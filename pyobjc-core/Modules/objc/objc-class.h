@@ -1,5 +1,8 @@
 #ifndef PyObjC_OBJC_CLASS_H
 #define PyObjC_OBJC_CLASS_H
+
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * @header objc-class.m
  * @abstract Definition of the wrapper for Objective-C classes
@@ -24,8 +27,6 @@
  */
 extern PyTypeObject PyObjCMetaClass_Type;
 extern PyTypeObject PyObjCClass_Type;
-
-/*extern int setup_class_meta(void);*/
 
 /*!
  * @function PyObjCClass_Check
@@ -79,11 +80,11 @@ extern PyObject* PyObjC_ClassExtender;
 typedef struct _PyObjCClassObject {
     PyHeapTypeObject base;
     Class class;
-    PyObject* sel_to_py;
-    PyObject* delmethod;
-    PyObject* hiddenSelectors;
-    PyObject* hiddenClassSelectors;
-    PyObject* lookup_cache;
+    PyObject* _Nullable sel_to_py;
+    PyObject* _Nullable delmethod;
+    PyObject* _Nullable hiddenSelectors;
+    PyObject* _Nullable hiddenClassSelectors;
+    PyObject* _Nullable lookup_cache;
 
     Py_ssize_t   dictoffset;
     Py_ssize_t   generation;
@@ -93,32 +94,34 @@ typedef struct _PyObjCClassObject {
     unsigned int isFinal : 1;
 } PyObjCClassObject;
 
-extern PyObject* PyObjCClass_DefaultModule;
-extern PyObject* PyObjCClass_New(Class objc_class);
-extern Class     PyObjCClass_GetClass(PyObject* object);
-extern PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method);
-extern void      PyObjCClass_MaybeRescan(PyObject* class);
-extern int       ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-extern int       PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
+extern PyObject* _Nullable PyObjCClass_DefaultModule;
+extern PyObject* _Nullable PyObjCClass_New(Class objc_class);
+extern Class _Nullable PyObjCClass_GetClass(PyObject* object);
+extern PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
+                                                    BOOL class_method);
+extern void       PyObjCClass_MaybeRescan(PyObject* class);
+extern int        ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
+extern int        PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
-extern PyObject*  PyObjCClass_GetDelMethod(PyObject* cls);
-extern void       PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
-extern int        PyObjCClass_HasPythonImplementation(PyObject* cls);
-extern PyObject*  PyObjCClass_ClassForMetaClass(PyObject* meta);
-extern PyObject*  PyObjCClass_HiddenSelector(PyObject* tp, SEL sel,
-                                             BOOL classMethod); /* returns borrowed */
-extern int        PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod,
-                                        PyObject* metadata);
-extern int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
-extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
+extern PyObject* _Nullable PyObjCClass_GetDelMethod(PyObject* cls);
+extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
+extern int  PyObjCClass_HasPythonImplementation(PyObject* cls);
+extern PyObject* _Nullable PyObjCClass_ClassForMetaClass(PyObject* meta);
+extern PyObject* _Nullable PyObjCClass_HiddenSelector(
+    PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
+extern int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod,
+                                 PyObject* metadata);
+extern int PyObjCClass_AddMethods(PyObject*  cls, PyObject* _Nonnull* _Nonnull methods,
+                                  Py_ssize_t count);
+extern PyObject* _Nullable PyObjCClass_ListProperties(PyObject* cls);
 
 /* Returns a borrowed reference or NULL (without necessarily raising an exception) */
-extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
-extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
-                                                    SEL sel);
+extern PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
+                                                          SEL sel);
+extern PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base,
+                                                              PyObject* name, SEL sel);
 
-static inline PyObject*
-PyObjCClass_GetLookupCache(PyTypeObject* tp)
+static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 {
     return ((PyObjCClassObject*)tp)->lookup_cache;
 }
@@ -161,6 +164,8 @@ PyObjCClass_IsFinal(PyTypeObject* tp)
     return ((PyObjCClassObject*)tp)->isFinal;
 }
 
-PyObject* objc_class_locate(Class objc_class);
+PyObject* _Nullable objc_class_locate(Class objc_class);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_OBJC_CLASS_H */

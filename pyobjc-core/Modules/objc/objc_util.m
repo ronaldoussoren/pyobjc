@@ -1326,6 +1326,11 @@ PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)
     if (PyType_Check(object)
         && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
         PyObject* temp = PyObjCClass_ClassForMetaClass(object);
+        if (temp == NULL) {
+            Py_DECREF(object);
+            PyErr_Format(PyObjCExc_Error, "Cannot find class for metaclass %R", object);
+            return NULL;
+        }
         Py_INCREF(temp);
         Py_DECREF(object);
         return temp;

@@ -228,8 +228,8 @@ base_name(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(base_class_doc, "Objective-C Class that defines the method");
-static PyObject*
-base_class(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable base_class(PyObject* _self,
+                                      void*     closure __attribute__((__unused__)))
 {
     PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
     if (self->base.sel_class != nil) {
@@ -523,6 +523,9 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
          * have to validate the type of self for instance methods.
          */
         PyObject* myClass = PyObjCClass_New(self->base.sel_class);
+        if (myClass == NULL) {
+            return NULL;
+        }
 
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyUnicode_Check(pyself)
@@ -663,6 +666,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         PyObject* myClass;
 
         myClass = PyObjCClass_New(self->base.sel_class);
+        if (myClass == NULL) {
+            return NULL;
+        }
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyUnicode_Check(pyself)
                   && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
@@ -771,11 +777,22 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     if (meth->sel_call_func == NULL) {
         if (class_isMetaClass(meth->base.sel_class)) {
             PyObject* metaclass_obj = PyObjCClass_New(meth->base.sel_class);
-            PyObject* class_obj     = PyObjCClass_ClassForMetaClass(metaclass_obj);
+            if (metaclass_obj == NULL) {
+                Py_DECREF(result);
+                return NULL;
+            }
+            PyObject* class_obj = PyObjCClass_ClassForMetaClass(metaclass_obj);
             Py_CLEAR(metaclass_obj);
 
-            meth->sel_call_func = PyObjC_FindCallFunc(PyObjCClass_GetClass(class_obj),
-                                                      meth->base.sel_selector);
+            if (class_obj == NULL) {
+                Py_DECREF(result);
+                return NULL;
+            }
+
+            /* PyObjCClass_ClassForMetaClass will only return a class proxy for a non-Nil
+             * class */
+            meth->sel_call_func = PyObjC_FindCallFunc(
+                (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector);
             Py_CLEAR(class_obj);
 
         } else {

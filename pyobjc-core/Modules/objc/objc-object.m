@@ -207,7 +207,10 @@ object_verify_type(PyObject* obj)
          *
          * (The same can happen when other code perform ISA swiffling)
          */
-        PyTypeObject* tp = (PyTypeObject*)PyObjCClass_New(object_getClass(obj_inst));
+
+        /* object_getClass only returns Nil if its argument is nil */
+        PyTypeObject* tp =
+            (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(obj_inst));
 
         if (tp != Py_TYPE(obj)) {
             PyTypeObject* tmp;
@@ -255,7 +258,10 @@ object_verify_not_nil(PyObject* obj, PyObject* name)
 PyObject*
 PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
-    Class     cls  = PyObjCClass_GetClass(base);
+    Class cls = PyObjCClass_GetClass(base);
+    if (cls == NULL) {
+        return NULL;
+    }
     PyObject* dict = ((PyTypeObject*)base)->tp_dict;
     Method    m    = class_getInstanceMethod(cls, sel);
     if (m) {
@@ -398,15 +404,20 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
     return descr;
 }
 
+/* XXX: Consider passing in name_bytes as well */
 static inline PyObject*
 _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 {
-    Py_ssize_t i, n;
-    PyObject * mro, *base;
-    PyObject*  descr = NULL;
-    PyObject*  res;
-    char       selbuf[2048];
-    char*      sel_name;
+    Py_ssize_t  i, n;
+    PyObject *  mro, *base;
+    PyObject*   descr = NULL;
+    PyObject*   res;
+    char        selbuf[2048];
+    char*       sel_name;
+    const char* name_bytes = PyUnicode_AsUTF8(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -429,6 +440,9 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
         }
 
         cls = PyObjCClass_GetClass(base);
+        if (cls == NULL) {
+            return NULL;
+        }
 
         /* class_copyMethodList will only return NULL when it also
          * sets method_count to 0.
@@ -445,17 +459,24 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
             if (sel_name == NULL)
                 continue;
 
-            if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
-                const char* encoding = method_getTypeEncoding(m);
+            if (strcmp(sel_name, name_bytes) == 0) {
+                const char* encoding  = method_getTypeEncoding(m);
+                SEL         meth_name = method_getName(m);
+
                 if (encoding == NULL) {
                     free(methods);
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     return NULL;
                 }
+                if (meth_name == NULL) {
+                    free(methods);
+                    PyErr_SetString(PyObjCExc_Error, "Native selector with Nil selector");
+                    return NULL;
+                }
 
                 /* Create (unbound) selector */
-                descr = PyObjCSelector_NewNative(cls, method_getName(m), encoding, 0);
+                descr = PyObjCSelector_NewNative(cls, meth_name, encoding, 0);
                 free(methods);
                 if (descr == NULL) {
                     return NULL;
@@ -762,15 +783,19 @@ done:
 
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 
-static PyObject*
-objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable objc_get_real_class(PyObject* self,
+                                               void* closure __attribute__((__unused__)))
 {
     id        obj_object;
     PyObject* ret;
 
     obj_object = PyObjCObject_GetObject(self);
     PyObjC_Assert(obj_object != nil, NULL);
-    ret = PyObjCClass_New(object_getClass(obj_object));
+    /* object_getClass only return Nil if its argument is nil */
+    ret = PyObjCClass_New((Class _Nonnull)object_getClass(obj_object));
+    if (ret == NULL) {
+        return NULL;
+    }
     if (ret != (PyObject*)Py_TYPE(self)) {
         Py_DECREF(Py_TYPE(self));
         Py_SET_TYPE(self, (PyTypeObject*)ret);
@@ -1091,7 +1116,8 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
     PyTypeObject* cls_type;
 
     PyObjC_Assert(objc_object != nil, NULL);
-    cls_type = (PyTypeObject*)PyObjCClass_New(object_getClass(objc_object));
+    cls_type =
+        (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(objc_object));
     if (cls_type == NULL) {
         return NULL;
     }
@@ -1153,7 +1179,10 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 PyObject*
 PyObjCObject_New(id objc_object, int flags, int retain)
 {
-    Class         cls = object_getClass(objc_object);
+    PyObjC_Assert(objc_object != nil, NULL);
+
+    /* object_getClass only returns Nil if its argument is nil */
+    Class         cls = (Class _Nonnull)object_getClass(objc_object);
     PyTypeObject* cls_type;
     PyObject*     res;
 
@@ -1161,10 +1190,9 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     if (res)
         return res;
 
-    PyObjC_Assert(objc_object != nil, NULL);
-
     cls_type = (PyTypeObject*)PyObjCClass_New(cls);
     if (cls_type == NULL) {
+        PyErr_SetString(PyObjCExc_Error, "Found method without selector in runtime");
         return NULL;
     }
 

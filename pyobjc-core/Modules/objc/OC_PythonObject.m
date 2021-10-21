@@ -622,7 +622,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     return pyObject;
 }
 
-+ (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
++ (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObject* rval;
 

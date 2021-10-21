@@ -122,6 +122,11 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         return PyObjC_NSCFTypeClass;
     }
 
+    Class cf_class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
+    if (cf_class == Nil) {
+        return NULL;
+    }
+
     PyObject* cf = PyLong_FromUnsignedLongLong(typeID);
     if (cf == NULL) {
         return NULL;
@@ -173,7 +178,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     ((PyTypeObject*)result)->tp_str  = cf_repr;
 
     info                = (PyObjCClassObject*)result;
-    info->class         = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
+    info->class         = cf_class;
     info->sel_to_py     = NULL;
     info->dictoffset    = 0;
     info->useKVO        = 0;

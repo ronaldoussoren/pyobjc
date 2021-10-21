@@ -189,7 +189,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     /* FIXME: structs/unions/... also use byref */
     Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
     BOOL       variadic_args = NO;
-    Py_ssize_t i;
 
     if (methinfo == 0) {
         PyErr_SetString(PyObjCExc_InternalError, "methinfo not set");
@@ -213,7 +212,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         return -1;
 #endif /* PyObjC_DEBUG */
 
-    for (i = 0; i < Py_SIZE(methinfo); i++) {
+    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
         switch (*methinfo->argtype[i]->type) {
         /* Pointer-like return values aren't "simple" */
         case _C_CONST:

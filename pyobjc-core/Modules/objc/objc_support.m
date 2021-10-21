@@ -2556,8 +2556,13 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
         } else if (PyType_Check(argument)
                    && PyType_IsSubtype((PyTypeObject*)argument, &PyObjCClass_Type)) {
-            *(Class*)datum =
-                PyObjCClass_GetClass(PyObjCClass_ClassForMetaClass(argument));
+            PyObject* class_object = PyObjCClass_ClassForMetaClass(argument);
+            if (class_object == NULL) {
+                PyErr_Format(PyObjCExc_Error, "Cannot locate class for metaclass %R",
+                             argument);
+                return -1;
+            }
+            *(Class*)datum = PyObjCClass_GetClass(class_object);
 
         } else {
             PyErr_Format(PyExc_ValueError, "depythonifying 'Class', got '%s'",
