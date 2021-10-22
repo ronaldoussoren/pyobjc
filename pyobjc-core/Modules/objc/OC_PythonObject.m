@@ -598,7 +598,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     return pyObject;
 }
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObjC_BEGIN_WITH_GIL
         /* XXX: This is a bit too magic. Can pyObject ever be NULL?
@@ -1074,7 +1074,10 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            if (selfAsPython == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
             v = PyObjC_CallDecoder(cdr, setValue);
             Py_DECREF(cdr);

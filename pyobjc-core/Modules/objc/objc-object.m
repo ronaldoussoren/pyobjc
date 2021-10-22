@@ -9,8 +9,10 @@
 #include <objc/Object.h>
 #include <stddef.h>
 
-static PyObject*
-object_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused__)),
+                                      PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"cobject", "c_void_p", NULL};
     PyObject*    cobject    = NULL;
@@ -70,8 +72,7 @@ object_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObj
     }
 }
 
-static PyObject*
-object_repr(PyObject* _self)
+static PyObject* _Nullable object_repr(PyObject* _self)
 {
     PyObjCObject* self = (PyObjCObject*)_self;
     PyObject*     res;
@@ -157,6 +158,7 @@ object_dealloc(PyObject* obj)
         } else {
             Py_BEGIN_ALLOW_THREADS
                 @try {
+                    /* XXX: Both branches are the same */
                     if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT) {
                         CFRelease(((PyObjCObject*)obj)->objc_object);
                     } else {
@@ -167,7 +169,8 @@ object_dealloc(PyObject* obj)
                     NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
                           localException);
                 }
-                Py_END_ALLOW_THREADS((PyObjCObject*)obj)->objc_object = nil;
+            Py_END_ALLOW_THREADS;
+            ((PyObjCObject*)obj)->objc_object = nil;
         }
     }
 
@@ -225,8 +228,14 @@ object_verify_type(PyObject* obj)
              * tp)`` Investigate the impact of that. Performance shouldn't be an issue
              * here, a isa change should not happen often.
              *
-             * XXX2: the setattr call above works from Python, which is confusing
-             * behaviour (it changes the class of the proxy, not the ISA)
+             * XXX: the setattr call above works from Python, which is confusing
+             * behaviour (it changes the class of the proxy, not the ISA). Change
+             * object_setattr to either change the ObjC class as well, or to avoid
+             * changing the class. The latter is safer, as we cannot properly check if the
+             * old and new types are compatible.
+             *
+             * XXX: Probably need to call PyObject_Type.tp_setattro(...) to avoid hitting
+             * calling object_setattro in this file.
              */
             tmp = Py_TYPE(obj);
             Py_SET_TYPE(obj, tp);
@@ -255,8 +264,8 @@ object_verify_not_nil(PyObject* obj, PyObject* name)
     return 0;
 }
 
-PyObject*
-PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
+PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
+                                                   SEL sel)
 {
     Class cls = PyObjCClass_GetClass(base);
     if (cls == NULL) {
@@ -302,8 +311,7 @@ PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
     return NULL;
 }
 
-static PyObject**
-_get_dictptr(PyObject* obj)
+static PyObject* _Nullable* _Nullable _get_dictptr(PyObject* obj)
 {
     Py_ssize_t dictoffset;
     id         obj_object;
@@ -315,19 +323,15 @@ _get_dictptr(PyObject* obj)
     return (PyObject**)(((char*)obj_object) + dictoffset);
 }
 
-static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name)
+static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
+                                               const char* name_bytes)
 {
-    Py_ssize_t  i, n;
-    PyObject *  mro, *base, *dict;
-    PyObject*   first_class = NULL;
-    PyObject*   descr       = NULL;
-    PyObject*   res;
-    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
-    if (name_bytes == NULL) {
-        return NULL;
-    }
-    SEL sel = PyObjCSelector_DefaultSelector(name_bytes);
+    Py_ssize_t i, n;
+    PyObject * mro, *base, *dict;
+    PyObject*  first_class = NULL;
+    PyObject*  descr       = NULL;
+    PyObject*  res;
+    SEL        sel = PyObjCSelector_DefaultSelector(name_bytes);
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -405,19 +409,15 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 }
 
 /* XXX: Consider passing in name_bytes as well */
-static inline PyObject*
-_type_lookup_harder(PyTypeObject* tp, PyObject* name)
+static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject* name,
+                                                      const char* name_bytes)
 {
-    Py_ssize_t  i, n;
-    PyObject *  mro, *base;
-    PyObject*   descr = NULL;
-    PyObject*   res;
-    char        selbuf[2048];
-    char*       sel_name;
-    const char* name_bytes = PyUnicode_AsUTF8(name);
-    if (name_bytes == NULL) {
-        return NULL;
-    }
+    Py_ssize_t i, n;
+    PyObject * mro, *base;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    char       selbuf[2048];
+    char*      sel_name;
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -499,8 +499,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
     return descr;
 }
 
-static PyObject*
-object_getattro(PyObject* obj, PyObject* name)
+static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
 {
     PyTypeObject* tp    = NULL;
     PyObject*     descr = NULL;
@@ -509,26 +508,16 @@ object_getattro(PyObject* obj, PyObject* name)
     PyObject**    dictptr;
     const char*   namestr;
 
-    if (name == NULL) {
-        PyErr_SetString(PyExc_TypeError, "<nil> name");
-        return NULL;
-    }
+    PyObjC_Assert(name != NULL, NULL);
 
-    if (PyUnicode_Check(name)) {
-        if (PyObjC_Unicode_Fast_Bytes(name) == NULL)
-            return NULL;
-
-    } else {
+    if (!PyUnicode_Check(name)) {
         PyErr_Format(PyExc_TypeError, "attribute name must be string, got %s",
                      Py_TYPE(name)->tp_name);
         return NULL;
     }
 
-    namestr = PyObjC_Unicode_Fast_Bytes(name);
+    namestr = PyUnicode_AsUTF8(name);
     if (namestr == NULL) {
-        if (!PyErr_Occurred()) {
-            PyErr_SetString(PyExc_ValueError, "Empty name");
-        }
         return NULL;
     }
 
@@ -548,7 +537,7 @@ object_getattro(PyObject* obj, PyObject* name)
 
     /* replace _PyType_Lookup */
     if (descr == NULL) {
-        descr = _type_lookup(tp, name);
+        descr = _type_lookup(tp, name, namestr);
         if (descr == NULL && PyErr_Occurred()) {
             return NULL;
         }
@@ -567,7 +556,7 @@ object_getattro(PyObject* obj, PyObject* name)
         }
     }
 
-    if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__del__") == 0) {
+    if (PyObjC_is_ascii_string(name, "__del__")) {
 
         res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
         goto done;
@@ -579,7 +568,7 @@ object_getattro(PyObject* obj, PyObject* name)
     if (dictptr != NULL) {
         PyObject* dict;
 
-        if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__dict__") == 0) {
+        if (PyObjC_is_ascii_string(name, "__dict__")) {
 
             res = *dictptr;
             if (res == NULL) {
@@ -616,7 +605,7 @@ object_getattro(PyObject* obj, PyObject* name)
          * for a method where the selector does not conform to the
          * naming convention that _type_lookup expects.
          */
-        descr = _type_lookup_harder(tp, name);
+        descr = _type_lookup_harder(tp, name, namestr);
 
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
@@ -664,7 +653,7 @@ done:
 }
 
 static int
-object_setattro(PyObject* obj, PyObject* name, PyObject* value)
+object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
 {
     PyTypeObject* tp = Py_TYPE(obj);
     PyObject*     descr;
@@ -673,14 +662,15 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* value)
     int           res;
     id            obj_inst;
     NSString*     obj_name;
+    const char*   namestr;
 
-    if (PyUnicode_Check(name)) {
-        if (PyObjC_Unicode_Fast_Bytes(name) == NULL)
-            return -1;
-
-    } else {
+    if (!PyUnicode_Check(name)) {
         PyErr_Format(PyExc_TypeError, "attribute name must be string, got %s",
                      Py_TYPE(name)->tp_name);
+        return -1;
+    }
+    namestr = PyObjC_Unicode_Fast_Bytes(name);
+    if (namestr == NULL) {
         return -1;
     }
 
@@ -708,7 +698,7 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* value)
             }
         }
     }
-    descr = _type_lookup(tp, name);
+    descr = _type_lookup(tp, name, namestr);
     if (descr == NULL && PyErr_Occurred()) {
         return -1;
     }
@@ -809,21 +799,21 @@ PyDoc_STRVAR(
     "The attributes of this field are the instance methods of this object. This\n"
     "can be used to force access to an instance method.");
 
-static PyObject*
-obj_get_instanceMethods(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable obj_get_instanceMethods(PyObject* _self, void* closure
+                                                   __attribute__((__unused__)))
 {
     PyObjCObject* self = (PyObjCObject*)_self;
     return PyObjCMethodAccessor_New((PyObject*)self, 0);
 }
 
-static PyObject*
-obj_get_flags(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable obj_get_flags(PyObject* self,
+                                         void*     closure __attribute__((__unused__)))
 {
-    return Py_BuildValue("I", PyObjCObject_GetFlags(self));
+    return PyLong_FromUnsignedLong(PyObjCObject_GetFlags(self));
 }
 
-static PyObject*
-obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
+                                                  __attribute__((__unused__)))
 {
     if (PyObjCObject_IsBlock(self)) {
         PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
@@ -849,8 +839,8 @@ obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__))
 }
 
 static int
-obj_set_blocksignature(PyObject* self, PyObject* newVal,
-                       void* closure __attribute__((__unused__)))
+obj_set_blocksignature(PyObject* self, PyObject* _Nullable newVal,
+                       void*     closure __attribute__((__unused__)))
 {
     if (newVal == NULL) {
         PyErr_SetString(PyExc_TypeError, "Cannot delete '__block_signature__'");
@@ -908,15 +898,13 @@ static PyGetSetDef obj_getset[] = {{
  * classes that doesn't work for us (it will write incomplete values to the
  * pickle). This method forces a failure during pickling.
  */
-static PyObject*
-meth_reduce(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable meth_reduce(PyObject* self __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError, "Cannot pickle Objective-C objects");
     return NULL;
 }
 
-static PyObject*
-meth_sizeof(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable meth_sizeof(PyObject* self __attribute__((__unused__)))
 {
     /* Basis __sizeof__ implementation for Cocoa objects.
      * This doesn't return the correct size for collections (such as NSArray),
@@ -935,15 +923,20 @@ meth_sizeof(PyObject* self __attribute__((__unused__)))
 static PyObject*
 meth_is_magic(PyObject* self)
 {
+    int is_magic;
+
     if (PyObjCObject_GetObject(self) == nil) {
-        return PyBool_FromLong(0);
+        is_magic = 0;
     } else {
-        return PyBool_FromLong(PyObjCObject_IsMagic(self));
+        is_magic = PyObjCObject_IsMagic(self);
     }
+
+    PyObject* result = is_magic ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
 }
 
-static PyObject*
-as_cobject(PyObject* self)
+static PyObject* _Nullable as_cobject(PyObject* self)
 {
     if (PyObjCObject_GetObject(self) == nil) {
         Py_INCREF(Py_None);
@@ -954,8 +947,7 @@ as_cobject(PyObject* self)
 }
 
 /* XXX: Move this function to objc_util.m */
-PyObject*
-PyObjC_get_c_void_p(void)
+PyObject* _Nullable PyObjC_get_c_void_p(void)
 {
     static PyObject* c_void_p = NULL;
     if (c_void_p == NULL) {
@@ -975,8 +967,7 @@ PyObjC_get_c_void_p(void)
     return c_void_p;
 }
 
-static PyObject*
-as_ctypes_voidp(PyObject* self)
+static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
     return PyObjC_MakeCVoidP(PyObjCObject_GetObject(self));
 }
@@ -984,8 +975,7 @@ as_ctypes_voidp(PyObject* self)
 /*
  * Implementation of __dir__, which is the hook used by dir() on python 2.6 or later.
  */
-static PyObject*
-meth_dir(PyObject* self)
+static PyObject* _Nullable meth_dir(PyObject* self)
 {
     PyObject*    result;
     Class        cls;
@@ -1109,8 +1099,7 @@ PyObjCClassObject PyObjCObject_Type = {
  *  Allocate a proxy object for use during the call of __del__,
  *  this isn't a full-featured proxy object.
  */
-PyObject*
-_PyObjCObject_NewDeallocHelper(id objc_object)
+PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
 {
     PyObject*     res;
     PyTypeObject* cls_type;
@@ -1155,18 +1144,20 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
         PyErr_Warn(PyObjCExc_ObjCRevivalWarning, buf);
 
         id objc_object = PyObjCObject_GetObject(obj);
+        if (objc_object != nil) {
 
-        if (((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE) {
-            /* pass */
+            if (((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE) {
+                /* pass */
 
-        } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-            /* pass */
+            } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
+                /* pass */
 
-        } else {
-            CFRelease(objc_object);
+            } else {
+                CFRelease(objc_object);
+            }
+
+            PyObjC_UnregisterPythonProxy(objc_object, obj);
         }
-
-        PyObjC_UnregisterPythonProxy(objc_object, obj);
         ((PyObjCObject*)obj)->objc_object = nil;
 
         Py_DECREF(obj);
@@ -1176,8 +1167,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
     Py_DECREF(obj);
 }
 
-PyObject*
-PyObjCObject_New(id objc_object, int flags, int retain)
+PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 {
     PyObjC_Assert(objc_object != nil, NULL);
 
@@ -1239,8 +1229,7 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     return res;
 }
 
-PyObject*
-PyObjCObject_FindSelector(PyObject* object, SEL selector)
+PyObject* _Nullable PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
     PyObject* meth;
 
@@ -1254,7 +1243,7 @@ PyObjCObject_FindSelector(PyObject* object, SEL selector)
     }
 }
 
-id(PyObjCObject_GetObject)(PyObject* object)
+id _Nullable(PyObjCObject_GetObject)(PyObject* object)
 {
     if (!PyObjCObject_Check(object)) {
         PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
@@ -1275,14 +1264,12 @@ PyObjCObject_ClearObject(PyObject* object)
     ((PyObjCObject*)object)->objc_object = nil;
 }
 
-PyObject*
-PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
+PyObject* _Nullable PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
 {
     return object_getattro(obj, name);
 }
 
-PyObject*
-PyObjCObject_GetAttrString(PyObject* obj, char* name)
+PyObject* _Nullable PyObjCObject_GetAttrString(PyObject* obj, char* name)
 {
     PyObject* pyname = PyUnicode_FromString(name);
     if (pyname == NULL)
@@ -1292,3 +1279,5 @@ PyObjCObject_GetAttrString(PyObject* obj, char* name)
     Py_DECREF(pyname);
     return rv;
 }
+
+NS_ASSUME_NONNULL_END

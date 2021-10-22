@@ -91,6 +91,9 @@ imp_NSCoder_encodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
     PyGILState_STATE state = PyGILState_Ensure();
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
+    if (pyself == NULL) {
+        goto error;
+    }
 
     v1 = PyBytes_FromString(typestr);
     if (v1 == NULL)
@@ -1119,6 +1122,10 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(ffi_cif* cif __attribute__((__unus
     int        cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
+
+    pyself = PyObjCObject_NewTransient(self, &cookie);
+    if (pyself == NULL)
+        goto error;
 
     v1 = id_to_python(self);
     if (v1 == NULL)

@@ -78,11 +78,10 @@ Decimal_ObjCValue(PyObject* self)
     return res;
 }
 
-static PyObject*
-decimal_get__pyobjc_object__(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable decimal_get__pyobjc_object__(PyObject* self, void* closure
+                                                        __attribute__((__unused__)))
 {
-    PyObject* rval = PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
-    return rval;
+    return PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
 }
 
 static PyGetSetDef decimal_getseters[] = {{

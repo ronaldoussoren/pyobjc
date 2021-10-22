@@ -8,23 +8,29 @@
 #define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 BOOL
-PyObjC_class_isSubclassOf(Class child, Class parent)
+PyObjC_class_isSubclassOf(Class child, Class _Nullable parent)
 {
+    Class _Nullable cur = child;
+
     if (parent == nil)
         return YES;
 
-    while (child != nil) {
-        if (child == parent) {
+    while (cur != nil) {
+        if (cur == parent) {
             return YES;
         }
 
-        child = class_getSuperclass(child);
+        cur = class_getSuperclass(cur);
     }
     return NO;
 }
 
 #if defined(__x86_64__)
+
+/* XXX: Is this not needed for arm64? */
 
 @implementation
 Protocol (NSObjectCompat)
@@ -103,3 +109,5 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
     }
     return YES;
 }
+
+NS_ASSUME_NONNULL_END

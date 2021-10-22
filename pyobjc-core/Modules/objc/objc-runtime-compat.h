@@ -3,9 +3,6 @@
 /*
  * Objective-C 2.x runtime compatibility.
  *
- * This files makes it possible to use the Objective-C 2.x API on versions
- * of Mac OS X before 10.5.
- *
  * Special:
  *  - PyObjC_class_addMethodList is not a function in the ObjC 2.0 runtime API,
  *    but added here to (a) get semantics that are slightly nicer for what
@@ -16,6 +13,8 @@
  */
 #include <objc/Protocol.h>
 #include <objc/objc-runtime.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 struct PyObjC_method {
     SEL         name;
@@ -45,7 +44,7 @@ struct PyObjC_method {
 #define objc_superGetClass(super) ((super).super_class)
 
 /* Some functions that are missing (oddly enough) */
-BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
+BOOL PyObjC_class_isSubclassOf(Class child, Class _Nullable parent);
 #define class_isSubclassOf PyObjC_class_isSubclassOf
 
 /*
@@ -60,5 +59,7 @@ PyObjC_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMetho
 #define protocol_getMethodDescription PyObjC_protocol_getMethodDescription
 
 extern BOOL PyObjC_class_addMethodList(Class, struct PyObjC_method*, unsigned int);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_RUNTIME_COMPAT */

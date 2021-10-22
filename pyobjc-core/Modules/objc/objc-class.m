@@ -2972,11 +2972,16 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error;
         }
 
-        objcMethod->imp = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)aMethod);
+        IMP imp = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)aMethod);
+        if (imp == NULL) {
+            goto cleanup_and_return_error;
+        }
+        objcMethod->imp = imp;
 
         name = PyObject_GetAttrString(aMethod, "__name__");
 
         if (PyBytes_Check(name)) {
+            /* XXX: Why support bytes here? */
             PyObject* t =
                 PyUnicode_Decode(PyBytes_AsString(name), PyBytes_Size(name), NULL, NULL);
             if (t == NULL) {
@@ -3026,12 +3031,15 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     }
 
     PyMem_Free(methodsToAdd);
+    methodsToAdd = NULL;
     if (curClassMethodIndex != 0) {
-        PyObjC_class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
-                                   (unsigned)curClassMethodIndex);
+        /* object_getClass will only return Nil if its argument is nil */
+        PyObjC_class_addMethodList((Class _Nonnull)object_getClass(targetClass),
+                                   classMethodsToAdd, (unsigned)curClassMethodIndex);
     }
 
     PyMem_Free(classMethodsToAdd);
+    classMethodsToAdd = NULL;
 
     r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
     if (r == -1)
@@ -3051,10 +3059,14 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 cleanup_and_return_error:
     Py_XDECREF(metaDict);
     Py_XDECREF(extraDict);
-    if (methodsToAdd)
+    if (methodsToAdd) {
+        /* XXX: This should also clear entries */
         PyMem_Free(methodsToAdd);
-    if (classMethodsToAdd)
+    }
+    if (classMethodsToAdd) {
+        /* XXX: This should also clear entries */
         PyMem_Free(classMethodsToAdd);
+    }
     return -1;
 }
 

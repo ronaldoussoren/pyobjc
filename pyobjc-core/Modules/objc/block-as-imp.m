@@ -23,6 +23,9 @@ create_void_noargs(PyObject*              callable,
 
       int       cookie;
       PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
 
       PyObject* args[2] = {NULL, pyself};
       PyObject* result  = PyObject_Vectorcall(callable, args + 1,
@@ -65,6 +68,9 @@ create_id_noargs(PyObject* callable, PyObjCMethodSignature* methinfo)
 
       int       cookie;
       PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
 
       PyObject* args[2] = {NULL, pyself};
       PyObject* result  = PyObject_Vectorcall(callable, args + 1,

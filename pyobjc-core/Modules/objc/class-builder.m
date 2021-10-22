@@ -1333,22 +1333,24 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
             delmethod = PyObjCClass_GetDelMethod(cls);
             if (delmethod != NULL) {
                 PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-                /* XXX: Why not use Vectorcall uncondationally (through compat layer on
-                 * py3.8 and earlier)? */
+                if (s != NULL) {
+                    /* XXX: Why not use Vectorcall uncondationally (through compat layer
+                     * on py3.8 and earlier)? */
 #if PY_VERSION_HEX >= 0x03090000
-                PyObject* args[2] = {NULL, s};
-                obj               = PyObject_Vectorcall(delmethod, args + 1,
-                                                        1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                    PyObject* args[2] = {NULL, s};
+                    obj               = PyObject_Vectorcall(delmethod, args + 1,
+                                                            1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 #else
-                obj = PyObject_CallFunctionObjArgs(delmethod, s, NULL);
+                    obj = PyObject_CallFunctionObjArgs(delmethod, s, NULL);
 #endif
-                _PyObjCObject_FreeDeallocHelper(s);
-                if (obj == NULL) {
-                    PyErr_WriteUnraisable(delmethod);
-                } else {
-                    Py_DECREF(obj);
+                    _PyObjCObject_FreeDeallocHelper(s);
+                    if (obj == NULL) {
+                        PyErr_WriteUnraisable(delmethod);
+                    } else {
+                        Py_DECREF(obj);
+                    }
+                    Py_DECREF(delmethod);
                 }
-                Py_DECREF(delmethod);
             }
 
             free_ivars(self, cls);

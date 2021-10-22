@@ -49,7 +49,7 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
  *     This method is part of the implementation of objc_support.m,
  *     see that file for details.
  */
-- (PyObject*)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
 - (void)forwardInvocation:(NSInvocation*)invocation;
 - (BOOL)respondsToSelector:(SEL)aSelector;
 - (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)selector;

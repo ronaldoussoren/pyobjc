@@ -129,7 +129,9 @@ NSProxy (PyObjCSupport)
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        PyObjC_RegisterPythonProxy(self, rval);
+        if (rval != NULL) {
+            PyObjC_RegisterPythonProxy(self, rval);
+        }
     }
     return rval;
 }
@@ -281,7 +283,9 @@ NSDecimalNumber (PyObjCSupport)
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        PyObjC_RegisterPythonProxy(self, rval);
+        if (rval != NULL) {
+            PyObjC_RegisterPythonProxy(self, rval);
+        }
     }
 
     return rval;

@@ -378,7 +378,10 @@ NS_ASSUME_NONNULL_BEGIN
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            if (selfAsPython == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
             v = PyObjC_CallDecoder(cdr, setValue);
             Py_DECREF(cdr);

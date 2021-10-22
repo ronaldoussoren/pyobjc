@@ -147,6 +147,10 @@ Generic Implementation Quality
   side effect of this a number of internal checks were strengthened, although
   most of them were for error conditions that should never happen.
 
+  That said, this change also found a number of places where Python reference
+  counts weren't updated properly, which may have led to refcount overflows
+  in long running programs.
+
 * Add more error checking to pyobjc-core to catch (very) unlikely error conditions.
 
   This is a side effect of the previous item.
