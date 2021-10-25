@@ -2,6 +2,8 @@ info:
 	@echo "all               - build and develop"
 	@echo "test              - build, develop and test"
 	@echo "sanitize-test     - clean & test with sanitizers"
+	@echo "scan-build        - build with clang static analyzer"
+	@echo "c-coverage        - clean & test with C level coverage"
 	@echo "clean             - remove build and dist"
 
 all:
@@ -16,7 +18,7 @@ test:
 # sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env DYLD_INSERT_LIBRARIES=$(shell xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
+	env DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
 
 clean:
 	rm -rf build dist
