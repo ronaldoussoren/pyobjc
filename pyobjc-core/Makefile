@@ -40,7 +40,7 @@ c-coverage:
 	rm -rf build dist
 	mkdir build dist
 	python3 -mvenv build/cov-env
-	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage" build/cov-env/bin/python3 setup.py develop
+	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage -DUSE_STATIC_ANALYZER" build/cov-env/bin/python3 setup.py develop
 	build/cov-env/bin/python3 setup.py test --verbosity=3
 	lcov --capture --directory . --output-file build/coverage.info
 	genhtml build/coverage.info --output-directory dist/c-coverage
