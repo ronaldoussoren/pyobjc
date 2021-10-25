@@ -3,6 +3,22 @@ import MailKit  # noqa: F401
 import objc
 
 
+class TestMEMessageSecurityHandlerHelper(MailKit.NSObject):
+    def primaryActionClickedForMessageContext_completionHandler_(self, a, b):
+        pass
+
+
 class TestMEMessageSecurityHandler(TestCase):
+    def test_constants(self):
+        self.assertEqual(MailKit.MEMessageSecurityEncodingError, 0)
+        self.assertEqual(MailKit.MEMessageSecurityDecodingError, 1)
+
     def test_protocols(self):
         objc.protocolNamed("MEMessageSecurityHandler")
+
+    def test_methods(self):
+        self.assertArgIsBlock(
+            TestMEMessageSecurityHandlerHelper.primaryActionClickedForMessageContext_completionHandler_,
+            1,
+            b"v@",
+        )

@@ -104,3 +104,34 @@ class TestAXUIElement(TestCase):
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)
+
+    @min_os_level("12.0")
+    def test_types12_0(self):
+        # XXX: 12.0 SDK headers have no availability constraints for these???
+        self.assertIsCFType(HIServices.AXTextMarkerRef)
+        self.assertIsCFType(HIServices.AXTextMarkerRangeRef)
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        # XXX: 12.0 SDK headers have no availability constraints for these???
+        HIServices.AXTextMarkerGetTypeID
+
+        self.assertResultIsCFRetained(HIServices.AXTextMarkerCreate)
+        self.assertArgIsIn(HIServices.AXTextMarkerCreate, 1)
+        self.assertArgSizeInArg(HIServices.AXTextMarkerCreate, 1, 2)
+        HIServices.AXTextMarkerGetLength
+
+        self.assertResultIsVariableSize(HIServices.AXTextMarkerGetBytePtr)
+
+        HIServices.AXTextMarkerRangeGetTypeID
+
+        self.assertResultIsCFRetained(HIServices.AXTextMarkerRangeCreate)
+
+        self.assertResultIsCFRetained(HIServices.AXTextMarkerRangeCreateWithBytes)
+        self.assertArgIsIn(HIServices.AXTextMarkerRangeCreateWithBytes, 1)
+        self.assertArgSizeInArg(HIServices.AXTextMarkerRangeCreateWithBytes, 1, 2)
+        self.assertArgIsIn(HIServices.AXTextMarkerRangeCreateWithBytes, 3)
+        self.assertArgSizeInArg(HIServices.AXTextMarkerRangeCreateWithBytes, 3, 4)
+
+        self.assertResultIsCFRetained(HIServices.AXTextMarkerRangeCopyStartMarker)
+        self.assertResultIsCFRetained(HIServices.AXTextMarkerRangeCopyEndMarker)

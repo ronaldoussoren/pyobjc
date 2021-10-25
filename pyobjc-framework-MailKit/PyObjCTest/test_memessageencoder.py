@@ -17,21 +17,13 @@ class TestMEMessageEncoder(TestCase):
 
     def test_methods(self):
         self.assertArgIsBlock(
-            TestMEMessageEncoderHelper.getEncodingStatusForMessage_completionHandler_,
-            1,
+            TestMEMessageEncoderHelper.getEncodingStatusForMessage_composeContext_completionHandler_,
+            2,
             b"v@",
         )
 
-        self.assertArgIsBOOL(
-            TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
-            1,
-        )
-        self.assertArgIsBOOL(
-            TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
-            2,
-        )
         self.assertArgIsBlock(
-            TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
-            3,
+            TestMEMessageEncoderHelper.encodeMessage_composeContext_completionHandler_,
+            2,
             b"v@",
         )

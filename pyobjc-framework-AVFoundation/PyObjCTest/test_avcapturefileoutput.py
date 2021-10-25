@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureFileOutputHelper(AVFoundation.NSObject):
@@ -22,4 +22,14 @@ class TestAVCaptureFileOutput(TestCase):
     def testProtocolMethods(self):
         self.assertResultIsBOOL(
             TestAVCaptureFileOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
+        )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled_,
+            0,
         )

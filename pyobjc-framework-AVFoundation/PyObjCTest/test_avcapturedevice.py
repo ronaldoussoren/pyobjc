@@ -67,6 +67,39 @@ class TestAVCaptureDevice(TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorUnsupported,
+            0,
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorAuto, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorRestricted, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorLocked, 3
+        )
+
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionNone,
+            0,
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionVideoZoomChanged,
+            1 << 0,
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionFocusModeChanged,
+            1 << 1,
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionExposureModeChanged,
+            1 << 2,
+        )
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
@@ -136,3 +169,5 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectEnabled)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectActive)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectSupported)

@@ -31,7 +31,7 @@ else:
 
 
 misc = {}
-constants = """$NSSystemExtensionUsageDescriptionKey$OSBundleUsageDescriptionKey$OSSystemExtensionErrorDomain$"""
+constants = """$NSSystemExtensionUsageDescriptionKey$OSBundleUsageDescriptionKey$OSSystemExtensionErrorDomain$OSRelatedKernelExtensionKey$"""
 enums = """$OSSystemExtensionErrorAuthorizationRequired@13$OSSystemExtensionErrorCodeSignatureInvalid@8$OSSystemExtensionErrorDuplicateExtensionIdentifer@6$OSSystemExtensionErrorExtensionMissingIdentifier@5$OSSystemExtensionErrorExtensionNotFound@4$OSSystemExtensionErrorForbiddenBySystemPolicy@10$OSSystemExtensionErrorMissingEntitlement@2$OSSystemExtensionErrorRequestCanceled@11$OSSystemExtensionErrorRequestSuperseded@12$OSSystemExtensionErrorUnknown@1$OSSystemExtensionErrorUnknownExtensionCategory@7$OSSystemExtensionErrorUnsupportedParentBundleLocation@3$OSSystemExtensionErrorValidationFailed@9$OSSystemExtensionReplacementActionCancel@0$OSSystemExtensionReplacementActionReplace@1$OSSystemExtensionRequestCompleted@0$OSSystemExtensionRequestWillCompleteAfterReboot@1$"""
 misc.update({})
 r = objc.registerMetaDataForSelector

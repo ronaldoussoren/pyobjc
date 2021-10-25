@@ -8,5 +8,9 @@ class TestMEMessage(TestCase):
         self.assertEqual(MailKit.MEMessageStateDraft, 1)
         self.assertEqual(MailKit.MEMessageStateSending, 2)
 
+        self.assertEqual(MailKit.MEMessageEncryptionStateUnknown, 0)
+        self.assertEqual(MailKit.MEMessageEncryptionStateNotEncrypted, 1)
+        self.assertEqual(MailKit.MEMessageEncryptionStateEncrypted, 2)
+
     def test_classes(self):
         MailKit.MEMessage

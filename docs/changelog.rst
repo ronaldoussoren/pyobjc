@@ -158,7 +158,7 @@ Generic Implementation Quality
 New features
 ............
 
-* Updated framework bindings for macOS 12 (Xcode 13 beta 5)
+* Updated framework bindings for macOS 12
 
 * New framework bindings for the following frameworks:
 

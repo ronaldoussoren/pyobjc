@@ -165,6 +165,27 @@ class TestCVPixelBuffer(TestCase):
             Quartz.kCVPixelFormatType_Lossless_420YpCbCr10PackedBiPlanarVideoRange,
             fourcc(b"&xv0"),
         )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossless_422YpCbCr10PackedBiPlanarVideoRange,
+            fourcc(b"&xv2"),
+        )
+
+        self.assertEqual(Quartz.kCVPixelFormatType_Lossy_32BGRA, fourcc(b"-BGA"))
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossy_420YpCbCr8BiPlanarVideoRange,
+            fourcc(b"-8v0"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossy_420YpCbCr8BiPlanarFullRange, fourcc(b"-8f0")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossy_420YpCbCr10PackedBiPlanarVideoRange,
+            fourcc(b"-xv0"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossy_422YpCbCr10PackedBiPlanarVideoRange,
+            fourcc(b"-xv2"),
+        )
 
     def testTypes(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)
