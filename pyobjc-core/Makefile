@@ -26,7 +26,7 @@ clean:
 # Run a build with clang's static analyzer.
 scan-build:
 	test -d build || mkdir build
-	env CFLAGS="-DPyObjC_DEBUG" scan-build -o build   \
+	env CFLAGS="-DPyObjC_DEBUG -DUSE_STATIC_ANALYZER" scan-build -o build   \
             --enable-checker nullability.NullableDereferenced \
             --enable-checker nullability.NullablePassedToNonnull \
             --enable-checker nullability.NullableReturnedFromNonnull \
@@ -42,8 +42,8 @@ c-coverage:
 	rm -rf build dist
 	mkdir build dist
 	python3 -mvenv build/cov-env
-	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage -DUSE_STATIC_ANALYZER" build/cov-env/bin/python3 setup.py develop
-	build/cov-env/bin/python3 setup.py test --verbosity=3
+	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage -O0" build/cov-env/bin/python3 setup.py develop
+	-build/cov-env/bin/python3 setup.py test --verbosity=3
 	lcov --capture --directory . --output-file build/coverage.info
 	genhtml build/coverage.info --output-directory dist/c-coverage
 	open dist/c-coverage/index.html

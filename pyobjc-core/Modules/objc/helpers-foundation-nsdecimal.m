@@ -709,8 +709,11 @@ decimal_coerce_compare(PyObject** l, PyObject** r)
 static PyObject*
 decimal_repr(PyObject* self)
 {
-    NSString* val  = NSDecimalString(&Decimal_Value(self), NULL);
-    PyObject* tmp  = id_to_python(val);
+    NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
+    PyObject* tmp = id_to_python(val);
+    if (tmp == NULL) {
+        return NULL;
+    }
     PyObject* repr = PyObject_Str(tmp);
     Py_XDECREF(tmp);
     return repr;

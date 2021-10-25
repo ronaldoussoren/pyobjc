@@ -223,8 +223,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     }
 
-    pymethod = PyObject_GetAttrString(
-        obj, PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name)));
+    const char* py_meth_name =
+        PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name));
+    if (py_meth_name == NULL) {
+        return NULL;
+    }
+    pymethod = PyObject_GetAttrString(obj, py_meth_name);
     if (pymethod == NULL) {
         return NULL;
     }

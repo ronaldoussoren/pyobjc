@@ -659,9 +659,14 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
              * and instance method for the same selector in one
              * generation.
              */
-            char      buf[1024];
-            PyObject* pyname = PyUnicode_FromString(PyObjC_SELToPythonName(
-                PyObjCSelector_GetSelector(value), buf, sizeof(buf)));
+            char        buf[1024];
+            const char* py_meth_name = PyObjC_SELToPythonName(
+                PyObjCSelector_GetSelector(value), buf, sizeof(buf));
+            if (py_meth_name == NULL) {
+                goto error_cleanup;
+            }
+
+            PyObject* pyname = PyUnicode_FromString(py_meth_name);
 
             if (pyname == NULL) {
                 goto error_cleanup;

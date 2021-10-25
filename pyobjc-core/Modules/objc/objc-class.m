@@ -1161,9 +1161,9 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
         methods =
             (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (i = 0; i < method_count; i++) {
-            char*     name;
-            PyObject* item;
-            SEL       meth_name = method_getName(methods[i]);
+            const char* name;
+            PyObject*   item;
+            SEL         meth_name = method_getName(methods[i]);
             if (meth_name == NULL) {
                 /* Ignore methods without a selector */
                 continue;
@@ -1174,11 +1174,12 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
                 continue;
             }
 
-            name = (char*)PyObjC_SELToPythonName(meth_name, selbuf, sizeof(selbuf));
+            name = PyObjC_SELToPythonName(meth_name, selbuf, sizeof(selbuf));
             if (name == NULL) {
                 /* Ignore selectors that cannot be converted to a python name.
                  * This should never happen with the size of selbuf.
                  */
+                PyErr_Clear();
                 continue;
             }
 
@@ -1289,7 +1290,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         Method*      methods;
         unsigned int method_count, j;
         char         selbuf[2048];
-        char*        sel_name;
+        const char*  sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
         PyObjC_Assert(base != NULL, NULL);
@@ -1328,8 +1329,12 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 continue;
             }
 
-            sel_name =
-                (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            sel_name = PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            if (sel_name == NULL) {
+                /* Ignore selectors whose name cannot be converted to a python name */
+                PyErr_Clear();
+                continue;
+            }
             if (strcmp(sel_name, name_bytes) == 0) {
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
@@ -1565,6 +1570,11 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
 
             sel_name =
                 (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            if (sel_name == NULL) {
+                /* Ignore methods whose selector cannot be converted */
+                PyErr_Clear();
+                continue;
+            }
 
             if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
                 /* Create (unbound) selector */
@@ -2162,8 +2172,11 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
             name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
                                                  sizeof(selbuf));
-            if (name == NULL)
+            if (name == NULL) {
+                /* Ignore methods whose SEL cannot be converted */
+                PyErr_Clear();
                 continue;
+            }
 
             item = PyUnicode_FromString(name);
             if (item == NULL) {
@@ -2727,8 +2740,10 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             char*     name;
             PyObject* py_name;
             name = PyObjC_SELToPythonName(selector, selbuf, sizeof(selbuf));
-            if (!name)
+            if (!name) {
+                PyErr_Clear();
                 continue;
+            }
 
             py_name = PyUnicode_FromString(name);
             if (!py_name) {

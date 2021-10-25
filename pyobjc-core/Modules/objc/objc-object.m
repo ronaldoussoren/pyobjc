@@ -456,8 +456,10 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
             sel_name =
                 (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
-            if (sel_name == NULL)
+            if (sel_name == NULL) {
+                PyErr_Clear();
                 continue;
+            }
 
             if (strcmp(sel_name, name_bytes) == 0) {
                 const char* encoding  = method_getTypeEncoding(m);
@@ -1018,8 +1020,10 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
             name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
                                                  sizeof(selbuf));
-            if (name == NULL)
+            if (name == NULL) {
+                PyErr_Clear();
                 continue;
+            }
 
             item = PyUnicode_FromString(name);
             if (item == NULL) {

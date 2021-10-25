@@ -1407,12 +1407,15 @@ char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
     char*  cur;
 
     if (res != strlen(sel_getName(sel))) {
+        PyErr_SetString(PyExc_RuntimeError, "selector too long to calculate python name");
         return NULL;
     }
 
     if (PyObjC_IsPythonKeyword(buf)) {
         res = snprintf(buf, buflen, "%s__", sel_getName(sel));
         if (res != 2 + strlen(sel_getName(sel))) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "selector too long to calculate python name");
             return NULL;
         }
         return buf;
