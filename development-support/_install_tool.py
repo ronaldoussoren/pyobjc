@@ -116,7 +116,8 @@ def get_sdk_level():
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
 
-    if sdkname == "MacOSX.sdk":
+    settings_path = os.path.join(sdk, "SDKSettings.plist")
+    if os.path.exists(settings_path):
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
@@ -125,9 +126,9 @@ def get_sdk_level():
             raise
             raise SystemExit("Cannot determine SDK version")
     else:
-        return sdkname[6:-4]
-
-    return sdk[6:-4]
+        version_part = sdkname[6:-4]
+        assert version_part != ""
+        return version_part
 
 
 def sorted_framework_wrappers():
@@ -200,7 +201,7 @@ def sorted_framework_wrappers():
     return frameworks
 
 
-def build_project(project, extra_args, setuptools_command):
+def build_project(project, extra_arg):
     proj_dir = os.path.join(TOPDIR, project)
 
     # First ask distutils to clean up
@@ -214,9 +215,11 @@ def build_project(project, extra_args, setuptools_command):
     if os.path.exists(os.path.join(proj_dir, "build")):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
-    print(f"Installing {project!r} using {sys.executable!r}")
+    print(f"Installing {project!r} using {sys.executable!r}, {extra_arg}")
     status = subprocess.call(
-        [sys.executable, "setup.py", setuptools_command] + extra_args, cwd=proj_dir
+        [sys.executable, "-mpip", "install"]
+        + ([extra_arg, "."] if extra_arg is not None else ["."]),
+        cwd=proj_dir,
     )
 
     if status != 0:
@@ -230,12 +233,16 @@ def version_key(version):
     return tuple(int(x) for x in version.split("."))
 
 
-def main(setuptools_command):
+def main(extra_arg=None):
     if sys.platform != "darwin":
         print("PyObjC requires macOS")
         sys.exit(1)
 
+    subprocess.check_call(
+        [sys.executable, "-mpip", "install", "-U", "setuptools", "pip", "wheel"]
+    )
+
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        if not build_project(project, sys.argv[1:], setuptools_command):
+        if not build_project(project, extra_arg):
             print("Cannot build one of the projects, bailing out")
             sys.exit(1)
