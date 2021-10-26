@@ -187,8 +187,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
      */
     /* TODO: simple pass-by-reference objects args should work (NSError** arguments) */
     /* FIXME: structs/unions/... also use byref */
-    Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
-    BOOL       variadic_args = NO;
 
     if (methinfo == 0) {
         PyErr_SetString(PyObjCExc_InternalError, "methinfo not set");
@@ -203,6 +201,8 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     return 0;
 
 #else /*  PY_VERSION_HEX >= 0x03090000 */
+    Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
+    BOOL       variadic_args = NO;
 
     if (methinfo == NULL || methinfo->variadic) {
         return 0;

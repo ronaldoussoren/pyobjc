@@ -81,7 +81,7 @@ static PyObject* _Nullable func_repr(PyObject* _self)
 }
 
 static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
-                                           size_t nargsf, PyObject* kwnames)
+                                           size_t nargsf, PyObject* _Nullable kwnames)
 {
     func_object* self = (func_object*)s;
     Py_ssize_t   byref_in_count;
@@ -284,7 +284,8 @@ error:
  * (about 50% faster on my M1 laptop)
  */
 static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* args,
-                                                  size_t nargsf, PyObject* kwnames)
+                                                  size_t nargsf,
+                                                  PyObject* _Nullable kwnames)
 {
     func_object* self = (func_object*)s;
 
