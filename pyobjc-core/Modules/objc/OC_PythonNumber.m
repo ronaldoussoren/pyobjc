@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
             PyErr_Clear();
         } else if (lv >= 1ULL << 63) {
             /* Workaround for round-trip problems... */
-            /* XXX: What kind of round-trip problems, and is this still relevant */
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
@@ -21,9 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
              * This should return an autoreleased value, but that causes
              * a crash in pyobjc-framework-Cocoa/test_regr.py
              *
-             * XXX: Further investigate
+             * XXX: Further investigate (in particular
+             *
+             * XXX: This crash still happens with Python 3.10 on
+             *      macOS 12, and doesn't go away when using
+             *      ``numberWithUnsignedLongLong:``.
              */
-            return [[[NSNumber alloc] initWithUnsignedLongLong:lv] autorelease];
+            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
