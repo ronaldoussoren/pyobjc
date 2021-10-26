@@ -466,7 +466,7 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            ctx = USE_10_6(CGBitmapContextCreateWithData)(
+            ctx = CGBitmapContextCreateWithData(
                 view ? PyObjCMemView_GetBuffer(view)->buf : NULL, width, height,
                 bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback,
                 releaseInfo);

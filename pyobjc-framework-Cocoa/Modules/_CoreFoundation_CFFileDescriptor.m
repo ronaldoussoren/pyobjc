@@ -1,12 +1,5 @@
 #if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
 
-/* Needed when building against the OS X 10.5+ SDK but running on 10.4. */
-#pragma weak CFFileDescriptorCreate
-#pragma weak CFFileDescriptorGetContext
-
-WEAK_LINKED_NAME_10_5(CFFileDescriptorCreate)
-WEAK_LINKED_NAME_10_5(CFFileDescriptorGetContext)
-
 static void*
 mod_filedescr_retain(void* info)
 {
@@ -86,9 +79,8 @@ mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject*
     CFFileDescriptorRef rv = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            rv =
-                USE_10_5(CFFileDescriptorCreate)(allocator, descriptor, closeOnInvalidate,
-                                                 mod_CFFileDescriptorCallBack, &context);
+            rv = CFFileDescriptorCreate(allocator, descriptor, closeOnInvalidate,
+                                        mod_CFFileDescriptorCallBack, &context);
 
         } @catch (NSException* localException) {
             rv = NULL;
@@ -133,7 +125,7 @@ mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObj
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            USE_10_5(CFFileDescriptorGetContext)(f, &context);
+            CFFileDescriptorGetContext(f, &context);
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
@@ -164,7 +156,3 @@ mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObj
      NULL},                                                                              \
         {"CFFileDescriptorGetContext", (PyCFunction)mod_CFFileDescriptorGetContext,      \
          METH_VARARGS, NULL},
-
-#define COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE                                       \
-    CHECK_WEAK_LINK_10_5(m, CFFileDescriptorCreate);                                     \
-    CHECK_WEAK_LINK_10_5(m, CFFileDescriptorGetContext);
