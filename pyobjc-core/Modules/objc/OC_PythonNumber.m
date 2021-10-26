@@ -22,9 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
              *
              * XXX: Further investigate (in particular
              *
-             * XXX: This crash still happens with Python 3.10 on
-             *      macOS 12, and doesn't go away when using
-             *      ``numberWithUnsignedLongLong:``.
+             *      This is caused by callers of this method assuming
+             *      that the result is an instance of an OC_ class that
+             *      will unregister itself in dealloc. That's not true
+             *      of instances like this.
+             *
+             *      I'm leaving the code like this for now and need
+             *      to perform more testing before fixing this.
              */
             return [[NSNumber alloc] initWithUnsignedLongLong:lv];
 #ifdef __clang__
