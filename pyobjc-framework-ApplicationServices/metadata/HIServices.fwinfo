@@ -5,6 +5,22 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "AXTextMarkerRangeCreateWithBytes": {
+    "args": {
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
+    },
+    "retval": { "already_cfretained": true }
+   },
+   "AXTextMarkerCreate": {
+    "args":{
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    },
+    "retval": { "already_cfretained": true }
+   },
+   "AXTextMarkerGetBytePtr": {
+    "retval": { "c_array_of_variable_length": true }
+   },
    "AXIsProcessTrustedWithOptions": {
     "args": {
      "0": { "type_modifier": "o" }
@@ -1115,6 +1131,14 @@
    "kICWhoisHost": { "ignore": true }
   },
   "cftypes": {
+   "AXTextMarkerRangeRef": {
+    "gettypeid_func": "AXTextMarkerRangeGetTypeID",
+    "typestr": "^{__AXTextMarkerRange=}"
+   },
+   "AXTextMarkerRef": {
+    "gettypeid_func": "AXTextMarkerGetTypeID",
+    "typestr": "^{__AXTextMarker=}"
+   },
    "AXObserverRef": {
     "gettypeid_func": "AXObserverGetTypeID",
     "typestr": "^{__AXObserver=}"

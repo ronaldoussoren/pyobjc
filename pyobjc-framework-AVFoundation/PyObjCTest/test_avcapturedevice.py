@@ -170,4 +170,6 @@ class TestAVCaptureDevice(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectActive)
 
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectSupported)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isPortraitEffectSupported
+        )
