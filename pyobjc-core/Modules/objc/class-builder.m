@@ -337,6 +337,7 @@ exit:
             if (new_buf == NULL) {
                 /* Should not happen! */
                 PyObjCErr_InternalError();
+                return;
             }
             buf = new_buf;
         }
@@ -355,8 +356,13 @@ exit:
                 buf++;
             }
             tc2tc(buf);
-            // XXX: The line below doesn't do anything...
-            // buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            if (new_buf == NULL) {
+                /* Should not happen! */
+                PyObjCErr_InternalError();
+                return;
+            }
+            buf = new_buf;
         }
         break;
 
