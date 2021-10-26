@@ -252,7 +252,9 @@ def get_sdk_level():
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
+
+    settings_path = os.path.join(sdk, "SDKSettings.plist")
+    if os.path.exists(settings_path):
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
@@ -260,7 +262,9 @@ def get_sdk_level():
         except Exception:
             raise SystemExit("Cannot determine SDK version")
     else:
-        return sdkname[6:-4]
+        version_part = sdkname[6:-4]
+        assert version_part
+        return version_part
 
 
 class pyobjc_install_lib(install_lib.install_lib):
