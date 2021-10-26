@@ -4,6 +4,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define SHORTCUT_MAX_ARGBUF 512
+
 extern PyTypeObject PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
     PyObject_TypeCheck(obj, &PyObjCMethodSignature_Type)

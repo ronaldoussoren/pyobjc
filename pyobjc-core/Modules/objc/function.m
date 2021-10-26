@@ -289,7 +289,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
 {
     func_object* self = (func_object*)s;
 
-    unsigned char argbuf[256];
+    unsigned char argbuf[SHORTCUT_MAX_ARGBUF];
     void*         values[MAX_ARGCOUNT_SIMPLE];
 
     if (!self->methinfo->shortcut_signature) {

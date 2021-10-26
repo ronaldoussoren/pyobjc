@@ -4434,7 +4434,7 @@ error_cleanup:
 PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
                                             PyObject* const* args, size_t nargs)
 {
-    unsigned char argbuf[256];
+    unsigned char argbuf[SHORTCUT_MAX_ARGBUF];
     void*         values[MAX_ARGCOUNT_SIMPLE];
 
     Py_ssize_t             argbuf_cur = 0;

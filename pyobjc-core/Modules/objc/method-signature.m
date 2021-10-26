@@ -265,7 +265,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         return 0;
     }
 
-    if (argbuf_len >= 1 << 12) {
+    if (argbuf_len + result_size >= SHORTCUT_MAX_ARGBUF) {
         return 0;
     }
 

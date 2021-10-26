@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
             PyErr_Clear();
         } else if (lv >= 1ULL << 63) {
             /* Workaround for round-trip problems... */
-            /* XXX: What kind of round-trip problems, and is this still relevant */
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
@@ -21,9 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
              * This should return an autoreleased value, but that causes
              * a crash in pyobjc-framework-Cocoa/test_regr.py
              *
-             * XXX: Further investigate
+             * XXX: Further investigate (in particular
+             *
+             *      This is caused by callers of this method assuming
+             *      that the result is an instance of an OC_ class that
+             *      will unregister itself in dealloc. That's not true
+             *      of instances like this.
+             *
+             *      I'm leaving the code like this for now and need
+             *      to perform more testing before fixing this.
              */
-            return [[[NSNumber alloc] initWithUnsignedLongLong:lv] autorelease];
+            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

@@ -11,6 +11,6 @@ class TestMEExtensionManager(TestCase):
         )
         self.assertArgIsBlock(
             MailKit.MEExtensionManager.reloadVisibleMessagesWithCompletionHandler_,
-            1,
+            0,
             b"v@",
         )

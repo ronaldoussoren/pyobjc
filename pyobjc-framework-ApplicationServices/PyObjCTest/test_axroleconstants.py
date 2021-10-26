@@ -40,7 +40,7 @@ class TestAXRoleConstants(TestCase):
         self.assertEqual(HIServices.kAXTextFieldRole, "AXTextField")
         self.assertEqual(HIServices.kAXTextAreaRole, "AXTextArea")
         self.assertEqual(HIServices.kAXStaticTextRole, "AXStaticText")
-        self.assertEqual(HIServices.kAXHeadingRole, "kAXHeading")
+        self.assertEqual(HIServices.kAXHeadingRole, "AXHeading")
         self.assertEqual(HIServices.kAXMenuBarRole, "AXMenuBar")
         self.assertEqual(HIServices.kAXMenuBarItemRole, "AXMenuBarItem")
         self.assertEqual(HIServices.kAXMenuRole, "AXMenu")

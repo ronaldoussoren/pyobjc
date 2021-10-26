@@ -6295,16 +6295,28 @@ try:
         b"isLockingWhiteBalanceWithCustomDeviceGainsSupported",
         {"retval": {"type": b"Z"}},
     )
-    r(b"null", b"isLowLightBoostEnabled", {"retval": {"type": b"Z"}})
-    r(b"null", b"isLowLightBoostSupported", {"retval": {"type": b"Z"}})
-    r(b"null", b"isMultiCamSupported", {"retval": {"type": b"Z"}})
-    r(b"null", b"isPortraitEffectActive", {"retval": {"type": b"Z"}})
-    r(b"null", b"isPortraitEffectEnabled", {"retval": {"type": b"Z"}})
-    r(b"null", b"isPortraitEffectSupported", {"retval": {"type": b"Z"}})
-    r(b"null", b"isPortraitEffectsMatteDeliveryEnabled", {"retval": {"type": b"Z"}})
-    r(b"null", b"isPortraitEffectsMatteDeliverySupported", {"retval": {"type": b"Z"}})
+    r(b"AVCaptureDevice", b"isLowLightBoostEnabled", {"retval": {"type": b"Z"}})
+    r(b"AVCaptureDevice", b"isLowLightBoostSupported", {"retval": {"type": b"Z"}})
+    r(b"AVCaptureMultiCamSession", b"isMultiCamSupported", {"retval": {"type": b"Z"}})
+    r(b"AVCaptureDevice", b"isPortraitEffectActive", {"retval": {"type": b"Z"}})
+    r(b"AVCaptureDevice", b"isPortraitEffectEnabled", {"retval": {"type": b"Z"}})
     r(
-        b"null",
+        b"AVCaptureDeviceFormat",
+        b"isPortraitEffectSupported",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"AVCaptureDevice",
+        b"isPortraitEffectsMatteDeliveryEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"AVCaptureDevice",
+        b"isPortraitEffectsMatteDeliverySupported",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"AVCaptureDevice",
         b"isPortraitEffectsMatteStillImageDeliverySupported",
         {"retval": {"type": b"Z"}},
     )
