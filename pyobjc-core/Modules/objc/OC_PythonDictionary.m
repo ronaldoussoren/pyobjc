@@ -217,7 +217,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (v == Py_None) {
             result = [NSNull null];
 
-        } else if (unlikely(depythonify_c_value(@encode(id), v, &result) == -1)) {
+        } else if (unlikely(depythonify_python_object(v, &result) == -1)) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
