@@ -5,7 +5,6 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
-
 #if PyObjC_BUILD_RELEASE < 1011
 #define kAXValueTypeCGPoint kAXValueCGPointType
 #define kAXValueTypeCGSize kAXValueCGSizeType

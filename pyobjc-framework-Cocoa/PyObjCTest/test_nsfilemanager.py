@@ -96,7 +96,6 @@ class TestNSFileManager(TestCase):
         self.assertIsInstance(Foundation.NSFileSystemNodes, str)
         self.assertIsInstance(Foundation.NSFileSystemFreeNodes, str)
 
-
     @min_os_level("10.13")
     def testConstantsMissingOn10_9(self):
         self.assertIsInstance(Foundation.NSFileProtectionKey, str)

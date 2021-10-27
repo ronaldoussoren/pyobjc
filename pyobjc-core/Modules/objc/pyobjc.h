@@ -19,7 +19,7 @@
 #include <objc/objc.h>
 
 #ifndef NS_ASSUME_NONNULL_BEGIN
-/* 
+/*
  * Old compiler without nullability support
  */
 #define NS_ASSUME_NONNULL_BEGIN
