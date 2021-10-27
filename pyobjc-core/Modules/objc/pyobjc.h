@@ -18,6 +18,16 @@
 
 #include <objc/objc.h>
 
+#ifndef NS_ASSUME_NONNULL_BEGIN
+/* 
+ * Old compiler without nullability support
+ */
+#define NS_ASSUME_NONNULL_BEGIN
+#define NS_ASSUME_NONNULL_END
+#define _Nullable
+#define _Nonnull
+#endif /* !NS_ASSUME_NONNULL_BEGIN */
+
 /*
  * Configuration block
  */

@@ -1,6 +1,14 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
+#ifndef NS_ASSUME_NONNULL_BEGIN
+/* Old compiler without the Nullability attributes */
+#define NS_ASSUME_NONNULL_BEGIN
+#define NS_ASSUME_NONNULL_END
+#define _Nullable
+#define _Nonnull
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 /*

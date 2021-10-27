@@ -149,8 +149,8 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         return sizeof(sinaddr->sin_addr);
     }
     /* XXX: Replace sscanf */
-    if (sscanf(name, "%u.%u.%u.%u%c", &d1, &d2, &d3, &d4, &ch) == 4 && 0 <= d1
-        && d1 <= 255 && 0 <= d2 && d2 <= 255 && 0 <= d3 && d3 <= 255 && 0 <= d4
+    if (sscanf(name, "%u.%u.%u.%u%c", &d1, &d2, &d3, &d4, &ch) == 4
+        && d1 <= 255 && d2 <= 255 && d3 <= 255 
         && d4 <= 255) {
         struct sockaddr_in* sinaddr;
         sinaddr                  = (struct sockaddr_in*)addr_ret;

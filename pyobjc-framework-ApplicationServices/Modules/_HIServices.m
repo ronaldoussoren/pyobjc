@@ -5,6 +5,16 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
+
+#if PyObjC_BUILD_RELEASE < 1011
+#define kAXValueTypeCGPoint kAXValueCGPointType
+#define kAXValueTypeCGSize kAXValueCGSizeType
+#define kAXValueTypeCGRect kAXValueCGRectType
+#define kAXValueTypeCFRange kAXValueCFRangeType
+#define kAXValueTypeAXError kAXValueAXErrorType
+#define kAXValueTypeIllegal kAXValueIllegalType
+#endif
+
 static PyObject*
 m_AXValueCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
 {
@@ -123,7 +133,6 @@ m_AXValueGetValue(PyObject* mod __attribute__((__unused__)), PyObject* args)
     case kAXValueTypeAXError:
         valuePtr = (void*)&error;
         break;
-
     default:
         PyErr_SetString(PyExc_ValueError, "'type' is invalid");
         return NULL;

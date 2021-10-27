@@ -149,5 +149,7 @@ class TestCode(TestCase):
         self.assertArgHasType(Security.SecCodeMapMemory, 0, objc._C_ID)
         self.assertArgHasType(Security.SecCodeMapMemory, 1, objc._C_UINT)
 
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertArgIsOut(Security.SecCodeCreateWithXPCMessage, 2)
         self.assertArgIsCFRetained(Security.SecCodeCreateWithXPCMessage, 2)

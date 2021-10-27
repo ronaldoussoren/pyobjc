@@ -575,6 +575,12 @@ class oc_build_ext(build_ext.build_ext):
             % (tuple(map(int, get_sdk_level(self.sdk_root).split(".")[:2])))
         )
 
+        if tuple(map(int, get_sdk_level(self.sdk_root).split("."))) < (10, 14):
+            # XXX: Not sure where the cut-off is, but older compilers warn
+            #      about unused parameters for objc methods even with the right
+            #      __attribute__.
+            CFLAGS.append("-Wno-unused-parameter")
+
         _fixup_compiler(
             use_ccache="PYOBJC_USE_CCACHE" in os.environ
             or any(cmd in sys.argv for cmd in ["develop", "test"])
