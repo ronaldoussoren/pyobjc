@@ -26,7 +26,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
 
 
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCase):
-    @min_sdk_level("10.12")
+    @min_sdk_level("12.0")
     def testProtocols12_0(self):
         self.assertIsInstance(
             objc.protocolNamed("AVPictureInPictureSampleBufferPlaybackDelegate"),

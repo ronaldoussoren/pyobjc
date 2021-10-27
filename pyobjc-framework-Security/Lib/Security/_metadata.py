@@ -2177,6 +2177,12 @@ cftypes = [
         "SecAccessControlGetTypeID",
         None,
     ),
+    (
+        "SecAccessControlRef",
+        b"^{OpaqueSecAccessControlRef=}",
+        "SecAccessControlGetTypeID",
+        None,
+    ),
     ("SecAccessRef", b"^{__SecAccess=}", "SecAccessGetTypeID", None),
     ("SecCertificateRef", b"^{__SecCertificate=}", "SecCertificateGetTypeID", None),
     ("SecCodeRef", b"^{__SecCode=}", "SecCodeGetTypeID", None),

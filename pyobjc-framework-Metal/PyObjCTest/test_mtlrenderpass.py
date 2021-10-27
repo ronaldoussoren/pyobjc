@@ -40,8 +40,8 @@ class TestMTLRenderPass(TestCase):
         self.assertIsInstance(v, Metal.MTLClearColor)
         self.assertEqual(v, (1.0, 2.0, 3.0, 4.0))
 
-    @min_os_level("10.11")
-    def test_methods10_11(self):
+    @min_os_level("10.13")
+    def test_methods10_13(self):
         self.assertArgIsIn(Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0)
         self.assertArgSizeInArg(
             Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0, 1

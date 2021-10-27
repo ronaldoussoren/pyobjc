@@ -234,6 +234,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewDataSource));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSpringLoadingDestination));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1013
     p = PyObjC_IdToPython(@protocol(NSAccessibilityElementLoading));
@@ -279,8 +281,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutEnvironment));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutVisibleItem));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(NSSpringLoadingDestination));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSTextCheckingClient));
     Py_XDECREF(p);

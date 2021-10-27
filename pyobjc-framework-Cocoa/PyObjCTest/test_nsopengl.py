@@ -145,7 +145,7 @@ class TestNSOpenGL(TestCase):
         )
 
     @min_os_level("10.6")
-    @max_os_level("10.14")
+    @max_os_level("10.11")
     def testMethods10_6(self):
         self.assertArgHasType(
             AppKit.NSOpenGLPixelFormat.initWithCGLPixelFormatObj_,

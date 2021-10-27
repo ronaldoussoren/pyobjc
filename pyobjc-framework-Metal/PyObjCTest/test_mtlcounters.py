@@ -67,7 +67,7 @@ class TestMTLCounters(TestCase):
         self.assertEqual(v.fragmentsPassed, 0)
         self.assertEqual(v.computeKernelInvocations, 0)
 
-    @min_sdk_level("10.13")
+    @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("MTLCounter")
         objc.protocolNamed("MTLCounterSet")

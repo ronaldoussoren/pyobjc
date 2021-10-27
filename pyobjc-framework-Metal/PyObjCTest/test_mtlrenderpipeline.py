@@ -167,6 +167,9 @@ class TestMTLRenderPipeline(TestCase):
             .setTessellationFactorScaleEnabled_,
             0,
         )
+
+    @min_os_level("10.14")
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             Metal.MTLRenderPipelineDescriptor.alloc()
             .init()

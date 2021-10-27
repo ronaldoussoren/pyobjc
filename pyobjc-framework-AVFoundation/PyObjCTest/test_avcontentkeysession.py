@@ -87,13 +87,6 @@ class TestAVContentKeySession(TestCase):
             b"v@@",
         )
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_  # noqa: B950
-        )
-        self.assertArgIsOut(
-            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_,  # noqa: B950
-            0,
-        )
 
     @expectedFailure
     @min_os_level("10.14")
@@ -103,21 +96,6 @@ class TestAVContentKeySession(TestCase):
             AVFoundation.AVContentKeyRequest.renewsExpiringResponseData
         )
 
-    @min_os_level("10.12.4")
-    def testMethods10_5(self):
-        self.assertArgIsBlock(
-            AVFoundation.AVContentKeySession.makeSecureTokenForExpirationDateOfPersistableContentKey_completionHandler_,  # noqa: B950
-            1,
-            b"v@@",
-        )
-
-        self.assertResultIsBOOL(
-            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_  # noqa: B950
-        )
-        self.assertArgIsOut(
-            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_,  # noqa: B950
-            0,
-        )
 
     @min_os_level("10.15")
     def testMethods10_15(self):
@@ -131,6 +109,25 @@ class TestAVContentKeySession(TestCase):
             AVFoundation.AVContentKeySession.invalidateAllPersistableContentKeysForApp_options_completionHandler_,  # noqa: B950
             2,
             b"v@@",
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_  # noqa: B950
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_,  # noqa: B950
+            0,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVContentKeySession.makeSecureTokenForExpirationDateOfPersistableContentKey_completionHandler_,  # noqa: B950
+            1,
+            b"v@@",
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_  # noqa: B950
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVContentKeyRequest.respondByRequestingPersistableContentKeyRequestAndReturnError_,  # noqa: B950
+            0,
         )
 
     @min_os_level("11.3")
