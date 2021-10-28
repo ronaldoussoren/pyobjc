@@ -114,9 +114,8 @@ class TestColorSyncProfile(TestCase):
     def testFunctions11_0(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsMatrixBased, objc._C_BOOL)
 
-    @min_os_level("11.0")
+    @min_os_level("12.0")
     def testFunctions12_0(self):
-        # XXX: introduced in 12.0 SDK, but available on 11?
         self.assertResultHasType(ColorSync.ColorSyncProfileIsPQBased, objc._C_BOOL)
         self.assertResultHasType(ColorSync.ColorSyncProfileIsHLGBased, objc._C_BOOL)
 

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import PassKit
 
@@ -8,6 +8,7 @@ class TestPKAddShareablePassConfiguration(TestCase):
         self.assertEqual(PassKit.PKAddShareablePassConfigurationPrimaryActionAdd, 0)
         self.assertEqual(PassKit.PKAddShareablePassConfigurationPrimaryActionShare, 1)
 
+    @min_os_level("12.0")
     def test_methods(self):
         self.assertArgIsBOOL(
             PassKit.PKShareablePassMetadata.initWithProvisioningCredentialIdentifier_sharingInstanceIdentifier_passThumbnailImage_ownerDisplayName_localizedDescription_accountHash_templateIdentifier_relyingPartyIdentifier_requiresUnifiedAccessCapableDevice_,  # noqa: B950

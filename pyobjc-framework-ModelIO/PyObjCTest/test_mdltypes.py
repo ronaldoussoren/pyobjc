@@ -41,8 +41,9 @@ class TestMDLTypes(TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescription, str)
 
-    @min_os_level("11.0")
+    @min_os_level("12.0")
     def testConstants11_0(self):
+        # Documented as available on 11.0 and later, but not present until 12.0
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescriptionMobile, str)
 
     def testProtocolObjects(self):

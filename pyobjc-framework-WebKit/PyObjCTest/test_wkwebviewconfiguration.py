@@ -29,8 +29,9 @@ class TestWKWebViewConfiguration(TestCase):
             WebKit.WKWebViewConfiguration.limitsNavigationsToAppBoundDomains
         )
 
-    @min_os_level("11.3")
+    @min_os_level("12.0")
     def testMethods11_3(self):
+        # Not actually present on 11.6...
         self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.upgradeKnownHostsToHTTPS)
         self.assertArgIsBOOL(
             WebKit.WKWebViewConfiguration.setUpgradeKnownHostsToHTTPS_, 0

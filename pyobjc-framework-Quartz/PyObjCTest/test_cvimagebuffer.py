@@ -123,10 +123,10 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(
             Quartz.kCVImageBufferAlphaChannelMode_PremultipliedAlpha, str
         )
-        self.assertIsInstance(Quartz.kCVImageBufferAmbientViewingEnvironmentKey, str)
 
     @min_os_level("12.0")
     def testConstants12_0(self):
+        self.assertIsInstance(Quartz.kCVImageBufferAmbientViewingEnvironmentKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferRegionOfInterestKey, str)
 
     def testFunctions(self):

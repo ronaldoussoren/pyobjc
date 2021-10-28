@@ -57,8 +57,9 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentOwnerPasswordOption, str)
         self.assertIsInstance(Quartz.PDFDocumentUserPasswordOption, str)
 
-    @min_os_level("11.1")
+    @min_os_level("12.0")
     def test_constants11_1(self):
+        # Documented as available on 11.1, but not actually available until 12.0
         self.assertIsInstance(Quartz.PDFDocumentFoundSelectionKey, str)
         self.assertIsInstance(Quartz.PDFDocumentPageIndexKey, str)
 

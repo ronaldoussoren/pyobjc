@@ -217,7 +217,12 @@ def build_project(project, extra_arg):
 
     print(f"Installing {project!r} using {sys.executable!r}, {extra_arg}")
     status = subprocess.call(
-        [sys.executable, "-mpip", "install"]
+        [
+            sys.executable,
+            "-mpip",
+            "install",
+            "--no-cache-dir",
+        ]
         + ([extra_arg, "."] if extra_arg is not None else ["."]),
         cwd=proj_dir,
     )

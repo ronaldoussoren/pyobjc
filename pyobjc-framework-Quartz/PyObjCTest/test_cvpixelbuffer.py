@@ -359,6 +359,9 @@ class TestCVPixelBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_ColorMatrix, str)
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_GainFactor, str)
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
 
     @min_os_level("10.6")

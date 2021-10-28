@@ -93,8 +93,8 @@ class TestWKWebView(TestCase):
             WebKit.WKWebView.resumeDownloadFromResumeData_completionHandler_, 1, b"v@"
         )
 
-    @min_os_level("11.3")
-    def testMethods11_3(self):
+    @min_os_level("12.0")
+    def testMethods12_0(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.closeAllMediaPresentationsWithCompletionHandler_,
             0,

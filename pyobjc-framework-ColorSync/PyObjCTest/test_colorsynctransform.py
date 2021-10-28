@@ -20,7 +20,7 @@ class TestColorSyncTransform(TestCase):
         self.assertArgIsIn(ColorSync.ColorSyncTransformConvert, 7)
         self.assertArgIsVariableSize(ColorSync.ColorSyncTransformConvert, 7)
 
-    @min_os_level("11.0")
+    @min_os_level("12.0")
     def testFunctions11_0(self):
         ColorSync.ColorSyncTransformGetProfileSequence
 
@@ -117,4 +117,7 @@ class TestColorSyncTransform(TestCase):
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(ColorSync.kColorSyncExtendedRange, str)
+
+    @min_os_level("12.0")
+    def testConstants11_0_missing(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformProfileSequnce, str)

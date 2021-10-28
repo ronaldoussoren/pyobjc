@@ -27,10 +27,15 @@ sys.modules["Accessibility"] = mod = objc.ObjCLazyModule(
     (_Accessibility, Quartz),
 )
 
-mod.AXNumericDataAxisDescriptor.__objc_final__ = True
-mod.AXDataPointValue.__objc_final__ = True
-mod.AXDataPoint.__objc_final__ = True
-mod.AXChartDescriptor.__objc_final__ = True
-
+for cls in (
+    "AXNumericDataAxisDescriptor",
+    "AXDataPointValue",
+    "AXDataPoint",
+    "AXChartDescriptor",
+):
+    try:
+        getattr(mod, cls).__objc_final__ = True
+    except AttributeError:
+        pass
 
 del sys.modules["Accessibility._metadata"]

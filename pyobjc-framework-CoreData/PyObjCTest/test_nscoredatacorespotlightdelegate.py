@@ -17,8 +17,9 @@ class TestNSCoreDataCoreSpotlightDelegate(TestCase):
             b"v",
         )
 
-    @min_os_level("11.0")
+    @min_os_level("12.0")
     def test_methods11_0(self):
+        # Documented as 11.0+, but not available on 11.6
         self.assertArgIsBlock(
             CoreData.NSCoreDataCoreSpotlightDelegate.deleteSpotlightIndexWithCompletionHandler_,
             0,
