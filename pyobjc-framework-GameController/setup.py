@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.0b2"
+VERSION = "8.0"
 
 setup(
     name="pyobjc-framework-GameController",

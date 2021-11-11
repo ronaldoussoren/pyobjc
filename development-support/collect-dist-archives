@@ -78,7 +78,11 @@ def main():
 
         for ver in detect_pyversions():
             for variant in variants(ver):
-                if any(variant.endswith(x) for x in ("-x86_64", "-arm64")):
+                if ver == "3.8":
+                    pass
+                elif any(variant.endswith(x) for x in ("-x86_64", "-arm64")):
+                    # Don't create single architecture wheels for anything other than
+                    # Python 3.8 (where the universal2 build is only for macOS 11 or later)
                     continue
                 setup_variant(ver, variant)
                 status = subprocess.call(

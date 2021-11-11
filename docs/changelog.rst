@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 8.0b2
--------------
+Version 8.0
+-----------
 
 Backward incompatible changes
 .............................
@@ -121,7 +121,9 @@ in older Python versions is unchanged except for the effects of general cleanup.
 * Add more optimized vectorcall implementation to :class:`objc.function`,
   :class:`objc.IMP` and :class:`objc.selector` for simpler callables.
 
-  XXX: To describe wat 'simpler' actually is...
+  In the current version "simpole enough" callables have a 8 or fewer
+  arguments, and none of those arguments are pass by reference. This will
+  change over time.
 
 Generic Implementation Quality
 ..............................

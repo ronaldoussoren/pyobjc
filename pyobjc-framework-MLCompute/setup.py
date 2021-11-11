@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "8.0b2"
+VERSION = "8.0"
 
 setup(
     name="pyobjc-framework-MLCompute",
