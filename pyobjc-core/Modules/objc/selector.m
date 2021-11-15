@@ -862,8 +862,8 @@ PyTypeObject PyObjCNativeSelector_Type = {
     .tp_call                                       = objcsel_call,
     .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags =
-        Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_flags = Py_TPFLAGS_DEFAULT
+                | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
     .tp_vectorcall_offset = offsetof(PyObjCNativeSelector, base.sel_vectorcall),
 #else
     .tp_flags = Py_TPFLAGS_DEFAULT,
@@ -1842,8 +1842,8 @@ PyTypeObject PyObjCPythonSelector_Type = {
     .tp_flags = Py_TPFLAGS_DEFAULT,
 #else
     .tp_call = PyVectorcall_Call,
-    .tp_flags =
-        Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_flags = Py_TPFLAGS_DEFAULT
+                | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
     .tp_vectorcall_offset = offsetof(PyObjCPythonSelector, base.sel_vectorcall),
 #endif
     .tp_getattro    = PyObject_GenericGetAttr,

@@ -138,8 +138,8 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_dealloc                                    = meth_dealloc,
     .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags =
-        Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_flags = Py_TPFLAGS_DEFAULT
+                | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
     .tp_vectorcall_offset = offsetof(PyObjCPythonMethod, vectorcall),
 #else
     .tp_flags = Py_TPFLAGS_DEFAULT,

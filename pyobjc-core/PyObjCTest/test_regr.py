@@ -364,3 +364,13 @@ class TestTypedefedClass(TestCase):
 
         o = v.parent()
         self.assertIsInstance(o, objc.lookUpClass("NSArray"))
+
+
+class TestReboundMethod(TestCase):
+    # Issue #399
+    def test_rebound(self):
+        class Foo:
+            alloc = NSObject.alloc
+
+        f = Foo()
+        f.alloc().init()

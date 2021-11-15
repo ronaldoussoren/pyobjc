@@ -3,6 +3,19 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.0.1
+-------------
+
+* #399: Fix error message when passing wrong number of arguments in a
+  call of an Objective-C method
+
+* #399: Disable support for ``Py_TPFLAGS_METHOD_DESCRIPTOR`` in
+  :class:`objc.selector` and :class:`objc.python_method`.
+
+  I'm looking for a better solutions, but for now this is needed
+  to avoid problems in code that stores a bound selector as class
+  attribute.
+
 Version 8.0
 -----------
 
