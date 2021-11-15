@@ -4686,7 +4686,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     if (unlikely(PyVectorcall_NARGS(nargsf) != Py_SIZE(methinfo) - 2)) {
         PyErr_Format(PyExc_TypeError,
                      "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                     Py_SIZE(methinfo) - 1, PyVectorcall_NARGS(nargsf));
+                     Py_SIZE(methinfo) - 2, PyVectorcall_NARGS(nargsf));
         goto error_cleanup;
     }
 
