@@ -76,6 +76,10 @@ class TestAVAssetExportSession(TestCase):
             AVFoundation.AVAssetExportPresetAppleProRes4444LPCM, str
         )  # noqa: B950
 
+    @min_os_level("12.1")
+    def testConstants12_1(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC7680x4320, str)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertArgIsBlock(

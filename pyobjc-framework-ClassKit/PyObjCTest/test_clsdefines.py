@@ -15,6 +15,7 @@ class TestCLSActivity(TestCase):
         self.assertEqual(ClassKit.CLSErrorCodeInvalidCreate, 7)
         self.assertEqual(ClassKit.CLSErrorCodeInvalidUpdate, 8)
         self.assertEqual(ClassKit.CLSErrorCodePartialFailure, 9)
+        self.assertEqual(ClassKit.CLSErrorCodeInvalidAccountCredentials, 10)
 
     @min_os_level("11.0")
     def test_constants11_0(self):

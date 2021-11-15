@@ -106,6 +106,8 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceExtendedRange, str)
         self.assertIsInstance(Quartz.kCGColorSpaceLinearITUR_2020, str)
         self.assertIsInstance(Quartz.kCGColorSpaceLinearDisplayP3, str)
+        self.assertIsInstance(Quartz.kCGColorSpaceITUR_709_PQ, str)
+        self.assertIsInstance(Quartz.kCGColorSpaceITUR_2020_sRGBGamma, str)
 
     def testFunctions(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateDeviceGray)

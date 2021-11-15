@@ -60,7 +60,7 @@ copyright = "2017, Ronald Oussoren"  # noqa: A001
 # built documents.
 #
 # The short X.Y version.
-version = "8.0"
+version = "8.0.1b1"
 # The full version, including alpha/beta/rc tags.
 release = version
 
