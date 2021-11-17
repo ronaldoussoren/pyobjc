@@ -16,6 +16,9 @@ Version 8.0.1
   to avoid problems in code that stores a bound selector as class
   attribute.
 
+* #401: ``AppKit.NSCenterTextAlignment`` and ``AppKit.NSRightTextAlignment``
+  had a wrong value for arm64 systems.
+
 Version 8.0
 -----------
 
