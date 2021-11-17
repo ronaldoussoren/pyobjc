@@ -25,8 +25,6 @@ class TestNSText(TestCase):
         self.assertEqual(AppKit.NSParagraphSeparatorCharacter, chr(0x2029))
 
         self.assertEqual(AppKit.NSLeftTextAlignment, 0)
-        self.assertEqual(AppKit.NSRightTextAlignment, 1)
-        self.assertEqual(AppKit.NSCenterTextAlignment, 2)
         self.assertEqual(AppKit.NSJustifiedTextAlignment, 3)
         self.assertEqual(AppKit.NSNaturalTextAlignment, 4)
 
@@ -37,6 +35,9 @@ class TestNSText(TestCase):
         else:
             self.assertEqual(AppKit.NSTextAlignmentCenter, 1)
             self.assertEqual(AppKit.NSTextAlignmentRight, 2)
+
+        self.assertEqual(AppKit.NSRightTextAlignment, AppKit.NSTextAlignmentRight)
+        self.assertEqual(AppKit.NSCenterTextAlignment, AppKit.NSTextAlignmentCenter)
 
         self.assertEqual(AppKit.NSTextAlignmentJustified, 3)
         self.assertEqual(AppKit.NSTextAlignmentNatural, 4)

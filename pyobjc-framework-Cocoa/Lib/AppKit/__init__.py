@@ -180,5 +180,8 @@ if objc.arch == "arm64":
     mod.NSTextAlignmentCenter = 1
     mod.NSTextAlignmentRight = 2
 
+mod.NSRightTextAlignment = mod.NSTextAlignmentRight
+mod.NSCenterTextAlignment = mod.NSTextAlignmentCenter
+
 
 del sys.modules["AppKit._metadata"]
