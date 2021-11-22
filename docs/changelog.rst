@@ -19,6 +19,8 @@ Version 8.0.1
 * #401: ``AppKit.NSCenterTextAlignment`` and ``AppKit.NSRightTextAlignment``
   had a wrong value for arm64 systems.
 
+* Update framework bindings for Xcode 13.2 beta 2 (macOS 12.1)
+
 Version 8.0
 -----------
 

@@ -14,4 +14,5 @@ API Notes
 
 .. note::
 
-   This framework is only available on macOS 11 and later.
+   This framework is only available on macOS 11 and later, although large portions
+   were made unavailable in the macOS 12.1 SDK.

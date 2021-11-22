@@ -23,3 +23,9 @@ class TestNWTCPConnection(TestCase):
         self.assertArgIsBlock(
             NetworkExtension.NWUDPSession.writeDatagram_completionHandler_, 1, b"v@"
         )
+
+        self.assertArgIsBlock(
+            NetworkExtension.NWUDPSession.writeMultipleDatagrams_completionHandler_,
+            1,
+            b"v@",
+        )

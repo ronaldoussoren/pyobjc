@@ -19,7 +19,7 @@ class TestVNTypes(TestCase):
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
-        self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyCode39, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyCode39Checksum, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyCode39FullASCII, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyCode39FullASCIIChecksum, str)
@@ -35,6 +35,11 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(Vision.VNBarcodeSymbologyPDF417, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyQR, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyUPCE, str)
+
+    @min_os_level("11.0")
+    def testConstants11_0(self):
+        self.assertIsInstance(Vision.VNVideoProcessingOptionFrameCadence, str)
+        self.assertIsInstance(Vision.VNVideoProcessingOptionTimeInterval, str)
 
     @min_os_level("12.0")
     def testConstants12_0(self):
