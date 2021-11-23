@@ -3,6 +3,13 @@ import weakref
 from PyObjCTest.fnd import NSArray, NSAutoreleasePool, NSObject
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
+from . import corefoundation
+
+CFUUIDRef = objc.registerCFSignature(
+    "CFUUIDRef",
+    corefoundation.OC_TestCoreFoundation.signatureForCFUUIDRef(),
+    corefoundation.OC_TestCoreFoundation.typeidForCFUUIDRef(),
+)
 
 
 class OC_WeakrefTest1(NSObject):
@@ -28,6 +35,16 @@ class TestWeakrefs(TestCase):
 
 
 class TestObjCWeakRef(TestCase):
+    @min_os_level("10.7")
+    def test_weakref_to_cftype(self):
+        o = corefoundation.OC_TestCoreFoundation.createUUID()
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "Expecting a Cocoa object, got instance of CoreFoundation type '.*'",
+        ):
+            objc.WeakRef(o)
+
     @min_os_level("10.7")
     def test_weakref_to_python(self):
         self.assertRaises(TypeError, objc.WeakRef, 1)
@@ -70,6 +87,9 @@ class TestObjCWeakRef(TestCase):
 
         with self.assertRaises(TypeError):
             r(1)
+
+        with self.assertRaises(TypeError):
+            r(x=1)
 
         with self.assertRaises(TypeError):
             objc.WeakRef(value=o)

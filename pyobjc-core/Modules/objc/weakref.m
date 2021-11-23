@@ -97,14 +97,14 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
     if ((PyObjCObject_GetFlags(tmp) & PyObjCObject_kCFOBJECT) != 0) {
         PyErr_Format(
             PyExc_TypeError,
-            "Executing a Cocoa object, got instance of CoreFoundation type '%.100s'",
+            "Expecting a Cocoa object, got instance of CoreFoundation type '%.100s'",
             Py_TYPE(tmp)->tp_name);
         return NULL;
     }
 
     result = (PyObjC_WeakRef*)PyObject_New(PyObjC_WeakRef, &PyObjCWeakRef_Type);
-    if (result == NULL) {
-        return NULL;
+    if (unlikely(result == NULL)) {
+        return NULL; /* no-cover: ran out of memory */
     }
 
     result->object = nil;
