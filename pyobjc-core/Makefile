@@ -42,9 +42,10 @@ c-coverage:
 	rm -rf build dist
 	mkdir build dist
 	python3 -mvenv build/cov-env
-	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage -fno-lto -O0" LDFLAGS="-coverage -fprofile-arcs -ftest-coverage -fno-lto -O0" build/cov-env/bin/python3 setup.py develop
+	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE -coverage -fprofile-arcs -ftest-coverage -fno-lto -O0" LDFLAGS="-coverage -fprofile-arcs -ftest-coverage -fno-lto -O0" build/cov-env/bin/python3 setup.py develop
+	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test --verbosity=3
-	lcov --capture --directory . --output-file build/coverage.info
+	lcov --no-external --capture --directory . --output-file build/coverage.info
 	genhtml build/coverage.info --output-directory dist/c-coverage
 	open dist/c-coverage/index.html
 
