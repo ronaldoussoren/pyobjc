@@ -308,6 +308,14 @@ FILE_create(FILE* _Nullable fp)
 {
     struct file_object* self;
     if (fp == NULL) {
+        /* XXX: This cannot happen, this function is called through
+         *      PyObjCPointerWrapper_ToPython and its only user ensures
+         *      that the value is not NULL.
+         *
+         *      Only replace this by an assertion after updating the
+         *      nullablity attributes to ensure we'll get a compile
+         *      error if that ever changes.
+         */
         Py_INCREF(Py_None);
         return Py_None;
     }
