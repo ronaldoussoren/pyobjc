@@ -46,7 +46,7 @@ c-coverage:
 	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test --verbosity=3
 	lcov --no-external --capture --directory . --output-file build/coverage.info
-	genhtml build/coverage.info --output-directory dist/c-coverage
+	genhtml --branch-coverage --legend build/coverage.info --output-directory dist/c-coverage
 	open dist/c-coverage/index.html
 
 # XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:

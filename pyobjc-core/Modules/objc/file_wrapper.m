@@ -63,13 +63,33 @@ static PyObject* _Nullable file_close(PyObject* _self)
     return Py_None;
 }
 
+static PyObject* _Nullable file_flush(PyObject* _self)
+{
+    struct file_object* self = (struct file_object*)_self;
+    int                 result;
+
+    if (self->fp == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
+        return NULL;
+    }
+
+    result = fflush(self->fp);
+    if (result != 0) {
+        PyErr_SetFromErrno(PyExc_OSError);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
 static PyObject* _Nullable file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closing closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -84,7 +104,7 @@ static PyObject* _Nullable file_at_eof(PyObject* _self)
     int                 result;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closing closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -99,7 +119,7 @@ static PyObject* _Nullable file_tell(PyObject* _self)
     long                offset;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closing closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -122,7 +142,7 @@ static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* 
     long                result;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -146,15 +166,12 @@ static PyObject* _Nullable file_fileno(PyObject* _self)
     int                 fd;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closing closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
     fd = fileno(self->fp);
-    if (fd < 0) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
-    }
+    /* According to the manpage this function cannot fail */
 
     return PyLong_FromLong(fd);
 }
@@ -169,7 +186,7 @@ static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject*
     size_t              result;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -186,6 +203,11 @@ static PyObject* _Nullable file_readline(PyObject* _self)
     struct file_object* self = (struct file_object*)_self;
     char                buffer[2048];
     char*               result;
+
+    if (self->fp == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
+        return NULL;
+    }
 
     result = fgets(buffer, 2048, self->fp);
     if (result == NULL) {
@@ -205,7 +227,7 @@ static PyObject* _Nullable file_read(PyObject* _self, PyObject* args, PyObject* 
     size_t              result;
 
     if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Closed file");
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
     }
 
@@ -258,6 +280,10 @@ static PyMethodDef file_methods[] = {{.ml_name  = "readline",
                                       .ml_meth  = (PyCFunction)file_fileno,
                                       .ml_flags = METH_NOARGS,
                                       .ml_doc   = "write to the file"},
+                                     {.ml_name  = "flush",
+                                      .ml_meth  = (PyCFunction)file_flush,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc   = "flush the file buffers"},
                                      {.ml_name  = "close",
                                       .ml_meth  = (PyCFunction)file_close,
                                       .ml_flags = METH_NOARGS,
@@ -294,7 +320,8 @@ FILE_create(FILE* _Nullable fp)
 FILE* _Nullable FILE_get(PyObject* fp)
 {
     if (!FILE_Check(fp)) {
-        PyErr_SetString(PyExc_TypeError, "Not a FILE wrapper");
+        PyErr_Format(PyExc_TypeError, "Expecting objc.FILE, got %.100s",
+                     Py_TYPE(fp)->tp_name);
         return NULL;
     }
 

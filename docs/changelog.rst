@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.1
+-----------
+
+* Added a "flush" method to :type:`objc.FILE`
+
+* :meth:`objc.FILE.readline` would crash if the file is closed in Python.
+
 Version 8.0.1
 -------------
 

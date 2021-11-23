@@ -1908,6 +1908,12 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 
       Closes the stream.
 
+   .. method:: flush()
+
+      Flushes the file buffers.
+
+      .. versionadded: 8.1
+
    .. method:: readline()
 
       Read a single line from the stream.

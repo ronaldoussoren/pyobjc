@@ -10,6 +10,7 @@
 }
 
 - (FILE*)openFile:(char*)path withMode:(char*)mode;
+- (FILE*)openNoFile;
 - (NSString*)readline:(FILE*)fp;
 @end
 
@@ -17,6 +18,11 @@
 - (FILE*)openFile:(char*)path withMode:(char*)mode
 {
     return fopen(path, mode);
+}
+
+- (FILE*)openNoFile
+{
+    return NULL;
 }
 
 - (NSString*)readline:(FILE*)fp
