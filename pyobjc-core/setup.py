@@ -128,14 +128,14 @@ OBJC_LDFLAGS = [
 #
 
 
-if "-O0" in get_config_var("CFLAGS"):
-    # -O0 doesn't work with some (older?) compilers, unconditionally
-    # change -O0 to -O1 to work around that issue.
-    print("Change -O0 to -O1 (-O0 miscompiles libffi)")
-    config_vars = get_config_vars()
-    for k in config_vars:
-        if isinstance(config_vars[k], str) and "-O0" in config_vars[k]:
-            config_vars[k] = config_vars[k].replace("-O0", "-O1")
+# if "-O0" in get_config_var("CFLAGS"):
+#    # -O0 doesn't work with some (older?) compilers, unconditionally
+#    # change -O0 to -O1 to work around that issue.
+#    print("Change -O0 to -O1 (-O0 miscompiles libffi)")
+#    config_vars = get_config_vars()
+#    for k in config_vars:
+#        if isinstance(config_vars[k], str) and "-O0" in config_vars[k]:
+#            config_vars[k] = config_vars[k].replace("-O0", "-O1")
 
 
 if get_config_var("Py_DEBUG"):
@@ -148,15 +148,15 @@ if get_config_var("Py_DEBUG"):
         elif isinstance(cfg_vars[k], str) and "-O3" in cfg_vars[k]:
             cfg_vars[k] = cfg_vars[k].replace("-O3", "-O1 -g")
 
-else:
-    # Enable -O4, which enables link-time optimization with
-    # clang. This appears to have a positive effect on performance.
-    cfg_vars = get_config_vars()
-    for k in cfg_vars:
-        if isinstance(cfg_vars[k], str) and "-O2" in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace("-O2", "-O3")
-        elif isinstance(cfg_vars[k], str) and "-O3" in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace("-O3", "-O3")
+# else:
+#    # Enable -O3, which enables link-time optimization with
+#    # clang. This appears to have a positive effect on performance.
+#    cfg_vars = get_config_vars()
+#    for k in cfg_vars:
+#        if isinstance(cfg_vars[k], str) and "-O2" in cfg_vars[k]:
+#            cfg_vars[k] = cfg_vars[k].replace("-O2", "-O3")
+#        elif isinstance(cfg_vars[k], str) and "-O3" in cfg_vars[k]:
+#            cfg_vars[k] = cfg_vars[k].replace("-O3", "-O3")
 
 
 # XXX: bug in CPython 3.4 repository leaks unwanted compiler flag into distutils.
