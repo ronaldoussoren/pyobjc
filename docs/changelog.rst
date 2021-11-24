@@ -24,9 +24,6 @@ Version 8.1
 * ``SomeClass.alloc()`` would raise an internal error in PyObjC 8 when
   this method returned ``nil``.
 
-Version 8.0.1
--------------
-
 * #399: Fix error message when passing wrong number of arguments in a
   call of an Objective-C method
 
