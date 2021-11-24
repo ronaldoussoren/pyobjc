@@ -3,8 +3,6 @@
  *
  * This type is not used in pyobjc-core itself, but is used
  * by the Quartz framework bindings.
- *
- * XXX: Add tests in ctests.m
  */
 #include "pyobjc.h"
 
@@ -27,13 +25,14 @@ static void
 obj_dealloc(PyObject* self)
 {
     /* Users or this type must release the buffer after use */
-    /* XXX: Check the users if this is actually done */
     if (((((struct pyobjc_memview*)self))->view).obj != NULL) {
         /* Users of this API must release the buffer, enforce this
          * at runtime.
          *
          * XXX: This matches the implementation of PyBuffer_Release,
          * but setting .obj to NULL is not a documented API invariant!
+         *
+         * XXX: Consider moving the call to Release to this function...
          */
         PyObjCErr_InternalError();
     }

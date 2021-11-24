@@ -810,6 +810,31 @@ long actual_align  = (long)__alignof__(NSDecimal);
 ASSERT_EQUALS(encoded_align, actual_align, "%ld");
 END_UNITTEST
 
+BEGIN_UNITTEST(MemView)
+PyObject* view = PyObjCMemView_New();
+
+ASSERT(view != NULL);
+
+ASSERT(PyObjCMemView_Check(view));
+ASSERT(!PyObjCMemView_Check(Py_True));
+
+Py_buffer* buf = PyObjCMemView_GetBuffer(view);
+ASSERT(buf);
+ASSERT(!buf->obj);
+ASSERT(!PyErr_Occurred());
+
+buf = PyObjCMemView_GetBuffer(Py_True);
+ASSERT(!buf);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
+
+PyObject* repr = PyObject_Repr(view);
+ASSERT(repr);
+ASSERT(PyObjC_is_ascii_string(repr, "objc.memview object"));
+
+Py_DECREF(view);
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(StructSize),
@@ -839,6 +864,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(UnicodeFunctions),
                                     TESTDEF(DecimalSize),
                                     TESTDEF(DecimalAlign),
+                                    TESTDEF(MemView),
                                     {0, 0, 0, 0}};
 
 int
