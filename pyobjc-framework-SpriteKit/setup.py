@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "8.0.1b1"
+VERSION = "8.1b1"
 
 setup(
     name="pyobjc-framework-SpriteKit",
