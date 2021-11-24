@@ -3,6 +3,8 @@
  *
  * This type is not used in pyobjc-core itself, but is used
  * by the Quartz framework bindings.
+ *
+ * XXX: Add tests in ctests.m
  */
 #include "pyobjc.h"
 
