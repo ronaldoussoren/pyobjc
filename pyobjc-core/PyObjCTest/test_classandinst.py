@@ -1,5 +1,8 @@
 import objc
-from PyObjCTest.testclassandinst import PyObjC_TestClassAndInstance
+from PyObjCTest.testclassandinst import (
+    PyObjC_TestClassAndInstance,
+    PyObjC_TestUnallocatable,
+)
 from PyObjCTools.TestSupport import TestCase
 
 
@@ -105,8 +108,6 @@ class TestClassAndInstance(TestCase):
         self.assertFalse(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
         self.assertTrue(PyObjC_TestClassAndInstance.alloc().init().isInstance())
 
-
-#    @min_os_level('10.5')
-#    def testUnallocatable(self):
-#        # FIXME: This crashes on Tiger, haven't had time to debug yet
-#        self.assertEqual(PyObjC_TestUnallocatable.alloc(), None)
+    def testUnallocatable(self):
+        # FIXME: This crashes on Tiger, haven't had time to debug yet
+        self.assertEqual(PyObjC_TestUnallocatable.alloc(), None)

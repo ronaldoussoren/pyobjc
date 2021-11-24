@@ -60,6 +60,11 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         return NULL;
     }
 
+    if (result == nil) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
     return PyObjCObject_New(result, PyObjCObject_kUNINITIALIZED, NO);
 }
 

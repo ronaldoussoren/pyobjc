@@ -21,6 +21,9 @@ Version 8.1
   It is now possible to access ``SomeClass.myvar``, in previous versions
   this raised :exc:`TypeError`.
 
+* ``SomeClass.alloc()`` would raise an internal error in PyObjC 8 when
+  this method returned ``nil``.
+
 Version 8.0.1
 -------------
 
