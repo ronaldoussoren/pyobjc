@@ -27,11 +27,65 @@ class TestClass(NSObject):
     idVar2 = objc.ivar("idVar2", b"@")
     intVar = objc.ivar("intVar", objc._C_INT)
     doubleVar = objc.ivar("doubleVar", objc._C_DBL)
+    outlet = objc.ivar("outlet", isOutlet=True)
+    unnamed = objc.ivar()
 
 
 class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
+
+    def test_repr(self):
+        self.assertEqual(repr(TestClass.idVar), "<instance-variable idVar>")
+        self.assertEqual(repr(TestClass.outlet), "<IBOutlet outlet>")
+        self.assertEqual(repr(TestClass.unnamed), "<instance-variable unnamed>")
+
+        v = objc.ivar()
+        self.assertEqual(repr(v), "<instance-variable>")
+
+        v = objc.ivar(isOutlet=True)
+        self.assertEqual(repr(v), "<IBOutlet>")
+
+    def test_ivar_in_python_class(self):
+        class MyObject:
+            idVar = objc.ivar("idVar")
+
+        instance = MyObject()
+
+        with self.assertRaisesRegex(
+            TypeError, "objc.ivar descriptor on a plain Python object"
+        ):
+            instance.idVar
+
+        with self.assertRaisesRegex(
+            TypeError, "objc.ivar descriptor on a plain Python object"
+        ):
+            instance.idVar = 4
+
+    # def test_ivar_of_null(self):
+    # XXX: Arange for an objc_object that refers to NULL
+
+    def test_non_existing_ivar(self):
+
+        instance = NSObject.alloc().init()
+        iv = objc.ivar("nosuchname")
+
+        with self.assertRaisesRegex(
+            RuntimeError, "objc.ivar descriptor for non-existing instance variable.*"
+        ):
+            iv.__get__(instance, NSObject)
+
+        with self.assertRaisesRegex(
+            RuntimeError, "objc.ivar descriptor for non-existing instance variable.*"
+        ):
+            iv.__set__(instance, 42)
+
+        iv = objc.ivar()  # No name
+        with self.assertRaisesRegex(TypeError, "Using unnamed instance variable"):
+            iv.__get__(instance, NSObject)
+
+        with self.assertRaisesRegex(TypeError, "Using unnamed instance variable"):
+            iv.__set__(instance, 42)
 
     def testID(self):
         # Check that we can set and query attributes of type 'id'

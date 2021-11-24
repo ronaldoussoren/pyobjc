@@ -17,7 +17,6 @@ extern PyTypeObject PyObjCInstanceVariable_Type;
     PyObject_TypeCheck((obj), &PyObjCInstanceVariable_Type)
 
 extern PyObject* _Nullable PyObjCInstanceVariable_New(const char* name);
-extern int PyObjCInstanceVariable_SetName(PyObject* self, PyObject* name);
 
 #define PyObjCInstanceVariable_IsOutlet(obj) (((PyObjCInstanceVariable*)(obj))->isOutlet)
 #define PyObjCInstanceVariable_IsSlot(obj) (((PyObjCInstanceVariable*)(obj))->isSlot)

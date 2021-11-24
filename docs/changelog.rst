@@ -10,6 +10,17 @@ Version 8.1
 
 * :meth:`objc.FILE.readline` would crash if the file is closed in Python.
 
+* Instance variable descriptors can now be retrieved from a class. That
+  is, given:
+
+  .. sourcecode:: python
+
+     class SomeClass(NSobject):
+         myvar = objc.ivar("myvar")
+
+  It is now possible to access ``SomeClass.myvar``, in previous versions
+  this raised :exc:`TypeError`.
+
 Version 8.0.1
 -------------
 

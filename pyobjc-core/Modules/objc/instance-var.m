@@ -53,14 +53,23 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     id                      objc;
     PyObject*               res;
 
+    if (!obj) {
+        /* Getting the instance variable from a class, return the descriptor itself
+         * to make it easier to introspect.
+         */
+        Py_INCREF(_self);
+        return _self;
+    }
+
     if (!obj || PyObjCClass_Check(obj)) {
+        /* XXX: Not sure if this is ever true... */
         PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
                                          "through class");
         return NULL;
     }
 
     if (!PyObjCObject_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError, "objc_ivar descriptor on a non-objc object");
+        PyErr_SetString(PyExc_TypeError, "objc.ivar descriptor on a plain Python object");
         return NULL;
     }
 
@@ -80,7 +89,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     if (var == NULL) {
         PyErr_Format(
             PyExc_RuntimeError,
-            "objc_ivar descriptor for non-existing instance variable '%s' in class '%s'",
+            "objc.ivar descriptor for non-existing instance variable '%s' in class '%s'",
             self->name, class_getName(object_getClass(objc)));
         return NULL;
     }
@@ -128,13 +137,13 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     }
 
     if (!obj || PyObjCClass_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
+        PyErr_SetString(PyExc_TypeError, "Cannot set Objective-C instance-variables "
                                          "through class");
         return -1;
     }
 
     if (!PyObjCObject_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError, "objc_ivar descriptor on a non-objc object");
+        PyErr_SetString(PyExc_TypeError, "objc.ivar descriptor on a plain Python object");
         return -1;
     }
 
@@ -399,50 +408,6 @@ PyTypeObject PyObjCInstanceVariable_Type = {
     .tp_alloc                                      = PyType_GenericAlloc,
     .tp_new                                        = PyType_GenericNew,
 };
-
-/* Set the name of an ivar if it doesn't already have one
- * This should only be used during class construction.
- */
-int
-PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
-{
-    if (!PyObjCInstanceVariable_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "unexpected type for ivar.setname");
-        return -1;
-    }
-
-    PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)value;
-    if (self->name) {
-        return 0;
-    }
-
-    if (PyUnicode_Check(name)) {
-        PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-        if (bytes == NULL) {
-            return -1;
-        }
-
-        char* b = PyBytes_AsString(bytes);
-        if (b == NULL || *b == '\0') {
-            PyErr_SetString(PyExc_ValueError, "Empty name");
-            return -1;
-        }
-
-        self->name = PyObjCUtil_Strdup(b);
-        Py_DECREF(bytes);
-        if (self->name == NULL) {
-            PyErr_NoMemory();
-            return -1;
-        }
-
-    } else {
-        PyErr_SetString(PyExc_TypeError,
-                        "Implied instance variable name is not a string");
-        return -1;
-    }
-
-    return (self->name == NULL ? -1 : 0);
-}
 
 PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
 {
