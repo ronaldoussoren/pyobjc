@@ -1,6 +1,8 @@
 #include "pyobjc.h"
 /*
  * XXX: Is this code still needed?
+ *      The code isn't used on macOS 12, haven't checked
+ *      older macOS versions yet.
  */
 
 NS_ASSUME_NONNULL_BEGIN
