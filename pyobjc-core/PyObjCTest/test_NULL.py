@@ -120,13 +120,36 @@ class TestNULLArguments(TestCase):
         obj = OCTestNULL.alloc().init()
 
         v = []
-        self.assertRaises(ValueError, obj.callList_andInOut2_, v, 42)
+
+        with self.assertRaisesRegex(ValueError, "argument 1 must be None or objc.NULL"):
+            obj.callList_andInOut2_(v, 42)
         self.assertEqual(v, [])
 
         v = []
         rv = obj.callList_andInOut2_(v, objc.NULL)
         self.assertEqual(v, ["NULL"])
         self.assertEqual(rv, (12, objc.NULL))
+
+        v = []
+        rv = obj.callList_andInOut2_(v, None)
+        self.assertEqual(v, ["0"])
+        self.assertEqual(rv, (12, 0))
+
+    def testCallOut(self):
+        obj = OCTestNULL.alloc().init()
+
+        r = obj.callOut_(None)
+        self.assertEqual(r, 144)
+
+        v = []
+        r = obj.callList_andOut_(v, None)
+        self.assertEqual(r, (24, 99))
+        self.assertEqual(v, ["POINTER"])
+
+        v = []
+        r = obj.callList_andOut_(v, objc.NULL)
+        self.assertEqual(r, (24, objc.NULL))
+        self.assertEqual(v, ["NULL"])
 
     def testCallInNULL(self):
         obj = OCTestNULL.alloc().init()
