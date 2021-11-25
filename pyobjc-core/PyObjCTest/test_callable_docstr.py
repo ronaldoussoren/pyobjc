@@ -859,6 +859,16 @@ class TestDescribeCallable(TestCase):
             mod.describe_callable(self.NSSearchPathForDirectoriesInDomains),
         )
 
+    def test_no_metadata(self):
+        class M:
+            __name__ = "foo"
+
+            def __metadata__(self):
+                raise objc.internal_error
+
+        m = M()
+        self.assertIs(mod.describe_callable(m), None)
+
 
 class TestCallableSignature(TestCase):
     def test_function(self):
@@ -946,3 +956,15 @@ class TestCallableSignature(TestCase):
         self.assertRaises(AttributeError, mod.callable_signature, int)
         self.assertRaises(AttributeError, mod.callable_signature, dir)
         self.assertRaises(AttributeError, mod.callable_signature, lambda x: x * 2)
+
+    def test_no_metadata(self):
+        class M:
+            __name__ = "foo"
+
+            def __metadata__(self):
+                raise objc.internal_error
+
+        m = M()
+        self.assertIs(mod.describe_callable(m), None)
+
+        self.assertIs(mod.callable_signature(m), None)

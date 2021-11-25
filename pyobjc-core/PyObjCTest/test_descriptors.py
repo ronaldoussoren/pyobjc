@@ -13,6 +13,20 @@ class TestBasicDescriptors(TestCase):
 
     # IBOutlet is tested in test_ivar
 
+    def test_IB_DESIGNABLE(self):
+        @objc.IB_DESIGNABLE
+        class Foo:
+            pass
+
+        self.assertIsInstance(Foo, type)
+
+        v = 99999
+        self.assertIs(objc.IB_DESIGNABLE(v), v)
+
+    def test_IBInspectable(self):
+        v = 99999
+        self.assertIs(objc.IBInspectable(v), v)
+
     def test_ibaction(self):
         @objc.IBAction
         def myAction_(self, sender):
