@@ -38,15 +38,7 @@ from objc._objc import (
     selector,
 )
 
-try:
-    from inspect import getargspec
-except ImportError:
-    getargspec = None
-
-try:
-    from inspect import getfullargspec
-except ImportError:
-    getfullargspec = None
+from inspect import getfullargspec
 
 _C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2 ** 32]
 
@@ -104,19 +96,15 @@ def accessor(func, typeSignature=b"@"):
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
     """
-    if getfullargspec is not None:
-        (
-            args,
-            varargs,
-            varkw,
-            defaults,
-            kwonlyargs,
-            _kwonlydefaults,
-            _annotations,
-        ) = getfullargspec(func)
-    else:
-        args, varargs, varkw, defaults = getargspec(func)
-        kwonlyargs = None
+    (
+        args,
+        varargs,
+        varkw,
+        defaults,
+        kwonlyargs,
+        _kwonlydefaults,
+        _annotations,
+    ) = getfullargspec(func)
     funcName = func.__name__
     maxArgs = len(args)
     minArgs = maxArgs - len(defaults or ())
