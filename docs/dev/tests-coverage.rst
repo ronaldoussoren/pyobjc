@@ -40,9 +40,9 @@ code is correct):
 
 2. Memory allocation failure handling
 
-Use ``LOCV_EXC_LINE`` in a comment to exclude a specific line.
+Use ``LCOV_EXCL_LINE`` in a comment to exclude a specific line.
 
-Use ``LCOV_EXC_START`` and ``EXC_EXC_STOP`` in comments to exclude a block
+Use ``LCOV_EXCL_START`` and ``EXC_EXCL_STOP`` in comments to exclude a block
 of code.
 
 

@@ -1,5 +1,6 @@
 /*
- * Nicer signal handling, integrated into the runloop.
+ * Signal handling integrated into the default runloop
+ * on the thread that imports this extension.
  */
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
@@ -14,7 +15,7 @@ PyDoc_STRVAR(machsignals_doc,
              "This module exports a dictionary that contains the functions that \n"
              "should be called when a signal is caught.\n"
              "\n"
-             "The function 'handleSignal' installs a C signal handler that will \n"
+             "The function 'handle_signal' installs a C signal handler that will \n"
              "make sure our signal handler is called.");
 
 static mach_port_t exit_m_port = MACH_PORT_NULL;
@@ -31,13 +32,12 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
     /* this is abuse of msgh_id */
     signum = ((mach_msg_header_t*)msg)->msgh_id;
     if (!signalmapping) {
-        return;
+        return; // LCOV_EXCL_LINE
     }
     PyObjC_BEGIN_WITH_GIL
         tmp = PyLong_FromLong((long)signum);
-        if (tmp == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
 
         callable = PyDict_GetItem(signalmapping, tmp);
         if (!callable) {
@@ -101,8 +101,15 @@ static PyMethodDef mod_methods[] = {
      machsignals_handleSignal_doc},
     {0, 0, 0, 0}};
 
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_machsignals", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_machsignals",
+                                        machsignals_doc,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__machsignals(void);
 PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
@@ -111,26 +118,23 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
 
     m = PyModule_Create(&mod_module);
     if (m == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     CFMachPortRef      e_port;
     CFRunLoopSourceRef e_rls;
 
     if (PyObjC_ImportAPI(m) < 0) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     signalmapping = PyDict_New();
     if (!signalmapping) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, "_signalmapping", signalmapping) == -1) {
-        return NULL;
-    }
-    if (PyModule_AddStringConstant(m, "__doc__", machsignals_doc) == -1) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     e_port      = CFMachPortCreate(NULL, SIGCallback, NULL, NULL);
