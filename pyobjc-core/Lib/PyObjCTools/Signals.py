@@ -24,6 +24,7 @@ import os
 import signal
 import traceback
 import warnings
+import sys
 
 __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
 
@@ -42,9 +43,9 @@ def dumpHandler(signum, frame):
     then re-raise the signal
     """
     resetFatalSignals()
-    print("*** Handling fatal signal '%d'." % signum)
+    print("*** Handling fatal signal '%d'." % signum, file=sys.stderr)
     traceback.print_stack(frame)
-    print("*** Restored handlers and resignaling.")
+    print("*** Restored handlers and resignaling.", file=sys.stderr)
     os.kill(os.getpid(), signum)
 
 

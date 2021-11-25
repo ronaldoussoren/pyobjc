@@ -42,6 +42,9 @@ Version 8.1
 * PyObjC now works correctly on macOS 11 or later when compiled on macOS 10.15
   or earlier.
 
+* All messages from the deprecated module PyObjCTools.Signals are now
+  printed on stderr.
+
 Version 8.0
 -----------
 

@@ -5,6 +5,10 @@
 .. module:: PyObjCTools.Signals
    :synopsis: Debug signal handling
 
+.. warning::
+
+   This module is deprecated and will be removed in PyObjC 9.
+
 This module provides two functions that can be useful while investigating
 random crashes of a PyObjC program. These crashes are often caused by
 Objective-C style weak references or incorrectly implemented protocols.
