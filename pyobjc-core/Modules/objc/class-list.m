@@ -6,12 +6,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-Py_ssize_t
-PyObjC_ClassCount(void)
-{
-    return objc_getClassList(NULL, 0);
-}
-
 PyObject*
 PyObjC_GetClassList(void)
 {
@@ -42,8 +36,10 @@ PyObjC_GetClassList(void)
 
         newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
         if (newBuffer == NULL) {
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             goto error;
+            // LCOV_EXCL_STOP
         }
 
         buffer    = newBuffer;
@@ -54,7 +50,7 @@ PyObjC_GetClassList(void)
 
     result = PyTuple_New(bufferLen);
     if (result == NULL) {
-        goto error;
+        goto error; // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < bufferLen; i++) {
@@ -62,7 +58,7 @@ PyObjC_GetClassList(void)
 
         pyclass = PyObjCClass_New(buffer[i]);
         if (pyclass == NULL) {
-            goto error;
+            goto error; // LCOV_EXCL_LINE
         }
         PyTuple_SET_ITEM(result, i, pyclass);
     }
@@ -73,12 +69,13 @@ PyObjC_GetClassList(void)
     return result;
 
 error:
+    // LCOV_EXCL_START
     if (buffer != NULL) {
         PyMem_Free(buffer);
-        buffer = NULL;
     }
     Py_XDECREF(result);
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 NS_ASSUME_NONNULL_END

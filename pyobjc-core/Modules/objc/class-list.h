@@ -11,16 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define PYOBJC_EXPECTED_CLASS_COUNT 10000
 
 /*!
- * @header class-list.h
- * @abstract Get the list of classes in the Objective-C runtime
- * @discussion
- *    This module defines a function that returns the list of classes
- *    in the Objetive-C runtime (converted to Python)
- */
-
-Py_ssize_t PyObjC_ClassCount(void);
-
-/*!
  * @function PyObjC_GetClassList
  * @result Returns a list of Objective-C classes
  * @discussion
