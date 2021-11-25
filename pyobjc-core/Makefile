@@ -37,6 +37,17 @@ scan-build:
 	    python3 setup.py build_ext
 	open build/scan-build*/index.html
 
+# Run the test suite while recording Python-level coverage
+coverage:
+	rm -rf build dist
+	mkdir build dist
+	python3 -mvenv build/cov-env
+	build/cov-env/bin/python3 -mpip install -U wheel pip setuptools coverage
+	build/cov-env/bin/python3 setup.py develop
+	-build/cov-env/bin/python3 -mcoverage run --branch setup.py test --verbosity=3
+	build/cov-env/bin/python3 -mcoverage html --omit='PyObjCTest/*,setup.py'
+	open htmlcov/index.html
+
 # Run the test suite while recording C-level coverage
 c-coverage:
 	rm -rf build dist

@@ -3,6 +3,10 @@ Test coverage information
 
 This file is very much a work in progress...
 
+The documentation in this file is focused on pyobjc-core, I'll add
+information about framework bindings once I'm happy with code coverage
+for the core bridge as most interesting code is in the bridge itself.
+
 
 General
 -------
@@ -12,12 +16,12 @@ gaps in test coverage. When adding new tests to fill in gaps make sure
 to add tests that cover functionality, not just tests that cover
 particular lines in the source code.
 
+The longer term goal is to reach close to 100% test coverage through
+functional tests.
+
 
 Test coverage for C code in pyobjc-core
 ---------------------------------------
-
-The longer term goal is to reach close to 100% test coverage through
-functional tests.
 
 For internal APIs in pyobjc-core it can be useful to add tests for these APIs
 as well, especially to cover error cases that should never occur in real code.
@@ -45,4 +49,15 @@ of code.
 Test coverage for Python code in pyobjc-core
 --------------------------------------------
 
-To be written.  This will use the coverage library.
+To collect coverage information first install `coverage <https://coverage.readthedocs.io/>`,
+then run:
+
+.. sourcecode:: shell
+
+   $ python3 -mcoverage run --branch setup.py test --verbosity=3
+   $ python3 -mcoverage html --omit='PyObjCTest/*,setup.py'
+   $ open htmlcov/index.html
+
+Alternatively use the "coverage" target in the Makefile
+
+As with coverage for C code use coverage pragma's sparingly.
