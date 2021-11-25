@@ -1,7 +1,21 @@
 import warnings
 
 import objc
+import copy
+import pickle
 from PyObjCTools.TestSupport import TestCase
+
+
+class TestOptionVarious(TestCase):
+    def test_option_creation(self):
+        with self.assertRaisesRegex(TypeError, "Cannot create instances of this type"):
+            type(objc.options)()
+
+        with self.assertRaisesRegex(TypeError, "Cannot call this method"):
+            copy.copy(objc.options)
+
+        with self.assertRaisesRegex(TypeError, "Cannot call this method"):
+            pickle.dumps(objc.options)
 
 
 class TestCompatFunctions(TestCase):

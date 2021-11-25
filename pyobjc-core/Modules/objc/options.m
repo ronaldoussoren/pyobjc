@@ -185,7 +185,7 @@ static PyObject* _Nullable object_new(PyTypeObject* tp __attribute__((__unused__
                                       PyObject* _Nullable kwds
                                       __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_ValueError, "Cannot create instances of this type");
+    PyErr_SetString(PyExc_TypeError, "Cannot create instances of this type");
     return NULL;
 }
 
@@ -195,7 +195,7 @@ static PyObject* _Nullable object_dont_call(PyObject* self __attribute__((__unus
                                             PyObject* _Nullable kwds
                                             __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_ValueError, "Cannot call this method");
+    PyErr_SetString(PyExc_TypeError, "Cannot call this method");
     return NULL;
 }
 
@@ -227,16 +227,15 @@ int
 PyObjC_SetupOptions(PyObject* m)
 {
     if (PyType_Ready(&PyObjCOptions_Type) < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     PyObject* o = (PyObject*)PyObject_New(struct object, &PyObjCOptions_Type);
     if (o == NULL) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    int r = PyModule_AddObject(m, "options", o);
-    return r;
+    return PyModule_AddObject(m, "options", o);
 }
 
 NS_ASSUME_NONNULL_END

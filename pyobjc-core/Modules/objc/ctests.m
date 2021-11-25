@@ -459,7 +459,7 @@ a = [NSMutableArray arrayWithObjects:d, nil];
 @try {
     v             = [a valueForKey:@"keyM"];
     haveException = 0;
-} @catch (NSObject* localException) {
+} @catch (NSObject* localException) { // LCOV_EXCL_LINE (see comment at start)
     v             = nil;
     haveException = 1;
 }
@@ -911,20 +911,20 @@ PyObjC_init_ctests(PyObject* m)
 {
     PyObject* d = PyDict_New();
     if (d == NULL) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     PyMethodDef* cur;
     for (cur = mod_methods; cur->ml_name != NULL; cur++) {
         PyObject* meth = PyCFunction_NewEx(cur, NULL, NULL);
         if (meth == NULL) {
-            Py_DECREF(d);
-            return -1;
+            Py_DECREF(d); // LCOV_EXCL_LINE
+            return -1;    // LCOV_EXCL_LINE
         }
         if (PyDict_SetItemString(d, cur->ml_name, meth) < 0) {
-            Py_DECREF(d);
-            Py_DECREF(meth);
-            return -1;
+            Py_DECREF(d);    // LCOV_EXCL_LINE
+            Py_DECREF(meth); // LCOV_EXCL_LINE
+            return -1;       // LCOV_EXCL_LINE
         }
         Py_DECREF(meth);
     }
