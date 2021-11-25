@@ -426,6 +426,21 @@ class TestLazyImport(TestCase):
         self.assertTrue((mod.kCFAllocatorDefault.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorDefault, mod.CFAllocatorRef)
 
+        # XXX: These need to be in a different test file
+        self.assertTrue(getattr(mod.kCFAllocatorDefault, "__is_magic")())  # noqa: B009
+        self.assertTrue(mod.kCFAllocatorDefault == mod.kCFAllocatorDefault)
+        self.assertFalse(mod.kCFAllocatorDefault != mod.kCFAllocatorDefault)
+        self.assertTrue(mod.kCFAllocatorDefault != mod.CFBagRef)
+        self.assertFalse(mod.kCFAllocatorDefault == mod.CFBagRef)
+        with self.assertRaises(TypeError):
+            mod.kCFAllocatorDefault < mod.kCFAllocatorDefault  # noqa: B015
+        with self.assertRaises(TypeError):
+            mod.kCFAllocatorDefault <= mod.kCFAllocatorDefault  # noqa: B015
+        with self.assertRaises(TypeError):
+            mod.kCFAllocatorDefault > mod.kCFAllocatorDefault  # noqa: B015
+        with self.assertRaises(TypeError):
+            mod.kCFAllocatorDefault >= mod.kCFAllocatorDefault  # noqa: B015
+
         self.assertIsInstance(mod.kCFAllocatorSystemDefault, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorSystemDefault.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorSystemDefault, mod.CFAllocatorRef)
