@@ -1,4 +1,5 @@
 import objc
+import os
 from PyObjCTest.fsref import OC_TestFSRefHelper
 from PyObjCTools.TestSupport import TestCase
 
@@ -35,6 +36,9 @@ class TestFSRef(TestCase):
         self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
 
+        with self.assertRaisesRegex(TypeError, "Cannot convert value to FSRef"):
+            o.stringForFSRef_("/etc/hosts")
+
     def testInput(self):
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.fsrefForPath_("/Library")
@@ -54,3 +58,22 @@ class TestFSRef(TestCase):
         p = o.stringForFSRef_(ref)
         self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
+
+    def test_frompath(self):
+        ref = objc.FSRef.from_pathname("/etc/hosts")
+        self.assertIsInstance(ref, objc.FSRef)
+
+        self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
+
+        with self.assertRaisesRegex(TypeError, "Expecting string"):
+            objc.FSRef.from_pathname(42)
+
+    def test_sizeof(self):
+        ref = objc.FSRef.from_pathname("/etc/hosts")
+        self.assertIsInstance(ref.__sizeof__(), int)
+
+    def test_as_bytes(self):
+        ref = objc.FSRef.from_pathname("/etc/hosts")
+        self.assertIsInstance(ref.data, bytes)
+
+        # XXX: there's not really much we can do here...

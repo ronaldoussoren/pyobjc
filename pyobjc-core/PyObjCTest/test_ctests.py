@@ -63,7 +63,15 @@ def test_%s(self):
     return result[f"test_{name}"]
 
 
+def test_AlwaysFails(self):
+    with self.assertRaisesRegex(AssertionError, r"Modules/objc/ctests.m:\d+ 0 == 1"):
+        ctests["AlwaysFails"]()
+
+
 for n in names:
-    methods[f"test_{n}"] = make_test(n)
+    if n == "AlwaysFails":
+        methods[f"test_{n}"] = test_AlwaysFails
+    else:
+        methods[f"test_{n}"] = make_test(n)
 
 CTests = type(TestCase)("CTests", (TestCase,), methods)

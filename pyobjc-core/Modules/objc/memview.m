@@ -34,7 +34,7 @@ obj_dealloc(PyObject* self)
          *
          * XXX: Consider moving the call to Release to this function...
          */
-        PyObjCErr_InternalError();
+        PyObjCErr_InternalError(); /* LCOV_EXCL_LINE */
     }
 
     PyObject_Free(self);

@@ -814,7 +814,6 @@ BEGIN_UNITTEST(MemView)
 PyObject* view = PyObjCMemView_New();
 
 ASSERT(view != NULL);
-
 ASSERT(PyObjCMemView_Check(view));
 ASSERT(!PyObjCMemView_Check(Py_True));
 
@@ -833,6 +832,44 @@ ASSERT(repr);
 ASSERT(PyObjC_is_ascii_string(repr, "objc.memview object"));
 
 Py_DECREF(view);
+END_UNITTEST
+
+BEGIN_UNITTEST(ReleasedBuffer)
+PyObject*         v;
+OCReleasedBuffer* buf;
+
+v = PyBytes_FromString("hello world\n");
+ASSERT(v);
+
+buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:NO];
+ASSERT(buf);
+ASSERT([buf buffer]);
+ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+[buf release];
+
+buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:YES];
+ASSERT(!buf);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
+
+v = PyByteArray_FromStringAndSize("hello", 5);
+ASSERT(v);
+buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:NO];
+ASSERT(buf);
+ASSERT([buf buffer]);
+ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+[buf release];
+
+buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:YES];
+ASSERT(buf);
+ASSERT([buf buffer]);
+ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+[buf release];
+
+END_UNITTEST
+
+BEGIN_UNITTEST(AlwaysFails)
+ASSERT(0 == 1);
 END_UNITTEST
 
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
@@ -865,6 +902,8 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(DecimalSize),
                                     TESTDEF(DecimalAlign),
                                     TESTDEF(MemView),
+                                    TESTDEF(ReleasedBuffer),
+                                    TESTDEF(AlwaysFails),
                                     {0, 0, 0, 0}};
 
 int

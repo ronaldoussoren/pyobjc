@@ -35,10 +35,6 @@ typedef struct {
 static PyObject* _Nullable fsref_as_bytes(PyObject* ref, void* _Nullable closure
                                           __attribute__((__unused__)))
 {
-    if (!PyObjC_FSRefCheck(ref)) {
-        PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
-    }
-
     return PyBytes_FromStringAndSize((char*)&((PyObjC_FSRefObject*)ref)->ref,
                                      sizeof(FSRef));
 }
@@ -52,10 +48,6 @@ static PyObject* _Nullable fsref_as_path(PyObject* ref)
 {
     OSStatus rc;
     UInt8    buffer[1024];
-
-    if (!PyObjC_FSRefCheck(ref)) {
-        PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
-    }
 
     rc = FSRefMakePath(&((PyObjC_FSRefObject*)ref)->ref, buffer, sizeof(buffer));
     if (rc != 0) {
@@ -81,7 +73,7 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
     }
 
     value = PyUnicode_EncodeFSDefault(path);
-    /* XXX: Add type assertion */
+    PyObjC_Assert(PyBytes_Check(value), NULL);
     if (value == NULL)
         return NULL;
 

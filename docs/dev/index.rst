@@ -7,3 +7,4 @@ Developer Documentation
     structure
     coding-style
     wrapping
+    tests-coverage
