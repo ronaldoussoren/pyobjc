@@ -45,6 +45,9 @@ Version 8.1
 * All messages from the deprecated module PyObjCTools.Signals are now
   printed on stderr.
 
+* PyObjCTools.MachSignals won't cause an interpreter error when the
+  signal dictionary doesn't contain a handler for a signal.
+
 Version 8.0
 -----------
 

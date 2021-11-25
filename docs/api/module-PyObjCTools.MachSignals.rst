@@ -28,3 +28,6 @@ reliably when not running Python code, but this does.
 
    Returns the old signal handler, or :data:`None` when there is
    no previous handler.
+
+   The *handler* should be a function that has exactly
+   one argument, the signal number.

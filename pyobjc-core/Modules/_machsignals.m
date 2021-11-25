@@ -34,23 +34,24 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
         return;
     }
     PyObjC_BEGIN_WITH_GIL
-        do {
-            tmp = PyLong_FromLong((long)signum);
-            if (!tmp)
-                break;
-
-            callable = PyDict_GetItem(signalmapping, tmp);
-            Py_DECREF(tmp);
-            if (!callable) {
-                tmp = NULL;
-                break;
-            }
-
-            tmp = PyObject_CallFunction(callable, "i", signum);
-            Py_XDECREF(tmp);
-        } while (0);
-        if (!tmp)
+        tmp = PyLong_FromLong((long)signum);
+        if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
+        }
+
+        callable = PyDict_GetItem(signalmapping, tmp);
+        if (!callable) {
+            Py_DECREF(tmp);
+            PyObjC_GIL_RETURNVOID;
+        }
+        Py_INCREF(callable);
+        Py_DECREF(tmp);
+
+        tmp = PyObject_CallFunction(callable, "i", signum);
+        Py_DECREF(callable);
+        if (tmp == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
     PyObjC_END_WITH_GIL
 }
 
@@ -61,7 +62,6 @@ HandleSIG(int signum)
      * Send a mach_msg to ourselves (since that is signal safe) telling us
      * to handle a signal.
      */
-    // mach_msg_return_t msg_result;
     mach_msg_header_t header;
 
     header.msgh_bits        = MACH_MSGH_BITS(MACH_MSG_TYPE_MAKE_SEND, 0);
