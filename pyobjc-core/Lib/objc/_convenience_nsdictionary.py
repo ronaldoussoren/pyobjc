@@ -4,7 +4,6 @@ Convenience interface for NSDictionary/NSMutableDictionary
 __all__ = ()
 
 import collections.abc
-import os
 
 from objc._convenience import addConvenienceForClass, container_wrap
 from objc._convenience_mapping import addConvenienceForBasicMapping
@@ -236,39 +235,20 @@ collections.abc.Mapping.register(NSDictionary)
 collections.abc.MutableMapping.register(NSMutableDictionary)
 
 
-if int(os.uname()[2].split(".")[0]) <= 10:
-    # Limited functionality on OSX 10.6 and earlier
+def nsdict_fromkeys(cls, keys, value=None):
+    keys = [container_wrap(k) for k in keys]
+    values = [container_wrap(value)] * len(keys)
 
-    def nsdict_fromkeys(cls, keys, value=None):
-        keys = [container_wrap(k) for k in keys]
-        values = [container_wrap(value)] * len(keys)
-
-        return NSDictionary.dictionaryWithObjects_forKeys_(values, keys)
-
-    def nsmutabledict_fromkeys(cls, keys, value=None):
-        value = container_wrap(value)
-
-        result = NSMutableDictionary.alloc().init()
-        for k in keys:
-            result[container_wrap(k)] = value
-        return result
+    return cls.dictionaryWithObjects_forKeys_(values, keys)
 
 
-else:
+def nsmutabledict_fromkeys(cls, keys, value=None):
+    value = container_wrap(value)
 
-    def nsdict_fromkeys(cls, keys, value=None):
-        keys = [container_wrap(k) for k in keys]
-        values = [container_wrap(value)] * len(keys)
-
-        return cls.dictionaryWithObjects_forKeys_(values, keys)
-
-    def nsmutabledict_fromkeys(cls, keys, value=None):
-        value = container_wrap(value)
-
-        result = cls.alloc().init()
-        for k in keys:
-            result[container_wrap(k)] = value
-        return result
+    result = cls.alloc().init()
+    for k in keys:
+        result[container_wrap(k)] = value
+    return result
 
 
 def nsdict_new(cls, *args, **kwds):
@@ -360,7 +340,7 @@ addConvenienceForClass(
     "NSMutableDictionary",
     (
         ("__new__", staticmethod(nsdict_new)),
-        ("fromkeys", classmethod(nsdict_fromkeys)),
+        ("fromkeys", classmethod(nsmutabledict_fromkeys)),
         ("clear", lambda self: self.removeAllObjects()),
     ),
 )
