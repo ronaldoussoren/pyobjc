@@ -6,7 +6,6 @@ __all__ = (
     "dict_property",
 )
 
-import sys
 from copy import copy as copy_func
 
 from objc import (
@@ -806,11 +805,6 @@ class set_proxy(collections.abc.MutableSet):
 
         else:
             return self._wrapped >= other
-
-    if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
-
-        def __cmp__(self, other):
-            raise TypeError("cannot compare sets using cmp()")
 
     def add(self, item):
         if self._ro:
