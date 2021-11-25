@@ -1821,11 +1821,12 @@ done:
 static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
     PyObject* _Nullable mod __attribute__((__unused__)), PyObject* object)
 {
+    if (!PyUnicode_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expecting a string");
+        return NULL;
+    }
+
     if (@available(macOS 10.16, *)) {
-        if (!PyUnicode_Check(object)) {
-            PyErr_SetString(PyExc_TypeError, "Expecting a string");
-            return NULL;
-        }
         const char* path = PyUnicode_AsUTF8(object);
         if (path == NULL) {
             return NULL;
@@ -1834,12 +1835,47 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
         int result = _dyld_shared_cache_contains_path(path);
         return PyBool_FromLong(result);
     } else {
-        PyErr_SetString(PyExc_NotImplementedError,
-                        "_dyld_shared_cache_contains_path not available");
-        return NULL;
+        Py_INCREF(Py_False);
+        return Py_False;
     }
 }
-/* XXX: Add variant that can be used when building on older OS versions */
+
+#else
+
+/* Variant to be used when buildin on macOS 10.15 or earlier:
+ * use dlsym(3) APIs to look for the function.
+ */
+
+static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
+    PyObject* _Nullable mod __attribute__((__unused__)), PyObject* object)
+{
+    static bool (*contains_func)(const char*) = NULL;
+    static bool resolved_func                 = 0;
+
+    if (!resolved_func) {
+        contains_func = dlsym(RTLD_DEFAULT, "_dyld_shared_cache_contains_path");
+        resolved_func = 1;
+    }
+
+    if (!PyUnicode_Check(object)) {
+        PyErr_SetString(PyExc_TypeError, "Expecting a string");
+        return NULL;
+    }
+
+    if (contains_func) {
+        const char* path = PyUnicode_AsUTF8(object);
+        if (path == NULL) {
+            return NULL;
+        }
+
+        int result = contains_func(path);
+        return PyBool_FromLong(result);
+    } else {
+        Py_INCREF(Py_False);
+        return Py_False;
+    }
+}
+
 #endif
 
 static PyMethodDef mod_methods[] = {
@@ -2053,7 +2089,6 @@ static PyMethodDef mod_methods[] = {
         .ml_doc   = "_rescanClass(classObject)\n" CLINIC_SEP
                   "\nForce a rescan of the method table of a class",
     },
-#if PyObjC_BUILD_RELEASE >= 1100
     {
         .ml_name  = "_dyld_shared_cache_contains_path",
         .ml_meth  = (PyCFunction)mod_dyld_shared_cache_contains_path,
@@ -2061,7 +2096,6 @@ static PyMethodDef mod_methods[] = {
         .ml_doc   = "_dyld_shared_cache_contains_path(path)\n" CLINIC_SEP
                   "\nForce a rescan of the method table of a class",
     },
-#endif
     {
         .ml_name = NULL /* SENTINEL */
     }};

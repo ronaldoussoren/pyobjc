@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 import objc._dyld as dyld
@@ -197,6 +198,17 @@ class TestDyld(TestCase):
             "/usr/lib/libSystem.dylib",
         )
 
+        if os.path.exists("/Library/Frameworks/Python.framework"):
+            # Test using a non-system path, to ensure we hit a code path that doesn't find the
+            # library in the shared library cache
+            libdir = os.environ[
+                "DYLD_LIBRARY_PATH"
+            ] = f"/Library/Frameworks/Python.framework/Versions/{sys.version_info[0]}.{sys.version_info[1]}/lib"
+            self.assertEqual(
+                dyld.dyld_library("libcrypto.dylib", "libcrypto.dylib"),
+                f"{libdir}/libcrypto.dylib",
+            )
+
         # When the 'command line tools for xcode' are not installed
         # there is no debug version of libsystem in the system wide
         # library directory. In that case we look in the SDK instead.
@@ -367,6 +379,15 @@ class TestDyld(TestCase):
             dyld.dyld_framework("/System/Library/Cocoa.framework/Cocoa", "Cocoa", "A"),
             "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
         )
+
+        if os.path.exists("/Library/Frameworks/Python.framework"):
+            py_ver = ".".join(map(str, sys.version_info[:2]))
+            self.assertEqual(
+                dyld.dyld_framework(
+                    "/Library/Python.framework/Python", "Python", py_ver
+                ),
+                f"/Library/Frameworks/Python.framework/Versions/{py_ver}/Python",
+            )
 
     def test_dyld_find(self):
         self.assertEqual(

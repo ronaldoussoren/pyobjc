@@ -39,6 +39,9 @@ Version 8.1
 
 * Update framework bindings for Xcode 13.2 beta 2 (macOS 12.1)
 
+* PyObjC now works correctly on macOS 11 or later when compiled on macOS 10.15
+  or earlier.
+
 Version 8.0
 -----------
 
