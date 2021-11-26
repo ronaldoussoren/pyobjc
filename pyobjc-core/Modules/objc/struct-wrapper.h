@@ -128,8 +128,7 @@ int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
 extern PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature,
                                                        Py_ssize_t  len);
 
-extern int PyObjC_SetStructField(PyObject* strval, Py_ssize_t inde,
-                                 PyObject* _Nullable value);
+extern int PyObjC_SetStructField(PyObject* strval, Py_ssize_t inde, PyObject* value);
 extern PyObject* _Nullable StructAsTuple(PyObject* strval);
 
 extern PyTypeObject StructBase_Type;

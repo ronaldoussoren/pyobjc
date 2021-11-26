@@ -11,11 +11,17 @@ import sys
 import warnings
 
 import objc
+import pickle
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.structs import OC_StructTest
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
 PTR_SIZE = 8
+
+# Used in the pickle test, and therefore needs a fully qualified name
+GlobalType = objc.createStructType(
+    "PyObjCTest.test_structs.GlobalType", b"{_GlobalType=ff}", ["a", "b"]
+)
 
 
 class TestStructs(TestCase):
@@ -60,6 +66,14 @@ class TestStructs(TestCase):
         self.assertEqual(p.y, 4.0)
 
         self.assertEqual(p._asdict(), {"x": 3.0, "y": 4.0})
+
+        with self.assertRaisesRegex(
+            TypeError, "_replace called with positional arguments"
+        ):
+            p._replace(42)
+
+        with self.assertRaises(AttributeError):
+            p._replace(invalid=9)
 
         p2 = p._replace(y=5)
         self.assertEqual(p.x, 3.0)
@@ -220,13 +234,19 @@ class TestStructs(TestCase):
         with pyobjc_options(structs_indexable=False, structs_writable=True):
             v = tp0(1, 2)
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are not sequences"
+            ):
                 v[0]
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are not sequences"
+            ):
                 v[0] = 4
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are not sequences"
+            ):
                 len(v)
 
             self.assertFalse(v == (1, 2))
@@ -270,3 +290,171 @@ class TestStructs(TestCase):
             self.assertEqual(v.second, 3)
 
             self.assertRaises(TypeError, tp0, 4, 5, 6)
+
+    def test_struct_as_sequence(self):
+        tp0 = objc.createStructType(
+            "FooStruct2", b'{FooStruct2="first"i"second"i"third"i}', None
+        )
+
+        with pyobjc_options(structs_indexable=True, structs_writable=True):
+            v = tp0(1, 2, 3)
+
+            #  Read (item, slice)
+            self.assertEqual(v[0], 1)
+            self.assertEqual(v[-1], 3)
+            self.assertEqual(v[:], (1, 2, 3))
+
+            self.assertEqual(v[-4:8], (1, 2, 3))
+
+            self.assertEqual(v[1:2], (2,))
+            self.assertEqual(v[::2], (1, 3))
+
+            with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
+                v[5]
+
+            with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
+                v[-6]
+
+            with self.assertRaises(IndexError):
+                v[2 ** 68]
+
+            self.assertEqual(v[2 ** 68 :], ())
+            self.assertEqual(v[2 ** 68 : 2 ** 68 + 3], ())
+
+            # Write (item, slice)
+            v[0] = 4
+            self.assertEqual(v.first, 4)
+
+            v[0:2] = iter((9, 10))
+            self.assertEqual(v.first, 9)
+            self.assertEqual(v.second, 10)
+            self.assertEqual(v.third, 3)
+
+            v[::2] = (-1, -2)
+            self.assertEqual(v.first, -1)
+            self.assertEqual(v.second, 10)
+            self.assertEqual(v.third, -2)
+
+            with self.assertRaisesRegex(
+                TypeError, "Slice assignment would change size of FooStruct2 instance"
+            ):
+                v[:] = range(10)
+
+            with self.assertRaisesRegex(TypeError, "Must assign sequence to slice"):
+                v[:] = 42
+
+            with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
+                v[5] = 42
+
+            with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
+                v[-6] = 42
+
+            with self.assertRaises(IndexError):
+                v[2 ** 68] = 4
+
+            with self.assertRaises(TypeError):
+                v[2 ** 68 :] = (4,)
+
+            # Delete (item slice)
+            with self.assertRaisesRegex(
+                TypeError, "Cannot delete item '1' in a FooStruct2 instance"
+            ):
+                del v[1]
+
+            with self.assertRaisesRegex(
+                TypeError, "Cannot delete items in instances of FooStruct2"
+            ):
+                del v[1:3]
+
+            # Wrong type
+            with self.assertRaisesRegex(
+                TypeError, "Struct indices must be integers, not str"
+            ):
+                v["first"]
+
+            with self.assertRaisesRegex(
+                TypeError, "Struct indices must be integers, not str"
+            ):
+                v["first"] = 22
+
+            v = tp0(1, 2, 3)
+            self.assertIn(2, v)
+            self.assertNotIn(9, v)
+
+            with self.assertRaisesRegex(TypeError, "FooStruct2 objects are unhashable"):
+                hash(v)
+
+    def test_struct_as_attributes(self):
+        tp0 = objc.createStructType(
+            "FooStruct4", b'{FooStruct4="first"i"second"i"third"i}', None
+        )
+
+        with pyobjc_options(structs_indexable=False, structs_writable=True):
+            v = tp0(1, 2, 3)
+
+            #  Read
+            self.assertEqual(v.first, 1)
+
+            # Write
+            v.first = 4
+
+            # Delete
+            with self.assertRaisesRegex(
+                TypeError, "Cannot delete attributes of FooStruct4"
+            ):
+                del v.second
+
+    def test_no_sublcassing(self):
+        tp0 = objc.createStructType(
+            "FooStruct5", b'{FooStruct4="first"i"second"i"third"i}', None
+        )
+
+        with self.assertRaisesRegex(
+            TypeError, "type 'FooStruct5' is not an acceptable base type"
+        ):
+
+            class MyStruct(tp0):
+                pass
+
+    def test_struct_pickling(self):
+        orig = GlobalType(9, 10)
+        self.assertEqual(orig.a, 9.0)
+        self.assertEqual(orig.b, 10.0)
+
+        buf = pickle.dumps(orig)
+        self.assertIsInstance(buf, bytes)
+
+        copy = pickle.loads(buf)
+        self.assertIsInstance(copy, GlobalType)
+        self.assertEqual(copy.a, 9.0)
+        self.assertEqual(copy.b, 10.0)
+
+        self.assertEqual(copy, orig)
+
+    def test_struct_naming(self):
+        self.assertEqual(GlobalType.__name__, "GlobalType")
+        self.assertEqual(GlobalType.__module__, "PyObjCTest.test_structs")
+        self.assertEqual(GlobalType.__qualname__, "PyObjCTest.test_structs.GlobalType")
+
+    def test_sizeof(self):
+        self.assertIsInstance(GlobalType().__sizeof__(), int)
+
+        tp0 = objc.createStructType(
+            "FooStruct3", b'{FooStruct3="first"i"second"i"third"i}', None
+        )
+
+        self.assertGreaterThan(tp0().__sizeof__(), GlobalType().__sizeof__())
+
+    def todo_test_struct_defaults(self):
+        # Check default values for various types
+        # - char, unsigned char, char_as_int, char_as_text
+        # - short,  unsigned short
+        # - int,  unsigned int
+        # - long,  unsigned long
+        # - long long,  unsigned long long
+        # - float
+        # - double
+        # - bool, BOOL
+        # - nested structs
+        # - nested arrays
+        self.fail()

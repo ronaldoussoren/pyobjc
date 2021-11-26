@@ -27,6 +27,7 @@ GET_STRUCT_FIELD(PyObject* self, PyMemberDef* member)
 
     v = *(PyObject**)(((char*)self) + member->offset);
     if (v == NULL) {
+        /* XXX: When can this value be NULL? */
         return Py_None;
     } else {
         return v;
@@ -81,10 +82,8 @@ static PyObject* _Nullable struct_sq_item(PyObject* self, Py_ssize_t offset)
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
-        PyErr_Format(PyExc_IndexError,
-                     "%.100s index out of range %" PY_FORMAT_SIZE_T
-                     "d (len %" PY_FORMAT_SIZE_T "d)",
-                     Py_TYPE(self)->tp_name, offset, len);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -115,7 +114,7 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
 
     result = PyTuple_New(ihigh - ilow);
     if (result == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     for (i = ilow; i < ihigh; i++) {
@@ -154,10 +153,8 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError,
-                     "%.100s index out of range %" PY_FORMAT_SIZE_T
-                     "d (len %" PY_FORMAT_SIZE_T "d)",
-                     Py_TYPE(self)->tp_name, offset, len);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -201,14 +198,14 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         ihigh = len;
     }
 
-    seq = PySequence_Fast(v, "must assign sequence to slice");
+    seq = PySequence_Fast(v, "Must assign sequence to slice");
     if (seq == NULL)
         return -1;
 
     if (PySequence_Fast_GET_SIZE(seq) != ihigh - ilow) {
         Py_DECREF(seq);
         PyErr_Format(PyExc_TypeError,
-                     "slice assignment would change size of %.100s "
+                     "Slice assignment would change size of %.100s "
                      "instance",
                      Py_TYPE(self)->tp_name);
         return -1;
@@ -232,7 +229,6 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 static int
 struct_sq_contains(PyObject* self, PyObject* value)
 {
-    PyMemberDef* member = Py_TYPE(self)->tp_members;
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
@@ -240,7 +236,8 @@ struct_sq_contains(PyObject* self, PyObject* value)
         return -1;
     }
 
-    while (member && member->name) {
+    for (PyMemberDef* member = Py_TYPE(self)->tp_members; member && member->name;
+         member++) {
         int       r;
         PyObject* cur = GET_STRUCT_FIELD(self, member);
 
@@ -263,7 +260,7 @@ static PyObject* _Nullable struct_reduce(PyObject* self)
     len    = STRUCT_LENGTH(self);
     values = PyTuple_New(len);
     if (values == NULL)
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
 
     for (i = 0; i < len; i++) {
         PyObject* v = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
@@ -288,11 +285,12 @@ static PyObject* _Nullable struct_copy(PyObject* self)
 
     result = PyObject_GC_New(PyObject, Py_TYPE(self));
     if (result == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXC_LINE
     }
 
     while (member && member->name) {
         if (member->type != T_OBJECT) {
+            /* XXX: When can this happen? */
             member++;
             continue;
         }
@@ -373,7 +371,7 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
 
     result = PyDict_New();
     if (result == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     while (member && member->name) {
@@ -387,8 +385,10 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
         r = PyDict_SetItemString(result, member->name, t);
 
         if (r == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         member++;
     }
@@ -437,7 +437,7 @@ static PyObject* _Nullable struct_mp_subscript(PyObject* self, PyObject* item)
         } else {
             result = PyTuple_New(slicelength);
             if (result == NULL) {
-                return NULL;
+                return NULL; // LCOV_EXCL_LINE
             }
 
             for (cur = start, i = 0; i < slicelength; cur += step, i++) {
@@ -448,7 +448,7 @@ static PyObject* _Nullable struct_mp_subscript(PyObject* self, PyObject* item)
         }
 
     } else {
-        PyErr_Format(PyExc_TypeError, "struct indices must be integers, not %.100s",
+        PyErr_Format(PyExc_TypeError, "Struct indices must be integers, not %.100s",
                      Py_TYPE(item)->tp_name);
         return NULL;
     }
@@ -524,7 +524,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
         return 0;
 
     } else {
-        PyErr_Format(PyExc_TypeError, "struct indices must be integers, not %.100s",
+        PyErr_Format(PyExc_TypeError, "Struct indices must be integers, not %.100s",
                      Py_TYPE(item)->tp_name);
         return -1;
     }
@@ -619,7 +619,7 @@ static PyObject* _Nullable struct_new(PyTypeObject* type, PyObject* args, PyObje
 
     result = PyObject_GC_New(PyObject, type);
     if (result == NULL)
-        return NULL;
+        return NULL; // LCOV_EXC_LINE
 
     while (member && member->name) {
         if (member->type != T_OBJECT) {
@@ -902,20 +902,22 @@ static initproc _Nullable make_init(const char* _typestr)
 
     typestr_copy = PyObjCUtil_Strdup(_typestr);
     if (typestr_copy == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (init_cif == NULL) {
         PyObjCMethodSignature* signature =
             PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
         if (signature == NULL) {
-            return NULL;
+            return NULL; // LCOV_EXCL_LINE
         }
         init_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (init_cif == NULL) {
+            // LCOV_EXCL_START
             PyMem_Free((void*)typestr_copy);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -936,8 +938,10 @@ static initproc _Nullable make_init(const char* _typestr)
 #pragma clang diagnostic pop
 #endif
     if (cl == NULL) {
+        // LCOV_EXCL_START
         PyMem_Free((void*)typestr_copy);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -962,6 +966,7 @@ static initproc _Nullable make_init(const char* _typestr)
 #endif
 
     if (rv != FFI_OK) {
+        // LCOV_EXCL_START
 #ifdef HAVE_CLOSURE_POOL
 
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -981,6 +986,7 @@ static initproc _Nullable make_init(const char* _typestr)
         PyMem_Free((void*)typestr_copy);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return (initproc)codeloc;
@@ -1301,7 +1307,7 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
 
     fields = PyTuple_New(numFields);
     if (fields == NULL) {
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields + 1));
@@ -1343,10 +1349,12 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     result->base.tp_dict = PyDict_New();
 
     if (result->base.tp_dict == NULL) {
+        // LCOV_EXCL_START
         Py_DECREF(fields);
         PyMem_Free(members);
         PyMem_Free(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_SET_REFCNT(result, 1);
@@ -1442,8 +1450,8 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 
     result = PyObject_GC_New(PyObject, type);
     if (result == NULL) {
-        PyErr_Clear();
-        return NULL;
+        PyErr_Clear(); // LCOV_EXCL_LINE
+        return NULL;   // LCOV_EXC_LINE
     }
 
     while (member && member->name) {
@@ -1645,7 +1653,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             /* This leaks some memory, but we cannot safely
              * deallocate the type
              */
-            return NULL;
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 
@@ -1686,7 +1694,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
     if (structRegistry == NULL) {
         structRegistry = PyDict_New();
         if (structRegistry == NULL) {
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         }
     }
 
@@ -1707,29 +1715,19 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
     return 0;
 }
 
-/*
- *  XXX: Make newVal _Nonnull once all implementation files have nullability attributes
- */
 int
-PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal)
+PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 {
     Py_ssize_t   len;
     PyMemberDef* member;
 
-    if (newVal == NULL) {
-        PyErr_Format(PyExc_TypeError,
-                     "Cannot delete item '%" PY_FORMAT_SIZE_T "d' in a %.100s instance",
-                     offset, Py_TYPE(self)->tp_name);
-        return -1;
-    }
+    PyObjC_Assert(newVal != NULL, -1);
 
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError,
-                     "%.100s index out of range %" PY_FORMAT_SIZE_T
-                     "d (len %" PY_FORMAT_SIZE_T "d)",
-                     Py_TYPE(self)->tp_name, offset, len);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range",
+                     Py_TYPE(self)->tp_name);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -1742,7 +1740,7 @@ PyObject* _Nullable StructAsTuple(PyObject* strval)
     Py_ssize_t i, len = STRUCT_LENGTH(strval);
     PyObject*  retval = PyTuple_New(len);
     if (retval == NULL) {
-        return 0;
+        return 0; // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < len; i++) {

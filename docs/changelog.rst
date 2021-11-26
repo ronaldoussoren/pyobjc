@@ -48,6 +48,8 @@ Version 8.1
 * PyObjCTools.MachSignals won't cause an interpreter error when the
   signal dictionary doesn't contain a handler for a signal.
 
+* ``value in someNSPoint`` works again, instead of hanging the interpreter.
+
 Version 8.0
 -----------
 
