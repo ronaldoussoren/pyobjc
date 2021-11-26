@@ -8,9 +8,9 @@ unitest.m file as its methods.
 """
 import platform
 import sys
-
+import warnings
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
 ctests = objc._ctests
 
@@ -49,6 +49,17 @@ def make_test(name):
             self.fail("NSInvocation works!")
 
         return test_CheckNSInvoke
+
+    elif name == "InvalidObjCPointer":
+
+        def test_InvalidObjCPointer(self):
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=objc.ObjCPointerWarning)
+
+                with pyobjc_options(unknown_pointer_raises=False):
+                    ctests["InvalidObjCPointer"]()
+
+        return test_InvalidObjCPointer
 
     do_exec(
         """\

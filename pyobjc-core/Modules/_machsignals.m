@@ -133,9 +133,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "_signalmapping", signalmapping)
-        == -1) {     // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (PyModule_AddObject(m, "_signalmapping", signalmapping) // LCOV_BR_EXCL_LINE
+        == -1) {                                               // LCOV_BR_EXCL_LINE
+        return NULL;                                           // LCOV_EXCL_LINE
     }
 
     e_port      = CFMachPortCreate(NULL, SIGCallback, NULL, NULL);

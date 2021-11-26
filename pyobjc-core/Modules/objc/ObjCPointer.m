@@ -25,10 +25,9 @@ typedef struct {
 
 void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
 {
-    if (!PyObjCPointer_Check(obj)) {
-        PyErr_SetString(PyExc_TypeError, "Unexpected type");
-        return NULL;
-    }
+    /* The only caller checks the type as well */
+    PyObjC_Assert(PyObjCPointer_Check(obj), NULL);
+
     return ((PyObjCPointer*)(obj))->ptr;
 }
 
@@ -101,12 +100,17 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     }
 
     self = PyObject_NEW(PyObjCPointer, &PyObjCPointer_Type);
-    if (self == NULL) {
-        return NULL;
+    if (self == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     self->type = PyBytes_FromStringAndSize((char*)t, typeend - t);
     self->ptr  = p;
+
+    if (self->type == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(self);      // LCOV_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
+    }
 
     return (PyObject*)self;
 }

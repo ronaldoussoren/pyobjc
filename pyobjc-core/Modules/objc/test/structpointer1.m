@@ -34,6 +34,11 @@ static struct TestStructPointerStruct myGlobal = {1};
     return (struct UnwrappedStruct*)42;
 }
 
++ (unsigned long)unwrappedToInt:(struct UnwrappedStruct*)val
+{
+    return (unsigned long)val;
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
