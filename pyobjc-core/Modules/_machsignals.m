@@ -31,12 +31,12 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
     int       signum;
     /* this is abuse of msgh_id */
     signum = ((mach_msg_header_t*)msg)->msgh_id;
-    if (!signalmapping) {
-        return; // LCOV_EXCL_LINE
+    if (!signalmapping) { // LCOV_BR_EXCL_LINE
+        return;           // LCOV_EXCL_LINE
     }
     PyObjC_BEGIN_WITH_GIL
         tmp = PyLong_FromLong((long)signum);
-        if (tmp == NULL)
+        if (tmp == NULL)              // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
 
         callable = PyDict_GetItem(signalmapping, tmp);
@@ -117,23 +117,24 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
     PyObject* m;
 
     m = PyModule_Create(&mod_module);
-    if (m == NULL) {
+    if (m == NULL) { // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE
     }
 
     CFMachPortRef      e_port;
     CFRunLoopSourceRef e_rls;
 
-    if (PyObjC_ImportAPI(m) < 0) {
-        return NULL; // LCOV_EXCL_LINE
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
 
     signalmapping = PyDict_New();
-    if (!signalmapping) {
-        return NULL; // LCOV_EXCL_LINE
+    if (!signalmapping) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "_signalmapping", signalmapping) == -1) {
+    if (PyModule_AddObject(m, "_signalmapping", signalmapping)
+        == -1) {     // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE
     }
 
