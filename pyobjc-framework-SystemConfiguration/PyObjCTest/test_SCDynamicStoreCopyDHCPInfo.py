@@ -16,15 +16,16 @@ class TestSCDynamicStoreCopyDHCPInfo(TestCase):
         self.assertTrue(isinstance(st, SystemConfiguration.SCDynamicStoreRef))
 
         have_ip = False
-        with os.popen("ifconfig en0 | grep inet", "r") as fp:
-            ip = fp.read()
-        if ip.strip():
-            have_ip = True
-        else:
-            with os.popen("ifconfig en1 | grep inet", "r") as fp:
+
+        for intf in ("en0", "en1", "en2", "en3"):
+            with os.popen(f"ifconfig {intf} 2>/dev/null| grep inet", "r") as fp:
                 ip = fp.read()
-            if ip.strip():
-                have_ip = True
+                if ip.strip():
+                    have_ip = True
+                    break
+
+        if not have_ip:
+            print("Didn't find a configured interface")
 
         info = SystemConfiguration.SCDynamicStoreCopyDHCPInfo(st, None)
         if not have_ip:

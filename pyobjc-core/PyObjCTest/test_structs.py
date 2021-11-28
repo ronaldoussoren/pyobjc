@@ -14,7 +14,7 @@ import objc
 import pickle
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.structs import OC_StructTest
-from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from PyObjCTools.TestSupport import TestCase, pyobjc_options, expectedFailure
 
 PTR_SIZE = 8
 
@@ -431,6 +431,7 @@ class TestStructs(TestCase):
 
         self.assertEqual(copy, orig)
 
+    @expectedFailure
     def test_struct_naming(self):
         self.assertEqual(GlobalType.__name__, "GlobalType")
         self.assertEqual(GlobalType.__module__, "PyObjCTest.test_structs")
