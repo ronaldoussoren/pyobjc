@@ -16,7 +16,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 8.0 was released on 2021-11-11. See the :doc:`changelog <changelog>` for more information. PyObjC 8 supports Python 3.6 and later.
+PyObjC 8.1 was released on 2021-11-29. See the :doc:`changelog <changelog>` for more information. PyObjC 8 supports Python 3.6 and later.
 
 PyObjC 5.3 is the last version supporting Python 2 and was released on 2019-10-16.
 
