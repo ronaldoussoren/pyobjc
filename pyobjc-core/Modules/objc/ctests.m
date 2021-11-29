@@ -872,6 +872,21 @@ BEGIN_UNITTEST(AlwaysFails)
 ASSERT(0 == 1);
 END_UNITTEST
 
+BEGIN_UNITTEST(InvalidObjCPointer)
+
+/* Invalid type encoding */
+PyObject* p = PyObjCPointer_New(&p, "^{foo=");
+ASSERT(PyErr_Occurred());
+ASSERT(!p);
+PyErr_Clear();
+
+p = PyObjCPointer_New(&p, "{foo=");
+ASSERT(PyErr_Occurred());
+ASSERT(!p);
+PyErr_Clear();
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(StructSize),
@@ -904,6 +919,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(MemView),
                                     TESTDEF(ReleasedBuffer),
                                     TESTDEF(AlwaysFails),
+                                    TESTDEF(InvalidObjCPointer),
                                     {0, 0, 0, 0}};
 
 int

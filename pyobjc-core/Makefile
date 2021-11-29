@@ -54,10 +54,10 @@ c-coverage:
 	mkdir build dist
 	python3 -mvenv build/cov-env
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE -coverage -fprofile-arcs -ftest-coverage" LDFLAGS="-coverage -fprofile-arcs -ftest-coverage" build/cov-env/bin/python3 setup.py develop
-	lcov --directory .  --zerocounters
+	lcov --config-file .lcovrc --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test --verbosity=3
-	lcov --no-external --capture --directory . --output-file build/coverage.info
-	genhtml --branch-coverage --legend build/coverage.info --output-directory dist/c-coverage
+	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|PyObjC_Assert"  --no-external --capture --directory . --output-file build/coverage.info
+	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|PyObjC_Assert" --legend build/coverage.info --output-directory dist/c-coverage
 	open dist/c-coverage/index.html
 
 # XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:
