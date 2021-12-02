@@ -156,32 +156,9 @@ PyObjC_CreateInlineTab(PyObjC_function_map* map)
 static inline int
 PyObjC_ImportAPI(PyObject* calling_module)
 {
-    PyObject* m;
-    PyObject* d;
-    PyObject* api_obj;
-    PyObject* name = PyUnicode_FromString("objc");
-
-    m = PyImport_Import(name);
-    Py_DECREF(name);
-    if (m == NULL) {
-        return -1;
-    }
-
-    d = PyModule_GetDict(m);
-    if (d == NULL) {
-        PyErr_SetString(PyExc_RuntimeError, "No dict in objc module");
-        return -1;
-    }
-
-    api_obj = PyDict_GetItemString(d, PYOBJC_API_NAME);
-    if (api_obj == NULL) {
-        PyErr_SetString(PyExc_RuntimeError, "No C_API in objc module");
-        return -1;
-    }
-    PyObjC_API =
-        (struct pyobjc_api*)PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
+    PyObjC_API = PyCapsule_Import("objc." PYOBJC_API_NAME, 0);
     if (PyObjC_API == NULL) {
-        return 0;
+        return -1;
     }
     if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
         PyErr_Format(PyExc_RuntimeError,
@@ -196,8 +173,6 @@ PyObjC_ImportAPI(PyObject* calling_module)
                      (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
         return -1;
     }
-
-    Py_INCREF(api_obj);
 
     /* Current pyobjc implementation doesn't allow deregistering
      * information, avoid unloading of users of the C-API.
