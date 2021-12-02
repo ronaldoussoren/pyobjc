@@ -15,6 +15,9 @@ Version 8.1.1b1
 * Switch to :c:func:`PyCapsule_Import` to load the PyObjC API object in
   extension modules.
 
+* Fix crash when calling ``objc.FSRef.from_pathname()`` with a path
+  that cannot be encoded in the filesystem encoding (UTF-8).
+
 Version 8.1
 -----------
 

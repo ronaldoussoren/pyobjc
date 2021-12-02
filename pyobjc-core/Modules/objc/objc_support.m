@@ -1695,17 +1695,11 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
     }
 
     if (IS_FSREF(types)) {
-        if (PyObjC_encode_fsref(arg, datum) == 0) {
-            return 0;
-        }
-        PyErr_Clear();
+        return PyObjC_encode_fsref(arg, datum);
     }
 
     if (IS_FSSPEC(types)) {
-        if (PyObjC_encode_fsspec(arg, datum) == 0) {
-            return 0;
-        }
-        PyErr_Clear();
+        return PyObjC_encode_fsspec(arg, datum);
     }
 
     if (IS_DECIMAL(types)) {

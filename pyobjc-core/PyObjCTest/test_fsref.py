@@ -1,5 +1,6 @@
 import objc
 import os
+import tempfile
 from PyObjCTest.fsref import OC_TestFSRefHelper
 from PyObjCTools.TestSupport import TestCase
 
@@ -17,17 +18,16 @@ class TestFSRef(TestCase):
         self.assertIsInstance(ref.data, bytes)
         self.assertIsInstance(ref.as_pathname(), str)
 
-        try:
-            from Carbon.File import FSRef
+        with tempfile.NamedTemporaryFile() as fp:
+            name = fp.name
+            ref = o.fsrefForPath_(fp.name)
 
-        except ImportError:
-            pass
-
-        else:
-            self.assertIsInstance(ref.as_carbon(), FSRef)
+        self.assertFalse(os.path.exists(name))
+        with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
+            ref.as_pathname()
 
     def testArg(self):
-        return  #
+        # return  #
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.fsrefForPath_("/Library")
         self.assertIsInstance(ref, objc.FSRef)
@@ -36,7 +36,7 @@ class TestFSRef(TestCase):
         self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
 
-        with self.assertRaisesRegex(TypeError, "Cannot convert value to FSRef"):
+        with self.assertRaisesRegex(ValueError, "Cannot convert value to FSRef"):
             o.stringForFSRef_("/etc/hosts")
 
     def testInput(self):
@@ -67,6 +67,12 @@ class TestFSRef(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Expecting string"):
             objc.FSRef.from_pathname(42)
+
+        with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
+            objc.FSRef.from_pathname("\uDC00")
+
+        with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
+            objc.FSRef.from_pathname("no-such-file.missing")
 
     def test_sizeof(self):
         ref = objc.FSRef.from_pathname("/etc/hosts")

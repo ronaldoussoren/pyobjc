@@ -10,7 +10,7 @@ extern PyTypeObject FILE_Type;
 
 #define FILE_Check(obj) PyObject_TypeCheck(obj, &FILE_Type)
 
-extern PyObject* _Nullable FILE_create(FILE* _Nullable fp);
+extern PyObject* _Nullable FILE_create(FILE* fp);
 extern FILE* _Nullable FILE_get(PyObject* fp);
 
 NS_ASSUME_NONNULL_END

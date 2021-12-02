@@ -73,9 +73,9 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
     }
 
     value = PyUnicode_EncodeFSDefault(path);
-    PyObjC_Assert(PyBytes_Check(value), NULL);
     if (value == NULL)
         return NULL;
+    PyObjC_Assert(PyBytes_Check(value), NULL);
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
     Py_DECREF(value);
@@ -143,8 +143,8 @@ PyObject* _Nullable PyObjC_decode_fsref(void* buffer)
 {
     PyObjC_FSRefObject* result = PyObject_New(PyObjC_FSRefObject, &PyObjC_FSRefType);
 
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
     result->ref = *(FSRef*)buffer;
     return (PyObject*)result;

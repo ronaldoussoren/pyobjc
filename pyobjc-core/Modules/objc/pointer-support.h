@@ -5,8 +5,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern PyTypeObject PyObjCZoneWrapper_Type;
 
-typedef PyObject* _Nullable (*PyObjCPointerWrapper_ToPythonFunc)(void*);
-typedef int (*PyObjCPointerWrapper_FromPythonFunc)(PyObject*, void*);
+typedef PyObject* _Nullable (*PyObjCPointerWrapper_ToPythonFunc)(void* _Nonnull);
+typedef int (*PyObjCPointerWrapper_FromPythonFunc)(PyObject*, void* _Nonnull);
 
 extern int PyObjCPointerWrapper_Register(const char* type_name, const char*,
                                          PyObjCPointerWrapper_ToPythonFunc   pythonify,

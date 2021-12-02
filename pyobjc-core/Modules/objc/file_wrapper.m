@@ -304,21 +304,11 @@ PyTypeObject FILE_Type = {
 };
 
 PyObject*
-FILE_create(FILE* _Nullable fp)
+FILE_create(FILE* fp)
 {
     struct file_object* self;
-    if (fp == NULL) {
-        /* XXX: This cannot happen, this function is called through
-         *      PyObjCPointerWrapper_ToPython and its only user ensures
-         *      that the value is not NULL.
-         *
-         *      Only replace this by an assertion after updating the
-         *      nullablity attributes to ensure we'll get a compile
-         *      error if that ever changes.
-         */
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+
+    PyObjC_Assert(fp != NULL, NULL);
 
     self     = PyObject_NEW(struct file_object, &FILE_Type);
     self->fp = fp;
