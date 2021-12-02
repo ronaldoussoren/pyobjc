@@ -15,6 +15,7 @@ class TestAVAudioSequencer(TestCase):
         v = AVFoundation.AVBeatRange()
         self.assertIsInstance(v.start, float)
         self.assertIsInstance(v.length, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
     def testFunctions(self):

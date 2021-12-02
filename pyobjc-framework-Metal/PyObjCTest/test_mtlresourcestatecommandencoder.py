@@ -38,6 +38,7 @@ class TestMTLResourceStateCommandEncoder(TestCase):
         self.assertIsInstance(v.regionSizeDepth, int)
         self.assertIsInstance(v.mipMapLevel, int)
         self.assertIsInstance(v.sliceId, int)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):

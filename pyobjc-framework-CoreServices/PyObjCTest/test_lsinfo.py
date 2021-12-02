@@ -104,6 +104,7 @@ class TestLSInfo(TestCase):
         self.assertHasAttr(v, "extension")
         self.assertNotHasAttr(v, "iconFileName")
         self.assertNotHasAttr(v, "kindID")
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         CoreServices.LSInit(CoreServices.kLSInitializeDefaults)

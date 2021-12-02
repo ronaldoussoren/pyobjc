@@ -7,14 +7,17 @@ class TestAVCaption(TestCase):
         v = AVFoundation.AVCaptionDimension()
         self.assertIsInstance(v.value, float)
         self.assertIsInstance(v.units, int)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVCaptionPoint()
         self.assertIsInstance(v.x, AVFoundation.AVCaptionDimension)
         self.assertIsInstance(v.y, AVFoundation.AVCaptionDimension)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVCaptionSize()
         self.assertIsInstance(v.width, AVFoundation.AVCaptionDimension)
         self.assertIsInstance(v.height, AVFoundation.AVCaptionDimension)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(AVFoundation.AVCaptionUnitsTypeUnspecified, 0)

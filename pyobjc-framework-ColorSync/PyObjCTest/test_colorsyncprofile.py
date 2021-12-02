@@ -200,3 +200,4 @@ class TestColorSyncProfile(TestCase):
     def testStructs(self):
         v = ColorSync.ColorSyncMD5()
         self.assertTrue(hasattr(v, "digest"))
+        self.assertPickleRoundTrips(v)

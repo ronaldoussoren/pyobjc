@@ -10,12 +10,15 @@ class TestAuthorization(TestCase):
     def test_structs(self):
         v = Security.AuthorizationExternalForm()
         self.assertEqual(v.bytes, None)
+        self.assertPickleRoundTrips(v)
 
         v.bytes = b"\x00" * 32
+        self.assertPickleRoundTrips(v)
 
         w = objc.repythonify(v, Security.AuthorizationExternalForm.__typestr__)
         self.assertIsInstance(w, Security.AuthorizationExternalForm)
         self.assertEqual(w.bytes, (0,) * 32)
+        self.assertPickleRoundTrips(w)
 
     def test_constants(self):
         self.assertEqual(Security.kAuthorizationEmptyEnvironment, None)

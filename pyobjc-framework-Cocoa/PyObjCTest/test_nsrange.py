@@ -7,6 +7,7 @@ class TestNSRange(TestCase):
         v = Foundation.NSRange()
         self.assertHasAttr(v, "location")
         self.assertHasAttr(v, "length")
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         v = Foundation.NSMakeRange(1, 4)

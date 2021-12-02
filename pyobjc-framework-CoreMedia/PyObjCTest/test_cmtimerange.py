@@ -7,10 +7,12 @@ class TestCMTimeRange(TestCase):
         v = CoreMedia.CMTimeRange()
         self.assertEqual(v.start, CoreMedia.CMTime())
         self.assertEqual(v.duration, CoreMedia.CMTime())
+        self.assertPickleRoundTrips(v)
 
         v = CoreMedia.CMTimeMapping()
         self.assertEqual(v.source, CoreMedia.CMTimeRange())
         self.assertEqual(v.target, CoreMedia.CMTimeRange())
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertIsInstance(CoreMedia.kCMTimeRangeZero, CoreMedia.CMTimeRange)

@@ -114,6 +114,7 @@ class TestDRCoreTrack(TestCase):
         self.assertEqual(v.flags, 0)
         self.assertEqual(v.blockSize, 0)
         self.assertEqual(v.requestedAddress, 0)
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         self.assertIsInstance(DiscRecording.DRTrackGetTypeID(), int)

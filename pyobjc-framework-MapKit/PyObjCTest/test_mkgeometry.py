@@ -10,22 +10,27 @@ class TestMKGeometry(TestCase):
         s = MapKit.MKCoordinateSpan()
         self.assertIsInstance(s.latitudeDelta, float)
         self.assertIsInstance(s.longitudeDelta, float)
+        self.assertPickleRoundTrips(s)
 
         s = MapKit.MKCoordinateRegion()
         self.assertIsInstance(s.center, MapKit.CLLocationCoordinate2D)
         self.assertIsInstance(s.span, MapKit.MKCoordinateSpan)
+        self.assertPickleRoundTrips(s)
 
         s = MapKit.MKMapPoint()
         self.assertIsInstance(s.x, float)
         self.assertIsInstance(s.y, float)
+        self.assertPickleRoundTrips(s)
 
         s = MapKit.MKMapSize()
         self.assertIsInstance(s.width, float)
         self.assertIsInstance(s.height, float)
+        self.assertPickleRoundTrips(s)
 
         s = MapKit.MKMapRect()
         self.assertIsInstance(s.origin, MapKit.MKMapPoint)
         self.assertIsInstance(s.size, MapKit.MKMapSize)
+        self.assertPickleRoundTrips(s)
 
     @min_os_level("10.9")
     def testConstants(self):

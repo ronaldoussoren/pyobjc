@@ -237,6 +237,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertEqual(v.y, 0)
         self.assertEqual(v.width, 0)
         self.assertEqual(v.height, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLViewport()
         self.assertEqual(v.originX, 0)
@@ -245,12 +246,14 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertEqual(v.height, 0)
         self.assertEqual(v.znear, 0)
         self.assertEqual(v.zfar, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLDrawPrimitivesIndirectArguments()
         self.assertEqual(v.vertexCount, 0)
         self.assertEqual(v.instanceCount, 0)
         self.assertEqual(v.vertexStart, 0)
         self.assertEqual(v.baseInstance, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLDrawIndexedPrimitivesIndirectArguments()
         self.assertEqual(v.indexCount, 0)
@@ -258,24 +261,29 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertEqual(v.indexStart, 0)
         self.assertEqual(v.baseVertex, 0)
         self.assertEqual(v.baseInstance, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLDrawPatchIndirectArguments()
         self.assertEqual(v.patchCount, 0)
         self.assertEqual(v.instanceCount, 0)
         self.assertEqual(v.patchStart, 0)
         self.assertEqual(v.baseInstance, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLQuadTessellationFactorsHalf()
         self.assertEqual(v.edgeTessellationFactor, None)
         self.assertEqual(v.insideTessellationFactor, None)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLTriangleTessellationFactorsHalf()
         self.assertEqual(v.edgeTessellationFactor, None)
         self.assertEqual(v.insideTessellationFactor, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLVertexAmplificationViewMapping()
         self.assertEqual(v.viewportArrayIndexOffset, 0)
         self.assertEqual(v.renderTargetArrayIndexOffset, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("10.11")
     def test_protocols(self):

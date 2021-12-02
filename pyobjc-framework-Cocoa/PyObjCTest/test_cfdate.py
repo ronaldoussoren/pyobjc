@@ -48,6 +48,8 @@ class TestDate(TestCase):
         self.assertHasAttr(v, "minute")
         self.assertHasAttr(v, "second")
 
+        self.assertPickleRoundTrips(v)
+
         v = CoreFoundation.CFGregorianUnits()
         self.assertHasAttr(v, "years")
         self.assertHasAttr(v, "months")
@@ -55,6 +57,8 @@ class TestDate(TestCase):
         self.assertHasAttr(v, "hours")
         self.assertHasAttr(v, "minutes")
         self.assertHasAttr(v, "seconds")
+
+        self.assertPickleRoundTrips(v)
 
     def testAbsoluteTime(self):
         v = CoreFoundation.CFAbsoluteTimeGetCurrent()

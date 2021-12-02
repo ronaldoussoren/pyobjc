@@ -595,6 +595,7 @@ class TestCMFormatDescription(TestCase):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)
         self.assertEqual(v.height, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMFormatDescriptionRef)

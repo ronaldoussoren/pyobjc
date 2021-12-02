@@ -4,10 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCLLocation(TestCase):
     @min_os_level("10.6")
-    def testTypes(self):
+    def testStructs(self):
         v = CoreLocation.CLLocationCoordinate2D()
         self.assertIsInstance(v.latitude, float)
         self.assertIsInstance(v.longitude, float)
+        self.assertPickleRoundTrips(v)
         self.assertEqual(
             CoreLocation.CLLocationCoordinate2D.__typestr__,
             b"{CLLocationCoordinate2D=dd}",

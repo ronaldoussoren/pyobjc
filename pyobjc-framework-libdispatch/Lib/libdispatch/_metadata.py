@@ -34,7 +34,7 @@ misc = {}
 misc.update(
     {
         "timespec": objc.createStructType(
-            "timespec", b"{timespec=ll}", ["tv_sec", "tv_nsec"]
+            "libdispatch.timespec", b"{timespec=ll}", ["tv_sec", "tv_nsec"]
         )
     }
 )

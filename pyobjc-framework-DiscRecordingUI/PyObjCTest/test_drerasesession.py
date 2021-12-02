@@ -40,11 +40,13 @@ class TestDREraseSession(TestCase):
         v = DiscRecordingUI.DREraseSessionSetupDialogOptions()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
+        self.assertPickleRoundTrips(v)
 
         v = DiscRecordingUI.DREraseSessionProgressDialogOptions()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
         self.assertEqual(v.description, None)
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         self.assertIsInstance(DiscRecordingUI.DREraseSessionGetTypeID(), int)

@@ -24,3 +24,4 @@ class TestMKTileOverlay(TestCase):
         self.assertIsInstance(c.y, int)
         self.assertIsInstance(c.z, int)
         self.assertIsInstance(c.contentScaleFactor, float)
+        self.assertPickleRoundTrips(c)

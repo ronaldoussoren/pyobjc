@@ -34,6 +34,7 @@ class TestMTLRenderPass(TestCase):
         self.assertEqual(v.green, 0.0)
         self.assertEqual(v.blue, 0.0)
         self.assertEqual(v.alpha, 0.0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         v = Metal.MTLClearColorMake(1, 2, 3, 4)

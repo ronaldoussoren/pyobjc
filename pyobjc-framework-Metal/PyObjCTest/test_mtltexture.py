@@ -122,6 +122,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(v.green, 0)
         self.assertEqual(v.blue, 0)
         self.assertEqual(v.alpha, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("10.15")
     def test_functions(self):

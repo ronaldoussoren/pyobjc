@@ -569,6 +569,7 @@ class TestAudioDriverPlugIn(TestCase):
         v = CoreAudio.AudioValueRange()
         self.assertEqual(v.mMinimum, 0.0)
         self.assertEqual(v.mMaximum, 0.0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioStreamBasicDescription()
         self.assertEqual(v.mSampleRate, 0.0)
@@ -580,11 +581,13 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(v.mChannelsPerFrame, 0)
         self.assertEqual(v.mBitsPerChannel, 0)
         self.assertEqual(v.mReserved, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioStreamPacketDescription()
         self.assertEqual(v.mStartOffset, 0)
         self.assertEqual(v.mVariableFramesInPacket, 0)
         self.assertEqual(v.mDataByteSize, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.SMPTETime()
         self.assertEqual(v.mSubframes, 0)
@@ -596,6 +599,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(v.mMinutes, 0)
         self.assertEqual(v.mSeconds, 0)
         self.assertEqual(v.mFrames, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioTimeStamp()
         self.assertEqual(v.mSampleTime, 0.0)
@@ -605,11 +609,13 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(v.mSMPTETime, CoreAudio.SMPTETime())
         self.assertEqual(v.mFlags, 0)
         self.assertEqual(v.mReserved, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioClassDescription()
         self.assertEqual(v.mType, 0)
         self.assertEqual(v.mSubType, 0)
         self.assertEqual(v.mManufacturer, 0)
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         CoreAudio.TestAudioFormatNativeEndian

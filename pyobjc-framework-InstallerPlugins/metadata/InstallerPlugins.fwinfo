@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "InstallerSection_Private": { "ignore": true },
+   "InstallerState_Private": { "ignore": true },
+   "InstallerPane_Private": { "ignore": true }
+  },
   "classes": {
    "InstallerPane": {
     "methods": [

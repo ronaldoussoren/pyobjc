@@ -6,10 +6,12 @@ class TestMIDIThruConnection(TestCase):
     def test_structs(self):
         v = CoreMIDI.MIDIValueMap()
         self.assertIs(v.value, None)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDITransform()
         self.assertIsInstance(v.transform, int)
         self.assertIsInstance(v.param, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDIControlTransform()
         self.assertIsInstance(v.controlType, int)
@@ -17,10 +19,12 @@ class TestMIDIThruConnection(TestCase):
         self.assertIsInstance(v.controlNumber, int)
         self.assertIsInstance(v.transform, int)
         self.assertIsInstance(v.param, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDIThruConnectionEndpoint()
         self.assertIsInstance(v.endpointRef, int)
         self.assertIsInstance(v.uniqueID, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDIThruConnectionParams()
         self.assertIsInstance(v.version, int)
@@ -48,6 +52,7 @@ class TestMIDIThruConnection(TestCase):
         self.assertIsInstance(v.numControlTransforms, int)
         self.assertIsInstance(v.numMaps, int)
         self.assertIs(v.reserved3, None)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(CoreMIDI.kMIDITransform_None, 0)

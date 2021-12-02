@@ -89,23 +89,27 @@ class TestNSPoint(TestCase):
 
     def testRepr(self):
         p = Foundation.NSPoint()
-        self.assertEqual(repr(p), "<NSPoint x=0.0 y=0.0>")
+        self.assertEqual(repr(p), "<Foundation.NSPoint x=0.0 y=0.0>")
 
         p = Foundation.NSPoint(42, 98)
-        self.assertEqual(repr(p), "<NSPoint x=42 y=98>")
+        self.assertEqual(repr(p), "<Foundation.NSPoint x=42 y=98>")
 
         p.x = p
-        self.assertEqual(repr(p), "<NSPoint x=<NSPoint ...> y=98>")
+        self.assertEqual(
+            repr(p), "<Foundation.NSPoint x=<Foundation.NSPoint ...> y=98>"
+        )
 
     def testStr(self):
         p = Foundation.NSPoint()
-        self.assertEqual(str(p), "<NSPoint x=0.0 y=0.0>")
+        self.assertEqual(str(p), "<Foundation.NSPoint x=0.0 y=0.0>")
 
         p = Foundation.NSPoint(42, 98)
-        self.assertEqual(str(p), "<NSPoint x=42 y=98>")
+        self.assertEqual(str(p), "<Foundation.NSPoint x=42 y=98>")
 
         p.x = p
-        self.assertEqual(repr(p), "<NSPoint x=<NSPoint ...> y=98>")
+        self.assertEqual(
+            repr(p), "<Foundation.NSPoint x=<Foundation.NSPoint ...> y=98>"
+        )
 
     def testSlice(self):
         p = Foundation.NSPoint(1, 2)

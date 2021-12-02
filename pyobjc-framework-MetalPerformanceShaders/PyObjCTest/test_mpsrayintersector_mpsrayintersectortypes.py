@@ -23,10 +23,12 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
 
         v = MetalPerformanceShaders.MPSIntersectionDistance()
         self.assertIsInstance(v.distance, float)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndex()
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Vector
         self.assertNotHasAttr(
@@ -37,6 +39,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.instanceIndex, int)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Vector
         self.assertNotHasAttr(
@@ -48,6 +51,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.bufferIndex, int)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Vector
         self.assertNotHasAttr(
@@ -61,6 +65,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.instanceIndex, int)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Vector
         self.assertNotHasAttr(

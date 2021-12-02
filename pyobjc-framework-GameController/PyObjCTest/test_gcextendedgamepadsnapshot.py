@@ -54,6 +54,7 @@ class TestGCExtendedGamepadSnapshot(TestCase):
         self.assertIsInstance(v.rightThumbstickY, float)
         self.assertIsInstance(v.leftTrigger, float)
         self.assertIsInstance(v.rightTrigger, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.14.1")
     def test_structs_10_14_1(self):

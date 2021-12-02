@@ -3,6 +3,15 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.1.1b1
+---------------
+
+* #404: Instances of the Python represention of C structs can now be pickled
+
+  That is, instances of ``AppKit.NSPoint``, ``Foundation.NSRange``, etc. can
+  be pickled. The exception are a number of types in the CoreAudio bindings
+  that have manual wrapper types instead of the generic support in pyobjc-core.
+
 Version 8.1
 -----------
 

@@ -17,3 +17,4 @@ class TestCMDeviceMotion(TestCase):
         v = CoreMotion.CMCalibratedMagneticField()
         self.assertEqual(v.field, CoreMotion.CMMagneticField())
         self.assertEqual(v.accuracy, 0)
+        self.assertPickleRoundTrips(v)

@@ -9,6 +9,7 @@ class TestCAFrameRateRange(TestCase):
         self.assertIsInstance(v.minimum, float)
         self.assertIsInstance(v.maximum, float)
         self.assertIsInstance(v.preferred, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("12.0")
     def test_constants(self):

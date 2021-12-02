@@ -238,6 +238,7 @@ class TestCGPath(TestCase):
         self.assertEqual(Quartz.kCGPathElementCloseSubpath, 4)
 
     def testStructs(self):
-        Quartz.CGPathElement()
-        self.assertTrue(hasattr(Quartz.CGPathElement, "type"))
-        self.assertTrue(hasattr(Quartz.CGPathElement, "points"))
+        v = Quartz.CGPathElement()
+        self.assertTrue(hasattr(v, "type"))
+        self.assertTrue(hasattr(v, "points"))
+        self.assertPickleRoundTrips(v)

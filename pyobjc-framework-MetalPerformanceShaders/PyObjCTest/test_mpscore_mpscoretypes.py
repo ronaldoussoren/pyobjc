@@ -115,39 +115,47 @@ class TestMPSCore_MPSCoreTypes(TestCase):
         self.assertIsInstance(v.x, int)
         self.assertIsInstance(v.y, int)
         self.assertIsInstance(v.z, int)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSOrigin()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSSize()
         self.assertIsInstance(v.width, float)
         self.assertIsInstance(v.height, float)
         self.assertIsInstance(v.depth, float)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSDimensionSlice()
         self.assertIsInstance(v.start, int)
         self.assertIsInstance(v.length, int)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSRegion()
         self.assertIsInstance(v.origin, MetalPerformanceShaders.MPSOrigin)
         self.assertIsInstance(v.size, MetalPerformanceShaders.MPSSize)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSScaleTransform()
         self.assertIsInstance(v.scaleX, float)
         self.assertIsInstance(v.scaleY, float)
         self.assertIsInstance(v.translateX, float)
         self.assertIsInstance(v.translateY, float)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSImageCoordinate()
         self.assertIsInstance(v.x, int)
         self.assertIsInstance(v.y, int)
         self.assertIsInstance(v.channel, int)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSImageRegion()
         self.assertIsInstance(v.offset, MetalPerformanceShaders.MPSImageCoordinate)
         self.assertIsInstance(v.size, MetalPerformanceShaders.MPSImageCoordinate)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.13")
     def test_functions10_13(self):

@@ -381,11 +381,13 @@ class TestMTLDevice(TestCase):
         v = Metal.MTLSizeAndAlign()
         self.assertEqual(v.size, 0)
         self.assertEqual(v.align, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLAccelerationStructureSizes()
         self.assertEqual(v.accelerationStructureSize, 0)
         self.assertEqual(v.buildScratchBufferSize, 0)
         self.assertEqual(v.refitScratchBufferSize, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
     def test_funtions10_11(self):

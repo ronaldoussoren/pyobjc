@@ -101,6 +101,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertEqual(v.leading, 0.0)
         self.assertEqual(v.bottom, 0.0)
         self.assertEqual(v.trailing, 0.0)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("10.15")
     def test_functions_10_15(self):

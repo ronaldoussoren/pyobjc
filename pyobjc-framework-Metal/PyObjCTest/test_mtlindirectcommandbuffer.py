@@ -24,6 +24,7 @@ class TestMTLIndirectCommandBuffer(TestCase):
         v = Metal.MTLIndirectCommandBufferExecutionRange()
         self.assertEqual(v.location, 0)
         self.assertEqual(v.length, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.14")
     def test_functions(self):

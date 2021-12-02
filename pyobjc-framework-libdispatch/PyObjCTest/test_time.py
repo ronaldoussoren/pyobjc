@@ -22,10 +22,12 @@ class TestTime(TestCase):
         tv = libdispatch.timespec(50, 100)
         self.assertEqual(tv.tv_sec, 50)
         self.assertEqual(tv.tv_nsec, 100)
+        self.assertPickleRoundTrips(tv)
 
         tv = libdispatch.timespec()
         self.assertEqual(tv.tv_sec, 0)
         self.assertEqual(tv.tv_nsec, 0)
+        self.assertPickleRoundTrips(tv)
 
     @min_os_level("10.6")
     def test_functions(self):

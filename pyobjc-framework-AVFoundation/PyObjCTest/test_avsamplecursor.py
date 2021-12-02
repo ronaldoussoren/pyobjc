@@ -26,6 +26,7 @@ class TestAVSampleCursor(TestCase):
         self.assertIsInstance(v.sampleIsFullSync, bool)
         self.assertIsInstance(v.sampleIsPartialSync, bool)
         self.assertIsInstance(v.sampleIsDroppable, bool)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVSampleCursorDependencyInfo()
         self.assertIsInstance(
@@ -38,17 +39,21 @@ class TestAVSampleCursor(TestCase):
             v.sampleIndicatesWhetherItHasRedundantCoding, bool
         )  # noqa: B950
         self.assertIsInstance(v.sampleHasRedundantCoding, bool)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVSampleCursorStorageRange()
         self.assertIsInstance(v.offset, int)
         self.assertIsInstance(v.length, int)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVSampleCursorChunkInfo()
         self.assertIsInstance(v.chunkSampleCount, int)
         self.assertIsInstance(v.chunkHasUniformSampleSizes, bool)
         self.assertIsInstance(v.chunkHasUniformSampleDurations, bool)
         self.assertIsInstance(v.chunkHasUniformFormatDescriptions, bool)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVSampleCursorAudioDependencyInfo()
         self.assertIsInstance(v.audioSampleIsIndependentlyDecodable, bool)
         self.assertIsInstance(v.audioSamplePacketRefreshCount, int)
+        self.assertPickleRoundTrips(v)

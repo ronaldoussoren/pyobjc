@@ -10,6 +10,7 @@ class TestCMIOHardwareDevice(TestCase):
         v = CoreMediaIO.CMIODeviceStreamConfiguration()
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mNumberChannels, None)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMediaIO.CMIODeviceAVCCommand()
         self.assertEqual(v.mCommand, None)
@@ -17,6 +18,7 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(v.mResponse, None)
         self.assertEqual(v.mResponseLength, 0)
         self.assertEqual(v.mResponseUsed, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMediaIO.CMIODeviceRS422Command()
         self.assertEqual(v.mCommand, None)
@@ -24,10 +26,12 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(v.mResponse, None)
         self.assertEqual(v.mResponseLength, 0)
         self.assertEqual(v.mResponseUsed, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMediaIO.CMIODeviceSMPTETimeCallback()
         self.assertEqual(v.mGetSMPTETimeProc, None)
         self.assertEqual(v.mRefCon, None)
+        self.assertPickleRoundTrips(v)
 
     def testConstants(self):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeInput, fourcc(b"inpt"))

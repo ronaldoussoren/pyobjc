@@ -23,6 +23,7 @@ class TestGCGamepadSnapshot(TestCase):
         self.assertIsInstance(v.buttonY, float)
         self.assertIsInstance(v.leftShoulder, float)
         self.assertIsInstance(v.rightShoulder, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.9")
     def testFunctions(self):

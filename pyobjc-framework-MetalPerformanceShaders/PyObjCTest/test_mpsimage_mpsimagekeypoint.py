@@ -8,6 +8,7 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         v = MetalPerformanceShaders.MPSImageKeypointRangeInfo()
         self.assertIsInstance(v.maximumKeypoints, int)
         self.assertIsInstance(v.minimumThresholdValue, float)
+        self.assertPickleRoundTrips(v)
 
         self.assertNotHasAttr(MetalPerformanceShaders, "MPSImageKeypointData")
         # v = MetalPerformanceShaders.MPSImageKeypointData()

@@ -16,6 +16,7 @@ class TestNSProcessInfo(TestCase):
         self.assertIsInstance(v.majorVersion, int)
         self.assertIsInstance(v.minorVersion, int)
         self.assertIsInstance(v.patchVersion, int)
+        self.assertPickleRoundTrips(v)
 
     def testConstants(self):
         self.assertEqual(Foundation.NSWindowsNTOperatingSystem, 1)

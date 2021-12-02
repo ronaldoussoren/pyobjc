@@ -9,17 +9,20 @@ class TestAVAudioTypes(TestCase):
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
+        self.assertPickleRoundTrips(v)
 
         self.assertTrue(AVFoundation.AVAudio3DVector, AVFoundation.AVAudio3DPoint)
 
         v = AVFoundation.AVAudio3DVectorOrientation()
         self.assertIsInstance(v.forward, AVFoundation.AVAudio3DVector)
         self.assertIsInstance(v.up, AVFoundation.AVAudio3DVector)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVAudio3DAngularOrientation()
         self.assertIsInstance(v.yaw, float)
         self.assertIsInstance(v.pitch, float)
         self.assertIsInstance(v.roll, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.10")
     def testFunctions(self):

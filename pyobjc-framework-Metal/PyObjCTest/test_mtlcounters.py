@@ -48,6 +48,7 @@ class TestMTLCounters(TestCase):
     def test_structs(self):
         v = Metal.MTLCounterResultTimestamp()
         self.assertEqual(v.timestamp, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLCounterResultStageUtilization()
         self.assertEqual(v.totalCycles, 0)
@@ -56,6 +57,7 @@ class TestMTLCounters(TestCase):
         self.assertEqual(v.postTessellationVertexCycles, 0)
         self.assertEqual(v.fragmentCycles, 0)
         self.assertEqual(v.renderTargetCycles, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLCounterResultStatistic()
         self.assertEqual(v.tessellationInputPatches, 0)
@@ -66,6 +68,7 @@ class TestMTLCounters(TestCase):
         self.assertEqual(v.fragmentInvocations, 0)
         self.assertEqual(v.fragmentsPassed, 0)
         self.assertEqual(v.computeKernelInvocations, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("10.15")
     def test_protocols(self):

@@ -29,6 +29,7 @@ class TestMIDICapabilityInquiry(TestCase):
         self.assertIs(v.modelNumber, None)
         self.assertIs(v.revisionLevel, None)
         self.assertIs(v.reserved, None)
+        self.assertPickleRoundTrips(v)
 
     def test_methods(self):
         self.assertResultIsBOOL(

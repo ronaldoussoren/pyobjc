@@ -8,10 +8,12 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(v.mSelector, 0)
         self.assertEqual(v.mScope, 0)
         self.assertEqual(v.mElement, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioStreamRangedDescription()
         self.assertEqual(v.mFormat, CoreAudio.AudioStreamBasicDescription())
         self.assertEqual(v.mSampleRateRange, CoreAudio.AudioValueRange())
+        self.assertPickleRoundTrips(v)
 
     def testConstants(self):
         self.assertEqual(CoreAudio.kAudioHardwareNoError, 0)

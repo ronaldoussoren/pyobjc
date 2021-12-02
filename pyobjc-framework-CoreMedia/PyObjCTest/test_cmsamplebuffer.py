@@ -187,6 +187,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertEqual(v.duration, CoreMedia.CMTime())
         self.assertEqual(v.presentationTimeStamp, CoreMedia.CMTime())
         self.assertEqual(v.decodeTimeStamp, CoreMedia.CMTime())
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         self.assertArgIsBOOL(CoreMedia.CMSampleBufferCreate, 2)

@@ -30,16 +30,19 @@ class TestFoundation(TestCase):
         o = Foundation.NSPoint()
         self.assertHasAttr(o, "x")
         self.assertHasAttr(o, "y")
+        self.assertPickleRoundTrips(o)
 
         self.assertHasAttr(Foundation, "NSSize")
         o = Foundation.NSSize()
         self.assertHasAttr(o, "width")
         self.assertHasAttr(o, "height")
+        self.assertPickleRoundTrips(o)
 
         self.assertHasAttr(Foundation, "NSRange")
         o = Foundation.NSRange()
         self.assertHasAttr(o, "location")
         self.assertHasAttr(o, "length")
+        self.assertPickleRoundTrips(o)
 
         self.assertHasAttr(Foundation, "NSRect")
         o = Foundation.NSRect()
@@ -47,6 +50,7 @@ class TestFoundation(TestCase):
         self.assertHasAttr(o, "size")
         self.assertIsInstance(o.origin, Foundation.NSPoint)
         self.assertIsInstance(o.size, Foundation.NSSize)
+        self.assertPickleRoundTrips(o)
 
         self.assertHasAttr(Foundation, "NSAffineTransformStruct")
         o = Foundation.NSAffineTransformStruct()
@@ -56,3 +60,4 @@ class TestFoundation(TestCase):
         self.assertHasAttr(o, "m22")
         self.assertHasAttr(o, "tX")
         self.assertHasAttr(o, "tY")
+        self.assertPickleRoundTrips(o)

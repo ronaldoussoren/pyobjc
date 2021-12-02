@@ -137,10 +137,12 @@ class TestCMIOHardwareStream(TestCase):
         self.assertEqual(v.mStatus, 0)
         self.assertEqual(v.mState, 0)
         self.assertEqual(v.mState2, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMediaIO.CMIOStreamScheduledOutputNotificationProcAndRefCon()
         self.assertEqual(v.scheduledOutputNotificationProc, None)
         self.assertEqual(v.scheduledOutputNotificationRefCon, None)
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         self.assertArgIsOut(CoreMediaIO.CMIOStreamCopyBufferQueue, 3)

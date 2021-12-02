@@ -107,10 +107,12 @@ class TestMTLComputeCommandEncoder(TestCase):
     def test_structs(self):
         v = Metal.MTLDispatchThreadgroupsIndirectArguments()
         self.assertEqual(v.threadgroupsPerGrid, None)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLStageInRegionIndirectArguments()
         self.assertEqual(v.stageInOrigin, None)
         self.assertEqual(v.stageInSize, None)
+        self.assertPickleRoundTrips(v)
 
     @min_sdk_level("10.11")
     def test_protocols(self):

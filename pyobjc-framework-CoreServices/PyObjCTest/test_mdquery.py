@@ -88,6 +88,7 @@ class TestMDQuery(TestCase):
         self.assertEqual(v.progress_max_ms, 0)
         self.assertEqual(v.update_max_num, 0)
         self.assertEqual(v.update_max_ms, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(CoreServices.kMDQuerySynchronous, 1)

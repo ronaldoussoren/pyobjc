@@ -41,6 +41,7 @@ class TestCGRemoteOperation(TestCase):
         v = Quartz.CGScreenUpdateMoveDelta()
         self.assertTrue(hasattr(v, "dX"))
         self.assertTrue(hasattr(v, "dY"))
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         myInfo = object()

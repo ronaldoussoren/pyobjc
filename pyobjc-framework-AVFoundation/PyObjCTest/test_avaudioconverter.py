@@ -24,6 +24,7 @@ class TestAVAudioConverter(TestCase):
         v = AVFoundation.AVAudioConverterPrimeInfo()
         self.assertEqual(v.leadingFrames, 0)
         self.assertEqual(v.trailingFrames, 0)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
     def testMethods(self):

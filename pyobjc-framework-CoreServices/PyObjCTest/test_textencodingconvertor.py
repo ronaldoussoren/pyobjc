@@ -43,6 +43,7 @@ class TestTextEncodingConvertor(TestCase):
         self.assertEqual(v.destinationEncoding, 0)
         self.assertEqual(v.reserved1, 0)
         self.assertEqual(v.reserved2, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         self.assertArgIsOut(CoreServices.TECCountAvailableTextEncodings, 0)

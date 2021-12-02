@@ -9,11 +9,13 @@ class TestCGDirectPalette(TestCase):
         self.assertTrue(hasattr(v, "red"))
         self.assertTrue(hasattr(v, "green"))
         self.assertTrue(hasattr(v, "blue"))
+        self.assertPickleRoundTrips(v)
 
         v = Quartz.CGDeviceColor()
         self.assertTrue(hasattr(v, "red"))
         self.assertTrue(hasattr(v, "green"))
         self.assertTrue(hasattr(v, "blue"))
+        self.assertPickleRoundTrips(v)
 
     def testTypes(self):
         self.assertIsOpaquePointer(Quartz.CGDirectPaletteRef)

@@ -100,12 +100,14 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         v = MetalPerformanceShaders.MPSMatrixOffset()
         self.assertIsInstance(v.rowOffset, int)
         self.assertIsInstance(v.columnOffset, int)
+        self.assertPickleRoundTrips(v)
 
         v = MetalPerformanceShaders.MPSIntegerDivisionParams()
         self.assertIsInstance(v.divisor, int)
         self.assertIsInstance(v.recip, int)
         self.assertIsInstance(v.addend, int)
         self.assertIsInstance(v.shift, int)
+        self.assertPickleRoundTrips(v)
 
         # self.fail("MPSCustomKernelSourceInfo")  # Vector types
         # self.fail("MPSCustomKernelInfo")  # Vector types
@@ -116,6 +118,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertIsInstance(v.destinationTextureCount, int)
         self.assertIsInstance(v.sourceTextureCount, int)
         self.assertIsInstance(v.broadcastTextureCount, int)
+        self.assertPickleRoundTrips(v)
 
     def test_inline_functions(self):
         MetalPerformanceShaders.MPSFindIntegerDivisionParams

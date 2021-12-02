@@ -14,6 +14,7 @@ import struct as _struct
 import sys as _sys
 import unittest as _unittest
 import subprocess as _subprocess
+import pickle as _pickle
 from distutils.sysconfig import get_config_var as _get_config_var
 
 import objc
@@ -1506,6 +1507,13 @@ class TestCase(_unittest.TestCase):
         if not isinstance(proto, objc.formal_protocol):
             # Should never happen
             self.fail(f"Protocol {name!r} is not a protocol, but {type(proto)}")
+
+    def assertPickleRoundTrips(self, value):
+        buf = _pickle.dumps(value)
+        clone = _pickle.loads(buf)
+
+        self.assertEqual(clone, value)
+        self.assertIsInstance(clone, type(value))
 
     def run(self, *args):
         """

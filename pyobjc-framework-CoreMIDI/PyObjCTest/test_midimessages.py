@@ -7,17 +7,20 @@ class TestMIDIMessages(TestCase):
         v = CoreMIDI.MIDIMessage_64()
         self.assertIsInstance(v.word0, int)
         self.assertIsInstance(v.word1, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDIMessage_96()
         self.assertIsInstance(v.word0, int)
         self.assertIsInstance(v.word1, int)
         self.assertIsInstance(v.word2, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMIDI.MIDIMessage_128()
         self.assertIsInstance(v.word0, int)
         self.assertIsInstance(v.word1, int)
         self.assertIsInstance(v.word2, int)
         self.assertIsInstance(v.word3, int)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Contains a union
         self.assertNotHasAttr(CoreMIDI, "MIDIUniversalMessage")

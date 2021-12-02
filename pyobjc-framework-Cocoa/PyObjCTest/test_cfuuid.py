@@ -166,3 +166,5 @@ class TestCFUUIDAPI(TestCase):
         self.assertHasAttr(o, "byte13")
         self.assertHasAttr(o, "byte14")
         self.assertHasAttr(o, "byte15")
+
+        self.assertPickleRoundTrips(o)

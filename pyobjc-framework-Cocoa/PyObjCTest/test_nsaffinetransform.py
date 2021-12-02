@@ -110,36 +110,38 @@ class TestNSAffineTransformStruct(TestCase):
         p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             repr(p),
-            "<NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
+            "<Foundation.NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
         )
 
         p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         self.assertEqual(
-            repr(p), "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>"
+            repr(p),
+            "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>",
         )
 
         p.tX = p
         self.assertEqual(
             repr(p),
-            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",  # noqa: B950
+            "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<Foundation.NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
     def testStr(self):
         p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             str(p),
-            "<NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
+            "<Foundation.NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
         )
 
         p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         self.assertEqual(
-            str(p), "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>"
+            str(p),
+            "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>",
         )
 
         p.tX = p
         self.assertEqual(
             str(p),
-            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",  # noqa: B950
+            "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<Foundation.NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
     def testSlice(self):

@@ -48,11 +48,13 @@ class TestDRBurnSession(TestCase):
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
         self.assertEqual(v.defaultButtonTitle, None)
+        self.assertPickleRoundTrips(v)
 
         v = DiscRecordingUI.DRBurnSessionProgressDialogOptions()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
         self.assertEqual(v.description, None)
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         self.assertIsInstance(DiscRecordingUI.DRBurnSessionGetTypeID(), int)

@@ -99,6 +99,8 @@ class TestStream(TestCase):
         self.assertHasAttr(o, "domain")
         self.assertHasAttr(o, "error")
 
+        self.assertPickleRoundTrips(o)
+
     def testGetTypeID(self):
         v = CoreFoundation.CFReadStreamGetTypeID()
         self.assertIsInstance(v, int)

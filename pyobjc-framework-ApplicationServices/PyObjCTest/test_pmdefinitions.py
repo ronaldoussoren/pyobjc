@@ -163,12 +163,15 @@ class TestPMDefinitions(TestCase):
         self.assertIsInstance(v.left, float)
         self.assertIsInstance(v.bottom, float)
         self.assertIsInstance(v.right, float)
+        self.assertPickleRoundTrips(v)
 
         v = PrintCore.PMResolution()
         self.assertIsInstance(v.hRes, float)
         self.assertIsInstance(v.vRes, float)
+        self.assertPickleRoundTrips(v)
 
         v = PrintCore.PMLanguageInfo()
         self.assertIs(v.level, None)
         self.assertIs(v.version, None)
         self.assertIs(v.release, None)
+        self.assertPickleRoundTrips(v)

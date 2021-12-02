@@ -14,11 +14,13 @@ class TestCVBase(TestCase):
         self.assertIsInstance(v.minutes, int)
         self.assertIsInstance(v.seconds, int)
         self.assertIsInstance(v.frames, int)
+        self.assertPickleRoundTrips(v)
 
         v = Quartz.CVTime()
         self.assertIsInstance(v.timeValue, int)
         self.assertIsInstance(v.timeScale, int)
         self.assertIsInstance(v.flags, int)
+        self.assertPickleRoundTrips(v)
 
         v = Quartz.CVTimeStamp()
         self.assertIsInstance(v.version, int)
@@ -30,6 +32,7 @@ class TestCVBase(TestCase):
         self.assertIsInstance(v.smpteTime, Quartz.CVSMPTETime)
         self.assertIsInstance(v.flags, int)
         self.assertIsInstance(v.reserved, int)
+        self.assertPickleRoundTrips(v)
 
     def testConstants(self):
         self.assertEqual(Quartz.kCVSMPTETimeType24, 0)

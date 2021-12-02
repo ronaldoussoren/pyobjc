@@ -36,6 +36,16 @@ class TestSecImportExport(TestCase):
 
         self.assertEqual(Security.SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION, 0)
 
+        self.assertIsInstance(Security.kSecImportExportPassphrase, str)
+        self.assertIsInstance(Security.kSecImportExportKeychain, str)
+        self.assertIsInstance(Security.kSecImportExportAccess, str)
+
+        self.assertIsInstance(Security.kSecImportItemLabel, str)
+        self.assertIsInstance(Security.kSecImportItemKeyID, str)
+        self.assertIsInstance(Security.kSecImportItemTrust, str)
+        self.assertIsInstance(Security.kSecImportItemCertChain, str)
+        self.assertIsInstance(Security.kSecImportItemIdentity, str)
+
     def test_structs(self):
         v = Security.SecItemImportExportKeyParameters()
         self.assertEqual(v.version, 0)
@@ -46,16 +56,7 @@ class TestSecImportExport(TestCase):
         self.assertEqual(v.accessRef, None)
         self.assertEqual(v.keyUsage, None)
         self.assertEqual(v.keyAttributes, None)
-
-        self.assertIsInstance(Security.kSecImportExportPassphrase, str)
-        self.assertIsInstance(Security.kSecImportExportKeychain, str)
-        self.assertIsInstance(Security.kSecImportExportAccess, str)
-
-        self.assertIsInstance(Security.kSecImportItemLabel, str)
-        self.assertIsInstance(Security.kSecImportItemKeyID, str)
-        self.assertIsInstance(Security.kSecImportItemTrust, str)
-        self.assertIsInstance(Security.kSecImportItemCertChain, str)
-        self.assertIsInstance(Security.kSecImportItemIdentity, str)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         self.assertFalse(hasattr(Security, "SecKeychainItemExport"))

@@ -34,39 +34,59 @@ class TestXMLNode(TestCase):
         self.assertEqual(CoreFoundation.kCFXMLEntityTypeCharacter, 4)
 
     def testStructs(self):
-        return
+        # self.fail()
 
         o = CoreFoundation.CFXMLElementInfo()
         self.assertHasAttr(o, "attributes")
         self.assertHasAttr(o, "attributeOrder")
         self.assertHasAttr(o, "isEmpty")
         self.assertHasAttr(o, "_reserved")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLProcessingInstructionInfo()
         self.assertHasAttr(o, "dataString")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLDocumentInfo()
         self.assertHasAttr(o, "sourceURL")
         self.assertHasAttr(o, "encoding")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLExternalID()
         self.assertHasAttr(o, "systemID")
         self.assertHasAttr(o, "publicID")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLDocumentTypeInfo()
         self.assertHasAttr(o, "externalID")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLNotationInfo()
         self.assertHasAttr(o, "externalID")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLElementTypeDeclarationInfo()
         self.assertHasAttr(o, "contentDescription")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLAttributeDeclarationInfo()
         self.assertHasAttr(o, "attributeName")
         self.assertHasAttr(o, "typeString")
         self.assertHasAttr(o, "defaultString")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLAttributeListDeclarationInfo()
         self.assertHasAttr(o, "numberOfAttributes")
         self.assertHasAttr(o, "attributes")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLEntityInfo()
         self.assertHasAttr(o, "entityType")
         self.assertHasAttr(o, "replacementText")
         self.assertHasAttr(o, "entityID")
         self.assertHasAttr(o, "notationName")
+        self.assertPickleRoundTrips(o)
+
         o = CoreFoundation.CFXMLEntityReferenceInfo()
         self.assertHasAttr(o, "entityType")
 

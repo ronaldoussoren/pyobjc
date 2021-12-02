@@ -5322,7 +5322,7 @@
    "SecCreateSharedWebCredentialPassword": {
     "args": {
     },
-    "retval": { "type_override": "^{__CFString=}", "already_cfretained": true }
+    "retval": { "type_override": "@", "already_cfretained": true }
    },
    "sec_protocol_metadata_create_secret": {
     "args": {

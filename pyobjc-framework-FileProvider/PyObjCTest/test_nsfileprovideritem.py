@@ -58,6 +58,7 @@ class TestNSFileProviderItem(TestCase):
         v = FileProvider.NSFileProviderTypeAndCreator()
         self.assertIsInstance(v.type, int)
         self.assertIsInstance(v.creator, int)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(

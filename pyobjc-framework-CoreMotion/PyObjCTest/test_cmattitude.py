@@ -14,12 +14,14 @@ class TestCMAccelerometer(TestCase):
         self.assertEqual(v.m31, 0.0)
         self.assertEqual(v.m32, 0.0)
         self.assertEqual(v.m33, 0.0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreMotion.CMQuaternion()
         self.assertEqual(v.x, 0.0)
         self.assertEqual(v.y, 0.0)
         self.assertEqual(v.z, 0.0)
         self.assertEqual(v.w, 0.0)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(CoreMotion.CMAttitudeReferenceFrameXArbitraryZVertical, 1 << 0)

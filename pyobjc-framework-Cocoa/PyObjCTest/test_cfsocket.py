@@ -68,6 +68,8 @@ class TestSocket(TestCase):
         self.assertHasAttr(o, "protocol")
         self.assertHasAttr(o, "address")
 
+        self.assertPickleRoundTrips(o)
+
     def testNameRegistry(self):
         p1 = CoreFoundation.CFSocketGetDefaultNameRegistryPortNumber()
         self.assertIsInstance(p1, int)

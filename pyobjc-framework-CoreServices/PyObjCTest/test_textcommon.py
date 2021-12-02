@@ -458,10 +458,12 @@ class TestTextCommon(TestCase):
         v = CoreServices.TextEncodingRun()
         self.assertEqual(v.offset, 0)
         self.assertEqual(v.textEncoding, 0)
+        self.assertPickleRoundTrips(v)
 
         v = CoreServices.ScriptCodeRun()
         self.assertEqual(v.offset, 0)
         self.assertEqual(v.script, 0)
+        self.assertPickleRoundTrips(v)
 
         # XXX tecTextEncodingsFolderName and tecExtensionFileName are Str31
         v = CoreServices.TECInfo()
@@ -474,6 +476,7 @@ class TestTextCommon(TestCase):
         self.assertEqual(v.tecExtensionFileName, None)
         self.assertEqual(v.tecLowestTEFileVersion, 0)
         self.assertEqual(v.tecHighestTEFileVersion, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         CoreServices.CreateTextEncoding

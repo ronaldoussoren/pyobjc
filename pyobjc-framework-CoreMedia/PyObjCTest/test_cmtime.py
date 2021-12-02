@@ -35,6 +35,7 @@ class TestCMTime(TestCase):
         self.assertEqual(v.timescale, 0)
         self.assertEqual(v.flags, 0)
         self.assertEqual(v.epoch, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_contants(self):
         self.assertIsInstance(CoreMedia.kCMTimeInvalid, CoreMedia.CMTime)

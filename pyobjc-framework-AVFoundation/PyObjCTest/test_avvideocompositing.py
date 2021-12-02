@@ -28,12 +28,14 @@ class TestAVVideoCompositing(TestCase):
         v = AVFoundation.AVPixelAspectRatio()
         self.assertIsInstance(v.horizontalSpacing, int)
         self.assertIsInstance(v.verticalSpacing, int)
+        self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVEdgeWidths()
         self.assertIsInstance(v.left, float)
         self.assertIsInstance(v.top, float)
         self.assertIsInstance(v.right, float)
         self.assertIsInstance(v.bottom, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.9")
     def testMethods10_9(self):

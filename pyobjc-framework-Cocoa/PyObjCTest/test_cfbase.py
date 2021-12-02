@@ -114,10 +114,11 @@ class TestBase(TestCase):
         self.assertEqual(CoreFoundation.kCFNotFound, -1)
 
     def testStructs(self):
-
         o = CoreFoundation.CFRange()
         self.assertHasAttr(o, "location")
         self.assertHasAttr(o, "length")
+
+        self.assertPickleRoundTrips(o)
 
     def testCFRangeMake(self):
         r = CoreFoundation.CFRangeMake(42, 99)

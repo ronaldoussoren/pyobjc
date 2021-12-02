@@ -58,6 +58,7 @@ class TestCTParagraphStyle(TestCase):
         self.assertHasAttr(v, "spec")
         self.assertHasAttr(v, "valueSize")
         self.assertHasAttr(v, "value")
+        self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
         v = CoreText.CTParagraphStyleGetTypeID()

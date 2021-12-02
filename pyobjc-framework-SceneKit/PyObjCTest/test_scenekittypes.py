@@ -11,17 +11,19 @@ import SceneKit
 
 
 class TestSceneKitTypes(TestCase):
-    def testTypes(self):
+    def testStructs(self):
         v = SceneKit.SCNVector3()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
+        self.assertPickleRoundTrips(v)
 
         v = SceneKit.SCNVector4()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
         self.assertIsInstance(v.w, float)
+        self.assertPickleRoundTrips(v)
 
         self.assertTrue(SceneKit.SCNQuaternion is SceneKit.SCNVector4)
         self.assertTrue(SceneKit.SCNMatrix4 is SceneKit.CATransform3D)

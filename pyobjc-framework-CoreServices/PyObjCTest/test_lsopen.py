@@ -48,6 +48,7 @@ class TestLSOpen(TestCase):
         self.assertHasAttr(v, "environment")
         self.assertHasAttr(v, "argv")
         self.assertHasAttr(v, "initialEvent")
+        self.assertPickleRoundTrips(v)
 
     def testLSLaunchFSRefSpec(self):
         o = CoreServices.LSLaunchURLSpec()

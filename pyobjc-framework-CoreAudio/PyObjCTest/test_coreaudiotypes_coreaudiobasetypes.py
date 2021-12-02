@@ -820,17 +820,22 @@ class TestCoreAudioBaseTypes(TestCase):
         v = CoreAudio.AudioValueRange()
         self.assertIsInstance(v.mMinimum, float)
         self.assertIsInstance(v.mMaximum, float)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioValueTranslation()
         self.assertIs(v.mInputData, None)
         self.assertIsInstance(v.mInputDataSize, int)
         self.assertIs(v.mOutputData, None)
         self.assertIsInstance(v.mOutputDataSize, int)
+        # XXX: Manual bindings
+        # self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioBuffer()
         self.assertIsInstance(v.mNumberChannels, int)
         self.assertIsInstance(v.mDataByteSize, int)
         self.assertIs(v.mData, None)
+        # XXX: Manual bindings
+        # self.assertPickleRoundTrips(v)
 
         # Manual binding, tested elsewhere
         # v = CoreAudio.AudioBufferList(1)
@@ -847,11 +852,13 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mChannelsPerFrame, int)
         self.assertIsInstance(v.mBitsPerChannel, int)
         self.assertIsInstance(v.mReserved, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioStreamPacketDescription()
         self.assertIsInstance(v.mStartOffset, int)
         self.assertIsInstance(v.mVariableFramesInPacket, int)
         self.assertIsInstance(v.mDataByteSize, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.SMPTETime()
         self.assertIsInstance(v.mSubframes, int)
@@ -863,6 +870,7 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mMinutes, int)
         self.assertIsInstance(v.mSeconds, int)
         self.assertIsInstance(v.mFrames, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioTimeStamp()
         self.assertIsInstance(v.mSampleTime, float)
@@ -872,16 +880,20 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mSMPTETime, CoreAudio.SMPTETime)
         self.assertIsInstance(v.mFlags, int)
         self.assertIsInstance(v.mReserved, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioClassDescription()
         self.assertIsInstance(v.mType, int)
         self.assertIsInstance(v.mSubType, int)
         self.assertIsInstance(v.mManufacturer, int)
+        self.assertPickleRoundTrips(v)
 
         v = CoreAudio.AudioChannelDescription()
         self.assertIsInstance(v.mChannelLabel, int)
         self.assertIsInstance(v.mChannelFlags, int)
         self.assertEqual(v.mCoordinates, (0.0, 0.0, 0.0))
+        # XXX: Manual bindings
+        # self.assertPickleRoundTrips(v)
 
         # Tested elsewhere
         # v = CoreAudio.AudioChannelLayout()
@@ -893,6 +905,7 @@ class TestCoreAudioBaseTypes(TestCase):
         v = CoreAudio.AudioFormatListItem()
         self.assertIsInstance(v.mASBD, CoreAudio.AudioStreamBasicDescription)
         self.assertIsInstance(v.mChannelLayoutTag, int)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         CoreAudio.TestAudioFormatNativeEndian

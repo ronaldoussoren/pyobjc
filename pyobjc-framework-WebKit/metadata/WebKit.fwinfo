@@ -2,6 +2,10 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "WebPreferencesPrivate": { "ignore": true },
+   "DOMObjectInternal": { "ignore": true }
+  },
   "aliases": {
    "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": {
     "ignore": true

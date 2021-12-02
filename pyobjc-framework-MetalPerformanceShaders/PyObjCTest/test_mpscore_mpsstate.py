@@ -13,6 +13,7 @@ class TestMPSCore_MPSState(TestCase):
         self.assertIsInstance(v.pixelFormat, int)
         self.assertIsInstance(v.textureType, int)
         self.assertIsInstance(v.usage, int)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeNone, 0)

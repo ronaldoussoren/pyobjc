@@ -10,6 +10,7 @@ class TestMPSMatrix_MPSMatrixCombination(TestCase):
         self.assertIsInstance(v.sourceColumnOffset, int)
         self.assertIsInstance(v.destinationRowOffset, int)
         self.assertIsInstance(v.destinationColumnOffset, int)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.13")
     def test_methods10_13(self):

@@ -49,6 +49,7 @@ class TestDRContentFile(TestCase):
         self.assertEqual(v.fork, 0)
         self.assertEqual(v.query, 0)
         self.assertEqual(v.size, 0)
+        self.assertPickleRoundTrips(v)
 
         # XXX: Requires manual work
         v = DiscRecording.DRFileProductionInfo()
@@ -58,3 +59,4 @@ class TestDRContentFile(TestCase):
         self.assertEqual(v.actCount, 0)
         self.assertEqual(v.blockSize, 0)
         self.assertEqual(v.fork, 0)
+        self.assertPickleRoundTrips(v)

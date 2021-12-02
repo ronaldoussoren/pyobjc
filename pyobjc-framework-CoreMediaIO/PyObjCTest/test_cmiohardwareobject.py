@@ -11,6 +11,7 @@ class TestCMIOHardwareObject(TestCase):
         self.assertEqual(v.mSelector, 0)
         self.assertEqual(v.mScope, 0)
         self.assertEqual(v.mElement, 0)
+        self.assertPickleRoundTrips(v)
 
     def testConstants(self):
         self.assertEqual(

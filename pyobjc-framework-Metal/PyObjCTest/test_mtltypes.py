@@ -8,19 +8,23 @@ class TestMTLTypes(TestCase):
         self.assertEqual(v.x, 0)
         self.assertEqual(v.y, 0)
         self.assertEqual(v.z, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLSize()
         self.assertEqual(v.width, 0)
         self.assertEqual(v.height, 0)
         self.assertEqual(v.depth, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLRegion()
         self.assertIsInstance(v.origin, Metal.MTLOrigin)
         self.assertIsInstance(v.size, Metal.MTLSize)
+        self.assertPickleRoundTrips(v)
 
         v = Metal.MTLSamplePosition()
         self.assertEqual(v.x, 0.0)
         self.assertEqual(v.y, 0.0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         v = Metal.MTLOriginMake(1, 2, 3)

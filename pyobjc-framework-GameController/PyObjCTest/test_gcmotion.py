@@ -14,17 +14,20 @@ class TestGCMotion(TestCase):
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
+        self.assertPickleRoundTrips(v)
 
         v = GameController.GCRotationRate()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
+        self.assertPickleRoundTrips(v)
 
         v = GameController.GCQuaternion()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
         self.assertIsInstance(v.z, float)
         self.assertIsInstance(v.w, float)
+        self.assertPickleRoundTrips(v)
 
     @min_os_level("10.10")
     def testMethods10_10(self):

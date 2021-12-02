@@ -16,12 +16,14 @@ class TestSecKeychain(TestCase):
         self.assertEqual(v.lockOnSleep, False)
         self.assertEqual(v.useLockInterval, False)
         self.assertEqual(v.lockInterval, 0)
+        self.assertPickleRoundTrips(v)
 
         v = Security.SecKeychainCallbackInfo()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.item, None)
         self.assertEqual(v.keychain, None)
         self.assertEqual(v.pid, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_constants(self):
         self.assertEqual(Security.kSecUnlockStateStatus, 1)

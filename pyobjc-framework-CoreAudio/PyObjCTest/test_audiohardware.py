@@ -420,3 +420,4 @@ class TestAudioHardware(TestCase):
         self.assertEqual(v.mIOProc, None)
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mStreamIsOn, None)
+        self.assertPickleRoundTrips(v)

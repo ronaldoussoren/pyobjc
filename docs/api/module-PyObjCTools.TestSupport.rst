@@ -381,6 +381,11 @@ wrappers.
 
       Assert that argument *argno* is a pass-by-reference input and output parameter.
 
+   .. method:: assertPickleRoundTrips(value)
+
+      Assert that *value* can be pickled, and roundtrips back to an equal
+      value of the same type.
+
    .. note::
 
       There are also a number of deprecated aliases for the methods above, those

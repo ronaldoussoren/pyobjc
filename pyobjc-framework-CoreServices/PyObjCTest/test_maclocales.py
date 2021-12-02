@@ -25,6 +25,7 @@ class TestMacLocales(TestCase):
         v = CoreServices.LocaleAndVariant()
         self.assertEqual(v.locale, None)
         self.assertEqual(v.opVariant, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         self.assertArgIsOut(CoreServices.LocaleRefFromLangOrRegionCode, 2)
