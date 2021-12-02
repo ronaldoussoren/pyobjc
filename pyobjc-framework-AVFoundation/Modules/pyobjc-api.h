@@ -38,9 +38,15 @@ typedef void Py_buffer;
  * Do not increase when adding a new function, the struct_len field
  * can be used for detecting if a function has been added.
  */
+#ifndef PYOBJC_API_VERSION
 #define PYOBJC_API_VERSION 22
+#endif
 
 #define PYOBJC_API_NAME "__C_API__"
+
+#ifndef PyObjC_EXPECTED_STRUCT_SIZE
+#define PyObjC_EXPECTED_STRUCT_SIZE (sizeof(struct pyobjc_api))
+#endif
 
 /*
  * Only add items to the end of this list!
@@ -167,7 +173,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
         return -1;
     }
 
-    if (PyObjC_API->struct_len < sizeof(struct pyobjc_api)) {
+    if (PyObjC_API->struct_len < PyObjC_EXPECTED_STRUCT_SIZE) {
         PyErr_Format(PyExc_RuntimeError,
                      "Wrong struct-size of PyObjC C API (got %d, expected %d)",
                      (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
