@@ -27,6 +27,11 @@ Version 8.2b1
 * Fix crash when calling ``objc.FSRef.from_pathname()`` with a path
   that cannot be encoded in the filesystem encoding (UTF-8).
 
+* Fix name of opaque pointer type wrappers (such as ``Foundation.NSZonePtr``)
+
+  The "__name__" and "__qualname__" attributes were correct, but the
+  corresponding slot in the C struct of the type could point to
+  no longer valid memory.
 
 Version 8.1
 -----------

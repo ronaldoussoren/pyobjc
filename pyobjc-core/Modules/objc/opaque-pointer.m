@@ -304,25 +304,35 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     }
 
     PyType_Spec opaque_spec = {
-        .name      = dot != NULL ? name : buf,
+        /* XXX: See issue45983 on BPO, string in the .name field must
+         *      valid during the lifetime of the created type.
+         */
+        .name      = PyObjCUtil_Strdup(dot != NULL ? name : buf),
         .basicsize = sizeof(OpaquePointerObject),
         .itemsize  = 0,
-        .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+        .flags     = (Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE) & ~Py_TPFLAGS_BASETYPE,
         .slots     = opaque_slots,
     };
 
+    if (opaque_spec.name == NULL) {
+        goto error_cleanup;
+    }
+
     newType = PyType_FromSpec(&opaque_spec);
     if (newType == NULL) {
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
 
     w = PyBytes_FromString(typestr);
     if (w == NULL) {
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
 
     if (PyObject_SetAttrString(newType, "__typestr__", w) == -1) {
         Py_CLEAR(newType);
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
     Py_CLEAR(w);
@@ -346,6 +356,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 #pragma clang diagnostic pop
 #endif
     if (cl_to_c == NULL) {
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
 
@@ -367,6 +378,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 #endif
     }
     if (rv != FFI_OK) {
+        PyMem_Free((char*)opaque_spec.name);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
@@ -390,6 +402,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 #pragma clang diagnostic pop
 #endif
     if (cl_from_c == NULL) {
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
 
@@ -413,6 +426,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         Py_XDECREF(newType);
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
@@ -423,6 +437,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (r == -1) {
         Py_XDECREF(newType);
         Py_XDECREF(newType);
+        PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
     }
 

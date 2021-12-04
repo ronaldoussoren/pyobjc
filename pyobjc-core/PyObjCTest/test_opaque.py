@@ -23,6 +23,25 @@ class TestFromPython(TestCase):
         # NULL pointer is converted to None
         self.assertEqual(OC_OpaqueTest.nullBar(), None)
 
+    def testSubclassing(self):
+        tp = objc.createOpaquePointerType("BarHandle", BarEncoded, "BarHandle doc")
+        self.assertEqual(tp.__name__, "BarHandle")
+
+        with self.assertRaisesRegex(
+            TypeError, "type 'objc.BarHandle' is not an acceptable base type"
+        ):
+
+            class Subclass1(tp):
+                pass
+
+        tp = objc.createOpaquePointerType("Foo.BarHandle", BarEncoded, "BarHandle doc")
+        with self.assertRaisesRegex(
+            TypeError, "type 'Foo.BarHandle' is not an acceptable base type"
+        ):
+
+            class Subclass2(tp):
+                pass
+
     def testNaming(self):
         tp = objc.createOpaquePointerType("Mod.BarHandle", BarEncoded, "BarHandle doc")
 
