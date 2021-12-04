@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    void* _Nullable pointer_value;
+    void* _Nonnull pointer_value;
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {
@@ -23,10 +23,7 @@ static PyMemberDef opaque_members[] = {
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
-    if (((OpaquePointerObject*)self)->pointer_value == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    PyObjC_Assert(((OpaquePointerObject*)self)->pointer_value != NULL, NULL);
 
     return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__",
                          NULL);
@@ -72,7 +69,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
     }
 
     if (cobject != NULL && c_void_p != NULL) {
-        PyErr_SetString(PyExc_ValueError, "pass 'cobject' or 'c_void_p', not both");
+        PyErr_SetString(PyExc_TypeError, "pass 'cobject' or 'c_void_p', not both");
         return NULL;
     }
 
@@ -86,16 +83,19 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         }
 
         p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
-        if (p == NULL && PyErr_Occurred()) {
+        if (p == NULL) {
+            /* The pointer in a capsule cannot be NULL */
+            PyObjC_Assert(PyErr_Occurred(), NULL);
             return NULL;
         }
 
-        result = PyObject_New(OpaquePointerObject, type);
-        if (result == NULL) {
-            return NULL;
+        result = PyObject_GC_New(OpaquePointerObject, type);
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         result->pointer_value = p;
+        PyObject_GC_Track((PyObject*)result);
         return (PyObject*)result;
 
     } else if (c_void_p != NULL) {
@@ -121,18 +121,29 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
                 return NULL;
             }
 
+        } else if (attrval == Py_None) {
+            Py_INCREF(Py_None);
+            return Py_None;
+
         } else {
-            PyErr_SetString(PyExc_ValueError, "c_void_p.value is not an integer");
+            PyErr_SetString(PyExc_TypeError, "c_void_p.value is not an integer");
             return NULL;
         }
 
         Py_DECREF(attrval);
-        result = PyObject_New(OpaquePointerObject, type);
-        if (result == NULL) {
-            return NULL;
+
+        if (p == NULL) {
+            Py_INCREF(Py_None);
+            return Py_None;
+        }
+
+        result = PyObject_GC_New(OpaquePointerObject, type);
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         result->pointer_value = p;
+        PyObject_GC_Track((PyObject*)result);
         return (PyObject*)result;
 
     } else {
@@ -144,7 +155,16 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
 static void
 opaque_dealloc(PyObject* self)
 {
-    PyObject_Del(self);
+#if PY_VERSION_HEX >= 0x03090000
+    PyTypeObject* tp = Py_TYPE(self);
+#endif
+
+    PyObject_GC_UnTrack(self);
+    PyObject_GC_Del(self);
+
+#if PY_VERSION_HEX >= 0x03090000
+    Py_DECREF(tp);
+#endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
 static int
@@ -166,14 +186,18 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     PyTypeObject*        opaque_type   = (PyTypeObject*)userdata;
     OpaquePointerObject* result;
 
-    result = PyObject_New(OpaquePointerObject, opaque_type);
-    if (result == NULL) {
-        *(PyObject**)retval = NULL;
-        return;
+    if (pointer_value == NULL)
+        PyObjCErr_InternalError(); // LCOV_BR_EXCL_LINE
+
+    result = PyObject_GC_New(OpaquePointerObject, opaque_type);
+    if (result == NULL) {           // LCOV_BR_EXCL_LINE
+        *(PyObject**)retval = NULL; // LCOV_EXCL_LINE
+        return;                     // LCOV_EXCL_LINE
     }
 
     result->pointer_value = pointer_value;
-    *(PyObject**)retval   = (PyObject*)result;
+    PyObject_GC_Track((PyObject*)result);
+    *(PyObject**)retval = (PyObject*)result;
 }
 
 static void
@@ -213,7 +237,6 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     static ffi_cif*   convert_cif             = NULL;
     static ffi_cif*   new_cif                 = NULL;
 
-    /* XXX: 'name' should be copied, see BPO 45315 */
     PyObject*                           newType   = NULL;
     PyObjCPointerWrapper_ToPythonFunc   from_c    = NULL;
     PyObjCPointerWrapper_FromPythonFunc to_c      = NULL;
@@ -230,26 +253,26 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(new_cif_signature, NULL, NO);
-        if (signature == NULL) {
-            return NULL;
+        if (signature == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;         // LCOV_EXCL_LINE
         }
         new_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        if (new_cif == NULL) {
-            return NULL;
+        if (new_cif == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
         }
     }
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(convert_cif_signature, NULL, YES);
-        if (signature == NULL) {
-            return NULL;
+        if (signature == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;         // LCOV_EXCL_LINE
         }
         convert_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        if (convert_cif == NULL) {
-            return NULL;
+        if (convert_cif == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;           // LCOV_EXCL_LINE
         }
     }
 
@@ -286,9 +309,11 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (docstr == NULL) {
         /* Set slot with Py_tp_doc to NULL */
         PyType_Slot* docslot = opaque_slots + 5;
-        if (docslot->slot != Py_tp_doc) {
+        if (docslot->slot != Py_tp_doc) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_RuntimeError, "tp_doc not in expected slot");
             goto error_cleanup;
+            // LCOV_EXCL_STOP
         }
         docslot->slot = 0;
     }
@@ -304,36 +329,36 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     }
 
     PyType_Spec opaque_spec = {
-        /* XXX: See issue45983 on BPO, string in the .name field must
-         *      valid during the lifetime of the created type.
-         */
+        /* The string in .name must stay valid for the lifetime of the type */
         .name      = PyObjCUtil_Strdup(dot != NULL ? name : buf),
         .basicsize = sizeof(OpaquePointerObject),
         .itemsize  = 0,
-        .flags     = (Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE) & ~Py_TPFLAGS_BASETYPE,
+        .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC | Py_TPFLAGS_HEAPTYPE,
         .slots     = opaque_slots,
     };
 
-    if (opaque_spec.name == NULL) {
-        goto error_cleanup;
-    }
+    if (opaque_spec.name == NULL) { // LCOV_BREXCL_LINE
+        goto error_cleanup;         // LCOV_EXCL_LINE
+    }                               // LCOV_EXCL_LINE
 
     newType = PyType_FromSpec(&opaque_spec);
-    if (newType == NULL) {
-        PyMem_Free((char*)opaque_spec.name);
-        goto error_cleanup;
+    if (newType == NULL) {                   // LCOV_BR_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
+        goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
     w = PyBytes_FromString(typestr);
-    if (w == NULL) {
-        PyMem_Free((char*)opaque_spec.name);
-        goto error_cleanup;
+    if (w == NULL) {                         // LCOV_BR_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
+        goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
-    if (PyObject_SetAttrString(newType, "__typestr__", w) == -1) {
+    if (PyObject_SetAttrString(newType, "__typestr__", w) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(newType);
         PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
     Py_CLEAR(w);
 
@@ -355,9 +380,9 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
 #pragma clang diagnostic pop
 #endif
-    if (cl_to_c == NULL) {
-        PyMem_Free((char*)opaque_spec.name);
-        goto error_cleanup;
+    if (cl_to_c == NULL) {                   // LCOV_BR_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
+        goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -377,10 +402,12 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 #pragma clang diagnostic pop
 #endif
     }
-    if (rv != FFI_OK) {
+    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free((char*)opaque_spec.name);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
@@ -401,9 +428,9 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
 #pragma clang diagnostic pop
 #endif
-    if (cl_from_c == NULL) {
-        PyMem_Free((char*)opaque_spec.name);
-        goto error_cleanup;
+    if (cl_from_c == NULL) {                 // LCOV_BR_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
+        goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -423,22 +450,26 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 #pragma clang diagnostic pop
 #endif
     }
-    if (rv != FFI_OK) {
+    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         Py_XDECREF(newType);
         PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
     from_c = (PyObjCPointerWrapper_ToPythonFunc)codeloc;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_XDECREF(newType);
         Py_XDECREF(newType);
         PyMem_Free((char*)opaque_spec.name);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     return (PyObject*)newType;
@@ -469,13 +500,13 @@ error_cleanup:
 #else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    if (cl_to_c) {
-        ffi_closure_free(cl_to_c);
-    }
+    if (cl_to_c) {                 // LCOV_BR_EXCL_LINE
+        ffi_closure_free(cl_to_c); // LCOV_EXCL_LINE
+    }                              // LCOV_EXCL_LINE
 
-    if (cl_from_c) {
-        ffi_closure_free(cl_from_c);
-    }
+    if (cl_from_c) {                 // LCOV_BR_EXCL_LINE
+        ffi_closure_free(cl_from_c); // LCOV_EXCL_LINE
+    }                                // LCOV_EXCL_LINE
 #pragma clang diagnostic pop
 #endif
     Py_XDECREF(newType);

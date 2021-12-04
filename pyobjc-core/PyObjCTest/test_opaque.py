@@ -1,5 +1,7 @@
 import objc
-from PyObjCTest.opaque import OC_OpaqueTest, BarEncoded, FooEncoded
+import sys
+import ctypes
+from PyObjCTest.opaque import OC_OpaqueTest, BarEncoded, FooEncoded, traverse
 from PyObjCTools.TestSupport import TestCase
 
 FooHandle = objc.createOpaquePointerType("FooHandle", FooEncoded, "FooHandle doc")
@@ -106,5 +108,83 @@ class TestFromC(TestCase):
 
         # Check round tripping through a PyCObject.
         co = f.__cobject__()
-        g = FooHandle(co)
+        g = FooHandle(cobject=co)
         self.assertEqual(f.__pointer__, g.__pointer__)
+
+        # Check roundtripping to a c_void_p
+        cptr = f.__c_void_p__()
+        self.assertIsInstance(cptr, ctypes.c_void_p)
+        g = FooHandle(c_void_p=cptr)
+        self.assertEqual(f.__pointer__, g.__pointer__)
+
+        # Check that NULL pointers result in None
+        cptr = ctypes.c_voidp(0)
+        g = FooHandle(c_void_p=cptr)
+        self.assertIs(g, None)
+
+        g = FooHandle(c_void_p=0)
+        self.assertIs(g, None)
+
+    def test_sizeof(self):
+        # XXX: Test is suboptimal, but code looks ok...
+        f = OC_OpaqueTest.createFoo_(99)
+        self.assertIsInstance(f, FooHandle)
+        self.assertIsInstance(f.__sizeof__(), int)
+
+    def test_invalid_creation(self):
+        with self.assertRaisesRegex(
+            TypeError, "'invalid' is an invalid keyword argument for this function"
+        ):
+            FooHandle(invalid=42)
+
+        with self.assertRaisesRegex(TypeError, "'cobject' argument is not a PyCapsule"):
+            FooHandle(42)
+
+        with self.assertRaisesRegex(
+            OverflowError, "Python int too large to convert to C unsigned long"
+        ):
+            FooHandle(c_void_p=2 ** 65 + 3)
+
+        with self.assertRaisesRegex(
+            AttributeError, "'str' object has no attribute 'value'"
+        ):
+            FooHandle(c_void_p="hello")
+
+        class Pointer:
+            value = "hello"
+
+        with self.assertRaisesRegex(TypeError, "c_void_p.value is not an integer"):
+            FooHandle(c_void_p=Pointer())
+
+        f = OC_OpaqueTest.createFoo_(99)
+        with self.assertRaisesRegex(
+            TypeError, "pass 'cobject' or 'c_void_p', not both"
+        ):
+            FooHandle(cobject=f.__cobject__(), c_void_p=f.__c_void_p__())
+
+        with self.assertRaisesRegex(TypeError, "Cannot create objc.FooHandle objects"):
+            FooHandle()
+
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            FooHandle(cobject=objc.__C_API__)
+
+    def test_too_long_name(self):
+        with self.assertRaisesRegex(ValueError, "dotless name is too long"):
+            objc.createOpaquePointerType("BarHandle" * 100, BarEncoded, "BarHandle doc")
+
+    def test_invalid_opaque_arg(self):
+        with self.assertRaisesRegex(
+            TypeError, "Need instance of objc.FooHandle, got instance of int"
+        ):
+            OC_OpaqueTest.deleteFoo_(42)
+
+    def test_traverse(self):
+        # XXX: Need to investigate how to trigger a traverse call
+        f = OC_OpaqueTest.createFoo_(99)
+        r = traverse(f)
+        if sys.version_info[:2] < (3, 9):
+            self.assertEqual(r, [])
+        else:
+            self.assertEqual(r, [type(f)])

@@ -27,7 +27,40 @@ typedef struct _Bar* BarHandle;
 + (double)getSecond:(BarHandle)handle;
 @end
 
-static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
+static int
+do_visit(PyObject* o, void* arg)
+{
+    return PyList_Append((PyObject*)arg, o);
+}
+
+static PyObject*
+do_traverse(PyObject* m __attribute__((__unused__)), PyObject* o)
+{
+    if (Py_TYPE(o)->tp_traverse == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
+    PyObject* result = PyList_New(0);
+    if (result == NULL)
+        return NULL;
+
+    int r = Py_TYPE(o)->tp_traverse(o, do_visit, result);
+    if (r != 0) {
+        Py_DECREF(result);
+        return NULL;
+    }
+
+    return result;
+}
+
+static PyMethodDef mod_methods[] = {{
+                                        .ml_name  = "traverse",
+                                        .ml_meth  = (PyCFunction)do_traverse,
+                                        .ml_flags = METH_O,
+                                    },
+
+                                    {0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "opaque", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
