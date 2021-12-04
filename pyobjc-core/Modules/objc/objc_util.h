@@ -26,10 +26,8 @@ extern PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr);
 extern int PyObjCUtil_Init(PyObject* module);
 
 extern void PyObjCErr_FromObjC(NSObject* localException);
-extern void PyObjCErr_ToObjC(void) __attribute__((__noreturn__))
-__attribute__((__deprecated__("Use PyObjCErr_ToObjCWithGILState")));
 
-extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nullable state)
+extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
     __attribute__((__noreturn__));
 
 extern NSException* _Nullable PyObjCErr_AsExc(void);

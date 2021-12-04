@@ -91,8 +91,8 @@ call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* const* a
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             res = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector
                                                                       (addresses));

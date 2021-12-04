@@ -128,13 +128,13 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
             continue;
         }
 
-        if (!class_isSubclassOf(cls, cur_class)
-            && !class_isSubclassOf(cls, object_getClass(cur_class))) {
+        if (!PyObjC_class_isSubclassOf(cls, cur_class)
+            && !PyObjC_class_isSubclassOf(cls, object_getClass(cur_class))) {
             continue;
         }
 
         if (found_class != NULL && found_class != cur_class) {
-            if (class_isSubclassOf(found_class, cur_class)) {
+            if (PyObjC_class_isSubclassOf(found_class, cur_class)) {
                 continue;
             }
         }

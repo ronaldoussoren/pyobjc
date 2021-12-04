@@ -532,7 +532,8 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
 
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyUnicode_Check(pyself)
-                  && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
+                  && PyObjC_class_isSubclassOf(self->base.sel_class,
+                                               [NSString class])))) {
 
             Py_DECREF(myClass);
             PyErr_Format(PyExc_TypeError,
@@ -674,7 +675,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         }
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyUnicode_Check(pyself)
-                  && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
+                  && PyObjC_class_isSubclassOf(self->base.sel_class,
+                                               [NSString class])))) {
 
             Py_DECREF(myClass);
             PyErr_Format(PyExc_TypeError,

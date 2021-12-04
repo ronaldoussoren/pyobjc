@@ -14,83 +14,23 @@
 #undef PyObjCObject_GetObject
 #endif
 
-static id
-python_to_id(PyObject* object)
-{
-    id  result;
-    int err;
-
-    err = depythonify_c_value(@encode(id), object, &result);
-    if (err == -1) {
-        return nil;
-    }
-
-    return result;
-}
-
-static Class
-sel_get_class(PyObject* sel)
-{
-    if (!PyObjCSelector_Check(sel)) {
-        PyErr_Format(PyExc_TypeError, "1Expecting PyObjCSelector, got an instance of %s",
-                     Py_TYPE(sel)->tp_name);
-        return NULL;
-    }
-    return ((PyObjCSelector*)sel)->sel_class;
-}
-
-static SEL
-sel_get_sel(PyObject* sel)
-{
-    if (!PyObjCSelector_Check(sel)) {
-        PyErr_Format(PyExc_TypeError, "2Expecting PyObjCSelector, got an instance of %s",
-                     Py_TYPE(sel)->tp_name);
-        return NULL;
-    }
-    return ((PyObjCSelector*)sel)->sel_selector;
-}
-
-static void
-fill_super(struct objc_super* super, Class cls, id receiver)
-{
-    objc_superSetReceiver(*super, receiver);
-    objc_superSetClass(*super, cls);
-}
-
-static void
-fill_super_cls(struct objc_super* super, Class cls, Class self)
-{
-    objc_superSetReceiver(*super, self);
-    /* object_getClass will only return Nil if the argument is nil */
-    objc_superSetClass(*super, (Class _Nonnull)object_getClass(cls));
-}
-
-static int
-depythonify_c_array_count2(const char* type, Py_ssize_t count, BOOL strict,
-                           PyObject* value, void* datum)
-{
-    return depythonify_c_array_count(type, count, strict, value, datum, NO, NO);
-}
-
 struct pyobjc_api objc_api = {
     .api_version = PYOBJC_API_VERSION,
     .struct_len  = sizeof(struct pyobjc_api),
     .register_method_mapping =
         /* Cast is needed because of ffi_cif */
     (RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,
-    .obj_get_object           = PyObjCObject_GetObject,
-    .cls_get_class            = PyObjCClass_GetClass,
-    .python_to_id             = python_to_id,
-    .id_to_python             = id_to_python,
-    .err_objc_to_python       = PyObjCErr_FromObjC,
-    .py_to_objc               = depythonify_c_value,
-    .objc_to_py               = pythonify_c_value,
-    .sizeof_type              = PyObjCRT_SizeOfType,
-    .sel_get_class            = sel_get_class,
-    .sel_get_sel              = sel_get_sel,
-    .fill_super               = fill_super,
-    .fill_super_cls           = fill_super_cls,
-    .register_pointer_wrapper = PyObjCPointerWrapper_Register,
+    .obj_get_object            = PyObjCObject_GetObject,
+    .cls_get_class             = PyObjCClass_GetClass,
+    .depythonify_python_object = depythonify_python_object,
+    .id_to_python              = id_to_python,
+    .err_objc_to_python        = PyObjCErr_FromObjC,
+    .py_to_objc                = depythonify_c_value,
+    .objc_to_py                = pythonify_c_value,
+    .sizeof_type               = PyObjCRT_SizeOfType,
+    .sel_get_class             = PyObjCSelector_GetClass,
+    .sel_get_sel               = PyObjCSelector_GetSelector,
+    .register_pointer_wrapper  = PyObjCPointerWrapper_Register,
     .unsupported_method_imp =
         (void (*)(void*, void*, void**, void*))PyObjCUnsupportedMethod_IMP,
     .unsupported_method_caller = PyObjCUnsupportedMethod_Caller,
@@ -104,7 +44,7 @@ struct pyobjc_api objc_api = {
     .newtransient              = PyObjCObject_NewTransient,
     .releasetransient          = PyObjCObject_ReleaseTransient,
     .pyobjc_null               = &PyObjC_NULL,
-    .dep_c_array_count         = depythonify_c_array_count2,
+    .dep_c_array_count         = depythonify_c_array_count,
     .varlistnew                = PyObjC_VarList_New,
     .pyobjcobject_convert      = PyObjCObject_Convert,
     .register_id_alias         = PyObjCPointerWrapper_RegisterID,
@@ -120,12 +60,12 @@ PyObjCAPI_Register(PyObject* module)
 {
     PyObject* API = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
 
-    if (API == NULL)
-        return -1;
+    if (API == NULL) // LCOV_BR_EXCL_LINE
+        return -1;   // LCOV_EXCL_LINE
 
-    if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) {
-        Py_DECREF(API);
-        return -1;
+    if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(API);                                         // LCOV_EXCL_LINE
+        return -1;                                              // LCOV_EXCL_LINE
     }
     return 0;
 }

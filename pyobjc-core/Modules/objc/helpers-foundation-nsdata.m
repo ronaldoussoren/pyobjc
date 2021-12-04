@@ -18,9 +18,9 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-            objc_superSetClass(super, PyObjCSelector_GetClass(method));
-            bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
+            bytes             = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
             bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, @selector(length));
@@ -122,8 +122,8 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-            objc_superSetClass(super, PyObjCSelector_GetClass(method));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));

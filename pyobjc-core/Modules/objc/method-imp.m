@@ -512,13 +512,12 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     }
 
     if (PyObjCClass_Check(self)) {
-        objc_superSetReceiver(super, PyObjCClass_GetClass(self));
+        super.receiver = PyObjCClass_GetClass(self);
 
     } else {
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+        super.receiver = PyObjCObject_GetObject(self);
     }
-
-    objc_superSetClass(super, object_getClass(objc_superGetReceiver(super)));
+    super.super_class = object_getClass(super.receiver);
 
     Py_BEGIN_ALLOW_THREADS
         @try {

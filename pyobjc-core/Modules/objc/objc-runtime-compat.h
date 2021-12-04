@@ -37,15 +37,8 @@ struct PyObjC_method {
 #define _C_CHAR_AS_INT 'z'
 #define _C_NSBOOL 'Z'
 
-#define objc_superSetReceiver(super, val) (super).receiver = (val)
-#define objc_superGetReceiver(super) ((super).receiver)
-
-#define objc_superSetClass(super, cls) (super).super_class = (cls)
-#define objc_superGetClass(super) ((super).super_class)
-
 /* Some functions that are missing (oddly enough) */
 BOOL PyObjC_class_isSubclassOf(Class child, Class _Nullable parent);
-#define class_isSubclassOf PyObjC_class_isSubclassOf
 
 /*
  * XXX: Override protocol_getMethodDescription. This is a crude hack that's added because

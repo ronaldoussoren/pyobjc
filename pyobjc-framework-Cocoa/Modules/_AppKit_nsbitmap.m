@@ -23,8 +23,9 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject*
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuperCls(&super, PyObjCSelector_GetClass(method),
-                                PyObjCClass_GetClass(self));
+            super.super_class =
+                (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
+            super.receiver = PyObjCClass_GetClass(self);
 
             ((void (*)(struct objc_super*, SEL, NSTIFFCompression**,
                        NSInteger*))objc_msgSendSuper)(
@@ -149,8 +150,8 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             newImageRep = ((id(*)(struct objc_super*, SEL, const void**, NSInteger,
                                   NSInteger, NSInteger, NSInteger, BOOL, BOOL, id,
@@ -274,8 +275,8 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             newImageRep =
                 ((id(*)(struct objc_super*, SEL, const void**, NSInteger, NSInteger,
@@ -334,8 +335,8 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
     Py_BEGIN_ALLOW_THREADS
         @try {
 
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             ((void (*)(struct objc_super*, SEL, unsigned char***))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method),
@@ -398,8 +399,8 @@ call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self,
     Py_BEGIN_ALLOW_THREADS
         @try {
 
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             bitmapData = ((unsigned char* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));

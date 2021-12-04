@@ -38,8 +38,8 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), idx,
                     points);
             } else {
-                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                                 PyObjCObject_GetObject(self));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 res = ((NSBezierPathElement(*)(struct objc_super*, SEL, NSInteger,
                                                NSPoint*))objc_msgSendSuper)(
@@ -143,8 +143,8 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), points,
                     idx);
             } else {
-                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                                 PyObjCObject_GetObject(self));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, NSPoint*,
                            NSInteger))objc_msgSendSuper)(

@@ -125,13 +125,11 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
         return NULL;
     }
 
-    script = (CFStringRef)PyObjC_PythonToId(py_script);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(py_script, (id*)&script) == -1) {
         return NULL;
     }
 
-    url = (CFURLRef)PyObjC_PythonToId(py_url);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(py_url, (id*)&url) == -1) {
         return NULL;
     }
 
@@ -181,13 +179,11 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
         return NULL;
     }
 
-    script = (CFURLRef)PyObjC_PythonToId(py_script);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(py_script, (id*)&script) == -1) {
         return NULL;
     }
 
-    url = (CFURLRef)PyObjC_PythonToId(py_url);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(py_url, (id*)&url) == -1) {
         return NULL;
     }
 
@@ -235,11 +231,9 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    host = (CFHostRef)PyObjC_PythonToId(py_host);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(py_host, (id*)&host) == -1) {
         return NULL;
     }
-
     if (callback == Py_None) {
         Py_BEGIN_ALLOW_THREADS
             @try {

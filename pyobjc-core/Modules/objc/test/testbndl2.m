@@ -4135,12 +4135,11 @@ arg2id(const char* argtype, void* argptr)
         PyObjCErr_ToObjCWithGILState(&state);
         return nil;
     }
-    res = PyObjC_PythonToId(tmp);
-    Py_DECREF(tmp);
-    if (PyErr_Occurred()) {
+    if (depythonify_python_object(tmp, &res) == -1) {
         PyObjCErr_ToObjCWithGILState(&state);
         return nil;
     }
+    Py_DECREF(tmp);
     PyGILState_Release(state);
     return res;
 }

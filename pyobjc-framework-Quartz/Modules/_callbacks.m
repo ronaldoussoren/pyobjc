@@ -483,7 +483,8 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    if (PyObjC_DepythonifyCArray(@encode(CGFloat), rangedim, NO, result, (void*)outData)
+    if (PyObjC_DepythonifyCArray(@encode(CGFloat), rangedim, NO, result, (void*)outData,
+                                 NO, NO)
         < 0) {
         Py_DECREF(result);
         PyObjCErr_ToObjCWithGILState(&state);

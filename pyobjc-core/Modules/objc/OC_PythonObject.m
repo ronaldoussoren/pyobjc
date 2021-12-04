@@ -1263,8 +1263,6 @@ void
 PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 {
     if (PyObjC_Encoder != NULL) {
-        NSException* exc = nil;
-
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = id_to_python(coder);
             if (cdr == NULL) {
@@ -1277,18 +1275,13 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(cdr);
             if (r == NULL) {
-                exc = PyObjCErr_AsExc();
-                // PyObjC_GIL_FORWARD_EXC();
+                PyObjC_GIL_FORWARD_EXC();
 
             } else {
                 Py_DECREF(r);
             }
 
         PyObjC_END_WITH_GIL
-
-        if (exc != nil) {
-            [exc raise];
-        }
 
     } else {
         [NSException raise:NSInvalidArgumentException

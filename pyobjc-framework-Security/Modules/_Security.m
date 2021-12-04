@@ -62,8 +62,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         return NULL;
     }
 
-    keychainOrArray = PyObjC_PythonToId(py_keychainOrArray);
-    if (keychainOrArray == nil && PyErr_Occurred()) {
+    if (depythonify_python_object(py_keychainOrArray, &keychainOrArray) == -1) {
         return NULL;
     }
 
@@ -245,11 +244,9 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
         return NULL;
     }
 
-    keychainOrArray = PyObjC_PythonToId(py_keychainOrArray);
-    if (keychainOrArray == nil && PyErr_Occurred()) {
+    if (depythonify_python_object(py_keychainOrArray, &keychainOrArray) == -1) {
         return NULL;
     }
-
     serviceName_token = PyObjC_PythonToCArray(NO, NO, &string, py_serviceName,
                                               (void**)&serviceName, &serviceName_length,
                                               &serviceName_buffer, &serviceName_view);

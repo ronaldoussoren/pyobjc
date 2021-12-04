@@ -4277,12 +4277,12 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         argbuf_cur = align(resultSize, sizeof(void*));
 
     } else {
-        objc_superSetReceiver(super, self_obj);
         if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            objc_superSetClass(super, object_getClass(meth->base.sel_class));
+            super.super_class = object_getClass(meth->base.sel_class);
         } else {
-            objc_superSetClass(super, meth->base.sel_class);
+            super.super_class = meth->base.sel_class;
         }
+        super.receiver = self_obj;
 
 #ifndef __arm64__
         useStret = PyObjCRT_ResultUsesStret(rettype);
@@ -4554,12 +4554,12 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         argbuf_cur = align(resultSize, sizeof(void*));
 
     } else {
-        objc_superSetReceiver(super, self_obj);
         if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            objc_superSetClass(super, object_getClass(meth->base.sel_class));
+            super.super_class = object_getClass(meth->base.sel_class);
         } else {
-            objc_superSetClass(super, meth->base.sel_class);
+            super.super_class = meth->base.sel_class;
         }
+        super.receiver = self_obj;
 #ifndef __arm64__
         useStret = PyObjCRT_ResultUsesStret(rettype);
         if (useStret == -1) {
@@ -4736,12 +4736,12 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 #ifndef __arm64__
     useStret = 0;
 #endif
-    objc_superSetReceiver(super, self_obj);
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-        objc_superSetClass(super, object_getClass(meth->base.sel_class));
+        super.super_class = object_getClass(meth->base.sel_class);
     } else {
-        objc_superSetClass(super, meth->base.sel_class);
+        super.super_class = meth->base.sel_class;
     }
+    super.receiver = self_obj;
 #ifndef __arm64__
     useStret = PyObjCRT_ResultUsesStret(rettype);
     if (useStret == -1) {

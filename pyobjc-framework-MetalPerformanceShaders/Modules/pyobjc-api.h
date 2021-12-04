@@ -39,7 +39,7 @@ typedef void Py_buffer;
  * can be used for detecting if a function has been added.
  */
 #ifndef PYOBJC_API_VERSION
-#define PYOBJC_API_VERSION 22
+#define PYOBJC_API_VERSION 23
 #endif
 
 #define PYOBJC_API_NAME "__C_API__"
@@ -62,7 +62,7 @@ struct pyobjc_api {
     RegisterMethodMappingFunctionType* register_method_mapping;
     id (*obj_get_object)(PyObject*);
     Class (*cls_get_class)(PyObject*);
-    id (*python_to_id)(PyObject*);
+    int (*depythonify_python_object)(PyObject*, id*);
     PyObject* (*id_to_python)(id);
     void (*err_objc_to_python)(NSObject*);
     int (*py_to_objc)(const char*, PyObject*, void*);
@@ -70,8 +70,6 @@ struct pyobjc_api {
     Py_ssize_t (*sizeof_type)(const char*);
     Class (*sel_get_class)(PyObject* sel);
     SEL (*sel_get_sel)(PyObject* sel);
-    void (*fill_super)(struct objc_super*, Class, id);
-    void (*fill_super_cls)(struct objc_super*, Class, Class);
     int (*register_pointer_wrapper)(const char*, const char*,
                                     PyObject* (*pythonify)(void*),
                                     int (*depythonify)(PyObject*, void*));
@@ -91,7 +89,7 @@ struct pyobjc_api {
     void (*releasetransient)(PyObject* proxy, int cookie);
     PyObject** pyobjc_null;
     int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict,
-                             PyObject* value, void* datum);
+                             PyObject* value, void* datum, BOOL, BOOL);
     PyObject* (*varlistnew)(const char* tp, void* array);
     int (*pyobjcobject_convert)(PyObject*, void*);
     int (*register_id_alias)(const char*, const char*);
@@ -114,15 +112,13 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjCClass_GetClass (PyObjC_API->cls_get_class)
 #define PyObjCSelector_GetClass (PyObjC_API->sel_get_class)
 #define PyObjCSelector_GetSelector (PyObjC_API->sel_get_sel)
-#define PyObjC_PythonToId (PyObjC_API->python_to_id)
+#define depythonify_python_object (PyObjC_API->depythonify_python_object)
 #define PyObjC_IdToPython (PyObjC_API->id_to_python)
 #define PyObjCErr_FromObjC (PyObjC_API->err_objc_to_python)
 #define PyObjCErr_ToObjCWithGILState (PyObjC_API->err_python_to_objc_gil)
 #define PyObjC_PythonToObjC (PyObjC_API->py_to_objc)
 #define PyObjC_ObjCToPython (PyObjC_API->objc_to_py)
 #define PyObjC_RegisterMethodMapping (PyObjC_API->register_method_mapping)
-#define PyObjC_InitSuper (PyObjC_API->fill_super)
-#define PyObjC_InitSuperCls (PyObjC_API->fill_super_cls)
 #define PyObjCPointerWrapper_Register (PyObjC_API->register_pointer_wrapper)
 #define PyObjCUnsupportedMethod_IMP (PyObjC_API->unsupported_method_imp)
 #define PyObjCUnsupportedMethod_Caller (PyObjC_API->unsupported_method_caller)
@@ -162,7 +158,7 @@ PyObjC_CreateInlineTab(PyObjC_function_map* map)
 static inline int
 PyObjC_ImportAPI(PyObject* calling_module)
 {
-    PyObjC_API = PyCapsule_Import("objc." PYOBJC_API_NAME, 0);
+    PyObjC_API = (struct pyobjc_api*)PyCapsule_Import("objc." PYOBJC_API_NAME, 0);
     if (PyObjC_API == NULL) {
         return -1;
     }

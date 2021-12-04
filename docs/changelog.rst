@@ -18,6 +18,10 @@ Version 8.1.1b1
 * Fix crash when calling ``objc.FSRef.from_pathname()`` with a path
   that cannot be encoded in the filesystem encoding (UTF-8).
 
+* The internal extension API between framework bindings and pyobjc-core has
+  been cleaned up a little. Because of this extensions need to be
+  recompiled for this version.
+
 Version 8.1
 -----------
 

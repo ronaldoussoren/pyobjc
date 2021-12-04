@@ -795,8 +795,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            objc_superSetReceiver(super, object_getClass(PyObjCClass_GetClass(self)));
-            objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
+            super.super_class = object_getClass(PyObjCSelector_GetClass(method));
+            super.receiver    = object_getClass(PyObjCClass_GetClass(self));
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
@@ -833,8 +833,8 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-            objc_superSetClass(super, PyObjCSelector_GetClass(method));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
@@ -916,8 +916,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-            objc_superSetClass(super, PyObjCSelector_GetClass(method));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
 #if defined(__i386__) || defined(__arm64__)
             /* XXX: The call below doesn't work on i386, I'm not sure why.

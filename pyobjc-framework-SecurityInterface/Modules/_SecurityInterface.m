@@ -91,8 +91,8 @@ call_authorizationRights(PyObject* method, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             rights = ((AuthorizationRights * (*)(struct objc_super*, SEL))
                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
@@ -135,8 +135,8 @@ call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* const* 
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             ((void (*)(struct objc_super*, SEL, AuthorizationRights*))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), &rights);

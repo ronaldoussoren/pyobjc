@@ -224,13 +224,6 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObjC_END_WITH_GIL
 }
 
-/* XXX: To be removed */
-void
-PyObjCErr_ToObjC(void)
-{
-    PyObjCErr_ToObjCWithGILState(NULL);
-}
-
 NSException*
 PyObjCErr_AsExc(void)
 {
@@ -243,6 +236,9 @@ PyObjCErr_AsExc(void)
     NSException*         val;
     NSMutableDictionary* userInfo;
 
+    /* XXX: Add precondition that there is an exception,
+     *      check all callers, and enforce in debug builds
+     */
     PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
     if (exc_type == NULL) {
         return nil;
@@ -367,20 +363,18 @@ PyObjCErr_AsExc(void)
 }
 
 void
-PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nullable state)
+PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
 {
     NSException* exc = PyObjCErr_AsExc();
-    assert(exc != nil);
+    if (exc == nil)
+        PyObjCErr_InternalError(); // LCOV_BR_EXCL_LINE
 
     if (state) {
         PyGILState_Release(*state);
     }
 
     [exc raise];
-
-    /* Fatal error: this should never happen */
-    NSLog(@"reached unreachable code");
-    abort();
+    __builtin_unreachable();
 }
 
 char* _Nullable PyObjCUtil_Strdup(const char* value)

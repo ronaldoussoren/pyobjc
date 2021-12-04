@@ -50,8 +50,8 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
                     buf);
 
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.receiver    = PyObjCObject_GetObject(self);
+                super.super_class = PyObjCSelector_GetClass(method);
 
                 ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), view.buf, buf);
@@ -213,8 +213,8 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     count, buf);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
                            void*))objc_msgSendSuper)(
@@ -363,8 +363,8 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     buf);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), view.buf, buf);
@@ -487,8 +487,8 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_size_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     buf, size);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, char*, void*,
                            NSUInteger))objc_msgSendSuper)(
@@ -632,8 +632,8 @@ static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     count, buf);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
                            void*))objc_msgSendSuper)(&super,
@@ -794,8 +794,8 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        met
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     length);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), view.buf, length);
@@ -901,8 +901,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
                 bytes = ((void* (*)(id, SEL, NSUInteger*))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), &size);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 bytes =
                     ((void* (*)(struct objc_super*, SEL, NSUInteger*))objc_msgSendSuper)(
@@ -1046,8 +1046,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), key,
                     (NSUInteger*)&size);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 bytes = ((void* (*)(struct objc_super*, SEL, id,
                                     NSUInteger*))objc_msgSendSuper)(
@@ -1231,8 +1231,8 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     (NSUInteger)view.len, key);
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger,
                            id))objc_msgSendSuper)(&super,

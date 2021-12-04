@@ -1371,8 +1371,8 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
 
     PyObjC_END_WITH_GIL
 
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
+    spr.super_class = (Class)userdata;
+    spr.receiver    = self;
 
     ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, _meth);
 }
@@ -1393,8 +1393,8 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
 
     /* Ask super to create a copy */
 
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
+    spr.super_class = (Class)userdata;
+    spr.receiver    = self;
     copy =
         ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
 
@@ -1495,8 +1495,8 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     PyObjC_END_WITH_GIL
 
     /* Check superclass */
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
+    spr.super_class = (Class)userdata;
+    spr.receiver    = self;
 
     *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
                                                                            aSelector);
@@ -1519,8 +1519,8 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
 
     *p_result = nil;
 
-    objc_superSetClass(spr, (Class)userdata);
-    objc_superSetReceiver(spr, self);
+    spr.super_class = (Class)userdata;
+    spr.receiver    = self;
 
     /*
      * XXX: This checks self and super in a different order than the
@@ -1635,8 +1635,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         Py_XDECREF(pymeth);
         Py_XDECREF(pyself);
 
-        objc_superSetClass(spr, (Class)userdata);
-        objc_superSetReceiver(spr, self);
+        spr.super_class = (Class)userdata;
+        spr.receiver    = self;
         PyGILState_Release(state);
         ((void (*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth,
                                                                               invocation);
@@ -2035,9 +2035,9 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
 
     /* First check super */
     @try {
-        objc_superSetClass(spr, (Class)userdata);
-        objc_superSetReceiver(spr, self);
-        *((id*)retval) = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
+        spr.super_class = (Class)userdata;
+        spr.receiver    = self;
+        *((id*)retval)  = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
             &spr, _meth, key);
     } @catch (NSObject* localException) {
 
@@ -2116,8 +2116,8 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         /* First check super */
-        objc_superSetClass(spr, (Class)userdata);
-        objc_superSetReceiver(spr, self);
+        spr.super_class = (Class)userdata;
+        spr.receiver    = self;
         ((void (*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value,
                                                                        key);
     } @catch (NSObject* localException) {

@@ -41,9 +41,9 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         Py_END_ALLOW_THREADS
 
     } else {
-        objc_superSetReceiver(spr, (id)PyObjCClass_GetClass(self));
-        objc_superSetClass(spr, object_getClass(PyObjCSelector_GetClass(method)));
-        aSel = PyObjCSelector_GetSelector(method);
+        spr.super_class = object_getClass(PyObjCSelector_GetClass(method));
+        spr.receiver    = (id)PyObjCClass_GetClass(self);
+        aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -141,9 +141,9 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
         Py_END_ALLOW_THREADS
 
     } else {
-        objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
-        objc_superSetClass(spr, PyObjCSelector_GetClass(method));
-        aSel = PyObjCSelector_GetSelector(method);
+        spr.super_class = PyObjCSelector_GetClass(method);
+        spr.receiver    = PyObjCObject_GetObject(self);
+        aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -238,9 +238,9 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
         Py_END_ALLOW_THREADS
 
     } else {
-        objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
-        objc_superSetClass(spr, PyObjCSelector_GetClass(method));
-        aSel = PyObjCSelector_GetSelector(method);
+        spr.super_class = PyObjCSelector_GetClass(method);
+        spr.receiver    = PyObjCObject_GetObject(self);
+        aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -296,9 +296,9 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         Py_END_ALLOW_THREADS
 
     } else {
-        objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
-        objc_superSetClass(spr, PyObjCSelector_GetClass(method));
-        aSel = PyObjCSelector_GetSelector(method);
+        spr.super_class = PyObjCSelector_GetClass(method);
+        spr.receiver    = PyObjCObject_GetObject(self);
+        aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {

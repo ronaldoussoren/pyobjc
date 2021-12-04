@@ -24,8 +24,8 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
                 res = ((float** (*)(id, SEL))PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
             } else {
-                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                                 PyObjCObject_GetObject(self));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 res = ((float** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
@@ -86,8 +86,8 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
                 res = ((int16_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
             } else {
-                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                                 PyObjCObject_GetObject(self));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 res = ((int16_t * *(*)(struct objc_super*, SEL))
                            objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
@@ -148,8 +148,8 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
                 res = ((int32_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
             } else {
-                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                                 PyObjCObject_GetObject(self));
+                super.super_class = PyObjCSelector_GetClass(method);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 res = ((int32_t * *(*)(struct objc_super*, SEL))
                            objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));

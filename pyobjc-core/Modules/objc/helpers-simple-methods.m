@@ -32,8 +32,8 @@ call_void__noargs(PyObject* method, PyObject* self,
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
 
             } else {
-                objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-                objc_superSetClass(super, PyObjCSelector_GetClass(method));
+                super.super_class =  PyObjCSelector_GetClass(method);
+                super.receiver = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));

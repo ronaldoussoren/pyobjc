@@ -54,9 +54,9 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
-            vec = ((vector_float3(*)(struct objc_super*, SEL,
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
+            vec               = ((vector_float3(*)(struct objc_super*, SEL,
                                      vector_float3))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), vec);
 
@@ -114,9 +114,8 @@ call_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t 
 
     Py_BEGIN_ALLOW_THREADS
             @try {
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver = PyObjCObject_GetObject(self);
 
         result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
 
@@ -177,8 +176,8 @@ callC_id_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, object_getClass(PyObjCSelector_GetClass(method)),
-                             PyObjCClass_GetClass(self));
+            super.super_class = object_getClass(PyObjCSelector_GetClass(method));
+            super.receiver    = PyObjCClass_GetClass(self);
 
             result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), vec);
@@ -209,8 +208,8 @@ call_vF3_v(PyObject* method, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             vec = ((vector_float3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
@@ -269,8 +268,8 @@ call_v_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_t 
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
-                             PyObjCObject_GetObject(self));
+            super.super_class = PyObjCSelector_GetClass(method);
+            super.receiver    = PyObjCObject_GetObject(self);
 
             ((void (*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), vec);
