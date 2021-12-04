@@ -3,8 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 8.1.1b1
+Version 8.2b1
 ---------------
+
+* The internal extension API between framework bindings and pyobjc-core has
+  been cleaned up a little. Because of this extensions need to be
+  recompiled for this version.
 
 * #404: Instances of the Python represention of C structs can now be pickled.
 
@@ -18,9 +22,6 @@ Version 8.1.1b1
 * Fix crash when calling ``objc.FSRef.from_pathname()`` with a path
   that cannot be encoded in the filesystem encoding (UTF-8).
 
-* The internal extension API between framework bindings and pyobjc-core has
-  been cleaned up a little. Because of this extensions need to be
-  recompiled for this version.
 
 Version 8.1
 -----------
