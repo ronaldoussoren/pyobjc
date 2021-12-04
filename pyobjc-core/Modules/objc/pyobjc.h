@@ -127,7 +127,6 @@
 #import "file_wrapper.h"
 #import "formal-protocol.h"
 #import "fsref.h"
-#import "fsspec.h"
 #import "function.h"
 #import "helpers.h"
 #import "informal-protocol.h"

@@ -2339,9 +2339,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyType_Ready(&PyObjC_FSRefType) < 0) {
         return NULL;
     }
-    if (PyType_Ready(&PyObjC_FSSpecType) < 0) {
-        return NULL;
-    }
     if (PyType_Ready(&PyObjCPythonMethod_Type) < 0) {
         return NULL;
     }
@@ -2437,9 +2434,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;
     }
     if (PyDict_SetItemString(d, "FSRef", (PyObject*)&PyObjC_FSRefType) < 0) {
-        return NULL;
-    }
-    if (PyDict_SetItemString(d, "FSSpec", (PyObject*)&PyObjC_FSSpecType) < 0) {
         return NULL;
     }
     if (PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type) < 0) {

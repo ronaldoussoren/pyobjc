@@ -1249,9 +1249,6 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
         return PyObjC_decode_fsref(datum);
     }
 
-    if (IS_FSSPEC(type)) {
-        return PyObjC_decode_fsspec(datum);
-    }
     if (IS_DECIMAL(type)) {
         return pythonify_nsdecimal(datum);
     }
@@ -1696,10 +1693,6 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 
     if (IS_FSREF(types)) {
         return PyObjC_encode_fsref(arg, datum);
-    }
-
-    if (IS_FSSPEC(types)) {
-        return PyObjC_encode_fsspec(arg, datum);
     }
 
     if (IS_DECIMAL(types)) {

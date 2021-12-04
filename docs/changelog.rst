@@ -10,6 +10,11 @@ Version 8.2b1
   been cleaned up a little. Because of this extensions need to be
   recompiled for this version.
 
+* Removed ``objc.FSSpec``
+
+  This is a wrapper for a C type that's only usable in 32-bit code, PyObjC
+  no longer supports 32-bit.
+
 * #404: Instances of the Python represention of C structs can now be pickled.
 
   That is, instances of ``AppKit.NSPoint``, ``Foundation.NSRange``, etc. can

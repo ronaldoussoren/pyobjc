@@ -30,7 +30,6 @@ class TestInspectSignatures(TestCase):
             objc.pyobjc_unicode,
             objc.selector,
             objc.FSRef,
-            objc.FSSpec,
             objc.ivar,
             objc.informal_protocol,
             objc.formal_protocol,
