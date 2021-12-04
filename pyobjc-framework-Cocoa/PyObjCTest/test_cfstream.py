@@ -5,7 +5,7 @@ import socket
 import sys
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyIf
+from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
 import objc
 
 from .test_cfsocket import onTheNetwork
@@ -343,7 +343,7 @@ class TestStream(TestCase):
 
         del readStream, writeStream
 
-    @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
+    @skipUnless(onTheNetwork(), "Test requires a working Internet connection")
     def testSockets(self):
         with contextlib.closing(
             socket.socket(socket.AF_INET, socket.SOCK_STREAM)

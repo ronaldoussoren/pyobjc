@@ -5,7 +5,7 @@ import sys
 from test import list_tests, seq_tests
 
 import objc
-from PyObjCTools.TestSupport import onlyIf, expectedFailure
+from PyObjCTools.TestSupport import skipUnless, expectedFailure
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -34,7 +34,7 @@ class ArrayTests(seq_tests.CommonTest):
         self.assertEqual(a, b)
         self.assertIsInstance(b, NSArray)
 
-    @onlyIf(0, "Not relevant for NSArray")
+    @skipUnless(0, "Not relevant for NSArray")
     def test_pickle(self):
         pass
 
@@ -135,7 +135,7 @@ class ArrayTests(seq_tests.CommonTest):
         # See test_contains_fake
         pass
 
-    @onlyIf(0, "test irrelevant for NSArray")
+    @skipUnless(0, "test irrelevant for NSArray")
     def test_free_after_iterating(self):
         pass
 
@@ -147,23 +147,23 @@ class MutableArrayTest(list_tests.CommonTest):
     def test_pop(self):
         list_tests.CommonTest.test_pop(self)
 
-    @onlyIf(0, "test irrelevant for NSMutableArray")
+    @skipUnless(0, "test irrelevant for NSMutableArray")
     def test_repr_deep(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableArray")
+    @skipUnless(0, "test irrelevant for NSMutableArray")
     def test_exhausted_iterator(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableArray")
+    @skipUnless(0, "test irrelevant for NSMutableArray")
     def test_free_after_iterating(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableArray")
+    @skipUnless(0, "test irrelevant for NSMutableArray")
     def test_copy(self):
         pass
 
-    @onlyIf(0, "Not relevant for NSArray")
+    @skipUnless(0, "Not relevant for NSArray")
     def test_pickle(self):
         pass
 

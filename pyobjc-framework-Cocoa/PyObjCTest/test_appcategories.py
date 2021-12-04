@@ -1,6 +1,6 @@
 import Cocoa
 import PyObjCTools.AppCategories  # noqa: F401
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 
 class TestAppKitCategories(TestCase):
@@ -11,7 +11,7 @@ class TestAppKitCategories(TestCase):
         with Cocoa.NSGraphicsContext.savedGraphicsState():
             pass
 
-    @onlyIf(
+    @skipUnless(
         hasattr(Cocoa, "NSAnimationContext"), "Test for NSAnimationContext category"
     )
     def testAnimationContext(self):

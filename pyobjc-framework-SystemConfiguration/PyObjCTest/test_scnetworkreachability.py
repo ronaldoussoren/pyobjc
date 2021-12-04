@@ -3,7 +3,7 @@ import socket
 import objc
 
 from PyObjCTest.test_scnetwork import resolver_available
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyIf
+from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
 import SystemConfiguration
 
 
@@ -13,7 +13,7 @@ class TestSCNetworkReachability(TestCase):
             SystemConfiguration.SCNetworkReachabilityRef, objc.objc_class
         )
 
-    @onlyIf(resolver_available(), "No DNS resolver available")
+    @skipUnless(resolver_available(), "No DNS resolver available")
     def testFunctions(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCNetworkReachabilityCreateWithAddressPair

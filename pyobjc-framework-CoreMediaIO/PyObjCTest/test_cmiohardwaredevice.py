@@ -184,7 +184,7 @@ class TestCMIOHardwareDevice(TestCase):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 
-        self.assertIsNotInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
-        self.assertIsNotInstance(
+        self.assertNotIsInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
+        self.assertNotIsInstance(
             CoreMediaIO.CMIODeviceProcessRS422Command, objc.function
         )

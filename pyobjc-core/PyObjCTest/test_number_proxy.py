@@ -39,7 +39,7 @@ class TestNSNumber(TestCase):
         ):
             v = getattr(NSNumber, m)(0)
             self.assertIsInstance(v, NSNumber)
-            self.assertIsNotInstance(v, OC_PythonNumber)
+            self.assertNotIsInstance(v, OC_PythonNumber)
             self.assertIs(OC_TestNumber.numberClass_(v), NSCFNumber)
 
     def testDecimal(self):

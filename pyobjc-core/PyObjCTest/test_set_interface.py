@@ -9,7 +9,7 @@ import test.test_set
 from test.test_set import PassThru, check_pass_thru
 
 import objc
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
@@ -88,10 +88,10 @@ class TestPyObjCSet(TestCase):
 
     def test_conversion(self):
         s = NSSet([1, 2, 3])
-        self.assertItemsEqual(list(s), [1, 2, 3])
+        self.assertCountEqual(list(s), [1, 2, 3])
 
         it = iter(s)
-        self.assertItemsEqual(list(it), [1, 2, 3])
+        self.assertCountEqual(list(it), [1, 2, 3])
 
         it = iter(s)
         next(it)
@@ -108,35 +108,35 @@ class TestSet(test.test_set.TestJointOps, TestCase):
     thetype = NSSet
     basetype = NSSet
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_cyclical_print(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_cyclical_repr(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_pickling(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_do_not_rehash_dict_keys(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_badcmp(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_subclass_with_custom_hash(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_iterator_pickling(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_free_after_iterating(self):
         pass
 
@@ -273,23 +273,23 @@ class TestMutableSet(TestSet, test.test_set.TestSet):
         self.assertIsInstance(dup, self.basetype)
 
     # Tests from 'TestSet'
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_init(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_hash(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_weakref(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_iterator_pickling(self):
         pass
 
-    @onlyIf(0, "test irrelevant for NSMutableSet")
+    @skipUnless(0, "test irrelevant for NSMutableSet")
     def test_free_after_iterating(self):
         pass
 

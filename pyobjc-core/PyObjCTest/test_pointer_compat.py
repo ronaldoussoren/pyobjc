@@ -5,7 +5,7 @@ except ImportError:
 
 import objc
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 OpaqueType = objc.createOpaquePointerType("OpaqueType", b"^{OpaqueType}", None)
 
@@ -22,7 +22,7 @@ class TestProxySupport(TestCase):
         v = objc.objc_object(cobject=p)
         self.assertIs(v, arr)
 
-    @onlyIf(ctypes is not None, "requires ctypes")
+    @skipUnless(ctypes is not None, "requires ctypes")
     def test_voidp_roundtrip(self):
         arr = objc.lookUpClass("NSArray").array()
 
@@ -33,7 +33,7 @@ class TestProxySupport(TestCase):
         v = objc.objc_object(c_void_p=p)
         self.assertIs(v, arr)
 
-    @onlyIf(ctypes is not None, "requires ctypes")
+    @skipUnless(ctypes is not None, "requires ctypes")
     def test_voidp_using_ctypes(self):
         lib = ctypes.CDLL(
             "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation"
@@ -59,7 +59,7 @@ class TestProxySupport(TestCase):
         self.assertRaises(ValueError, OpaqueType, cobject=object_capsule())
         self.assertRaises(TypeError, OpaqueType, cobject=42)
 
-    @onlyIf(ctypes is not None, "requires ctypes")
+    @skipUnless(ctypes is not None, "requires ctypes")
     def test_opaque_ctypes(self):
         ptr = ctypes.c_void_p(0xABCD)
 

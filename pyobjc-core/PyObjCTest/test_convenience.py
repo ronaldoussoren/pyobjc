@@ -427,7 +427,7 @@ class TestNSString(TestCase):
         NSMutableString = objc.lookUpClass("NSMutableString")
 
         value = NSMutableString("hello world")
-        self.assertIsNotInstance(value, NSMutableString)
+        self.assertNotIsInstance(value, NSMutableString)
         value = value.nsstring()
         self.assertIsInstance(value, NSMutableString)
 

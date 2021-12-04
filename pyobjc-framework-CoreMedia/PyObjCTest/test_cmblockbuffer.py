@@ -65,14 +65,14 @@ class TestCMBlockBuffer(TestCase):
     @expectedFailure
     def test_functions_manual(self):
         # XXX: Need manual wrappers for these to support custom block sources:
-        self.assertIsNotInstance(
+        self.assertNotIsInstance(
             CoreMedia.CMBlockBufferCreateWithMemoryBlock, objc.function
         )
-        self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateContiguous, objc.function)
-        self.assertIsNotInstance(
+        self.assertNotIsInstance(CoreMedia.CMBlockBufferCreateContiguous, objc.function)
+        self.assertNotIsInstance(
             CoreMedia.CMBlockBufferAppendMemoryBlock, objc.function
         )
 
         # XXX: Need manual wrapper to expose this function
-        self.assertIsNotInstance(CoreMedia.CMBlockBufferAccessDataBytes, objc.function)
-        self.assertIsNotInstance(CoreMedia.CMBlockBufferGetDataPointer, objc.function)
+        self.assertNotIsInstance(CoreMedia.CMBlockBufferAccessDataBytes, objc.function)
+        self.assertNotIsInstance(CoreMedia.CMBlockBufferGetDataPointer, objc.function)

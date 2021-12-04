@@ -444,7 +444,7 @@ class TestStructs(TestCase):
             "FooStruct3", b'{FooStruct3="first"i"second"i"third"i}', None
         )
 
-        self.assertGreaterThan(tp0().__sizeof__(), GlobalType().__sizeof__())
+        self.assertGreater(tp0().__sizeof__(), GlobalType().__sizeof__())
 
     def todo_test_struct_defaults(self):
         # Check default values for various types

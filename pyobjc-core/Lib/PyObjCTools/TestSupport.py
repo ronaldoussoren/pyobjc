@@ -8,7 +8,6 @@ testsuite.
 import contextlib
 import gc as _gc
 import os as _os
-import plistlib as _pl
 import re as _re
 import struct as _struct
 import sys as _sys
@@ -18,6 +17,7 @@ import pickle as _pickle
 from distutils.sysconfig import get_config_var as _get_config_var
 
 import objc
+
 
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
@@ -176,109 +176,11 @@ def os_release():
     if _os_release is not None:
         return _os_release
 
-    if hasattr(_pl, "load"):
-        with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
-            pl = _pl.load(fp)
-    else:
-        pl = _pl.readPlist("/System/Library/CoreServices/SystemVersion.plist")
-    v = pl["ProductVersion"]
-    if v.startswith("10.16"):
-        # We're in a python compiled with an pre-macOS 11 SDK, which causes
-        # the system to ly to us. Use sw_vers to get the actual version.
-        v = _subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    _os_release = (
+        _subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    )
 
-    return ".".join(v.split("."))
-
-
-def is32Bit():
-    """
-    Return True if we're running in 32-bit mode
-    """
-    if _sys.maxsize > 2 ** 32:
-        return False
-    return True
-
-
-def onlyIf(expr, message=None):
-    """
-    Usage::
-
-        class Tests (unittest.TestCase):
-
-            @onlyIf(1 == 2)
-            def testUnlikely(self):
-                pass
-
-    The test only runs when the argument expression is true
-    """
-
-    def callback(function):
-        if not expr:
-            if hasattr(_unittest, "skip"):
-                return _unittest.skip(message)(function)
-            return lambda self: None  # pragma: no cover (py2.6)
-        else:
-            return function
-
-    return callback
-
-
-def onlyPython2(function):
-    """
-    Usage:
-        class Tests (unittest.TestCase):
-
-            @onlyPython2
-            def testPython2(self):
-                pass
-
-    The test is only executed for Python 2.x
-    """
-    return onlyIf(_sys.version_info[0] == 2, "python2.x only")(function)
-
-
-def onlyPython3(function):
-    """
-    Usage:
-        class Tests (unittest.TestCase):
-
-            @onlyPython3
-            def testPython3(self):
-                pass
-
-    The test is only executed for Python 3.x
-    """
-    return onlyIf(_sys.version_info[0] == 3, "python3.x only")(function)
-
-
-def onlyOn32Bit(function):
-    """
-    Usage::
-
-        class Tests (unittest.TestCase):
-
-            @onlyOn32Bit
-            def test32BitOnly(self):
-                pass
-
-    The test runs only on 32-bit systems
-    """
-    return onlyIf(is32Bit(), "32-bit only")(function)
-
-
-def onlyOn64Bit(function):
-    """
-    Usage::
-
-        class Tests (unittest.TestCase):
-
-            @onlyOn64Bit
-            def test64BitOnly(self):
-                pass
-
-    The test runs only on 64-bit systems
-    """
-    return onlyIf(not is32Bit(), "64-bit only")(function)
+    return _os_release
 
 
 def arch_only(arch):
@@ -294,7 +196,7 @@ def arch_only(arch):
     """
 
     def decorator(function):
-        return onlyIf(objc.arch == arch, f"{arch} only")(function)
+        return _unittest.skipUnless(objc.arch == arch, f"{arch} only")(function)
 
     return decorator
 
@@ -310,7 +212,9 @@ def min_python_release(version):
                 pass
     """
     parts = tuple(map(int, version.split(".")))
-    return onlyIf(_sys.version_info[:2] >= parts, f"Requires Python {version} or later")
+    return _unittest.skipUnless(
+        _sys.version_info[:2] >= parts, f"Requires Python {version} or later"
+    )
 
 
 def _sort_key(version):
@@ -341,7 +245,7 @@ def min_sdk_level(release):
                 pass
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
-    return onlyIf(
+    return _unittest.skipUnless(
         v >= os_level_key(release), f"Requires build with SDK {release} or later"
     )
 
@@ -356,7 +260,7 @@ def max_sdk_level(release):
                 pass
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
-    return onlyIf(
+    return _unittest.skipUnless(
         v <= os_level_key(release), f"Requires build with SDK {release} or later"
     )
 
@@ -371,7 +275,7 @@ def min_os_level(release):
             def testSnowLeopardCode(self):
                 pass
     """
-    return onlyIf(
+    return _unittest.skipUnless(
         os_level_key(os_release()) >= os_level_key(release),
         f"Requires OSX {release} or later",
     )
@@ -387,7 +291,7 @@ def max_os_level(release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(
+    return _unittest.skipUnless(
         os_level_key(os_release()) <= os_level_key(release),
         f"Requires OSX up to {release}",
     )
@@ -403,7 +307,7 @@ def os_level_between(min_release, max_release):
             def testUntilLeopard(self):
                 pass
     """
-    return onlyIf(
+    return _unittest.skipUnless(
         os_level_key(min_release)
         <= os_level_key(os_release())
         <= os_level_key(max_release),
@@ -418,13 +322,8 @@ _nscftype = tuple(cls for cls in objc.getClassList() if "NSCFType" in cls.__name
 
 _typealias = {}
 
-if not is32Bit():
-    _typealias[objc._C_LNG_LNG] = objc._C_LNG
-    _typealias[objc._C_ULNG_LNG] = objc._C_ULNG
-
-else:  # pragma: no cover (32-bit)
-    _typealias[objc._C_LNG] = objc._C_INT
-    _typealias[objc._C_ULNG] = objc._C_UINT
+_typealias[objc._C_LNG_LNG] = objc._C_LNG
+_typealias[objc._C_ULNG_LNG] = objc._C_ULNG
 
 
 class TestCase(_unittest.TestCase):
@@ -1318,106 +1217,17 @@ class TestCase(_unittest.TestCase):
                 message or "arg %d of %s is not an 'in' argument" % (argno, method)
             )
 
-    #
-    # Addition assert methods, all of them should only be necessary for
-    # python 2.7 or later
-    #
+    def assertStartswith(self, value, test, message=None):  # pragma: no cover
+        if not value.startswith(test):
+            self.fail(message or f"{value!r} does not start with {test!r}")
 
-    if not hasattr(_unittest.TestCase, "assertItemsEqual"):  # pragma: no cover
+    def assertHasAttr(self, value, key, message=None):
+        if not hasattr(value, key):
+            self.fail(message or f"{key} is not an attribute of {value!r}")
 
-        def assertItemsEqual(self, seq1, seq2, message=None):
-            # This is based on unittest.util._count_diff_all_purpose from
-            # Python 2.7
-            s, t = list(seq1), list(seq2)
-            m, n = len(s), len(t)
-            NULL = object()
-            result = []
-            for i, elem in enumerate(s):
-                if elem is NULL:
-                    continue
-
-                cnt_s = cnt_t = 0
-                for j in range(i, m):
-                    if s[j] == elem:
-                        cnt_s += 1
-                        s[j] = NULL
-
-                for j, other_elem in enumerate(t):
-                    if other_elem == elem:
-                        cnt_t += 1
-                        t[j] = NULL
-
-                if cnt_s != cnt_t:
-                    result.append((cnt_s, cnt_t, elem))
-            for i, elem in enumerate(t):
-                if elem is NULL:
-                    continue
-                cnt_t = 0
-                for j in range(i, n):
-                    if t[j] == elem:
-                        cnt_t += 1
-                        t[j] = NULL
-
-                result.append((0, cnt_t, elem))
-
-            if result:
-                for actual, expected, value in result:
-                    print("Seq1 %d, Seq2: %d  value: %r" % (actual, expected, value))
-
-                self.fail(
-                    message
-                    or (
-                        "sequences do not contain the same items:"
-                        + "\n".join(
-                            ["Seq1 %d, Seq2: %d  value: %r" % (item) for item in result]
-                        )
-                    )
-                )
-
-    if not hasattr(_unittest.TestCase, "assertStartswith"):
-
-        def assertStartswith(self, value, test, message=None):  # pragma: no cover
-            if not value.startswith(test):
-                self.fail(message or f"{value!r} does not start with {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertIs"):  # pragma: no cover
-
-        def assertIs(self, value, test, message=None):
-            if value is not test:
-                self.fail(
-                    message
-                    or "%r (id=%r) is not %r (id=%r) "
-                    % (value, id(value), test, id(test))
-                )
-
-    if not hasattr(_unittest.TestCase, "assertIsNot"):  # pragma: no cover
-
-        def assertIsNot(self, value, test, message=None):
-            if value is test:
-                self.fail(message or f"{value!r} is {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertIsNone"):  # pragma: no cover
-
-        def assertIsNone(self, value, message=None):
-            self.assertIs(value, None)
-
-    if not hasattr(_unittest.TestCase, "assertIsNotNone"):  # pragma: no cover
-
-        def assertIsNotNone(self, value, message=None):
-            if value is None:
-                self.fail(message, f"{value!r} is not None")
-
-    if not hasattr(_unittest.TestCase, "assertHasAttr"):  # pragma: no cover
-
-        def assertHasAttr(self, value, key, message=None):
-            if not hasattr(value, key):
-                self.fail(message or f"{key} is not an attribute of {value!r}")
-
-    if not hasattr(_unittest.TestCase, "assertNotHasAttr"):  # pragma: no cover
-
-        def assertNotHasAttr(self, value, key, message=None):
-            if hasattr(value, key):
-                self.fail(message or f"{key} is an attribute of {value!r}")
+    def assertNotHasAttr(self, value, key, message=None):
+        if hasattr(value, key):
+            self.fail(message or f"{key} is an attribute of {value!r}")
 
     def assertIsSubclass(self, value, types, message=None):
         if not issubclass(value, types):
@@ -1426,66 +1236,6 @@ class TestCase(_unittest.TestCase):
     def assertIsNotSubclass(self, value, types, message=None):
         if issubclass(value, types):
             self.fail(message or f"{value} is a subclass of {types!r}")
-
-    if not hasattr(_unittest.TestCase, "assertIsInstance"):  # pragma: no cover
-
-        def assertIsInstance(self, value, types, message=None):
-            if not isinstance(value, types):
-                self.fail(
-                    message
-                    or "%s is not an instance of %r but %s"
-                    % (value, types, type(value))
-                )
-
-    if not hasattr(_unittest.TestCase, "assertIsNotInstance"):  # pragma: no cover
-
-        def assertIsNotInstance(self, value, types, message=None):
-            if isinstance(value, types):
-                self.fail(message or f"{value} is an instance of {types!r}")
-
-    if not hasattr(_unittest.TestCase, "assertIn"):  # pragma: no cover
-
-        def assertIn(self, value, seq, message=None):
-            if value not in seq:
-                self.fail(message or f"{value!r} is not in {seq!r}")
-
-    if not hasattr(_unittest.TestCase, "assertNotIn"):  # pragma: no cover
-
-        def assertNotIn(self, value, seq, message=None):
-            if value in seq:
-                self.fail(message or f"{value!r} is in {seq!r}")
-
-    if not hasattr(_unittest.TestCase, "assertGreaterThan"):  # pragma: no cover
-
-        def assertGreaterThan(self, val, test, message=None):
-            if not (val > test):
-                self.fail(message or f"{val!r} <= {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertGreaterEqual"):  # pragma: no cover
-
-        def assertGreaterEqual(self, val, test, message=None):
-            if not (val >= test):
-                self.fail(message or f"{val!r} < {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertLessThan"):  # pragma: no cover
-
-        def assertLessThan(self, val, test, message=None):
-            if not (val < test):
-                self.fail(message or f"{val!r} >= {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertLessEqual"):  # pragma: no cover
-
-        def assertLessEqual(self, val, test, message=None):
-            if not (val <= test):
-                self.fail(message or f"{val!r} > {test!r}")
-
-    if not hasattr(_unittest.TestCase, "assertAlmostEquals"):  # pragma: no cover
-
-        def assertAlmostEquals(self, val1, val2, message=None):
-            self.assertTrue(
-                abs(val1 - val2) < 0.00001,
-                message or f"abs({val1!r} - {val2!r}) >= 0.00001",
-            )
 
     def assertClassIsFinal(self, cls):
         if not isinstance(cls, objc.objc_class):
@@ -1534,25 +1284,8 @@ class TestCase(_unittest.TestCase):
 
 
 main = _unittest.main
-
-if hasattr(_unittest, "expectedFailure"):
-    expectedFailure = _unittest.expectedFailure
-
-else:  # pragma: no cover (py2.6)
-
-    def expectedFailure(func):
-        def test(self):
-            try:
-                func(self)
-
-            except AssertionError:
-                return
-
-            self.fail("test unexpectedly passed")
-
-        test.__name__ = func.__name__
-
-        return test
+expectedFailure = _unittest.expectedFailure
+skipUnless = _unittest.skipUnless
 
 
 def expectedFailureIf(condition):

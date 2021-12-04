@@ -1,12 +1,12 @@
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, os_release, onlyIf
+from PyObjCTools.TestSupport import TestCase, os_release, skipUnless
 
 
 class TestDictionaryServices(TestCase):
     def testClasses(self):
         self.assertIsCFType(CoreServices.DCSDictionaryRef)
 
-    @onlyIf(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
+    @skipUnless(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
     def testFunctions(self):
         txt = "the hello world program"
         r = CoreServices.DCSGetTermRangeInString(None, txt, 5)

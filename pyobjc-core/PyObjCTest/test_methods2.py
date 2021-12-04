@@ -2,7 +2,7 @@ import objc
 from objc import NO, YES
 from PyObjCTest.fnd import NSPriorDayDesignations
 from PyObjCTest.testbndl2 import PyObjC_TestClass1, PyObjC_TestClass2
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 
 NSPoint_tp = b"{_NSPoint=dd}"
@@ -23508,7 +23508,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokeNSRectArg_of_(((7, 8), (9, 10)), o)
         self.assertEqual(r, ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testcallstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23519,7 +23519,7 @@ class ObjCToPy(TestCase):
         )
         self.assertEqual(r, (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23530,7 +23530,7 @@ class ObjCToPy(TestCase):
         )
         self.assertEqual(r, (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testcallstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23541,7 +23541,7 @@ class ObjCToPy(TestCase):
         )
         self.assertEqual(r, (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23552,7 +23552,7 @@ class ObjCToPy(TestCase):
         )
         self.assertEqual(r, (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testcallstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23561,7 +23561,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_of_((2, 4), o)
         self.assertEqual(r, (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23570,7 +23570,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_of_((2, 4), o)
         self.assertEqual(r, (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testcallstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23579,7 +23579,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((2, 4), o)
         self.assertEqual(r, (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23588,7 +23588,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_of_((2, 4), o)
         self.assertEqual(r, (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testcallstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -23597,7 +23597,7 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_of_((2, 4.5), o)
         self.assertEqual(r, (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -24472,7 +24472,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeboolAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -24521,7 +24521,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeboolAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -24562,7 +24562,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeboolAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -24599,7 +24599,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeboolAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -24636,7 +24636,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeboolAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -25521,7 +25521,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeBOOLAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -25570,7 +25570,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeBOOLAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -25611,7 +25611,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeBOOLAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -25648,7 +25648,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeBOOLAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -25685,7 +25685,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NO)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeBOOLAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -26932,7 +26932,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 127)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -27001,7 +27001,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 127)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -27058,7 +27058,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 127)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -27109,7 +27109,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 127)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -27160,7 +27160,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 127)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -29495,7 +29495,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedshortAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -29604,7 +29604,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedshortAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -29713,7 +29713,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedshortAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -29822,7 +29822,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedshortAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -29931,7 +29931,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedshortAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -32180,7 +32180,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedintAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -32289,7 +32289,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedintAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -32394,7 +32394,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedintAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -32501,7 +32501,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedintAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -32610,7 +32610,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedintAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -34913,7 +34913,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlongAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -35022,7 +35022,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlongAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -35131,7 +35131,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlongAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -35240,7 +35240,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlongAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -35349,7 +35349,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlongAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -37908,7 +37908,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 60)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlonglongAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -38017,7 +38017,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 60)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlonglongAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -38126,7 +38126,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 60)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlonglongAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -38235,7 +38235,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 60)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlonglongAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -38344,7 +38344,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 60)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokesignedlonglongAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -39769,7 +39769,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 255)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedcharAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -39838,7 +39838,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 255)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedcharAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -39907,7 +39907,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 255)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedcharAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -39976,7 +39976,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 255)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedcharAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -40045,7 +40045,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 255)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedcharAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -41542,7 +41542,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedshortAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -41611,7 +41611,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedshortAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -41680,7 +41680,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedshortAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -41749,7 +41749,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedshortAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -41818,7 +41818,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 14)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedshortAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -43237,7 +43237,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedintAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -43306,7 +43306,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedintAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -43375,7 +43375,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedintAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -43444,7 +43444,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedintAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -43513,7 +43513,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedintAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -44976,7 +44976,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlongAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -45045,7 +45045,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlongAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -45114,7 +45114,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlongAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -45183,7 +45183,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlongAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -45252,7 +45252,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 30)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlongAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -46879,7 +46879,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 62)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlonglongAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -46948,7 +46948,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 62)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlonglongAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -47017,7 +47017,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 62)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlonglongAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -47086,7 +47086,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 62)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlonglongAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -47155,7 +47155,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], 1 << 62)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeunsignedlonglongAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -48804,7 +48804,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokefloatAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -48893,7 +48893,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokefloatAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -48966,7 +48966,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokefloatAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -49043,7 +49043,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokefloatAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -49126,7 +49126,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokefloatAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -50809,7 +50809,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokedoubleAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -50898,7 +50898,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokedoubleAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -50975,7 +50975,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokedoubleAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51058,7 +51058,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokedoubleAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51147,7 +51147,7 @@ class ObjCToPy(TestCase):
         self.assertAlmostEqual(r[0], 1e10)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokedoubleAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51896,7 +51896,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NSPriorDayDesignations)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeidAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51925,7 +51925,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NSPriorDayDesignations)
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeidAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51954,7 +51954,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NSPriorDayDesignations)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeidAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -51983,7 +51983,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NSPriorDayDesignations)
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeidAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -52012,7 +52012,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], NSPriorDayDesignations)
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeidAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -53429,7 +53429,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharPtrAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -53498,7 +53498,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharPtrAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -53567,7 +53567,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharPtrAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -53636,7 +53636,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharPtrAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -53705,7 +53705,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokecharPtrAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -54676,7 +54676,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (3, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSPointAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -54725,7 +54725,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (3, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSPointAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -54774,7 +54774,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (3, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSPointAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -54823,7 +54823,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (3, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSPointAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -54872,7 +54872,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (3, 4))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSPointAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56121,7 +56121,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], ((7, 8), (9, 10)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSRectAndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56170,7 +56170,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], ((7, 8), (9, 10)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSRectAndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56219,7 +56219,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], ((7, 8), (9, 10)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSRectAndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56268,7 +56268,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], ((7, 8), (9, 10)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSRectAndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56317,7 +56317,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], ((7, 8), (9, 10)))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokeNSRectAndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56366,7 +56366,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56415,7 +56415,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56474,7 +56474,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 127)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56563,7 +56563,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56672,7 +56672,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56781,7 +56781,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56890,7 +56890,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 60)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -56979,7 +56979,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 255)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57048,7 +57048,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57117,7 +57117,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57186,7 +57186,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57255,7 +57255,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 62)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57334,7 +57334,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57423,7 +57423,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57482,7 +57482,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndidArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57531,7 +57531,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], str(b"foobar"))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57590,7 +57590,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (3, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57639,7 +57639,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndNSRectArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57688,7 +57688,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57737,7 +57737,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57786,7 +57786,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57835,7 +57835,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57884,7 +57884,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57933,7 +57933,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -57982,7 +57982,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58041,7 +58041,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 127)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58130,7 +58130,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58239,7 +58239,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58348,7 +58348,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58457,7 +58457,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 60)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58546,7 +58546,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 255)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58615,7 +58615,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58684,7 +58684,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58753,7 +58753,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58822,7 +58822,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], 1 << 62)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58901,7 +58901,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -58990,7 +58990,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59049,7 +59049,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndidArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59098,7 +59098,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], str(b"foobar"))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59157,7 +59157,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (3, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59206,7 +59206,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndNSRectArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59255,7 +59255,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59304,7 +59304,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59353,7 +59353,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59402,7 +59402,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59451,7 +59451,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59492,7 +59492,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59525,7 +59525,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59564,7 +59564,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 127)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59641,7 +59641,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59746,7 +59746,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59855,7 +59855,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -59964,7 +59964,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 60)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60053,7 +60053,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 255)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60122,7 +60122,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60191,7 +60191,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60260,7 +60260,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60329,7 +60329,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 62)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60392,7 +60392,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60465,7 +60465,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60524,7 +60524,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndidArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60573,7 +60573,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], str(b"foobar"))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60632,7 +60632,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (3, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60681,7 +60681,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndNSRectArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60730,7 +60730,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60779,7 +60779,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60828,7 +60828,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60877,7 +60877,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60926,7 +60926,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -60971,7 +60971,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61012,7 +61012,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61061,7 +61061,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 127)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61144,7 +61144,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61251,7 +61251,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61360,7 +61360,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61469,7 +61469,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 60)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61558,7 +61558,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 255)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61627,7 +61627,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61696,7 +61696,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61765,7 +61765,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61834,7 +61834,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], 1 << 62)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61905,7 +61905,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -61986,7 +61986,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62045,7 +62045,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndidArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62094,7 +62094,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], str(b"foobar"))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62153,7 +62153,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (3, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62202,7 +62202,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndNSRectArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62251,7 +62251,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62300,7 +62300,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62349,7 +62349,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62398,7 +62398,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62447,7 +62447,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62488,7 +62488,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62525,7 +62525,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], NO)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62568,7 +62568,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 127)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62653,7 +62653,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62762,7 +62762,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62871,7 +62871,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -62980,7 +62980,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 60)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63069,7 +63069,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 255)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63138,7 +63138,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 14)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63207,7 +63207,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63276,7 +63276,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 30)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63345,7 +63345,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], 1 << 62)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63420,7 +63420,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63509,7 +63509,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertAlmostEqual(r[1], 1e10)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63568,7 +63568,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndidArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63617,7 +63617,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], str(b"foobar"))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63676,7 +63676,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (3, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63725,7 +63725,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndNSRectArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63774,7 +63774,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndstructTestStruct1Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63823,7 +63823,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndstructTestStruct2Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63872,7 +63872,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndstructTestStruct3Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63921,7 +63921,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (2, 4))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndstructTestStruct4Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
@@ -63970,7 +63970,7 @@ class ObjCToPy(TestCase):
         self.assertEqual(r[0], (2, 4.5))
         self.assertEqual(r[1], (2, 4.5))
 
-    @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
+    @skipUnless(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndstructTestStruct5Arg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)

@@ -6,11 +6,6 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBezierPath(TestCase):
-    if not hasattr(TestCase, "assertAlmostEquals"):
-
-        def assertAlmostEquals(self, val1, val2):
-            self.assertTrue(abs(val1 - val2) < 0.000_001)
-
     def assertPointEquals(self, point1, point2):
         self.assertAlmostEqual(point1[0], point2[0])
         self.assertAlmostEqual(point1[1], point2[1])

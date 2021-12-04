@@ -22,5 +22,5 @@ class TestCGPDFObject(TestCase):
     def testFunctions(self):
         Quartz.CGPDFObjectGetType
 
-        self.assertIsNotInstance(Quartz.CGPDFObjectGetValue, objc.function)
+        self.assertNotIsInstance(Quartz.CGPDFObjectGetValue, objc.function)
         # XXX: Actual tests for ^^^^ (with manual wrapper)

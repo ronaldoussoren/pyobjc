@@ -15,6 +15,12 @@ Version 8.2b1
   This is a wrapper for a C type that's only usable in 32-bit code, PyObjC
   no longer supports 32-bit.
 
+* The module ``PyObjCTools.TestSupport`` was modernized a little
+
+  This most visible part of this is that a number of functions and assertion
+  method have been removed because they have a better alternative in the
+  :mod:`unittest` library.
+
 * #404: Instances of the Python represention of C structs can now be pickled.
 
   That is, instances of ``AppKit.NSPoint``, ``Foundation.NSRange``, etc. can

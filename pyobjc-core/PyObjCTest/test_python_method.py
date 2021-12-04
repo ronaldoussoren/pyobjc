@@ -42,7 +42,7 @@ class TestPythonMethod(TestCase):
             b = objc.python_method(2)
 
         o = OC_PythonMethod_Class.alloc().init()
-        self.assertIsNotInstance(o.my_method, objc.selector)
+        self.assertNotIsInstance(o.my_method, objc.selector)
         self.assertIsInstance(o.someSelector, objc.selector)
 
         self.assertEqual(o.my_method(4), 8)

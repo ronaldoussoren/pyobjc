@@ -577,7 +577,7 @@ class TestArrayProperty(TestCase):
         o = TestArrayPropertyHelper.alloc().init()
         o.array = [1, 2, 3, 4]
 
-        self.assertIsNotInstance(o.array, list)
+        self.assertNotIsInstance(o.array, list)
 
         self.assertEqual(o.array, [1, 2, 3, 4])
         self.assertNotEqual(o.array, [1, 2, 3, 4, 5])

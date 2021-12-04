@@ -146,7 +146,7 @@ class TestCFTree(TestCase):
         CoreFoundation.CFTreeSortChildren(root, compare, None)
         CoreFoundation.CFTreeApplyFunctionToChildren(root, applyFunc, after)
 
-        self.assertItemsEqual(before, after)
+        self.assertCountEqual(before, after)
 
         CoreFoundation.CFTreeRemoveAllChildren(root)
         self.assertEqual(CoreFoundation.CFTreeGetChildCount(root), 0)

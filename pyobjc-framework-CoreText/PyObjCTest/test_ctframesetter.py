@@ -1,5 +1,5 @@
 import CoreText
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyIf
+from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
 import objc
 
 try:
@@ -27,7 +27,7 @@ class TestCTFramesetter(TestCase):
         self.assertIsInstance(v, CoreText.CTTypesetterRef)
 
     @min_os_level("10.5")
-    @onlyIf(CGSize is not None, "CoreGraphics not available")
+    @skipUnless(CGSize is not None, "CoreGraphics not available")
     def testMethods10_5(self):
         setter = CoreText.CTFramesetterCreateWithAttributedString(
             CoreText.CFAttributedStringCreate(None, "hello", None)

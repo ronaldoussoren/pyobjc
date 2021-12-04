@@ -1,7 +1,7 @@
 import sys
 
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, onlyIf
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, skipUnless
 import objc
 
 try:
@@ -221,7 +221,7 @@ class TestNSWindow(TestCase):
             AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
         )
 
-    @onlyIf(Quartz is not None)
+    @skipUnless(Quartz is not None)
     def testMagicConstants(self):
         self.assertEqual(AppKit.NSNormalWindowLevel, Quartz.kCGNormalWindowLevel)
         self.assertEqual(AppKit.NSFloatingWindowLevel, Quartz.kCGFloatingWindowLevel)

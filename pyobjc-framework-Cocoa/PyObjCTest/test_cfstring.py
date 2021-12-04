@@ -137,14 +137,14 @@ class TestString(TestCase):
 
         v = CoreFoundation.CFStringGetCharacterAtIndex("zing", 2)
         self.assertIsInstance(v, str)
-        self.assertIsNotInstance(v, objc.pyobjc_unicode)
+        self.assertNotIsInstance(v, objc.pyobjc_unicode)
         self.assertEqual(v, "n")
 
         v = CoreFoundation.CFStringGetCharacters(
             "foo", CoreFoundation.CFRange(0, 3), None
         )
         self.assertIsInstance(v, str)
-        self.assertIsNotInstance(v, objc.pyobjc_unicode)
+        self.assertNotIsInstance(v, objc.pyobjc_unicode)
         self.assertEqual(v, "foo")
 
         ok, buf = CoreFoundation.CFStringGetCString(

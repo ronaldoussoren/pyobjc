@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import TestCase, main, expectedFailure, onlyIf
+from PyObjCTools.TestSupport import TestCase, main, expectedFailure, skipUnless
 
 from importlib import reload
 
@@ -1305,15 +1305,15 @@ class TestBridgeSupportParser(TestCase):
         ]
 
         self.maxDiff = None
-        self.assertItemsEqual(prs.constants, all_constants)
+        self.assertCountEqual(prs.constants, all_constants)
         self.assertEqual(prs.values, all_values)
-        self.assertItemsEqual(prs.opaque, all_opaque)
-        self.assertItemsEqual(prs.func_aliases, all_func_aliases)
-        self.assertItemsEqual(prs.cftypes, all_cftypes)
-        self.assertItemsEqual(prs.functions, all_functions)
+        self.assertCountEqual(prs.opaque, all_opaque)
+        self.assertCountEqual(prs.func_aliases, all_func_aliases)
+        self.assertCountEqual(prs.cftypes, all_cftypes)
+        self.assertCountEqual(prs.functions, all_functions)
         self.assertEqual(prs.meta, all_methods)
-        self.assertItemsEqual(prs.informal_protocols, all_protocols)
-        self.assertItemsEqual(prs.structs, all_structs)
+        self.assertCountEqual(prs.informal_protocols, all_protocols)
+        self.assertCountEqual(prs.structs, all_structs)
 
     def assertIsIdentifier(self, value):
         m = IDENTIFIER.match(value)
@@ -1642,7 +1642,7 @@ class Patcher:
 
 
 class TestParseBridgeSupport(TestCase):
-    @onlyIf(ctypes is not None, "requires ctypes")
+    @skipUnless(ctypes is not None, "requires ctypes")
     def test_calls(self):
         # - Minimal XML with all types of metadata
         # - Mock the APIs used by parseBridgeSupport

@@ -52,7 +52,7 @@ class TestNSDictionaryInterface(TestCase):
         self.assertIn("a", k)
         self.assertIn("b", k)
 
-        self.assertIsNotInstance(k, list)
+        self.assertNotIsInstance(k, list)
 
         s = d.keys() | {"c"}
         self.assertEqual(s, {"a", "b", "c"})
@@ -90,7 +90,7 @@ class TestNSDictionaryInterface(TestCase):
 
         self.assertEqual(set(d.values()), {1})
         self.assertRaises(TypeError, d.values, None)
-        self.assertIsNotInstance(d.values(), list)
+        self.assertNotIsInstance(d.values(), list)
 
         self.assertEqual(
             repr(self.createDictionary(a=1).values()), "<nsdict_values([1])>"
@@ -347,7 +347,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         self.assertIn("a", k)
         self.assertIn("b", k)
 
-        self.assertIsNotInstance(k, list)
+        self.assertNotIsInstance(k, list)
 
         self.assertNotIn("c", d)
         self.assertNotIn("c", k)

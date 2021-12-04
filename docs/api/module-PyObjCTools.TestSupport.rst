@@ -72,36 +72,6 @@ wrappers.
    Return a value for *release* that can be used to compare
    two versions with the "<" and ">" operators.
 
-.. function:: is32Bit()
-
-   Returns :data:`True` if the process is in 32-bit mode.
-
-.. function:: onlyIf(expr, message)
-
-   Decorator for enabling tests only when an expression is true. This is
-   the same as :func:`skipUnless <unittest.skipUnless>` in Python 2.7 or later.
-
-.. function:: onlyPython2
-
-   Decorator for enabling a test only when using Python 2.x.
-
-   This is basically ``onlyIf(sys.version_info[0] == 2)``.
-
-.. function:: onlyPython3
-
-   Decorator for enabling a test only when using Python 3.x.
-
-   This is basically ``onlyIf(sys.version_info[0] == 3)``.
-
-.. function:: onlyOn32Bit
-
-   Decorator for enabling a test only when the process is running in 32-bit mode.
-
-.. function:: onlyOn64Bit
-
-   Decorator for enabling a test only when the process is running in 64-bit mode.
-
-
 .. function:: min_sdk_level(version)
 
    Decorator for enabling a test only when running with a build of PyObjC
@@ -147,43 +117,7 @@ wrappers.
          used to environment variable :envvar:`PyOBJC_USE_LEAKS` as a trigger to enable the
          functionality.
 
-   .. method:: assertItemsEqual(seq1, seq2[, message])
-
-      Asserts that sequences *seq1* and *seq2* have the same members (in any order).
-
-   .. method:: assertGreaterThan(value, test[, message])
-
-      Asserts that *value* is greater than *test*.
-
-   .. method:: assertGreaterThanOrEquals(value, test[, message])
-
-      Asserts that *value* is greater than or equal to *test*.
-
-   .. method:: assertLessThan(value, test[, message])
-
-      Asserts that *value* is less than *test*.
-
-   .. method:: assertLessThanOrEquals(value, test[, message])
-
-      Asserts that *value* is less than or equal to *test*.
-
-   .. method:: assertIs(value, test[, message])
-
-      Asserts that *value* is the same object as *test*
-
-   .. method:: assertIsNot(value, test[, message])
-
-      Asserts that *value* is not the same object as *test*
-
-   .. method:: assertIsNone(value[, message])
-
-      Asserts that *value* is the same object as :data:`None`
-
-   .. method:: assertIsNotNone(value[, message])
-
-      Asserts that *value* is the not same object as :data:`None`
-
-   .. method:: assertSstartswith(self, value, check[, message])
+   .. method:: assertStartswith(self, value, check[, message])
 
       Assert that *value* is a string that starts with *check*.
 
@@ -194,27 +128,6 @@ wrappers.
    .. method:: assertNotHasAttr(self, value, key[, message])
 
       Assert that *value* does not have an attribute named *key*.
-
-   .. method:: assertIsInstance(self, value, types[, message])
-
-      Assert that *value* is an instance of *types*.
-
-   .. method:: assertIsNotInstance(self, value, types[, message])
-
-      Assert that *value* is not an instance of *types*.
-
-   .. method:: assertAlmostEquals(val1, val2[, message)
-
-      Assert that *val1* is almost equal to *val2* (that is,
-      the difference between the two values is less that 1e-5)
-
-   .. method:: assertIn(self, value, seq[, message])
-
-      Assert that *value* is a member of *seq*.
-
-   .. method:: assertNotIn(self, value, seq[, message])
-
-      Assert that *value* is not a member of *seq*.
 
    .. method:: assertIsCFType(tp[, message])
 

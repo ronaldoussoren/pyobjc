@@ -1,6 +1,6 @@
 import socket
 
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 import SystemConfiguration
 import objc
 
@@ -34,7 +34,7 @@ class TestSCNetwork(TestCase):
             None,
         )
 
-    @onlyIf(resolver_available(), "No DNS resolver available")
+    @skipUnless(resolver_available(), "No DNS resolver available")
     def testHardFunctions(self):
         b, flags = SystemConfiguration.SCNetworkCheckReachabilityByAddress(
             ("www.python.org", 80), objc._size_sockaddr_ip4, None
@@ -44,7 +44,7 @@ class TestSCNetwork(TestCase):
         self.assertEqual(b, True)
         self.assertEqual(flags, SystemConfiguration.kSCNetworkFlagsReachable)
 
-    @onlyIf(resolver_available(), "No DNS resolver available")
+    @skipUnless(resolver_available(), "No DNS resolver available")
     def testFunctions(self):
         r, flags = SystemConfiguration.SCNetworkCheckReachabilityByName(
             b"www.python.org", None

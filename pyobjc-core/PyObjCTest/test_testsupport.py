@@ -12,13 +12,13 @@ from PyObjCTools.TestSupport import (
     TestCase,
     sdkForPython,
     os_release,
-    onlyIf,
-    onlyPython2,
-    onlyPython3,
+    skipUnless,
     max_os_level,
-    is32Bit,
     min_os_level,
+    min_sdk_level,
+    max_sdk_level,
     fourcc,
+    arch_only,
 )
 
 
@@ -43,6 +43,24 @@ class Method:
 
 
 class TestTestSupport(TestCase):
+    def test_arch_only(self):
+        @arch_only("foo")
+        def wrapped_function(self):
+            raise RuntimeError("test me")
+
+        with self.assertRaisesRegex(unittest.SkipTest, "foo only"):
+            wrapped_function()
+
+        orig = objc.arch
+        try:
+            objc.arch = "foo"
+
+            with self.assertRaisesRegex(RuntimeError, "test me"):
+                wrapped_function()
+
+        finally:
+            objc.arch = orig
+
     def test_sdkForPython(self):
         orig_get_config_var = TestSupport._get_config_var
         try:
@@ -117,7 +135,7 @@ class TestTestSupport(TestCase):
 
         self.assertEqual(fourcc(b"abcd"), struct.unpack(">i", b"abcd")[0])
 
-    @onlyIf(ctypes is not None, "test requires ctypes")
+    @skipUnless(ctypes is not None, "test requires ctypes")
     def test_cast(self):
         c_int = ctypes.c_int()
         c_uint = ctypes.c_uint()
@@ -135,82 +153,6 @@ class TestTestSupport(TestCase):
             c_ulonglong.value = v
             self.assertEqual(c_longlong.value, TestSupport.cast_longlong(v))
             self.assertEqual(c_ulonglong.value, TestSupport.cast_ulonglong(v))
-
-    def testOnlyIf(self):
-        def func_false():
-            pass
-
-        dec_false = onlyIf(1 == 2, "message")(func_false)
-
-        def func_true():
-            pass
-
-        dec_true = onlyIf(1 == 1, "message")(func_true)
-
-        self.assertIs(func_true, dec_true)
-        self.assertIsNot(func_false, dec_false)
-
-        try:
-            dec_false()
-        except TestSupport._unittest.SkipTest:
-            # OK
-            pass
-
-        else:
-            self.fail("Not skipped?")
-
-    def testOnlyPython(self):
-        orig_version = sys.version_info
-
-        try:
-            sys.version_info = (2, 7, 3, "-")
-
-            @onlyPython2
-            def func_true():
-                pass
-
-            @onlyPython3
-            def func_false():
-                pass
-
-            try:
-                func_true()
-            except TestSupport._unittest.SkipTest:
-                self.fail("Unexpected skip for python 2")
-
-            try:
-                func_false()
-            except TestSupport._unittest.SkipTest:
-                pass
-
-            else:
-                self.fail("Unexpected non-skip for python 2")
-
-            sys.version_info = (3, 3, 1, "-")
-
-            @onlyPython2
-            def func_false():
-                pass
-
-            @onlyPython3
-            def func_true():
-                pass
-
-            try:
-                func_true()
-            except TestSupport._unittest.SkipTest:
-                self.fail("Unexpected skip for python 2")
-
-            try:
-                func_false()
-            except TestSupport._unittest.SkipTest:
-                pass
-
-            else:
-                self.fail("Unexpected non-skip for python 2")
-
-        finally:
-            sys.version_info = orig_version
 
     def test_mxx_os_level(self):
         orig_os_release = TestSupport.os_release
@@ -242,6 +184,12 @@ class TestTestSupport(TestCase):
             def func_false_2():
                 pass
 
+            with self.assertRaisesRegex(ValueError, "Invalid version"):
+
+                @max_os_level("11")
+                def func_invalid():
+                    pass
+
             for func_true in (func_true_1, func_true_2, func_true_3, func_true_4):
                 try:
                     func_true()
@@ -260,17 +208,59 @@ class TestTestSupport(TestCase):
         finally:
             TestSupport.os_release = orig_os_release
 
-    def testIs32Bit(self):
-        orig = sys.maxsize
-        try:
-            sys.maxsize = 2 ** 31 - 1
-            self.assertTrue(is32Bit())
+    def test_mxx_sdklevel(self):
+        orig_build_release = objc.PyObjC_BUILD_RELEASE
 
-            sys.maxsize = 2 ** 63 - 1
-            self.assertFalse(is32Bit())
+        try:
+            objc.PyObjC_BUILD_RELEASE = 1005
+
+            @min_sdk_level("10.4")
+            def func_true_1():
+                pass
+
+            @min_sdk_level("10.5")
+            def func_true_2():
+                pass
+
+            @min_sdk_level("10.6")
+            def func_false_1():
+                pass
+
+            @max_sdk_level("10.5")
+            def func_true_3():
+                pass
+
+            @max_sdk_level("10.6")
+            def func_true_4():
+                pass
+
+            @max_sdk_level("10.4")
+            def func_false_2():
+                pass
+
+            with self.assertRaisesRegex(ValueError, "Invalid version"):
+
+                @max_os_level("11")
+                def func_invalid():
+                    pass
+
+            for func_true in (func_true_1, func_true_2, func_true_3, func_true_4):
+                try:
+                    func_true()
+                except TestSupport._unittest.SkipTest:
+                    self.fail("Unexpected skip for python 2")
+
+            for func_false in (func_false_1, func_false_2):
+                try:
+                    func_false()
+                except TestSupport._unittest.SkipTest:
+                    pass
+
+                else:
+                    self.fail("Unexpected non-skip for python 2")
 
         finally:
-            sys.maxsize = orig
+            objc.PyObjC_BUILD_RELEASE = orig_build_release
 
     def testAssertIsSubclass(self):
         self.assertIsSubclass(int, object)

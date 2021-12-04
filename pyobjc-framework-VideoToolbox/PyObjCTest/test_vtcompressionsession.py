@@ -49,7 +49,7 @@ class TestVTCompressionSession(TestCase):
 
         self.assertArgIsOut(VideoToolbox.VTCompressionSessionEndPass, 1)
 
-        self.assertIsNotInstance(
+        self.assertNotIsInstance(
             VideoToolbox.VTCompressionSessionGetTimeRangesForNextPass, objc.function
         )
 

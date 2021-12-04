@@ -63,7 +63,7 @@ class TestDate(TestCase):
     def testAbsoluteTime(self):
         v = CoreFoundation.CFAbsoluteTimeGetCurrent()
         self.assertIsInstance(v, float)
-        self.assertLessThan(
+        self.assertLess(
             abs(v - time.time() + CoreFoundation.kCFAbsoluteTimeIntervalSince1970), 1.0
         )
 
@@ -81,7 +81,7 @@ class TestDate(TestCase):
         dt2 = CoreFoundation.CFDateCreate(None, now + 1000)
         self.assertEqual(CoreFoundation.CFDateGetTimeIntervalSinceDate(dt2, dt), 1000)
         cmp = CoreFoundation.CFDateCompare(dt, dt2, 0)
-        self.assertLessThan(cmp, 0)
+        self.assertLess(cmp, 0)
         dt = CoreFoundation.CFGregorianDate()
         dt.month = 12
         self.assertIs(

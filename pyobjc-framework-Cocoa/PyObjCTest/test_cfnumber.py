@@ -216,7 +216,7 @@ class TestCFNumber(TestCase):
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(1.0))
 
         r = CoreFoundation.CFNumberCompare(44, 45, 0)
-        self.assertLessThan(r, 0)
+        self.assertLess(r, 0)
 
     def testConstants(self):
         self.assertIs(CoreFoundation.kCFBooleanTrue, True)

@@ -15,7 +15,7 @@ class TestPickleNumber(TestCase):
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
         self.assertEqual(v2, v)
-        self.assertIsNotInstance(v2, number_type)
+        self.assertNotIsInstance(v2, number_type)
         self.assertIsInstance(v2, int)
 
     def testPickleFloat(self):
@@ -26,5 +26,5 @@ class TestPickleNumber(TestCase):
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
         self.assertEqual(v2, v)
-        self.assertIsNotInstance(v2, OC_PythonFloat)
+        self.assertNotIsInstance(v2, OC_PythonFloat)
         self.assertIsInstance(v2, float)

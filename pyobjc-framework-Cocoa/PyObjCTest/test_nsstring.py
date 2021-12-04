@@ -1,9 +1,8 @@
 import sys
 import objc
-import warnings
 
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint, onlyPython2
+from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestNSString(TestCase):
@@ -60,44 +59,6 @@ class TestNSStringBridging(TestCase):
         self.assertIsInstance(self.nsUniString, str)
         self.assertIsInstance(self.pyUniString, str)
 
-    @onlyPython2
-    def testStrConversion(self):
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore")
-
-            curEnabledFlag = objc.getStrBridgeEnabled()
-            objc.setStrBridgeEnabled(True)
-            try:
-                v = Foundation.NSString.stringWithString_("hello2")
-                self.assertIsInstance(v, objc.pyobjc_unicode)
-                self.assertEqual(v, "hello2")
-
-                self.assertRaises(UnicodeError, str, "\xff")
-                # XXX: string bridge now uses the default Foundation.NSString encoding
-                # self.assertRaises(UnicodeError, Foundation.NSString.stringWithString_, '\xff')
-
-                objc.setStrBridgeEnabled(False)
-
-                warnings.filterwarnings("error", category=objc.PyObjCStrBridgeWarning)
-                try:
-                    # v = Foundation.NSString.stringWithString_("hello")
-
-                    # we need to make sure that the str is unique
-                    # because an already bridged one might have crossed
-                    # and would be cached
-                    newString = type("test_str", (str,), {})("hello2")
-                    self.assertRaises(
-                        objc.PyObjCStrBridgeWarning,
-                        Foundation.NSString.stringWithString_,
-                        newString,
-                    )
-
-                finally:
-                    del warnings.filters[0]
-
-            finally:
-                objc.setStrBridgeEnabled(curEnabledFlag)
-
     def testNSStringMethodAccess(self):
         self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
         v = self.nsUniString.stringByAppendingString_
@@ -132,25 +93,6 @@ class TestPickle(TestCase):
         Check that ObjC-strings pickle as str strings
         """
         import pickle
-
-        s = pickle.dumps(self.strVal, 0)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-        s = pickle.dumps(self.strVal, 1)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-        s = pickle.dumps(self.strVal, 2)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-    @onlyPython2
-    def testCPickle(self):
-        """
-        Check that ObjC-strings pickle as str strings
-        """
-        import cPickle as pickle
 
         s = pickle.dumps(self.strVal, 0)
         v = pickle.loads(s)

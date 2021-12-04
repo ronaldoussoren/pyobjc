@@ -267,7 +267,7 @@ class TestAllInstanceVariables(TestCase):
 
         o = NSObject.alloc().init()
         self.assertIsInstance(o, NSObject)
-        self.assertIsNotInstance(o, DummyClass)
+        self.assertNotIsInstance(o, DummyClass)
 
         objc.setInstanceVariable(o, "isa", DummyClass)
         self.assertIsInstance(o, DummyClass)

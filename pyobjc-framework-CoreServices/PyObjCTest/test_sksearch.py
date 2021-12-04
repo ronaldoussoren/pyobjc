@@ -87,13 +87,13 @@ class TestSKSearch(TestCase):
             # The API does not work on macOS 10.7 or later.
             # (Verified with an ObjC reproducer).
             # See issue #9
-            self.assertGreaterThan(cnt, 0)
+            self.assertGreater(cnt, 0)
 
         res = orig_res
 
         cnt = CoreServices.SKSearchResultsGetCount(res)
         self.assertIsInstance(cnt, int)
-        self.assertGreaterThan(cnt, 0)
+        self.assertGreater(cnt, 0)
 
         v, o1, o2, o3 = CoreServices.SKSearchResultsGetInfoInRange(
             res, CoreServices.CFRange(0, cnt), None, None, None

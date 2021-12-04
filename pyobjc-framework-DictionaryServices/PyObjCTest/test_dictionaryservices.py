@@ -1,6 +1,6 @@
 import warnings
 
-from PyObjCTools.TestSupport import TestCase, os_release, onlyIf
+from PyObjCTools.TestSupport import TestCase, os_release, skipUnless
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
@@ -11,7 +11,7 @@ class TestDictionaryServices(TestCase):
     def testClasses(self):
         self.assertIsCFType(DictionaryServices.DCSDictionaryRef)
 
-    @onlyIf(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
+    @skipUnless(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
     def testFunctions(self):
         txt = "the hello world program"
         r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)

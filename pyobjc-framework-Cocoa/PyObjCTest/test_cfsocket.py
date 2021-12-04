@@ -2,7 +2,7 @@ import socket
 import struct
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, onlyIf
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 cached_info = None
 
@@ -80,7 +80,7 @@ class TestSocket(TestCase):
 
         CoreFoundation.CFSocketSetDefaultNameRegistryPortNumber(p1)
 
-    @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
+    @skipUnless(onTheNetwork(), "Test requires a working Internet connection")
     def testSocketFunctions(self):
         data = {}
         state = []
