@@ -6,20 +6,28 @@ try:
 except ImportError:
     ctypes = None
 
+import pickle
+
 import objc
 from PyObjCTools import TestSupport
 from PyObjCTools.TestSupport import (
+    pyobjc_options,
+    expectedFailure,
+    expectedFailureIf,
     TestCase,
     sdkForPython,
     os_release,
     skipUnless,
+    os_level_between,
     max_os_level,
     min_os_level,
     min_sdk_level,
     max_sdk_level,
+    min_python_release,
     fourcc,
     arch_only,
 )
+from unittest import SkipTest
 
 
 class Method:
@@ -43,6 +51,55 @@ class Method:
 
 
 class TestTestSupport(TestCase):
+    def test_pyobjc_options(self):
+        class Options:
+            pass
+
+        orig_options = objc.options
+
+        try:
+            objc.options = Options()
+            objc.options.opt1 = True
+            objc.options.opt2 = 1
+
+            self.assertIs(objc.options.opt1, True)
+            self.assertEqual(objc.options.opt2, 1)
+
+            with pyobjc_options(opt1=False):
+                self.assertIs(objc.options.opt1, False)
+                self.assertEqual(objc.options.opt2, 1)
+
+            self.assertIs(objc.options.opt1, True)
+            self.assertEqual(objc.options.opt2, 1)
+
+            with pyobjc_options(opt1=False, opt2=42):
+                self.assertIs(objc.options.opt1, False)
+                self.assertEqual(objc.options.opt2, 42)
+
+            self.assertIs(objc.options.opt1, True)
+            self.assertEqual(objc.options.opt2, 1)
+
+            with self.assertRaises(AttributeError):
+                with pyobjc_options(opt1=False, opt2=42, opt3="a"):
+                    pass
+
+            self.assertIs(objc.options.opt1, True)
+            self.assertEqual(objc.options.opt2, 1)
+
+        finally:
+            objc.options = orig_options
+
+    def test_expectedFailureIf(self):
+        def func(self):
+            pass
+
+        o = expectedFailureIf(True)
+        self.assertIs(o, expectedFailure)
+
+        o = expectedFailureIf(False)
+        self.assertIsNot(o, expectedFailure)
+        self.assertIs(func, o(func))
+
     def test_arch_only(self):
         @arch_only("foo")
         def wrapped_function(self):
@@ -154,6 +211,86 @@ class TestTestSupport(TestCase):
             self.assertEqual(c_longlong.value, TestSupport.cast_longlong(v))
             self.assertEqual(c_ulonglong.value, TestSupport.cast_ulonglong(v))
 
+    def test_os_level_between(self):
+        orig_os_release = TestSupport.os_release
+
+        try:
+            TestSupport.os_release = lambda: "10.5"
+
+            @os_level_between("10.3", "10.4")
+            def func_false_1():
+                pass
+
+            @os_level_between("10.3", "10.5")
+            def func_true_1():
+                pass
+
+            @os_level_between("10.3", "10.8")
+            def func_true_2():
+                pass
+
+            @os_level_between("10.5", "10.3")
+            def func_false_2():
+                pass
+
+            @os_level_between("10.5", "10.5")
+            def func_true_3():
+                pass
+
+            @os_level_between("10.5", "10.8")
+            def func_true_4():
+                pass
+
+            @os_level_between("10.8", "10.3")
+            def func_false_3():
+                pass
+
+            @os_level_between("10.8", "10.5")
+            def func_false_4():
+                pass
+
+            @os_level_between("10.8", "10.8")
+            def func_false_5():
+                pass
+
+            with self.assertRaisesRegex(ValueError, "Invalid version"):
+
+                @os_level_between("11", "12.9")
+                def func_invalid1():
+                    pass
+
+            with self.assertRaisesRegex(ValueError, "Invalid version"):
+
+                @os_level_between("10.0", "12")
+                def func_invalid2():
+                    pass
+
+            for func_true in (func_true_1, func_true_2, func_true_3, func_true_4):
+                with self.subTest(func_true):
+                    try:
+                        func_true()
+                    except TestSupport._unittest.SkipTest:
+                        self.fail("Unexpected skip")
+
+            for func_false in (
+                func_false_1,
+                func_false_2,
+                func_false_3,
+                func_false_4,
+                func_false_5,
+            ):
+                with self.subTest(func_false):
+                    try:
+                        func_false()
+                    except TestSupport._unittest.SkipTest:
+                        pass
+
+                    else:
+                        self.fail("Unexpected non-skip")
+
+        finally:
+            TestSupport.os_release = orig_os_release
+
     def test_mxx_os_level(self):
         orig_os_release = TestSupport.os_release
 
@@ -262,6 +399,32 @@ class TestTestSupport(TestCase):
         finally:
             objc.PyObjC_BUILD_RELEASE = orig_build_release
 
+    def test_min_python_release(self):
+        @min_python_release("99.5")
+        def func1():
+            pass
+
+        with self.assertRaisesRegex(SkipTest, "Requires Python 99.5 or later"):
+            func1()
+
+        @min_python_release("2")
+        def func1():
+            pass
+
+        try:
+            func1()
+        except SkipTest:
+            self.fail("Unexpected skip")
+
+        @min_python_release("3.0")
+        def func1():
+            pass
+
+        try:
+            func1()
+        except SkipTest:
+            self.fail("Unexpected skip")
+
     def testAssertIsSubclass(self):
         self.assertIsSubclass(int, object)
         self.assertIsSubclass(str, object)
@@ -285,6 +448,15 @@ class TestTestSupport(TestCase):
         self.assertIsInstance(42, (int, str))
 
         self.assertRaises(self.failureException, self.assertIsInstance, 42, str)
+
+    def test_assertManualBinding(self):
+        with self.assertRaisesRegex(self.failureException, ".*has automatic bindings"):
+            self.assertManualBinding(objc.lookUpClass("NSObject").alloc)
+
+        try:
+            self.assertManualBinding(dir)
+        except self.failureException:
+            self.fail("Unexpected assertion failure")
 
     def test_assert_cftype(self):
         self.assertRaises(self.failureException, self.assertIsCFType, int)
@@ -901,6 +1073,146 @@ class TestTestSupport(TestCase):
 
         else:
             self.fail("unexpected test pass")
+
+    def test_assertHasAttr(self):
+        with self.assertRaises(self.failureException):
+            self.assertHasAttr(object, "foo")
+
+        try:
+            self.assertHasAttr(self, "assertHasAttr")
+        except self.failureExeption:
+            self.fail("Unexpected assertion failure")
+
+    def test_assertNotHasAttr(self):
+        with self.assertRaises(self.failureException):
+            self.assertNotHasAttr(self, "assertHasAttr")
+
+        try:
+            self.assertNotHasAttr(object, "foo")
+        except self.failureExeption:
+            self.fail("Unexpected assertion failure")
+
+    def test_ClassIsFinal(self):
+        class FinalTesetClass(objc.lookUpClass("NSObject"), final=True):
+            __objc_final__ = True
+
+        try:
+            self.assertClassIsFinal(FinalTesetClass)
+        except self.failureException:
+            self.fail("Unexpected assertion failure")
+
+        with self.assertRaisesRegex(self.failureException, ".*is not a final class"):
+            self.assertClassIsFinal(objc.lookUpClass("NSObject"))
+
+        with self.assertRaisesRegex(
+            self.failureException, ".*is not an Objective-C class"
+        ):
+            self.assertClassIsFinal(type(self))
+
+    def test_assertProtoclExcists(self):
+        objc.protocolNamed("NSObject")
+        try:
+            objc.protocolNamed("FooBar")
+        except objc.error:
+            pass
+        else:
+            self.fail("Have FooBar protocol")
+
+        with self.assertRaisesRegex(
+            self.failureException, "Protocol 'FooBar' does not exist"
+        ):
+            self.assertProtocolExists("FooBar")
+
+        try:
+            self.assertProtocolExists("NSObject")
+        except self.failureException:
+            self.fail("Unexpected test failure")
+
+        orig = objc.protocolNamed
+        try:
+            objc.protocolNamed = lambda name: name
+
+            with self.assertRaisesRegex(
+                self.failureException, "Protocol 'FooBar' is not a protocol, but.*"
+            ):
+                self.assertProtocolExists("FooBar")
+        finally:
+            objc.protocolNamed = orig
+
+        try:
+            objc.protocolNamed("FooBar")
+        except objc.error:
+            pass
+        else:
+            self.fail("Have FooBar protocol")
+
+    def test_assertPickleRoundTrips(self):
+        try:
+            self.assertPickleRoundTrips(42)
+        except self.failureException:
+            self.fail("Unexpected assertion error")
+
+        class NoPickle:
+            def __getstate__(self):
+                raise RuntimeError("go away")
+
+        with self.assertRaises((pickle.PickleError, RuntimeError)):
+            pickle.dumps(NoPickle())
+
+        with self.assertRaisesRegex(self.failureException, ".* cannot be pickled"):
+            self.assertPickleRoundTrips(NoPickle())
+
+        class UnpickledAsInt:
+            def __reduce__(self):
+                return (int, (42,))
+
+        o = UnpickledAsInt()
+        self.assertEqual(pickle.loads(pickle.dumps(o)), 42)
+
+        with self.assertRaises(self.failureException):
+            self.assertPickleRoundTrips(o)
+
+        class NotEqual:
+            def __eq__(self, other):
+                return False
+
+        o = NotEqual()
+        self.assertNotEqual(o, o)
+
+        with self.assertRaises(self.failureException):
+            self.assertPickleRoundTrips(o)
+
+    def test_result_is_sel(self):
+        for is_selector in (True, False):
+            m = Method(
+                None,
+                {"type": objc._C_SEL, "sel_of_type": b"v@:@"},
+                selector=is_selector,
+            )
+            self.assertResultIsSEL(m, b"v@:@")
+
+            with self.assertRaises(self.failureException):
+                self.assertResultIsSEL(m, b"v@:d")
+
+            m = Method(None, {"type": objc._C_INT}, selector=is_selector)
+            with self.assertRaises(self.failureException):
+                self.assertResultIsSEL(m, b"v@:@")
+
+            m = Method(None, {"type": objc._C_SEL}, selector=is_selector)
+            with self.assertRaises(self.failureException):
+                self.assertResultIsSEL(m, b"v@:@")
+
+            with self.assertRaises(self.failureException):
+                self.assertResultIsSEL(m, b"v@:@")
+
+            class M:
+                def __metadata__(self):
+                    return {}
+
+            with self.assertRaisesRegex(
+                self.failureException, r"result.*has no metadata \(or doesn't exist\)"
+            ):
+                self.assertResultIsSEL(M(), b"v@:@")
 
     def test_arg_is_sel(self):
         m = Method(3, {"type": objc._C_SEL, "sel_of_type": b"v@:@"}, selector=True)
