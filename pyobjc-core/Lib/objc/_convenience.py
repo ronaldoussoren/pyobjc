@@ -36,8 +36,8 @@ def add_convenience_methods(cls, type_dict):
         type_dict[nm] = value
 
     try:
-        for cls in CLASS_ABC[cls.__name__]:
-            cls.register(cls)
+        for abc_class in CLASS_ABC[cls.__name__]:
+            abc_class.register(cls)
         del CLASS_ABC[cls.__name__]
     except KeyError:
         pass
@@ -64,9 +64,9 @@ def registerABCForClass(classname, *abc_class):
     """
     global CLASS_ABC
     try:
-        CLASS_ABC += tuple(abc_class)
+        CLASS_ABC[classname] += tuple(abc_class)
     except KeyError:
-        CLASS_ABC = tuple(abc_class)
+        CLASS_ABC[classname] = tuple(abc_class)
 
     options._mapping_count += 1
     _rescanClass(classname)

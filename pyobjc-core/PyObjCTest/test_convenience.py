@@ -1,5 +1,6 @@
 import operator
 import sys
+import collections.abc
 
 import objc
 import objc._convenience as convenience
@@ -536,3 +537,22 @@ class TestSequences(TestCase):
         self.assertRaises(IndexError, operator.setitem, o, 6, "x")
         self.assertRaises(IndexError, operator.setitem, o, -7, "x")
         self.assertRaises(ValueError, operator.setitem, o, slice(1, 3), (1, 2))
+
+
+class FakeSequence(objc.lookUpClass("NSObject")):
+    pass
+
+
+class TestABCs(TestCase):
+    def test_registerABCForClass(self):
+        self.assertFalse(issubclass(FakeSequence, collections.abc.Sequence))
+
+        objc.registerABCForClass("FakeSequence", collections.abc.Sequence)
+        objc.registerABCForClass("FakeSequence2", collections.abc.Sequence)
+
+        self.assertTrue(issubclass(FakeSequence, collections.abc.Sequence))
+
+        class FakeSequence2(objc.lookUpClass("NSObject")):
+            pass
+
+        self.assertTrue(issubclass(FakeSequence2, collections.abc.Sequence))

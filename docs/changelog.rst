@@ -39,6 +39,9 @@ Version 8.2b1
   corresponding slot in the C struct of the type could point to
   no longer valid memory.
 
+* Function :func:`objc.registerABCForClass` now actually works
+
+
 Version 8.1
 -----------
 
