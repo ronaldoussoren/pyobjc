@@ -39,10 +39,7 @@ def nsdata__bytes__(self):
 
 def nsdata__getitem__(self, item):
     buff = self.bytes()
-    try:
-        return buff[item]
-    except TypeError:
-        return buff[:][item]
+    return buff[item]
 
 
 def nsmutabledata__setitem__(self, item, value):
