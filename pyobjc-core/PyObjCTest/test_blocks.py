@@ -458,6 +458,9 @@ class TestBlocks(TestCase):
         v = block(1.5, 2.5, 3.5, 4.5)
         self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
+        block2 = obj.getStructBlock()
+        self.assertIs(block, block2)
+
     @min_os_level("10.6")
     def testBlockSignatures(self):
         obj = OCTestBlock.alloc().init()
