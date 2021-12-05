@@ -12,6 +12,7 @@ __all__ = ()
 import copy
 import copyreg
 import sys
+import collections.abc
 from pickle import PicklingError, UnpicklingError
 
 import objc
@@ -190,7 +191,9 @@ encode_dispatch[float] = save_float
 def save_global(coder, obj, name=None):
     if name is None:
         name = getattr(obj, "__qualname__", None)
-    if name is None:
+    if name is None:  # pragma: no cover
+        # XXX: I haven't found a type yet that
+        # doesn't have a qualname in Python 3.10...
         name = obj.__name__
 
     module_name = whichmodule(obj, name)
@@ -235,7 +238,7 @@ def save_global(coder, obj, name=None):
 encode_dispatch[type(save_global)] = save_global
 try:
     dir.__reduce__()
-except TypeError:
+except TypeError:  # pragma: no cover
     encode_dispatch[type(dir)] = save_global
 
 
@@ -350,6 +353,14 @@ decode_dispatch[kOP_GLOBAL] = load_global
 
 
 def load_inst(coder, setValue):
+    # This function is only used for loading archivees
+    # created using older version of PyObjC.
+    #
+    # Because increasing coverage in this file requires
+    # using an old version of PyObjC to create new test
+    # archives I've copped out and just disabled coverage
+    # testing for the parts not tested by the current
+    # archives.
     if coder.allowsKeyedCoding():
         cls = coder.decodeObjectForKey_(kCLASS)
         initargs = coder.decodeObjectForKey_(kARGS)
@@ -359,7 +370,7 @@ def load_inst(coder, setValue):
 
     try:
         value = cls(*initargs)
-    except TypeError as err:
+    except TypeError as err:  # pragma: no cover
         raise TypeError(
             f"in constructor for {cls.__name__}: {str(err)}", sys.exc_info()[2]
         )
@@ -374,7 +385,7 @@ def load_inst(coder, setValue):
         state = coder.decodeObjectForKey_(kSTATE)
     else:
         state = coder.decodeObject()
-        if isinstance(state, NSArray):
+        if isinstance(state, collections.abc.Sequence):
             state = tuple(state)
 
     setstate = getattr(value, "__setstate__", None)
@@ -383,27 +394,19 @@ def load_inst(coder, setValue):
         return value
 
     slotstate = None
-    if isinstance(state, tuple) and len(state) == 2:
-        state, slotstate = state
+    if isinstance(state, tuple) and len(state) == 2:  # pragma: no branch
+        state, slotstate = state  # pragma:  no cover
 
-    if state:
-        # Note: pickle.py catches RuntimeError here,
-        # that's for supporting restricted mode and
-        # is not relevant for PyObjC.
-        inst_dict = value.__dict__
-        for k in state:
-            v = state[k]
-            if type(k) == objc.pyobjc_unicode:
-                inst_dict[intern(str(k))] = v
-            elif type(k) == str:
-                inst_dict[intern(k)] = v
-            else:
-                inst_dict[k] = v
+    # Note: pickle.py catches RuntimeError here,
+    # that's for supporting restricted mode and
+    # is not relevant for PyObjC.
+    inst_dict = value.__dict__
+    for k in state or ():
+        v = state[k]
+        inst_dict[intern(k)] = v
 
-    if slotstate:
+    if slotstate:  # pragma: no cover
         for k, v in slotstate.items():
-            if isinstance(k, objc.pyobjc_unicode):
-                k = k.encode("utf-8")
             setattr(value, intern(k), v)
 
     return value

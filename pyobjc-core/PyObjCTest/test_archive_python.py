@@ -179,11 +179,79 @@ class a_reducing_class:
         return make_instance, (self.__dict__,)
 
 
+class TestInterning(TestCase):
+    def test_intern_string(self):
+        v = "hello"
+        w = "hel"
+        w += "lo"
+        self.assertIsNot(v, w)
+        self.assertEqual(v, w)
+
+        iv = pycoder.intern(v)
+        iw = pycoder.intern(w)
+        self.assertIs(iv, iw)
+        self.assertEqual(iv, v)
+
+    def test_intern_oc_string(self):
+        v = NSString.stringWithString_("hello")
+        w = "hel"
+        w += "lo"
+
+        iv = pycoder.intern(v)
+        iw = pycoder.intern(w)
+        self.assertEqual(iv, v)
+        self.assertIsInstance(iv, str)
+        self.assertIs(iv, iw)
+
+    def test_intern_other(self):
+        v = 400000 - 1
+        w = 400000 - 2
+        v += 1
+        w += 2
+
+        self.assertIsNot(v, w)
+        self.assertEqual(v, w)
+
+        iv = pycoder.intern(v)
+        iw = pycoder.intern(w)
+
+        self.assertEqual(iv, iw)
+        self.assertEqual(iv, v)
+
+        self.assertIs(iv, v)
+        self.assertIs(iw, w)
+        self.assertIsNot(iw, iv)
+
+
 class TestKeyedArchiveSimple(TestCase):
     def setUp(self):
         self.isKeyed = True
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
+
+    def test_global_from_main(self):
+        import __main__ as mod
+
+        class Foo:
+            pass
+
+        Foo.__module__ = None
+        Foo.__qualname__ = "Foo"
+        mod.Foo = Foo
+        objc.Foo = "hello"
+        self.assertIs(mod.Foo.__module__, None)
+        self.assertEqual(mod.Foo.__qualname__, "Foo")
+
+        buf = self.archiverClass.archivedDataWithRootObject_(Foo)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIs(v, Foo)
+
+        del mod.Foo
+        del objc.Foo
+
+        with self.assertRaises(pickle.PicklingError):
+            buf = self.archiverClass.archivedDataWithRootObject_(Foo)
 
     def test_unknown_type(self):
         try:
