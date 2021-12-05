@@ -139,11 +139,8 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 fp.write(data.bytes())
                 fp.flush()
 
-                self.assertRaises(
-                    subprocess.CalledProcessError,
-                    subprocess.check_output,
-                    [self.progpath, fp.name],
-                )
+                with self.assertRaises(subprocess.CalledProcessError):
+                    subprocess.check_output([self.progpath, fp.name])
 
         def test_interop_data(self):
             for testval in (b"hello world",):

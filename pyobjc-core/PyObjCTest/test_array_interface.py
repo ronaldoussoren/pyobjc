@@ -66,13 +66,16 @@ class ArrayTests(seq_tests.CommonTest):
         # is not the regular python one.
 
         u = self.type2test()
-        self.assertRaises(ValueError, u.index, 1)
-        self.assertRaises(ValueError, u.index, 1, 1)
+        with self.assertRaisesRegex(ValueError, ".*not in list"):
+            u.index(1)
+        with self.assertRaisesRegex(ValueError, ".*not in list"):
+            u.index(1, 1)
 
         u = self.type2test([0, 1])
         self.assertEqual(u.index(0), 0)
         self.assertEqual(u.index(1), 1)
-        self.assertRaises(ValueError, u.index, 2)
+        with self.assertRaises(ValueError):
+            u.index(2)
 
         u = self.type2test([-2, -1, 0, 0, 1, 2])
         # self.assertEqual(u.count(0), 2)
@@ -81,9 +84,11 @@ class ArrayTests(seq_tests.CommonTest):
         self.assertEqual(u.index(-2, -10), 0)
         self.assertEqual(u.index(0, 3), 3)
         self.assertEqual(u.index(0, 3, 4), 3)
-        self.assertRaises(ValueError, u.index, 2, 0, -10)
+        with self.assertRaisesRegex(ValueError, ".*not in list"):
+            u.index(2, 0, -10)
 
-        self.assertRaises(TypeError, u.index)
+        with self.assertRaises(TypeError):
+            u.index()
 
     def test_addmul(self):
         # Same as the one in our superclass, but disables subclassing tests
@@ -170,8 +175,10 @@ class MutableArrayTest(list_tests.CommonTest):
     def test_pyobjc_setitem(self):
         lst = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         a = NSMutableArray([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        self.assertRaises(TypeError, operator.setitem, a, "a", "b")
-        self.assertRaises(ValueError, operator.setitem, a, slice(1, 4, 0), ("c", "d"))
+        with self.assertRaises(TypeError):
+            operator.setitem(a, "a", "b")
+        with self.assertRaises(ValueError):
+            operator.setitem(a, slice(1, 4, 0), ("c", "d"))
         a[1:4] = a
         lst[1:4] = lst
         self.assertEqual(a, NSMutableArray(lst))
@@ -184,8 +191,10 @@ class MutableArrayTest(list_tests.CommonTest):
 
         lst = [1, 2, 3, 4]
         a = NSMutableArray([1, 2, 3, 4])
-        self.assertRaises(ValueError, operator.setitem, a, slice(None, None, 2), a)
-        self.assertRaises(ValueError, operator.setitem, a, slice(None, None, 2), lst)
+        with self.assertRaises(ValueError):
+            operator.setitem(a, slice(None, None, 2), a)
+        with self.assertRaises(ValueError):
+            operator.setitem(a, slice(None, None, 2), lst)
 
     def test_pyobjc_clear(self):
         a = NSMutableArray([1, 2, 3])
@@ -236,7 +245,8 @@ class MutableArrayTest(list_tests.CommonTest):
     @expectedFailure
     def test_pyobjc_pop(self):
         u = self.type2test([1, 2, 3, 4])
-        self.assertRaises(IndexError, u.pop, -8)
+        with self.assertRaises(IndexError):
+            u.pop(-8)
 
         u = self.type2test([1, 2, 3, 4])
         self.assertEqual(u.pop(-2), 3)
@@ -278,7 +288,8 @@ class MutableArrayTest(list_tests.CommonTest):
         u = self.type2test([0, 1])
         self.assertEqual(u.index(0), 0)
         self.assertEqual(u.index(1), 1)
-        self.assertRaises(ValueError, u.index, 2)
+        with self.assertRaises(ValueError):
+            u.index(2)
 
         u = self.type2test([-2, -1, 0, 0, 1, 2])
         # self.assertEqual(u.count(0), 2)
@@ -287,9 +298,11 @@ class MutableArrayTest(list_tests.CommonTest):
         self.assertEqual(u.index(-2, -10), 0)
         self.assertEqual(u.index(0, 3), 3)
         self.assertEqual(u.index(0, 3, 4), 3)
-        self.assertRaises(ValueError, u.index, 2, 0, -10)
+        with self.assertRaises(ValueError):
+            u.index(2, 0, -10)
 
-        self.assertRaises(TypeError, u.index)
+        with self.assertRaises(TypeError):
+            u.index()
 
         if 0:
             # Disabled due to dependency on the
@@ -305,7 +318,8 @@ class MutableArrayTest(list_tests.CommonTest):
                     return False
 
             a = self.type2test([0, 1, 2, 3])
-            self.assertRaises(BadExc, a.index, BadCmp())
+            with self.assertRaises(BadExc):
+                a.index(BadCmp())
 
         a = self.type2test([-2, -1, 0, 0, 1, 2])
         self.assertEqual(a.index(0), 2)
@@ -317,10 +331,13 @@ class MutableArrayTest(list_tests.CommonTest):
         self.assertEqual(a.index(0, 3, 4), 3)
         self.assertEqual(a.index(0, -3, -2), 3)
         self.assertEqual(a.index(0, -4 * sys.maxsize, 4 * sys.maxsize), 2)
-        self.assertRaises(ValueError, a.index, 0, 4 * sys.maxsize, -4 * sys.maxsize)
-        self.assertRaises(ValueError, a.index, 2, 0, -10)
+        with self.assertRaises(ValueError):
+            a.index(0, 4 * sys.maxsize, -4 * sys.maxsize)
+        with self.assertRaises(ValueError):
+            a.index(2, 0, -10)
         a.remove(0)
-        self.assertRaises(ValueError, a.index, 2, 0, 4)
+        with self.assertRaises(ValueError):
+            a.index(2, 0, 4)
         self.assertEqual(a, self.type2test([-2, -1, 0, 1, 2]))
 
         if 0:
@@ -337,7 +354,8 @@ class MutableArrayTest(list_tests.CommonTest):
             a = self.type2test()
             a[:] = [EvilCmp(a) for _ in range(100)]
             # This used to seg fault before patch #1005778
-            self.assertRaises(ValueError, a.index, None)
+            with self.assertRaises(ValueError):
+                a.index(None)
 
     def test_remove(self):
         # Same as the test inherited from the superclass,
@@ -351,16 +369,19 @@ class MutableArrayTest(list_tests.CommonTest):
         a.remove(0)
         self.assertEqual(a, [])
 
-        self.assertRaises(ValueError, a.remove, 0)
+        with self.assertRaises(ValueError):
+            a.remove(0)
 
-        self.assertRaises(TypeError, a.remove)
+        with self.assertRaises(TypeError):
+            a.remove()
 
         d = self.type2test("abcdefghcij")
         d.remove("c")
         self.assertEqual(d, self.type2test("abdefghcij"))
         d.remove("c")
         self.assertEqual(d, self.type2test("abdefghij"))
-        self.assertRaises(ValueError, d.remove, "c")
+        with self.assertRaises(ValueError):
+            d.remove("c")
         self.assertEqual(d, self.type2test("abdefghij"))
 
     # Disable a couple of tests that are not relevant for us.

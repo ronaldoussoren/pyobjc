@@ -201,9 +201,8 @@ class TestKeyedArchiveSimple(TestCase):
             else:
                 exception = pickle.UnpicklingError
 
-            self.assertRaises(
-                exception, self.unarchiverClass.unarchiveObjectWithData_, buf
-            )
+            with self.assertRaises(exception):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
 
         finally:
             pycoder.decode_dispatch[pycoder.kOP_GLOBAL] = orig
@@ -217,7 +216,9 @@ class TestKeyedArchiveSimple(TestCase):
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, object1)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(object1)
+
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
@@ -229,7 +230,8 @@ class TestKeyedArchiveSimple(TestCase):
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, object2)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(object2)
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
@@ -256,7 +258,8 @@ class TestKeyedArchiveSimple(TestCase):
 
             data = NSMutableData.alloc().init()
             archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-            self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, o)
+            with self.assertRaises(pickle.PicklingError):
+                archiver.encodeRootObject_(o)
 
             if self.archiverClass is NSKeyedArchiver:
                 archiver.finishEncoding()
@@ -270,7 +273,8 @@ class TestKeyedArchiveSimple(TestCase):
             o = orig("hello")
             data = NSMutableData.alloc().init()
             archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-            self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, o)
+            with self.assertRaises(pickle.PicklingError):
+                archiver.encodeRootObject_(o)
             if self.archiverClass is NSKeyedArchiver:
                 archiver.finishEncoding()
 
@@ -307,9 +311,9 @@ class TestKeyedArchiveSimple(TestCase):
                 exception = (objc.error, ValueError)
             else:
                 exception = ValueError
-            self.assertRaises(
-                exception, self.unarchiverClass.unarchiveObjectWithData_, buf
-            )
+
+            with self.assertRaises(exception):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
 
         finally:
             try:
@@ -377,9 +381,8 @@ class TestKeyedArchiveSimple(TestCase):
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(
-            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
-        )
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(invalid_reduce())
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
@@ -389,9 +392,8 @@ class TestKeyedArchiveSimple(TestCase):
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(
-            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
-        )
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(invalid_reduce())
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
@@ -401,9 +403,9 @@ class TestKeyedArchiveSimple(TestCase):
 
         data = NSMutableData.alloc().init()
         archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
-        self.assertRaises(
-            pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce()
-        )
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(invalid_reduce())
+
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 

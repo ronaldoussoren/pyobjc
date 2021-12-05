@@ -101,11 +101,8 @@ class TestNSKeyedArchivingInterop(TestCase):
             fp.write(data.bytes())
             fp.flush()
 
-            self.assertRaises(
-                subprocess.CalledProcessError,
-                subprocess.check_output,
-                [self.progpath, "keyed", fp.name],
-            )
+            with self.assertRaises(subprocess.CalledProcessError):
+                subprocess.check_output([self.progpath, "keyed", fp.name])
 
     def test_interop_data(self):
         for testval in (b"hello world",):
@@ -242,11 +239,8 @@ class TestNSArchivingInterop(TestCase):
             fp.write(data.bytes())
             fp.flush()
 
-            self.assertRaises(
-                subprocess.CalledProcessError,
-                subprocess.check_output,
-                [self.progpath, "plain", fp.name],
-            )
+            with self.assertRaises(subprocess.CalledProcessError):
+                subprocess.check_output([self.progpath, "plain", fp.name])
 
     def test_interop_data(self):
         for testval in (b"hello world",):
