@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import TestCase, main, expectedFailure, skipUnless
+from PyObjCTools.TestSupport import TestCase, expectedFailure, skipUnless
 
 from importlib import reload
 
@@ -53,6 +53,7 @@ TEST_XML = b"""\
      nsstring='true' /><!-- ignore 32-bit -->
   <string_constant name='strconst7' value='zee&#0235;n' nsstring='true' />
   <string_constant /><!-- ignore -->
+  <string_constant name='strconstinvalid' value='zee&#5235;n'  nsstring='false' />
   <enum name='enum1' value='1' />
   <enum name='enum2' value='3' value64='4'/>
   <enum name='enum3' le_value='5' be_value='6'/>
@@ -64,6 +65,15 @@ TEST_XML = b"""\
   <enum name='enum8' le_value='5' /><!-- ignore ppc -->
   <enum name='enum9' value='2.5' />
   <enum name='enum10' value='0x1.5p+3' />
+  <enum name='enum11' value='11.5f' />
+  <enum name='enum12' value='12.5F' />
+  <enum name='enum13' value='13l' />
+  <enum name='enum14' value='14L' />
+  <enum name='enum_posinf' value='+inf' />
+  <enum name='enum_posinf2' value='inf' />
+  <enum name='enum_neginf' value='-inf' />
+  <enum name='enum_nan' value='nan' />
+  <enum /><!-- ignore -->
   <enum /><!-- ignore -->
   <null_const name='null1' />
   <null_const /><!-- ignore -->
@@ -604,7 +614,9 @@ class TestBridgeSupportParser(TestCase):
             reload(bridgesupport)
 
     def verify_xml_structure(self):
-        prs = self.assert_valid_bridgesupport("TestXML", TEST_XML)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            prs = self.assert_valid_bridgesupport("TestXML", TEST_XML)
 
         all_constants = [
             ("constant1", b"@", False),
@@ -633,6 +645,14 @@ class TestBridgeSupportParser(TestCase):
             "enum4": 7,
             "enum9": 2.5,
             "enum10": 10.5,
+            "enum11": 11.5,
+            "enum12": 12.5,
+            "enum13": 13,
+            "enum14": 14,
+            "enum_posinf": float("+inf"),
+            "enum_neginf": float("-inf"),
+            "enum_nan": float("nan"),
+            "enum_posinf2": float("+inf"),
             "null1": None,
         }
         if sys.maxsize > 2 ** 32:
@@ -1304,9 +1324,11 @@ class TestBridgeSupportParser(TestCase):
             ("struct9", b"{struct9=ii}", None),
         ]
 
+        self.assertNotIn("strconstinvalid", prs.values)
+
         self.maxDiff = None
         self.assertCountEqual(prs.constants, all_constants)
-        self.assertEqual(prs.values, all_values)
+        self.assertCountEqual(prs.values, all_values)
         self.assertCountEqual(prs.opaque, all_opaque)
         self.assertCountEqual(prs.func_aliases, all_func_aliases)
         self.assertCountEqual(prs.cftypes, all_cftypes)
@@ -2930,6 +2952,31 @@ class TestMisc(TestCase):
         self.assertIs(tp1, tp3)
         self.assertHasAttr(objc.ivar, "TestStruct3")
 
+        o = objc.ivar.TestStruct1()
+        self.assertEqual(o.__typestr__, b"{TestStruct1=dd}")
+        o = objc.ivar.TestStruct3()
+        self.assertEqual(o.__typestr__, b"{TestStruct1=dd}")
 
-if __name__ == "__main__":
-    main()
+    def test_ivar_slots(self):
+        for name, encoding in [
+            ("bool", objc._C_BOOL),
+            ("char", objc._C_CHR),
+            ("int", objc._C_INT),
+            ("short", objc._C_SHT),
+            ("long", objc._C_LNG),
+            ("long_long", objc._C_LNG_LNG),
+            ("unsigned_int", objc._C_UINT),
+            ("unsigned_short", objc._C_USHT),
+            ("unsigned_long", objc._C_ULNG),
+            ("unsigned_long_long", objc._C_ULNG_LNG),
+            ("float", objc._C_FLT),
+            ("double", objc._C_DBL),
+            ("BOOL", objc._C_NSBOOL),
+            ("UniChar", objc._C_UNICHAR),
+            ("char_text", objc._C_CHAR_AS_TEXT),
+            ("char_int", objc._C_CHAR_AS_INT),
+        ]:
+            with self.subTest(name):
+                o = getattr(objc.ivar, name)()
+                self.assertIsInstance(o, objc.ivar)
+                self.assertEqual(o.__typestr__, encoding)

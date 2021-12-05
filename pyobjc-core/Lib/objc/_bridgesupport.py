@@ -64,12 +64,6 @@ def _as_bytes(value):
     return value.encode("ascii")
 
 
-def _as_string(value):
-    if isinstance(value, bytes):
-        return value.decode("ascii")
-    return value
-
-
 class _BridgeSupportParser:
     """
     Parser for the bridge support file format.
@@ -422,13 +416,14 @@ class _BridgeSupportParser:
         if not name or not value:
             return
 
+        if value.endswith("l") or value.endswith("L"):
+            value = value[:-1]
+
         if value.lower() in ("+inf", "-inf", "nan"):
             value = float(value)
 
         elif "." in value:
             if value.endswith("f") or value.endswith("F"):
-                value = value[:-1]
-            if value.endswith("l") or value.endswith("L"):
                 value = value[:-1]
             if value.startswith("0x") or value.startswith("0X"):
                 value = float.fromhex(value)
@@ -635,7 +630,7 @@ def parseBridgeSupport(
 
         for name, typestr, magic in prs.constants:
             try:
-                value = objc._loadConstant(name, _as_string(typestr), magic)
+                value = objc._loadConstant(name, typestr.decode("ascii"), magic)
             except AttributeError:
                 continue
 
@@ -830,7 +825,7 @@ def _structConvenience(structname, structencoding):
 
     makevar.__name__ = structname
     makevar.__doc__ = f"Create *ivar* for type encoding {structencoding!r}"
-    if hasattr(objc.ivar, "__qualname__"):
+    if hasattr(objc.ivar, "__qualname__"):  # pragma: no branch
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)
 
