@@ -229,7 +229,6 @@ class ObjCLazyModule(ModuleType):
                     try:
                         self.__dict__[nm] = objc._loadConstant(nm, tp[2:], 2)
                     except AttributeError:
-                        raise
                         pass
                 elif tp.startswith("="):
                     try:
@@ -289,16 +288,16 @@ class ObjCLazyModule(ModuleType):
                 if nm not in self.__dict__:
                     self.__dict__[nm] = dct[nm]
 
-            if self.__inlinelist is not None:
-                dct = {}
-                objc.loadFunctionList(
-                    self.__inlinelist, dct, func_list, skip_undefined=True
-                )
-                for nm in dct:
-                    if nm not in self.__dict__:
-                        self.__dict__[nm] = dct[nm]
+        if self.__inlinelist:
+            dct = {}
+            objc.loadFunctionList(
+                self.__inlinelist, dct, func_list, skip_undefined=True
+            )
+            for nm in dct:
+                if nm not in self.__dict__:
+                    self.__dict__[nm] = dct[nm]
 
-            self.__funcmap = {}
+            self.__inlinelist = {}
 
         if self.__expressions:
             for nm in list(self.__expressions):
@@ -336,10 +335,7 @@ class ObjCLazyModule(ModuleType):
 
     def __prs_enum(self, val):
         if val.startswith("'"):
-            if isinstance(val, bytes):  # pragma: no 3.x cover
-                (val,) = struct.unpack(">l", val[1:-1])
-            else:  # pragma: no 2.x cover
-                (val,) = struct.unpack(">l", val[1:-1].encode("latin1"))
+            (val,) = struct.unpack(">l", val[1:-1].encode("latin1"))
 
         elif "." in val or "e" in val:
             val = float(val)
@@ -453,7 +449,7 @@ class ObjCLazyModule(ModuleType):
                     result = objc._FLT_MIN
                 elif alias == "objc.NULL":
                     result = objc.NULL
-                elif alias == "objc.UINT32_MAX":
+                elif alias == "UINT32_MAX":
                     result = 0xFFFFFFFF
                 else:
                     result = getattr(self, alias)

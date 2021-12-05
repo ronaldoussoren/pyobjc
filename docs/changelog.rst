@@ -41,6 +41,9 @@ Version 8.2b1
 
 * Function :func:`objc.registerABCForClass` now actually works
 
+* Fix bug in lazyloader where fetching the module's ``__all__`` could
+  raise :exc:`AttributeError` for some particular constants.
+
 
 Version 8.1
 -----------

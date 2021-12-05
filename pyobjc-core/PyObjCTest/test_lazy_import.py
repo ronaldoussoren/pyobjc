@@ -2,11 +2,14 @@ import operator
 import os
 import struct
 import sys
+import copy
+import warnings
 
 import objc
 import objc._lazyimport as lazyimport
 from PyObjCTest import metadatafunction
 from PyObjCTools.TestSupport import TestCase
+from PyObjCTest.test_deprecations import deprecation_warnings
 
 
 def lookupClasses(*names):
@@ -29,6 +32,9 @@ class TestLazyImport(TestCase):
         self.assertEqual(o["path"], sys.path)
         self.assertEqual(o["version"], sys.version)
         self.assertRaises(KeyError, o.__getitem__, "nosuchkey")
+
+        v = o["CFSTR"]
+        self.assertEqual(v(b"hello"), "hello")
 
     def test_load_bundle(self):
         NSBundle = objc.lookUpClass("NSBundle")
@@ -274,7 +280,17 @@ class TestLazyImport(TestCase):
 
     def test_magic_aliases(self):
         metadict = {
-            "aliases": {"umax": "ULONG_MAX", "max": "LONG_MAX", "min": "LONG_MIN"}
+            "aliases": {
+                "umax": "ULONG_MAX",
+                "max": "LONG_MAX",
+                "min": "LONG_MIN",
+                "dblmx": "DBL_MAX",
+                "dblmn": "DBL_MIN",
+                "fltmx": "FLT_MAX",
+                "fltmn": "FLT_MIN",
+                "null": "objc.NULL",
+                "umx": "UINT32_MAX",
+            }
         }
 
         initial_dict = {"__doc__": "AppKit test module"}
@@ -293,6 +309,12 @@ class TestLazyImport(TestCase):
         self.assertEqual(mod.umax, 2 ** 64 - 1)
         self.assertEqual(mod.max, sys.maxsize)
         self.assertEqual(mod.min, -sys.maxsize - 1)
+        self.assertEqual(mod.dblmx, sys.float_info.max)
+        self.assertEqual(mod.dblmn, sys.float_info.min)
+        self.assertEqual(mod.fltmx, objc._FLT_MAX)
+        self.assertEqual(mod.fltmn, objc._FLT_MIN)
+        self.assertEqual(mod.null, objc.NULL)
+        self.assertEqual(mod.umx, 2 ** 32 - 1)
 
     def test_existing_submodules(self):
         try:
@@ -362,6 +384,53 @@ class TestLazyImport(TestCase):
         self.assertIn("makeArrayWithFormat_", mod.__all__)
         self.assertIn("makeArrayWithCFormat_", mod.__all__)
         self.assertEqual(mod.make4Tuple_, 42)
+
+    def test_inline_list__all__(self):
+        # Check __all__ handling for inline functions
+        metadict = {
+            "functions": {
+                "makeArrayWithFormat_": (
+                    b"@@",
+                    "",
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
+                ),
+                "makeArrayWithCFormat_": (
+                    b"@*",
+                    "",
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
+                ),
+                "make4Tuple_": (
+                    b"@^d",
+                    "",
+                    {
+                        "arguments": {
+                            0: {
+                                "type_modifier": objc._C_IN,
+                                "c_array_of_fixed_length": 4,
+                                "null_accepted": False,
+                            }
+                        }
+                    },
+                ),
+                "NoSuchFunction": (b"@d", "", {}),
+            }
+        }
+
+        inline_list = metadatafunction.function_list
+        mod = objc.ObjCLazyModule(
+            "MyFramework", None, None, metadict, inline_list, {}, ()
+        )
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
+        mod.__dict__["makeArrayWithFormat_"] = 42
+        mod.__dict__["make4Tuple_"] = 43
+
+        self.assertIn("makeArrayWithFormat_", mod.__all__)
+        self.assertIn("makeArrayWithCFormat_", mod.__all__)
+        self.assertIn("make4Tuple_", mod.__all__)
+
+        self.assertEqual(mod.makeArrayWithFormat_, 42)
+        self.assertEqual(mod.make4Tuple_, 43)
+        self.assertIsInstance(mod.makeArrayWithCFormat_, objc.function)
 
     def test_cftype(self):
         metadict = {
@@ -461,3 +530,216 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.kCFAllocatorMallocZone, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorMallocZone.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorMallocZone, mod.CFAllocatorRef)
+
+    def assertDeprecationWarning(self, func):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            func()
+
+        self.assertEqual(len(w), 1)
+        self.assertTrue(issubclass(w[-1].category, objc.ApiDeprecationWarning))
+
+    def assertNoDeprecationWarning(self, func):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            func()
+
+        self.assertEqual(len(w), 0)
+
+    def test_deprecatins(self):
+        metadict = {
+            "constants": "$NSWorkspaceMoveOperation$NSWorkspaceCopyOperation@@$",
+            "constants_dict": {
+                "NSWorkspaceLinkOperation": "@",
+                "NSWindowWillCloseNotification": "@",
+                "NSUnderlineByWordMask": objc._C_NSUInteger.decode(),
+            },
+            "enums": "$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$",
+            "aliases": {"min": "LONG_MIN", "max": "LONG_MAX"},
+            "deprecated_aliases": {
+                "min": 1004,
+                "max": 1008,
+            },
+            "deprecated_constants": {
+                "NSWorkspaceLinkOperation": 1004,
+                "NSWorkspaceMoveOperation": 1008,
+            },
+            "deprecated_enums": {
+                "NSAWTEventType": 1004,
+                "NSAboveBottom": 1008,
+            },
+        }
+
+        def make_mod():
+            initial_dict = {"__doc__": "AppKit test module"}
+
+            return objc.ObjCLazyModule(
+                "AppKit",
+                None,
+                "/System/Library/Frameworks/AppKit.framework",
+                copy.deepcopy(metadict),
+                None,
+                initial_dict,
+                (),
+            )
+
+        with deprecation_warnings(1003):
+            mod = make_mod()
+            self.assertIsInstance(mod, objc.ObjCLazyModule)
+            self.assertNoDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)
+            self.assertNoDeprecationWarning(lambda: mod.NSWorkspaceMoveOperation)
+            self.assertNoDeprecationWarning(lambda: mod.NSAWTEventType)
+            self.assertNoDeprecationWarning(lambda: mod.NSAboveBottom)
+            self.assertNoDeprecationWarning(lambda: mod.min)
+            self.assertNoDeprecationWarning(lambda: mod.max)
+
+        with deprecation_warnings(1005):
+            mod = make_mod()
+            self.assertIsInstance(mod, objc.ObjCLazyModule)
+            self.assertDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)
+            self.assertNoDeprecationWarning(lambda: mod.NSWorkspaceMoveOperation)
+            self.assertDeprecationWarning(lambda: mod.NSAWTEventType)
+            self.assertNoDeprecationWarning(lambda: mod.NSAboveBottom)
+            self.assertDeprecationWarning(lambda: mod.min)
+            self.assertNoDeprecationWarning(lambda: mod.max)
+
+        with deprecation_warnings(1200):
+            mod = make_mod()
+            self.assertIsInstance(mod, objc.ObjCLazyModule)
+            self.assertDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)
+            self.assertDeprecationWarning(lambda: mod.NSWorkspaceMoveOperation)
+            self.assertDeprecationWarning(lambda: mod.NSAWTEventType)
+            self.assertDeprecationWarning(lambda: mod.NSAboveBottom)
+            self.assertDeprecationWarning(lambda: mod.min)
+            self.assertDeprecationWarning(lambda: mod.max)
+
+    def test_functions_all(self):
+
+        for override in (False, True):
+            metadict = {
+                "functions": {
+                    "LSSharedFileListItemGetTypeID": (b"Q",),
+                },
+            }
+            initial_dict = {"__doc__": "AppKit test module"}
+
+            mod = objc.ObjCLazyModule(
+                "AppKit",
+                None,
+                "/System/Library/Frameworks/AppKit.framework",
+                copy.deepcopy(metadict),
+                None,
+                initial_dict,
+                (),
+            )
+
+            if override:
+                mod.LSSharedFileListItemGetTypeID = 42
+                mod.__all__
+                self.assertEqual(mod.LSSharedFileListItemGetTypeID, 42)
+            else:
+                self.assertIsInstance(mod.LSSharedFileListItemGetTypeID, objc.function)
+
+    def do_indirect_magic(self, fetchall):
+        metadict = {
+            "cftypes": [
+                (
+                    "LSSharedFileListItemRef",
+                    b"^{OpaqueLSSharedFileListItemRef=}",
+                    "LSSharedFileListItemGetTypeID",
+                    None,
+                ),
+            ],
+            "functions": {
+                "LSSharedFileListItemGetTypeID": (b"Q",),
+            },
+            "constants": "$kLSSharedFileListItemBeforeFirst@==^{OpaqueLSSharedFileListItemRef=}$",
+        }
+        initial_dict = {"__doc__": "AppKit test module"}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            copy.deepcopy(metadict),
+            None,
+            initial_dict,
+            (),
+        )
+        if fetchall:
+            mod.__all__
+
+        self.assertIsInstance(
+            mod.kLSSharedFileListItemBeforeFirst, mod.LSSharedFileListItemRef
+        )
+
+    def test_indirect_magic(self):
+        self.do_indirect_magic(False)
+        self.do_indirect_magic(True)
+
+    def do_indirect_magic_dict(self, fetchall):
+        metadict = {
+            "cftypes": [
+                (
+                    "LSSharedFileListItemRef",
+                    b"^{OpaqueLSSharedFileListItemRef=}",
+                    "LSSharedFileListItemGetTypeID",
+                    None,
+                ),
+            ],
+            "functions": {
+                "LSSharedFileListItemGetTypeID": (b"Q",),
+            },
+            "constants_dict": {
+                "kLSSharedFileListItemBeforeFirst": "==^{OpaqueLSSharedFileListItemRef=}",
+                "kLSSharedFileListItemLaatste": "==^{OpaqueLSSharedFileListItemRef=}",
+            },
+        }
+        initial_dict = {"__doc__": "AppKit test module"}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            copy.deepcopy(metadict),
+            None,
+            initial_dict,
+            (),
+        )
+
+        if fetchall:
+            mod.__all__
+
+        self.assertIsInstance(
+            mod.kLSSharedFileListItemBeforeFirst, mod.LSSharedFileListItemRef
+        )
+        self.assertNotHasAttr(mod, "kLSSharedFileListItemLaatste")
+
+    def test_indirect_magic_dict(self):
+        self.do_indirect_magic_dict(False)
+        self.do_indirect_magic_dict(True)
+
+    def test_default_cftype(self):
+        metadict = {
+            "cftypes": [
+                (
+                    "LSSharedFileListItemRef",
+                    b"^{OpaqueLSSharedFileListItemRef=}",
+                    None,
+                    None,
+                ),
+            ],
+        }
+        initial_dict = {"__doc__": "AppKit test module"}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            copy.deepcopy(metadict),
+            None,
+            initial_dict,
+            (),
+        )
+
+        self.assertIn("CFType", mod.LSSharedFileListItemRef.__name__)
