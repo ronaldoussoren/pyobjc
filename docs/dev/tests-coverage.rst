@@ -25,7 +25,8 @@ Test coverage for C code in pyobjc-core
 
 For internal APIs in pyobjc-core it can be useful to add tests for these APIs
 as well, especially to cover error cases that should never occur in real code.
-Add such tests to ``pyobjc-core/Modules/objc/ctests.m``.
+Add such tests to ``pyobjc-core/Modules/objc/ctests.m``. But in general try
+to improve coverage with tests in python first.
 
 The Makefile target "c-coverage" runs the test suite
 while collecting coverage information. This requires having

@@ -4925,7 +4925,6 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
 {
     ffi_cif*     cif;
     ffi_closure* cl;
-    ffi_status   rv;
     void*        codeloc;
 
     cif = PyObjCFFI_CIFForSignature(methinfo);
@@ -4933,53 +4932,12 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
         return NULL;
     }
 
-    /* And finally create the actual closure */
-#ifdef HAVE_CLOSURE_POOL
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else
-#endif
-    {
-        cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
-    }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    cl     = ffi_closure_alloc(sizeof(*cl), &codeloc);
-#pragma clang diagnostic pop
-#endif
-    if (cl == NULL) {
-        PyObjCFFI_FreeCIF(cif);
+    if (alloc_prepped_closure(&cl, cif, &codeloc, func, userdata) == -1) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         return NULL;
     }
 
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        rv = ffi_prep_closure_loc(cl, cif, func, userdata, codeloc);
-    } else {
-#ifdef __arm64__
-        rv = FFI_BAD_ABI;
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-        rv = ffi_prep_closure(cl, cif, func, userdata);
-
-#pragma clang diagnostic pop
-#endif
-    }
-
-#else /* PyObjC_BUILD_RELEASE < 1015 */
-    rv     = ffi_prep_closure(cl, cif, func, userdata);
-#endif
-
-    if (rv != FFI_OK) {
-        PyObjCFFI_FreeCIF(cif);
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
-        return NULL;
-    }
+    PyObjC_Assert(codeloc != NULL, NULL);
 
     return (IMP)codeloc;
 }
@@ -4992,35 +4950,12 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
 void*
 PyObjCFFI_FreeClosure(IMP closure)
 {
-    void*        retval;
-    ffi_closure* cl;
+    ffi_cif* cif;
+    void*    userdata;
 
-#ifdef HAVE_CLOSURE_POOL
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        cl     = ffi_find_closure_for_code_np(closure);
-        retval = cl->user_data;
-        PyObjCFFI_FreeCIF(cl->cif);
-        ffi_closure_free(cl);
-    } else
-#endif
-    {
-        cl     = (ffi_closure*)closure;
-        retval = cl->user_data;
-        PyObjCFFI_FreeCIF(cl->cif);
-        PyObjC_ffi_closure_free(cl);
-    }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    cl     = ffi_find_closure_for_code_np(closure);
-    retval = cl->user_data;
-    PyObjCFFI_FreeCIF(cl->cif);
-    ffi_closure_free(cl);
-#pragma clang diagnostic pop
-#endif
-    return retval;
+    free_closure_from_codeloc(closure, &cif, &userdata);
+    PyObjCFFI_FreeCIF(cif);
+    return userdata;
 }
 
 NS_ASSUME_NONNULL_END

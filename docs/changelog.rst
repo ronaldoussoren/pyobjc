@@ -44,6 +44,9 @@ Version 8.2b1
 * Fix bug in lazyloader where fetching the module's ``__all__`` could
   raise :exc:`AttributeError` for some particular constants.
 
+* #317: Cleanup code dealing with libffi closures APIs on various versions
+  of macOS.
+
 
 Version 8.1
 -----------

@@ -896,7 +896,6 @@ static initproc _Nullable make_init(const char* _typestr)
 {
     static ffi_cif* init_cif = NULL;
     ffi_closure*    cl       = NULL;
-    ffi_status      rv;
     void*           codeloc;
     const char*     typestr_copy;
 
@@ -921,70 +920,11 @@ static initproc _Nullable make_init(const char* _typestr)
         }
     }
 
-#ifdef HAVE_CLOSURE_POOL
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else
-#endif
-    {
-        cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
-    }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-#pragma clang diagnostic pop
-#endif
-    if (cl == NULL) {
+    if (alloc_prepped_closure(&cl, init_cif, &codeloc, struct_init, (char*)typestr_copy)
+        == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         PyMem_Free((void*)typestr_copy);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        rv =
-            ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr_copy, codeloc);
-    } else {
-#ifdef __arm64__
-        rv = FFI_BAD_ABI; /* Can't happen... */
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-        rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr_copy);
-
-#pragma clang diagnostic pop
-#endif
-    }
-#else
-
-    rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr_copy);
-#endif
-
-    if (rv != FFI_OK) {
-        // LCOV_EXCL_START
-#ifdef HAVE_CLOSURE_POOL
-
-#if PyObjC_BUILD_RELEASE >= 1015
-        if (@available(macOS 10.15, *)) {
-            ffi_closure_free(cl);
-        } else
-#endif
-        {
-            PyObjC_ffi_closure_free(cl);
-        }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-        ffi_closure_free(cl);
-#pragma clang diagnostic pop
-#endif
-        PyMem_Free((void*)typestr_copy);
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
         // LCOV_EXCL_STOP
     }

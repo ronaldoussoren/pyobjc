@@ -129,9 +129,9 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     }
 
     struct wrapper* tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
-    if (tmp == NULL) {
-        PyErr_NoMemory();
-        return -1;
+    if (tmp == NULL) {    // LCOV_BR_EXCL_LINE
+        PyErr_NoMemory(); // LCOV_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
     }
     items = tmp;
     item_count++;
@@ -139,19 +139,23 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     value = items + (item_count - 1);
 
     char* tmp_name = PyObjCUtil_Strdup(name);
-    if (tmp_name == NULL) {
+    if (tmp_name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         item_count--;
         return -1;
+        // LCOV_EXCL_STOP
     }
     value->name = tmp_name;
 
     char* tmp_sig = PyObjCUtil_Strdup(signature);
-    if (tmp_sig == NULL) {
+    if (tmp_sig == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free((void*)value->name);
         PyErr_NoMemory();
         item_count--;
         return -1;
+        // LCOV_EXCL_STOP
     }
     value->signature = tmp_sig;
 
@@ -272,17 +276,17 @@ PyObjCPointerWrapper_Init(void)
 
     r = PyObjCPointerWrapper_Register("PyObject*", @encode(PyObject*), PyObjectPtr_New,
                                       PyObjectPtr_Convert);
-    if (r == -1)
-        return -1;
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}", class_new,
                                       class_convert);
-    if (r == -1)
-        return -1;
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*), FILE_New, FILE_Convert);
-    if (r == -1)
-        return -1;
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     return 0;
 }

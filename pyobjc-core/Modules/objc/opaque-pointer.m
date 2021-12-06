@@ -242,7 +242,6 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     PyObjCPointerWrapper_FromPythonFunc to_c      = NULL;
     ffi_closure*                        cl_to_c   = NULL;
     ffi_closure*                        cl_from_c = NULL;
-    ffi_status                          rv;
     int                                 r;
     PyObject*                           v       = NULL;
     PyObject*                           w       = NULL;
@@ -362,104 +361,25 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     }
     Py_CLEAR(w);
 
-#ifdef HAVE_CLOSURE_POOL
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        cl_to_c = ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
-    } else
-#endif
-    {
-        cl_to_c = PyObjC_ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
+    if (alloc_prepped_closure(&cl_to_c, convert_cif, &codeloc, opaque_to_c, newType)
+        == -1) { // LCOV_BR_EXCL_LINE
+        PyErr_SetString(PyObjCExc_Error,
+                        "Cannot create libffi closure"); // LCOV_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name);             // LCOV_EXCL_LINE
+        goto error_cleanup;                              // LCOV_EXCL_LINE
     }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-
-    cl_to_c = ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
-
-#pragma clang diagnostic pop
-#endif
-    if (cl_to_c == NULL) {                   // LCOV_BR_EXCL_LINE
-        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
-        goto error_cleanup;                  // LCOV_EXCL_LINE
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        rv = ffi_prep_closure_loc(cl_to_c, convert_cif, opaque_to_c, newType, codeloc);
-    } else
-#endif
-    {
-#ifdef __arm64__
-        rv = FFI_BAD_ABI;
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-        rv = ffi_prep_closure(cl_to_c, convert_cif, opaque_to_c, newType);
-
-#pragma clang diagnostic pop
-#endif
-    }
-    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        PyMem_Free((char*)opaque_spec.name);
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
-        goto error_cleanup;
-        // LCOV_EXCL_STOP
-    }
-    Py_INCREF(newType); /* Store reference, hence INCREF */
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
 
-#ifdef HAVE_CLOSURE_POOL
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
-    } else
-#endif
-    {
-        cl_from_c = PyObjC_ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
-    }
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
-#pragma clang diagnostic pop
-#endif
-    if (cl_from_c == NULL) {                 // LCOV_BR_EXCL_LINE
-        PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
-        goto error_cleanup;                  // LCOV_EXCL_LINE
+    if (alloc_prepped_closure(&cl_from_c, new_cif, &codeloc, opaque_from_c, newType)
+        == -1) { // LCOV_BR_EXCL_LINE
+        PyErr_SetString(PyObjCExc_Error,
+                        "Cannot create libffi closure"); // LCOV_EXCL_LINE
+        PyMem_Free((char*)opaque_spec.name);             // LCOV_EXCL_LINE
+        goto error_cleanup;                              // LCOV_EXCL_LINE
     }
 
-#if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15, *)) {
-        rv = ffi_prep_closure_loc(cl_from_c, new_cif, opaque_from_c, newType, codeloc);
-    } else
-#endif
-    {
-#ifdef __arm64__
-        rv = FFI_BAD_ABI;
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-        rv = ffi_prep_closure(cl_from_c, new_cif, opaque_from_c, newType);
-
-#pragma clang diagnostic pop
-#endif
-    }
-    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
-        Py_XDECREF(newType);
-        PyMem_Free((char*)opaque_spec.name);
-        goto error_cleanup;
-        // LCOV_EXCL_STOP
-    }
     Py_INCREF(newType); /* Store reference, hence INCREF */
-
     from_c = (PyObjCPointerWrapper_ToPythonFunc)codeloc;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);

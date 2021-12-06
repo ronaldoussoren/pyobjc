@@ -114,6 +114,7 @@
 #import "selector.h"
 
 #import "block-as-imp.h"
+#import "libffi_extra.h"
 #import "libffi_support.h"
 
 #import "ObjCPointer.h"
@@ -121,7 +122,6 @@
 #import "bundle-variables.h"
 #import "class-builder.h"
 #import "class-list.h"
-#import "closure_pool.h"
 #import "corefoundation.h"
 #import "ctests.h"
 #import "file_wrapper.h"
