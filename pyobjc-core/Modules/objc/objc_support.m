@@ -2204,6 +2204,9 @@ depythonify_python_object(PyObject* argument, id* datum)
             Py_DECREF(anObject);
         }
     } else {
+        if (!PyErr_ExceptionMatches(PyExc_AttributeError)) {
+            return -1;
+        }
         PyErr_Clear();
     }
 

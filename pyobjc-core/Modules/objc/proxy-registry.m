@@ -18,17 +18,21 @@ PyObjC_InitProxyRegistry(void)
     python_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                       PyObjCUtil_PointerValueCallBacks, 0);
 
-    if (python_proxies == NULL) {
+    if (python_proxies == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError,
                         "Cannot create NSMapTable for python_proxies");
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     objc_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                     PyObjCUtil_PointerValueCallBacks, 0);
-    if (objc_proxies == NULL) {
+    if (objc_proxies == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for objc_proxies");
         return -1;
+        // LCOV_EXCL_STOP
     }
     return 0;
 }
@@ -79,25 +83,20 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 {
     PyObject* v;
 
-    if (original == nil) {
-        v = Py_None;
+    if (original == nil)           // LCOV_BR_EXCL_LINE
+        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
-    } else {
-        v = NSMapGet(python_proxies, original);
-    }
-
+    v = NSMapGet(python_proxies, original);
     Py_XINCREF(v);
     return v;
 }
 
 id _Nullable PyObjC_FindObjCProxy(PyObject* original)
 {
-    if (original == Py_None) {
-        return nil;
+    if (original == Py_None)       // LCOV_BR_EXCL_LINE
+        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
-    } else {
-        return NSMapGet(objc_proxies, original);
-    }
+    return NSMapGet(objc_proxies, original);
 }
 
 id _Nullable PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)

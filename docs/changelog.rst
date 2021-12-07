@@ -47,6 +47,12 @@ Version 8.2b1
 * #317: Cleanup code dealing with libffi closures APIs on various versions
   of macOS.
 
+* If fetching the ``__pyobjc_object__`` attribute during conversion from
+  Python to Objective-C raisea an exception other than :exc:`AttributeError`
+  the conversion will fail.
+
+  In previous versions the attribute was ignored when this happens.
+
 
 Version 8.1
 -----------

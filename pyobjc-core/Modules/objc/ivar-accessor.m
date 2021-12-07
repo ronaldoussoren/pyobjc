@@ -32,47 +32,52 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
         cur = PyObjCClass_GetClass(object);
 
     } else {
-        PyErr_Format(PyExc_TypeError, "not a class or object");
+        PyErr_Format(PyExc_TypeError, "not an Objective-C class or object");
         return NULL;
     }
 
+    PyObjC_Assert(cur != NULL, NULL);
+
     result = PyList_New(0);
-    if (result == NULL) {
-        return result;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return result;    // LCOV_EXCL_LINE
     }
 
     /* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
     v = Py_BuildValue("(sy)", "isa", @encode(Class));
-    if (v == NULL) {
-        Py_DECREF(result);
-        return result;
+    if (v == NULL) {       // LCOV_BR_EXCL_LINE
+        Py_DECREF(result); // LCOV_EXCL_LINE
+        return result;     // LCOV_EXCL_LINE
     }
 
     r = PyList_Append(result, v);
     Py_DECREF(v);
-    if (r == -1) {
-        Py_DECREF(result);
-        return result;
+    if (r == -1) {         // LCOV_BR_EXCL_LINE
+        Py_DECREF(result); // LCOV_EXCL_LINE
+        return result;     // LCOV_EXCL_LINE
     }
 
-    while (cur != nil) {
+    do {
         Ivar     ivar;
         Ivar*    ivarList;
         unsigned i, ivarCount;
 
         ivarList = class_copyIvarList(cur, &ivarCount);
-        if (ivarList == NULL) {
-            PyErr_SetString(PyExc_SystemError, "copyIvarList failed");
+        if (ivarList == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_Error, "class_copyIvarList failed");
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         for (i = 0; i < ivarCount; i++) {
             ivar                  = ivarList[i];
             const char* ivar_name = ivar_getName(ivar);
 
-            if (ivar == NULL)
-                continue;
+            /* XXX: Haven't found a way yet to trigger this */
+            if (ivar == NULL) // LCOV_BR_EXCL_LINE
+                continue;     // LCOV_EXCL_LINE
 
             if (strcmp(ivar_name, "isa") == 0) {
                 /* See comment above */
@@ -81,25 +86,30 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
 
             v = Py_BuildValue("(sy)", ivar_name, ivar_getTypeEncoding(ivar));
 
-            if (v == NULL) {
+            if (v == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(ivarList);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             r = PyList_Append(result, v);
             Py_DECREF(v);
-            if (r == -1) {
+            if (r == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(ivarList);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
 
         free(ivarList);
 
         cur = class_getSuperclass(cur);
-    }
+    } while (cur != NULL); // LCOV_BR_EXCL_LINE
+
     return result;
 }
 
@@ -129,10 +139,7 @@ PyObject* _Nullable PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
 
     objcValue = PyObjCObject_GetObject(anObject);
     if (objcValue == NULL) {
-        if (!PyErr_Occurred()) {
-            PyErr_SetString(PyExc_ValueError,
-                            "Getting instance variable from nil object");
-        }
+        PyErr_SetString(PyExc_ValueError, "Getting instance variable of a nil object");
         return NULL;
     }
 
@@ -191,9 +198,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
 
     objcValue = PyObjCObject_GetObject(anObject);
     if (objcValue == NULL) {
-        if (!PyErr_Occurred()) {
-            PyErr_SetString(PyExc_ValueError, "Setting instance variable of nil object");
-        }
+        PyErr_SetString(PyExc_ValueError, "Setting instance variable of a nil object");
         return NULL;
     }
 
@@ -213,9 +218,13 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
 
         (void)object_setClass(objcValue, cls);
 
+        /* Note that 'value' doesn't have to be an instance
+         * of PyObjCClass_Type, thanks to the indirection through
+         * __pyobjc_object__ when converting to ObjC.
+         */
         pycls = PyObjCClass_New(cls);
-        if (pycls == NULL) {
-            return NULL;
+        if (pycls == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;     // LCOV_EXCL_LINE
         }
 
         /* XXX: See comment in objc-object.m, change python

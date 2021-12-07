@@ -186,8 +186,8 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     PyTypeObject*        opaque_type   = (PyTypeObject*)userdata;
     OpaquePointerObject* result;
 
-    if (pointer_value == NULL)
-        PyObjCErr_InternalError(); // LCOV_BR_EXCL_LINE
+    if (pointer_value == NULL)     // LCOV_BR_EXCL_LINE
+        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
     result = PyObject_GC_New(OpaquePointerObject, opaque_type);
     if (result == NULL) {           // LCOV_BR_EXCL_LINE
@@ -336,7 +336,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         .slots     = opaque_slots,
     };
 
-    if (opaque_spec.name == NULL) { // LCOV_BREXCL_LINE
+    if (opaque_spec.name == NULL) { // LCOV_BR_EXCL_LINE
         goto error_cleanup;         // LCOV_EXCL_LINE
     }                               // LCOV_EXCL_LINE
 
@@ -361,22 +361,26 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     }
     Py_CLEAR(w);
 
-    if (alloc_prepped_closure(&cl_to_c, convert_cif, &codeloc, opaque_to_c, newType)
-        == -1) { // LCOV_BR_EXCL_LINE
-        PyErr_SetString(PyObjCExc_Error,
-                        "Cannot create libffi closure"); // LCOV_EXCL_LINE
-        PyMem_Free((char*)opaque_spec.name);             // LCOV_EXCL_LINE
-        goto error_cleanup;                              // LCOV_EXCL_LINE
+    if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
+            &cl_to_c, convert_cif, &codeloc, opaque_to_c, newType)
+        == -1) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
+        PyMem_Free((char*)opaque_spec.name);
+        goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
 
-    if (alloc_prepped_closure(&cl_from_c, new_cif, &codeloc, opaque_from_c, newType)
-        == -1) { // LCOV_BR_EXCL_LINE
-        PyErr_SetString(PyObjCExc_Error,
-                        "Cannot create libffi closure"); // LCOV_EXCL_LINE
-        PyMem_Free((char*)opaque_spec.name);             // LCOV_EXCL_LINE
-        goto error_cleanup;                              // LCOV_EXCL_LINE
+    if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
+            &cl_from_c, new_cif, &codeloc, opaque_from_c, newType)
+        == -1) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
+        PyMem_Free((char*)opaque_spec.name);
+        goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(newType); /* Store reference, hence INCREF */

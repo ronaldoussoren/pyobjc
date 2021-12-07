@@ -6,6 +6,17 @@ NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
 
+# XXX: This type and instance should be in a  helper module
+class NilHelper(NSObject):
+    def init(self):
+        self.release()
+        return None
+
+
+nilObject = NilHelper.alloc()
+nilObject.init()
+
+
 class Base:
     def __init__(self, ondel):
         self.ondel = ondel
@@ -209,6 +220,22 @@ class TestAllInstanceVariables(TestCase):
 
         self.assertRaises(AttributeError, getter, obj, "noSuchMember")
 
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an Objective-C object, got instance of str"
+        ):
+            getter("value", "upper")
+
+        with self.assertRaises(TypeError):
+            getter(obj, "value", 42)
+
+        with self.assertRaises(TypeError):
+            getter(obj, 42)
+
+        with self.assertRaisesRegex(
+            ValueError, "Getting instance variable of a nil object"
+        ):
+            getter(nilObject, "isa")
+
     def testWriting(self):
         obj = ClassWithVariables.alloc().init()
 
@@ -237,7 +264,12 @@ class TestAllInstanceVariables(TestCase):
 
         o = NSObject.new()
         self.assertIsNot(getter(obj, "objValue"), o)
-        self.assertRaises(TypeError, setter, "objValue", o)
+        with self.assertRaisesRegex(
+            TypeError,
+            "Instance variable is an object, updateRefCounts argument is required",
+        ):
+            setter(obj, "objValue", o)
+
         self.assertIsNot(getter(obj, "objValue"), o)
         setter(obj, "objValue", o, True)
         self.assertIs(getter(obj, "objValue"), o)
@@ -246,6 +278,15 @@ class TestAllInstanceVariables(TestCase):
         o2.retain()
         self.assertIsNot(getter(obj, "objValue"), o2)
         setter(obj, "objValue", o2, False)
+        self.assertIs(getter(obj, "objValue"), o2)
+
+        class Fake:
+            @property
+            def __pyobjc_object__(self):
+                raise TypeError("Cannot proxy")
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            setter(obj, "objValue", Fake(), True)
         self.assertIs(getter(obj, "objValue"), o2)
 
         self.assertEqual(getter(obj, "pyValue"), slice(1, 10, 4))
@@ -257,6 +298,27 @@ class TestAllInstanceVariables(TestCase):
         self.assertEqual(getter(obj, "rectValue"), ((-4, -8), (2, 7)))
 
         self.assertRaises(AttributeError, setter, obj, "noSuchMember", "foo")
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an Objective-C object, got instance of str"
+        ):
+            setter("value", "upper", 1)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'Class', got 'int'"):
+            setter(obj, "isa", 42)
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            setter(obj, "rectValue", 42)
+
+        with self.assertRaises(TypeError):
+            setter(obj)
+
+        with self.assertRaisesRegex(
+            ValueError, "Setting instance variable of a nil object"
+        ):
+            setter(nilObject, "isa", NSObject)
 
     def testClassMod(self):
         # It's scary as hell, but updating the class of an object does "work"
@@ -280,6 +342,25 @@ class TestAllInstanceVariables(TestCase):
         v = objc.listInstanceVariables(obj)
         self.assertIn(("charValue", objc._C_CHR), v)
         self.assertIn(("intValue", objc._C_INT), v)
+        self.assertIn(("isa", objc._C_CLASS), v)
+
+        with self.assertRaisesRegex(TypeError, "not an Objective-C class or object"):
+            v = objc.listInstanceVariables(self)
+
+        v = objc.listInstanceVariables(NSObject.alloc().init())
+        self.assertIn(("isa", objc._C_CLASS), v)
+
+        v = objc.listInstanceVariables(NSObject)
+        self.assertIn(("isa", objc._C_CLASS), v)
+
+        class PythonClassWithVariables(ClassWithVariables):
+            extra = objc.ivar("extra", objc._C_FLT)
+
+        obj = PythonClassWithVariables.alloc().init()
+        v = objc.listInstanceVariables(obj)
+        self.assertIn(("charValue", objc._C_CHR), v)
+        self.assertIn(("intValue", objc._C_INT), v)
+        self.assertIn(("extra", objc._C_FLT), v)
         self.assertIn(("isa", objc._C_CLASS), v)
 
     def testAnonymousIvar(self):
