@@ -110,13 +110,11 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObject*     dict;
     PyObject*     exception;
     PyObject*     v;
-    PyObject*     buf;
     PyObject*     exc_type;
     PyObject*     exc_value;
     PyObject*     exc_traceback;
     PyObject*     c_localException_name;
     PyObject*     c_localException_reason;
-    NSObject*     t;
 
     PyObjC_BEGIN_WITH_GIL
         if (![localException isKindOfClass:[NSException class]]) {
@@ -171,8 +169,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                 PyObjC_GIL_RETURNVOID;           // LCOV_EXCL_LINE
             }
 
-            c_localException_reason =
-                pythonify_c_value([(NSException*)localException reason]);
+            c_localException_reason = id_to_python([(NSException*)localException reason]);
             if (c_localException_reason == NULL) { // LCOV_BR_EXCL_LINE
                 Py_DECREF(c_localException_name);  // LCOV_EXCL_LINE
                 PyObjC_GIL_RETURNVOID;             // LCOV_EXCL_LINE
