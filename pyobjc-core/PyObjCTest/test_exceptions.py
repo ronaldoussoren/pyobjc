@@ -85,4 +85,40 @@ class TestExceptionsFromObjC(TestCase):
             o.raiseAString()
 
         except objc.error as e:
+            self.assertEqual(str(e), "non-NSException object caught")
             self.assertEqual(e._pyobjc_exc_, "thrown string")
+
+    def test_conversion(self):
+        o = PyObjCTestExceptions.alloc().init()
+
+        for name, conversion in [
+            ("NSRangeException", IndexError),
+            ("NSInvalidArgumentException", ValueError),
+            ("NSMallocException", MemoryError),
+            ("NSUnknownKeyException", KeyError),
+        ]:
+            # Look up the variable name in Foundation
+            objc_name = objc._loadConstant(name, "@", 0)
+
+            with self.assertRaises(conversion):
+                o.raiseWithString_(objc_name)
+
+            with self.assertRaises(conversion):
+                o.raiseWithString_(name)
+
+    def test_null_exception(self):
+        NSException = objc.lookUpClass("NSException")
+        exc = NSException.exceptionWithName_reason_userInfo_(None, None, None)
+        self.assertRegex(str(exc), r"<NSException objective-c instance [0-9a-fx]+>")
+
+        try:
+            exc.raise__()
+        except objc.error as msg:
+            self.assertEqual(str(msg), "<null>")
+
+        exc = NSException.exceptionWithName_reason_userInfo_(None, "some reason", None)
+
+        try:
+            exc.raise__()
+        except objc.error as msg:
+            self.assertEqual(str(msg), "<null> - some reason")

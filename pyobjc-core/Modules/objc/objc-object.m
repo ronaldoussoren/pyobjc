@@ -95,6 +95,10 @@ static PyObject* _Nullable object_repr(PyObject* _self)
                                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (res == NULL) {
             PyErr_Clear();
+            /* Fall though to default */
+        } else if (res == Py_None) {
+            Py_DECREF(res);
+            /* Fall though to default */
         } else {
             return res;
         }

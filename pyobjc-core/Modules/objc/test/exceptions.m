@@ -20,6 +20,7 @@ addSomeUnicode(NSString* input)
 - (void)raiseUnicodeReason;
 - (void)raiseUnicodeWithInfo;
 - (void)raiseAString;
+- (void)raiseWithString:(NSString*)name;
 @end
 
 @implementation PyObjCTestExceptions
@@ -27,6 +28,11 @@ addSomeUnicode(NSString* input)
 - (void)raiseSimple
 {
     [NSException raise:@"SimpleException" format:@"hello world"];
+}
+
+- (void)raiseWithString:(NSString*)name
+{
+    [NSException raise:name format:@"raised %@", name];
 }
 
 - (void)raiseSimpleWithInfo

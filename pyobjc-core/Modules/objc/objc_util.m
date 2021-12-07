@@ -120,7 +120,7 @@ PyObjCErr_FromObjC(NSObject* localException)
 
     PyObjC_BEGIN_WITH_GIL
         if (![localException isKindOfClass:[NSException class]]) {
-            /* We caught some random objects as the exception, so the minimal possible
+            /* We caught some random objects as the exception, do the minimal possible
              */
             PyErr_SetString(PyObjCExc_Error, "non-NSException object caught");
 
@@ -166,55 +166,54 @@ PyObjCErr_FromObjC(NSObject* localException)
                 }
             }
 
-            t                     = [(NSException*)localException name];
-            c_localException_name = pythonify_c_value(@encode(NSObject*), &t);
-            if (c_localException_name == NULL) {
-                PyObjC_GIL_RETURNVOID;
+            c_localException_name = id_to_python([(NSException*)localException name]);
+            if (c_localException_name == NULL) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_RETURNVOID;           // LCOV_EXCL_LINE
             }
 
-            t                       = [(NSException*)localException reason];
-            c_localException_reason = pythonify_c_value(@encode(NSObject*), &t);
-            if (c_localException_reason == NULL) {
-                Py_DECREF(c_localException_name);
-                PyObjC_GIL_RETURNVOID;
+            c_localException_reason =
+                pythonify_c_value([(NSException*)localException reason]);
+            if (c_localException_reason == NULL) { // LCOV_BR_EXCL_LINE
+                Py_DECREF(c_localException_name);  // LCOV_EXCL_LINE
+                PyObjC_GIL_RETURNVOID;             // LCOV_EXCL_LINE
             }
 
             dict = PyDict_New();
-            if (dict == NULL) {
-                Py_DECREF(c_localException_name);
-                Py_DECREF(c_localException_reason);
-                PyObjC_GIL_RETURNVOID;
+            if (dict == NULL) {                     // LCOV_BR_EXCL_LINE
+                Py_DECREF(c_localException_name);   // LCOV_EXCL_LINE
+                Py_DECREF(c_localException_reason); // LCOV_EXCL_LINE
+                PyObjC_GIL_RETURNVOID;              // LCOV_EXCL_LINE
             }
+
+            /* Ignore errors in setting up ``dict``, the exception state
+             * will be replaced later.
+             */
             PyDict_SetItemString(dict, "name", c_localException_name);
             Py_DECREF(c_localException_name);
 
             PyDict_SetItemString(dict, "reason", c_localException_reason);
             Py_DECREF(c_localException_reason);
             if (userInfo) {
-                v = PyObjCObject_New(userInfo, PyObjCObject_kDEFAULT, YES);
+                v = id_to_python(userInfo);
                 if (v != NULL) {
                     PyDict_SetItemString(dict, "userInfo", v);
                     Py_DECREF(v);
-                } else {
-                    PyErr_Clear();
+                } else {           // LCOV_BR_EXCL_LINE
+                    PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
                 PyDict_SetItemString(dict, "userInfo", Py_None);
             }
 
-            if ([[(NSException*)localException reason] UTF8String]) {
-                buf = PyUnicode_FromFormat(
-                    "%s - %s", [[(NSException*)localException name] UTF8String],
-                    [[(NSException*)localException reason] UTF8String]);
+            const char* name   = [[(NSException*)localException name] UTF8String];
+            const char* reason = [[(NSException*)localException reason] UTF8String];
+            if (reason != NULL) {
+                PyErr_Format(exception, "%s - %s", name ? name : "<null>", reason);
             } else {
-                buf = PyUnicode_FromFormat(
-                    "%s", [[(NSException*)localException name] UTF8String]);
+                PyErr_Format(exception, name ? name : "<null>");
             }
-            PyErr_SetObject(exception, buf);
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-            if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
-                PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-            }
+            PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
             PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
             Py_CLEAR(dict);

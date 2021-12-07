@@ -53,6 +53,11 @@ Version 8.2b1
 
   In previous versions the attribute was ignored when this happens.
 
+* Fix error in ``__str__`` and ``__repr__`` of an Objective-C instance
+  when the class' ``description`` selector returns ``nil``.
+
+* Fixed crash in conversion of an Objective-C exception to a Python
+  exception when the exception name is ``NULL``.
 
 Version 8.1
 -----------
