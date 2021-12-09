@@ -81,7 +81,7 @@ Version 8.2b1
 
   Note that calling such function is not supported even with this bugfix.
 
-* #401: The "docstring" field in the function list argument for
+* #406: The "docstring" field in the function list argument for
   :func:`objc.loadBundleFunctions` was effectively ignored. It is now
   part of the document string (``__doc__``) of the :class:`objc.function`
   object.
