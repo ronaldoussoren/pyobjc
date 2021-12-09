@@ -407,6 +407,74 @@ _FunctionTable = [
             }
         },
     ),
+    (
+        "getDoubleFunc",
+        b"^?",
+        "",
+        {
+            "retval": {
+                "callable": {
+                    "retval": {"type": objc._C_INT},
+                    "arguments": {
+                        "0": {"type": objc._C_INT},
+                    },
+                }
+            }
+        },
+    ),
+    (
+        "getOldDoubleFunc",
+        b"^?",
+        "",
+        {
+            "retval": {
+                "callable": {
+                    "deprecated": 1005,
+                    "retval": {"type": objc._C_INT},
+                    "arguments": {
+                        0: {"type": objc._C_INT},
+                    },
+                }
+            }
+        },
+    ),
+    (
+        "getGetter",
+        b"^?",
+        "",
+        {
+            "retval": {
+                "callable": {
+                    "deprecated": 1005,
+                    "retval": {"type": objc._C_VOID},
+                    "arguments": {
+                        0: {"type": objc._C_OUT + objc._C_PTR + objc._C_INT},
+                        1: {"type": objc._C_OUT + objc._C_PTR + objc._C_INT},
+                    },
+                }
+            }
+        },
+    ),
+    (
+        "get2ndGetter",
+        b"^?",
+        "",
+        {
+            "retval": {
+                "callable": {
+                    "deprecated": 1005,
+                    "retval": {"type": objc._C_VOID},
+                    "arguments": {
+                        i: {"type": objc._C_OUT + objc._C_PTR + objc._C_INT}
+                        for i in range(63)
+                    },
+                }
+            }
+        },
+    ),
+    ("oldDoubleFunc", b"ii", "", {"deprecated": 1005}),
+    ("raiseFunc", b"v", "", {}),
+    ("raiseFunc2", b"vn^i", "", {}),
 ]
 
 objc.loadFunctionList(function_list, globals(), _FunctionTable, False)

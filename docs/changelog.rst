@@ -4,7 +4,7 @@ What's new in PyObjC
 An overview of the relevant changes in new, and older, releases.
 
 Version 8.2b1
----------------
+-------------
 
 * The internal extension API between framework bindings and pyobjc-core has
   been cleaned up a little. Because of this extensions need to be
@@ -58,6 +58,33 @@ Version 8.2b1
 
 * Fixed crash in conversion of an Objective-C exception to a Python
   exception when the exception name is ``NULL``.
+
+* Type encoding that ends with an incomplete pointer definition will
+  now raise an error earlier, in particular before the first time the
+  callable is used.
+
+* Using a value for the metadata dict of functions and selectors that
+  is not a :type:`dict` now raises an exception instead of being silently
+  ignored.
+
+* The "suggestion" function metadata was ignored for :class:`objc.function`
+  instances using the fast FFI variant.
+
+* Deprecating the function returned by an API exposed through :class:`objc.function`
+  would cause a crash.
+
+* Fix value of the "deprecated" key in the result of ``__metadata__()`` for
+  callables that are deprecated in a macOS version.
+
+* Loading metadata for a function with more than 63 arguments would
+  crash the interpreter.
+
+  Note that calling such function is not supported even with this bugfix.
+
+* #401: The "docstring" field in the function list argument for
+  :func:`objc.loadBundleFunctions` was effectively ignored. It is now
+  part of the document string (``__doc__``) of the :class:`objc.function`
+  object.
 
 Version 8.1
 -----------

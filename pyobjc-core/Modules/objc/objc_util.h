@@ -71,6 +71,8 @@ extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__p
 
 extern char* _Nullable PyObjC_SELToPythonName(SEL, char*, size_t);
 
+extern bool version_is_deprecated(int version);
+
 static inline Py_ssize_t
 align(Py_ssize_t offset, Py_ssize_t alignment)
 {

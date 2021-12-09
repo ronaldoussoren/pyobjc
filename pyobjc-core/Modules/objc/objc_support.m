@@ -449,7 +449,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
                     type++;
                 } else {
                     PyErr_Format(PyObjCExc_InternalError,
-                                 "Invalid union definition in type signature: %s",
+                                 "Invalid union definition in type signature: '%s'",
                                  start_type);
                     return NULL;
                 }
@@ -458,7 +458,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
         }
         if (type && *type != _C_UNION_E) {
             PyErr_Format(PyObjCExc_InternalError,
-                         "Invalid union definition in type signature: %s", start_type);
+                         "Invalid union definition in type signature: '%s'", start_type);
             return NULL;
         }
         if (type)
@@ -473,6 +473,11 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     case _C_BYCOPY:
     case _C_BYREF:
     case _C_ONEWAY:
+        if (type[1] == '\0') {
+            PyErr_Format(PyObjCExc_InternalError, "Incomplete type signature: '%s'",
+                         start_type);
+            return NULL;
+        }
 
         /* Just skip the following typespec */
         type = PyObjCRT_SkipTypeSpec(type + 1);

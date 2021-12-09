@@ -33,14 +33,14 @@ init_registry(void)
 {
     if (signature_registry == NULL) {
         signature_registry = PyDict_New();
-        if (signature_registry == NULL)
-            return -1;
+        if (signature_registry == NULL) // LCOV_BR_EXCL_LINE
+            return -1;                  // LCOV_EXCL_LINE
     }
 
     if (special_registry == NULL) {
         special_registry = PyDict_New();
-        if (special_registry == NULL)
-            return -1;
+        if (special_registry == NULL) // LCOV_BR_EXCL_LINE
+            return -1;                // LCOV_EXCL_LINE
     }
 
     return 0;

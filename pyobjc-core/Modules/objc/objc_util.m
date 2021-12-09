@@ -1507,4 +1507,10 @@ PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
+bool
+version_is_deprecated(int version)
+{
+    return (PyObjC_DeprecationVersion && version && version <= PyObjC_DeprecationVersion);
+}
+
 NS_ASSUME_NONNULL_END

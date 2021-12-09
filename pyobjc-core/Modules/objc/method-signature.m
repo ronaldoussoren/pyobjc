@@ -207,6 +207,11 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     if (methinfo == NULL || methinfo->variadic) {
         return 0;
     }
+
+    if (methinfo->suggestion != NULL) {
+        return 0;
+    }
+
 #ifdef PyObjC_DEBUG
     if (PyObjCMethodSignature_Validate(methinfo) == -1)
         return -1;
@@ -590,6 +595,9 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
  *  0: OK
  * -1: error
  * -2: 'descr' is template, but would have to be updated.
+ *
+ *  XXX: Use warnings to warn about invalid metadata, with a specific warning that
+ *       can be easility turned into an error.
  */
 static int
 setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_native)
@@ -731,13 +739,18 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             /* Make up a dummy signature, will be overridden by
              * the metadata.
              */
-            char      buffer[64];
+            char      buffer[128];
             PyObject* a = PyDict_GetItemStringWithError(d, "arguments");
             if (a == NULL && PyErr_Occurred()) {
                 return -1;
             } else if (a != NULL) {
                 Py_ssize_t i, len = PyDict_Size(a);
                 if (len == -1) {
+                    return -1;
+                }
+                if ((size_t)len >= sizeof(buffer) - 2) {
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Callable metadata with too many arguments");
                     return -1;
                 }
 
@@ -946,14 +959,14 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             Py_INCREF(bytes);
 
         } else {
-            PyErr_SetString(PyExc_SystemError, "Inconsistent if-case");
+            PyObjC_Assert(0, -1);
             return -1;
         }
 
         const char* type = PyBytes_AsString(bytes);
 
         /* XXX: This assertion is not really useful and needs to be more clear */
-        PyObjC_Assert(!is_native || descr->type != NULL, -1);
+        // PyObjC_Assert(!is_native || descr->type != NULL, -1);
 
         if (is_native && !PyObjC_signatures_compatible(descr->type, type)) {
             /* The new signature is not compatible enough, ignore the
@@ -1032,7 +1045,10 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
     PyObject* v;
 
     if (metadata != NULL && !PyDict_Check(metadata)) {
-        metadata = NULL;
+        PyErr_Format(PyExc_TypeError,
+                     "Metadata dictionary is of type '%s' instead of 'dict'",
+                     Py_TYPE(metadata)->tp_name);
+        return -1;
     }
 
     if (metadata) {
@@ -1042,18 +1058,15 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         } else if (retval != NULL) {
             int r = setup_descr(methinfo->rettype, retval, is_native);
             if (r == -1) {
-                Py_DECREF(methinfo);
                 return -1;
 
             } else if (r == -2) {
                 methinfo->rettype = alloc_descr(methinfo->rettype);
                 if (methinfo->rettype == NULL) {
-                    Py_DECREF(methinfo);
                     return -1;
                 }
                 r = setup_descr(methinfo->rettype, retval, is_native);
                 if (r == -1) {
-                    Py_DECREF(methinfo);
                     return -1;
                 }
                 PyObjC_Assert(r != -2, -1);
@@ -1100,11 +1113,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                     continue;
                 }
 
-                PyObjC_Assert(
-                    methinfo->argtype[i] == NULL || methinfo->argtype[i]->allowNULL, -1);
+                // PyObjC_Assert(
+                //     methinfo->argtype[i] == NULL || methinfo->argtype[i]->allowNULL,
+                //     -1);
                 r = setup_descr(methinfo->argtype[i], d, is_native);
                 if (r == -1) {
-                    Py_DECREF(methinfo);
                     return -1;
 
                 } else if (r == -2) {
@@ -1115,7 +1128,6 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                     }
                     r = setup_descr(methinfo->argtype[i], d, is_native);
                     if (r == -1) {
-                        Py_DECREF(methinfo);
                         return -1;
                     }
                     PyObjC_Assert(r != -2, -1);
@@ -1785,7 +1797,7 @@ PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo
     }
 
     if (methinfo->deprecated != 0) {
-        v = Py_BuildValue("i", &methinfo->deprecated);
+        v = PyLong_FromLong(methinfo->deprecated);
         if (v == NULL)
             goto error;
 

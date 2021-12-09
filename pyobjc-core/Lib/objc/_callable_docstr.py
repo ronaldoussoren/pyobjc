@@ -260,6 +260,10 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
                 % (describe_type(metadata["arguments"][-1]["type"]),)
             )
 
+    if metadata.get("__doc__", None):
+        result.append("\n")
+        result.append(str(metadata["__doc__"]))
+
     return ("\n" + offset).join(result).replace("\n" + offset + "\n", "\n\n")
 
 

@@ -4143,7 +4143,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     if (Py_SIZE(methinfo) >= 127) {
         PyErr_Format(PyObjCExc_Error,
                      "wrapping a function with %" PY_FORMAT_SIZE_T
-                     "d arguments, at most 64 "
+                     "d arguments, at most 126 "
                      "are supported",
                      Py_SIZE(methinfo));
         return NULL;

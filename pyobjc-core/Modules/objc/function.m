@@ -17,16 +17,30 @@ typedef struct {
     PyObjCMethodSignature* methinfo;
     void*                  function;
     PyObject* _Nullable doc;
-    PyObject* name;
+    PyObject* _Nullable name;
     PyObject* _Nullable module;
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
 #endif
 } func_object;
 
-static PyObject* _Nullable func_metadata(PyObject* self)
+static PyObject* _Nullable func_metadata(PyObject* _self)
 {
-    return PyObjCMethodSignature_AsDict(((func_object*)self)->methinfo);
+    func_object* self = (func_object*)_self;
+    PyObject*    result;
+    result = PyObjCMethodSignature_AsDict(self->methinfo);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
+    if (self->doc) {
+        if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                result, "__doc__", self->doc)
+            == -1) {
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
+        }
+    }
+    return result;
 }
 
 static PyMethodDef func_methods[] = {
@@ -72,10 +86,8 @@ static PyObject* _Nullable func_repr(PyObject* _self)
     func_object* self = (func_object*)_self;
 
     if (self->name == NULL) {
-        return PyUnicode_FromFormat("<objc.function object at %p>", self);
-
+        return PyUnicode_FromFormat("<objc.function at %p>", self);
     } else {
-
         return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
     }
 }
@@ -113,17 +125,12 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
      */
     nargsf = PyVectorcall_NARGS(nargsf);
 
-    if (PyObjC_DeprecationVersion && self->methinfo->deprecated
-        && self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
+    if (version_is_deprecated(self->methinfo->deprecated)) {
         char buf[128];
 
-        if (PyUnicode_Check(self->name)) {
-            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
-                     PyUnicode_AsUTF8(self->name), self->methinfo->deprecated / 100,
-                     self->methinfo->deprecated % 100);
-        } else {
-            snprintf(buf, 128, "function is a deprecated API");
-        }
+        snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
+                 (self->name ? PyUnicode_AsUTF8(self->name) : "objc.function instance"),
+                 self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
 
         if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
             return NULL;
@@ -138,7 +145,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     if (Py_SIZE(self->methinfo) >= 63) {
         PyErr_Format(PyObjCExc_Error,
                      "wrapping a function with %" PY_FORMAT_SIZE_T
-                     "d arguments, at most 64 "
+                     "d arguments, at most 62 "
                      "are supported",
                      Py_SIZE(self->methinfo));
         return NULL;
@@ -177,9 +184,9 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     }
 
     argbuf = PyMem_Malloc(argbuf_len);
-    if (argbuf == NULL) {
-        PyErr_NoMemory();
-        return NULL;
+    if (argbuf == NULL) { // LCOV_BR_EXCL_LINE
+        PyErr_NoMemory(); // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     cif_arg_count = PyObjCFFI_ParseArguments(
@@ -292,14 +299,11 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     unsigned char argbuf[SHORTCUT_MAX_ARGBUF];
     void*         values[MAX_ARGCOUNT_SIMPLE];
 
-    if (!self->methinfo->shortcut_signature) {
-        PyErr_Format(PyObjCExc_InternalError, "%R is not a simple function", self);
-        return NULL;
-    }
+    PyObjC_Assert(self->methinfo->shortcut_signature, NULL);
 
     if (unlikely(kwnames != NULL
                  && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        PyErr_Format(PyExc_TypeError, "%R does not accept keyword arguments", s);
         return NULL;
     }
 
@@ -310,18 +314,12 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
      */
     nargsf = PyVectorcall_NARGS(nargsf);
 
-    if (unlikely(PyObjC_DeprecationVersion && self->methinfo->deprecated
-                 && self->methinfo->deprecated <= PyObjC_DeprecationVersion)) {
+    if (version_is_deprecated(self->methinfo->deprecated)) {
         char buf[128];
 
-        if (PyUnicode_Check(self->name)) {
-            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
-                     PyUnicode_AsUTF8(self->name), self->methinfo->deprecated / 100,
-                     self->methinfo->deprecated % 100);
-        } else {
-            snprintf(buf, 128, "function is a deprecated API");
-        }
-
+        snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
+                 (self->name ? PyUnicode_AsUTF8(self->name) : "objc.function instance"),
+                 self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
         if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
             return NULL;
         }
@@ -427,9 +425,11 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
 {
     func_object* result;
 
+    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+
     result = PyObject_NEW(func_object, &PyObjCFunc_Type);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
@@ -442,6 +442,7 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
 
+    /* XXX: Set ->cif on first call? */
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {
         Py_DECREF(result);
@@ -457,9 +458,15 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 {
     func_object* result;
 
-    result = PyObject_NEW(func_object, &PyObjCFunc_Type);
-    if (result == NULL)
-        return NULL;
+    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+    if (doc && PyUnicode_GetLength(doc) == 0) {
+        /* Ignore empty docstring */
+        doc = NULL;
+    }
+
+    result = PyObject_New(func_object, &PyObjCFunc_Type);
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
@@ -486,10 +493,12 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);
+
+    /* XXX: Set ->cif on first call? */
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
-    if (result->cif == NULL) {
-        Py_DECREF(result);
-        return NULL;
+    if (result->cif == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(result);     // LCOV_EXCL_LINE
+        return NULL;           // LCOV_EXCL_LINE
     }
 
     return (PyObject*)result;

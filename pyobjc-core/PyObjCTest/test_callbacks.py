@@ -147,6 +147,7 @@ class TestCallbackFor(TestCase):
         )
 
     def testCreatingCallbacks(self):
+        # XXX: Need variant using objc.function
         @objc.callbackFor(OC_CallbackTest.selWithCallback_)
         def function(arg1, arg2):
             pass

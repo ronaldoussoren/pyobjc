@@ -439,6 +439,56 @@ maybeFillArray_(int* data)
     return 2;
 }
 
+static int
+do_double(int val)
+{
+    return val * 2;
+}
+
+typedef int (*returnfunc)(int);
+static returnfunc
+getDoubleFunc(void)
+{
+    return do_double;
+}
+
+typedef int (*returnfunc)(int);
+static returnfunc
+getOldDoubleFunc(void)
+{
+    return do_double;
+}
+
+static void
+raiseFunc(void)
+{
+    @throw [NSException exceptionWithName:@"ExceptionName"
+                                   reason:@"No Reason"
+                                 userInfo:nil];
+}
+
+static void
+raiseFunc2(int* inval __attribute__((__unused__)))
+{
+    @throw [NSException exceptionWithName:@"ExceptionName"
+                                   reason:@"No Reason"
+                                 userInfo:nil];
+}
+
+static void
+getxy(int* x, int* y)
+{
+    *x = 1;
+    *y = 2;
+}
+typedef void (*getfunc)(int*, int*);
+
+static getfunc
+getGetter(void)
+{
+    return getxy;
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
@@ -480,6 +530,14 @@ static struct function {
                     {"makeArrayWithFormat_", (F)makeArrayWithFormat_},
                     {"makeArrayWithCFormat_", (F)makeArrayWithCFormat_},
                     {"maybeFillArray_", (F)maybeFillArray_},
+                    {"getDoubleFunc", (F)getDoubleFunc},
+                    {"get2ndDoubleFunc", (F)getDoubleFunc},
+                    {"getOldDoubleFunc", (F)getOldDoubleFunc},
+                    {"raiseFunc", (F)raiseFunc},
+                    {"raiseFunc2", (F)raiseFunc2},
+                    {"oldDoubleFunc", (F)do_double},
+                    {"getGetter", (F)getGetter},
+                    {"get2ndGetter", (F)getGetter},
 
                     {NULL, NULL}};
 

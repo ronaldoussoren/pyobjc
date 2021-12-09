@@ -506,8 +506,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         return NULL;
     }
 
-    if (PyObjC_DeprecationVersion && methinfo->deprecated
-        && methinfo->deprecated <= PyObjC_DeprecationVersion) {
+    if (version_is_deprecated(methinfo->deprecated)) {
         char  buf[128];
         Class cls = PyObjCSelector_GetClass(_self);
         SEL   sel = PyObjCSelector_GetSelector(_self);
@@ -614,8 +613,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         return NULL;
     }
 
-    if (PyObjC_DeprecationVersion && methinfo->deprecated
-        && methinfo->deprecated <= PyObjC_DeprecationVersion) {
+    if (version_is_deprecated(methinfo->deprecated)) {
         char  buf[128];
         Class cls = PyObjCSelector_GetClass(_self);
         SEL   sel = PyObjCSelector_GetSelector(_self);
