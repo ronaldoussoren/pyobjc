@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    ffi_cif*               cif;
+    ffi_cif* _Nullable cif;
     PyObjCMethodSignature* methinfo;
     void*                  function;
     PyObject* _Nullable doc;
@@ -454,7 +454,7 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
 }
 
 PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signature,
-                                   PyObject* doc, PyObject* meta)
+                                   PyObject* _Nullable doc, PyObject* meta)
 {
     func_object* result;
 
@@ -474,16 +474,19 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     result->function = func;
 
     /* set later in this function */
-    result->doc    = (PyObject* _Nonnull)NULL;
-    result->name   = (PyObject* _Nonnull)NULL;
-    result->module = NULL;
-    result->cif    = NULL;
+    result->doc      = (PyObject* _Nonnull)NULL;
+    result->name     = (PyObject* _Nonnull)NULL;
+    result->module   = NULL;
+    result->methinfo = (PyObjCMethodSignature* _Nonnull)NULL;
+    result->cif      = NULL;
 
-    result->methinfo = PyObjCMethodSignature_WithMetaData(signature, meta, NO);
-    if (result->methinfo == NULL) {
+    PyObjCMethodSignature* methinfo =
+        PyObjCMethodSignature_WithMetaData(signature, meta, NO);
+    if (methinfo == NULL) {
         Py_DECREF(result);
         return NULL;
     }
+    result->methinfo = methinfo;
 
 #if PY_VERSION_HEX >= 0x03090000
     if (result->methinfo->shortcut_signature) {

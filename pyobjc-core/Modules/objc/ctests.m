@@ -843,12 +843,23 @@ ASSERT(v);
 
 buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:NO];
 ASSERT(buf);
-ASSERT([buf buffer]);
-ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+if (![buf buffer]) {
+    [buf release];
+    ASSERT(0);
+}
+
+if (strncmp([buf buffer], "hello", 5) != 0) {
+    [buf release];
+    ASSERT(0);
+}
+
 [buf release];
 
 buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:YES];
-ASSERT(!buf);
+if (buf) {
+    [buf release];
+    ASSERT(!buf);
+}
 ASSERT(PyErr_Occurred());
 PyErr_Clear();
 
@@ -856,14 +867,32 @@ v = PyByteArray_FromStringAndSize("hello", 5);
 ASSERT(v);
 buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:NO];
 ASSERT(buf);
-ASSERT([buf buffer]);
-ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+if (![buf buffer]) {
+    Py_CLEAR(v);
+    [buf release];
+    ASSERT(0);
+}
+if (strncmp([buf buffer], "hello", 5) != 0) {
+    Py_CLEAR(v);
+    [buf release];
+    ASSERT(0);
+}
+
 [buf release];
 
 buf = [[OCReleasedBuffer alloc] initWithPythonBuffer:v writable:YES];
 ASSERT(buf);
-ASSERT([buf buffer]);
-ASSERT(strncmp([buf buffer], "hello", 5) == 0);
+if (![buf buffer]) {
+    Py_CLEAR(v);
+    [buf release];
+    ASSERT(0);
+}
+if (strncmp([buf buffer], "hello", 5) != 0) {
+    Py_CLEAR(v);
+    [buf release];
+    ASSERT(0);
+}
+Py_CLEAR(v);
 [buf release];
 
 END_UNITTEST
