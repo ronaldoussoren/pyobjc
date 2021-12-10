@@ -82,6 +82,8 @@ class DataSubClass(objc.lookUpClass("NSData")):
         return self
 
     def length(self):
+        if self._value is None:
+            return 0
         return len(self._value)
 
     def bytes(self):  # noqa: A003
@@ -95,6 +97,8 @@ class MutableDataSubClass(objc.lookUpClass("NSMutableData")):
         return self
 
     def length(self):
+        if self._value is None:
+            return 0
         return len(self._value)
 
     def bytes(self):  # noqa: A003
@@ -110,12 +114,36 @@ class TestSubclassing(TestCase):
 
         self.assertEqual(objc.lookUpClass("NSData").dataWithData_(buf), b"hello world")
 
+        buf._value = None
+        b = OC_MutableDataHelper.fetchBytesOf_(buf)
+        self.assertIs(b, None)
+
+        buf._value = 42
+        with self.assertRaises(TypeError):
+            OC_MutableDataHelper.fetchBytesOf_(buf)
+
     def testNSMutableData(self):
         buf = MutableDataSubClass.alloc().init()
 
         self.assertEqual(objc.lookUpClass("NSData").dataWithData_(buf), b"hello world")
 
-        # XXX: Need helper to actually invoke mutableBytes
+        b = OC_MutableDataHelper.fetchMutableBytesOf_(buf)
+        self.assertEqual(b, b"hello world")
+        self.assertIsInstance(b, objc.lookUpClass("NSData"))
+
+        buf._value = None
+        b = OC_MutableDataHelper.fetchMutableBytesOf_(buf)
+        self.assertIs(b, None)
+
+        b = OC_MutableDataHelper.fetchBytesOf_(buf)
+        self.assertIs(b, None)
+
+        buf._value = 42
+        with self.assertRaises(TypeError):
+            OC_MutableDataHelper.fetchBytesOf_(buf)
+
+        with self.assertRaises(TypeError):
+            OC_MutableDataHelper.fetchMutableBytesOf_(buf)
 
     def testCopyRO(self):
         orig = DataSubClass.alloc().init()

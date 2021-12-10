@@ -12,6 +12,24 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation OC_MutableDataHelper
++ (NSData* _Nullable)fetchBytesOf:(NSMutableData*)input
+{
+    const void* bytes = [input bytes];
+    if (bytes == NULL) {
+        return NULL;
+    }
+    return [NSData dataWithBytes:bytes length:[input length]];
+}
+
++ (NSData* _Nullable)fetchMutableBytesOf:(NSMutableData*)input
+{
+    void* bytes = [input mutableBytes];
+    if (bytes == NULL) {
+        return NULL;
+    }
+    return [NSData dataWithBytes:bytes length:[input length]];
+}
+
 - (instancetype)initWithScenario:(int)value
 {
     self = [super init];

@@ -100,9 +100,6 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
     return;
 
 error:
-    if (pyself) {
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-    }
     PyObjCErr_ToObjCWithGILState(&state);
     *pretval = NULL;
 }
@@ -209,9 +206,6 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
     return;
 
 error:
-    if (pyself) {
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-    }
     *pretval = NULL;
     PyObjCErr_ToObjCWithGILState(&state);
 }
@@ -222,7 +216,7 @@ PyObjC_setup_nsdata(void)
     Class classNSData        = objc_lookUpClass("NSData");
     Class classNSMutableData = objc_lookUpClass("NSMutableData");
 
-    if (classNSData != NULL) {
+    if (classNSData != NULL) { // LCOV_BR_EXCL_LINE
 
         if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
                 classNSData, @selector(bytes), call_NSData_bytes, imp_NSData_bytes)
@@ -231,7 +225,7 @@ PyObjC_setup_nsdata(void)
         }
     }
 
-    if (classNSMutableData != NULL) {
+    if (classNSMutableData != NULL) { // LCOV_BR_EXCL_LINE
 
         if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
                 classNSMutableData, @selector(mutableBytes),
