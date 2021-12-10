@@ -44,8 +44,10 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
         return PyBytes_FromStringAndSize("", 0);
     }
 
-    if (PyBuffer_FillInfo(&info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO) < 0) {
-        return NULL;
+    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+            &info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
     }
     return PyMemoryView_FromBuffer(&info);
 }
@@ -142,15 +144,21 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
         return NULL;
 
     if (bytes == NULL) {
-        /* PyMemoryView doesn't like null pointers, and those
-         * are nonsensical here anyway.
+        /* XXX: Requires a custom NSData subclass for to test */
+        /* The selector may return NULL for empty buffers,
+         * return an empty memoryview.
+         *
+         * XXX: The Foundation headers in the 12.1 SDK say
+         *      this selector is not nullable, and hence should
+         *      never by NULL.
          */
-        PyErr_SetString(PyExc_ValueError, "NULL pointer in NSMutableData");
-        return NULL;
+        return PyMemoryView_FromMemory("", 0, PyBUF_WRITE);
     }
 
-    if (PyBuffer_FillInfo(&info, self, bytes, bytes_len, 0, PyBUF_FULL) < 0) {
-        return NULL;
+    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+            &info, self, bytes, bytes_len, 0, PyBUF_FULL)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
     }
     result = PyMemoryView_FromBuffer(&info);
 
@@ -216,20 +224,20 @@ PyObjC_setup_nsdata(void)
 
     if (classNSData != NULL) {
 
-        if (PyObjC_RegisterMethodMapping(classNSData, @selector(bytes), call_NSData_bytes,
-                                         imp_NSData_bytes)
+        if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                classNSData, @selector(bytes), call_NSData_bytes, imp_NSData_bytes)
             < 0) {
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         }
     }
 
     if (classNSMutableData != NULL) {
 
-        if (PyObjC_RegisterMethodMapping(classNSMutableData, @selector(mutableBytes),
-                                         call_NSMutableData_mutableBytes,
-                                         imp_NSMutableData_mutableBytes)
+        if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                classNSMutableData, @selector(mutableBytes),
+                call_NSMutableData_mutableBytes, imp_NSMutableData_mutableBytes)
             < 0) {
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         }
     }
 

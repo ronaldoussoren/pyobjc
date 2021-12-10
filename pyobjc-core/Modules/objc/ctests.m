@@ -9,6 +9,9 @@
 
 #include <fcntl.h>
 
+// LCOV_BR_EXCL_START
+// LCOV_EXCL_START
+
 NS_ASSUME_NONNULL_BEGIN
 
 struct Struct1 {
@@ -976,5 +979,8 @@ PyObjC_init_ctests(PyObject* m)
 
     return PyModule_AddObject(m, "_ctests", d);
 }
+
+// LCOV_BR_EXCL_STOP
+// LCOV_EXCL_STOP
 
 NS_ASSUME_NONNULL_END
