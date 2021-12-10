@@ -63,13 +63,6 @@ PyObjCIMP_GetFlags(PyObject* self)
     return ((PyObjCIMPObject*)self)->flags;
 }
 
-PyObjC_CallFunc _Nullable PyObjCIMP_GetCallFunc(PyObject* self)
-{
-    ASSERT_IS_IMP(self, NULL)
-
-    return ((PyObjCIMPObject*)self)->callfunc;
-}
-
 PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 {
     ASSERT_IS_IMP(self, NULL)
@@ -323,8 +316,8 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
     int       r;
 
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
@@ -334,16 +327,16 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
         r = PyDict_SetItemString(result, "classmethod", Py_False);
     }
 
-    if (r == -1) {
-        Py_DECREF(result);
-        return NULL;
+    if (r == -1) {         // LCOV_BR_EXCL_LINE
+        Py_DECREF(result); // LCOV_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
     }
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
         r = PyDict_SetItemString(result, "return_unitialized_object", Py_True);
-        if (r == -1) {
-            Py_DECREF(result);
-            return NULL;
+        if (r == -1) {         // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
         }
     }
 
@@ -388,8 +381,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
     PyObjC_Assert(callfunc != NULL, NULL);
 
     result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     result->imp       = imp;
     result->selector  = selector;
@@ -581,14 +574,14 @@ PyObjCIMP_SetUpMethodWrappers(void)
     r = PyObjC_RegisterMethodMapping(nil, @selector(instanceMethodForSelector:),
                                      call_instanceMethodForSelector_,
                                      PyObjCUnsupportedMethod_IMP);
-    if (r == -1)
-        return -1;
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(nil, @selector(methodForSelector:),
                                      call_methodForSelector_,
                                      PyObjCUnsupportedMethod_IMP);
-    if (r == -1)
-        return -1;
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     return 0;
 }

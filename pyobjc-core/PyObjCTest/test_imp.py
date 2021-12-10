@@ -61,3 +61,29 @@ class TestBasicIMP(TestCase):
         o = NSObject.alloc().init()
 
         self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
+
+    def test_repr(self):
+        o = NSObject.alloc().init()
+
+        imp = o.methodForSelector_(b"description")
+
+        self.assertRegex(repr(imp), "<IMP description at 0x[0-9a-f]+ for 0x[0-9a-f]+>")
+
+    def test_no_keywords(self):
+        o = NSObject.alloc().init()
+
+        imp = o.methodForSelector_(b"description")
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "<IMP description at 0x[0-9a-f]+ for 0x[0-9a-f]+> does not accept keyword arguments",
+        ):
+            imp(self=o)
+
+    def test_too_rew(self):
+        o = NSObject.alloc().init()
+
+        imp = o.methodForSelector_(b"description")
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            imp()

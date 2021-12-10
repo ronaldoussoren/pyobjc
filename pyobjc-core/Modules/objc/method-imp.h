@@ -29,8 +29,6 @@ extern PyTypeObject PyObjCIMP_Type;
 #define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, &PyObjCIMP_Type)
 
 extern _Nullable IMP PyObjCIMP_GetIMP(PyObject* self) __attribute__((warn_unused_result));
-extern _Nullable PyObjC_CallFunc PyObjCIMP_GetCallFunc(PyObject* self)
-    __attribute__((warn_unused_result));
 extern PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
     __attribute__((warn_unused_result));
 extern int PyObjCIMP_GetFlags(PyObject* self) __attribute__((warn_unused_result));
