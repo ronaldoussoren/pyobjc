@@ -42,17 +42,18 @@ class SplitSignatureTest(TestCase):
         # signatures, and therefore all signatures changed by PyObjC, are
         # valid.
         for cls in objc.getClassList():
-            for selName in list(cls.__dict__.keys()):
-                try:
-                    sel = getattr(cls, selName.decode("latin1"))
-                except (AttributeError, TypeError):
-                    continue
+            with self.subTest(cls.__name__):
+                for selName in list(cls.__dict__.keys()):
+                    try:
+                        sel = getattr(cls, selName.decode("latin1"))
+                    except (AttributeError, TypeError):
+                        continue
 
-                if not isinstance(sel, objc.selector):
-                    continue
+                    if not isinstance(sel, objc.selector):
+                        continue
 
-                # Check is that the call is successfull
-                objc.splitSignature(sel.signature)
+                    # Check is that the call is successfull
+                    objc.splitSignature(sel.signature)
 
     def testSimple(self):
         self.assertEqual(objc.splitSignature(b"@:@"), (b"@", b":", b"@"))

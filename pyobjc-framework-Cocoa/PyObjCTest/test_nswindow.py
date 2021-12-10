@@ -221,7 +221,7 @@ class TestNSWindow(TestCase):
             AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
         )
 
-    @skipUnless(Quartz is not None)
+    @skipUnless(Quartz is not None, "test requires Quartz")
     def testMagicConstants(self):
         self.assertEqual(AppKit.NSNormalWindowLevel, Quartz.kCGNormalWindowLevel)
         self.assertEqual(AppKit.NSFloatingWindowLevel, Quartz.kCGFloatingWindowLevel)

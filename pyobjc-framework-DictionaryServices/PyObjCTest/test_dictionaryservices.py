@@ -11,7 +11,9 @@ class TestDictionaryServices(TestCase):
     def testClasses(self):
         self.assertIsCFType(DictionaryServices.DCSDictionaryRef)
 
-    @skipUnless(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
+    @skipUnless(
+        os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"), "buggy OS release"
+    )
     def testFunctions(self):
         txt = "the hello world program"
         r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)
