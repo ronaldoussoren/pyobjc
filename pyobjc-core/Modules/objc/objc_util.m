@@ -398,27 +398,6 @@ NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
     NULL,
 };
 
-static void
-nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
-{
-    CFRetain((id)datum);
-}
-
-static void
-nsmaptable_objc_release(NSMapTable* table __attribute__((__unused__)), void* datum)
-{
-    CFRelease((id)datum);
-}
-
-NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks = {
-    NULL, NULL, &nsmaptable_objc_retain, &nsmaptable_objc_release, NULL, NULL,
-};
-
-NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks = {
-    &nsmaptable_objc_retain, &nsmaptable_objc_release,
-    NULL // generic description
-};
-
 #define SHOULD_FREE 1
 #define SHOULD_IGNORE 2
 

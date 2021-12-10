@@ -37,9 +37,6 @@ extern char* _Nullable PyObjCUtil_Strdup(const char* value);
 extern NSMapTableKeyCallBacks   PyObjCUtil_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 
-extern NSMapTableKeyCallBacks   PyObjCUtil_ObjCIdentityKeyCallBacks;
-extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
-
 extern void PyObjC_FreeCArray(int, Py_buffer*);
 extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*,
                                   void* _Nullable* _Nonnull, Py_ssize_t* _Nullable,

@@ -7,6 +7,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static void
+nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
+{
+    CFRetain((id)datum);
+}
+
+static void
+nsmaptable_objc_release(NSMapTable* table __attribute__((__unused__)), void* datum)
+{
+    CFRelease((id)datum);
+}
+
+static NSMapTableValueCallBacks PyObjC_ObjCValueCallBacks = {
+    &nsmaptable_objc_retain, &nsmaptable_objc_release,
+    NULL // generic description
+};
+
 static id (*bundleForClassIMP)(id, SEL, Class);
 
 @implementation OC_NSBundleHackCheck
@@ -29,8 +46,8 @@ static id (*bundleForClassIMP)(id, SEL, Class);
 
     if (unlikely(!bundleCache)) {
         bundleCache =
-            NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
-                             PyObjCUtil_ObjCValueCallBacks, PYOBJC_EXPECTED_CLASS_COUNT);
+            NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, PyObjC_ObjCValueCallBacks,
+                             PYOBJC_EXPECTED_CLASS_COUNT);
     }
 
     if (!aClass) {
