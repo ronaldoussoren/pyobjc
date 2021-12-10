@@ -238,7 +238,7 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
             PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
         if (methinfo == NULL)
             goto error_cleanup;
-        IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, base_class);
+        IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, intermediate_class);
         Py_CLEAR(methinfo);
         if (closure == NULL)
             goto error_cleanup;
@@ -996,7 +996,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 if (methinfo == NULL)
                     goto error_cleanup;
 
-                IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, super_class);
+                IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, new_class);
                 Py_CLEAR(methinfo);
                 if (closure == NULL)
                     goto error_cleanup;
@@ -1371,7 +1371,7 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
 
     PyObjC_END_WITH_GIL
 
-    spr.super_class = (Class)userdata;
+    spr.super_class = class_getSuperclass((Class)userdata);
     spr.receiver    = self;
 
     ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, _meth);
@@ -1387,14 +1387,15 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     SEL     _meth = *(SEL*)args[1];
     NSZone* zone  = *(NSZone**)args[2];
     Class   cls;
+    Class   super_cls;
 
     struct objc_super spr;
     PyGILState_STATE  state;
 
     /* Ask super to create a copy */
 
-    spr.super_class = (Class)userdata;
-    spr.receiver    = self;
+    spr.super_class = super_cls = class_getSuperclass((Class)userdata);
+    spr.receiver                = self;
     copy =
         ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
 
@@ -1402,11 +1403,21 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
         *(id*)resp = nil;
         return;
     }
+    if (!PyObjC_class_isSubclassOf(object_getClass(copy), userdata)) {
+        /* The copy is not a subclass of the defining class, this
+         * can happen in (for example) class clusters.
+         *
+         * XXX: Need explicit test case for this!
+         */
+        // NSLog(@"not a subclass %@ %@", object_getClass(copy), userdata);
+        *(id*)resp = copy;
+        return;
+    }
 
     state = PyGILState_Ensure();
 
     cls = object_getClass(self);
-    while (cls != (Class)userdata) {
+    while (cls != super_cls) {
         unsigned ivarCount, i;
         /* Returns NULL only when setting ivarCount to 0 */
         Ivar* ivarList = (Ivar* _Nonnull)class_copyIvarList(cls, &ivarCount);
@@ -1495,7 +1506,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     PyObjC_END_WITH_GIL
 
     /* Check superclass */
-    spr.super_class = (Class)userdata;
+    spr.super_class = class_getSuperclass((Class)userdata);
     spr.receiver    = self;
 
     *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
@@ -1519,7 +1530,7 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
 
     *p_result = nil;
 
-    spr.super_class = (Class)userdata;
+    spr.super_class = class_getSuperclass((Class)userdata);
     spr.receiver    = self;
 
     /*
@@ -1635,7 +1646,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         Py_XDECREF(pymeth);
         Py_XDECREF(pyself);
 
-        spr.super_class = (Class)userdata;
+        spr.super_class = class_getSuperclass((Class)userdata);
         spr.receiver    = self;
         PyGILState_Release(state);
         ((void (*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth,
@@ -2035,7 +2046,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
 
     /* First check super */
     @try {
-        spr.super_class = (Class)userdata;
+        spr.super_class = class_getSuperclass((Class)userdata);
         spr.receiver    = self;
         *((id*)retval)  = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
             &spr, _meth, key);
@@ -2116,7 +2127,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         /* First check super */
-        spr.super_class = (Class)userdata;
+        spr.super_class = class_getSuperclass((Class)userdata);
         spr.receiver    = self;
         ((void (*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value,
                                                                        key);

@@ -86,6 +86,12 @@ Version 8.2b1
   part of the document string (``__doc__``) of the :class:`objc.function`
   object.
 
+* The default implementation of ``-copy`` for subclasses of Objective-C
+  classes that implemented ``-copy`` (needed to adjust Python attributes)
+  didn't consider that the superclass implementation of ``-copy`` may
+  return an instance of a different class.  This caused a hard crash.
+
+
 Version 8.1
 -----------
 
