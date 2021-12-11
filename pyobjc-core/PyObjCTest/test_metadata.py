@@ -1389,13 +1389,59 @@ class TestVariableLengthValue(TestCase):
         self.assertEqual(v[1], 3)
         self.assertEqual(v[5], 13)
 
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-1]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-1] = 1
+
         # self.fail((type(v), v))
         # self.fail((v[0:2], type(v[0:2])))
         self.assertEqual(v[0:2], (1, 3))
         self.assertEqual(v[0:2:1], (1, 3))
         self.assertEqual(v[:2], (1, 3))
+        self.assertEqual(v[2:0], ())
 
-        # XXX: Needs check on message as well.
+        v[2:0] = ()
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-10:-5]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-10:-5] = range(5)
+
+        with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
+            v[-10:]
+
+        with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
+            v[-10:] = range(5)
+
+        with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
+            v[-10::1] = range(5)
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[:-5]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[:-5] = range(5)
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[:-5:1] = range(5)
+
         with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
             v[2:]
         with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
@@ -1420,6 +1466,33 @@ class TestVariableLengthValue(TestCase):
             v[slice(0, sys.maxsize // 2 + 4)]
         with self.assertRaisesRegex(IndexError, ".*out of range.*"):
             v[sys.maxsize // 2 + 10]
+        with self.assertRaisesRegex(
+            IndexError, "cannot fit 'int' into an index-sized integer"
+        ):
+            v[2 ** 67]
+        with self.assertRaisesRegex(
+            IndexError, "cannot fit 'int' into an index-sized integer"
+        ):
+            v[2 ** 67] = 1
+        with self.assertRaisesRegex(
+            TypeError, "objc.varlist indices must be integers, got str"
+        ):
+            v["hello"]
+        with self.assertRaisesRegex(
+            TypeError, "objc.varlist indices must be integers, got str"
+        ):
+            v["hello"] = 1
+        with self.assertRaisesRegex(
+            ValueError, "Slice index of unsupported type 'str'"
+        ):
+            v["hello":"world"]
+        with self.assertRaisesRegex(
+            ValueError, "Slice index of unsupported type 'str'"
+        ):
+            v["hello":"world"] = 1
+
+        with self.assertRaisesRegex(TypeError, "New value must be a sequence"):
+            v[1:3] = 42
 
         self.assertEqual(v.as_tuple(5), (1, 3, 5, 7, 11))
         self.assertEqual(v.as_tuple(0), ())

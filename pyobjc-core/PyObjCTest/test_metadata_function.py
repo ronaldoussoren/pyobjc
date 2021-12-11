@@ -4,8 +4,10 @@ Tests for the new-style metadata format interface.
 These tests are for global function
 """
 import objc
-from PyObjCTest.metadatafunction import function_list
+from PyObjCTest.metadatafunction import function_list, union_SomeUnion
 from PyObjCTools.TestSupport import TestCase
+
+union_SomeUnion = union_SomeUnion.encode()
 
 _FunctionTable = [
     (
@@ -475,6 +477,27 @@ _FunctionTable = [
     ("oldDoubleFunc", b"ii", "", {"deprecated": 1005}),
     ("raiseFunc", b"v", "", {}),
     ("raiseFunc2", b"vn^i", "", {}),
+    (
+        "returnUnionArray",
+        b"^" + union_SomeUnion,
+        "",
+        {"retval": {"c_array_of_variable_length": True}},
+    ),
+    (
+        "returnPointerArray",
+        b"^^{UnknownLabel=ii}22",
+        "",
+        {"retval": {"c_array_of_variable_length": True}},
+    ),
+    ("makeVoidPArrayOf_", b"^vi", "", {"retval": {"c_array_of_variable_length": True}}),
+    #    (
+    #        "return2ndPointerArray",
+    #        b"^^{UnknownLabel=ii",
+    #        "",
+    #        {
+    #            "retval": { "c_array_of_variable_length": True }
+    #        }
+    #    ),
 ]
 
 objc.loadFunctionList(function_list, globals(), _FunctionTable, False)

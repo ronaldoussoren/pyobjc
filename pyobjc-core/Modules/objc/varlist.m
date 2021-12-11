@@ -62,8 +62,8 @@ static PyObject* _Nullable object_as_tuple(PyObject* _self, PyObject* args,
     }
 
     result = PyTuple_New(length);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < length; i++) {
@@ -107,8 +107,10 @@ static PyObject* _Nullable object_as_buffer(PyObject* _self, PyObject* args,
 
     buffer_size = length * self->itemsize;
 
-    if (PyBuffer_FillInfo(&info, _self, self->array, buffer_size, 0, PyBUF_FULL) < 0) {
-        return NULL;
+    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+            &info, _self, self->array, buffer_size, 0, PyBUF_FULL)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return PyMemoryView_FromBuffer(&info);
@@ -146,6 +148,9 @@ static PyObject* _Nullable object__getslice__(PyObject* _self, Py_ssize_t start,
     }
 
     result = PyTuple_New(stop - start);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
 
     for (idx = start; idx < stop; idx++) {
         PyObject* v = pythonify_c_value(self->typestr, ((unsigned char*)self->array)
@@ -179,7 +184,7 @@ object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject*
         stop = start;
     }
 
-    seq = PySequence_Fast(newval, "New value must be sequence");
+    seq = PySequence_Fast(newval, "New value must be a sequence");
     if (seq == NULL) {
         return -1;
     }
@@ -418,8 +423,12 @@ PyObjC_VarList_New(const char* tp, void* array)
     const char*     end;
 
     end = PyObjCRT_SkipTypeSpec(tp);
-    if (end == NULL) {
-        return NULL;
+    if (end == NULL) { // LCOV_BR_EXCL_LINE
+        /* This should never happen because the 'tp' argument
+         * is either from the ObjC runtime, or is validated before
+         * we get here.
+         */
+        return NULL; // LCOV_EXCL_LINE
     }
     while (end > tp && isdigit(end[-1])) {
         end--;
@@ -427,15 +436,18 @@ PyObjC_VarList_New(const char* tp, void* array)
 
     result = (PyObjC_VarList*)PyObject_Malloc(_PyObject_SIZE(&PyObjC_VarList_Type)
                                               + (end - tp) + 1);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
     PyObject_Init((PyObject*)result, &PyObjC_VarList_Type);
     result->array    = array;
     result->itemsize = PyObjCRT_AlignedSize(tp);
     if (unlikely(result->itemsize == -1)) {
+        /* Should never happen, type is already validated */
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     memcpy(result->typestr, tp, end - tp);

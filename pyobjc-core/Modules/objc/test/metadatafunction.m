@@ -489,6 +489,35 @@ getGetter(void)
     return getxy;
 }
 
+union SomeUnion {
+    unsigned long intvalue;
+    double        doublevalue;
+};
+
+static union SomeUnion*
+returnUnionArray(void)
+{
+    static union SomeUnion buffer[] = {
+        {.intvalue = 42}, {.doublevalue = 2.5}, {.doublevalue = 4.0}};
+    return buffer;
+}
+
+static struct UnknownLabel {
+    int first;
+    int second;
+} LabelArray[] = {
+    {.first = 0, .second = 1},
+    {.first = 2, .second = 3},
+    {.first = 4, .second = 5},
+};
+
+static struct UnknownLabel**
+returnPointerArray(void)
+{
+    static struct UnknownLabel* buffer[] = {LabelArray, LabelArray + 1, LabelArray + 2};
+    return buffer;
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
@@ -496,6 +525,7 @@ static struct function {
 } gFunctionMap[] = {{"makeIntArrayOf5", (F)makeIntArrayOf5},
                     {"makeStringArray", (F)makeStringArray},
                     {"makeIntArrayOf_", (F)makeIntArrayOf_},
+                    {"makeVoidPArrayOf_", (F)makeIntArrayOf_},
                     {"nullIntArrayOf5", (F)nullIntArrayOf5},
                     {"nullStringArray", (F)nullStringArray},
                     {"nullIntArrayOf_", (F)nullIntArrayOf_},
@@ -538,6 +568,9 @@ static struct function {
                     {"oldDoubleFunc", (F)do_double},
                     {"getGetter", (F)getGetter},
                     {"get2ndGetter", (F)getGetter},
+                    {"returnUnionArray", (F)returnUnionArray},
+                    {"returnPointerArray", (F)returnPointerArray},
+                    {"return2ndPointerArray", (F)returnPointerArray},
 
                     {NULL, NULL}};
 
@@ -574,7 +607,11 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_metadatafunction(voi
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "function_list", v) < 0) {
+    if (PyModule_AddObject(m, "function_list", v) == -1) {
+        return NULL;
+    }
+    if (PyModule_AddStringConstant(m, "union_SomeUnion", @encode(union SomeUnion))
+        == -1) {
         return NULL;
     }
 
