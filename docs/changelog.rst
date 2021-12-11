@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.2b1
 -------------
 
+This release contains a lot of little fixes due to improving
+test coverage of the C code in pyobjc-core. These are mostly fixes
+for edge cases that don't happen in normal programs.
+
 * The internal extension API between framework bindings and pyobjc-core has
   been cleaned up a little. Because of this extensions need to be
   recompiled for this version.
@@ -14,6 +18,14 @@ Version 8.2b1
 
   This is a wrapper for a C type that's only usable in 32-bit code, PyObjC
   no longer supports 32-bit.
+
+* The default implementation of ``-copy`` for subclasses of Objective-C
+  classes that implemented ``-copy`` (needed to adjust Python attributes)
+  didn't consider that the superclass implementation of ``-copy`` may
+  return an instance of a different class.  This caused a hard crash.
+
+  The easiest way to trigger this bug: Create a subclass of NSMutableData
+  in Python, create an instance of that class and call the ``copy`` method.
 
 * The module ``PyObjCTools.TestSupport`` was modernized a little
 
@@ -64,7 +76,7 @@ Version 8.2b1
   callable is used.
 
 * Using a value for the metadata dict of functions and selectors that
-  is not a :type:`dict` now raises an exception instead of being silently
+  is not a :class:`dict` now raises an exception instead of being silently
   ignored.
 
 * The "suggestion" function metadata was ignored for :class:`objc.function`
@@ -86,16 +98,12 @@ Version 8.2b1
   part of the document string (``__doc__``) of the :class:`objc.function`
   object.
 
-* The default implementation of ``-copy`` for subclasses of Objective-C
-  classes that implemented ``-copy`` (needed to adjust Python attributes)
-  didn't consider that the superclass implementation of ``-copy`` may
-  return an instance of a different class.  This caused a hard crash.
 
 
 Version 8.1
 -----------
 
-* Added a "flush" method to :type:`objc.FILE`
+* Added a "flush" method to :class:`objc.FILE`
 
 * :meth:`objc.FILE.readline` would crash if the file is closed in Python.
 
@@ -419,8 +427,8 @@ Other changes and bugfixes
   methods now use the filesystem encoding instead of the default encoding.
   C string.  This shouldn't affect any code, both encoding default to UTF-8 on macOS.
 
-* Inheriting directly from :type:`objc.objc_object` now raises :type:`TypeError`
-  instead of :type:`objc.InternalError`. User code should always inherit from
+* Inheriting directly from :class:`objc.objc_object` now raises :class:`TypeError`
+  instead of :class:`objc.InternalError`. User code should always inherit from
   a Cocoa class.
 
 Version 7.3
