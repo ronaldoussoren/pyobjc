@@ -100,6 +100,14 @@ for edge cases that don't happen in normal programs.
 
 * Actually implemented cyclic GC support in :class:`objc.python_method`.
 
+* Fix crash when calling ``-[NSObject retain]`` or ``-[NSObject release]``
+  though an :class:`objc.IMP`, for example:
+
+  .. sourcecode:: python
+
+     anObject = NSObject.alloc().init()
+     retain = anObject.methodForSelector_("retain")
+     retain(anObject)
 
 Version 8.1
 -----------
