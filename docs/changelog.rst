@@ -134,7 +134,7 @@ Version 8.1
 * #401: ``AppKit.NSCenterTextAlignment`` and ``AppKit.NSRightTextAlignment``
   had a wrong value for arm64 systems.
 
-* Update framework bindings for Xcode 13.2 beta 2 (macOS 12.1)
+* Update framework bindings for Xcode 13.2 (macOS 12.1 SDK)
 
 * PyObjC now works correctly on macOS 11 or later when compiled on macOS 10.15
   or earlier.
