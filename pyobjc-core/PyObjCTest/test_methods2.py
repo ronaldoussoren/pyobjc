@@ -11,6 +11,20 @@ long_tp = b"q"
 ulong_tp = b"Q"
 
 
+"""
+XXX:
+    - Create script to regenerate this file (and corresponding C code)
+    - Create multiple variants for tests (and support code):
+        - objc.selector
+        - objc.IMP
+        - objc.function
+        - Obective-C blocks
+    - For all of these: create "simple" and "regular" variants
+      (this definitely requires a generation script because the
+       definition of "simple" can and will change).
+"""
+
+
 #
 # NSInvocation in macOS 10.2 doesn't like some struct definition, it
 # garbles the contents of those structs. These unittests disable NSInvocation

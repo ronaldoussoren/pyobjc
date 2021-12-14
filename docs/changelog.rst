@@ -98,6 +98,7 @@ for edge cases that don't happen in normal programs.
   part of the document string (``__doc__``) of the :class:`objc.function`
   object.
 
+* Actually implemented cyclic GC support in :class:`objc.python_method`.
 
 
 Version 8.1

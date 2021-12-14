@@ -12,22 +12,6 @@ typedef struct {
 
 } PyObjCPythonMethod;
 
-PyObject* _Nullable PyObjCPythonMethod_GetMethod(PyObject* value)
-{
-    if (!PyObjCPythonMethod_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting a python-method object");
-        return NULL;
-    }
-
-    /* Should not happen... */
-    if (((PyObjCPythonMethod*)value)->callable == NULL) {
-        PyErr_SetString(PyExc_TypeError, "python-method without callable");
-        return NULL;
-    }
-
-    return ((PyObjCPythonMethod*)value)->callable;
-}
-
 static PyMemberDef meth_members[] = {{
                                          .name   = "callable",
                                          .type   = T_OBJECT,
@@ -45,9 +29,12 @@ static PyObject* _Nullable meth_descr_get(PyObject* self, PyObject* _Nullable ob
     PyObject*    result;
 
     result = ((PyObjCPythonMethod*)self)->callable;
-    if (unlikely(result == NULL)) {
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        /* result is only NULL if tp_clear has been called */
         PyErr_SetString(PyExc_ValueError, "Empty objc.python-method");
         return NULL;
+        // LCOV_EXCL_STOP
     }
     f = Py_TYPE(result)->tp_descr_get;
     if (f == NULL) {
@@ -59,9 +46,11 @@ static PyObject* _Nullable meth_descr_get(PyObject* self, PyObject* _Nullable ob
 }
 
 static int
-meth_traverse(PyObject* self, visitproc visit, void* _Nullable arg)
+meth_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
 {
-    return visit(((PyObjCPythonMethod*)self)->callable, arg);
+    PyObjCPythonMethod* self = (PyObjCPythonMethod*)_self;
+    Py_VISIT(self->callable);
+    return 0;
 }
 
 static int
@@ -74,15 +63,18 @@ meth_clear(PyObject* self)
 static void
 meth_dealloc(PyObject* self)
 {
+    PyObject_GC_UnTrack(self);
     meth_clear(self);
-    Py_TYPE(self)->tp_free(self);
+    PyObject_GC_Del(self);
 }
 
 static PyObject* _Nullable meth_call(PyObject* self, PyObject* args, PyObject* kwds)
 {
-    if (((PyObjCPythonMethod*)self)->callable == NULL) {
+    if (((PyObjCPythonMethod*)self)->callable == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "python-method without callable");
         return NULL;
+        // LCOV_EXCL_STOP
     }
     return PyObject_Call(((PyObjCPythonMethod*)self)->callable, args, kwds);
 }
@@ -91,9 +83,11 @@ static PyObject* _Nullable meth_call(PyObject* self, PyObject* args, PyObject* k
 static PyObject* _Nullable meth_vectorcall(PyObject* self, PyObject* const* args,
                                            size_t nargsf, PyObject* kwnames)
 {
-    if (((PyObjCPythonMethod*)self)->callable == NULL) {
+    if (((PyObjCPythonMethod*)self)->callable == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "python-method without callable");
         return NULL;
+        // LCOV_EXCL_STOP
     }
     return PyObject_Vectorcall(((PyObjCPythonMethod*)self)->callable, args, nargsf,
                                kwnames);
@@ -112,16 +106,18 @@ static PyObject* _Nullable meth_new(PyTypeObject* type __attribute__((__unused__
     }
     PyObjC_Assert(callable != NULL, NULL);
 
-    result =
-        (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
-    if (result == NULL) {
-        return NULL;
+    result = (PyObjCPythonMethod*)PyObject_GC_New(PyObjCPythonMethod,
+                                                  &PyObjCPythonMethod_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
     Py_INCREF(callable);
     result->callable = callable;
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = meth_vectorcall;
 #endif
+
+    PyObject_GC_Track((PyObject*)result);
 
     return (PyObject*)result;
 }
@@ -138,11 +134,11 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_dealloc                                    = meth_dealloc,
     .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags = Py_TPFLAGS_DEFAULT
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC
                 | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
     .tp_vectorcall_offset = offsetof(PyObjCPythonMethod, vectorcall),
 #else
-    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
 #endif
     .tp_doc       = meth_doc,
     .tp_members   = meth_members,

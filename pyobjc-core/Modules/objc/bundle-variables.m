@@ -361,14 +361,11 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
         return NULL;
     }
 
-    if (!PyCapsule_CheckExact(pyFunctionsList)) {
-        PyErr_SetString(PyExc_TypeError, "function_list not a PyCapsule");
-        return NULL;
-    }
-
     function_list = PyCapsule_GetPointer(pyFunctionsList, "objc.__inline__");
     if (function_list == NULL) {
-        PyErr_SetString(PyExc_ValueError, "no function list");
+        /* NULL is always an error return from PyCapsule_GetPointer as the
+         * API doesn't allow creating a capsule for a NULL pointer.
+         */
         return NULL;
     }
 

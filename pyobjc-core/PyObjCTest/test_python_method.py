@@ -1,4 +1,5 @@
 import objc
+import gc
 from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
@@ -47,3 +48,44 @@ class TestPythonMethod(TestCase):
 
         self.assertEqual(o.my_method(4), 8)
         self.assertEqual(o.b, 2)
+
+    def test_python_method_in_regular_class(self):
+        class Foo:
+            @objc.python_method
+            def args(self, a, b):
+                return (a, b)
+
+        o = Foo()
+        self.assertEqual(o.args(1, 2), (1, 2))
+
+        o = Foo()
+        self.assertEqual(o.args(b=1, a=2), (2, 1))
+
+    def test_gc(self):
+        deallocated = False
+
+        class Cleanup:
+            def __del__(self):
+                nonlocal deallocated
+                deallocated = True
+
+        c = Cleanup()
+
+        r = objc.python_method(c)
+        c.r = r
+
+        del c, r
+
+        # XXX: This is a bit too specific for current
+        #      CPython behaviour.
+        self.assertFalse(deallocated)
+        gc.collect(2)
+        self.assertTrue(deallocated)
+
+    # XXX: Need a way to create a python_method with
+    #      a NULL callable (e.g. force a call to the
+    #      tp_clear slot.
+
+    # XXX: Need C helper that ensures that
+    #      tp_call is used (instead of vectorcall),
+    #      in particular when using keywords

@@ -1,6 +1,17 @@
 """
 Test lowlevel message passing details (Python -> ObjC)
 
+XXX:
+    - Create script to regenerate this file (and corresponding C code)
+    - Create multiple variants for tests (and support code):
+        - objc.selector
+        - objc.IMP
+        - objc.function
+        - Obective-C blocks
+    - For all of these: create "simple" and "regular" variants
+      (this definitely requires a generation script because the
+       definition of "simple" can and will change).
+
 
 NOTE: 'long long' return-value test for calls from Objective-C are disabled,
   they crash the interpreter.

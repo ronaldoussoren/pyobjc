@@ -1371,7 +1371,7 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
 
     PyObjC_END_WITH_GIL
 
-    spr.super_class = class_getSuperclass((Class)userdata);
+    spr.super_class = (Class _Nonnull)class_getSuperclass((Class)userdata);
     spr.receiver    = self;
 
     ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, _meth);
@@ -1394,7 +1394,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
 
     /* Ask super to create a copy */
 
-    spr.super_class = super_cls = class_getSuperclass((Class)userdata);
+    spr.super_class = super_cls = (Class _Nonnull)class_getSuperclass((Class)userdata);
     spr.receiver                = self;
     copy =
         ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
@@ -1403,7 +1403,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
         *(id*)resp = nil;
         return;
     }
-    if (!PyObjC_class_isSubclassOf(object_getClass(copy), userdata)) {
+    if (!PyObjC_class_isSubclassOf((Class _Nonnull)object_getClass(copy), userdata)) {
         /* The copy is not a subclass of the defining class, this
          * can happen in (for example) class clusters.
          *
@@ -1506,7 +1506,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     PyObjC_END_WITH_GIL
 
     /* Check superclass */
-    spr.super_class = class_getSuperclass((Class)userdata);
+    spr.super_class = (Class _Nonnull)class_getSuperclass((Class)userdata);
     spr.receiver    = self;
 
     *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,

@@ -11,12 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 BOOL
-PyObjC_class_isSubclassOf(Class child, Class _Nullable parent)
+PyObjC_class_isSubclassOf(Class child, Class parent)
 {
     Class _Nullable cur = child;
-
-    if (parent == nil)
-        return YES;
 
     while (cur != nil) {
         if (cur == parent) {
@@ -102,8 +99,9 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
             if (m != NULL) {
                 method_setImplementation(m, list[i].imp);
 
-            } else {
-                return NO;
+            } else { // LCOV_BR_EXCL_LINE
+                /* I don't know how to trigger this */
+                return NO; // LCOV_EXCL_LINE
             }
         }
     }
