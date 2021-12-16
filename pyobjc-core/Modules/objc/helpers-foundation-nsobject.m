@@ -110,7 +110,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
 {
     struct objc_super spr;
     IMP               anIMP;
-    Class             aClass;
+    NSObject*         anInstance;
     SEL               aSel;
 
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
@@ -120,13 +120,13 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
     PyObjC_Assert(PyObjCObject_Check(self), NULL);
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP  = PyObjCIMP_GetIMP(method);
-        aClass = PyObjCClass_GetClass(self);
-        aSel   = PyObjCIMP_GetSelector(method);
+        anIMP      = PyObjCIMP_GetIMP(method);
+        anInstance = PyObjCObject_GetObject(self);
+        aSel       = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
-                ((void (*)(Class, SEL))anIMP)(aClass, aSel);
+                ((void (*)(id, SEL))anIMP)(anInstance, aSel);
 
             } @catch (NSObject* localException) {
                 PyObjCErr_FromObjC(localException);
