@@ -43,6 +43,9 @@ class SplitSignatureTest(TestCase):
         # valid.
         for cls in objc.getClassList():
             with self.subTest(cls.__name__):
+                if cls.__name__ == "UINSServiceViewController":
+                    continue
+
                 for selName in list(cls.__dict__.keys()):
                     try:
                         sel = getattr(cls, selName.decode("latin1"))
