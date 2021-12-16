@@ -302,6 +302,11 @@ class TestFormalProtocols(TestCase):
                 ],
             )
 
+        with self.assertRaisesRegex(
+            TypeError, ".*selectors need to be a sequence of objc.selector instances"
+        ):
+            objc.formal_protocol("selectors", None, 42)
+
     def testMethodInfo(self):
         self.assertCountEqual(
             MyProtocol.instanceMethods(),
@@ -583,3 +588,22 @@ class TestFormalProtocols2(TestCase):
         self.assertEqual(
             MyClassProtocol3.descriptionForClassMethod_(b"nosuchmethod"), None
         )
+
+    def test_protocol_methods(self):
+        v = objc.protocolNamed("NSObject")
+        self.assertEqual(v.name(), "NSObject")
+
+        w = objc.protocolNamed("OC_TestProtocol2")
+        self.assertEqual(v.name(), "OC_TestProtocol2")
+
+        self.assertFalse(v.conformsTo_(w))
+        self.assertTrue(v.conformsTo_(v))
+
+        with self.assertRaises(TypeError):
+            v.conformsTo_(42)
+
+        with self.assertRaises(TypeError):
+            v.conformsTo_(w, v)
+
+        with self.assertRaises(TypeError):
+            v.conformsTo_(w, w, v)

@@ -364,7 +364,7 @@ imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        err = depythonify_c_value(@encode(id), result, resp);
+        err = depythonify_python_object(result, resp);
         Py_DECREF(result);
         PyObjCObject_ReleaseTransient(pyself, cookie);
         if (err == -1) {

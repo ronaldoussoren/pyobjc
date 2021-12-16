@@ -32,8 +32,8 @@ static PyObject* _Nullable proto_repr(PyObject* object)
     const char*           name;
 
     name = protocol_getName(self->objc);
-    if (name == NULL) {
-        name = "<nil>";
+    if (name == NULL) { // LCOV_BR_EXCL_LINE
+        name = "<nil>"; // LCOV_EXCL_LINE
     }
 
     return PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name,
@@ -122,9 +122,11 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 
     theProtocol = objc_allocateProtocol(name);
-    if (theProtocol == NULL) {
+    if (theProtocol == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         goto error;
+        // LCOV_EXCL_STOP
     }
 
     if (supers != Py_None) {
@@ -132,11 +134,11 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < len; i++) {
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
             Protocol* p = PyObjCFormalProtocol_GetProtocol(v);
-            if (p == nil) {
+            if (p == nil) { // LCOV_BR_EXCL_LINE
                 /* XXX: Should never happen because we've already checked that 'v'
                  *  is a formal protocol object.
                  */
-                goto error;
+                goto error; // LCOV_EXCL_LINE
             }
             protocol_addProtocol(theProtocol, p);
         }
@@ -148,8 +150,9 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         SEL         theSel       = PyObjCSelector_GetSelector(sel);
         const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
 
-        if (theSignature == NULL) {
-            goto error;
+        if (theSignature == NULL) { // LCOV_BR_EXCL_LINE
+            /* XXX: Should never happen, field cannot be NULL */
+            goto error; // LCOV_EXCL_LINE
         }
 
         protocol_addMethodDescription(theProtocol, theSel, theSignature,
@@ -196,14 +199,16 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     Py_DECREF(selectors);
     Py_DECREF(supers);
 
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->objc = theProtocol;
-    if (PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result) < 0) {
-        Py_DECREF(result);
-        goto error;
+    if (PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
+            result->objc, (PyObject*)result)
+        < 0) {
+        Py_DECREF(result); // LCOV_EXCL_LINE
+        goto error;        // LCOV_EXCL_LINE
     }
     return (PyObject*)result;
 
@@ -219,9 +224,11 @@ static PyObject* _Nullable proto_name(PyObject* object)
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
 
-    if (name == NULL) {
+    if (name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     return PyUnicode_FromString(name);
@@ -238,14 +245,16 @@ static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullab
     }
 
     objc_protocol = PyObjCFormalProtocol_GetProtocol(protocol);
-    if (objc_protocol == NULL) {
-        return NULL;
+    if (objc_protocol == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
 
     if (protocol_conformsToProtocol(self->objc, objc_protocol)) {
-        return PyBool_FromLong(1);
+        Py_INCREF(Py_True);
+        return Py_True;
     } else {
-        return PyBool_FromLong(0);
+        Py_INCREF(Py_False);
+        return Py_False;
     }
 }
 

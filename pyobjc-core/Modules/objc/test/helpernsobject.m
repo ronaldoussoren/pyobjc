@@ -19,6 +19,61 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @end
 
+@interface OC_RefcountRaises : NSObject {
+    int scenario;
+}
+@end
+
+@implementation OC_RefcountRaises
+- (instancetype)init
+{
+    self = [super init];
+    if (!self)
+        return self;
+    scenario = 0;
+    return self;
+}
+- (void)setScenario:(int)value
+{
+    scenario = value;
+}
+
+- (instancetype)retain
+{
+    if (scenario == 1) {
+        scenario = 0;
+        @throw [NSException exceptionWithName:@"SomeException"
+                                       reason:@"Some Reason"
+                                     userInfo:nil];
+    }
+    return [super retain];
+}
+
+- (oneway void)release
+{
+    if (scenario == 2) {
+        scenario = 0;
+        @throw [NSException exceptionWithName:@"SomeException"
+                                       reason:@"Some Reason"
+                                     userInfo:nil];
+    }
+    [super release];
+}
+
+- (void)dealloc
+{
+    if (scenario == 3) {
+        scenario = 0;
+        @throw [NSException exceptionWithName:@"SomeException"
+                                       reason:@"Some Reason"
+                                     userInfo:nil];
+    }
+    if (self == nil)
+        [super dealloc];
+}
+
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
@@ -45,6 +100,11 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit_helpernsob
     PyObjC_ImportAPI(m);
 
     if (PyModule_AddObject(m, "OC_AllocRaises", PyObjC_IdToPython([OC_AllocRaises class]))
+        < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "OC_RefcountRaises",
+                           PyObjC_IdToPython([OC_RefcountRaises class]))
         < 0) {
         return NULL;
     }
