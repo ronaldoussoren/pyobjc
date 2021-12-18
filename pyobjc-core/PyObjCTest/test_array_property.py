@@ -213,8 +213,12 @@ class TestArrayProperty(TestCase):
             self.assertNotIn("old", observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]["new"], ["b"])
 
-            self.assertRaises(TypeError, o.array.insert, slice(0, 2), 4)
-            self.assertRaises(TypeError, o.array.insert, "a", 4)
+            with self.assertRaisesRegex(TypeError, "insert argument 1 is a slice"):
+                o.array.insert(slice(0, 2), 4)
+
+            with self.assertRaisesRegex(TypeError, "^a$"):
+                o.array.insert("a", 4)
+
             o.array.insert(0, "a")
 
         finally:
@@ -257,8 +261,10 @@ class TestArrayProperty(TestCase):
             self.assertNotIn("new", observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]["old"], [4])
 
-            self.assertRaises(TypeError, o.array.pop, slice(0, 2))
-            self.assertRaises(TypeError, o.array.pop, "a")
+            with self.assertRaisesRegex(TypeError, "pop argument 1 is a slice"):
+                o.array.pop(slice(0, 2))
+            with self.assertRaisesRegex(TypeError, "^a$"):
+                o.array.pop("a")
 
         finally:
             observer.unregister(o, "array")
@@ -557,7 +563,8 @@ class TestArrayProperty(TestCase):
 
         o = TestArrayPropertyHelper.alloc().init()
         self.assertEqual(0, o.pyobjc_instanceMethods.countOfArray())
-        self.assertRaises(AttributeError, getattr, o, "countOfArray")
+        with self.assertRaisesRegex(AttributeError, "no attribute 'countOfArray'"):
+            o.countOfArray
 
         o.pyobjc_instanceMethods.insertObject_inArrayAtIndex_("a", 0)
         self.assertEqual(1, o.pyobjc_instanceMethods.countOfArray())
@@ -600,38 +607,24 @@ class TestArrayProperty(TestCase):
 
         self.assertEqual(list(o.roArray), [1, 2, 3])
 
-        self.assertRaises(ValueError, o.roArray.append, 1)
-        self.assertRaises(ValueError, o.roArray.extend, [1, 2])
-        self.assertRaises(ValueError, o.roArray.sort)
-        self.assertRaises(ValueError, o.roArray.reverse)
-        self.assertRaises(ValueError, o.roArray.pop)
-        try:
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray.append(1)
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray.extend([1, 2])
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray.sort()
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray.reverse()
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray.pop()
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
             o.roArray[0] = 2
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
-
-        try:
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
             del o.roArray[0]
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
-
-        try:
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
             o.roArray += [4]
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
-
-        try:
-            o.roArray *= 4
-        except ValueError:
-            pass
-        else:
-            self.fail("TypeError not raised")
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.roArray *= [4]
 
     def testMutatingReadonlyPropertyObjC(self):
         # Check that trying to mutate a read-only property
@@ -639,30 +632,20 @@ class TestArrayProperty(TestCase):
         o = TestArrayPropertyHelper.alloc().init()
         o._roArray = [1, 2, 3]
         self.assertEqual(3, o.pyobjc_instanceMethods.countOfRoArray())
-        self.assertRaises(AttributeError, getattr, o, "countOfRoArray")
+        with self.assertRaisesRegex(AttributeError, "no attribute 'countOfRoArray'"):
+            o.countOfRoArray
 
-        try:
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
             o.pyobjc_instanceMethods.insertObject_inRoArrayAtIndex_("a", 0)
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
 
         self.assertEqual(3, o.pyobjc_instanceMethods.countOfRoArray())
         self.assertEqual(1, o.pyobjc_instanceMethods.objectInRoArrayAtIndex_(0))
-        try:
-            o.pyobjc_instanceMethods.replaceObjectInRoArrayAtIndex_withObject_(0, "b")
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
 
-        try:
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
+            o.pyobjc_instanceMethods.replaceObjectInRoArrayAtIndex_withObject_(0, "b")
+
+        with self.assertRaisesRegex(ValueError, "Property 'roArray' is read-only"):
             o.pyobjc_instanceMethods.removeObjectFromRoArrayAtIndex_(0)
-        except ValueError:
-            pass
-        else:
-            self.fail("ValueError not raised")
 
     def testAssingmentInteraction(self):
         o = TestArrayPropertyHelper.alloc().init()
@@ -747,4 +730,5 @@ class TestArrayProperty(TestCase):
         self.assertEqual(v.count("a"), 0)
         self.assertEqual(list(v.__reversed__()), [3, 2, 1])
 
-        self.assertRaises(AttributeError, getattr, o.array, "nosuchattribute")
+        with self.assertRaisesRegex(AttributeError, "no attribute 'nosuchattribute'"):
+            o.array.nosuchattribute

@@ -473,7 +473,7 @@ class array_proxy(collections.abc.MutableSequence):
             raise ValueError(f"Property '{self._name}' is read-only")
 
         if isinstance(index, slice):
-            raise TypeError("insert argument 1 is a slice")
+            raise TypeError("pop argument 1 is a slice")
 
         indexes = self.__indexSetForIndex(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
