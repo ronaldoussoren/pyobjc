@@ -22,4 +22,5 @@ class TestContext(TestCase):
         objc.context.unregister(v)
         self.assertNotIn(h, objc.context._registry)
 
-        self.assertRaises(KeyError, objc.context.get, h)
+        with self.assertRaisesRegex(KeyError, str(h)):
+            objc.context.get(h)

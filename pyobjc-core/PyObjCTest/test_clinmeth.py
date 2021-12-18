@@ -20,7 +20,10 @@ class TestClassMethods(TestCase):
 
     def testViaInstance(self):
         o = PyObjC_ClsInst1.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "clsmeth")
+        with self.assertRaisesRegex(
+            AttributeError, "'PyObjC_ClsInst1' object has no attribute 'clsmeth'"
+        ):
+            o.clsmeth
 
     def testClassAndInstanceViaClass(self):
         m = PyObjC_ClsInst1.both
@@ -48,7 +51,8 @@ class TestInstanceMethods(TestCase):
         self.assertTrue(isinstance(m, objc.selector))
         self.assertTrue(not m.isClassMethod)
 
-        self.assertRaises(TypeError, m)
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
 
     def testViaInstance(self):
         o = PyObjC_ClsInst1.alloc().init()
