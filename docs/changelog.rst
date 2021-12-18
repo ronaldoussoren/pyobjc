@@ -100,14 +100,19 @@ for edge cases that don't happen in normal programs.
 
 * Actually implemented cyclic GC support in :class:`objc.python_method`.
 
-* Fix crash when calling ``-[NSObject retain]`` or ``-[NSObject release]``
-  though an :class:`objc.IMP`, for example:
+* Fix crash when calling ``-[NSObject dealloc]``, ``-[NSObject retain]``
+  or ``-[NSObject release]`` though an :class:`objc.IMP`, for example:
 
   .. sourcecode:: python
 
      anObject = NSObject.alloc().init()
      retain = anObject.methodForSelector_("retain")
      retain(anObject)
+
+* Tests in pyobjc-core better check the message of raised exceptions
+
+  This resulted in some minor changes in messages, this should not affect
+  code using PyObjC.
 
 Version 8.1
 -----------
