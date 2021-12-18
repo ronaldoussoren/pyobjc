@@ -368,7 +368,8 @@ class TestBlocks(TestCase):
                 pass
 
         helper = D()
-        self.assertRaises(TypeError, obj.callIntBlock_withValue_, helper.callback, 43)
+        with self.assertRaisesRegex(TypeError, "Method without possitional arguments"):
+            obj.callIntBlock_withValue_(helper.callback, 43)
 
     @min_os_level("10.6")
     def testStackBlocksWithDirectUse(self):

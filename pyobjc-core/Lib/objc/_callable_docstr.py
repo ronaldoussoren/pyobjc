@@ -99,6 +99,11 @@ def describe_type(typestr):
 
 
 def describe_callable(callable_object):
+    if not hasattr(callable_object, "__name__") or not hasattr(
+        callable_object, "__metadata__"
+    ):
+        return None
+
     name = callable_object.__name__
     try:
         metadata = callable_object.__metadata__()
@@ -274,6 +279,11 @@ def callable_signature(callable_object):
     # Create an inspect.Signature for an PyObjC callable
     # both objc.function and objc.native_selector only support positional
     # arguments, and not keyword arguments.
+    if not hasattr(callable_object, "__name__") or not hasattr(
+        callable_object, "__metadata__"
+    ):
+        return None
+
     try:
         metadata = callable_object.__metadata__()
     except objc.internal_error:

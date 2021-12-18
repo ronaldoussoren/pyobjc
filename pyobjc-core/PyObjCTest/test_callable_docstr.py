@@ -173,10 +173,10 @@ class TestDescribeCallable(TestCase):
         ]
 
     def test_not_for_regular_types(self):
-        self.assertRaises(AttributeError, mod.describe_callable, 42)
-        self.assertRaises(AttributeError, mod.describe_callable, int)
-        self.assertRaises(AttributeError, mod.describe_callable, dir)
-        self.assertRaises(AttributeError, mod.describe_callable, lambda x: x * 2)
+        self.assertIs(mod.describe_callable(42), None)
+        self.assertIs(mod.describe_callable(int), None)
+        self.assertIs(mod.describe_callable(dir), None)
+        self.assertIs(mod.describe_callable(lambda x: x * 2), None)
 
     def test_sel_func(self):
         # Basicly just test that mod.describe_callable calls
@@ -952,10 +952,10 @@ class TestCallableSignature(TestCase):
         self.assertEqual(list(sig.parameters), ["arg0", "arg1"])
 
     def test_not_for_regular_types(self):
-        self.assertRaises(AttributeError, mod.callable_signature, 42)
-        self.assertRaises(AttributeError, mod.callable_signature, int)
-        self.assertRaises(AttributeError, mod.callable_signature, dir)
-        self.assertRaises(AttributeError, mod.callable_signature, lambda x: x * 2)
+        self.assertIs(mod.callable_signature(42), None)
+        self.assertIs(mod.callable_signature(int), None)
+        self.assertIs(mod.callable_signature(dir), None)
+        self.assertIs(mod.callable_signature(lambda x: x * 2), None)
 
     def test_no_metadata(self):
         class M:

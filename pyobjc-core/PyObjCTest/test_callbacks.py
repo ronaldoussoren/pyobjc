@@ -74,19 +74,31 @@ class TestClosure(TestCase):
         def function(arg):
             pass
 
-        self.assertRaises(TypeError, objc._makeClosure, function, dir, -1)
-        self.assertRaises(TypeError, objc._makeClosure, function, function, -1)
-        self.assertRaises(TypeError, objc._makeClosure, function, 42, -1)
-        self.assertRaises(
-            ValueError,
-            objc._makeClosure,
-            function,
-            OC_CallbackTest.selWithSEL_SEL_andObject_,
-            -1,
-        )
-        self.assertRaises(
-            ValueError, objc._makeClosure, function, OC_CallbackTest.selWithoutSEL_, -1
-        )
+        with self.assertRaisesRegex(
+            TypeError,
+            "Don't know how to create closure for instance of builtin_function_or_method",
+        ):
+            objc._makeClosure(function, dir, -1)
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to create closure for instance of function"
+        ):
+            objc._makeClosure(function, function, -1)
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to create closure for instance of int"
+        ):
+            objc._makeClosure(function, 42, -1)
+        with self.assertRaisesRegex(
+            ValueError, "No callback argument in the specified object"
+        ):
+            objc._makeClosure(
+                function,
+                OC_CallbackTest.selWithSEL_SEL_andObject_,
+                -1,
+            )
+        with self.assertRaisesRegex(
+            ValueError, "No callback argument in the specified object"
+        ):
+            objc._makeClosure(function, OC_CallbackTest.selWithoutSEL_, -1)
 
     def testCreatingCallbacks(self):
         def function(*arg):
@@ -109,23 +121,25 @@ class TestClosure(TestCase):
         )
         self.assertIn(' "objc.__imp__" ', repr(cl))
 
-        self.assertRaises(
+        with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            objc._makeClosure,
-            lambda a: None,
-            OC_CallbackTest.selWithCallback_,
-            -1,
-        )
+            "Objective-C expects 2 arguments, Python argument has 1 arguments for .*",
+        ):
+            objc._makeClosure(
+                lambda a: None,
+                OC_CallbackTest.selWithCallback_,
+                -1,
+            )
         objc._makeClosure(lambda a, b: None, OC_CallbackTest.selWithCallback_, -1)
-        self.assertRaises(
+        with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            objc._makeClosure,
-            lambda a, b, c: None,
-            OC_CallbackTest.selWithCallback_,
-            -1,
-        )
-
-    # TODO: Verify that C code has proper coverage
+            "Objective-C expects 2 arguments, Python argument has 3 arguments for .*",
+        ):
+            objc._makeClosure(
+                lambda a, b, c: None,
+                OC_CallbackTest.selWithCallback_,
+                -1,
+            )
 
 
 class TestCallbackFor(TestCase):
@@ -134,17 +148,29 @@ class TestCallbackFor(TestCase):
         def function(arg):
             pass
 
-        self.assertRaises(TypeError, objc.callbackFor(dir), function)
-        self.assertRaises(TypeError, objc.callbackFor(function), function)
-        self.assertRaises(TypeError, objc.callbackFor(42), function)
-        self.assertRaises(
-            ValueError,
-            objc.callbackFor(OC_CallbackTest.selWithSEL_SEL_andObject_),
-            function,
-        )
-        self.assertRaises(
-            ValueError, objc.callbackFor(OC_CallbackTest.selWithoutSEL_), function
-        )
+        with self.assertRaisesRegex(
+            TypeError,
+            "Don't know how to create closure for instance of builtin_function_or_method",
+        ):
+            objc.callbackFor(dir)(function)
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to create closure for instance of function"
+        ):
+            objc.callbackFor(function)(function)
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to create closure for instance of int"
+        ):
+            objc.callbackFor(42)(function)
+        with self.assertRaisesRegex(
+            ValueError, "No callback argument in the specified object"
+        ):
+            objc.callbackFor(OC_CallbackTest.selWithSEL_SEL_andObject_)(
+                function,
+            )
+        with self.assertRaisesRegex(
+            ValueError, "No callback argument in the specified object"
+        ):
+            objc.callbackFor(OC_CallbackTest.selWithoutSEL_)(function)
 
     def testCreatingCallbacks(self):
         # XXX: Need variant using objc.function
@@ -158,7 +184,10 @@ class TestCallbackFor(TestCase):
         self.assertEqual(len(meta["arguments"]), 2)
 
         self.assertIsInstance(objc.callbackPointer(function), int)
-        self.assertRaises(ValueError, objc.callbackPointer, None)
+        with self.assertRaisesRegex(
+            ValueError, "Object is not decorated with 'callbackFor'"
+        ):
+            objc.callbackPointer(None)
 
         @objc.callbackFor(OC_CallbackTest.selWithCallback2_)
         def function():
@@ -184,18 +213,20 @@ class TestCallbackFor(TestCase):
 
         self.assertIn(' "objc.__imp__" ', repr(function.pyobjc_closure))
 
-        self.assertRaises(
+        with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            objc.callbackFor(OC_CallbackTest.selWithCallback_),
-            lambda a: None,
-        )
-        self.assertRaises(
+            "Objective-C expects 2 arguments, Python argument has 1 arguments for .*",
+        ):
+            objc.callbackFor(OC_CallbackTest.selWithCallback_)(
+                lambda a: None,
+            )
+        with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            objc.callbackFor(OC_CallbackTest.selWithCallback_),
-            lambda a, b, c: None,
-        )
-
-    # TODO: add tests that actually call the callback
+            "Objective-C expects 2 arguments, Python argument has 3 arguments for .*",
+        ):
+            objc.callbackFor(OC_CallbackTest.selWithCallback_)(
+                lambda a, b, c: None,
+            )
 
 
 class TestSelectorFor(TestCase):
@@ -204,13 +235,18 @@ class TestSelectorFor(TestCase):
         self.assertEqual(OC_CallbackTest.selWithSEL_SEL_andObject_.signature, b"v@:::@")
 
     def testNotSelector(self):
-        self.assertRaises(
-            ValueError, objc.selectorFor, OC_CallbackTest.selWithSEL_SEL_andObject_, 4
-        )
-        self.assertRaises(
-            ValueError, objc.selectorFor, OC_CallbackTest.selWithSEL_SEL_andObject_, 8
-        )
-        self.assertRaises(ValueError, objc.selectorFor, OC_CallbackTest.selWithoutSEL_)
+        with self.assertRaisesRegex(
+            ValueError, "Not a selector argument with type information"
+        ):
+            objc.selectorFor(OC_CallbackTest.selWithSEL_SEL_andObject_, 4)
+        with self.assertRaisesRegex(
+            ValueError, "Not a selector argument with type information"
+        ):
+            objc.selectorFor(OC_CallbackTest.selWithSEL_SEL_andObject_, 8)
+        with self.assertRaisesRegex(
+            ValueError, "Not a selector argument with type information"
+        ):
+            objc.selectorFor(OC_CallbackTest.selWithoutSEL_)
 
     def testDefault(self):
         @objc.selectorFor(OC_CallbackTest.selWithSEL_SEL_andObject_)

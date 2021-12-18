@@ -594,7 +594,7 @@ class TestFormalProtocols2(TestCase):
         self.assertEqual(v.name(), "NSObject")
 
         w = objc.protocolNamed("OC_TestProtocol2")
-        self.assertEqual(v.name(), "OC_TestProtocol2")
+        self.assertEqual(w.name(), "OC_TestProtocol2")
 
         self.assertFalse(v.conformsTo_(w))
         self.assertTrue(v.conformsTo_(v))

@@ -504,18 +504,19 @@ def contains_any(name, fragments):
 
 class TestBridgeSupportParser(TestCase):
     def testInvalidToplevel(self):
-        self.assertRaises(
-            objc.error,
-            bridgesupport._BridgeSupportParser,
-            b"<signatures2></signatures2>",
-            "Cocoa",
-        )
-        self.assertRaises(
-            ET.ParseError,
-            bridgesupport._BridgeSupportParser,
-            b"<signatures2></signatures>",
-            "Cocoa",
-        )
+        with self.assertRaisesRegex(
+            objc.error, "invalid root node in bridgesupport file"
+        ):
+            bridgesupport._BridgeSupportParser(
+                b"<signatures2></signatures2>",
+                "Cocoa",
+            )
+
+        with self.assertRaises(ET.ParseError):
+            bridgesupport._BridgeSupportParser(
+                b"<signatures2></signatures>",
+                "Cocoa",
+            )
 
     # I'd like to use a test method with subTests here, but that doesn't
     # support marking some subtests as expected failures
@@ -2787,16 +2788,15 @@ class TestInitFrameworkWrapper(TestCase):
                 raise ImportError(name)
 
             with self.assertWarns(DeprecationWarning):
-                self.assertRaises(
-                    ImportError,
-                    objc.initFrameworkWrapper,
-                    "Test",
-                    "/Library/Framework/Test.framework",
-                    "com.apple.Test",
-                    g,
-                    inlineTab=inlineTab,
-                    scan_classes=False,
-                )
+                with self.assertRaisesRegex(ImportError, "^Test$"):
+                    objc.initFrameworkWrapper(
+                        "Test",
+                        "/Library/Framework/Test.framework",
+                        "com.apple.Test",
+                        g,
+                        inlineTab=inlineTab,
+                        scan_classes=False,
+                    )
 
             self.assertEqual(load_calls, [])
             self.assertEqual(parse_calls, [])

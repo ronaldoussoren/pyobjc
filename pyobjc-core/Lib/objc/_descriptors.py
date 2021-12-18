@@ -306,7 +306,7 @@ def selectorFor(callable, argIndex=-1):  # noqa: A002
                 signature = arg["sel_of_type"]
                 break
         else:
-            raise ValueError("No selector argument with type information")
+            raise ValueError("Not a selector argument with type information")
 
     else:
         try:
