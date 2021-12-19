@@ -1061,7 +1061,7 @@ static PyObject* _Nullable class_repr(PyObject* obj)
             return PyUnicode_FromFormat("<objective-c class %s at %p>", nm, (void*)cls);
         }
     } else {
-        return PyUnicode_FromString("<class objc.objc_class>");
+        return PyUnicode_FromFormat("<class %s", ((PyTypeObject*)obj)->tp_name);
     }
 }
 
@@ -2008,7 +2008,7 @@ static PyObject* _Nullable cls_get__name__(PyObject* self, void* _Nullable closu
 {
     Class cls = PyObjCClass_GetClass(self);
     if (cls == NULL) {
-        return PyUnicode_FromString("objc.objc_class");
+        return PyUnicode_FromString(((PyTypeObject*)self)->tp_name);
 
     } else {
         const char* nm = class_getName(cls);
@@ -2229,7 +2229,7 @@ static PyMethodDef class_methods[] = {{.ml_name  = "__dir__",
  * class methods.
  */
 PyTypeObject PyObjCMetaClass_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc_meta_class",
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.objc_meta_class",
     .tp_basicsize                                  = sizeof(PyHeapTypeObject),
     .tp_itemsize                                   = sizeof(PyMemberDef),
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
@@ -2239,7 +2239,7 @@ PyTypeObject PyObjCMetaClass_Type = {
 };
 
 PyTypeObject PyObjCClass_Type = {
-    PyVarObject_HEAD_INIT(&PyObjCMetaClass_Type, 0).tp_name = "objc_class",
+    PyVarObject_HEAD_INIT(&PyObjCMetaClass_Type, 0).tp_name = "objc.objc_class",
     .tp_basicsize                                           = sizeof(PyObjCClassObject),
     .tp_itemsize                                            = 0,
     .tp_dealloc                                             = class_dealloc,
