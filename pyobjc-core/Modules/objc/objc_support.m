@@ -2730,7 +2730,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                    PyByteArray_Check(argument) ||
 #endif
                    PyUnicode_Check(argument)) {
-            PyErr_Format(PyExc_ValueError, "depythonifying 'float', got '%s'",
+            PyErr_Format(PyExc_ValueError, "depythonifying 'double', got '%s'",
                          Py_TYPE(argument)->tp_name);
             return -1;
 
@@ -2895,8 +2895,10 @@ void
 PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 {
     if (cookie && Py_REFCNT(proxy) != 1) {
-        CFRetain(PyObjCObject_GetObject(proxy));
-        ((PyObjCObject*)proxy)->flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
+        Py_BEGIN_ALLOW_THREADS
+            CFRetain(PyObjCObject_GetObject(proxy));
+            Py_END_ALLOW_THREADS((PyObjCObject*)proxy)->flags &=
+                ~PyObjCObject_kSHOULD_NOT_RELEASE;
     }
     Py_DECREF(proxy);
 }

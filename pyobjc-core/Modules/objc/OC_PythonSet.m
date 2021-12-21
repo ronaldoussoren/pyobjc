@@ -56,7 +56,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -257,10 +262,9 @@ NS_ASSUME_NONNULL_BEGIN
             }
             Py_DECREF(tmp);
 
-            [result retain];
-
         PyObjC_END_WITH_GIL
 
+        [result retain];
         return result;
 
     } else {
@@ -287,10 +291,9 @@ NS_ASSUME_NONNULL_BEGIN
         }
         Py_DECREF(tmp);
 
-        [result retain];
-
     PyObjC_END_WITH_GIL
 
+    [result retain];
     return result;
 }
 
@@ -358,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp;
 
-        if (anObject == [NSNull null]) {
+        if (anObject == [NSNull null]) { /* XXX: NSNull_null */
             tmp = Py_None;
             Py_INCREF(Py_None);
         } else {
@@ -422,7 +425,7 @@ NS_ASSUME_NONNULL_BEGIN
         int       r;
         PyObject* tmpMember;
 
-        if (anObject == [NSNull null]) {
+        if (anObject == [NSNull null]) { /* NSNull_null */
             tmpMember = Py_None;
             Py_INCREF(Py_None);
 

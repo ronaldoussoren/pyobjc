@@ -162,12 +162,7 @@ object_dealloc(PyObject* obj)
         } else {
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    /* XXX: Both branches are the same */
-                    if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT) {
-                        CFRelease(((PyObjCObject*)obj)->objc_object);
-                    } else {
-                        CFRelease(((PyObjCObject*)obj)->objc_object);
-                    }
+                    CFRelease(((PyObjCObject*)obj)->objc_object);
 
                 } @catch (NSObject* localException) {
                     NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
@@ -1086,7 +1081,7 @@ PyObjCClassObject PyObjCObject_Type = {
     .base = {
         .ht_type =
             {
-                PyVarObject_HEAD_INIT(&PyObjCClass_Type, 0).tp_name = "objc_object",
+                PyVarObject_HEAD_INIT(&PyObjCClass_Type, 0).tp_name = "objc.objc_object",
                 .tp_basicsize = sizeof(PyObjCObject),
                 .tp_itemsize  = 0,
                 .tp_dealloc   = object_dealloc,

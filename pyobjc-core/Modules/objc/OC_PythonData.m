@@ -57,7 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+        } @catch (NSException* exc) {
+            PyObjC_LEAVE_GIL;
+            [exc raise];
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -85,7 +90,12 @@ NS_ASSUME_NONNULL_BEGIN
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
                                                                        writable:NO];
         if (temp == nil) {
-            [self release];
+            @try {
+                [self release];
+            } @catch (NSException* exc) {
+                PyObjC_LEAVE_GIL;
+                [exc raise];
+            }
             PyErr_Clear();
             PyObjC_GIL_RETURN(0);
         }
@@ -132,25 +142,30 @@ NS_ASSUME_NONNULL_BEGIN
 {
 
     PyObjC_BEGIN_WITH_GIL
-        if (PyBytes_CheckExact(value)) {
-            if ([coder allowsKeyedCoding]) {
-                [coder encodeInt32:3 forKey:@"pytype"];
-            }
-            [super encodeWithCoder:coder];
-        } else if (PyByteArray_CheckExact(value)) {
-            if ([coder allowsKeyedCoding]) {
-                [coder encodeInt32:4 forKey:@"pytype"];
-            }
-            [super encodeWithCoder:coder];
-        } else {
-            if ([coder allowsKeyedCoding]) {
-                [coder encodeInt32:2 forKey:@"pytype"];
+        @try {
+            if (PyBytes_CheckExact(value)) {
+                if ([coder allowsKeyedCoding]) {
+                    [coder encodeInt32:3 forKey:@"pytype"];
+                }
+                [super encodeWithCoder:coder];
+            } else if (PyByteArray_CheckExact(value)) {
+                if ([coder allowsKeyedCoding]) {
+                    [coder encodeInt32:4 forKey:@"pytype"];
+                }
+                [super encodeWithCoder:coder];
             } else {
-                int v = 2;
-                [coder encodeValueOfObjCType:@encode(int) at:&v];
-            }
+                if ([coder allowsKeyedCoding]) {
+                    [coder encodeInt32:2 forKey:@"pytype"];
+                } else {
+                    int v = 2;
+                    [coder encodeValueOfObjCType:@encode(int) at:&v];
+                }
 
-            PyObjC_encodeWithCoder(value, coder);
+                PyObjC_encodeWithCoder(value, coder);
+            }
+        } @catch (NSException* exc) {
+            PyObjC_LEAVE_GIL;
+            [exc raise];
         }
     PyObjC_END_WITH_GIL
 }
@@ -199,7 +214,12 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {
-                [super dealloc];
+                @try {
+                    [super dealloc]; /* XXX: Is this correct? */
+                } @catch (NSException* exc) {
+                    PyObjC_LEAVE_GIL;
+                    [exc raise];
+                }
                 PyObjC_GIL_FORWARD_EXC();
             }
 

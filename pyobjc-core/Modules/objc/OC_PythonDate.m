@@ -56,7 +56,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+        } @catch (NSException* exc) {
+            PyObjC_LEAVE_GIL;
+            [exc raise];
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -169,7 +174,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             oc_value = [NSDate dateWithString:oc_v];
 #pragma clang diagnostic pop
-            [oc_value retain];
+            @try {
+                [oc_value retain];
+            } @catch (NSObject* exc) {
+                PyObjC_LEAVE_GIL;
+                @throw;
+            }
             Py_DECREF(v);
 
             if (oc_value == nil) {
@@ -213,9 +223,14 @@ NS_ASSUME_NONNULL_BEGIN
                 }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                oc_value = [NSDate dateWithString:oc_v];
+                @try {
+                    oc_value = [NSDate dateWithString:oc_v];
 #pragma clang diagnostic pop
-                [oc_value retain];
+                    [oc_value retain];
+                } @catch (NSObject* exc) {
+                    PyObjC_LEAVE_GIL;
+                    @throw;
+                }
                 Py_DECREF(v);
             }
 

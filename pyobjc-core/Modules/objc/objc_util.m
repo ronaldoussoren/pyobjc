@@ -116,6 +116,7 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObject*     c_localException_name;
     PyObject*     c_localException_reason;
 
+    /* XXX: add protection for ObjC exceptions */
     PyObjC_BEGIN_WITH_GIL
         if (![localException isKindOfClass:[NSException class]]) {
             /* We caught some random objects as the exception, do the minimal possible
@@ -237,6 +238,7 @@ PyObjCErr_AsExc(void)
      */
     PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
     if (exc_type == NULL) {
+        printf("No exception!\n");
         return nil;
     }
 
@@ -248,7 +250,7 @@ PyObjCErr_AsExc(void)
     } else {
         id result;
 
-        if (depythonify_c_value(@encode(id), args, &result) == -1) {
+        if (depythonify_python_object(args, &result) == -1) {
             PyErr_Clear();
             result = [[NSException alloc] initWithName:NSInternalInconsistencyException
                                                 reason:@"Cannot convert Python exception"
@@ -272,14 +274,14 @@ PyObjCErr_AsExc(void)
         /* NOTE: Don't use *WithError here because this function ignores errors */
         v = PyDict_GetItemString(args, "reason");
         if (v) {
-            if (depythonify_c_value(@encode(NSObject*), v, &reason) < 0) {
+            if (depythonify_python_object(v, &reason) < 0) {
                 PyErr_Clear();
             }
         }
 
         v = PyDict_GetItemString(args, "name");
         if (v) {
-            if (depythonify_c_value(@encode(NSObject*), v, &name) < 0) {
+            if (depythonify_python_object(v, &name) < 0) {
                 PyErr_Clear();
             }
         }
@@ -368,8 +370,10 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
     if (state) {
         PyGILState_Release(*state);
     }
-
-    [exc raise];
+    if (PyGILState_Check()) {
+        printf("Still own GIL!\n");
+    }
+    @throw exc;
     __builtin_unreachable();
 }
 

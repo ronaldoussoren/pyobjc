@@ -70,7 +70,13 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
     PyObjC_END_WITH_GIL
 }
 
@@ -82,7 +88,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
-        [realObject release];
+        @try {
+            [realObject release];
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
         realObject = nil;
         Py_CLEAR(value);
 

@@ -89,7 +89,7 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
 
     if (!PyObjCObject_Check(tmp)) {
         PyErr_Format(PyExc_TypeError,
-                     "Executing a Cocoa object, got instance of '%.100s'",
+                     "Expecting a Cocoa object, got instance of '%.100s'",
                      Py_TYPE(tmp)->tp_name);
         return NULL;
     }

@@ -48,17 +48,14 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
-    PyObjC_BEGIN_WITH_GIL
-        /* XXX: Why check for NULL here? */
-        if (pyObject) {
-            PyObjC_UnregisterObjCProxy(pyObject, self);
-        }
+    /* XXX: Why check for NULL here? */
+    if (pyObject) {
+        PyObjC_UnregisterObjCProxy(pyObject, self);
+    }
 
-        PyObjC_RegisterObjCProxy(obj, self);
+    PyObjC_RegisterObjCProxy(obj, self);
 
-        SET_FIELD_INCREF(pyObject, obj);
-
-    PyObjC_END_WITH_GIL
+    SET_FIELD_INCREF(pyObject, obj);
 
     return self;
 }
@@ -77,7 +74,13 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
     PyObjC_END_WITH_GIL
 }
 
@@ -330,7 +333,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         pymethod = get_method_for_selector(pyObject, sel);
         if (!pymethod) {
             PyErr_Clear();
-            PyGILState_Release(_GILState);
+            PyObjC_LEAVE_GIL;
+            /* XXX: Use @throw */
             [NSException raise:NSInvalidArgumentException
                         format:@"Class %s: no such selector: %s",
                                object_getClassName(self), sel_getName(sel)];
@@ -521,7 +525,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         pymethod = get_method_for_selector(pyObject, aSelector);
 
         if (!pymethod) {
-            PyGILState_Release(_GILState);
+            PyObjC_LEAVE_GIL;
+
             [self doesNotRecognizeSelector:aSelector];
             return;
         }
@@ -538,7 +543,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             Py_ssize_t  argsize;
             PyObject*   pyarg;
 
-            argtype = [msign getArgumentTypeAtIndex:i];
+            @try {
+                argtype = [msign getArgumentTypeAtIndex:i];
+            } @catch (NSObject* exc) {
+                PyObjC_LEAVE_GIL;
+                @throw;
+            }
 
             argsize = PyObjCRT_SizeOfType(argtype);
             if (argsize == -1) {
@@ -552,8 +562,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 @try {
                     [invocation getArgument:argbuffer atIndex:i];
 
-                } @catch (NSObject* localException) {
-                    PyGILState_Release(_GILState);
+                } @catch (NSObject* exc) {
+                    PyObjC_LEAVE_GIL;
                     @throw;
                 }
             Py_END_ALLOW_THREADS
@@ -588,7 +598,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                     [invocation setReturnValue:retbuffer];
 
                 } @catch (NSObject* localException) {
-                    PyGILState_Release(_GILState);
+                    PyObjC_LEAVE_GIL;
                     @throw;
                 }
             Py_END_ALLOW_THREADS
@@ -597,6 +607,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_END_WITH_GIL
 }
 
+/* XXX: Remove this method */
 - (PyObject*)pyObject
 {
     return pyObject;
@@ -840,7 +851,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        if (depythonify_c_value(@encode(id), val, &res) < 0) {
+        if (depythonify_python_object(val, &res) < 0) {
             Py_DECREF(val);
             PyObjC_GIL_FORWARD_EXC();
         }

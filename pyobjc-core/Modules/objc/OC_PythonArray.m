@@ -60,7 +60,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
     PyObjC_BEGIN_WITH_GIL
 
-        [super release];
+        @try {
+            [super release];
+        } @catch (NSException* exc) {
+            PyObjC_LEAVE_GIL;
+            [exc raise];
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -179,9 +184,14 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* v;
     PyObject* w;
 
+    static NSObject* NSNull_null = nil;
+    if (NSNull_null == nil) {
+        NSNull_null = [NSNull null];
+    }
+
     PyObjC_BEGIN_WITH_GIL
 
-        if (unlikely(anObject == [NSNull null])) {
+        if (unlikely(anObject == NSNull_null)) {
             Py_INCREF(Py_None);
             v = Py_None;
         } else {
@@ -208,6 +218,11 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* v;
     PyObject* w;
 
+    static NSObject* NSNull_null = nil;
+    if (NSNull_null == nil) {
+        NSNull_null = [NSNull null];
+    }
+
     if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
             PyErr_SetString(PyExc_IndexError, "No such index");
@@ -216,7 +231,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (unlikely(anObject == [NSNull null])) {
+        if (unlikely(anObject == NSNull_null)) {
             Py_INCREF(Py_None);
             v = Py_None;
         } else {
@@ -363,12 +378,18 @@ NS_ASSUME_NONNULL_BEGIN
      * protocol of NSArray.
      */
     NSUInteger i;
+
+    static NSObject* NSNull_null = nil;
+    if (NSNull_null == nil) {
+        NSNull_null = [NSNull null];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
             for (i = 0; i < count; i++) {
                 PyObject* v;
 
-                if (objects[i] == [NSNull null]) {
+                if (objects[i] == NSNull_null) {
                     v = Py_None;
                     Py_INCREF(Py_None);
 
@@ -394,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObject* v;
                 int       r;
 
-                if (objects[i] == [NSNull null]) {
+                if (objects[i] == NSNull_null) {
                     v = Py_None;
                     Py_INCREF(Py_None);
 
@@ -426,6 +447,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
+        /* XXX: What if "other" cannot be proxied? */
         PyObject* v = id_to_python(other);
         SET_FIELD(value, v);
 
@@ -591,6 +613,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
+        NSObject* result;
         PyObjC_BEGIN_WITH_GIL
 
             PyObject* copy = PyObjC_CallCopyFunc(value);
@@ -599,7 +622,6 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            NSObject* result;
             if (depythonify_python_object(copy, &result) == -1) {
                 Py_DECREF(copy);
                 PyObjC_GIL_FORWARD_EXC();
@@ -607,11 +629,10 @@ NS_ASSUME_NONNULL_BEGIN
 
             Py_DECREF(copy);
 
-            [result retain];
-
-            PyObjC_GIL_RETURN(result);
-
         PyObjC_END_WITH_GIL
+
+        [result retain];
+        return result;
 
     } else {
         return [super copyWithZone:zone];
@@ -621,13 +642,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
+        NSObject* result;
         PyObjC_BEGIN_WITH_GIL
             PyObject* copy = PySequence_List(value);
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            NSObject* result;
             if (depythonify_python_object(copy, &result) == -1) {
                 Py_DECREF(copy);
                 PyObjC_GIL_FORWARD_EXC();
@@ -635,10 +656,10 @@ NS_ASSUME_NONNULL_BEGIN
 
             Py_DECREF(copy);
 
-            [result retain];
-            PyObjC_GIL_RETURN(result);
-
         PyObjC_END_WITH_GIL
+
+        [result retain];
+        return result;
     } else {
         return [super mutableCopyWithZone:zone];
     }

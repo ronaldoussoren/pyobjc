@@ -5,7 +5,7 @@ import tempfile
 # from objc import super
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.helpernsobject import OC_AllocRaises, OC_RefcountRaises
-from objc import super  # noqa: F401
+from objc import super
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -15,7 +15,6 @@ class SomeException(Exception):
 
 
 class Py_AllocRaises(NSObject):
-    @classmethod
     def alloc(cls):
         raise SomeException("alloc")
 
@@ -27,28 +26,29 @@ class Py_RefCountRaises(NSObject):
 
     # XXX: For some reason super() doens't work
     #      to resolve these methods, to be fixed...
+    def alloc(cls):
+        return super().alloc()
 
     def retain(self):
         if self.scenario == 1:
             self.scenario = 0
             raise SomeException("retain")
-        return NSObject.__dict__["retain"](self)
-        # return super.retain()
+        r = super().retain()
+        return r
 
     def release(self):
         if self.scenario == 2:
             self.scenario = 0
             raise SomeException("release")
-        return NSObject.__dict__["release"](self)
-        # return super.release()
+        r = super().release()
+        return r
 
     def dealloc(self):
-        # print("dealloc", self.scenario)
         if self.scenario == 3:
             self.scenario = 0
             raise SomeException("dealloc")
-        return NSObject.__dict__["dealloc"](self)
-        # return super.dealloc()
+        r = super().dealloc()
+        return r
 
 
 class TestNSObjectSupport(TestCase):
@@ -114,9 +114,19 @@ class TestNSObjectSupport(TestCase):
         with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
             o.retain()
 
+        imp = o.methodForSelector_("retain")
+        o.setScenario_(1)
+        with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
+            imp(o)
+
         o.setScenario_(2)
         with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
             o.release()
+
+        imp = o.methodForSelector_("release")
+        o.setScenario_(2)
+        with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
+            imp(o)
 
         o.setScenario_(3)
         orig = os.dup(2)
@@ -134,10 +144,18 @@ class TestNSObjectSupport(TestCase):
 
         self.assertIn("Exception during dealloc of proxy: Some Reason", capture)
 
+        # XXX: Not sure why, but calling o.dealloc() before  'with tempfile...'
+        #      causes a crash.
         o = OC_RefcountRaises.alloc().init()
         o.setScenario_(3)
         with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
             o.dealloc()
+
+        o = OC_RefcountRaises.alloc().init()
+        o.setScenario_(3)
+        imp = o.methodForSelector_(b"dealloc")
+        with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):
+            imp(o)
 
     def test_python_alloc_raises(self):
         with self.assertRaisesRegex(SomeException, "alloc"):
@@ -161,13 +179,8 @@ class TestNSObjectSupport(TestCase):
         with self.assertRaisesRegex(SomeException, "dealloc"):
             obj.dealloc()
 
-        return
-
-        # XXX: raising in dealloc hangs the interpreter
-
-        obj.scenario = 3
         orig = os.dup(2)
-
+        obj.scenario = 3
         with tempfile.TemporaryFile() as stream:
             os.dup2(stream.fileno(), 2)
             try:
@@ -179,4 +192,5 @@ class TestNSObjectSupport(TestCase):
             stream.seek(0)
             capture = stream.read().decode()
 
-        self.assertIn("Exception during dealloc of proxy: Some Reason", capture)
+        self.assertIn("Exception during dealloc of proxy: ", capture)
+        self.assertIn("PyObjCTest.test_nsobject.SomeException", capture)

@@ -115,7 +115,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+        @try {
+            [super release];
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -186,7 +191,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (unlikely(key == [NSNull null])) {
+        if (unlikely(key == [NSNull null])) { /* XXX: NSNull_null */
             Py_INCREF(Py_None);
             k = Py_None;
         } else {
@@ -215,7 +220,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
 
         if (v == Py_None) {
-            result = [NSNull null];
+            result = [NSNull null]; /* XXX: NSNull_null */
 
         } else if (unlikely(depythonify_python_object(v, &result) == -1)) {
             Py_DECREF(v);
@@ -232,7 +237,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObject* v    = NULL;
     PyObject* k    = NULL;
-    id        null = [NSNull null];
+    id        null = [NSNull null]; /* XXX: NSNull_null */
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(val == null)) {
@@ -283,7 +288,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* k;
 
     PyObjC_BEGIN_WITH_GIL
-        if (unlikely(key == [NSNull null])) {
+        if (unlikely(key == [NSNull null])) { /* XXX: NSNull_null */
             Py_INCREF(Py_None);
             k = Py_None;
         } else {
@@ -354,7 +359,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* v;
             int       r;
 
-            if (objects[i] == [NSNull null]) {
+            if (objects[i] == [NSNull null]) { /* XXX: NSNull_null */
                 v = Py_None;
                 Py_INCREF(Py_None);
 
@@ -535,9 +540,9 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             }
             Py_DECREF(copy);
-            [result retain];
         PyObjC_END_WITH_GIL
 
+        [result retain];
         return result;
 
     } else {
@@ -567,10 +572,9 @@ NS_ASSUME_NONNULL_BEGIN
             }
             Py_DECREF(copy);
 
-            [result retain];
-
         PyObjC_END_WITH_GIL
 
+        [result retain];
         return result;
 
     } else {

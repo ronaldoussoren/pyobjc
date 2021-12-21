@@ -82,7 +82,13 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        [super release];
+
+        @try {
+            [super release];
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
 
     PyObjC_END_WITH_GIL
 }
@@ -515,22 +521,27 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 - (Class)classForArchiver
 {
     PyObjC_BEGIN_WITH_GIL
-        if (PyFloat_CheckExact(value)) {
-            /* Float is a C double and can be roundtripped using
-             * NSNumber.
-             */
-            PyObjC_GIL_RETURN([NSNumber class]);
-        } else if (PyLong_CheckExact(value)) {
-            /* Long object that fits in a long long */
-            (void)PyLong_AsLongLong(value);
-            if (PyErr_Occurred()) {
-                PyErr_Clear();
-                PyObjC_GIL_RETURN([self class]);
-            } else {
+        @try {
+            if (PyFloat_CheckExact(value)) {
+                /* Float is a C double and can be roundtripped using
+                 * NSNumber.
+                 */
                 PyObjC_GIL_RETURN([NSNumber class]);
+            } else if (PyLong_CheckExact(value)) {
+                /* Long object that fits in a long long */
+                (void)PyLong_AsLongLong(value);
+                if (PyErr_Occurred()) {
+                    PyErr_Clear();
+                    PyObjC_GIL_RETURN([self class]);
+                } else {
+                    PyObjC_GIL_RETURN([NSNumber class]);
+                }
+            } else {
+                PyObjC_GIL_RETURN([self class]);
             }
-        } else {
-            PyObjC_GIL_RETURN([self class]);
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
         }
     PyObjC_END_WITH_GIL
 }

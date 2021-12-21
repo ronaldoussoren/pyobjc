@@ -1334,8 +1334,6 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
     PyObject *        ptype, *pvalue, *ptraceback;
 
     PyObjC_BEGIN_WITH_GIL
-        fprintf(stderr, "compat_dealloc\n");
-
         PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
         /* object_getClass will only return Nil if its argument is nil */

@@ -163,25 +163,23 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
                      void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* v      = NULL;
+    PyObject* pyself = NULL;
     PyObject* result = NULL;
+    int       cookie;
 
     PyObjC_BEGIN_WITH_GIL
-
-        v = id_to_python(*(id*)args[0]);
-        if (unlikely(v == NULL)) {
+        pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+        if (pyself == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = {NULL, v};
+        PyObject* args[2] = {NULL, pyself};
         result            = PyObject_Vectorcall(callable, args + 1,
                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-
-        if (unlikely(result == NULL)) {
-            Py_DECREF(v);
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+        if (result == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-        Py_DECREF(v);
 
         if (unlikely(result != Py_None)) {
             PyErr_Format(PyExc_TypeError,
@@ -266,33 +264,40 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
     /* objc.selector and friends already check this */
     PyObjC_Assert(PyObjCObject_Check(self), NULL);
 
+    /*
+     * XXX:
+     * The code below does not release the GIL to fix a problem
+     * with test_nsobject.py, which would hang the interpreter
+     * otherwise. I'm not sure yet what the root cause of that
+     * hang is.
+     */
     if (PyObjCIMP_Check(method)) {
         anIMP      = PyObjCIMP_GetIMP(method);
         anInstance = PyObjCObject_GetObject(self);
         aSel       = PyObjCIMP_GetSelector(method);
 
-        Py_BEGIN_ALLOW_THREADS
-            @try {
-                retval = ((id(*)(id, SEL))anIMP)(anInstance, aSel);
+        // Py_BEGIN_ALLOW_THREADS
+        @try {
+            retval = ((id(*)(id, SEL))anIMP)(anInstance, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-            }
-        Py_END_ALLOW_THREADS
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+        // Py_END_ALLOW_THREADS
 
     } else {
         spr.super_class = PyObjCSelector_GetClass(method);
         spr.receiver    = PyObjCObject_GetObject(self);
         aSel            = PyObjCSelector_GetSelector(method);
 
-        Py_BEGIN_ALLOW_THREADS
-            @try {
-                retval = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
+        // Py_BEGIN_ALLOW_THREADS
+        @try {
+            retval = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-            }
-        Py_END_ALLOW_THREADS
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+        // Py_END_ALLOW_THREADS
     }
 
     if (PyErr_Occurred()) {
@@ -312,7 +317,6 @@ imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
     int       cookie;
 
     PyObjC_BEGIN_WITH_GIL
-
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
         if (pyself == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -356,17 +360,16 @@ imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = {NULL, pyself};
-        result            = PyObject_Vectorcall(callable, args + 1,
-                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* pyargs[2] = {NULL, pyself};
+        result              = PyObject_Vectorcall(callable, pyargs + 1,
+                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObjCObject_ReleaseTransient(pyself, cookie);
         if (result == NULL) {
-            PyObjCObject_ReleaseTransient(pyself, cookie);
             PyObjC_GIL_FORWARD_EXC();
         }
 
         err = depythonify_python_object(result, resp);
         Py_DECREF(result);
-        PyObjCObject_ReleaseTransient(pyself, cookie);
         if (err == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
