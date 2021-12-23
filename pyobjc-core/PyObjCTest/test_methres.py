@@ -20,8 +20,14 @@ class TestMethodResolution(TestCase):
         self.assertIsInstance(url, NSObject)
         self.assertIsInstance(url, NSURL)
 
-        self.assertRaises(AttributeError, getattr, obj, "oc_method1")
-        self.assertRaises(AttributeError, getattr, obj, "ocmethod2")
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute 'oc_method1'"
+        ):
+            obj.oc_method1
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute 'ocmethod2'"
+        ):
+            obj.ocmethod2
 
         # Check that a category was added to NSObject, and that
         # it can be used for NSURL objects as well.

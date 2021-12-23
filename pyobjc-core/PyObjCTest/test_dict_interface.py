@@ -89,7 +89,10 @@ class TestNSDictionaryInterface(TestCase):
         d = self.createDictionary(a=1)
 
         self.assertEqual(set(d.values()), {1})
-        self.assertRaises(TypeError, d.values, None)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) takes 1 positional argument but 2 were given"
+        ):
+            d.values(None)
         self.assertNotIsInstance(d.values(), list)
 
         self.assertEqual(
@@ -102,7 +105,10 @@ class TestNSDictionaryInterface(TestCase):
 
         d = self.createDictionary(a=1)
         self.assertEqual(set(d.items()), {("a", 1)})
-        self.assertRaises(TypeError, d.items, None)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) takes 1 positional argument but 2 were given"
+        ):
+            d.items(None)
         self.assertEqual(
             repr(self.createDictionary(a=1).items()), "<nsdict_items([('a', 1)])>"
         )

@@ -137,18 +137,10 @@ class TestMethodResolution(TestCase):
         s = PyObjC_MethodLookup1.pyobjc_classMethods.both
         self.assertTrue(s.isClassMethod)
 
-        self.assertRaises(
-            AttributeError,
-            getattr,
-            PyObjC_MethodLookup1.pyobjc_classMethods,
-            "instance5",
-        )
+        with self.assertRaisesRegex(AttributeError, "No selector instance5"):
+            PyObjC_MethodLookup1.pyobjc_classMethods.instance5
 
         s = PyObjC_MethodLookup1.pyobjc_instanceMethods.both
         self.assertFalse(s.isClassMethod)
-        self.assertRaises(
-            AttributeError,
-            getattr,
-            PyObjC_MethodLookup1.pyobjc_instanceMethods,
-            "clsmeth5",
-        )
+        with self.assertRaisesRegex(AttributeError, "No selector clsmeth5"):
+            PyObjC_MethodLookup1.pyobjc_instanceMethods.clsmeth5

@@ -79,7 +79,9 @@ class TestTestSupport(TestCase):
             self.assertIs(objc.options.opt1, True)
             self.assertEqual(objc.options.opt2, 1)
 
-            with self.assertRaises(AttributeError):
+            with self.assertRaisesRegex(
+                AttributeError, "'Options' object has no attribute 'opt3'"
+            ):
                 with pyobjc_options(opt1=False, opt2=42, opt3="a"):
                     pass
 
@@ -429,25 +431,33 @@ class TestTestSupport(TestCase):
         self.assertIsSubclass(int, object)
         self.assertIsSubclass(str, object)
         self.assertIsSubclass(objc.objc_class, type)
-        self.assertRaises(
+
+        with self.assertRaisesRegex(
             self.failureException,
-            self.assertIsSubclass,
-            objc.objc_class,
-            objc.objc_object,
-        )
+            "<class 'objc.objc_class'> is not a subclass of <class objc.objc_object",
+        ):
+            self.assertIsSubclass(
+                objc.objc_class,
+                objc.objc_object,
+            )
 
     def testAssertIsNotSubclass(self):
         self.assertIsNotSubclass(object, int)
-        self.assertRaises(
-            self.failureException, self.assertIsNotSubclass, objc.objc_object, object
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<class objc.objc_object is a subclass of <class 'object'>",
+        ):
+            self.assertIsNotSubclass(objc.objc_object, object)
 
     def testAssertIsIstance(self):
         self.assertIsInstance(object(), object)
         self.assertIsInstance(42, object)
         self.assertIsInstance(42, (int, str))
 
-        self.assertRaises(self.failureException, self.assertIsInstance, 42, str)
+        with self.assertRaisesRegex(
+            self.failureException, "42 is not an instance of <class 'str'>"
+        ):
+            self.assertIsInstance(42, str)
 
     def test_assertManualBinding(self):
         with self.assertRaisesRegex(self.failureException, ".*has automatic bindings"):
@@ -459,17 +469,24 @@ class TestTestSupport(TestCase):
             self.fail("Unexpected assertion failure")
 
     def test_assert_cftype(self):
-        self.assertRaises(self.failureException, self.assertIsCFType, int)
-        self.assertRaises(
-            self.failureException, self.assertIsCFType, objc.lookUpClass("NSCFType")
-        )
+        with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not a CFTypeRef type"
+        ):
+            self.assertIsCFType(int)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<core-foundation class NSCFType at 0x[0-9a-f]+> is not a unique CFTypeRef type",
+        ):
+            self.assertIsCFType(objc.lookUpClass("NSCFType"))
 
         # 'assertIsCFType' primarily tests that a type is either tollfree bridged, or
         # has a distinct type that is different from the default NSCFType 'placeholder' type.
         # self.assertIsCFType(objc.lookUpClass('NSObject'))
-        self.assertRaises(
-            self.failureException, self.assertIsCFType, objc.lookUpClass("NSObject")
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<objective-c class NSObject at 0x[0-9a-f]+> is not a CFTypeRef type",
+        ):
+            self.assertIsCFType(objc.lookUpClass("NSObject"))
 
         class OC_OPAQUE_TEST_1(objc.lookUpClass("NSCFType")):
             pass
@@ -480,19 +497,30 @@ class TestTestSupport(TestCase):
             self.fail("CFType subclass not recognized as CFType")
 
     def test_assert_opaque(self):
-        self.assertRaises(self.failureException, self.assertIsOpaquePointer, int)
+        with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not an opaque-pointer"
+        ):
+            self.assertIsOpaquePointer(int)
 
         class N:
             @property
             def __pointer__(self):
                 pass
 
-        self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<class 'PyObjCTest.test_testsupport.TestTestSupport.test_assert_opaque.<locals>.N'> is not an opaque-pointer",
+        ):
+            self.assertIsOpaquePointer(N)
 
         class N:
             __typestr__ = b"^q"
 
-        self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<class 'PyObjCTest.test_testsupport.TestTestSupport.test_assert_opaque.<locals>.N'> is not an opaque-pointer",
+        ):
+            self.assertIsOpaquePointer(N)
 
         class N:
             __typestr__ = b"^q"
@@ -512,31 +540,63 @@ class TestTestSupport(TestCase):
         self.assertResultIsNullTerminated(m)
 
         m = Method(None, {"c_array_delimited_by_null": False})
-        self.assertRaises(self.failureException, self.assertResultIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a null-terminated array",
+        ):
+            self.assertResultIsNullTerminated(m)
 
         m = Method(None, {})
-        self.assertRaises(self.failureException, self.assertResultIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a null-terminated array",
+        ):
+            self.assertResultIsNullTerminated(m)
 
     def test_assert_arg_nullterminated(self):
         m = Method(3, {"c_array_delimited_by_null": True}, selector=True)
         self.assertArgIsNullTerminated(m, 1)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 0 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 0)
 
         m = Method(3, {"c_array_delimited_by_null": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 1)
 
         m = Method(3, {"c_array_delimited_by_null": True}, selector=False)
         self.assertArgIsNullTerminated(m, 3)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 2)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 2 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 2)
 
         m = Method(3, {"c_array_delimited_by_null": False}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 3 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsNullTerminated, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 3 of <.*> is not a null-terminated array",
+        ):
+            self.assertArgIsNullTerminated(m, 3)
 
     def test_function_nullterminated(self):
         m = Method(None, {}, selector=False)
@@ -544,135 +604,246 @@ class TestTestSupport(TestCase):
         self.assertIsNullTerminated(m)
 
         m._meta["variadic"] = False
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
         m._meta["variadic"] = True
         m._meta["c_array_delimited_by_null"] = False
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
         del m._meta["variadic"]
         m._meta["c_array_delimited_by_null"] = True
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
         m = Method(None, {}, selector=True)
         m._meta.update({"variadic": True, "c_array_delimited_by_null": True})
         self.assertIsNullTerminated(m)
 
         m._meta["variadic"] = False
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
         m._meta["variadic"] = True
         m._meta["c_array_delimited_by_null"] = False
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
         del m._meta["variadic"]
         m._meta["c_array_delimited_by_null"] = True
-        self.assertRaises(self.failureException, self.assertIsNullTerminated, m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not a variadic function with a null-terminated list of arguments",
+        ):
+            self.assertIsNullTerminated(m)
 
-    def test_arg_varialbe_size(self):
+    def test_arg_variable_size(self):
         m = Method(3, {"c_array_of_variable_length": True}, selector=True)
         self.assertArgIsVariableSize(m, 1)
-        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 0 of <.*> is not a variable sized array",
+        ):
+            self.assertArgIsVariableSize(m, 0)
 
         m = Method(3, {"c_array_of_variable_length": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is not a variable sized array",
+        ):
+            self.assertArgIsVariableSize(m, 1)
 
         m = Method(3, {"c_array_of_variable_length": True}, selector=False)
         self.assertArgIsVariableSize(m, 3)
-        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is not a variable sized array",
+        ):
+            self.assertArgIsVariableSize(m, 1)
 
         m = Method(3, {"c_array_of_variable_length": False}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsVariableSize, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 3 of <.*> is not a variable sized array",
+        ):
+            self.assertArgIsVariableSize(m, 3)
 
     def test_result_varialbe_size(self):
         m = Method(None, {"c_array_of_variable_length": True}, selector=True)
         self.assertResultIsVariableSize(m, 1)
 
         m = Method(None, {"c_array_of_variable_length": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsVariableSize, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a variable sized array",
+        ):
+            self.assertResultIsVariableSize(m)
 
         m = Method(None, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsVariableSize, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a variable sized array",
+        ):
+            self.assertResultIsVariableSize(m)
 
     def test_argsize_in_result(self):
         m = Method(3, {"c_array_length_in_result": True}, selector=True)
         self.assertArgSizeInResult(m, 1)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 0 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 0)
 
         m = Method(3, {"c_array_length_in_result": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 1 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 1 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 1)
 
         m = Method(3, {"c_array_length_in_result": True}, selector=False)
         self.assertArgSizeInResult(m, 3)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 2)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 2 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 2)
 
         m = Method(3, {"c_array_length_in_result": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 3 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 3)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgSizeInResult, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 3 of .* does not have size in result"
+        ):
+            self.assertArgSizeInResult(m, 3)
 
     def test_arg_printf(self):
         m = Method(3, {"printf_format": True}, selector=True)
         m._meta["variadic"] = True
         self.assertArgIsPrintf(m, 1)
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 0 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 0)
 
         m._meta["variadic"] = False
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> is not a variadic function"
+        ):
+            self.assertArgIsPrintf(m, 1)
 
         m._meta["variadic"] = True
         m._meta["arguments"][3]["printf_format"] = False
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 1 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 1)
 
         m._meta["variadic"] = True
         del m._meta["arguments"][3]["printf_format"]
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 1 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 1)
 
         m = Method(3, {"printf_format": True}, selector=False)
         m._meta["variadic"] = True
         self.assertArgIsPrintf(m, 3)
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 2)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 2 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 2)
 
         m._meta["variadic"] = False
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> is not a variadic function"
+        ):
+            self.assertArgIsPrintf(m, 3)
 
         m._meta["variadic"] = True
         m._meta["arguments"][3]["printf_format"] = False
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 3 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 3)
 
         m._meta["variadic"] = True
         del m._meta["arguments"][3]["printf_format"]
-        self.assertRaises(self.failureException, self.assertArgIsPrintf, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 3 is not a printf format string"
+        ):
+            self.assertArgIsPrintf(m, 3)
 
     def test_arg_cfretained(self):
         m = Method(3, {"already_cfretained": True}, selector=True)
         self.assertArgIsCFRetained(m, 1)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 0 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 0)
 
         m = Method(3, {"already_cfretained": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 1)
 
         m = Method(3, {"already_cfretained": True}, selector=False)
         self.assertArgIsCFRetained(m, 3)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 2)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 2 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 2)
 
         m = Method(3, {"already_cfretained": False}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 3 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsCFRetained, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 3 of <.*> is not cfretained"
+        ):
+            self.assertArgIsCFRetained(m, 3)
 
     def test_arg_not_cfretained(self):
         m = Method(3, {"already_cfretained": True}, selector=True)
         self.assertArgIsNotCFRetained(m, 0)
-        self.assertRaises(self.failureException, self.assertArgIsNotCFRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is cfretained"
+        ):
+            self.assertArgIsNotCFRetained(m, 1)
 
         m = Method(3, {"already_cfretained": False}, selector=True)
         self.assertArgIsNotCFRetained(m, 1)
@@ -695,14 +866,17 @@ class TestTestSupport(TestCase):
         self.assertResultIsCFRetained(m)
 
         m = Method(None, {"already_cfretained": False})
-        self.assertRaises(self.failureException, self.assertResultIsCFRetained, m)
+        with self.assertRaisesRegex(self.failureException, "<.*> is not cfretained"):
+            self.assertResultIsCFRetained(m)
 
         m = Method(None, {})
-        self.assertRaises(self.failureException, self.assertResultIsCFRetained, m)
+        with self.assertRaisesRegex(self.failureException, "<.*> is not cfretained"):
+            self.assertResultIsCFRetained(m)
 
     def test_result_not_cfretained(self):
         m = Method(None, {"already_cfretained": True})
-        self.assertRaises(self.failureException, self.assertResultIsNotCFRetained, m)
+        with self.assertRaisesRegex(self.failureException, "<.*> is cfretained"):
+            self.assertResultIsNotCFRetained(m)
 
         m = Method(None, {"already_cfretained": False})
         self.assertResultIsNotCFRetained(m)
@@ -713,12 +887,16 @@ class TestTestSupport(TestCase):
     def test_arg_type(self):
         m = Method(3, {"type": objc._C_DBL}, selector=True)
         self.assertArgHasType(m, 1, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 2, objc._C_ID
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 2 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgHasType(m, 2, objc._C_ID)
+
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 1 of <.*> is not of type {objc._C_ID}, but {objc._C_DBL}",
+        ):
+            self.assertArgHasType(m, 1, objc._C_ID)
 
         m = Method(3, {}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ID)
@@ -726,39 +904,50 @@ class TestTestSupport(TestCase):
         m = Method(3, {"type": objc._C_LNG}, selector=True)
         self.assertArgHasType(m, 1, objc._C_LNG)
         self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 1 of <.*> is not of type {objc._C_ID}, but {objc._C_LNG}",
+        ):
+            self.assertArgHasType(m, 1, objc._C_ID)
 
         m = Method(3, {"type": objc._C_ULNG}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ULNG)
         self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 1 of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG}",
+        ):
+            self.assertArgHasType(m, 1, objc._C_ID)
 
         m = Method(3, {"type": objc._C_LNG_LNG}, selector=True)
         self.assertArgHasType(m, 1, objc._C_LNG)
         self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 1 of <.*> is not of type {objc._C_ID}, but {objc._C_LNG_LNG}",
+        ):
+            self.assertArgHasType(m, 1, objc._C_ID)
 
         m = Method(3, {"type": objc._C_ULNG_LNG}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ULNG)
         self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 1 of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG_LNG}",
+        ):
+            self.assertArgHasType(m, 1, objc._C_ID)
 
         m = Method(3, {"type": objc._C_DBL}, selector=False)
         self.assertArgHasType(m, 3, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 2, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type {objc._C_ID}, but {objc._C_DBL}",
+        ):
+            self.assertArgHasType(m, 3, objc._C_ID)
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 2 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgHasType(m, 2, objc._C_ID)
 
         m = Method(3, {}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ID)
@@ -766,148 +955,246 @@ class TestTestSupport(TestCase):
         m = Method(3, {"type": objc._C_LNG}, selector=False)
         self.assertArgHasType(m, 3, objc._C_LNG)
         self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type {objc._C_ID}, but {objc._C_LNG}",
+        ):
+            self.assertArgHasType(m, 3, objc._C_ID)
 
         m = Method(3, {"type": objc._C_ULNG}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ULNG)
         self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG}",
+        ):
+            self.assertArgHasType(m, 3, objc._C_ID)
 
         m = Method(3, {"type": objc._C_LNG_LNG}, selector=False)
         self.assertArgHasType(m, 3, objc._C_LNG)
         self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type {objc._C_ID}, but {objc._C_LNG_LNG}",
+        ):
+            self.assertArgHasType(m, 3, objc._C_ID)
 
         m = Method(3, {"type": objc._C_ULNG_LNG}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ULNG)
         self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG_LNG}",
+        ):
+            self.assertArgHasType(m, 3, objc._C_ID)
 
     def test_result_type(self):
         m = Method(None, {})
         self.assertResultHasType(m, objc._C_VOID)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_VOID}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_DBL})
         self.assertResultHasType(m, objc._C_DBL)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_DBL}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_LNG}, selector=False)
         self.assertResultHasType(m, objc._C_LNG)
         self.assertResultHasType(m, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_LNG}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_ULNG}, selector=False)
         self.assertResultHasType(m, objc._C_ULNG)
         self.assertResultHasType(m, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_LNG_LNG}, selector=False)
         self.assertResultHasType(m, objc._C_LNG)
         self.assertResultHasType(m, objc._C_LNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_LNG_LNG}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
         m = Method(None, {"type": objc._C_ULNG_LNG}, selector=False)
         self.assertResultHasType(m, objc._C_ULNG)
         self.assertResultHasType(m, objc._C_ULNG_LNG)
-        self.assertRaises(
-            self.failureException, self.assertResultHasType, m, objc._C_ID
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG_LNG}",
+        ):
+            self.assertResultHasType(m, objc._C_ID)
 
     def test_arg_fixed_size(self):
         m = Method(3, {"c_array_of_fixed_length": 42}, selector=True)
         self.assertArgIsFixedSize(m, 1, 42)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 0, 42)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 1, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 0 of <.*> is not a C-array of length 42"
+        ):
+            self.assertArgIsFixedSize(m, 0, 42)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not a C-array of length 3"
+        ):
+            self.assertArgIsFixedSize(m, 1, 3)
 
         m = Method(3, {}, selector=True)
         self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 1, 3)
 
         m = Method(3, {"c_array_of_fixed_length": 42}, selector=False)
         self.assertArgIsFixedSize(m, 3, 42)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 2, 42)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 3, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 2 of <.*> is not a C-array of length 42"
+        ):
+            self.assertArgIsFixedSize(m, 2, 42)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> is not a C-array of length 3"
+        ):
+            self.assertArgIsFixedSize(m, 3, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 3, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> is not a C-array of length 3"
+        ):
+            self.assertArgIsFixedSize(m, 3, 3)
 
     def test_result_fixed_size(self):
         m = Method(None, {"c_array_of_fixed_length": 42})
         self.assertResultIsFixedSize(m, 42)
-        self.assertRaises(self.failureException, self.assertResultIsFixedSize, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not a C-array of length 3"
+        ):
+            self.assertResultIsFixedSize(m, 3)
 
         m = Method(None, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsFixedSize, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not a C-array of length 3"
+        ):
+            self.assertResultIsFixedSize(m, 3)
 
     def test_arg_size_in_arg(self):
         m = Method(3, {"c_array_length_in_arg": 4}, selector=True)
         self.assertArgSizeInArg(m, 1, 2)
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, 3)
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertArgSizeInArg(m, 1, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 0 of <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertArgSizeInArg(m, 0, 3)
 
         m = Method(3, {"c_array_length_in_arg": (2, 4)}, selector=True)
         self.assertArgSizeInArg(m, 1, (0, 2))
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, (0, 3))
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, (1, 2))
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"arg 1 of <.*> is not a C-array of with length in arg \(0, 3\)",
+        ):
+            self.assertArgSizeInArg(m, 1, (0, 3))
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"arg 0 of <.*> is not a C-array of with length in arg \(1, 2\)",
+        ):
+            self.assertArgSizeInArg(m, 0, (1, 2))
 
         m = Method(3, {"c_array_length_in_arg": 4}, selector=False)
         self.assertArgSizeInArg(m, 3, 4)
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, 3)
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertArgSizeInArg(m, 1, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 0 of <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertArgSizeInArg(m, 0, 3)
 
         m = Method(3, {"c_array_length_in_arg": (2, 4)}, selector=False)
         self.assertArgSizeInArg(m, 3, (2, 4))
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 1, (2, 3))
-        self.assertRaises(self.failureException, self.assertArgSizeInArg, m, 0, (2, 3))
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"arg 1 of <.*> is not a C-array of with length in arg \(2, 3\)",
+        ):
+            self.assertArgSizeInArg(m, 1, (2, 3))
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"arg 0 of <.*> is not a C-array of with length in arg \(2, 3\)",
+        ):
+            self.assertArgSizeInArg(m, 0, (2, 3))
 
-    def test_result_ize_in_arg(self):
+    def test_result_ssize_in_arg(self):
         m = Method(None, {"c_array_length_in_arg": 4}, selector=True)
         self.assertResultSizeInArg(m, 2)
-        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
-        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertResultSizeInArg(m, 3)
 
         m = Method(None, {"c_array_length_in_arg": 4}, selector=False)
         self.assertResultSizeInArg(m, 4)
-        self.assertRaises(self.failureException, self.assertResultSizeInArg, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result <.*> is not a C-array of with length in arg 3",
+        ):
+            self.assertResultSizeInArg(m, 3)
 
     def test_arg_retained(self):
         m = Method(3, {"already_retained": True}, selector=True)
         self.assertArgIsRetained(m, 1)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 0 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 0)
 
         m = Method(3, {"already_retained": False}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 1)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 1)
 
         m = Method(3, {"already_retained": True}, selector=False)
         self.assertArgIsRetained(m, 3)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 2)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 2 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 2)
 
         m = Method(3, {"already_retained": False}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 3 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 3)
 
         m = Method(3, {}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsRetained, m, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 3 of <.*> is not retained"
+        ):
+            self.assertArgIsRetained(m, 3)
 
     def test_arg_not_retained(self):
         m = Method(3, {"already_retained": True}, selector=True)
@@ -1218,26 +1505,52 @@ class TestTestSupport(TestCase):
         m = Method(3, {"type": objc._C_SEL, "sel_of_type": b"v@:@"}, selector=True)
         self.assertArgIsSEL(m, 1, b"v@:@")
 
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 2, b"v@:@")
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b"v@:")
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 2 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgIsSEL(m, 2, b"v@:@")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> doesn't have sel_type b'v@:' but b'v@:@'",
+        ):
+            self.assertArgIsSEL(m, 1, b"v@:")
 
         m = Method(3, {"type": objc._C_SEL}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b"v@:")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> doesn't have sel_type b'v@:' but None"
+        ):
+            self.assertArgIsSEL(m, 1, b"v@:")
 
         m = Method(3, {"type": objc._C_ID, "sel_of_type": b"v@:@"}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 1, b"v@:@")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not of type SEL"
+        ):
+            self.assertArgIsSEL(m, 1, b"v@:@")
 
         m = Method(3, {"type": objc._C_SEL, "sel_of_type": b"v@:@"}, selector=False)
         self.assertArgIsSEL(m, 3, b"v@:@")
 
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 2, b"v@:@")
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b"v@:")
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 2 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgIsSEL(m, 2, b"v@:@")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> doesn't have sel_type b'v@:' but b'v@:@'",
+        ):
+            self.assertArgIsSEL(m, 3, b"v@:")
 
         m = Method(3, {"type": objc._C_SEL}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b"v@:")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> doesn't have sel_type b'v@:' but None"
+        ):
+            self.assertArgIsSEL(m, 3, b"v@:")
 
         m = Method(3, {"type": objc._C_ID, "sel_of_type": b"v@:@"}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsSEL, m, 3, b"v@:@")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> is not of type SEL"
+        ):
+            self.assertArgIsSEL(m, 3, b"v@:@")
 
     def test_arg_is_function(self):
         m = Method(
@@ -1252,15 +1565,20 @@ class TestTestSupport(TestCase):
             selector=True,
         )
         self.assertArgIsFunction(m, 1, b"i@d", False)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 0, "v", False
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "i@b", False
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "i@d", True
-        )
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 0 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgIsFunction(m, 0, "v", False)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is not a function_pointer with type 'i@b', but b'i@d'",
+        ):
+            self.assertArgIsFunction(m, 1, "i@b", False)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is not a function_pointer with type 'i@d', but b'i@d'",
+        ):
+            self.assertArgIsFunction(m, 1, "i@d", True)
         m = Method(
             3,
             {
@@ -1274,31 +1592,38 @@ class TestTestSupport(TestCase):
             selector=True,
         )
         self.assertArgIsFunction(m, 1, b"i@d", True)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, b"i@d", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*>; retained: True, expected: False"
+        ):
+            self.assertArgIsFunction(m, 1, b"i@d", False)
 
         m = Method(3, {"type": b"?", "callable": {}}, selector=True)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not of type function_pointer"
+        ):
+            self.assertArgIsFunction(m, 1, "v", False)
 
         m = Method(3, {"type": b"^?"}, selector=True)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not of type function_pointer"
+        ):
+            self.assertArgIsFunction(m, 1, "v", False)
         m = Method(3, {"type": b"^?", "callable": {}}, selector=True)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertArgIsFunction(m, 1, "v", False)
         m = Method(
             3,
             {"type": b"^?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=True,
         )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 1, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertArgIsFunction(m, 1, "v", False)
 
         m = Method(
             3,
@@ -1312,15 +1637,20 @@ class TestTestSupport(TestCase):
             selector=False,
         )
         self.assertArgIsFunction(m, 3, b"i@d", False)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 2, "v", False
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "i@b", False
-        )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "i@d", True
-        )
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 2 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgIsFunction(m, 2, "v", False)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> is not a function_pointer with type b'i@b', but b'i@d'",
+        ):
+            self.assertArgIsFunction(m, 3, b"i@b", False)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> is not a function_pointer with type 'i@d', but b'i@d'",
+        ):
+            self.assertArgIsFunction(m, 3, "i@d", True)
         m = Method(
             3,
             {
@@ -1336,26 +1666,32 @@ class TestTestSupport(TestCase):
         self.assertArgIsFunction(m, 3, b"i@d", True)
 
         m = Method(3, {"type": b"?", "callable": {}}, selector=False)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> is not of type function_pointer"
+        ):
+            self.assertArgIsFunction(m, 3, "v", False)
 
         m = Method(3, {"type": b"^?"}, selector=True)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException, r"arg 3 of <.*> has no metadata \(or doesn't exist\)"
+        ):
+            self.assertArgIsFunction(m, 3, "v", False)
         m = Method(3, {"type": b"^?", "callable": {}}, selector=False)
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertArgIsFunction(m, 3, "v", False)
         m = Method(
             3,
             {"type": b"^?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=False,
         )
-        self.assertRaises(
-            self.failureException, self.assertArgIsFunction, m, 3, "v", False
-        )
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertArgIsFunction(m, 3, "v", False)
 
     def test_result_is_function(self):
         m = Method(
@@ -1370,24 +1706,46 @@ class TestTestSupport(TestCase):
             selector=True,
         )
         self.assertResultIsFunction(m, b"i@d")
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "i@b")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a function_pointer with type 'i@b', but b'i@d'",
+        ):
+            self.assertResultIsFunction(m, "i@b")
 
         m = Method(1, {})
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "i@b")
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"result of <.*> has no metadata \(or doesn't exist\)",
+        ):
+            self.assertResultIsFunction(m, "i@b")
 
         m = Method(None, {"type": b"?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not of type function_pointer"
+        ):
+            self.assertResultIsFunction(m, "v")
 
         m = Method(None, {"type": b"^?"}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not of type function_pointer"
+        ):
+            self.assertResultIsFunction(m, "v")
         m = Method(None, {"type": b"^?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertResultIsFunction(m, "v")
         m = Method(
             None,
             {"type": b"^?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=True,
         )
-        self.assertRaises(self.failureException, self.assertResultIsFunction, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"result of <.*> is a function pointer with incomplete type information",
+        ):
+            self.assertResultIsFunction(m, "v")
 
     def test_arg_is_block(self):
         m = Method(
@@ -1406,8 +1764,15 @@ class TestTestSupport(TestCase):
             selector=True,
         )
         self.assertArgIsBlock(m, 1, b"i@d")
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 0, "v")
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "i@b")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 0 of <.*> does not exist"
+        ):
+            self.assertArgIsBlock(m, 0, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> is not a block with type 'i@b', but b'i@d'",
+        ):
+            self.assertArgIsBlock(m, 1, "i@b")
 
         m = Method(
             3,
@@ -1421,21 +1786,39 @@ class TestTestSupport(TestCase):
             },
             selector=True,
         )
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 1 of <.*> has an invalid block signature b'@' for argument 0",
+        ):
+            self.assertArgIsBlock(m, 1, "v")
 
         m = Method(3, {"type": b"?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not of type block: b'?'"
+        ):
+            self.assertArgIsBlock(m, 1, "v")
 
         m = Method(3, {"type": b"@?"}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not of type block: no callable"
+        ):
+            self.assertArgIsBlock(m, 1, "v")
         m = Method(3, {"type": b"@?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertArgIsBlock(m, 1, "v")
         m = Method(
             3,
             {"type": b"@?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=True,
         )
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 1, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertArgIsBlock(m, 1, "v")
 
         m = Method(
             3,
@@ -1453,8 +1836,15 @@ class TestTestSupport(TestCase):
             selector=False,
         )
         self.assertArgIsBlock(m, 3, b"i@d")
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 2, "v")
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "i@b")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 2 of <.*> does not exist"
+        ):
+            self.assertArgIsBlock(m, 2, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> is not a block with type b'i@b', but b'i@d'",
+        ):
+            self.assertArgIsBlock(m, 3, b"i@b")
 
         m = Method(
             3,
@@ -1468,21 +1858,39 @@ class TestTestSupport(TestCase):
             },
             selector=False,
         )
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "arg 3 of <.*> has an invalid block signature b'@' for argument 0",
+        ):
+            self.assertArgIsBlock(m, 3, "v")
 
         m = Method(3, {"type": b"?", "callable": {}}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> is not of type block: b'?'"
+        ):
+            self.assertArgIsBlock(m, 3, "v")
 
         m = Method(3, {"type": b"@?"}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "arg 3 of <.*> does not exist"
+        ):
+            self.assertArgIsBlock(m, 3, "v")
         m = Method(3, {"type": b"@?", "callable": {}}, selector=False)
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertArgIsBlock(m, 3, "v")
         m = Method(
             3,
             {"type": b"@?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=False,
         )
-        self.assertRaises(self.failureException, self.assertArgIsBlock, m, 3, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertArgIsBlock(m, 3, "v")
 
     def test_result_is_block(self):
         m = Method(
@@ -1501,7 +1909,11 @@ class TestTestSupport(TestCase):
             selector=True,
         )
         self.assertResultIsBlock(m, b"i@d")
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "i@b")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not a block with type b'i@b', but b'i@d'",
+        ):
+            self.assertResultIsBlock(m, b"i@b")
 
         m = Method(
             None,
@@ -1515,55 +1927,67 @@ class TestTestSupport(TestCase):
             },
             selector=True,
         )
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result <.*> has an invalid block signature b'@' for argument 0",
+        ):
+            self.assertResultIsBlock(m, "v")
 
         m = Method(3, {})
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not of type block: b'v'"
+        ):
+            self.assertResultIsBlock(m, "v")
 
         m = Method(None, {"type": b"?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException, "result of <.*> is not of type block: b'?'"
+        ):
+            self.assertResultIsBlock(m, "v")
 
         m = Method(None, {"type": b"@?"}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is not of type block: no callable specified",
+        ):
+            self.assertResultIsBlock(m, "v")
         m = Method(None, {"type": b"@?", "callable": {}}, selector=True)
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertResultIsBlock(m, "v")
         m = Method(
             None,
             {"type": b"@?", "callable": {"retval": {"type": objc._C_VOID}}},
             selector=True,
         )
-        self.assertRaises(self.failureException, self.assertResultIsBlock, m, "v")
+        with self.assertRaisesRegex(
+            self.failureException,
+            "result of <.*> is a block pointer with incomplete type information",
+        ):
+            self.assertResultIsBlock(m, "v")
 
     def test_result_bool(self):
         m = Method(None, {"type": objc._C_NSBOOL})
-        try:
-            self.assertResultIsBOOL(m)
-        except self.failureException:
-            raise
-            self.fail("unexpected test failure")
+        self.assertResultIsBOOL(m)
 
         m = Method(None, {"type": objc._C_NSBOOL}, selector=True)
-        try:
-            self.assertResultIsBOOL(m)
-        except self.failureException:
-            self.fail("unexpected test failure")
+        self.assertResultIsBOOL(m)
 
         m = Method(None, {"type": b"@"})
-        try:
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type BOOL, but {objc._C_ID}",
+        ):
             self.assertResultIsBOOL(m)
-        except self.failureException:
-            pass
-        else:
-            self.fail("unexpected test pass")
 
         m = Method(None, {"type": b"@"}, selector=True)
-        try:
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type BOOL, but {objc._C_ID}",
+        ):
             self.assertResultIsBOOL(m)
-        except self.failureException:
-            pass
-
-        else:
-            self.fail("unexpected test pass")
 
     def test_running(self):
         orig_use = TestSupport._usepool

@@ -89,9 +89,10 @@ CFLAGS = [
     "-Werror",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
-    # -O0", "-g"
-    "-O3",
-    "-flto",
+    "-O0",
+    "-g",
+    # "-O3",
+    # "-flto",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -108,10 +109,10 @@ OBJC_LDFLAGS = [
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     "-fvisibility=hidden",
-    # "-O0",
+    "-O0",
     "-g",
-    "-O3",
-    "-flto",
+    # "-O3",
+    # "-flto",
 ]
 
 
@@ -704,7 +705,7 @@ setup(
             extra_compile_args=EXT_CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
         )
-        for test_source in glob.glob(os.path.join("Modules", "objc", "test", "*.m"))
+        for test_source in glob.glob(os.path.join("Modules", "objc", "test", "*.[mc]"))
     ],
     cmdclass={
         "build_ext": oc_build_ext,

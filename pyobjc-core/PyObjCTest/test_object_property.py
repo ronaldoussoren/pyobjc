@@ -500,7 +500,8 @@ class TestObjectProperty(TestCase):
 
         o = OCTestObjectProperty3.alloc().init()
 
-        self.assertRaises(ValueError, setattr, o, "p1", 42)
+        with self.assertRaisesRegex(ValueError, "setting read-only property p1"):
+            o.p1 = 42
 
     def testSubclass(self):
         class OCTestObjectProperty5(NSObject):
@@ -522,8 +523,10 @@ class TestObjectProperty(TestCase):
                 return not objc.super(OCTestObjectProperty6, self).p3
 
         base = OCTestObjectProperty5.alloc().init()
-        self.assertRaises(ValueError, setattr, base, "p1", 1)
-        self.assertRaises(ValueError, setattr, base, "p3", 1)
+        with self.assertRaisesRegex(ValueError, "setting read-only property p1"):
+            base.p1 = 1
+        with self.assertRaisesRegex(ValueError, "setting read-only property p3"):
+            base.p3 = 1
         base.p2 = "b"
         self.assertEqual(base.p2, "b")
 

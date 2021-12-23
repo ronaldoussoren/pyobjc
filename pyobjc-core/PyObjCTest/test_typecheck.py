@@ -7,8 +7,16 @@ class TestPython3Types(TestCase):
     # behaviour is different)
 
     def testSelectorArguments(self):
-        self.assertRaises(TypeError, objc.selector, "hello", signature=b"v@:")
-        self.assertRaises(TypeError, objc.selector, b"hello", signature="v@:")
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.selector(lambda x: None, "hello", signature=b"v@:")
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.selector(lambda x: None, b"hello", signature="v@:")
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.selector(42, b"hello", signature=b"v@:")
 
     def testSelectorAttributes(self):
         o = objc.lookUpClass("NSObject").alloc().init()
@@ -32,10 +40,14 @@ class TestPython3Types(TestCase):
         self.assertIn("NSHomeDirectory", d)
 
         tab = [("NSHomeDirectory", "@")]
-        self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.loadBundleFunctions(bundle, d, tab)
 
         tab = [(b"NSHomeDirectory", b"@")]
-        self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
+        with self.assertRaisesRegex(TypeError, "functionInfo name not a string"):
+            objc.loadBundleFunctions(bundle, d, tab)
 
     def testVariableLookup(self):
         NSBundle = objc.lookUpClass("NSBundle")
@@ -49,8 +61,14 @@ class TestPython3Types(TestCase):
 
         tab = [("NSAppleScriptErrorMessage", "@")]
 
-        self.assertRaises(TypeError, objc.loadBundleVariables, bundle, d, tab)
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.loadBundleVariables(bundle, d, tab)
 
         tab = [(b"NSAppleScriptErrorMessage", b"@")]
 
-        self.assertRaises(TypeError, objc.loadBundleVariables, bundle, d, tab)
+        with self.assertRaisesRegex(
+            TypeError, r"variableInfo\(\) argument 1 must be str, not bytes"
+        ):
+            objc.loadBundleVariables(bundle, d, tab)

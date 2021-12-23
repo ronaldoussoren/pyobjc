@@ -122,7 +122,10 @@ class TestNSCopying(TestCase):
 
         self.assertEqual(o.x, 42)
         self.assertEqual(o.y, 24)
-        self.assertRaises(AttributeError, getattr, o, "z")
+        with self.assertRaisesRegex(
+            AttributeError, "OC_TestCopy1' object has no attribute 'z'"
+        ):
+            o.z
 
     def testCopyingWithSuperFromObjC(self):
         o = OC_CopyBase.alloc().init()
@@ -183,7 +186,10 @@ class TestNSCopying(TestCase):
 
         self.assertEqual(o.x, 42)
         self.assertEqual(o.y, 24)
-        self.assertRaises(AttributeError, getattr, o, "z")
+        with self.assertRaisesRegex(
+            AttributeError, "OC_TestCopy1' object has no attribute 'z'"
+        ):
+            o.z
 
     def testCopyingWithSuper(self):
         o = OC_CopyBase.alloc().init()

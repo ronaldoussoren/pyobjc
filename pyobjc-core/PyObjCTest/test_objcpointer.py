@@ -40,9 +40,10 @@ class TestObjCPointer(TestCase):
 
     def test_objc_pointer_raises(self):
         objc.options.unknown_pointer_raises = True
-        self.assertRaises(
-            objc.UnknownPointerError, OC_TestStructPointer.returnUnwrapped
-        )
+        with self.assertRaisesRegex(
+            objc.UnknownPointerError, r"pointer of type \^{UnwrappedStruct=ii}16@0:8"
+        ):
+            OC_TestStructPointer.returnUnwrapped()
 
     def test_warning_raises(self):
         with warnings.catch_warnings():

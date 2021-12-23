@@ -50,7 +50,10 @@ class TestImmutableSequence(TestCase, BasicSequenceTests):
     def testNotMutable(self):
         # Ensure that a frozenset cannot be mutated
         o = self.seqClass([1, 2, 3])
-        self.assertRaises((TypeError, AttributeError), OC_TestSet.set_addObject_, o, 4)
+        with self.assertRaisesRegex(
+            (TypeError, AttributeError), "'.*' object has no attribute 'append'"
+        ):
+            OC_TestSet.set_addObject_(o, 4)
 
 
 class TestMutableSequence(TestCase, BasicSequenceTests):

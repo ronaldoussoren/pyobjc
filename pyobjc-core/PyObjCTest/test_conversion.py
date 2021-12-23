@@ -59,12 +59,16 @@ class TestNumbers(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(
-                (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN
-            )
-            self.assertRaises(
-                (IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1
-            )
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max 255, value 18446744073709551488\)",
+            ):
+                pyObjCPy(objc._C_UCHR, SCHAR_MIN)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max 255, value 18446744073709551487\)",
+            ):
+                pyObjCPy(objc._C_UCHR, SCHAR_MIN - 1)
 
     def test_char(self):
         self.assertEqual(0, pyObjCPy(objc._C_CHR, 0))
@@ -81,8 +85,14 @@ class TestNumbers(TestCase):
         # equivalent to '\xff'. Should (char)-1 be converted to '\xff'/255 ?
         self.assertEqual(-1, pyObjCPy(objc._C_CHR, b"\xff"))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MAX + 1)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MIN - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'char', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_CHR, CHAR_MAX + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'char', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_CHR, CHAR_MIN - 1)
 
     def test_unsigned_short(self):
         self.assertEqual(0, pyObjCPy(objc._C_USHT, 0))
@@ -93,11 +103,25 @@ class TestNumbers(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN)
-            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN - 1)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max 65535, value 18446744073709518848\)",
+            ):
+                pyObjCPy(objc._C_USHT, SHRT_MIN)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max 65535, value 18446744073709518847\)",
+            ):
+                pyObjCPy(objc._C_USHT, SHRT_MIN - 1)
 
-            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, "1")
-            self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, b"1")
+            with self.assertRaisesRegex(
+                ValueError, r"depythonifying 'unsigned short', got 'str'"
+            ):
+                pyObjCPy(objc._C_USHT, "1")
+            with self.assertRaisesRegex(
+                ValueError, r"depythonifying 'unsigned short', got 'bytes'"
+            ):
+                pyObjCPy(objc._C_USHT, b"1")
 
     def test_short(self):
         self.assertEqual(0, pyObjCPy(objc._C_SHT, 0))
@@ -107,11 +131,19 @@ class TestNumbers(TestCase):
         self.assertEqual(SHRT_MAX, pyObjCPy(objc._C_SHT, float(SHRT_MAX)))
         self.assertEqual(SHRT_MIN, pyObjCPy(objc._C_SHT, float(SHRT_MIN)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, SHRT_MAX + 1)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, SHRT_MIN - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_SHT, SHRT_MAX + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_SHT, SHRT_MIN - 1)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, b"1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str'"):
+            pyObjCPy(objc._C_SHT, "1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'bytes'"):
+            pyObjCPy(objc._C_SHT, b"1")
 
     def test_unsigned_int(self):
         self.assertEqual(0, pyObjCPy(objc._C_UINT, 0))
@@ -122,11 +154,25 @@ class TestNumbers(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN)
-            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN - 1)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max 4294967295, value 18446744071562067968\)",
+            ):
+                pyObjCPy(objc._C_UINT, INT_MIN)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max 4294967295, value 18446744071562067967\)",
+            ):
+                pyObjCPy(objc._C_UINT, INT_MIN - 1)
 
-            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, "1")
-            self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, b"1")
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'unsigned int', got 'str'"
+            ):
+                pyObjCPy(objc._C_UINT, "1")
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'unsigned int', got 'bytes'"
+            ):
+                pyObjCPy(objc._C_UINT, b"1")
 
     def test_int(self):
         self.assertEqual(0, pyObjCPy(objc._C_INT, 0))
@@ -136,12 +182,20 @@ class TestNumbers(TestCase):
         self.assertEqual(INT_MAX, pyObjCPy(objc._C_INT, float(INT_MAX)))
         self.assertEqual(INT_MIN, pyObjCPy(objc._C_INT, float(INT_MIN)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_INT, INT_MAX + 1)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_INT, INT_MIN - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_INT, INT_MAX + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_INT, INT_MIN - 1)
 
         # Check implicit conversion
-        self.assertRaises(ValueError, pyObjCPy, objc._C_INT, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_INT, b"1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            pyObjCPy(objc._C_INT, "1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'bytes'"):
+            pyObjCPy(objc._C_INT, b"1")
 
     def test_unsigned_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_ULNG, 0))
@@ -153,11 +207,19 @@ class TestNumbers(TestCase):
 
             if sys.maxsize < 2 ** 32:
                 self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, float(ULONG_MAX)))
-                self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN)
-                self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN - 1)
+                with self.assertRaisesRegex(ValueError, "foo"):
+                    pyObjCPy(objc._C_ULNG, LONG_MIN)
+                with self.assertRaisesRegex(ValueError, "foo"):
+                    pyObjCPy(objc._C_ULNG, LONG_MIN - 1)
 
-            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, "1")
-            self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, b"1")
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'unsigned long', got 'str'"
+            ):
+                pyObjCPy(objc._C_ULNG, "1")
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'unsigned long', got 'bytes'"
+            ):
+                pyObjCPy(objc._C_ULNG, b"1")
 
     def test_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_LNG, 0))
@@ -168,11 +230,19 @@ class TestNumbers(TestCase):
             self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, float(LONG_MAX)))
             self.assertEqual(LONG_MIN, pyObjCPy(objc._C_LNG, float(LONG_MIN)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, LONG_MAX + 1)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, LONG_MIN - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_LNG, LONG_MAX + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_LNG, LONG_MIN - 1)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, b"1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long', got 'str'"):
+            pyObjCPy(objc._C_LNG, "1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long', got 'bytes'"):
+            pyObjCPy(objc._C_LNG, b"1")
 
     def test_unsigned_long_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, 0))
@@ -192,13 +262,21 @@ class TestNumbers(TestCase):
                 -LLONG_MIN + 100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN + 100)
             )
 
-        # self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)
-        self.assertRaises(
-            (ValueError, IndexError), pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN - 1
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned long long', got 'int' of wrong "
+            r"magnitude \(max 18446744073709551615, value 18446744073709551615\)",
+        ):
+            pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN - 1)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, b"1")
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            pyObjCPy(objc._C_ULNG_LNG, "1")
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'bytes'"
+        ):
+            pyObjCPy(objc._C_ULNG_LNG, b"1")
 
     def test_long_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_LNG_LNG, 0))
@@ -208,11 +286,23 @@ class TestNumbers(TestCase):
         self.assertEqual(LLONG_MAX, pyObjCPy(objc._C_LNG_LNG, LLONG_MAX))
         self.assertEqual(LLONG_MIN, pyObjCPy(objc._C_LNG_LNG, LLONG_MIN))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, LLONG_MAX + 1)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, LLONG_MIN - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_LNG_LNG, LLONG_MAX + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
+        ):
+            pyObjCPy(objc._C_LNG_LNG, LLONG_MIN - 1)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, b"1")
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            pyObjCPy(objc._C_LNG_LNG, "1")
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'bytes'"
+        ):
+            pyObjCPy(objc._C_LNG_LNG, b"1")
 
     def test_double(self):
         self.assertEqual(0, pyObjCPy(objc._C_DBL, 0))
@@ -224,12 +314,15 @@ class TestNumbers(TestCase):
         self.assertEqual(DBL_EPSILON, pyObjCPy(objc._C_DBL, DBL_EPSILON))
         self.assertEqual(-DBL_EPSILON, pyObjCPy(objc._C_DBL, -DBL_EPSILON))
 
-        self.assertRaises(
-            (OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1 << 10000
-        )
+        with self.assertRaisesRegex(
+            (OverflowError, ValueError), "int too large to convert to float"
+        ):
+            pyObjCPy(objc._C_DBL, 1 << 10000)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, b"1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            pyObjCPy(objc._C_DBL, "1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'bytes'"):
+            pyObjCPy(objc._C_DBL, b"1")
 
     def test_float(self):
         self.assertEqual(0, pyObjCPy(objc._C_FLT, 0))
@@ -245,12 +338,15 @@ class TestNumbers(TestCase):
         # of float
         self.assertNotEqual(DBL_MAX, pyObjCPy(objc._C_FLT, DBL_MAX))
 
-        self.assertRaises(
-            (ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1 << 10000
-        )
+        with self.assertRaisesRegex(
+            (ValueError, OverflowError), "int too large to convert to float"
+        ):
+            pyObjCPy(objc._C_FLT, 1 << 10000)
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, "1")
-        self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, b"1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'float', got 'str'"):
+            pyObjCPy(objc._C_FLT, "1")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'float', got 'bytes'"):
+            pyObjCPy(objc._C_FLT, b"1")
 
 
 class TestStruct(TestCase):
@@ -303,11 +399,24 @@ class TestArray(TestCase):
         self.assertEqual(value, tuple(pyObjCPy(signature, iter(value))))
         self.assertEqual(value, tuple(pyObjCPy(signature, iter(list(value)))))
 
-        self.assertRaises(ValueError, pyObjCPy, signature, value + value[:1])
-        self.assertRaises(ValueError, pyObjCPy, signature, value[:9])
-        self.assertRaises(ValueError, pyObjCPy, signature, iter(value + value[:1]))
-        self.assertRaises(ValueError, pyObjCPy, signature, iter(value[:9]))
-        self.assertRaises(TypeError, pyObjCPy, signature, None)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 11"
+        ):
+            pyObjCPy(signature, value + value[:1])
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 9"
+        ):
+            pyObjCPy(signature, value[:9])
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 11"
+        ):
+            pyObjCPy(signature, iter(value + value[:1]))
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 9"
+        ):
+            pyObjCPy(signature, iter(value[:9]))
+        with self.assertRaisesRegex(TypeError, "depythonifying array, got no sequence"):
+            pyObjCPy(signature, None)
 
 
 class TestCArray(TestCase):
@@ -327,8 +436,14 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_SHT, arr, 2)
         self.assertEqual(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_SHT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_SHT, ["a", "b"], 1)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(5\) expecting at least 7"
+        ):
+            carrayMaker(objc._C_SHT, arr, 7)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'str' of 1"
+        ):
+            carrayMaker(objc._C_SHT, ["a", "b"], 1)
 
     def testShortArray(self):
         arr = array.array("h", [1, 2, 3, 4, 5])
@@ -340,8 +455,14 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_SHT, arr, 2)
         self.assertEqual(res, tuple(arr)[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_SHT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_SHT, arr2, None)
+        with self.assertRaisesRegex(
+            ValueError, "Requesting buffer of 7, have buffer of 5"
+        ):
+            carrayMaker(objc._C_SHT, arr, 7)
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of f and and C array of s"
+        ):
+            carrayMaker(objc._C_SHT, arr2, None)
 
     def testIntTuple(self):
         arr = (1, 2, 3, 4, 5)
@@ -352,8 +473,12 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_INT, arr, 2)
         self.assertEqual(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(5\) expecting at least 7"
+        ):
+            carrayMaker(objc._C_INT, arr, 7)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 1"):
+            carrayMaker(objc._C_INT, ["a", "b"], 1)
 
     def testIntArray(self):
         arr = array.array("i", [1, 2, 3, 4, 5])
@@ -366,9 +491,18 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_INT, arr, 2)
         self.assertEqual(res, tuple(arr)[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr2, None)
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr3, None)
+        with self.assertRaisesRegex(
+            ValueError, "Requesting buffer of 7, have buffer of 5"
+        ):
+            carrayMaker(objc._C_INT, arr, 7)
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of f and and C array of i"
+        ):
+            carrayMaker(objc._C_INT, arr2, None)
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of s and and C array of i"
+        ):
+            carrayMaker(objc._C_INT, arr3, None)
 
     def testFloatTuple(self):
         arr = (1, 2, 3, 4, 5)
@@ -379,8 +513,12 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_FLT, arr, 2)
         self.assertEqual(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_INT, ["a", "b"], 1)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(5\) expecting at least 7"
+        ):
+            carrayMaker(objc._C_INT, arr, 7)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 1"):
+            carrayMaker(objc._C_INT, ["a", "b"], 1)
 
     def testFloatArray(self):
         arr = array.array("f", [1.5, 2.5, 3.5, 4.5, 5.5])
@@ -392,8 +530,14 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_FLT, arr, 2)
         self.assertEqual(res, tuple(arr)[:2])
 
-        self.assertRaises(ValueError, carrayMaker, objc._C_FLT, arr, 7)
-        self.assertRaises(ValueError, carrayMaker, objc._C_FLT, arr2, None)
+        with self.assertRaisesRegex(
+            ValueError, "Requesting buffer of 7, have buffer of 5"
+        ):
+            carrayMaker(objc._C_FLT, arr, 7)
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of i and and C array of f"
+        ):
+            carrayMaker(objc._C_FLT, arr2, None)
 
     def testPointTuple(self):
         arr = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
@@ -405,9 +549,18 @@ class TestCArray(TestCase):
         res = carrayMaker(b"{Point=ff}", arr, 2)
         self.assertEqual(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", arr, 7)
-        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", ["a", "b"], 1)
-        self.assertRaises(TypeError, carrayMaker, b"{Point=ff}", arr2, None)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(5\) expecting at least 7"
+        ):
+            carrayMaker(b"{Point=ff}", arr, 7)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying struct of 2 members, got tuple of 1"
+        ):
+            carrayMaker(b"{Point=ff}", ["a", "b"], 1)
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            carrayMaker(b"{Point=ff}", arr2, None)
 
     def testPointArray(self):
         arr = array.array("f", [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5])
@@ -421,7 +574,11 @@ class TestCArray(TestCase):
         res = carrayMaker(b"{Point=ff}", arr, 2)
         self.assertEqual(res, lst[:2])
 
-        self.assertRaises(ValueError, carrayMaker, b"{Point=ff}", arr2, None)
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of i and and C array of {Point=ff}",
+        ):
+            carrayMaker(b"{Point=ff}", arr2, None)
 
     def testRectArray(self):
         arr = array.array(
@@ -473,7 +630,11 @@ class TestCArray(TestCase):
         res = carrayMaker(b"[2[2f]]}", arr, None)
         self.assertEqual(res, lst)
 
-        self.assertRaises(ValueError, carrayMaker, b"{Rect={P=ff}{S=ff}}", arr2, None)
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of i and and C array of {Rect={P=ff}{S=ff}}",
+        ):
+            carrayMaker(b"{Rect={P=ff}{S=ff}}", arr2, None)
 
     def testMixedArray(self):
         arr = array.array(
@@ -502,9 +663,21 @@ class TestCArray(TestCase):
             ],
         )
 
-        self.assertRaises(ValueError, carrayMaker, b"{M={P=ff}{S=ii}}", arr, 4)
-        self.assertRaises(ValueError, carrayMaker, b"{M=if{S=ii}}", arr, None)
-        self.assertRaises(ValueError, carrayMaker, b"{M=fi{S=ff}}", arr, None)
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of f and and C array of {M={P=ff}{S=ii}}",
+        ):
+            carrayMaker(b"{M={P=ff}{S=ii}}", arr, 4)
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of f and and C array of {M=if{S=ii}}",
+        ):
+            carrayMaker(b"{M=if{S=ii}}", arr, None)
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of f and and C array of {M=fi{S=ff}}",
+        ):
+            carrayMaker(b"{M=fi{S=ff}}", arr, None)
 
 
 class PyOCTestTypeStr(TestCase):

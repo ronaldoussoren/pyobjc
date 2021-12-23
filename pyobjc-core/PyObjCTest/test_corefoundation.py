@@ -56,7 +56,8 @@ class TestCoreFoundation(TestCase):
             )
         )
 
-        self.assertRaises(objc.error, objc.lookUpClass, "CFUUIDRef")
+        with self.assertRaisesRegex(objc.error, "^CFUUIDRef$"):
+            objc.lookUpClass("CFUUIDRef")
 
         # AnotherUUID claims to return an Object (objc._C_ID), check that
         # we correctly return an object of the right type in that case as well.

@@ -480,9 +480,11 @@ class TestCase(_unittest.TestCase):
 
         try:
             if not info["arguments"][argno + offset]["already_cfretained"]:
-                self.fail(message or f"{method!r} is not cfretained")
+                self.fail(
+                    message or f"Argument {argno} of {method!r} is not cfretained"
+                )
         except (KeyError, IndexError):
-            self.fail(message or f"{method!r} is not cfretained")
+            self.fail(message or f"Argument {argno} of {method!r} is not cfretained")
 
     def assertArgIsNotCFRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -492,7 +494,7 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         try:
             if info["arguments"][argno + offset]["already_cfretained"]:
-                self.fail(message or f"{method!r} is cfretained")
+                self.fail(message or f"Argument {argno} of {method!r} is cfretained")
         except (KeyError, IndexError):
             pass
 
@@ -516,9 +518,9 @@ class TestCase(_unittest.TestCase):
 
         try:
             if not info["arguments"][argno + offset]["already_retained"]:
-                self.fail(message or f"{method!r} is not retained")
+                self.fail(message or f"Argument {argno} of {method!r} is not retained")
         except (KeyError, IndexError):
-            self.fail(message or f"{method!r} is not retained")
+            self.fail(message or f"Argument {argno} of {method!r} is not retained")
 
     def assertArgIsNotRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):

@@ -204,14 +204,14 @@ def namedSelector(name, signature=None):
 
         def _namedselector(func):
             if func is None:
-                raise TypeError("IBAction argument must be a callable")
+                raise TypeError("namedSelector argument must be a callable")
             return selector(func, selector=name, signature=signature)
 
     else:
 
         def _namedselector(func):
             if func is None:
-                raise TypeError("IBAction argument must be a callable")
+                raise TypeError("namedSelector argument must be a callable")
             return selector(func, selector=name)
 
     return _namedselector

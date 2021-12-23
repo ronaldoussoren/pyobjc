@@ -1,4 +1,3 @@
-import operator
 import sys
 import collections.abc
 
@@ -137,7 +136,8 @@ class TestNSDecimalNumber(TestCase):
         self.assertIsInstance(w, self.NSDecimalNumber)
         self.assertEqual(str(w), "2.5")
 
-        self.assertRaises(TypeError, self.NSDecimalNumber, {})
+        with self.assertRaisesRegex(TypeError, "Value is not a number"):
+            self.NSDecimalNumber({})
 
     def testCalculation(self):
         a_o = self.NSDecimalNumber("1.5")
@@ -235,12 +235,30 @@ class TestNSDecimalNumber(TestCase):
 
         # Not supported at the moment.
 
-        self.assertRaises(TypeError, operator.mod, a_o, b_o)
-        self.assertRaises(TypeError, operator.mod, a_c, b_c)
-        self.assertRaises(TypeError, operator.mod, a_o, 2)
-        self.assertRaises(TypeError, operator.mod, a_c, 2)
-        self.assertRaises(TypeError, operator.mod, 2, b_o)
-        self.assertRaises(TypeError, operator.mod, 2, b_c)
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            a_o % b_o
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            a_c % b_c
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            a_o % 2
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            a_c % 2
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            2 % b_o
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for %: .*"
+        ):
+            2 % b_c
 
         # v_o = a_o % b_o
         # v_c = a_c % b_c
@@ -478,11 +496,15 @@ class TestBasicConveniences(TestCase):
 
         self.assertEqual(o._.host, "www.python.org")
         self.assertEqual(o._["host"], "www.python.org")
-        self.assertRaises(TypeError, lambda: o._[42])
+        with self.assertRaisesRegex(TypeError, "Key must be string"):
+            o._[42]
         self.assertEqual(repr(o._), f"<KVC accessor for {o!r}>")
-        self.assertRaises(AttributeError, getattr, o._, "nosuchattr")
-        self.assertRaises(AttributeError, getattr, o._, "")
-        self.assertRaises(TypeError, o._.__getitem__, 42)
+        with self.assertRaisesRegex(AttributeError, "^nosuchattr$"):
+            o._.nosuchattr
+        with self.assertRaisesRegex(AttributeError, "^$"):
+            getattr(o._, "")
+        with self.assertRaisesRegex(TypeError, "Key must be string"):
+            o._[42]
 
         o = objc.lookUpClass("NSMutableDictionary").dictionary()
         o._.key1 = 1
@@ -492,12 +514,20 @@ class TestBasicConveniences(TestCase):
 
         # At least on OSX 10.11 the KVC accessor for NSDictionary returns
         # nil for non-existing keys.
-        # self.assertRaises(AttributeError, getattr, o._, 'nosuchattr')
-        self.assertRaises(TypeError, o._.__setitem__, 42, 1)
+        try:
+            v = o._.nosuchattr
+            self.assertIs(v, None)
+        except AttributeError as exc:
+            self.assertEqual(str(exc), "nosuchattr")
+
+        with self.assertRaisesRegex(TypeError, "Key must be string"):
+            o._[42] = 1
 
         o = OC_WithHash.alloc().initWithHash_(1)
-        self.assertRaises(IndexError, getattr, o._, "someKey")
-        self.assertRaises(KeyError, getattr, o._, "someOtherKey")
+        with self.assertRaisesRegex(IndexError, "NSRangeException - Test exception"):
+            o._.someKey
+        with self.assertRaisesRegex(KeyError, "^$"):  # XXX: Can we do better?
+            o._.someOtherKey
 
 
 class TestSequences(TestCase):
@@ -510,12 +540,21 @@ class TestSequences(TestCase):
         self.assertEqual(o[-1], "d")
         self.assertEqual(o[-3], "b")
 
-        self.assertRaises(IndexError, operator.getitem, o, 6)
-        self.assertRaises(IndexError, operator.getitem, o, -6)
-        self.assertRaises(ValueError, operator.getitem, o, slice(1, 3))
+        with self.assertRaisesRegex(
+            IndexError, "NSRangeException - Index 6 is out of range"
+        ):
+            o[6]
+        with self.assertRaisesRegex(IndexError, "^-6$"):  # XXX:Can be do better?
+            o[-6]
+        with self.assertRaisesRegex(ValueError, "Slices not supported"):
+            o[slice(1, 3)]
 
         self.assertEqual(list(iter(o)), ["a", "b", "c", "d"])
-        self.assertRaises(AttributeError, operator.setitem, o, 1, "A")
+        with self.assertRaisesRegex(
+            AttributeError,
+            "OC_TestSequence' object has no attribute 'setObject_atIndex_",
+        ):
+            o[1] = "A"
 
         o = OC_TestSequence.alloc().initWithArray_([])
         self.assertEqual(list(iter(o)), [])
@@ -534,9 +573,12 @@ class TestSequences(TestCase):
 
         self.assertEqual(list(o), ["A", "X", "C", "d"])
 
-        self.assertRaises(IndexError, operator.setitem, o, 6, "x")
-        self.assertRaises(IndexError, operator.setitem, o, -7, "x")
-        self.assertRaises(ValueError, operator.setitem, o, slice(1, 3), (1, 2))
+        with self.assertRaisesRegex(IndexError, "Index 6 is out of range"):
+            o[6] = "x"
+        with self.assertRaisesRegex(IndexError, "^-7$"):  # XXX: Can be do better?
+            o[-7] = "x"
+        with self.assertRaisesRegex(ValueError, "Slices not supported"):
+            o[slice(1, 3)] = (1, 2)
 
 
 class FakeSequence(objc.lookUpClass("NSObject")):

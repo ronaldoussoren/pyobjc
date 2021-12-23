@@ -63,7 +63,10 @@ class TestNSNumber(TestCase):
 
         self.assertIsNot(type(v), int)
 
-        self.assertRaises(AttributeError, setattr, v, "x", 42)
+        with self.assertRaisesRegex(
+            AttributeError, "'.*NSCFNumber' object has no attribute 'x'"
+        ):
+            v.x = 42
 
     def testEdgeCases(self):
         from objc._pythonify import numberWrapper

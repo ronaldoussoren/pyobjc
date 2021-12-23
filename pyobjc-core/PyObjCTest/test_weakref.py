@@ -23,15 +23,24 @@ class OC_WeakrefTest2(OC_WeakrefTest1):
 class TestWeakrefs(TestCase):
     def testPureObjC(self):
         o = NSObject.new()
-        self.assertRaises(TypeError, weakref.ref, o)
+        with self.assertRaisesRegex(
+            TypeError, "cannot create weak reference to 'NSObject' object"
+        ):
+            weakref.ref(o)
 
     def testFirstGenPython(self):
         o = OC_WeakrefTest1.new()
-        self.assertRaises(TypeError, weakref.ref, o)
+        with self.assertRaisesRegex(
+            TypeError, "cannot create weak reference to 'OC_WeakrefTest1' object"
+        ):
+            weakref.ref(o)
 
     def testSecondGenPython(self):
         o = OC_WeakrefTest2.new()
-        self.assertRaises(TypeError, weakref.ref, o)
+        with self.assertRaisesRegex(
+            TypeError, "cannot create weak reference to 'OC_WeakrefTest2' object"
+        ):
+            weakref.ref(o)
 
 
 class TestObjCWeakRef(TestCase):
@@ -47,11 +56,26 @@ class TestObjCWeakRef(TestCase):
 
     @min_os_level("10.7")
     def test_weakref_to_python(self):
-        self.assertRaises(TypeError, objc.WeakRef, 1)
-        self.assertRaises(TypeError, objc.WeakRef, "hello")
-        self.assertRaises(TypeError, objc.WeakRef, b"hello")
-        self.assertRaises(TypeError, objc.WeakRef, [])
-        self.assertRaises(TypeError, objc.WeakRef, self)
+        with self.assertRaisesRegex(
+            TypeError, "Expecting a Cocoa object, got instance of 'int'"
+        ):
+            objc.WeakRef(1)
+        with self.assertRaisesRegex(
+            TypeError, "Expecting a Cocoa object, got instance of 'str'"
+        ):
+            objc.WeakRef("hello")
+        with self.assertRaisesRegex(
+            TypeError, "Expecting a Cocoa object, got instance of 'bytes'"
+        ):
+            objc.WeakRef(b"hello")
+        with self.assertRaisesRegex(
+            TypeError, "Expecting a Cocoa object, got instance of 'list'"
+        ):
+            objc.WeakRef([])
+        with self.assertRaisesRegex(
+            TypeError, "Expecting a Cocoa object, got instance of 'TestObjCWeakRef'"
+        ):
+            objc.WeakRef(self)
 
     @min_os_level("10.7")
     def test_weakref_to_objc(self):
@@ -85,19 +109,25 @@ class TestObjCWeakRef(TestCase):
         r = objc.WeakRef(object=o)
         self.assertIs(r(), o)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(TypeError, ".*expected no arguments, got 1"):
             r(1)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(TypeError, ".*does not accept keyword arguments"):
             r(x=1)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'object' \(pos 1\)"
+        ):
             objc.WeakRef(value=o)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 1 argument \(2 given\)"
+        ):
             objc.WeakRef(o, value=o)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 1 argument \(2 given\)"
+        ):
             objc.WeakRef(o, o)
 
         del o

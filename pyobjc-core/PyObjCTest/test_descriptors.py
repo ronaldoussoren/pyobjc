@@ -37,8 +37,11 @@ class TestBasicDescriptors(TestCase):
         self.assertEqual(myAction_.selector, b"myAction:")
         self.assertFalse(myAction_.isClassMethod)
 
-        self.assertRaises(TypeError, objc.IBAction, None)
-        self.assertRaises(TypeError, objc.IBAction, 42)
+        # First is from 'IBAction', second is from 'selector'
+        with self.assertRaisesRegex(TypeError, "IBAction argument must be a callable"):
+            objc.IBAction(None)
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.IBAction(42)
 
     def test_instancemethod(self):
         class TestDescriptorsClass1(NSObject):
@@ -56,8 +59,12 @@ class TestBasicDescriptors(TestCase):
         self.assertIsInstance(m, objc.selector)
         self.assertFalse(m.isClassMethod)
 
-        self.assertRaises(TypeError, objc.instancemethod, None)
-        self.assertRaises(TypeError, objc.instancemethod, 42)
+        with self.assertRaisesRegex(
+            TypeError, "instancemethod argument must be a callable"
+        ):
+            objc.instancemethod(None)
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.instancemethod(42)
 
     def test_typedSelector(self):
         @objc.typedSelector(b"I@:qq")
@@ -68,8 +75,12 @@ class TestBasicDescriptors(TestCase):
         self.assertEqual(mySelector_arg_.signature, b"I@:qq")
         self.assertEqual(mySelector_arg_.selector, b"mySelector:arg:")
 
-        self.assertRaises(TypeError, objc.typedSelector(b"v@:i"), None)
-        self.assertRaises(TypeError, objc.typedSelector(b"v@:i"), 42)
+        with self.assertRaisesRegex(
+            TypeError, r"typedSelector\(\) function argument must be a callable"
+        ):
+            objc.typedSelector(b"v@:i")(None)
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.typedSelector(b"v@:i")(42)
 
     def testNamedSelector(self):
         @objc.namedSelector(b"foo:bar:")
@@ -80,8 +91,12 @@ class TestBasicDescriptors(TestCase):
         self.assertEqual(mymethod.signature, b"v@:@@")
         self.assertEqual(mymethod.selector, b"foo:bar:")
 
-        self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:"), None)
-        self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:"), 42)
+        with self.assertRaisesRegex(
+            TypeError, "namedSelector argument must be a callable"
+        ):
+            objc.namedSelector(b"foo:bar:")(None)
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.namedSelector(b"foo:bar:")(42)
 
         @objc.namedSelector(b"foo:bar:", signature=b"q@:qq")
         def mymethod(self, a, b):
@@ -91,8 +106,12 @@ class TestBasicDescriptors(TestCase):
         self.assertEqual(mymethod.signature, b"q@:qq")
         self.assertEqual(mymethod.selector, b"foo:bar:")
 
-        self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:", b"q@:qq"), None)
-        self.assertRaises(TypeError, objc.namedSelector(b"foo:bar:", b"q@:qq"), 42)
+        with self.assertRaisesRegex(
+            TypeError, "namedSelector argument must be a callable"
+        ):
+            objc.namedSelector(b"foo:bar:", b"q@:qq")(None)
+        with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
+            objc.namedSelector(b"foo:bar:", b"q@:qq")(42)
 
     def testNamedselector(self):
         with warnings.catch_warnings():
@@ -106,8 +125,14 @@ class TestBasicDescriptors(TestCase):
             self.assertEqual(mymethod.signature, b"v@:@@")
             self.assertEqual(mymethod.selector, b"foo:bar:")
 
-            self.assertRaises(TypeError, objc.namedselector(b"foo:bar:"), None)
-            self.assertRaises(TypeError, objc.namedselector(b"foo:bar:"), 42)
+            with self.assertRaisesRegex(
+                TypeError, "namedSelector argument must be a callable"
+            ):
+                objc.namedselector(b"foo:bar:")(None)
+            with self.assertRaisesRegex(
+                TypeError, "argument 'method' must be callable"
+            ):
+                objc.namedselector(b"foo:bar:")(42)
 
             @objc.namedselector(b"foo:bar:", signature=b"q@:qq")
             def mymethod(self, a, b):
@@ -117,10 +142,14 @@ class TestBasicDescriptors(TestCase):
             self.assertEqual(mymethod.signature, b"q@:qq")
             self.assertEqual(mymethod.selector, b"foo:bar:")
 
-            self.assertRaises(
-                TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), None
-            )
-            self.assertRaises(TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), 42)
+            with self.assertRaisesRegex(
+                TypeError, "namedSelector argument must be a callable"
+            ):
+                objc.namedselector(b"foo:bar:", b"q@:qq")(None)
+            with self.assertRaisesRegex(
+                TypeError, "argument 'method' must be callable"
+            ):
+                objc.namedselector(b"foo:bar:", b"q@:qq")(42)
 
     # synthesize is tested in test_synthesize
 
@@ -283,34 +312,60 @@ class TestBasicDescriptors(TestCase):
         def attrib(self, *args):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, attrib)
+        with self.assertRaisesRegex(
+            TypeError,
+            "attrib can not be an accessor because it accepts varargs, varkw or kwonly",
+        ):
+            objc.accessor(attrib)
 
         def attrib(self, **kwds):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, attrib)
+        with self.assertRaisesRegex(
+            TypeError,
+            "attrib can not be an accessor because it accepts varargs, varkw or kwonly",
+        ):
+            objc.accessor(attrib)
 
         # Not really an accessor
         def attrib_error_(self, a, b):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, attrib_error_)
+        with self.assertRaisesRegex(
+            TypeError, "attrib_error_ not recognized as an accessor"
+        ):
+            objc.accessor(attrib_error_)
 
         # Argument counts that don't match
         def validateObject_error_(self, a):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, validateObject_error_)
+        with self.assertRaisesRegex(
+            TypeError,
+            r"validateObject_error_ expected to take 2 args, but must accept 3 "
+            r"from Objective-C \(implicit self plus count of underscores\)",
+        ):
+            objc.accessor(validateObject_error_)
 
         def validateObject_error_(self, a, b, c):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, validateObject_error_)
+        with self.assertRaisesRegex(
+            TypeError,
+            r"validateObject_error_ expected to take 4 args, but must accept "
+            r"3 from Objective-C \(implicit self plus count of underscores\)",
+        ):
+            objc.accessor(validateObject_error_)
 
         def validateObject_error_(self, a, b, c, d=1, e=2):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, validateObject_error_)
+        with self.assertRaisesRegex(
+            TypeError,
+            r"validateObject_error_ expected to take between 4 and 6 args, but "
+            r"must accept 3 from Objective-C \(implicit self plus count of underscores\)",
+        ):
+            objc.accessor(validateObject_error_)
 
         @objc.accessor
         def validateObject_error_(self, a, b, c=1):
@@ -319,9 +374,11 @@ class TestBasicDescriptors(TestCase):
         def countOfFoo_withBar_withBaz_withNone_(self, foo, bar, baz, none):
             pass
 
-        self.assertRaises(
-            TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_
-        )
+        with self.assertRaisesRegex(
+            TypeError,
+            "countOfFoo_withBar_withBaz_withNone_ not recognized as an accessor",
+        ):
+            objc.accessor(countOfFoo_withBar_withBaz_withNone_)
 
     def test_typedAccessor(self):
         # NOTE: the optional type argument is tested through the typedAccessor function
@@ -652,38 +709,71 @@ class TestBasicDescriptors(TestCase):
             def attrib(self, *args):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, attrib)
+            with self.assertRaisesRegex(
+                TypeError,
+                "attrib can not be an accessor because it accepts varargs, varkw or kwonly",
+            ):
+                objc.Accessor(attrib)
 
             def attrib(self, **kwds):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, attrib)
+            with self.assertRaisesRegex(
+                TypeError,
+                "attrib can not be an accessor because it accepts varargs, varkw or kwonly",
+            ):
+                objc.Accessor(attrib)
 
             # Not really an accessor
             def attrib_error_(self, a, b):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, attrib_error_)
+            with self.assertRaisesRegex(
+                TypeError, "attrib_error_ not recognized as an accessor"
+            ):
+                objc.Accessor(attrib_error_)
 
             # Argument counts that don't match
             def validateObject_error_(self, a):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
+            with self.assertRaisesRegex(
+                TypeError,
+                r"validateObject_error_ expected to take 2 args, but must "
+                r"accept 3 from Objective-C \(implicit self plus count of underscores\)",
+            ):
+                objc.Accessor(validateObject_error_)
 
             def validateObject_error_(self, a, b, c):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
+            with self.assertRaisesRegex(
+                TypeError,
+                r"validateObject_error_ expected to take 4 args, but must "
+                r"accept 3 from Objective-C \(implicit self plus count of underscores\)",
+            ):
+                objc.Accessor(validateObject_error_)
 
             def validateObject_error_(self, a, b, c, d=1, e=2):
                 pass
 
-            self.assertRaises(TypeError, objc.Accessor, validateObject_error_)
+            with self.assertRaisesRegex(
+                TypeError,
+                r"validateObject_error_ expected to take between 4 and 6 args, "
+                r"but must accept 3 from Objective-C \(implicit self plus count of underscores\)",
+            ):
+                objc.Accessor(validateObject_error_)
 
             @objc.Accessor
             def validateObject_error_(self, a, b, c=1):
                 pass
+
+            with self.assertRaisesRegex(
+                TypeError,
+                r"validateObject_error_ expected to take 2 args, but must "
+                r"accept 3 from Objective-C \(implicit self plus count of underscores\)",
+            ):
+                objc.Accessor(validateObject_error_)
 
     def test_signature(self):
         with warnings.catch_warnings():
