@@ -672,17 +672,12 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
 
 /*
 Return the alignment of an object specified by type
+
+XXX: The embedded align function is used for the first
+member of a struct, and is no longer necessary.
 */
 
-static inline Py_ssize_t
-PyObjC_EmbeddedAlignOfType(const char* type)
-{
-    PyObjC_Assert(type != NULL, -1);
-
-    Py_ssize_t align = PyObjCRT_AlignOfType(type);
-
-    return align;
-}
+#define PyObjC_EmbeddedAlignOfType PyObjCRT_AlignOfType
 
 Py_ssize_t
 PyObjCRT_AlignOfType(const char* start_type)
@@ -1238,7 +1233,7 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
     int         haveTuple;
     const char* type_start = type;
     const char* type_end   = PyObjCRT_SkipTypeSpec(type);
-    Py_ssize_t  pack;
+    Py_ssize_t  pack       = -1;
 
     if (type_end == NULL) {
         return NULL;

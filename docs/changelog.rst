@@ -114,6 +114,12 @@ for edge cases that don't happen in normal programs.
   This resulted in some minor changes in messages, this should not affect
   code using PyObjC.
 
+* Fix the ``__name__`` and ``__repr__`` result for the exact class
+  :class:`objc.objc_object`.
+
+* Fix use of uninitialized variable in the code that converts a C struct
+  from Objective-C to a Python tuple.
+
 Version 8.1
 -----------
 
