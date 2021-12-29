@@ -2,7 +2,6 @@
 Tests for the NSDecimal wrapper type
 """
 import decimal
-import operator
 
 import objc
 from PyObjCTest.decimal import OC_TestDecimal
@@ -17,7 +16,8 @@ class TestNSDecimalWrapper(TestCase):
         d = objc.NSDecimal(-5)
         self.assertEqual(str(d), "-5")
 
-        self.assertRaises(OverflowError, objc.NSDecimal, 1 << 66)
+        with self.assertRaisesRegex(OverflowError, "int too big to convert"):
+            objc.NSDecimal(1 << 66)
 
         d = objc.NSDecimal(0.0)
         self.assertEqual(str(d), "0")
@@ -86,16 +86,28 @@ class TestNSDecimalWrapper(TestCase):
         self.assertTrue(d5 != D5)
         self.assertFalse(d5 < i5)
         self.assertFalse(d5 < f5)
-        self.assertRaises(TypeError, operator.lt, d5, D5)
+        with self.assertRaisesRegex(
+            TypeError, "Cannot compare NSDecimal and decimal.Decimal"
+        ):
+            d5 < D5  # noqa: B015
         self.assertFalse(d5 > i5)
         self.assertFalse(d5 > f5)
-        self.assertRaises(TypeError, operator.gt, d5, D5)
+        with self.assertRaisesRegex(
+            TypeError, "Cannot compare NSDecimal and decimal.Decimal"
+        ):
+            d5 > D5  # noqa: B015
         self.assertTrue(d5 >= i5)
         self.assertTrue(d5 >= f5)
-        self.assertRaises(TypeError, operator.ge, d5, D5)
+        with self.assertRaisesRegex(
+            TypeError, "Cannot compare NSDecimal and decimal.Decimal"
+        ):
+            d5 >= D5  # noqa: B015
         self.assertTrue(d5 <= i5)
         self.assertTrue(d5 <= f5)
-        self.assertRaises(TypeError, operator.le, d5, D5)
+        with self.assertRaisesRegex(
+            TypeError, "Cannot compare NSDecimal and decimal.Decimal"
+        ):
+            d5 <= D5  # noqa: B015
 
     def test_hash(self):
         self.assertEqual(hash(objc.NSDecimal("1.50")), hash(objc.NSDecimal("1.500")))
@@ -110,8 +122,14 @@ class TestNSDecimalWrapper(TestCase):
         self.assertEqual(d1.as_float(), 1.5)
         self.assertEqual(d2.as_float(), 25.0)
 
-        self.assertRaises(TypeError, int, d1)
-        self.assertRaises(TypeError, float, d1)
+        with self.assertRaisesRegex(
+            TypeError, r"int\(\) argument must .*, not 'Foundation.NSDecimal'"
+        ):
+            int(d1)
+        with self.assertRaisesRegex(
+            TypeError, r"float\(\) argument must be .*, not 'Foundation.NSDecimal'"
+        ):
+            float(d1)
 
     def test_rounding(self):
         d1 = objc.NSDecimal("1.5781")
@@ -130,12 +148,22 @@ class TestNSDecimalWrapper(TestCase):
         self.assertEqual(d2, objc.NSDecimal("20"))
 
     def test_pow(self):
-        self.assertRaises(TypeError, pow, objc.NSDecimal("3.5"), 3, 1)
-        self.assertRaises(TypeError, pow, objc.NSDecimal("3.5"), 3)
-        self.assertRaises(TypeError, operator.pow, objc.NSDecimal("3.5"), 3)
-        self.assertRaises(
-            TypeError, operator.pow, objc.NSDecimal("3.5"), objc.NSDecimal("2")
-        )
+        with self.assertRaisesRegex(
+            TypeError, r"pow\(\) and \*\* are not supported for NSDecimal"
+        ):
+            pow(objc.NSDecimal("3.5"), 3, 1)
+        with self.assertRaisesRegex(
+            TypeError, r"pow\(\) and \*\* are not supported for NSDecimal"
+        ):
+            pow(objc.NSDecimal("3.5"), 3)
+        with self.assertRaisesRegex(
+            TypeError, r"pow\(\) and \*\* are not supported for NSDecimal"
+        ):
+            objc.NSDecimal("3.5") ** 3
+        with self.assertRaisesRegex(
+            TypeError, r"pow\(\) and \*\* are not supported for NSDecimal"
+        ):
+            objc.NSDecimal("3.5") ** objc.NSDecimal("2")
 
     def test_operators(self):
         d1 = objc.NSDecimal("1.5")
@@ -171,10 +199,47 @@ class TestNSDecimalWrapper(TestCase):
         o = d1 // 2
         self.assertEqual(o, objc.NSDecimal("0"))
 
-        self.assertRaises(TypeError, operator.add, d1, 0.5)
-        self.assertRaises(TypeError, operator.sub, d1, 0.5)
-        self.assertRaises(TypeError, operator.mul, d1, 0.5)
-        self.assertRaises(TypeError, operator.truediv, d1, 0.5)
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \+: 'Foundation.NSDecimal' and 'float'",
+        ):
+            d1 + 0.5
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for -: 'Foundation.NSDecimal' and 'float'",
+        ):
+            d1 - 0.5
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \*: 'Foundation.NSDecimal' and 'float'",
+        ):
+            d1 * 0.5
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for /: 'Foundation.NSDecimal' and 'float'",
+        ):
+            d1 / 0.5
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \+: 'float' and 'Foundation.NSDecimal'",
+        ):
+            0.5 + d1
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for -: 'float' and 'Foundation.NSDecimal'",
+        ):
+            0.5 - d1
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \*: 'float' and 'Foundation.NSDecimal'",
+        ):
+            0.5 * d1
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for /: 'float' and 'Foundation.NSDecimal'",
+        ):
+            0.5 / d1
 
     def test_inplace_ro(self):
         d1 = objc.NSDecimal("1.5")

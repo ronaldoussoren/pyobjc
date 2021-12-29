@@ -118,9 +118,8 @@ class TestInstanceVariables(TestCase):
         # Check that we can set and query attributes of type 'int'
         self.assertEqual(self.object.intVar, 0)
 
-        self.assertRaises(
-            ValueError, lambda x: setattr(self.object, "intVar", x), "h"  # noqa: B010
-        )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 1"):
+            self.object.intVar = "h"
 
         self.object.intVar = 42
         self.assertEqual(self.object.intVar, 42)
@@ -130,11 +129,8 @@ class TestInstanceVariables(TestCase):
 
         # Can't rely on this for doubles...
         # self.assertEqual(self.object.doubleVar, 0.0)
-        self.assertRaises(
-            ValueError,
-            lambda x: setattr(self.object, "doubleVar", x),  # noqa: B010
-            "h",
-        )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            self.object.doubleVar = "h"
         self.object.doubleVar = 42.0
         self.assertAlmostEqual(self.object.doubleVar, 42.0)
 
@@ -182,7 +178,10 @@ class TestInstanceVariables(TestCase):
         self.assertEqual(self.deleted, 1)
 
     def testDelete(self):
-        self.assertRaises(TypeError, delattr, self.object.idVar)
+        with self.assertRaisesRegex(
+            TypeError, "Cannot delete Objective-C instance variables"
+        ):
+            del self.object.idVar
 
 
 class TestAllInstanceVariables(TestCase):
@@ -218,17 +217,20 @@ class TestAllInstanceVariables(TestCase):
 
         self.assertEqual(getter(obj, "rectValue"), ((1, 2), (3, 4)))
 
-        self.assertRaises(AttributeError, getter, obj, "noSuchMember")
+        with self.assertRaisesRegex(AttributeError, "noSuchMember"):
+            getter(obj, "noSuchMember")
 
         with self.assertRaisesRegex(
             TypeError, "Expecting an Objective-C object, got instance of str"
         ):
             getter("value", "upper")
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 2 arguments \(3 given\)"
+        ):
             getter(obj, "value", 42)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(TypeError, "argument 2 must be str, not int"):
             getter(obj, 42)
 
         with self.assertRaisesRegex(
@@ -297,7 +299,8 @@ class TestAllInstanceVariables(TestCase):
         setter(obj, "rectValue", ((-4, -8), (2, 7)))
         self.assertEqual(getter(obj, "rectValue"), ((-4, -8), (2, 7)))
 
-        self.assertRaises(AttributeError, setter, obj, "noSuchMember", "foo")
+        with self.assertRaisesRegex(AttributeError, "noSuchMember"):
+            setter(obj, "noSuchMember", "foo")
 
         with self.assertRaisesRegex(
             TypeError, "Expecting an Objective-C object, got instance of str"
@@ -312,7 +315,9 @@ class TestAllInstanceVariables(TestCase):
         ):
             setter(obj, "rectValue", 42)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'name' \(pos 2\)"
+        ):
             setter(obj)
 
         with self.assertRaisesRegex(

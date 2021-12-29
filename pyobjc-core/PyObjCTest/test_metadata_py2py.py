@@ -11,6 +11,10 @@ TODO:
 - The python->C interface (that is the contents of the metadata object) is
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
+
+XXX: python-to-python calls often don't pass through PyObjC's machinery,
+     resulting in slightly different behaviour. Fixing this likely breaks
+     user code.
 """
 import objc
 
@@ -31,7 +35,8 @@ class TestArraysOut_AllArgs(TestCase):
         v = o.fill4Tuple_(None)
         self.assertEqual(list(v), list(range(9, 13)))
 
-        self.assertRaises(ValueError, OC_MetaDataTest.fill4Tuple_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.fill4Tuple_on_(objc.NULL, o)
 
         n, v = o.nullfill4Tuple_(None)
         self.assertEqual(n, 1)
@@ -39,6 +44,7 @@ class TestArraysOut_AllArgs(TestCase):
 
         n, v = o.nullfill4Tuple_(objc.NULL)
         self.assertEqual(n, 2)
+        # FIXME:
         # self.assertIs(v, objc.NULL )
 
     def testNullTerminated(self):
@@ -104,7 +110,10 @@ if 0:
             v = o.fill4Tuple_(None)
             self.assertEqual(list(v), list(range(9, 13)))
 
-            self.assertRaises(ValueError, OC_MetaDataTest.fill4Tuple_on_, objc.NULL, o)
+            with self.assertRaisesRegex(
+                ValueError, "argument 0 isn't allowed to be NULL"
+            ):
+                OC_MetaDataTest.fill4Tuple_on_(objc.NULL, o)
 
             n, v = o.nullfill4Tuple_()
             self.assertEqual(n, 1)
@@ -310,8 +319,10 @@ class TestArraysIn_AllArgs(TestCase):
         (v,) = OC_MetaDataTest.makeStringArray_on_((), o)
         self.assertEqual(len(v), 0)
 
-        self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, [1, 2], o)
-        self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            OC_MetaDataTest.makeStringArray_on_([1, 2], o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.makeStringArray_on_(objc.NULL, o)
 
         (v,) = OC_MetaDataTest.nullStringArray_on_(objc.NULL, o)
         self.assertEqual(v, objc.NULL)

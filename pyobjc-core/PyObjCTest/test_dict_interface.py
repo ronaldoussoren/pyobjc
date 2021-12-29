@@ -11,7 +11,6 @@ TODO:
 - Do the same for sets (NSSet) and lists (NSArray)
 """
 import collections.abc
-import operator
 
 # Import some of the stdlib tests
 from test import mapping_tests
@@ -124,7 +123,10 @@ class TestNSDictionaryInterface(TestCase):
         self.assertIn("b", d)
         self.assertNotIn("c", d)
 
-        self.assertRaises(TypeError, d.__contains__)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) missing 1 required positional argument: 'key'"
+        ):
+            d.__contains__()
 
     def testLen(self):
         d = self.createDictionary()
@@ -138,7 +140,10 @@ class TestNSDictionaryInterface(TestCase):
         self.assertEqual(d["a"], 1)
         self.assertEqual(d["b"], 2)
 
-        self.assertRaises(TypeError, d.__getitem__)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) missing 1 required positional argument: 'key'"
+        ):
+            d.__getitem__()
 
     def testFromKeys(self):
         d = self.dictClass().fromkeys("abc")
@@ -154,7 +159,8 @@ class TestNSDictionaryInterface(TestCase):
             yield 1
 
         self.assertEqual(d.fromkeys(g()), {1: None})
-        self.assertRaises(TypeError, {}.fromkeys, 3)
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            {}.fromkeys(3)
 
         d = self.dictClass()(zip(range(6), range(6)))
         self.assertEqual(dict.fromkeys(d, 0), dict(zip(range(6), [0] * 6)))
@@ -172,8 +178,14 @@ class TestNSDictionaryInterface(TestCase):
         self.assertEqual(d.get("c", 3), 3)
         self.assertEqual(d.get("a"), 1)
         self.assertEqual(d.get("a", 3), 1)
-        self.assertRaises(TypeError, d.get)
-        self.assertRaises(TypeError, d.get, None, None, None)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) missing 1 required positional argument: 'key'"
+        ):
+            d.get()
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) takes from 2 to 3 positional arguments but 4 were given"
+        ):
+            d.get(None, None, None)
 
     def testEq(self):
         self.assertEqual(self.createDictionary(), self.createDictionary())
@@ -399,7 +411,10 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         del d["b"]
         self.assertEqual(d, {"a": 4, "c": 3})
 
-        self.assertRaises(TypeError, d.__getitem__)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) missing 1 required positional argument: 'key'"
+        ):
+            d.__getitem__()
 
         class Exc(Exception):
             pass
@@ -413,7 +428,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
 
         d = self.createDictionary()
         d[BadEq()] = 42
-        self.assertRaises(KeyError, d.__getitem__, 23)
+        with self.assertRaisesRegex(KeyError, "23"):
+            d.__getitem__(23)
 
         class BadHash:
             fail = False
@@ -430,7 +446,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         x.fail = True
 
         # FIXME
-        # self.assertRaises(Exc, d.__getitem__, x)
+        # with self.assertRaises(Exc):
+        #    d[x]
 
     def testClear(self):
         d = self.createDictionary(a=1, b=2, c=3)
@@ -438,7 +455,10 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
 
         self.assertEqual(d, {})
 
-        self.assertRaises(TypeError, d.clear, None)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) takes 1 positional argument but 2 were given"
+        ):
+            d.clear(None)
 
     def testUpdate(self):
         d = self.createDictionary()
@@ -450,7 +470,10 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         d.update()
         self.assertEqual(d, {1: 1, 2: 2, 3: 3})
 
-        self.assertRaises((TypeError, AttributeError), d.update, None)
+        with self.assertRaisesRegex(
+            (TypeError, AttributeError), "'NoneType' object is not iterable"
+        ):
+            d.update(None)
 
         class SimpleUserDict:
             def __init__(self):
@@ -475,7 +498,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
             def keys(self):
                 raise Exc()
 
-        self.assertRaises(Exc, d.update, FailingUserDict())
+        with self.assertRaises(Exc):
+            d.update(FailingUserDict())
 
         class FailingUserDict:
             def keys(self):
@@ -497,7 +521,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
             def __getitem__(self, key):
                 return key
 
-        self.assertRaises(Exc, d.update, FailingUserDict())
+        with self.assertRaises(Exc):
+            d.update(FailingUserDict())
 
         class FailingUserDict:
             def keys(self):
@@ -520,7 +545,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
             def __getitem__(self, key):
                 raise Exc
 
-        self.assertRaises(Exc, d.update, FailingUserDict())
+        with self.assertRaises(Exc):
+            d.update(FailingUserDict())
 
         class badseq:
             def __iter__(self):
@@ -529,8 +555,10 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
             def __next__(self):
                 raise Exc()
 
-        self.assertRaises(Exc, {}.update, badseq())
-        self.assertRaises(ValueError, {}.update, [(1, 2, 3)])
+        with self.assertRaises(Exc):
+            {}.update(badseq())
+            with self.assertRaisesRegex(ValueError, "foo"):
+                {}.update([(1, 2, 3)])
 
     def setDefault(self):
         d = self.createDictionary()
@@ -541,7 +569,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         self.assertEqual(d["key"][0], 3)
         d.setdefault("key", []).append(4)
         self.assertEqual(len(d["key"]), 2)
-        self.assertRaises(TypeError, d.setdefault)
+        with self.assertRaisesRegex(TypeError, "foo"):
+            d.setdefault()
 
         class Exc(Exception):
             pass
@@ -558,7 +587,8 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         x = BadHash()
         d[x] = 42
         x.fail = True
-        self.assertRaises(Exc, d.setdefault, x, [])
+        with self.assertRaises(Exc):
+            d.setdefault(x, [])
 
     def testPopitem(self):
         for copymode in -1, +1:
@@ -584,24 +614,32 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
                 self.assertFalse(b)
 
         d = self.createDictionary()
-        self.assertRaises(KeyError, d.popitem)
+        with self.assertRaisesRegex(
+            KeyError, "'popitem on an empty [A-Z0-9_]*NSDictionary[A-Z0-9_]*"
+        ):
+            d.popitem()
 
     def testPop(self):
         d = self.createDictionary()
         k, v = "abc", "def"
         d[k] = v
-        self.assertRaises(KeyError, d.pop, "ghi")
+        with self.assertRaisesRegex(KeyError, "^'ghi'$"):
+            d.pop("ghi")
 
         self.assertEqual(d.pop(k), v)
         self.assertEqual(len(d), 0)
 
-        self.assertRaises(KeyError, d.pop, k)
+        with self.assertRaisesRegex(KeyError, k):
+            d.pop(k)
 
         self.assertEqual(d.pop(k, v), v)
         d[k] = v
         self.assertEqual(d.pop(k, 1), v)
 
-        self.assertRaises(TypeError, d.pop)
+        with self.assertRaisesRegex(
+            TypeError, r".*\(\) missing 1 required positional argument: 'key'"
+        ):
+            d.pop()
 
         class Exc(Exception):
             pass
@@ -615,10 +653,11 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
                 else:
                     return 42
 
+        # XXX
         # x = BadHash()
         # d[x] = 42
         # x.fail = True
-        # self.assertRaises(Exc, d.pop, x)
+        # with self.assertRaises(Exc): d.pop( x)
 
 
 class DictSetTest(TestCase):
@@ -709,7 +748,10 @@ class TestDictUpdates(TestCase):
     def do_test(self, dictType):
         d = dictType()
         d["a"] = 42
-        self.assertRaises(TypeError, d.update, {}, {})
+        with self.assertRaisesRegex(
+            TypeError, "update expected at most 1 argument(s)?, got 2"
+        ):
+            d.update({}, {})
 
         d.update({"b": 9})
         self.assertEqual(dict(d), {"a": 42, "b": 9})
@@ -753,17 +795,63 @@ class TestABC(TestCase):
 
 class TestPyObjCDict(TestCase):
     def test_comparison(self):
-        self.assertRaises(TypeError, operator.lt, {}, {})
-        self.assertRaises(TypeError, operator.le, {}, {})
-        self.assertRaises(TypeError, operator.gt, {}, {})
-        self.assertRaises(TypeError, operator.ge, {}, {})
+        with self.assertRaisesRegex(
+            TypeError, "'<' not supported between instances of 'dict' and 'dict'"
+        ):
+            {} < {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError, "'<=' not supported between instances of 'dict' and 'dict'"
+        ):
+            {} <= {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError, "'>' not supported between instances of 'dict' and 'dict'"
+        ):
+            {} > {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError, "'>=' not supported between instances of 'dict' and 'dict'"
+        ):
+            {} >= {}  # noqa: B015
 
-        self.assertRaises(TypeError, operator.lt, NSDictionary(), {})
-        self.assertRaises(TypeError, operator.le, NSDictionary(), {})
-        self.assertRaises(TypeError, operator.gt, NSDictionary(), {})
-        self.assertRaises(TypeError, operator.lt, {}, NSDictionary())
-        self.assertRaises(TypeError, operator.le, {}, NSDictionary())
-        self.assertRaises(TypeError, operator.gt, {}, NSDictionary())
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of '[^']*NSDictionary[^']*' and 'dict'",
+        ):
+            NSDictionary() < {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of '[^']*NSDictionary[^']*' and 'dict'",
+        ):
+            NSDictionary() <= {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of '[^']*NSDictionary[^']*' and 'dict'",
+        ):
+            NSDictionary() > {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of '[^']*NSDictionary[^']*' and 'dict'",
+        ):
+            NSDictionary() >= {}  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of 'dict' and '[^']*NSDictionary[^']*'",
+        ):
+            {} < NSDictionary()  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'dict' and '[^']*NSDictionary[^']*'",
+        ):
+            {} <= NSDictionary()  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of 'dict' and '[^']*NSDictionary[^']*'",
+        ):
+            {} > NSDictionary()  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'dict' and '[^']*NSDictionary[^']*'",
+        ):
+            {} >= NSDictionary()  # noqa: B015
 
         self.assertFalse(NSMutableDictionary() == [])
         self.assertFalse(NSDictionary() == [])
@@ -796,7 +884,10 @@ class TestPyObjCDict(TestCase):
             self.assertEqual(v[1], -1)
             self.assertEqual(v[2], 9)
 
-            self.assertRaises(TypeError, dict_type, (1, 2), (3, 4))
+            with self.assertRaisesRegex(
+                TypeError, "dict expected at most 1 arguments, got 2"
+            ):
+                dict_type((1, 2), (3, 4))
 
             v = dict_type(a=3, b=4)
             self.assertEqual(len(v), 2)
@@ -826,28 +917,70 @@ class TestPyObjCDict(TestCase):
         v = oc.keys() | {"a", "f"}
         self.assertEqual(v, {"a", "b", "c", "d", "e", "f"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.or_, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.or_, ("a", "f"), oc.keys())
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for |: 'nsdict_keys' and 'tuple'"
+        ):
+            oc.keys() | ("a", "f")
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for |: 'tuple' and 'nsdict_keys'"
+        ):
+            ("a", "f") | oc.keys()
 
         v = oc.keys() & {"a", "f"}
         self.assertEqual(v, {"a"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.and_, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.and_, ("a", "f"), oc.keys())
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for &: 'nsdict_keys' and 'tuple'"
+        ):
+            oc.keys() & ("a", "f")
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for &: 'tuple' and 'nsdict_keys'"
+        ):
+            ("a", "f") & oc.keys()
 
         v = oc.keys() ^ {"a", "f"}
         self.assertEqual(v, {"b", "c", "d", "e", "f"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.xor, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.xor, ("a", "f"), oc.keys())
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \^: 'nsdict_keys' and 'tuple'",
+        ):
+            oc.keys() ^ ("a", "f")
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \^: 'tuple' and 'nsdict_keys'",
+        ):
+            ("a", "f") ^ oc.keys()
 
         v = oc.keys() - {"a", "f"}
         self.assertEqual(v, {"b", "c", "d", "e"})
         self.assertIsInstance(v, set)
-        self.assertRaises(TypeError, operator.sub, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.sub, ("a", "f"), oc.keys())
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for -: 'nsdict_keys' and 'tuple'"
+        ):
+            oc.keys() - ("a", "f")
+        with self.assertRaisesRegex(
+            TypeError, r"unsupported operand type\(s\) for -: 'tuple' and 'nsdict_keys'"
+        ):
+            ("a", "f") - oc.keys()
 
-        self.assertRaises(TypeError, operator.lt, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.le, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.gt, oc.keys(), ("a", "f"))
-        self.assertRaises(TypeError, operator.ge, oc.keys(), ("a", "f"))
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'<' not supported between instances of 'nsdict_keys' and 'tuple'",
+        ):
+            oc.keys() < ("a", "f")  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'<=' not supported between instances of 'nsdict_keys' and 'tuple'",
+        ):
+            oc.keys() <= ("a", "f")  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'>' not supported between instances of 'nsdict_keys' and 'tuple'",
+        ):
+            oc.keys() > ("a", "f")  # noqa: B015
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'>=' not supported between instances of 'nsdict_keys' and 'tuple'",
+        ):
+            oc.keys() >= ("a", "f")  # noqa: B015

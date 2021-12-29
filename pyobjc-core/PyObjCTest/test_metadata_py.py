@@ -656,7 +656,8 @@ class TestArraysOut(TestCase):
         v = OC_MetaDataTest.fill4Tuple_on_(None, o)
         self.assertEqual(list(v), list(range(9, 13)))
 
-        self.assertRaises(ValueError, OC_MetaDataTest.fill4Tuple_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.fill4Tuple_on_(objc.NULL, o)
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
         self.assertEqual(n, 1)
@@ -676,11 +677,19 @@ class TestArraysOut(TestCase):
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
-        self.assertRaises(TypeError, OC_MetaDataTest.fillStringArray_on_, None, o)
-        self.assertRaises(ValueError, OC_MetaDataTest.fillStringArray_on_, objc.NULL, o)
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            OC_MetaDataTest.fillStringArray_on_(None, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.fillStringArray_on_(objc.NULL, o)
 
-        self.assertRaises(TypeError, OC_MetaDataTest.nullfillStringArray_on_, o)
-        self.assertRaises(TypeError, OC_MetaDataTest.nullfillStringArray_on_, None, o)
+        with self.assertRaisesRegex(TypeError, "Need 2 arguments, got 1"):
+            OC_MetaDataTest.nullfillStringArray_on_(o)
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            OC_MetaDataTest.nullfillStringArray_on_(None, o)
         n, v = OC_MetaDataTest.nullfillStringArray_on_(objc.NULL, o)
         self.assertEqual(n, 9)
         self.assertIs(v, objc.NULL)
@@ -697,9 +706,8 @@ class TestArraysOut(TestCase):
         v = OC_MetaDataTest.fillArray_count_on_(None, 0, o)
         self.assertEqual(list(v), [])
 
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.fillArray_count_on_, objc.NULL, 0, o
-        )
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.fillArray_count_on_(objc.NULL, 0, o)
 
         n, v = OC_MetaDataTest.nullfillArray_count_on_(None, 3, o)
         self.assertEqual(n, 2)
@@ -730,11 +738,12 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (1, 2, 3, 4))
         self.assertEqual(v, (43, 44, 45, 46))
 
-        self.assertRaises(ValueError, OC_MetaDataTest.reverse4Tuple_on_, (1, 2, 3), o)
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.reverse4Tuple_on_, (1, 2, 3, 4, 5), o
-        )
-        self.assertRaises(ValueError, OC_MetaDataTest.reverse4Tuple_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            OC_MetaDataTest.reverse4Tuple_on_((1, 2, 3), o)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            OC_MetaDataTest.reverse4Tuple_on_((1, 2, 3, 4, 5), o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.reverse4Tuple_on_(objc.NULL, o)
 
         a = (1, 2, 3, 4)
         n, v = OC_MetaDataTest.nullreverse4Tuple_on_(a, o)
@@ -754,8 +763,10 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (b"aap", b"boot", b"cello"))
         self.assertEqual(v, (b"paa", b"toob", b"ollec"))
 
-        self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, (1, 2), o)
-        self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            OC_MetaDataTest.reverseStrings_on_((1, 2), o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.reverseStrings_on_(objc.NULL, o)
 
         a = (b"aap", b"boot", b"cello")
         n, v = OC_MetaDataTest.nullreverseStrings_on_(a, o)
@@ -787,12 +798,12 @@ class TestArraysInOut(TestCase):
         # self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
         # self.assertEqual(v, (2.0, 3.0, 4.0, 5.0, 6.0))
 
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.reverseArray_count_on_, (1.0, 2.0), 5, o
-        )
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.reverseArray_count_on_, objc.NULL, 0, o
-        )
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(2\) expecting at least 5"
+        ):
+            OC_MetaDataTest.reverseArray_count_on_((1.0, 2.0), 5, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.reverseArray_count_on_(objc.NULL, 0, o)
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         n, v = OC_MetaDataTest.nullreverseArray_count_on_(a, 5, o)
@@ -830,11 +841,12 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
-        self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3), o)
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3, 4, 5), o
-        )
-        self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            OC_MetaDataTest.make4Tuple_on_((1, 2, 3), o)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            OC_MetaDataTest.make4Tuple_on_((1, 2, 3, 4, 5), o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.make4Tuple_on_(objc.NULL, o)
 
         (v,) = OC_MetaDataTest.null4Tuple_on_(objc.NULL, o)
         self.assertIs(v, objc.NULL)
@@ -856,8 +868,10 @@ class TestArraysIn(TestCase):
         (v,) = OC_MetaDataTest.makeStringArray_on_((), o)
         self.assertEqual(len(v), 0)
 
-        self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, [1, 2], o)
-        self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            OC_MetaDataTest.makeStringArray_on_([1, 2], o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.makeStringArray_on_(objc.NULL, o)
 
         (v,) = OC_MetaDataTest.nullStringArray_on_(objc.NULL, o)
         self.assertEqual(v, objc.NULL)
@@ -876,23 +890,21 @@ class TestArraysIn(TestCase):
         # self.assertEqual(len(v), 3)
         # self.assertEqual(list(v), [1,2,3,4])
 
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.makeIntArray_count_on_, [1, 2, 3], 4, o
-        )
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 0, o
-        )
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 1, o
-        )
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(3\) expecting at least 4"
+        ):
+            OC_MetaDataTest.makeIntArray_count_on_([1, 2, 3], 4, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.makeIntArray_count_on_(objc.NULL, 0, o)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.makeIntArray_count_on_(objc.NULL, 1, o)
 
         v, c = OC_MetaDataTest.nullIntArray_count_on_(objc.NULL, 0, o)
         self.assertEqual(c, 0)
         self.assertEqual(v, objc.NULL)
 
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 1, o
-        )
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            OC_MetaDataTest.makeIntArray_count_on_(objc.NULL, 1, o)
 
         # Make sure this also works when the length is in a pass-by-reference argument
         v, c = OC_MetaDataTest.makeIntArray_countPtr_on_((1, 2, 3, 4), 4, o)
@@ -954,7 +966,8 @@ class TestByReference(TestCase):
         r = OC_MetaDataTest.sumX_andY_on_(2535, 5325, o)
         self.assertEqual(r, 2535 ** 2 + 5325 ** 2)
 
-        self.assertRaises(ValueError, OC_MetaDataTest.sumX_andY_on_, 42, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            OC_MetaDataTest.sumX_andY_on_(42, objc.NULL, o)
 
     def testOutput(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -967,9 +980,8 @@ class TestByReference(TestCase):
         self.assertEqual(div, int(13 / 7))
         self.assertEqual(rem, int(13 % 7))
 
-        self.assertRaises(
-            ValueError, OC_MetaDataTest.divBy5_remainder_on_, 42, objc.NULL, o
-        )
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            OC_MetaDataTest.divBy5_remainder_on_(42, objc.NULL, o)
 
     def testInputOutput(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -977,7 +989,8 @@ class TestByReference(TestCase):
         self.assertEqual(x, 284 * 2)
         self.assertEqual(y, 42 * 2)
 
-        self.assertRaises(ValueError, OC_MetaDataTest.swapX_andY_on_, 42, objc.NULL, o)
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            OC_MetaDataTest.swapX_andY_on_(42, objc.NULL, o)
 
     def testNullAccepted(self):
         # Note: the commented-out test-cases require a change in the pyobjc-core

@@ -519,7 +519,8 @@ class TestArraysOut(TestCase):
         v = fill4Tuple_(None)  # noqa: F821
         self.assertEqual(list(v), [0, -1, -8, -27])
 
-        self.assertRaises(ValueError, fill4Tuple_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            fill4Tuple_(objc.NULL)  # noqa: F821
 
         n, v = nullfill4Tuple_(None)  # noqa: F821
         self.assertEqual(n, 1)
@@ -534,11 +535,19 @@ class TestArraysOut(TestCase):
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
-        self.assertRaises(TypeError, fillStringArray_, None)  # noqa: F821
-        self.assertRaises(ValueError, fillStringArray_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            fillStringArray_(None)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            fillStringArray_(objc.NULL)  # noqa: F821
 
-        self.assertRaises(TypeError, nullfillStringArray_)  # noqa: F821
-        self.assertRaises(TypeError, nullfillStringArray_, None)  # noqa: F821
+        with self.assertRaisesRegex(TypeError, "Need 1 arguments, got 0"):
+            nullfillStringArray_()  # noqa: F821
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            nullfillStringArray_(None)  # noqa: F821
         n, v = nullfillStringArray_(objc.NULL)  # noqa: F821
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
@@ -557,7 +566,8 @@ class TestArraysOut(TestCase):
         v = fillArray_count_(None, 0)  # noqa: F821
         self.assertEqual(list(v), [])
 
-        self.assertRaises(ValueError, fillArray_count_, objc.NULL, 0)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            fillArray_count_(objc.NULL, 0)  # noqa: F821
 
         n, v = nullfillArray_count_(None, 3)  # noqa: F821
         self.assertEqual(n, 1)
@@ -604,9 +614,12 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (1, 2, 3, 4))
         self.assertEqual(v, (4, 3, 2, 1))
 
-        self.assertRaises(ValueError, reverse4Tuple_, (1, 2, 3))  # noqa: F821
-        self.assertRaises(ValueError, reverse4Tuple_, (1, 2, 3, 4, 5))  # noqa: F821
-        self.assertRaises(ValueError, reverse4Tuple_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            reverse4Tuple_((1, 2, 3))  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            reverse4Tuple_((1, 2, 3, 4, 5))  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            reverse4Tuple_(objc.NULL)  # noqa: F821
 
         a = (1, 2, 3, 4)
         n, v = nullreverse4Tuple_(a)  # noqa: F821
@@ -625,8 +638,10 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (b"a", b"b", b"c"))
         self.assertEqual(v, (b"c", b"b", b"a"))
 
-        self.assertRaises(ValueError, reverseStrings_, (1, 2))  # noqa: F821
-        self.assertRaises(ValueError, reverseStrings_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            reverseStrings_((1, 2))  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            reverseStrings_(objc.NULL)  # noqa: F821
 
         a = (b"a", b"b", b"c")
         n, v = nullreverseStrings_(a)  # noqa: F821
@@ -657,8 +672,12 @@ class TestArraysInOut(TestCase):
         # self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
         # self.assertEqual(v, (5.0, 4.0, 3.0, 2.0, 1.0))
 
-        self.assertRaises(ValueError, reverseArray_count_, (1.0, 2.0), 5)  # noqa: F821
-        self.assertRaises(ValueError, reverseArray_count_, objc.NULL, 0)  # noqa: F821
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(2\) expecting at least 5"
+        ):
+            reverseArray_count_((1.0, 2.0), 5)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            reverseArray_count_(objc.NULL, 0)  # noqa: F821
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         n, v = nullreverseArray_count_(a, 5)  # noqa: F821
@@ -694,9 +713,12 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
-        self.assertRaises(ValueError, make4Tuple_, (1, 2, 3))  # noqa: F821
-        self.assertRaises(ValueError, make4Tuple_, (1, 2, 3, 4, 5))  # noqa: F821
-        self.assertRaises(ValueError, make4Tuple_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            make4Tuple_((1, 2, 3))  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            make4Tuple_((1, 2, 3, 4, 5))  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            make4Tuple_(objc.NULL)  # noqa: F821
 
         v = null4Tuple_(objc.NULL)  # noqa: F821
         self.assertIs(v, None)
@@ -720,8 +742,10 @@ class TestArraysIn(TestCase):
         v = makeStringArray_(())  # noqa: F821
         self.assertEqual(len(v), 0)
 
-        self.assertRaises(ValueError, makeStringArray_, [1, 2])  # noqa: F821
-        self.assertRaises(ValueError, makeStringArray_, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            makeStringArray_([1, 2])  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            makeStringArray_(objc.NULL)  # noqa: F821
 
         v = nullStringArray_(objc.NULL)  # noqa: F821
         self.assertEqual(v, None)
@@ -737,14 +761,20 @@ class TestArraysIn(TestCase):
         # self.assertEqual(len(v), 3)
         # self.assertEqual(list(v), [1,2,3,4])
 
-        self.assertRaises(ValueError, makeIntArray_count_, [1, 2, 3], 4)  # noqa: F821
-        self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 0)  # noqa: F821
-        self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 1)  # noqa: F821
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(3\) expecting at least 4"
+        ):
+            makeIntArray_count_([1, 2, 3], 4)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            makeIntArray_count_(objc.NULL, 0)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            makeIntArray_count_(objc.NULL, 1)  # noqa: F821
 
         v = nullIntArray_count_(objc.NULL, 0)  # noqa: F821
         self.assertEqual(v, None)
 
-        self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 1)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            makeIntArray_count_(objc.NULL, 1)  # noqa: F821
 
         # Make sure this also works when the length is in a pass-by-reference argument
         v = makeIntArray_countPtr_((1, 2, 3, 4), 4)  # noqa: F821
@@ -808,7 +838,8 @@ class TestByReference(TestCase):
         r = sumX_andY_(2535, 5325)  # noqa: F821
         self.assertEqual(r, 2535 + 5325)
 
-        self.assertRaises(ValueError, sumX_andY_, 42, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            sumX_andY_(42, objc.NULL)  # noqa: F821
 
     def testOutput(self):
 
@@ -820,14 +851,16 @@ class TestByReference(TestCase):
         self.assertEqual(div, 2)
         self.assertEqual(rem, 3)
 
-        self.assertRaises(ValueError, divBy5_remainder_, 42, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            divBy5_remainder_(42, objc.NULL)  # noqa: F821
 
     def testInputOutput(self):
         x, y = swapX_andY_(42, 284)  # noqa: F821
         self.assertEqual(x, 284)
         self.assertEqual(y, 42)
 
-        self.assertRaises(ValueError, swapX_andY_, 42, objc.NULL)  # noqa: F821
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            swapX_andY_(42, objc.NULL)  # noqa: F821
 
     def testNullAccepted(self):
         # Note: the commented-out test-cases require a change in the pyobjc-core

@@ -67,7 +67,10 @@ class OCTestSubHidden(OCTestHidden):
 class TestHiddenSelector(TestCase):
     def testHiddenInClassDef(self):
         o = OCTestHidden.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "body")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestHidden' object has no attribute 'body'"
+        ):
+            o.body()
 
         v = o.performSelector_(b"body")
         self.assertEqual(v, "BODY")
@@ -75,7 +78,8 @@ class TestHiddenSelector(TestCase):
         v = o.pyobjc_instanceMethods.body()
         self.assertEqual(v, "BODY")
 
-        self.assertRaises(AttributeError, getattr, OCTestHidden, "bodyclass")
+        with self.assertRaisesRegex(AttributeError, "bodyclass"):
+            OCTestHidden.bodyclass()
         v = OCTestHidden.performSelector_(b"bodyclass")
         self.assertEqual(v, "BODYCLASS")
 
@@ -83,7 +87,10 @@ class TestHiddenSelector(TestCase):
         self.assertEqual(v, "BODYCLASS")
 
         o = OCTestHidden.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "boolMethod")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestHidden' object has no attribute 'boolMethod'"
+        ):
+            o.boolMethod()
         v = o.pyobjc_instanceMethods.boolMethod()
         self.assertIs(v, True)
 
@@ -91,7 +98,10 @@ class TestHiddenSelector(TestCase):
         o = OCTestHidden.alloc().init()
 
         # Instance method
-        self.assertRaises(AttributeError, getattr, o, "method")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestHidden' object has no attribute 'method'"
+        ):
+            o.method()
 
         v = o.performSelector_(b"method")
         self.assertEqual(v, 42)
@@ -100,7 +110,8 @@ class TestHiddenSelector(TestCase):
         self.assertEqual(v, 42)
 
         # Class method
-        self.assertRaises(AttributeError, getattr, OCTestHidden, "clsmethod")
+        with self.assertRaisesRegex(AttributeError, "clsmethod"):
+            OCTestHidden.clsmethod()
 
         v = OCTestHidden.performSelector_(b"clsmethod")
         self.assertEqual(v, 99)
@@ -126,7 +137,10 @@ class TestHiddenSelector(TestCase):
         o = OCTestHidden.alloc().init()
 
         # Instance method
-        self.assertRaises(AttributeError, getattr, o, "addedmethod")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestHidden' object has no attribute 'addedmethod'"
+        ):
+            o.addedmethod()
 
         v = o.performSelector_(b"addedmethod")
         self.assertEqual(v, "NEW")
@@ -135,7 +149,8 @@ class TestHiddenSelector(TestCase):
         self.assertEqual(v, "NEW")
 
         # Class method
-        self.assertRaises(AttributeError, getattr, OCTestHidden, "addedclass")
+        with self.assertRaisesRegex(AttributeError, "addedclass"):
+            OCTestHidden.addedclass()
 
         v = OCTestHidden.performSelector_(b"addedclass")
         self.assertEqual(v, "NEWCLASS")
@@ -145,7 +160,10 @@ class TestHiddenSelector(TestCase):
 
     def testClassVsInstance(self):
         o = OCTestHidden.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "sombody")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestHidden' object has no attribute 'sombody'"
+        ):
+            o.sombody()
         v = o.performSelector_(b"somebody")
         self.assertEqual(v, "instance")
 
@@ -156,7 +174,10 @@ class TestHiddenSelector(TestCase):
 
         # Instance
         o = OCTestSubHidden.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "body")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestSubHidden' object has no attribute 'body'"
+        ):
+            o.body()
         v = o.performSelector_(b"body")
         self.assertEqual(v, "BODY2")
 
@@ -183,20 +204,26 @@ class TestHiddenSelector(TestCase):
             return "sub2"
 
         objc.classAddMethods(OCTestSubHidden, [subclassbody])
-        self.assertRaises(AttributeError, getattr, o, "subclassbody")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestSubHidden' object has no attribute 'subclassbody'"
+        ):
+            o.subclassbody()
         v = o.performSelector_(b"subclassbody")
         self.assertEqual(v, "sub")
 
         OCTestSubHidden.subclassbody2 = subclassbody2
-        # self.assertRaises(AttributeError, getattr, o, "subclassbody2")
         v = o.performSelector_(b"subclassbody2")
         self.assertEqual(v, "sub2")
 
-        self.assertRaises(AttributeError, getattr, o, "boolMethod")
+        with self.assertRaisesRegex(
+            AttributeError, "'OCTestSubHidden' object has no attribute 'boolMethod'"
+        ):
+            o.boolMethod()
         v = o.pyobjc_instanceMethods.boolMethod()
         self.assertIs(v, False)
 
         # Class
-        self.assertRaises(AttributeError, getattr, OCTestSubHidden, "bodyclass")
+        with self.assertRaisesRegex(AttributeError, "bodyclass"):
+            OCTestSubHidden.bodyclass()
         v = OCTestSubHidden.performSelector_(b"bodyclass")
         self.assertEqual(v, "BODYCLASS2")

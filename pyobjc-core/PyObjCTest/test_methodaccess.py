@@ -10,26 +10,27 @@ class MethodAccessTest(TestCase):
     def testObjCObject(self):
         # Trying to access the methods of objc.objc_object should not
         # crash the interpreter.
-        self.assertRaises(
-            AttributeError, getattr, objc.objc_object.pyobjc_classMethods, "func_code"
-        )
-        self.assertRaises(
-            AttributeError,
-            getattr,
-            objc.objc_object.pyobjc_instanceMethods,
-            "func_code",
-        )
+        with self.assertRaisesRegex(
+            AttributeError, "<nil> doesn't have attribute func_code"
+        ):
+            objc.objc_object.pyobjc_classMethods.func_code
+
+        with self.assertRaisesRegex(
+            AttributeError, "<nil> doesn't have attribute func_code"
+        ):
+            objc.objc_object.pyobjc_instanceMethods.func_code,
 
     def testNSProxyStuff(self):
         # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but
         # this should not crash the interpreter
-        self.assertRaises(
-            AttributeError, getattr, NSProxy.pyobjc_instanceMethods, "foobar"
-        )
-        self.assertRaises(
-            AttributeError, getattr, NSProxy.pyobjc_classMethods, "foobar"
-        )
-        self.assertRaises(AttributeError, getattr, NSProxy, "foobar")
+        with self.assertRaisesRegex(AttributeError, "No selector foobar"):
+            NSProxy.pyobjc_instanceMethods.foobar
+
+        with self.assertRaisesRegex(AttributeError, "No selector foobar"):
+            NSProxy.pyobjc_classMethods.foobar
+
+        with self.assertRaisesRegex(AttributeError, "No attribute foobar"):
+            NSProxy.foobar
 
     def testDir(self):
         o = NSObject.new()
@@ -69,4 +70,7 @@ class MethodAccessTest(TestCase):
 class ClassAndInstanceMethods(TestCase):
     def testClassThroughInstance(self):
         # Class methods are not accessible through instances.
-        self.assertRaises(AttributeError, getattr, NSObject.new(), "alloc")
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute 'alloc'"
+        ):
+            NSObject.new().alloc

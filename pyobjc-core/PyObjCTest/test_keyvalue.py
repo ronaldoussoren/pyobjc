@@ -107,9 +107,8 @@ class PyKeyValueCoding(TestCase):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
         o = KeyValueClass2()
-        self.assertRaises(
-            KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, "private"
-        )
+        with self.assertRaisesRegex(KeyError, "private"):
+            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "private")
 
     def testValueForKey(self):
         o = KeyValueClass2()
@@ -126,9 +125,8 @@ class PyKeyValueCoding(TestCase):
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "pythonConvention"), "GOOD"
         )
 
-        self.assertRaises(
-            KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, "nokey"
-        )
+        with self.assertRaisesRegex(KeyError, "nokey"):
+            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "nokey")
 
     def testValueForKey2(self):
         o = KeyValueClass3()
@@ -164,9 +162,8 @@ class PyKeyValueCoding(TestCase):
             o.multiple,
         )
 
-        self.assertRaises(
-            KeyError, STUB.keyValue_forObject_key_, DO_STOREDVALUEFORKEY, o, "nokey"
-        )
+        with self.assertRaisesRegex(KeyError, "nokey"):
+            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "nokey")
 
     def testStoredValueForKey2(self):
         o = KeyValueClass3()
@@ -205,13 +202,12 @@ class PyKeyValueCoding(TestCase):
             o.multiple.level2.level3.keyB,
         )
 
-        self.assertRaises(
-            KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUEFORKEYPATH,
-            o,
-            "multiple.level2.nokey",
-        )
+        with self.assertRaisesRegex(KeyError, "nokey"):
+            STUB.keyValue_forObject_key_(
+                DO_VALUEFORKEYPATH,
+                o,
+                "multiple.level2.nokey",
+            )
 
     def testValuesForKeys(self):
         o = KeyValueClass2()
@@ -223,13 +219,12 @@ class PyKeyValueCoding(TestCase):
             {"key1": 1, "key2": 2, "key3": 3, "key4": "4"},
         )
 
-        self.assertRaises(
-            KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUESFORKEYS,
-            o,
-            ["key1", "key2", "nokey", "key3"],
-        )
+        with self.assertRaisesRegex(KeyError, "nokey"):
+            STUB.keyValue_forObject_key_(
+                DO_VALUESFORKEYS,
+                o,
+                ["key1", "key2", "nokey", "key3"],
+            )
 
     def testTakeValueForKey(self):
         o = KeyValueClass2()
@@ -258,14 +253,13 @@ class PyKeyValueCoding(TestCase):
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, "foo", "FOO")
         self.assertEqual(o.foo, "FOO")
 
-        self.assertRaises(
-            KeyError,
-            STUB.setKeyValue_forObject_key_value_,
-            DO_TAKEVALUE_FORKEY,
-            o,
-            "key9",
-            "IX",
-        )
+        with self.assertRaisesRegex(KeyError, "key9"):
+            STUB.setKeyValue_forObject_key_value_(
+                DO_TAKEVALUE_FORKEY,
+                o,
+                "key9",
+                "IX",
+            )
 
     def testTakeStoredValueForKey(self):
         o = KeyValueClass2()
@@ -302,22 +296,20 @@ class PyKeyValueCoding(TestCase):
         )
         self.assertEqual(o.foo, "FOO")
 
-        self.assertRaises(
-            KeyError,
-            STUB.setKeyValue_forObject_key_value_,
-            DO_TAKESTOREDVALUE_FORKEY,
-            o,
-            "key9",
-            "IX",
-        )
-        self.assertRaises(
-            KeyError,
-            STUB.setKeyValue_forObject_key_value_,
-            DO_TAKESTOREDVALUE_FORKEY,
-            o,
-            "roprop",
-            "IX",
-        )
+        with self.assertRaisesRegex(KeyError, "Key key9 does not exist'"):
+            STUB.setKeyValue_forObject_key_value_(
+                DO_TAKESTOREDVALUE_FORKEY,
+                o,
+                "key9",
+                "IX",
+            )
+        with self.assertRaisesRegex(KeyError, "Key roprop does not exist'"):
+            STUB.setKeyValue_forObject_key_value_(
+                DO_TAKESTOREDVALUE_FORKEY,
+                o,
+                "roprop",
+                "IX",
+            )
 
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass2()
@@ -349,22 +341,20 @@ class PyKeyValueCoding(TestCase):
         )
         self.assertEqual(o.foo, "FOO")
 
-        self.assertRaises(
-            KeyError,
-            STUB.setKeyValue_forObject_key_value_,
-            DO_TAKEVALUESFROMDICT,
-            o,
-            None,
-            {"key9": "IX"},
-        )
-        self.assertRaises(
-            KeyError,
-            STUB.setKeyValue_forObject_key_value_,
-            DO_TAKEVALUESFROMDICT,
-            o,
-            None,
-            {"roprop": "IX"},
-        )
+        with self.assertRaisesRegex(KeyError, "Key key9 does not exist"):
+            STUB.setKeyValue_forObject_key_value_(
+                DO_TAKEVALUESFROMDICT,
+                o,
+                None,
+                {"key9": "IX"},
+            )
+        with self.assertRaisesRegex(KeyError, "Key roprop does not exist"):
+            STUB.setKeyValue_forObject_key_value_(
+                DO_TAKEVALUESFROMDICT,
+                o,
+                None,
+                {"roprop": "IX"},
+            )
 
     def testTakeValueForKeyPath(self):
         o = KeyValueClass2()
@@ -398,20 +388,24 @@ class TestAccMethod(TestCase):
     def testStr(self):
         # Strings are automaticly converted to NSStrings, and those don't have
         # a capitalize key.
-        self.assertRaises(
+        with self.assertRaisesRegex(
             KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUEFORKEY,
-            "hello",
-            "capitalize",
-        )
-        self.assertRaises(
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key capitalize.",
+        ):
+            STUB.keyValue_forObject_key_(
+                DO_VALUEFORKEY,
+                "hello",
+                "capitalize",
+            )
+        with self.assertRaisesRegex(
             KeyError,
-            STUB.keyValue_forObject_key_,
-            DO_VALUEFORKEY,
-            "hello",
-            "capitalize",
-        )
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key capitalize.",
+        ):
+            STUB.keyValue_forObject_key_(
+                DO_VALUEFORKEY,
+                "hello",
+                "capitalize",
+            )
 
 
 class AbstractKVCodingTest:
@@ -600,14 +594,13 @@ if sys.platform == "darwin" and os.uname()[2] >= "7.0.0":
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, "foo", "FOO")
             self.assertEqual(o.foo, "FOO")
 
-            self.assertRaises(
-                KeyError,
-                STUB.setKeyValue_forObject_key_value_,
-                DO_SETVALUE_FORKEY,
-                o,
-                "key9",
-                "IX",
-            )
+            with self.assertRaisesRegex(KeyError, "foo"):
+                STUB.setKeyValue_forObject_key_value_(
+                    DO_SETVALUE_FORKEY,
+                    o,
+                    "key9",
+                    "IX",
+                )
 
         def testSetValuesForKeysFromDictionary(self):
             o = KeyValueClass2()
@@ -639,22 +632,20 @@ if sys.platform == "darwin" and os.uname()[2] >= "7.0.0":
             )
             self.assertEqual(o.foo, "FOO")
 
-            self.assertRaises(
-                KeyError,
-                STUB.setKeyValue_forObject_key_value_,
-                DO_SETVALUESFORKEYSFROMDICT,
-                o,
-                None,
-                {"key9": "IX"},
-            )
-            self.assertRaises(
-                KeyError,
-                STUB.setKeyValue_forObject_key_value_,
-                DO_SETVALUESFORKEYSFROMDICT,
-                o,
-                None,
-                {"roprop": "IX"},
-            )
+            with self.assertRaisesRegex(KeyError, "foo"):
+                STUB.setKeyValue_forObject_key_value_(
+                    DO_SETVALUESFORKEYSFROMDICT,
+                    o,
+                    None,
+                    {"key9": "IX"},
+                )
+            with self.assertRaisesRegex(KeyError, "foo"):
+                STUB.setKeyValue_forObject_key_value_(
+                    DO_SETVALUESFORKEYSFROMDICT,
+                    o,
+                    None,
+                    {"roprop": "IX"},
+                )
 
         def testSetValueForKeyPath(self):
             o = KeyValueClass2()

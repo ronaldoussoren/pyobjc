@@ -388,9 +388,16 @@ class PyOCTestSimpleArguments(TestCase):
 
         self.assertEqual(self.obj.intArg_(10.0), 5)
 
-        self.assertRaises(ValueError, self.obj.intArg_, sys.maxsize + 1)
-        self.assertRaises(ValueError, self.obj.intArg_, -sys.maxsize - 2)
-        self.assertRaises(ValueError, self.obj.intArg_, -float(sys.maxsize) - 2)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            self.obj.intArg_(sys.maxsize + 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            self.obj.intArg_(-sys.maxsize - 2)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'float'"):
+            self.obj.intArg_(-float(sys.maxsize) - 2)
 
     def testUInt(self):
         self.assertEqual(self.obj.uintArg_(0), 0)
@@ -403,9 +410,21 @@ class PyOCTestSimpleArguments(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(ValueError, self.obj.uintArg_, -5)
-            self.assertRaises(ValueError, self.obj.uintArg_, -5)
-            self.assertRaises(ValueError, self.obj.uintArg_, 1 + 2 * (sys.maxsize + 1))
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.uintArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.uintArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.uintArg_(1 + 2 * (sys.maxsize + 1))
 
     def testShort(self):
         self.assertEqual(self.obj.shortArg_(0), 0)
@@ -419,10 +438,22 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEqual(self.obj.shortArg_(10.0), 5)
 
         # Out of range arguments, assumes a short is 16 bits
-        self.assertRaises(ValueError, self.obj.shortArg_, -(1 << 16) - 1)
-        self.assertRaises(ValueError, self.obj.shortArg_, 1 << 16)
-        self.assertRaises(ValueError, self.obj.shortArg_, -(1 << 16) - 1)
-        self.assertRaises(ValueError, self.obj.shortArg_, 1 << 16)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.shortArg_(-(1 << 16) - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.shortArg_(1 << 16)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.shortArg_(-(1 << 16) - 1)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.shortArg_(1 << 16)
 
     def testUShort(self):
         self.assertEqual(self.obj.ushortArg_(0), 0)
@@ -436,12 +467,36 @@ class PyOCTestSimpleArguments(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-            self.assertRaises(ValueError, self.obj.ushortArg_, -(1 << 16) - 1)
-            self.assertRaises(ValueError, self.obj.ushortArg_, 1 << 16)
-            self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-            self.assertRaises(ValueError, self.obj.ushortArg_, -(1 << 16) - 1)
-            self.assertRaises(ValueError, self.obj.ushortArg_, 1 << 16)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(-(1 << 16) - 1)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(1 << 16)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(-(1 << 16) - 1)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ushortArg_(1 << 16)
 
     def testChar(self):
         self.assertEqual(self.obj.charArg_(0), (0))
@@ -467,18 +522,44 @@ class PyOCTestSimpleArguments(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            self.assertRaises(ValueError, self.obj.ucharArg_, -5)
-            self.assertRaises(ValueError, self.obj.ucharArg_, -256)
-            self.assertRaises(ValueError, self.obj.ucharArg_, 256)
-            self.assertRaises(ValueError, self.obj.ucharArg_, -5)
-            self.assertRaises(ValueError, self.obj.ucharArg_, -256)
-            self.assertRaises(ValueError, self.obj.ucharArg_, 256)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(-256)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(256)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(-5)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(-256)
+            with self.assertRaisesRegex(
+                ValueError,
+                r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+            ):
+                self.obj.ucharArg_(256)
 
     def testCharp(self):
         self.assertEqual(self.obj.charpArg_(b"hello world"), b"dlrow olleh")
 
-        self.assertRaises(ValueError, self.obj.charpArg_, 256)
-        self.assertRaises(ValueError, self.obj.charpArg_, "hello world")
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            self.obj.charpArg_(256)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'str'"):
+            self.obj.charpArg_("hello world")
 
     def testIDPython(self):
         # Test a Python object as the argument
@@ -503,16 +584,34 @@ class PyOCTestSimpleArguments(TestCase):
     def testStruct1(self):
         self.assertEqual(self.obj.dummyArg_((-1, 1)), (-2, 2))
 
-        self.assertRaises(TypeError, self.obj.dummyArg_, 256)
-        self.assertRaises(ValueError, self.obj.dummyArg_, (-1,))
-        self.assertRaises(ValueError, self.obj.dummyArg_, (-1, 1, 2))
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            self.obj.dummyArg_(256)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying struct of 2 members, got tuple of 1"
+        ):
+            self.obj.dummyArg_((-1,))
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying struct of 2 members, got tuple of 3"
+        ):
+            self.obj.dummyArg_((-1, 1, 2))
 
     def testStruct2(self):
         self.assertEqual(self.obj.dummy2Arg_(((1, 2, 3, 4),)), ((8, 6, 4, 2),))
 
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4, 2), 1))
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4),))
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4, 2, 1),))
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying struct of 1 members, got tuple of 2"
+        ):
+            self.obj.dummy2Arg_(((8, 6, 4, 2), 1))
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 4 items, got one of 3"
+        ):
+            self.obj.dummy2Arg_(((8, 6, 4),))
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 4 items, got one of 5"
+        ):
+            self.obj.dummy2Arg_(((8, 6, 4, 2, 1),))
 
 
 class PyOCTestByReferenceArguments(TestCase):
@@ -989,9 +1088,16 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.callInstanceCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceCharFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'char', got 'int' of wrong magnitude"
+        ):
+            self.obj.callInstanceCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str'"):
+            self.obj.callInstanceCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "charFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceCharFuncOf_(self.ocobj)
 
     def testIChar(self):
         self.pyobj.reset()
@@ -1002,9 +1108,16 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.invokeInstanceCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceCharFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'char', got 'int' of wrong magnitude"
+        ):
+            self.obj.invokeInstanceCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str'"):
+            self.obj.invokeInstanceCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'char', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceCharFuncOf_(self.ocobj)
 
     def testCUChar(self):
         self.pyobj.reset()
@@ -1015,15 +1128,19 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned char', got 'str'"
+        ):
+            self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "ucharFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj)
 
     def testIUChar(self):
         self.pyobj.reset()
@@ -1034,15 +1151,19 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned char', got 'int' of wrong magnitude \(max 255, value 256\)",
+        ):
+            self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned char', got 'str'"
+        ):
+            self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned char', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj)
 
     def testCShort(self):
         self.pyobj.reset()
@@ -1051,9 +1172,16 @@ class OCPyTestSimpleCalls(TestCase):
         for o in SHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceShortFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.callInstanceShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str'"):
+            self.obj.callInstanceShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "shortFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceShortFuncOf_(self.ocobj)
 
     def testIShort(self):
         self.pyobj.reset()
@@ -1062,9 +1190,16 @@ class OCPyTestSimpleCalls(TestCase):
         for o in SHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceShortFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'int' of wrong magnitude"
+        ):
+            self.obj.invokeInstanceShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str'"):
+            self.obj.invokeInstanceShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'short', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceShortFuncOf_(self.ocobj)
 
     def testCUShort(self):
         self.pyobj.reset()
@@ -1073,15 +1208,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in USHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.callInstanceUnsignedShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned short', got 'str'"
+        ):
+            self.obj.callInstanceUnsignedShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "ushortFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceUnsignedShortFuncOf_(self.ocobj)
 
     def testIUShort(self):
         self.pyobj.reset()
@@ -1090,15 +1229,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in USHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, r"depythonifying 'unsigned short', got 'str'"
+        ):
+            self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, r"depythonifying 'unsigned short', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj)
 
     def testCInt(self):
         self.pyobj.reset()
@@ -1107,9 +1250,16 @@ class OCPyTestSimpleCalls(TestCase):
         for o in INT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceIntFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            self.obj.callInstanceIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            self.obj.callInstanceIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "intFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceIntFuncOf_(self.ocobj)
 
     def testIInt(self):
         self.pyobj.reset()
@@ -1118,9 +1268,14 @@ class OCPyTestSimpleCalls(TestCase):
         for o in INT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceIntFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'int', got 'int' of wrong magnitude"
+        ):
+            self.obj.invokeInstanceIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 5"):
+            self.obj.invokeInstanceIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'NoneType'"):
+            self.obj.invokeInstanceIntFuncOf_(self.ocobj)
 
     def testCUInt(self):
         self.pyobj.reset()
@@ -1129,15 +1284,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in UINT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "uintFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj)
 
     def testIUInt(self):
         self.pyobj.reset()
@@ -1146,15 +1305,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in UINT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned int', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj)
 
     def testCLong(self):
         self.pyobj.reset()
@@ -1163,9 +1326,18 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceLongFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
+        ):
+            self.obj.callInstanceLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            self.obj.callInstanceLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "longFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceLongFuncOf_(self.ocobj)
 
     def testILong(self):
         self.pyobj.reset()
@@ -1174,9 +1346,18 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying '(long )?long', got 'int' of wrong magnitude"
+        ):
+            self.obj.invokeInstanceLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying '(long )?long', got 'str'"
+        ):
+            self.obj.invokeInstanceLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying '(long )?long', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceLongFuncOf_(self.ocobj)
 
     def testCULong(self):
         self.pyobj.reset()
@@ -1185,15 +1366,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in ULONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned long long', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "ulongFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj)
 
     def testIULong(self):
         self.pyobj.reset()
@@ -1202,15 +1387,19 @@ class OCPyTestSimpleCalls(TestCase):
         for o in ULONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned long long', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj)
 
     def testCLongLong(self):
         self.pyobj.reset()
@@ -1219,9 +1408,18 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONGLONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceLongLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceLongLongFuncOf_, self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
+        ):
+            self.obj.callInstanceLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            self.obj.callInstanceLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "longlongFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceLongLongFuncOf_(self.ocobj)
 
     def testILongLong(self):
         self.pyobj.reset()
@@ -1230,15 +1428,18 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONGLONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceLongLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
+        ):
+            self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
 
     def testCULongLong(self):
         self.pyobj.reset()
@@ -1249,15 +1450,19 @@ class OCPyTestSimpleCalls(TestCase):
                 self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o
             )
 
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned long long', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "ulonglongFunc: returned None, expecting a value"
+        ):
+            self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj)
 
     def testIULongLong(self):
         self.pyobj.reset()
@@ -1268,15 +1473,19 @@ class OCPyTestSimpleCalls(TestCase):
                 self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj), o
             )
 
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
-        self.assertRaises(
-            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            r"depythonifying 'unsigned long long', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
+        ):
+            self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj)
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'NoneType'"
+        ):
+            self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj)
 
     def testCFloat(self):
         self.pyobj.reset()

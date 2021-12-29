@@ -57,7 +57,8 @@ class TestDyld(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "foo")
 
-        self.assertRaises(UnicodeError, dyld.ensure_unicode, b"\xff\xff")
+        with self.assertRaises(UnicodeError):
+            dyld.ensure_unicode(b"\xff\xff")
 
     def test_dyld_library(self):
         for k in (
@@ -93,12 +94,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
             lst = []
-            self.assertRaises(
-                ValueError,
-                dyld.dyld_library,
-                "/usr/lib/libSystem.dylib",
-                "libXSystem.dylib",
-            )
+            with self.assertRaises(ValueError):
+                dyld.dyld_library(
+                    "/usr/lib/libSystem.dylib",
+                    "libXSystem.dylib",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -119,12 +119,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_LIBRARY_PATH"] = "/slib:/usr/slib"
             lst = []
-            self.assertRaises(
-                ValueError,
-                dyld.dyld_library,
-                "/usr/lib/libSystem.dylib",
-                "libXSystem.dylib",
-            )
+            with self.assertRaises(ValueError):
+                dyld.dyld_library(
+                    "/usr/lib/libSystem.dylib",
+                    "libXSystem.dylib",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -141,12 +140,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/slib:/usr/slib"
             lst = []
-            self.assertRaises(
-                ValueError,
-                dyld.dyld_library,
-                "/usr/lib/libSystem.dylib",
-                "libXSystem.dylib",
-            )
+            with self.assertRaises(ValueError):
+                dyld.dyld_library(
+                    "/usr/lib/libSystem.dylib",
+                    "libXSystem.dylib",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -162,12 +160,11 @@ class TestDyld(TestCase):
             os.environ["DYLD_IMAGE_SUFFIX"] = "_profile"
 
             lst = []
-            self.assertRaises(
-                ValueError,
-                dyld.dyld_library,
-                "/usr/lib/libSystem.dylib",
-                "libXSystem.dylib",
-            )
+            with self.assertRaises(ValueError):
+                dyld.dyld_library(
+                    "/usr/lib/libSystem.dylib",
+                    "libXSystem.dylib",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -253,12 +250,11 @@ class TestDyld(TestCase):
             self.maxDiff = None
 
             lst = []
-            self.assertRaises(
-                ImportError,
-                dyld.dyld_framework,
-                "/System/Library/Cocoa.framework/Cocoa",
-                "XCocoa",
-            )
+            with self.assertRaises(ImportError):
+                dyld.dyld_framework(
+                    "/System/Library/Cocoa.framework/Cocoa",
+                    "XCocoa",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -272,12 +268,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_IMAGE_SUFFIX"] = "_profile"
             lst = []
-            self.assertRaises(
-                ImportError,
-                dyld.dyld_framework,
-                "/System/Library/Cocoa.framework/Cocoa",
-                "XCocoa",
-            )
+            with self.assertRaises(ImportError):
+                dyld.dyld_framework(
+                    "/System/Library/Cocoa.framework/Cocoa",
+                    "XCocoa",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -299,12 +294,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
             lst = []
-            self.assertRaises(
-                ImportError,
-                dyld.dyld_framework,
-                "/System/Library/Cocoa.framework/Cocoa",
-                "XCocoa",
-            )
+            with self.assertRaises(ImportError):
+                dyld.dyld_framework(
+                    "/System/Library/Cocoa.framework/Cocoa",
+                    "XCocoa",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -321,12 +315,11 @@ class TestDyld(TestCase):
 
             os.environ["DYLD_FALLBACK_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
             lst = []
-            self.assertRaises(
-                ImportError,
-                dyld.dyld_framework,
-                "/System/Library/Cocoa.framework/Cocoa",
-                "XCocoa",
-            )
+            with self.assertRaises(ImportError):
+                dyld.dyld_framework(
+                    "/System/Library/Cocoa.framework/Cocoa",
+                    "XCocoa",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -342,13 +335,12 @@ class TestDyld(TestCase):
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
 
             lst = []
-            self.assertRaises(
-                ImportError,
-                dyld.dyld_framework,
-                "/System/Library/Cocoa.framework/Cocoa",
-                "XCocoa",
-                "B",
-            )
+            with self.assertRaises(ImportError):
+                dyld.dyld_framework(
+                    "/System/Library/Cocoa.framework/Cocoa",
+                    "XCocoa",
+                    "B",
+                )
             self.assertEqual(
                 lst,
                 [
@@ -401,4 +393,6 @@ class TestDyld(TestCase):
             dyld.pathForFramework("Cocoa.framework"),
             "/System/Library/Frameworks/Cocoa.framework",
         )
-        self.assertRaises(ImportError, dyld.pathForFramework, "Foo.framework")
+        with self.assertRaisesRegex(ImportError, "Framework Foo could not be found"):
+            # ^^^^ XXX: I don't like this exception, but it is public API by now.
+            dyld.pathForFramework("Foo.framework")

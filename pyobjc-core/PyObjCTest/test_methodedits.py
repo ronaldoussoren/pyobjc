@@ -85,13 +85,10 @@ class TestFromObjCSuperToObjCClass(TestCase):
             self.assertEqual(m.signature, b"q@:")
 
             # Cannot add native selectors:
-            self.assertRaises(
-                AttributeError,
-                objc.classAddMethod,
-                NSObject,
-                b"descriptionAlias",
-                NSObject.description,
-            )
+            with self.assertRaisesRegex(
+                ValueError, "Cannot add native selector to class"
+            ):
+                objc.classAddMethod(NSObject, b"descriptionAlias", NSObject.description)
 
         finally:
             mod.classAddMethods = orig_classAddMethods
@@ -246,19 +243,24 @@ class TestClassAsignments(TestCase):
         self.assertEqual(8, MEClass.classDuplicate_(4))
 
     def testAssignFuzzyMethod(self):
-        self.assertRaises(
-            (ValueError, TypeError),
-            setattr,
-            MEClass,
-            "fuzzyMethod",
-            objc.selector(None, selector=b"fuzzy", signature=b"@@:"),
-        )
+        with self.assertRaisesRegex(
+            (ValueError, TypeError), "selector object without callable"
+        ):
+            MEClass.fuzzyMethod = objc.selector(
+                None, selector=b"fuzzy", signature=b"@@:"
+            )
 
     def testRemovingMethods(self):
         theClass = NSObject
 
-        self.assertRaises(AttributeError, delattr, theClass, "alloc")
-        self.assertRaises(AttributeError, delattr, theClass, "init")
+        with self.assertRaisesRegex(
+            AttributeError, "Cannot remove selector 'alloc' in 'NSObject'"
+        ):
+            del theClass.alloc
+        with self.assertRaisesRegex(
+            AttributeError, "Cannot remove selector 'init' in 'NSObject'"
+        ):
+            del theClass.init
 
 
 class TestCategory(TestCase):
@@ -268,7 +270,10 @@ class TestCategory(TestCase):
         global Methods
 
         o = Methods.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "categoryMethod")
+        with self.assertRaisesRegex(
+            AttributeError, "'Methods' object has no attribute 'categoryMethod'"
+        ):
+            o.categoryMethod
 
         class Methods(objc.Category(Methods)):
             def categoryMethod(self):
@@ -304,7 +309,10 @@ class TestCategory(TestCase):
         NSObject = objc.lookUpClass("NSObject")
 
         o = NSObject.alloc().init()
-        self.assertRaises(AttributeError, getattr, o, "myCategoryMethod")
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute 'myCategoryMethod'"
+        ):
+            o.myCategoryMethod
 
         class NSObject(objc.Category(NSObject)):
             def myCategoryMethod(self):

@@ -1,5 +1,4 @@
 # Tests for PyObjCTools.KeyValueCoding
-import operator
 import os
 
 from PyObjCTools import KeyValueCoding
@@ -28,7 +27,10 @@ class TestArrayOperators(TestCase):
     def test_unknown_function(self):
         values = [{"a": 1}]
 
-        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, values, "@nofunction.a")
+        with self.assertRaisesRegex(
+            KeyError, "Array operator @nofunction not implemented"
+        ):
+            KeyValueCoding.getKeyPath(values, "@nofunction.a")
 
     def test_sum(self):
         arrayOperators = KeyValueCoding._ArrayOperators
@@ -38,7 +40,8 @@ class TestArrayOperators(TestCase):
         self.assertEqual(arrayOperators.sum(values, "b"), 6)
         self.assertEqual(arrayOperators.sum(values, "c"), 0)
         self.assertEqual(arrayOperators.sum([], "b"), 0)
-        self.assertRaises(KeyError, arrayOperators.sum, [], ())
+        with self.assertRaisesRegex(KeyError, ""):
+            arrayOperators.sum([], ())  # XXX
 
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@sum.a"), 10)
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@sum.b"), 6)
@@ -52,7 +55,8 @@ class TestArrayOperators(TestCase):
         self.assertEqual(arrayOperators.avg(values, "b"), 1.5)
         self.assertEqual(arrayOperators.avg(values, "c"), 0)
         self.assertEqual(arrayOperators.avg([], "b"), 0)
-        self.assertRaises(KeyError, arrayOperators.avg, [], ())
+        with self.assertRaisesRegex(KeyError, ""):
+            arrayOperators.avg([], ())  # XXX
 
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@avg.a"), 2.5)
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@avg.b"), 1.5)
@@ -74,7 +78,8 @@ class TestArrayOperators(TestCase):
         values = [{"a": 1}, {"a": 2, "b": 5}, {"a": 3, "b": 2}, {"a": 4}]
         self.assertEqual(arrayOperators.max(values, "a"), 4)
         self.assertEqual(arrayOperators.max(values, "b"), 5)
-        self.assertRaises(KeyError, arrayOperators.max, values, ())
+        with self.assertRaisesRegex(KeyError, ""):
+            arrayOperators.max(values, ())  # XXX
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@max.a"), 4)
 
     def test_min(self):
@@ -83,7 +88,8 @@ class TestArrayOperators(TestCase):
         values = [{"a": 1}, {"a": 2, "b": 5}, {"a": 3, "b": 2}, {"a": 4}]
         self.assertEqual(arrayOperators.min(values, "a"), 1)
         self.assertEqual(arrayOperators.min(values, "b"), 2)
-        self.assertRaises(KeyError, arrayOperators.min, values, ())
+        with self.assertRaisesRegex(KeyError, ""):
+            arrayOperators.min(values, ())  # XXX
         self.assertEqual(KeyValueCoding.getKeyPath(values, "@min.a"), 1)
 
     def test_unionOfObjects(self):
@@ -99,7 +105,8 @@ class TestArrayOperators(TestCase):
         )
 
         values.append({"a": {}})
-        self.assertRaises(KeyError, arrayOperators.unionOfObjects, values, ("a", "b"))
+        with self.assertRaisesRegex(KeyError, "Key b does not exist"):
+            arrayOperators.unionOfObjects(values, ("a", "b"))
 
     def test_distinctUnionOfObjects(self):
         arrayOperators = KeyValueCoding._ArrayOperators
@@ -140,12 +147,10 @@ class TestArrayOperators(TestCase):
         )
 
         values.append({"a": {}})
-        self.assertRaises(
-            KeyError, arrayOperators.distinctUnionOfObjects, values, ("a", "b")
-        )
-        self.assertRaises(
-            KeyError, KeyValueCoding.getKeyPath, values, "@distinctUnionOfObjects.a.b"
-        )
+        with self.assertRaisesRegex(KeyError, "Key b does not exist"):
+            arrayOperators.distinctUnionOfObjects(values, ("a", "b"))
+        with self.assertRaisesRegex(KeyError, "Key b does not exist"):
+            KeyValueCoding.getKeyPath(values, "@distinctUnionOfObjects.a.b")
 
         class Rec:
             def __init__(self, b):
@@ -300,10 +305,10 @@ class TestArrayOperators(TestCase):
             ],
         )
 
-        self.assertRaises(KeyError, arrayOperators.unionOfArrays, transactions, "date")
-        self.assertRaises(
-            KeyError, arrayOperators.distinctUnionOfArrays, transactions, "date"
-        )
+        with self.assertRaisesRegex(KeyError, "Key d does not exist"):
+            arrayOperators.unionOfArrays(transactions, "date")
+        with self.assertRaisesRegex(KeyError, "Key d does not exist"):
+            arrayOperators.distinctUnionOfArrays(transactions, "date")
 
     def test_unionOfArrays_variations(self):
         lst = [[{"a": 1}, {"a": 2}, {"a": 1}, {"a": 3}, {"a": 2}]]
@@ -341,7 +346,8 @@ class TestPythonObject(TestCase):
     def test_dict_get(self):
         d = {"a": 1}
         self.assertEqual(KeyValueCoding.getKey(d, "a"), 1)
-        self.assertRaises(KeyError, KeyValueCoding.getKey, d, "b")
+        with self.assertRaisesRegex(KeyError, "Key b does not exist"):
+            KeyValueCoding.getKey(d, "b")
 
     def test_array_get(self):
         lst = [{"a": 1, "b": 2}, {"a": 2}]
@@ -370,16 +376,22 @@ class TestPythonObject(TestCase):
         self.assertEqual(KeyValueCoding.getKeyPath(r, "prop1"), "a property")
 
         r = Record(attr1=Record(attr2="b", attr3=[Record(a=1), Record(a=2, b="b")]))
-        self.assertRaises(KeyError, KeyValueCoding.getKey, r, "slot1")
-        self.assertRaises(KeyError, KeyValueCoding.getKey, r, "attr99")
-        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, "slot1")
-        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, "attr99")
+        with self.assertRaisesRegex(KeyError, "Key slot1 does not exist"):
+            KeyValueCoding.getKey(r, "slot1")
+        with self.assertRaisesRegex(KeyError, "Key attr99 does not exist"):
+            KeyValueCoding.getKey(r, "attr99")
+        with self.assertRaisesRegex(KeyError, "Key slot1 does not exist"):
+            KeyValueCoding.getKeyPath(r, "slot1")
+        with self.assertRaisesRegex(KeyError, "Key attr99 does not exist"):
+            KeyValueCoding.getKeyPath(r, "attr99")
 
         self.assertEqual(KeyValueCoding.getKeyPath(r, "attr1.attr2"), "b")
         self.assertEqual(KeyValueCoding.getKeyPath(r, "attr1.attr3.a"), [1, 2])
         self.assertEqual(KeyValueCoding.getKeyPath(r, "attr1.attr3.b"), [null, "b"])
-        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, "attr3")
-        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, "attr1.attr9")
+        with self.assertRaisesRegex(KeyError, "Key attr3 does not exist"):
+            KeyValueCoding.getKeyPath(r, "attr3")
+        with self.assertRaisesRegex(KeyError, "Key attr9 does not exist"):
+            KeyValueCoding.getKeyPath(r, "attr1.attr9")
 
     def test_cocoa_get(self):
         r = objc.lookUpClass("NSObject").alloc().init()
@@ -388,10 +400,16 @@ class TestPythonObject(TestCase):
         self.assertEqual(
             KeyValueCoding.getKeyPath(r, "description.length"), len(r.description())
         )
-        self.assertRaises(KeyError, KeyValueCoding.getKey, r, "nosuchattr")
-        self.assertRaises(
-            KeyError, KeyValueCoding.getKeyPath, r, "description.nosuchattr"
-        )
+        with self.assertRaisesRegex(
+            KeyError,
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key nosuchattr.",
+        ):
+            KeyValueCoding.getKey(r, "nosuchattr")
+        with self.assertRaisesRegex(
+            KeyError,
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key nosuchattr.",
+        ):
+            KeyValueCoding.getKeyPath(r, "description.nosuchattr")
 
     def test_accessor_get(self):
         class Object:
@@ -493,7 +511,8 @@ class TestPythonObject(TestCase):
         KeyValueCoding.setKey(r, "attr1", 1)
         KeyValueCoding.setKey(r, "attr2", 2)
         KeyValueCoding.setKey(r, "attr3", 3)
-        self.assertRaises(KeyError, KeyValueCoding.setKey, r, "attr4", 4)
+        with self.assertRaisesRegex(KeyError, "Key attr4 does not exist"):
+            KeyValueCoding.setKey(r, "attr4", 4)
         KeyValueCoding.setKey(r, "attr6", 7)
 
         self.assertEqual(r._attr1, 1)
@@ -524,10 +543,16 @@ class TestPythonObject(TestCase):
         self.assertEqual(o, {"attr": "value2"})
 
         o = objc.lookUpClass("NSObject").alloc().init()
-        self.assertRaises(KeyError, KeyValueCoding.setKey, o, "description", "hello")
-        self.assertRaises(
-            KeyError, KeyValueCoding.setKeyPath, o, "description", "hello"
-        )
+        with self.assertRaisesRegex(
+            KeyError,
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key description.",
+        ):
+            KeyValueCoding.setKey(o, "description", "hello")
+        with self.assertRaisesRegex(
+            KeyError,
+            r"NSUnknownKeyException - \[.*\]: this class is not key value coding-compliant for the key description.",
+        ):
+            KeyValueCoding.setKeyPath(o, "description", "hello")
 
     def test_accessor(self):
         class Record:
@@ -719,5 +744,7 @@ class TestKVCHelper(TestCase):
         )
         self._trace[:] = []
 
-        self.assertRaises(TypeError, operator.getitem, o, 42)
-        self.assertRaises(TypeError, operator.setitem, o, 42, 99)
+        with self.assertRaisesRegex(TypeError, "Keys must be strings"):
+            o[42]
+        with self.assertRaisesRegex(TypeError, "Keys must be strings"):
+            o[42] = 99

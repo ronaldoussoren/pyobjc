@@ -28,7 +28,8 @@ class TestArraysOut(TestCase):
         v = m(o, None)
         self.assertEqual(list(v), [0, -1, -8, -27])
 
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("nullfill4Tuple:")
         n, v = m(o, None)
@@ -50,12 +51,20 @@ class TestArraysOut(TestCase):
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
-        self.assertRaises(TypeError, m, o, None)
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            m(o, None)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("fillStringArray:")
-        self.assertRaises(TypeError, m, o)
-        self.assertRaises(TypeError, m, o, None)
+        with self.assertRaisesRegex(TypeError, "Need 1 arguments, got 0"):
+            m(o)
+        with self.assertRaisesRegex(
+            TypeError, "NULL-terminated 'out' arguments are not supported"
+        ):
+            m(o, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
@@ -76,7 +85,8 @@ class TestArraysOut(TestCase):
         v = m(o, None, 0)
         self.assertEqual(list(v), [])
 
-        self.assertRaises(ValueError, m, o, objc.NULL, 0)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL, 0)
 
         m = o.methodForSelector_("nullfillArray:count:")
         n, v = m(o, None, 3)
@@ -114,9 +124,12 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (1, 2, 3, 4))
         self.assertEqual(v, (4, 3, 2, 1))
 
-        self.assertRaises(ValueError, m, o, (1, 2, 3))
-        self.assertRaises(ValueError, m, o, (1, 2, 3, 4, 5))
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            m(o, (1, 2, 3))
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            m(o, (1, 2, 3, 4, 5))
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("nullreverse4Tuple:")
         a = (1, 2, 3, 4)
@@ -138,8 +151,10 @@ class TestArraysInOut(TestCase):
         self.assertEqual(a, (b"a", b"b", b"c"))
         self.assertEqual(v, (b"c", b"b", b"a"))
 
-        self.assertRaises(ValueError, m, o, (1, 2))
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            m(o, (1, 2))
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("nullreverseStrings:")
         a = (b"a", b"b", b"c")
@@ -173,8 +188,12 @@ class TestArraysInOut(TestCase):
         # self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
         # self.assertEqual(v, (5.0, 4.0, 3.0, 2.0, 1.0))
 
-        self.assertRaises(ValueError, m, o, (1.0, 2.0), 5)
-        self.assertRaises(ValueError, m, o, objc.NULL, 0)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(2\) expecting at least 5"
+        ):
+            m(o, (1.0, 2.0), 5)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL, 0)
 
         m = o.methodForSelector_("nullreverseArray:count:")
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
@@ -216,9 +235,12 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
-        self.assertRaises(ValueError, m, o, (1, 2, 3))
-        self.assertRaises(ValueError, m, o, (1, 2, 3, 4, 5))
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            m(o, (1, 2, 3))
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 5"):
+            m(o, (1, 2, 3, 4, 5))
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("null4Tuple:")
         v = m(o, objc.NULL)
@@ -250,8 +272,10 @@ class TestArraysIn(TestCase):
         v = m(o, ())
         self.assertEqual(len(v), 0)
 
-        self.assertRaises(ValueError, m, o, [1, 2])
-        self.assertRaises(ValueError, m, o, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):
+            m(o, [1, 2])
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL)
 
         m = o.methodForSelector_("nullStringArray:")
         v = m(o, objc.NULL)
@@ -270,11 +294,17 @@ class TestArraysIn(TestCase):
         # self.assertEqual(len(v), 3)
         # self.assertEqual(list(v), [1,2,3,4])
 
-        self.assertRaises(ValueError, m, o, [1, 2, 3], 4)
-        self.assertRaises(ValueError, m, o, objc.NULL, 0)
-        self.assertRaises(ValueError, m, o, objc.NULL, 1)
+        with self.assertRaisesRegex(
+            ValueError, r"too few values \(3\) expecting at least 4"
+        ):
+            m(o, [1, 2, 3], 4)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL, 0)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL, 1)
 
-        self.assertRaises(ValueError, m, o, objc.NULL, 1)
+        with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
+            m(o, objc.NULL, 1)
 
         m = o.methodForSelector_("nullIntArray:count:")
         v = m(o, objc.NULL, 0)
@@ -355,7 +385,8 @@ class TestByReference(TestCase):
         r = m(o, 2535, 5325)
         self.assertEqual(r, 2535 + 5325)
 
-        self.assertRaises(ValueError, m, o, 42, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            m(o, 42, objc.NULL)
 
     def testOutput(self):
         o = OC_MetaDataTest.new()
@@ -370,7 +401,8 @@ class TestByReference(TestCase):
         self.assertEqual(rem, 3)
 
         # To be fixed:
-        # self.assertRaises(ValueError, m, o, 42, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            m(o, 42, objc.NULL)
 
     def testInputOutput(self):
         o = OC_MetaDataTest.new()
@@ -380,7 +412,8 @@ class TestByReference(TestCase):
         self.assertEqual(x, 284)
         self.assertEqual(y, 42)
 
-        self.assertRaises(ValueError, m, o, 42, objc.NULL)
+        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
+            m(o, 42, objc.NULL)
 
     def testNullAccepted(self):
         # Note: the commented-out test-cases require a change in the pyobjc-core

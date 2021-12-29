@@ -1,4 +1,3 @@
-import operator
 import os
 import struct
 import sys
@@ -31,7 +30,8 @@ class TestLazyImport(TestCase):
         o = lazyimport.GetAttrMap(sys)
         self.assertEqual(o["path"], sys.path)
         self.assertEqual(o["version"], sys.version)
-        self.assertRaises(KeyError, o.__getitem__, "nosuchkey")
+        with self.assertRaisesRegex(KeyError, "nosuchkey"):
+            o["nosuchkey"]
 
         v = o["CFSTR"]
         self.assertEqual(v(b"hello"), "hello")
@@ -128,9 +128,12 @@ class TestLazyImport(TestCase):
         )
         self.assertIsInstance(mod, objc.ObjCLazyModule)
 
-        self.assertRaises(AttributeError, getattr, mod, "Foo(")
-        self.assertRaises(AttributeError, getattr, mod, "Foo)")
-        self.assertRaises(AttributeError, getattr, mod, "42")
+        with self.assertRaisesRegex(AttributeError, "Foo"):
+            mod.Foo
+        with self.assertRaisesRegex(AttributeError, "Foo"):
+            mod.Foo
+        with self.assertRaisesRegex(AttributeError, "42"):
+            getattr(mod, "42")
 
         if dunder_all:
             # Force precalculation of all attributes by accessing the __all__
@@ -139,7 +142,8 @@ class TestLazyImport(TestCase):
 
         self.assertEqual(mod.__doc__, initial_dict["__doc__"])
         self.assertEqual(mod.doc_string, initial_dict["__doc__"])
-        self.assertRaises(AttributeError, getattr, mod, "invalid_alias")
+        with self.assertRaisesRegex(AttributeError, "invalid_alias"):
+            mod.invalid_alias
         self.assertIsInstance(mod.NSWorkspaceMoveOperation, objc.pyobjc_unicode)
         self.assertTrue(
             (mod.NSWorkspaceMoveOperation.nsstring().__flags__ & 0x10) == 0x00
@@ -154,12 +158,16 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.NSRectClipList, objc.function)
         self.assertEqual(mod.NSRectClipList.__name__, "NSRectClipList")
         self.assertArgSizeInArg(mod.NSRectClipList, 0, 1)
-        self.assertRaises(AttributeError, getattr, mod, "FunctionThatDoesNotExist")
+        with self.assertRaisesRegex(AttributeError, "FunctionThatDoesNotExist"):
+            mod.FunctionThatDoesNotExist
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
-        self.assertRaises(AttributeError, getattr, mod, "invalid_expression1")
-        self.assertRaises(AttributeError, getattr, mod, "invalid_expression2")
+        with self.assertRaisesRegex(AttributeError, "invalid_expression1"):
+            mod.invalid_expression1
+        with self.assertRaisesRegex(AttributeError, "invalid_expression2"):
+            mod.invalid_expression2
         self.assertIs(mod.NSURL, objc.lookUpClass("NSURL"))
-        self.assertRaises(AttributeError, getattr, mod, "NSNonExistingClass")
+        with self.assertRaisesRegex(AttributeError, "NSNonExistingClass"):
+            mod.NSNonExistingClass
 
         mod.NSAccessibilityActionDescription = 99
         mod.NSWindowWillCloseNotification = 100
@@ -205,11 +213,12 @@ class TestLazyImport(TestCase):
         self.assertIs(mod.__loader__, initial_dict["__loader__"])
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
-        self.assertRaises(AttributeError, getattr, mod, "ABPersonSetImageData")
-        self.assertRaises(AttributeError, getattr, mod, "ABAddressBookErrorDomain")
-        self.assertRaises(
-            AttributeError, getattr, mod, "ABMultiValueIdentifiersErrorKey"
-        )
+        with self.assertRaisesRegex(AttributeError, "ABPersonSetImageData"):
+            mod.ABPersonSetImageData
+        with self.assertRaisesRegex(AttributeError, "ABAddressBookErrorDomain"):
+            mod.ABAddressBookErrorDomain
+        with self.assertRaisesRegex(AttributeError, "ABMultiValueIdentifiersErrorKey"):
+            mod.ABMultiValueIdentifiersErrorKey
 
     def test_with_parents(self):
         mod = objc.ObjCLazyModule("RootLess", None, None, None, None, None, (sys, os))
@@ -326,8 +335,10 @@ class TestLazyImport(TestCase):
             self.assertIsInstance(mod, objc.ObjCLazyModule)
             self.assertEqual(mod.submodule, 42)
             self.assertEqual(mod.submodule2, 1)
-            self.assertRaises(KeyError, operator.getitem, mod.__dict__, "submodule3")
-            self.assertRaises(KeyError, operator.getitem, mod.__dict__, "submodule.x")
+            with self.assertRaisesRegex(KeyError, "submodule3"):
+                mod.__dict__["submodule3"]
+            with self.assertRaisesRegex(KeyError, "x"):
+                mod.__dict__["submodule.x"]
         finally:
             for nm in (
                 "MyFramework.submodule",
@@ -378,7 +389,8 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.makeArrayWithFormat_, objc.function)
         v = mod.makeArrayWithFormat_("%3d", 10)
         self.assertEqual(list(v), ["%3d", " 10"])
-        self.assertRaises(AttributeError, getattr, mod, "NoSuchFunction")
+        with self.assertRaisesRegex(AttributeError, "NoSuchFunction"):
+            mod.NoSuchFunction
 
         mod.make4Tuple_ = 42
         self.assertIn("makeArrayWithFormat_", mod.__all__)
@@ -501,27 +513,42 @@ class TestLazyImport(TestCase):
         self.assertFalse(mod.kCFAllocatorDefault != mod.kCFAllocatorDefault)
         self.assertTrue(mod.kCFAllocatorDefault != mod.CFBagRef)
         self.assertFalse(mod.kCFAllocatorDefault == mod.CFBagRef)
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of 'CFAllocatorRef' and 'CFAllocatorRef'",
+        ):
             mod.kCFAllocatorDefault < mod.kCFAllocatorDefault  # noqa: B015
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'CFAllocatorRef' and 'CFAllocatorRef'",
+        ):
             mod.kCFAllocatorDefault <= mod.kCFAllocatorDefault  # noqa: B015
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of 'CFAllocatorRef' and 'CFAllocatorRef'",
+        ):
             mod.kCFAllocatorDefault > mod.kCFAllocatorDefault  # noqa: B015
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'CFAllocatorRef' and 'CFAllocatorRef'",
+        ):
             mod.kCFAllocatorDefault >= mod.kCFAllocatorDefault  # noqa: B015
 
         self.assertIsInstance(mod.kCFAllocatorSystemDefault, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorSystemDefault.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorSystemDefault, mod.CFAllocatorRef)
 
-        self.assertRaises(AttributeError, getattr, mod, "kCFAllocatorMissing")
-        self.assertRaises(AttributeError, getattr, mod, "kCFAllocatorMissingZone")
+        with self.assertRaisesRegex(AttributeError, "kCFAllocatorMissing"):
+            mod.kCFAllocatorMissing
+        with self.assertRaisesRegex(AttributeError, "kCFAllocatorMissingZone"):
+            mod.kCFAllocatorMissingZone
 
         self.assertIn("kCFAllocatorDefault", mod.__all__)
         self.assertIn("kCFAllocatorSystemDefault", mod.__all__)
         self.assertIn("kCFAllocatorMallocZone", mod.__all__)
         self.assertIn("kCFAllocatorMalloc", mod.__all__)
-        self.assertRaises(AttributeError, getattr, mod, "kCFAllocatorOtherMissingZone")
+        with self.assertRaisesRegex(AttributeError, "kCFAllocatorOtherMissingZone"):
+            mod.kCFAllocatorOtherMissingZone
 
         self.assertIsInstance(mod.kCFAllocatorMalloc, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorMalloc.__flags__ & 0x10) == 0x10)
