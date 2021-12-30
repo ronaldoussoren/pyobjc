@@ -171,36 +171,35 @@ class TestImmutableSet(TestCase, BasicSetTests):
     def testNotMutable(self):
         # Ensure that a frozenset cannot be mutated
         o = self.setClass([1, 2, 3])
-        self.assertRaises((TypeError, AttributeError), OC_TestSet.set_addObject_, o, 4)
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_addObject_(o, 4)
 
-        self.assertRaises(TypeError, OC_TestSet.set_removeObject_, o, 2)
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_removeObject_(o, 2)
 
-        self.assertRaises(TypeError, OC_TestSet.set_addObjectsFromArray_, o, [4, 5, 6])
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_addObjectsFromArray_(o, [4, 5, 6])
 
-        self.assertRaises(
-            TypeError,
-            OC_TestSet.set_filterUsingPredicate_,
-            o,
-            NSPredicate.predicateWithValue_(True),
-        )
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_filterUsingPredicate_(
+                o,
+                NSPredicate.predicateWithValue_(True),
+            )
 
-        self.assertRaises(
-            TypeError, OC_TestSet.set_intersectSet_, o, self.setClass([2, 3, 4])
-        )
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_intersectSet_(o, self.setClass([2, 3, 4]))
 
-        self.assertRaises(
-            TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])
-        )
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_minusSet_(o, self.setClass([2, 3, 4]))
 
-        self.assertRaises(
-            TypeError, OC_TestSet.set_setSet_, o, self.setClass([2, 3, 4])
-        )
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_setSet_(o, self.setClass([2, 3, 4]))
 
-        self.assertRaises(
-            TypeError, OC_TestSet.set_minusSet_, o, self.setClass([2, 3, 4])
-        )
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.set_minusSet_(o, self.setClass([2, 3, 4]))
 
-        self.assertRaises(TypeError, OC_TestSet.removeAllObjecsFromSet_, o)
+        with self.assertRaisesRegex(TypeError, "Cannot mutate a frozenset"):
+            OC_TestSet.removeAllObjecsFromSet_(o)
 
 
 class TestMutableSet(TestCase, BasicSetTests):

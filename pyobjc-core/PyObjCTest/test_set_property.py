@@ -196,7 +196,8 @@ class TestSetProperty(TestCase):
             self.assertNotIn("new", observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]["old"], {1})
 
-            self.assertRaises(KeyError, o.aSet.remove, 2)
+            with self.assertRaisesRegex(KeyError, "2"):
+                o.aSet.remove(2)
             self.assertNotIn("new", observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]["old"], set())
 
@@ -208,7 +209,8 @@ class TestSetProperty(TestCase):
             self.assertEqual(observer.values[-1][-1]["old"], {v})
 
             o.aSet = set()
-            self.assertRaises(KeyError, o.aSet.pop)
+            with self.assertRaisesRegex(KeyError, "'Empty set'"):
+                o.aSet.pop()
 
     def testOperators(self):
         with OCObserve.alloc().init() as observer:
@@ -304,7 +306,11 @@ class TestSetProperty(TestCase):
 
         o = TestSetPropertyHelper.alloc().init()
         self.assertEqual(0, o.pyobjc_instanceMethods.countOfASet())
-        self.assertRaises(AttributeError, getattr, o, "countOfASet")
+        with self.assertRaisesRegex(
+            AttributeError,
+            "'TestSetPropertyHelper' object has no attribute 'countOfASet'",
+        ):
+            o.countOfASet
         o.aSet.add(1)
         o.aSet.add(2)
 
@@ -349,15 +355,24 @@ class TestSetProperty(TestCase):
         self.assertEqual(o.aROSet, {1, 2, 3, 4})
         self.assertIsNot(type(o.aROSet), set)
 
-        self.assertRaises(ValueError, o.aROSet.add, 1)
-        self.assertRaises(ValueError, o.aROSet.clear)
-        self.assertRaises(ValueError, o.aROSet.pop)
-        self.assertRaises(ValueError, o.aROSet.remove, 1)
-        self.assertRaises(ValueError, o.aROSet.difference_update, {1, 2})
-        self.assertRaises(ValueError, o.aROSet.intersection_update, {1, 2})
-        self.assertRaises(ValueError, o.aROSet.symmetric_difference_update, {1, 2})
-        self.assertRaises(ValueError, o.aROSet.update, {1, 2})
-        self.assertRaises(ValueError, o.aROSet.discard, 4)
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.add(1)
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.clear()
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.pop()
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.remove(1)
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.difference_update({1, 2})
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.intersection_update({1, 2})
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.symmetric_difference_update({1, 2})
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.update({1, 2})
+        with self.assertRaisesRegex(ValueError, "Property 'aROSet' is read-only"):
+            o.aROSet.discard(4)
 
         try:
             o.aROSet |= {1, 2}

@@ -168,7 +168,8 @@ class TestTypeCode_BOOL(TestCase):
         self.assertEqual(v, (1, 0, 1, 0))
 
         # It should not be possible to use a string as an array of booleans
-        self.assertRaises(ValueError, o.BOOLArrayOf4In_, b"\x00\x01\x00\x01")
+        with self.assertRaisesRegex(ValueError, "Need array of BOOL, got byte string"):
+            o.BOOLArrayOf4In_(b"\x00\x01\x00\x01")
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -206,4 +207,5 @@ class TestTypeCode_BOOL(TestCase):
         self.assertEqual(w, (False, False, False, False))
 
         # It should not be possible to use a string as an array of booleans
-        self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, b"\x00\x01\x00\x01")
+        with self.assertRaisesRegex(ValueError, "Need array of BOOL, got byte string"):
+            o.BOOLArrayOf4InOut_(b"\x00\x01\x00\x01")

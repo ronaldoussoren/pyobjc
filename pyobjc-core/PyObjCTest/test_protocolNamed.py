@@ -11,9 +11,13 @@ class TestProtocols(TestCase):
         self.assertIsInstance(p, objc.formal_protocol)
 
     def testNoProtocol(self):
-        self.assertRaises(
-            objc.ProtocolError, objc.protocolNamed, "PyObjCFooBarProtocol"
-        )
+        # XXX: I don't like this exception text, but changing the way the exception
+        #      is raised is not backward compatible
+        with self.assertRaisesRegex(
+            objc.ProtocolError,
+            """("protocol 'PyObjCFooBarProtocol' does not exist", 'PyObjCFooBarProtocol')""",
+        ):
+            objc.protocolNamed("PyObjCFooBarProtocol")
 
     def testBasic2(self):
         orig_protocolsForProcess = objc._objc.protocolsForProcess

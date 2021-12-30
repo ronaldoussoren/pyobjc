@@ -105,8 +105,15 @@ class TestRegressions(TestCase):
             def f(x):
                 pass
 
-        self.assertRaises(TypeError, NSObject.pyobjc_instanceMethods.description, None)
-        self.assertRaises(TypeError, SelfIsNone.pyobjc_instanceMethods.f, None)
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of NSObject as self, got one of NoneType"
+        ):
+            NSObject.pyobjc_instanceMethods.description(None)
+        with self.assertRaisesRegex(
+            TypeError,
+            "Expecting an Objective-C class or instance as self, got a NoneType",
+        ):
+            SelfIsNone.pyobjc_instanceMethods.f(None)
 
     def testOneArgumentTooMany(self):
         class ClsIsNone(NSObject):
@@ -116,10 +123,16 @@ class TestRegressions(TestCase):
 
         anObject = NSObject.alloc().init()
 
-        self.assertRaises(TypeError, anObject.description, None)
-        self.assertRaises(TypeError, anObject.description, "twelf")
-        self.assertRaises(TypeError, NSObject.description, None)
-        self.assertRaises(TypeError, ClsIsNone.f, None)
+        with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 1"):
+            anObject.description(None)
+        with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 1"):
+            anObject.description("twelf")
+        with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 1"):
+            NSObject.description(None)
+        with self.assertRaisesRegex(
+            TypeError, "takes 1 positional argument but 2 were given"
+        ):
+            ClsIsNone.f(None)
 
     def testBufferArg(self):
         data = objc.lookUpClass("NSData")

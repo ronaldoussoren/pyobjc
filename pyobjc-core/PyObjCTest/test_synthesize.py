@@ -59,5 +59,9 @@ class TestSynthesize(TestCase):
         self.assertEqual(obj.someTitle(), 42)
 
     def testFailures(self):
-        self.assertRaises(ValueError, objc.synthesize, "")
-        self.assertRaises(ValueError, objc.synthesize, None)
+        with self.assertRaisesRegex(ValueError, "Empty property name"):
+            objc.synthesize("")
+
+        # The message is suboptimal, but good enough.
+        with self.assertRaisesRegex(ValueError, "Empty property name"):
+            objc.synthesize(None)

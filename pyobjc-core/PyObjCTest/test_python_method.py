@@ -7,8 +7,14 @@ NSObject = objc.lookUpClass("NSObject")
 
 class TestPythonMethod(TestCase):
     def test_creation(self):
-        self.assertRaises(TypeError, objc.python_method)
-        self.assertRaises(TypeError, objc.python_method, 1, 2)
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'callable' \(pos 1\)"
+        ):
+            objc.python_method()
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 1 argument \(2 given\)"
+        ):
+            objc.python_method(1, 2)
         o = objc.python_method(1)
         self.assertEqual(o.callable, 1)
 

@@ -31,14 +31,19 @@ class TestInformalProtocols(TestCase):
 
         self.assertEqual(ProtoClass1.testMethod.signature, b"I@:")
 
-    def doIncompleteClass(self):
-        class ProtoClass2(NSObject, MyProto):
-            def testMethod2_(self, x):
-                pass
-
     def testIncompleteClass(self):
-        self.assertRaises(TypeError, self.doIncompleteClass)
-        self.assertRaises(objc.error, objc.lookUpClass, "ProtoClass2")
+        with self.assertRaisesRegex(
+            TypeError,
+            r"metaclass conflict: the metaclass of a derived class must be "
+            r"a \(non-strict\) subclass of the metaclasses of all its bases",
+        ):
+
+            class ProtoClass2(NSObject, MyProto):
+                def testMethod2_(self, x):
+                    pass
+
+        with self.assertRaisesRegex(objc.error, "^ProtoClass2$"):
+            objc.lookUpClass("ProtoClass2")
 
         for cls in objc.getClassList():
             self.assertNotEqual(cls.__name__, "ProtoClass2")
@@ -280,19 +285,29 @@ class TestFormalProtocols(TestCase):
 
     def testIncorrectlyDefiningFormalProtocols(self):
         # Some bad calls to objc.formal_protocol
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"formal_protocol\(\) argument 1 must be str, not list"
+        ):
             objc.formal_protocol([], None, ())
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, "supers need to be None or a sequence of objc.formal_protocols"
+        ):
             objc.formal_protocol("supers", (NSObject,), ())
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, "supers need to be None or a sequence of objc.formal_protocols"
+        ):
             objc.formal_protocol("supers", objc.protocolNamed("NSLocking"), ())
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, "Selectors is not a list of objc.selector instances"
+        ):
             objc.formal_protocol("supers", [objc.protocolNamed("NSLocking")], "hello")
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, "Selectors is not a list of objc.selector instances"
+        ):
             objc.formal_protocol(
                 "supers",
                 [objc.protocolNamed("NSLocking")],
@@ -500,58 +515,67 @@ class TestFormalProtocols2(TestCase):
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()
 
-        try:
+        with self.assertRaisesRegex(
+            TypeError,
+            "protocols list contains object that isn't an Objective-C protocol, but type NSObject",
+        ):
 
             class MyClassImplementingAnotherObject(NSObject, protocols=[anObject]):
                 pass
 
-            self.fail("Can create class that implements an object???")
-        except TypeError:
-            pass
-
-        try:
+        with self.assertRaisesRegex(
+            TypeError,
+            "protocols list contains object that isn't an Objective-C protocol, but type int",
+        ):
 
             class MyClassImplementingAnotherObject2(NSObject, protocols=[10]):
                 pass
 
-            self.fail()
-        except TypeError:
-            pass
-
-        try:
+        with self.assertRaisesRegex(
+            TypeError,
+            "protocols list contains object that isn't an Objective-C protocol, but type type",
+        ):
 
             class MyClassImplementingAnotherObject3(NSObject, protocols=[int]):
                 pass
 
-            self.fail()
-        except TypeError:
-            pass
-
     def testIncorrectlyDefiningFormalProtocols(self):
         # Some bad calls to objc.formal_protocol
-        self.assertRaises(TypeError, objc.formal_protocol, [], None, ())
-        self.assertRaises(TypeError, objc.formal_protocol, "supers", (NSObject,), ())
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            objc.protocolNamed("NSLocking"),
-            (),
-        )
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            [objc.protocolNamed("NSLocking"), "hello"],
-            (),
-        )
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            None,
-            [objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"), "hello"],
-        )
+        with self.assertRaisesRegex(
+            TypeError, r"formal_protocol\(\) argument 1 must be str, not list"
+        ):
+            objc.formal_protocol([], None, ())
+        with self.assertRaisesRegex(
+            TypeError, "supers need to be None or a sequence of objc.formal_protocols"
+        ):
+            objc.formal_protocol("supers", (NSObject,), ())
+        with self.assertRaisesRegex(
+            TypeError, "supers need to be None or a sequence of objc.formal_protocols"
+        ):
+            objc.formal_protocol(
+                "supers",
+                objc.protocolNamed("NSLocking"),
+                (),
+            )
+        with self.assertRaisesRegex(
+            TypeError, "supers need to be None or a sequence of objc.formal_protocols"
+        ):
+            objc.formal_protocol(
+                "supers",
+                [objc.protocolNamed("NSLocking"), "hello"],
+                (),
+            )
+        with self.assertRaisesRegex(
+            TypeError, "Selectors is not a list of objc.selector instances"
+        ):
+            objc.formal_protocol(
+                "supers",
+                None,
+                [
+                    objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"),
+                    "hello",
+                ],
+            )
 
     def testMethodInfo(self):
         self.assertCountEqual(
@@ -599,11 +623,22 @@ class TestFormalProtocols2(TestCase):
         self.assertFalse(v.conformsTo_(w))
         self.assertTrue(v.conformsTo_(v))
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, "Expecting objc.formal_protocol, got instance of 'int'"
+        ):
             v.conformsTo_(42)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function takes exactly 1 argument \(2 given\)"
+        ):
             v.conformsTo_(w, v)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaisesRegex(
+            TypeError, r"function takes exactly 1 argument \(3 given\)"
+        ):
             v.conformsTo_(w, w, v)
+
+        with self.assertRaisesRegex(
+            TypeError, r"function takes exactly 1 argument \(0 given\)"
+        ):
+            v.conformsTo_()

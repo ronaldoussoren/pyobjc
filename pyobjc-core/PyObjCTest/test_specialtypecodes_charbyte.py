@@ -186,7 +186,10 @@ class TestTypeCode_byte(TestCase):
         v = o.byteArg_andbyteArg_(b"a", b"b")
         self.assertEqual(v, ("a", "b"))
 
-        self.assertRaises(ValueError, o.byteArg_andbyteArg_, 200, 100)
+        with self.assertRaisesRegex(
+            ValueError, "Expecting byte string of length 1, got a 'int'"
+        ):
+            o.byteArg_andbyteArg_(200, 100)
 
     def testStringArgument(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -199,7 +202,13 @@ class TestTypeCode_byte(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "ab")
 
-        self.assertRaises(ValueError, o.byteStringArg_, [99, 100, 100, 0])
+        # The message is fairly confusing because this is handled by
+        # the generic code for handling C array arguments, which iterates
+        # for the list to convert item by item.
+        with self.assertRaisesRegex(
+            ValueError, "Expecting byte string of length 1, got a 'int'"
+        ):
+            o.byteStringArg_([99, 100, 100, 0])
 
     def testFixedArrayIn(self):
         o = OC_TestSpecialTypeCode.alloc().init()

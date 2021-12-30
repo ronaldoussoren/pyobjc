@@ -72,7 +72,9 @@ class TestStructs(TestCase):
         ):
             p._replace(42)
 
-        with self.assertRaises(AttributeError):
+        with self.assertRaisesRegex(
+            AttributeError, "OCPoint' object has no attribute 'invalid'"
+        ):
             p._replace(invalid=9)
 
         p2 = p._replace(y=5)
@@ -118,15 +120,18 @@ class TestStructs(TestCase):
 
         self.assertEqual(tp._fields, ("e", "f", "g", "h"))
 
-        self.assertRaises(
-            ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None
-        )
-        self.assertRaises(
-            ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None
-        )
-        self.assertRaises(
-            ValueError, objc.createStructType, "Foo4", b'^{_Foo="a"f}', None
-        )
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not all fields have an embedded name"
+        ):
+            objc.createStructType("Foo2", b'{_Foo=f"a"}', None)
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a complete struct encoding"
+        ):
+            objc.createStructType("Foo3", b'{_Foo="a"f', None)  # XX
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a struct encoding"
+        ):
+            objc.createStructType("Foo4", b'^{_Foo="a"f}', None)
 
     def testPointerFields(self):
         # Note: the created type won't be all that useful unless the pointer
@@ -216,16 +221,22 @@ class TestStructs(TestCase):
         with pyobjc_options(structs_indexable=False, structs_writable=False):
             v = tp0(1, 2)
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are read-only"
+            ):
                 v.first = 42
 
         with pyobjc_options(structs_indexable=True, structs_writable=False):
             v = tp0(1, 2)
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are read-only"
+            ):
                 v.first = 42
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Instances of 'FooStruct' are read-only"
+            ):
                 v[0] = 42
 
     def testStructNotSequence(self):
@@ -289,7 +300,10 @@ class TestStructs(TestCase):
             self.assertEqual(v.first, 2)
             self.assertEqual(v.second, 3)
 
-            self.assertRaises(TypeError, tp0, 4, 5, 6)
+            with self.assertRaisesRegex(
+                TypeError, r"FooStruct\(\) takes at most 2 arguments \(3 given\)"
+            ):
+                tp0(4, 5, 6)
 
     def test_struct_as_sequence(self):
         tp0 = objc.createStructType(
@@ -315,7 +329,9 @@ class TestStructs(TestCase):
             with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
                 v[-6]
 
-            with self.assertRaises(IndexError):
+            with self.assertRaisesRegex(
+                IndexError, "cannot fit 'int' into an index-sized integer"
+            ):
                 v[2 ** 68]
 
             self.assertEqual(v[2 ** 68 :], ())
@@ -349,10 +365,14 @@ class TestStructs(TestCase):
             with self.assertRaisesRegex(IndexError, "FooStruct2 index out of range"):
                 v[-6] = 42
 
-            with self.assertRaises(IndexError):
+            with self.assertRaisesRegex(
+                IndexError, "cannot fit 'int' into an index-sized integer"
+            ):
                 v[2 ** 68] = 4
 
-            with self.assertRaises(TypeError):
+            with self.assertRaisesRegex(
+                TypeError, "Slice assignment would change size of FooStruct2 instance"
+            ):
                 v[2 ** 68 :] = (4,)
 
             # Delete (item slice)

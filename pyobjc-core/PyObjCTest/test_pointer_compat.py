@@ -56,8 +56,12 @@ class TestProxySupport(TestCase):
         self.assertIsInstance(value, OpaqueType)
         self.assertEqual(value.__pointer__, 1234)
 
-        self.assertRaises(ValueError, OpaqueType, cobject=object_capsule())
-        self.assertRaises(TypeError, OpaqueType, cobject=42)
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            OpaqueType(cobject=object_capsule())
+        with self.assertRaisesRegex(TypeError, "cobject' argument is not a PyCapsule"):
+            OpaqueType(cobject=42)
 
     @skipUnless(ctypes is not None, "requires ctypes")
     def test_opaque_ctypes(self):
@@ -78,5 +82,9 @@ class TestProxySupport(TestCase):
         value = NSObject(cobject=cap)
         self.assertIsInstance(value, NSObject)
 
-        self.assertRaises(ValueError, NSObject, cobject=opaque_capsule())
-        self.assertRaises(TypeError, NSObject, cobject=42)
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            NSObject(cobject=opaque_capsule())
+        with self.assertRaisesRegex(TypeError, "cobject' argument is not a PyCapsule"):
+            NSObject(cobject=42)

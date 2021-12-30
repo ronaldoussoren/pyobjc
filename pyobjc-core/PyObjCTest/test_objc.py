@@ -22,11 +22,14 @@ class TestConstants(TestCase):
 
 class TestClassLookup(TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
-        self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "")
-        self.assertRaises(
-            objc.nosuchclass_error, objc.lookUpClass, "ThisClassReallyShouldNotExist"
-        )
-        self.assertRaises(TypeError, objc.lookUpClass, 1)
+        with self.assertRaisesRegex(objc.nosuchclass_error, "^$"):
+            objc.lookUpClass("")
+        with self.assertRaisesRegex(
+            objc.nosuchclass_error, "^ThisClassReallyShouldNotExist$"
+        ):
+            objc.lookUpClass("ThisClassReallyShouldNotExist")
+        with self.assertRaisesRegex(TypeError, "argument 1 must be str, not int"):
+            objc.lookUpClass(1)
 
     def testClassList(self):
         NSObject = objc.lookUpClass("NSObject")
@@ -79,9 +82,10 @@ class TestPickle(TestCase):
         import pickle
 
         o = NSObject.alloc().init()
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 0)
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
+        for proto in range(pickle.HIGHEST_PROTOCOL + 1):
+            with self.subTest(proto=proto):
+                with self.assertRaises((TypeError, ValueError)):
+                    pickle.dumps(o, proto)
 
 
 class TestDescription(TestCase):
@@ -98,7 +102,8 @@ class TestPrivate(TestCase):
     def test_resolve_name(self):
         resolve = objc._resolve_name
 
-        self.assertRaises(ValueError, resolve, "sys")
+        with self.assertRaisesRegex(ValueError, r"^sys$"):
+            resolve("sys")
 
         self.assertIs(resolve("sys.path"), sys.path)
 
@@ -108,7 +113,12 @@ class TestPrivate(TestCase):
 
         self.assertIs(v, show_formats)
 
-        self.assertRaises(
-            AttributeError, resolve, "distutils.command.sdist.dont_show_formats"
-        )
-        self.assertRaises(AttributeError, resolve, "sys.does_not_exist")
+        with self.assertRaisesRegex(
+            AttributeError,
+            "module 'distutils.command.sdist' has no attribute 'dont_show_formats'",
+        ):
+            resolve("distutils.command.sdist.dont_show_formats")
+        with self.assertRaisesRegex(
+            AttributeError, "module 'sys' has no attribute 'does_not_exist'"
+        ):
+            resolve("sys.does_not_exist")

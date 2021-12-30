@@ -182,7 +182,10 @@ class TestTypeCode_UniChar(TestCase):
         v = o.UniCharArg_andUniCharArg_("a", "b")
         self.assertEqual(v, ("a", "b"))
 
-        self.assertRaises(ValueError, o.UniCharArg_andUniCharArg_, 400, 401)
+        with self.assertRaisesRegex(
+            ValueError, "Expecting unicode string of length 1, got a 'int'"
+        ):
+            o.UniCharArg_andUniCharArg_(400, 401)
 
     def testStringArgument(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -199,7 +202,10 @@ class TestTypeCode_UniChar(TestCase):
         self.assertEqual(v, "ab")
         self.assertIsInstance(v, str)
 
-        self.assertRaises(ValueError, o.UniCharStringArg_, [99, 100, 100, 0])
+        with self.assertRaisesRegex(
+            ValueError, "Expecting unicode string of length 1, got a 'int'"
+        ):
+            o.UniCharStringArg_([99, 100, 100, 0])
 
     def testFixedArrayIn(self):
         o = OC_TestSpecialTypeCode.alloc().init()

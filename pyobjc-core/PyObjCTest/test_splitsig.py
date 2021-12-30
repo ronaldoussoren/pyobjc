@@ -129,9 +129,14 @@ class SplitSignatureTest(TestCase):
                 )
 
     def testSplitStructSignature(self):
-        self.assertRaises(ValueError, objc.splitStructSignature, objc._C_ID)
-        self.assertRaises(ValueError, objc.splitStructSignature, b"{NSPoint=dd")
-        self.assertRaises(ValueError, objc.splitStructSignature, b"{NSPoint=dd}d")
+        with self.assertRaisesRegex(ValueError, "not a struct encoding"):
+            objc.splitStructSignature(objc._C_ID)
+        with self.assertRaisesRegex(
+            ValueError, "value is not a complete struct signature"
+        ):
+            objc.splitStructSignature(b"{NSPoint=dd")
+        with self.assertRaisesRegex(ValueError, "additional text at end of signature"):
+            objc.splitStructSignature(b"{NSPoint=dd}d")
 
         self.assertEqual(
             objc.splitStructSignature(b"{NSPoint=dd}"),

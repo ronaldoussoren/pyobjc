@@ -53,12 +53,16 @@ class TestPyObjCSet(TestCase):
         res = MySet([3, 4]) | s
         self.assertEqual(res, NSSet([1, 2, 3, 4]))
         self.assertIsInstance(res, NSSet)
-        self.assertRaises(TypeError, operator.or_, (3, 4), s)
+        with self.assertRaisesRegex(
+            TypeError, r"value\|NSSet where value is not a set"
+        ):
+            (3, 4) | s
 
         res = MySet([3, 4]) & s
         self.assertEqual(res, NSSet([3]))
         self.assertIsInstance(res, NSSet)
-        self.assertRaises(TypeError, operator.and_, (3, 4), s)
+        with self.assertRaisesRegex(TypeError, r"value&NSSet where value is not a set"):
+            (3, 4) & s
 
         res = MySet([3, 4]) - s
         self.assertEqual(res, NSSet([4]))
@@ -154,8 +158,10 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(self.s, self.thetype(self.word))
         # self.assertEqual(type(u), self.thetype)
         self.assertIsInstance(u, self.thetype)
-        self.assertRaises(PassThru, self.s.union, check_pass_thru())
-        self.assertRaises(TypeError, self.s.union, [[]])
+        with self.assertRaisesRegex(PassThru, "^$"):
+            self.s.union(check_pass_thru())
+        with self.assertRaisesRegex(TypeError, "unhashable type: 'list'"):
+            self.s.union([[]])
         for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").union(C("cdc")), set("abcd"))
             self.assertEqual(self.thetype("abcba").union(C("efgfe")), set("abcefg"))
@@ -176,8 +182,10 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(self.s, self.thetype(self.word))
         # self.assertEqual(type(i), self.thetype)
         self.assertIsInstance(i, self.thetype)
-        self.assertRaises(PassThru, self.s.symmetric_difference, check_pass_thru())
-        self.assertRaises(TypeError, self.s.symmetric_difference, [[]])
+        with self.assertRaisesRegex(PassThru, "^$"):
+            self.s.symmetric_difference(check_pass_thru())
+        with self.assertRaisesRegex(TypeError, "unhashable type: 'list'"):
+            self.s.symmetric_difference([[]])
         for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(
                 self.thetype("abcba").symmetric_difference(C("cdc")), set("abd")
@@ -199,8 +207,10 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(self.s, self.thetype(self.word))
         # self.assertEqual(type(i), self.thetype)
         self.assertIsInstance(i, self.thetype)
-        self.assertRaises(PassThru, self.s.difference, check_pass_thru())
-        self.assertRaises(TypeError, self.s.difference, [[]])
+        with self.assertRaisesRegex(PassThru, "^$"):
+            self.s.difference(check_pass_thru())
+        with self.assertRaisesRegex(TypeError, "unhashable type: 'list'"):
+            self.s.difference([[]])
         for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").difference(C("cdc")), set("ab"))
             self.assertEqual(self.thetype("abcba").difference(C("efgfe")), set("abc"))
@@ -216,7 +226,8 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(self.s, self.thetype(self.word))
         # self.assertEqual(type(i), self.thetype)
         self.assertIsInstance(i, self.thetype)
-        self.assertRaises(PassThru, self.s.intersection, check_pass_thru())
+        with self.assertRaisesRegex(PassThru, "^$"):
+            self.s.intersection(check_pass_thru())
         for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").intersection(C("cdc")), set("cc"))
             self.assertEqual(self.thetype("abcba").intersection(C("efgfe")), set(""))
@@ -456,33 +467,37 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
                 "difference_update",
                 "symmetric_difference_update",
             ):
-                for g in (
-                    test.test_set.G,
-                    test.test_set.I,
-                    test.test_set.Ig,
-                    test.test_set.S,
-                    test.test_set.L,
-                    test.test_set.R,
-                ):
-                    # s = set('january')
-                    s = NSMutableSet("january")
-                    # t = s.copy()
-                    t = s.mutableCopy()
-                    getattr(s, methname)(list(g(data)))
-                    getattr(t, methname)(g(data))
-                    self.assertEqual(sorted(s, key=repr), sorted(t, key=repr))
+                with self.subTest(methname):
+                    for g in (
+                        test.test_set.G,
+                        test.test_set.I,
+                        test.test_set.Ig,
+                        test.test_set.S,
+                        test.test_set.L,
+                        test.test_set.R,
+                    ):
+                        # s = set('january')
+                        s = NSMutableSet("january")
+                        # t = s.copy()
+                        t = s.mutableCopy()
+                        getattr(s, methname)(list(g(data)))
+                        getattr(t, methname)(g(data))
+                        self.assertEqual(sorted(s, key=repr), sorted(t, key=repr))
 
-                self.assertRaises(
-                    TypeError, getattr(set("january"), methname), test.test_set.X(data)
-                )
-                self.assertRaises(
-                    TypeError, getattr(set("january"), methname), test.test_set.N(data)
-                )
-                self.assertRaises(
-                    ZeroDivisionError,
-                    getattr(set("january"), methname),
-                    test.test_set.E(data),
-                )
+                    with self.assertRaisesRegex(
+                        TypeError, "'X' object is not iterable"
+                    ):
+                        getattr(set("january"), methname)(test.test_set.X(data))
+
+                    with self.assertRaisesRegex(
+                        TypeError, r"iter\(\) returned non-iterator of type 'N'"
+                    ):
+                        getattr(set("january"), methname)(test.test_set.N(data))
+
+                    with self.assertRaisesRegex(
+                        ZeroDivisionError, "integer division or modulo by zero"
+                    ):
+                        getattr(set("january"), methname)(test.test_set.E(data))
 
 
 class TestGraphs(test.test_set.TestGraphs):

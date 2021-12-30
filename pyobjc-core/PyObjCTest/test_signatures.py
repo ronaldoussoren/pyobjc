@@ -7,9 +7,8 @@ from PyObjCTools.TestSupport import TestCase
 
 class PyOCTestTypeStr(TestCase):
     def testSelectorSignatures(self):
-        self.assertRaises(
-            ValueError, objc.selector, lambda x, y: 1, signature=b"FOOBAR"
-        )
+        with self.assertRaisesRegex(ValueError, "invalid signature"):
+            objc.selector(lambda x, y: 1, signature=b"FOOBAR")
 
     def testAll(self):
         self.assertEqual(objc._C_BOOL, b"B")
@@ -46,14 +45,18 @@ class PyOCTestTypeStr(TestCase):
         s = objc.selector(lambda x, y: 1, signature=b"ii")
         self.assertEqual(s.native_signature, b"ii")
 
-        self.assertRaises(
-            (TypeError, AttributeError), setattr, s, "native_signature", b"v@:ii"
-        )
+        with self.assertRaisesRegex(
+            AttributeError,
+            "attribute 'native_signature' of 'objc.selector' objects is not writable",
+        ):
+            s.native_signature = b"v@:ii"
 
         s = objc.lookUpClass("NSObject").description
-        self.assertRaises(
-            (TypeError, AttributeError), setattr, s, "native_signature", b"v@:ii"
-        )
+        with self.assertRaisesRegex(
+            AttributeError,
+            "attribute 'native_signature' of 'objc.selector' objects is not writable",
+        ):
+            s.native_signature = b"v@:ii"
 
         # We know that the description signature isn't changed by default
         self.assertEqual(s.signature, s.native_signature)

@@ -1054,7 +1054,10 @@ class TestTestSupport(TestCase):
             self.assertArgIsFixedSize(m, 1, 3)
 
         m = Method(3, {}, selector=True)
-        self.assertRaises(self.failureException, self.assertArgIsFixedSize, m, 1, 3)
+        with self.assertRaisesRegex(
+            self.failureException, "arg 1 of <.*> is not a C-array of length 3"
+        ):
+            self.assertArgIsFixedSize(m, 1, 3)
 
         m = Method(3, {"c_array_of_fixed_length": 42}, selector=False)
         self.assertArgIsFixedSize(m, 3, 42)
@@ -1199,7 +1202,10 @@ class TestTestSupport(TestCase):
     def test_arg_not_retained(self):
         m = Method(3, {"already_retained": True}, selector=True)
         self.assertArgIsNotRetained(m, 0)
-        self.assertRaises(self.failureException, self.assertArgIsNotRetained, m, 1)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is retained"
+        ):
+            self.assertArgIsNotRetained(m, 1)
 
         m = Method(3, {"already_retained": False}, selector=True)
         self.assertArgIsNotRetained(m, 1)
@@ -1222,14 +1228,23 @@ class TestTestSupport(TestCase):
         self.assertResultIsRetained(m)
 
         m = Method(None, {"already_retained": False})
-        self.assertRaises(self.failureException, self.assertResultIsRetained, m)
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is not retained"
+        ):
+            self.assertResultIsRetained(m)
 
         m = Method(None, {})
-        self.assertRaises(self.failureException, self.assertResultIsRetained, m)
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is not retained"
+        ):
+            self.assertResultIsRetained(m)
 
     def test_result_not_retained(self):
         m = Method(None, {"already_retained": True})
-        self.assertRaises(self.failureException, self.assertResultIsNotRetained, m)
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is retained"
+        ):
+            self.assertResultIsNotRetained(m)
 
         m = Method(None, {"already_retained": False})
         self.assertResultIsNotRetained(m)
@@ -1362,7 +1377,7 @@ class TestTestSupport(TestCase):
             self.fail("unexpected test pass")
 
     def test_assertHasAttr(self):
-        with self.assertRaises(self.failureException):
+        with self.assertRaisesRegex(self.failureException, "foo"):
             self.assertHasAttr(object, "foo")
 
         try:
@@ -1371,7 +1386,9 @@ class TestTestSupport(TestCase):
             self.fail("Unexpected assertion failure")
 
     def test_assertNotHasAttr(self):
-        with self.assertRaises(self.failureException):
+        with self.assertRaisesRegex(
+            self.failureException, "assertHasAttr is an attribute of <.*>"
+        ):
             self.assertNotHasAttr(self, "assertHasAttr")
 
         try:
@@ -1456,7 +1473,9 @@ class TestTestSupport(TestCase):
         o = UnpickledAsInt()
         self.assertEqual(pickle.loads(pickle.dumps(o)), 42)
 
-        with self.assertRaises(self.failureException):
+        with self.assertRaisesRegex(
+            self.failureException, "42 != <PyObjCTest.test_testsupport.*>"
+        ):
             self.assertPickleRoundTrips(o)
 
         class NotEqual:
@@ -1466,7 +1485,7 @@ class TestTestSupport(TestCase):
         o = NotEqual()
         self.assertNotEqual(o, o)
 
-        with self.assertRaises(self.failureException):
+        with self.assertRaisesRegex(self.failureException, "<.*> cannot be pickled"):
             self.assertPickleRoundTrips(o)
 
     def test_result_is_sel(self):
@@ -1478,18 +1497,29 @@ class TestTestSupport(TestCase):
             )
             self.assertResultIsSEL(m, b"v@:@")
 
-            with self.assertRaises(self.failureException):
+            with self.assertRaisesRegex(
+                self.failureException,
+                "result of <.*> doesn't have sel_type b'v@:d' but b'v@:@'",
+            ):
                 self.assertResultIsSEL(m, b"v@:d")
 
             m = Method(None, {"type": objc._C_INT}, selector=is_selector)
-            with self.assertRaises(self.failureException):
+            with self.assertRaisesRegex(
+                self.failureException, "result of <.*> is not of type SEL"
+            ):
                 self.assertResultIsSEL(m, b"v@:@")
 
             m = Method(None, {"type": objc._C_SEL}, selector=is_selector)
-            with self.assertRaises(self.failureException):
+            with self.assertRaisesRegex(
+                self.failureException,
+                "result of <.*> doesn't have sel_type b'v@:@' but None",
+            ):
                 self.assertResultIsSEL(m, b"v@:@")
 
-            with self.assertRaises(self.failureException):
+            with self.assertRaisesRegex(
+                self.failureException,
+                "result of <.*> doesn't have sel_type b'v@:@' but None",
+            ):
                 self.assertResultIsSEL(m, b"v@:@")
 
             class M:
