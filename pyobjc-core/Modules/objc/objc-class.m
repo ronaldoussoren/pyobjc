@@ -2956,8 +2956,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         struct PyObjC_method* objcMethod;
 
         if (PyObjCNativeSelector_Check(aMethod)) {
-            PyErr_Format(PyExc_TypeError, "Cannot add a native selector to other "
-                                          "classes");
+            PyErr_SetString(PyExc_TypeError, "Cannot add a native selector to other "
+                                             "classes");
             goto cleanup_and_return_error;
         }
 
