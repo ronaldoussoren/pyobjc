@@ -27,7 +27,12 @@ static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused
         return NULL;
     }
 
-    if (cobject != NULL && PyCapsule_CheckExact(cobject)) {
+    if (cobject != NULL) {
+        if (!PyCapsule_CheckExact(cobject)) {
+            PyErr_SetString(PyExc_TypeError, "cobject' argument is not a PyCapsule");
+            return NULL;
+        }
+
         NSObject* p = PyCapsule_GetPointer(cobject, "objc.__object__");
         if (PyErr_Occurred()) {
             return NULL;
