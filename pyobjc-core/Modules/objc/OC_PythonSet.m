@@ -492,7 +492,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObjC_BEGIN_WITH_GIL
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
         }
 
