@@ -1468,6 +1468,11 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
 
         while (*sigcur != _C_STRUCT_E) {
             numFields++;
+            if (*sigcur == '\0') {
+                PyErr_SetString(PyExc_ValueError,
+                                "invalid signature: not a complete struct encoding");
+                return NULL;
+            }
             if (*sigcur == '"') {
                 sigcur++;
                 sigcur = strchr(sigcur, '"');
