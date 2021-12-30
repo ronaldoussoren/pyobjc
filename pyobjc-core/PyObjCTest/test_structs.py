@@ -12,9 +12,15 @@ import warnings
 
 import objc
 import pickle
+import textwrap
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.structs import OC_StructTest
-from PyObjCTools.TestSupport import TestCase, pyobjc_options, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    pyobjc_options,
+    expectedFailure,
+    min_python_release,
+)
 
 PTR_SIZE = 8
 
@@ -33,6 +39,9 @@ class TestStructs(TestCase):
         self.assertEqual(tp.__typestr__, b"{_FooStruct=ffff}")
 
         self.assertEqual(tp._fields, ("a", "b", "c", "d"))
+
+        if sys.version_info[:2] >= (3, 10):
+            self.assertEqual(tp.__match_args__, ("a", "b", "c", "d"))
 
         o = tp()
         self.assertHasAttr(o, "a")
@@ -479,3 +488,44 @@ class TestStructs(TestCase):
         # - nested structs
         # - nested arrays
         self.fail()
+
+    @min_python_release("3.10")
+    def test_using_match(self):
+        PointStruct = objc.createStructType(
+            "PointStruct", b"{_PointStruct=ff}", ["x", "y"]
+        )
+        self.assertIsInstance(PointStruct, type)
+        self.assertEqual(PointStruct.__match_args__, ("x", "y"))
+
+        o = PointStruct(x=40, y=42)
+
+        # The match statement is executed with an # exec
+        # statement because it is invalid before Python 3.10
+        ns = locals().copy()
+        exec(
+            textwrap.dedent(
+                """\
+             match o:
+                 case PointStruct(x=_ as x, y=_ as y):
+                     pass
+        """
+            ),
+            ns,
+            ns,
+        )
+
+        self.assertEqual(ns["x"], o.x)
+        self.assertEqual(ns["y"], o.y)
+
+        ns = locals().copy()
+        exec(
+            textwrap.dedent(
+                """\
+             match o:
+                 case PointStruct(_ as x, _ as y):
+                     pass
+        """
+            ),
+            ns,
+            ns,
+        )

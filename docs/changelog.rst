@@ -10,6 +10,22 @@ This release contains a lot of little fixes due to improving
 test coverage of the C code in pyobjc-core. These are mostly fixes
 for edge cases that don't happen in normal programs.
 
+* #414: [Python 3.10] The representation for C structures, like
+  ``Foundation.NSPoint`` now have a ``__match_args__`` attribute, which means
+  it is now possible to use positional arguments to these types in match expressions.
+
+  For example:
+
+  .. sourcecode:: python
+
+     from Foundation import NSPoint
+
+     value = ...
+
+     match value:
+         case NSPoint(0, _):
+             print("On the Y axis")
+
 * The internal extension API between framework bindings and pyobjc-core has
   been cleaned up a little. Because of this extensions need to be
   recompiled for this version.

@@ -1307,6 +1307,15 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
         return NULL;
     }
 
+#if PY_VERSION_HEX >= 0x030a0000
+    if (PyDict_SetItemString(result->base.tp_dict, "__match_args__", fields) == -1) {
+        Py_DECREF(fields);
+        PyMem_Free(members);
+        PyMem_Free(result);
+        return NULL;
+    }
+#endif
+
     Py_CLEAR(fields);
 
     if (tpinit) {

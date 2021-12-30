@@ -530,19 +530,19 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         try:
             if info["arguments"][argno + offset]["already_retained"]:
-                self.fail(message or f"{method!r} is retained")
+                self.fail(message or f"Argument {argno} of {method!r} is retained")
         except (KeyError, IndexError):
             pass
 
     def assertResultIsRetained(self, method, message=None):
         info = method.__metadata__()
         if not info.get("retval", {}).get("already_retained", False):
-            self.fail(message or f"{method!r} is not retained")
+            self.fail(message or f"Result of {method!r} is not retained")
 
     def assertResultIsNotRetained(self, method, message=None):
         info = method.__metadata__()
         if info.get("retval", {}).get("already_retained", False):
-            self.fail(message or f"{method!r} is retained")
+            self.fail(message or f"Result of {method!r} is retained")
 
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
