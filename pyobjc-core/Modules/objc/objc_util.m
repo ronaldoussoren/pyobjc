@@ -1001,10 +1001,17 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
 
         if ((exactSize && seqlen != pycount) || (!exactSize && seqlen < pycount)) {
             Py_DECREF(seq);
-            PyErr_Format(PyExc_ValueError,
-                         "too few values (%" PY_FORMAT_SIZE_T "d) expecting at "
-                         "least %" PY_FORMAT_SIZE_T "d",
-                         seqlen, pycount);
+            if (exactSize) {
+                PyErr_Format(PyExc_ValueError,
+                             "expecting %" PY_FORMAT_SIZE_T "d values "
+                             "got %" PY_FORMAT_SIZE_T "d",
+                             pycount, seqlen);
+            } else {
+                PyErr_Format(PyExc_ValueError,
+                             "too few values (%" PY_FORMAT_SIZE_T "d) expecting at "
+                             "least %" PY_FORMAT_SIZE_T "d",
+                             seqlen, pycount);
+            }
             return -1;
         }
 
