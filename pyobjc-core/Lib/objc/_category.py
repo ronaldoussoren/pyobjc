@@ -10,6 +10,9 @@ def classAddMethod(cls, name, method):
     Add a single method to a class. 'name' is the ObjC selector
     """
     if isinstance(method, selector):
+        if not hasattr(method, "callable"):
+            raise ValueError("Cannot add native selector to class") from None
+
         sel = selector(
             method.callable,
             selector=name,
