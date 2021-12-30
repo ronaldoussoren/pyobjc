@@ -742,14 +742,14 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
     if (signature && *signature != _C_STRUCT_E) {
         Py_DECREF(structname);
         Py_DECREF(fields);
-        PyErr_SetString(PyExc_ValueError, "Value is not a complete struct signature");
+        PyErr_SetString(PyExc_ValueError, "value is not a complete struct signature");
         return NULL;
     }
 
     if (signature && signature[1]) {
         Py_DECREF(structname);
         Py_DECREF(fields);
-        PyErr_SetString(PyExc_ValueError, "Additional text at end of signature");
+        PyErr_SetString(PyExc_ValueError, "additional text at end of signature");
         return NULL;
     }
 
