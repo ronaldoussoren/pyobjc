@@ -952,6 +952,8 @@ static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unus
                                      &metadata)) {
         return NULL;
     }
+    PyObjC_Assert(PyBytes_Check(class_name), NULL);
+    PyObjC_Assert(PyBytes_Check(selector), NULL);
 
     if (PyObjC_registerMetaData(class_name, selector, metadata) < 0) {
         return NULL;

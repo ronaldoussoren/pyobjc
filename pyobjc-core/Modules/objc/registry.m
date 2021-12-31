@@ -19,14 +19,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     int       result;
     PyObject* sublist;
 
-    if (!PyUnicode_Check(class_name) && !PyBytes_Check(class_name)) {
-        PyErr_SetString(PyExc_TypeError, "class_name should be str or bytes");
-        return -1;
-    }
-    if (!PyBytes_Check(selector)) {
-        PyErr_SetString(PyExc_TypeError, "selector should be bytes");
-        return -1;
-    }
+    PyObjC_Assert(PyBytes_Check(class_name), -1);
+    PyObjC_Assert(PyBytes_Check(selector), -1);
 
     sublist = PyDict_GetItemWithError(registry, selector);
     if (sublist == NULL && PyErr_Occurred()) {
@@ -108,19 +102,12 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         PyObjC_Assert(PyTuple_CheckExact(cur), NULL);
 
         PyObject* nm = PyTuple_GET_ITEM(cur, 0);
-        if (PyUnicode_Check(nm)) {
-            PyObject* bytes = PyUnicode_AsEncodedString(nm, NULL, NULL);
-            if (bytes == NULL) {
-                return NULL;
-            }
-            cur_class = objc_lookUpClass(PyBytes_AsString(bytes));
-            Py_DECREF(bytes);
-        } else if (PyBytes_Check(nm)) {
+        if (PyBytes_Check(nm)) {
             cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 
         } else {
             PyErr_SetString(PyExc_TypeError,
-                            "Exception registry class name is not a string");
+                            "Exception registry class name is not a byte string");
             return NULL;
         }
 

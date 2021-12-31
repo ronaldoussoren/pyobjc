@@ -1289,12 +1289,18 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
 {
     PyObject* compiled;
     int       r;
+
+    /* XXX: Move creation of the registry to a separate function called from
+     * module init.
+     */
     if (registry == NULL) {
         registry = PyObjC_NewRegistry();
         if (registry == NULL) {
             return -1;
         }
     }
+    PyObjC_Assert(PyBytes_Check(class_name), -1);
+    PyObjC_Assert(PyBytes_Check(selector), -1);
     if (!PyDict_Check(metadata)) {
         PyErr_SetString(PyExc_TypeError, "metadata should be a dictionary");
         return -1;
@@ -1311,6 +1317,8 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
      * Leak a reference to 'compiled' to ensure it stays alive
      * even when someone registers new metadata for the same
      * selector.
+     *
+     * XXX: Why is this needed?
      * -- Py_DECREF(compiled); --
      */
     return r;
