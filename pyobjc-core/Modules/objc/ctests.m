@@ -919,6 +919,18 @@ PyErr_Clear();
 
 END_UNITTEST
 
+BEGIN_UNITTEST(InvalidRegistryUsage)
+PyObject* bytes = PyBytes_FromString("hello");
+if (bytes == NULL) {
+    return NULL;
+}
+
+int r = PyObjC_AddToRegistry(bytes, bytes, bytes, bytes);
+Py_DECREF(bytes);
+ASSERT(r == -1);
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(StructSize),
@@ -952,6 +964,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(ReleasedBuffer),
                                     TESTDEF(AlwaysFails),
                                     TESTDEF(InvalidObjCPointer),
+                                    TESTDEF(InvalidRegistryUsage),
                                     {0, 0, 0, 0}};
 
 int

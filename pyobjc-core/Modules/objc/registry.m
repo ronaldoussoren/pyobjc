@@ -28,10 +28,13 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     }
     if (sublist == NULL) {
         sublist = PyList_New(0);
-        result  = PyDict_SetItem(registry, selector, sublist);
+        if (sublist == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;         // LCOV_EXCL_LINE
+        }
+        result = PyDict_SetItem(registry, selector, sublist);
         Py_DECREF(sublist);
-        if (result == -1) {
-            return -1;
+        if (result == -1) { // LCOV_BR_EXCL_LINE
+            return -1;      // LCOV_EXCL_LINE
         }
     }
 
@@ -50,8 +53,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
         PyObjC_Assert(PyTuple_GET_SIZE(item) == 2, -1);
 
         int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
-        if (r == -1)
-            return -1;
+        if (r == -1)   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         if (r) {
             Py_DECREF(PyTuple_GET_ITEM(item, 1));
             PyTuple_SET_ITEM(item, 1, value);
@@ -61,8 +64,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     }
 
     PyObject* item = Py_BuildValue("(OO)", class_name, value);
-    if (item == NULL) {
-        return -1;
+    if (item == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;      // LCOV_EXCL_LINE
     }
     result = PyList_Append(sublist, item);
     Py_DECREF(item);
@@ -94,22 +97,13 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         Class cur_class;
 
         cur = PyList_GET_ITEM(sublist, i);
-        if (cur == NULL) {
-            PyErr_Clear();
-            continue;
-        }
-
+        PyObjC_Assert(cur != NULL, NULL);
         PyObjC_Assert(PyTuple_CheckExact(cur), NULL);
 
         PyObject* nm = PyTuple_GET_ITEM(cur, 0);
-        if (PyBytes_Check(nm)) {
-            cur_class = objc_lookUpClass(PyBytes_AsString(nm));
+        PyObjC_Assert(PyBytes_Check(nm), NULL);
 
-        } else {
-            PyErr_SetString(PyExc_TypeError,
-                            "Exception registry class name is not a byte string");
-            return NULL;
-        }
+        cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 
         if (cur_class == nil) {
             continue;
@@ -139,32 +133,42 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
 PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                                         PyObjC_ItemTransform value_transform)
 {
-    PyObject*  result = PyDict_New();
+    PyObject* result = PyDict_New();
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     PyObject*  key;
     PyObject*  sublist;
     Py_ssize_t pos = 0;
-    if (result == NULL) {
-        return NULL;
-    }
 
     while (PyDict_Next(registry, &pos, &key, &sublist)) {
         Py_ssize_t i, len;
         PyObject*  sl_new;
 
 #ifdef PyObjC_DEBUG
-        if (!PyList_CheckExact(sublist)) {
+        if (!PyList_CheckExact(sublist)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_InternalError, "sublist of registry is not a list");
-            goto error;
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
         }
 #endif
 
         len    = PyList_GET_SIZE(sublist);
         sl_new = PyList_New(len);
-        if (sl_new == NULL)
-            goto error;
-        if (PyDict_SetItem(result, key, sl_new) == -1) {
+        if (sl_new == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        if (PyDict_SetItem(result, key, sl_new) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(sl_new);
-            goto error;
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(sl_new);
 
@@ -175,18 +179,18 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             item     = PyList_GET_ITEM(sublist, i);
             new_item = Py_BuildValue("(ON)", PyTuple_GET_ITEM(item, 0),
                                      value_transform(PyTuple_GET_ITEM(item, 1)));
-            if (new_item == NULL)
-                goto error;
+            if (new_item == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(result);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
 
             PyList_SET_ITEM(sl_new, i, new_item);
         }
     }
 
     return result;
-
-error:
-    Py_DECREF(result);
-    return NULL;
 }
 
 NS_ASSUME_NONNULL_END
