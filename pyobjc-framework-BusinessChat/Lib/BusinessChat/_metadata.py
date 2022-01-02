@@ -11,7 +11,6 @@ if sys.maxsize > 2 ** 32:
     def sel32or64(a, b):
         return b
 
-
 else:
 
     def sel32or64(a, b):
@@ -22,7 +21,6 @@ if objc.arch == "arm64":
 
     def selAorI(a, b):
         return a
-
 
 else:
 

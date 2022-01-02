@@ -106,7 +106,6 @@ if sys.version_info[0] == 2:
     def make_bytes(values):
         return "".join(map(chr, values))
 
-
 else:
 
     def make_bytes(values):
@@ -2957,7 +2956,6 @@ if 1:  # Set to 1 for code in the book.
             Quartz.CGContextRestoreGState(context)
             # Position to draw the next row.
             Quartz.CGContextTranslateCTM(context, 0, -Quartz.CGRectGetHeight(rect))
-
 
 else:
     # This code works just fine to screen but when drawing to a PDF

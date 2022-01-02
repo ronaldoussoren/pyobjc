@@ -10,7 +10,6 @@ if sys.version_info[0] == 2:
     def _str(v):
         return v
 
-
 else:
     from io import StringIO
 

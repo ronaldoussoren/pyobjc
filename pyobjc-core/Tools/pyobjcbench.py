@@ -46,7 +46,6 @@ if len(sys.argv) == 2 and sys.argv[1] == "--record":
         print(f"@{key} {value}")
         print(f"@{key} {value}", file=record_fp)
 
-
 else:
 
     def print_bench(title, time):

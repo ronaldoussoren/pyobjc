@@ -22,7 +22,6 @@ if os.uname()[2] < "13.":
             return cls
         return None
 
-
 else:
 
     def _first_python(cls):

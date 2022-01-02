@@ -39,7 +39,6 @@ if sys.version_info[0] == 2:
 
         return value.encode("utf-8")
 
-
 else:
 
     def encodeField(value):

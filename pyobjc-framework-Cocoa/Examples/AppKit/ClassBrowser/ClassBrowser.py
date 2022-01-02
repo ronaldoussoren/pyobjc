@@ -48,7 +48,6 @@ if sys.version_info[0] == 2:
         else:
             return "-" + selector.selector
 
-
 else:
 
     def formatSelector(selector):
