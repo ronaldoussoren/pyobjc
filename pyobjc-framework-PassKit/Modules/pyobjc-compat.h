@@ -453,6 +453,11 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
     PyGILState_Release(_GILState);                                                       \
     }
 
+#define PyObjC_LEAVE_GIL                                                                 \
+    do {                                                                                 \
+        PyGILState_Release(_GILState);                                                   \
+    } while (0)
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_COMPAT_H */
