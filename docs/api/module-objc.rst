@@ -268,9 +268,12 @@ Utilities
    Returns true iff the current macOS version is at least the version
    specified. Use this like the "@available" construct in Objective-C.
 
-.. function:: allocateBuffer(size)
+.. function:: allocateBuffer(length)
 
-   Returns a writable buffer object of *size* bytes.
+   Returns a writable buffer object of *length* bytes. This function is
+   equivalent to `bytearray(length)`
+
+   .. deprecated: 8.2
 
 .. function:: CFToObject
 

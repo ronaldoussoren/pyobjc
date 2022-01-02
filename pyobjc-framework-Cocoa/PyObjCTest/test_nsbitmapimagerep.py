@@ -1,7 +1,6 @@
 import array
 import sys
 
-import objc
 import AppKit
 from objc import NO, YES
 from PyObjCTools.TestSupport import TestCase, min_os_level
@@ -43,7 +42,7 @@ class TestNSBitmapImageRep(TestCase):
         )
         self.assertIsInstance(i1, AppKit.NSBitmapImageRep)
 
-        singlePlane = objc.allocateBuffer(width * height * 4)
+        singlePlane = bytearray(width * height * 4)
         for i in range(0, width * height):
             si = i * 4
             singlePlane[si] = 1
@@ -101,7 +100,7 @@ class TestNSBitmapImageRep(TestCase):
         )
         self.assertTrue(i1)
 
-        singlePlane = objc.allocateBuffer(width * height * 3)
+        singlePlane = bytearray(width * height * 3)
         for i in range(0, width * height):
             si = i * 3
             if sys.version_info[0] == 2:

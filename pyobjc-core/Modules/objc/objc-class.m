@@ -2835,7 +2835,7 @@ update_convenience_methods(PyObject* cls)
     PyObject*  v;
     Py_ssize_t pos;
 
-    if (PyObjC_ClassExtender == NULL || cls == NULL)
+    if (PyObjC_ClassExtender == NULL || PyObjC_ClassExtender == Py_None || cls == NULL)
         return 0;
 
     if (!PyObjCClass_Check(cls)) {

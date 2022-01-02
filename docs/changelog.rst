@@ -30,6 +30,21 @@ for edge cases that don't happen in normal programs.
   been cleaned up a little. Because of this extensions need to be
   recompiled for this version.
 
+* :func:`objc.allocateBuffer` is deprecated, use :class:`bytearray` instead
+
+  This function has always returned a bytearray object in Python 3 and it
+  no longer necessary.
+
+  As a side effect of this change the function is now implemented in Python
+  instead of C.
+
+* The private function ``objc._dyld_shared_cache_contains_path`` is now
+  always available, and unconditionally returns :data:`False` on systems without
+  a shared library cache.
+
+* The private function ``objc._setClassExtender`` is now implemented in Python
+  and will be removed in PyObjC 9.
+
 * Removed ``objc.FSSpec``
 
   This is a wrapper for a C type that's only usable in 32-bit code, PyObjC

@@ -107,3 +107,50 @@ class TestMetadataRegistry(TestCase):
         self.assertResultHasType(OC_InternalTest.replacement_, objc._C_INT)
         self.assertResultHasType(OC_InternalTest.replacement2_, objc._C_SHT)
         self.assertResultHasType(OC_InternalTest.replacement3_, objc._C_ID)
+
+
+class TestRescanClass(TestCase):
+    def test_invalid_usage(self):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'name' \(pos 1\)"
+        ):
+            objc._rescanClass()
+
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'name' \(pos 1\)"
+        ):
+            objc._rescanClass(naam="NSObject")
+
+    def test_valid_usage(self):
+        objc._rescanClass(name="NSObject")
+        objc._rescanClass("NSObject")
+        objc._rescanClass("SomeNonexistingClass")
+
+        # XXX: add a convenience method for NSObject, rescan
+        #      and check that that method ends up in NSObject
+
+    def test_rescan_raises(self):
+        # Temporarily replace the class extender function
+        # by one that raises, scan NSObject (which should raise),
+        # store and rescan.
+        self.fail()
+
+
+class TestNameForSignature(TestCase):
+    def test_invalid_usage(self):
+        with self.assertRaisesRegex(
+            TypeError,
+            r"objc._objc._nameForSignature\(\) takes exactly one argument \(0 given\)",
+        ):
+            objc._nameForSignature()
+
+        with self.assertRaisesRegex(
+            TypeError, "type encoding must be a bytes string, not a 'str' object"
+        ):
+            objc._nameForSignature("some struct")
+
+    def test_valid_usage(self):
+        self.assertIs(objc._nameForSignature(objc._C_INT), None)
+
+        # XXX: The rest of the implementation is tested implicitly,
+        #      add tests here as well.

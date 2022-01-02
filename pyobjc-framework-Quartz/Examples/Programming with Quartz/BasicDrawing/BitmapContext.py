@@ -1,7 +1,6 @@
 import AppDrawing
 import DrawingBasics
 import LaunchServices
-import objc
 import Quartz
 import Utilities
 
@@ -38,7 +37,7 @@ def createRGBBitmapContext(
     # times the number of rows. The function 'calloc' is used so that the
     # memory is initialized to 0.
     try:
-        rasterData = objc.allocateBuffer(int(bytesPerRow * height))
+        rasterData = bytearray(int(bytesPerRow * height))
     except MemoryError:
         return None
 
@@ -380,7 +379,7 @@ def createAlphaOnlyContext(width, height):
     # // times the number of rows. The function 'calloc' is used so that the
     # // memory is initialized to 0.
     try:
-        rasterData = objc.allocateBuffer(bytesPerRow * height)
+        rasterData = bytearray(bytesPerRow * height)
     except MemoryError:
         return None
 

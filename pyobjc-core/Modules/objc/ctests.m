@@ -929,6 +929,8 @@ int r = PyObjC_AddToRegistry(bytes, bytes, bytes, bytes);
 Py_DECREF(bytes);
 ASSERT(r == -1);
 
+PyErr_Clear();
+
 END_UNITTEST
 
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),

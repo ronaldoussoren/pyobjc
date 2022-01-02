@@ -9,6 +9,7 @@ import warnings
 
 import objc
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
+from PyObjCTest.misc import OC_Misc
 from PyObjCTest.pythonnumber import OC_TestNumber
 from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 
@@ -370,6 +371,25 @@ class TestPyNumber(TestCase):
             self.assertIs(OC_TestNumber.numberClass_(v), boolClass)
             self.assertIs(objc.repythonify(v), v)
 
+    def test_repythonify_invalid(self):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'obj' \(pos 1\)"
+        ):
+            objc.repythonify()
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.repythonify(42, "i")
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_SizeOfType: Unhandled type '0x5f', _"
+        ):
+            objc.repythonify(42, b"_")
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 1"):
+            objc.repythonify("a", b"i")
+
     def testPythonIntConversions(self):
         # Conversions to other values. Note that values are converted
         # using C casts, without any exceptions when converting a
@@ -723,3 +743,111 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(
             formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p)
         )
+
+
+class FailedComparison:
+    def __eq__(self, other):
+        raise ValueError("comparing is not supported")
+
+    def __ne__(self, other):
+        raise ValueError("comparing is not supported")
+
+
+class NotLess:
+    def __lt__(self, other):
+        return False
+
+
+class NotComparable:
+    def __lt__(self, other):
+        return False
+
+    def __gt__(self, other):
+        return False
+
+
+class FailedComparisonInt(int):
+    def __eq__(self, other):
+        raise ValueError("comparing is not supported")
+
+    def __ne__(self, other):
+        raise ValueError("comparing is not supported")
+
+
+class TestFailedComparisions(TestCase):
+    def test_exception_while_comparing(self):
+        num = 42
+        other = FailedComparison()
+        other_num = FailedComparisonInt(42)
+
+        with self.assertRaisesRegex(ValueError, "comparing is not supported"):
+            OC_Misc.compare_and_(num, other)
+
+        with self.assertRaisesRegex(ValueError, "comparing is not supported"):
+            OC_Misc.compare_and_(other, num)
+
+        with self.assertRaisesRegex(ValueError, "comparing is not supported"):
+            OC_Misc.compare_and_(num, other_num)
+
+        with self.assertRaisesRegex(ValueError, "comparing is not supported"):
+            OC_Misc.compare_and_(other_num, num)
+
+    def test_comparison_failures(self):
+
+        with self.assertRaisesRegex(
+            TypeError, r"'.{1,2}' not supported between instances of 'int' and 'object'"
+        ):
+            OC_Misc.compare_and_(42, object())
+
+        with self.assertRaisesRegex(
+            TypeError, r"'.{1,2}' not supported between instances of 'object' and 'int'"
+        ):
+            OC_Misc.compare_and_(object(), 42)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'int' and 'NotLess'",
+        ):
+            OC_Misc.compare_and_(42, NotLess())
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'NotLess' and 'int'",
+        ):
+            OC_Misc.compare_and_(NotLess(), 42)
+
+        with self.assertRaisesRegex(TypeError, r".* and .* cannot be compared"):
+            OC_Misc.compare_and_(42, NotComparable())
+
+        with self.assertRaisesRegex(TypeError, r".* and .* cannot be compared"):
+            OC_Misc.compare_and_(NotComparable(), 42)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'object' and 'object'",
+        ):
+            OC_Misc.compare_and_(object(), object())
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'object' and 'object'",
+        ):
+            OC_Misc.compare_and_(object(), object())
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'object' and 'NotLess'",
+        ):
+            OC_Misc.compare_and_(object(), NotLess())
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"'.{1,2}' not supported between instances of 'NotLess' and 'object'",
+        ):
+            OC_Misc.compare_and_(NotLess(), object())
+
+        with self.assertRaisesRegex(TypeError, r".* and .* cannot be compared"):
+            OC_Misc.compare_and_(object(), NotComparable())
+
+        with self.assertRaisesRegex(TypeError, r".* and .* cannot be compared"):
+            OC_Misc.compare_and_(NotComparable(), object())

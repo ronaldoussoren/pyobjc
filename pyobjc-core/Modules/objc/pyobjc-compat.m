@@ -42,26 +42,30 @@ PyObject* _Nullable PyBytes_InternFromString(const char* v)
     PyObject* key;
     PyObject* value;
 
+    /* XXX: Move registry to module state and initialize during
+     *      module setup.
+     */
     if (registry == NULL) {
         registry = PyDict_New();
-        if (registry == NULL) {
-            return NULL;
-        }
+        if (registry == NULL) // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
     }
 
     key = PyBytes_FromString(v);
-    if (key == NULL) {
-        return NULL;
+    if (key == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     value = PyDict_GetItemWithError(registry, key);
-    if (value == NULL && PyErr_Occurred()) {
-        Py_DECREF(key);
+    if (value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(key);                      // LCOV_EXCL_LINE
         return NULL;
     } else if (value == NULL) {
         int r = PyDict_SetItem(registry, key, key);
-        if (r == -1) {
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(key);
             return NULL;
+            // LCOV_EXCL_STOP
         } else {
             return key;
         }
@@ -108,12 +112,16 @@ PyObject* _Nullable PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     }
 }
 
+/* XXX: Can we do without this function, it is a little too intimate with
+ * unicode details.
+ */
 const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
 {
-    if (!PyUnicode_Check(object)) {
-        PyErr_SetString(PyExc_UnicodeDecodeError, "Not a unicode object");
-        return NULL;
-    }
+    /* Having a unicode string is a precondition, checked manually
+     * that callers check the type beforehand.
+     */
+    PyObjC_Assert(PyUnicode_Check(object), NULL);
+
     if (!PyUnicode_IS_ASCII(object)) {
         PyErr_SetString(PyExc_UnicodeDecodeError, "Not an ASCII string");
         return NULL;

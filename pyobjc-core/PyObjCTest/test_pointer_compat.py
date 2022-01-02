@@ -49,6 +49,15 @@ class TestProxySupport(TestCase):
         self.assertIsInstance(value, objc.pyobjc_unicode)
         self.assertEqual(objc.pyobjc_id(value.nsstring()), ct_obj)
 
+    def test_pyobjc_id_invalid(self):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'obj' \(pos 1\)"
+        ):
+            objc.pyobjc_id()
+
+        with self.assertRaisesRegex(TypeError, r"not an Objective-C object"):
+            objc.pyobjc_id(42)
+
     def test_opaque_capsule(self):
         cap = opaque_capsule()
 

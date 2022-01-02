@@ -1,9 +1,16 @@
 import os
+import objc
 import sys
 import subprocess
 
 import objc._dyld as dyld
-from PyObjCTools.TestSupport import TestCase, os_release, os_level_key
+from PyObjCTools.TestSupport import (
+    TestCase,
+    os_release,
+    os_level_key,
+    min_os_level,
+    max_os_level,
+)
 
 
 class TestDyld(TestCase):
@@ -59,6 +66,36 @@ class TestDyld(TestCase):
 
         with self.assertRaises(UnicodeError):
             dyld.ensure_unicode(b"\xff\xff")
+
+    @max_os_level("10.15")
+    def test_contains_path_old_os(self):
+        self.assertFalse(
+            objc._dyld_shared_cache_contains_path("/usr/lib/libSystem.dylib")
+        )
+
+    @min_os_level("11.0")
+    def test_contains_path_new_os(self):
+        self.assertTrue(
+            objc._dyld_shared_cache_contains_path("/usr/lib/libSystem.dylib")
+        )
+
+        if os.path.exists("/Library/Frameworks/Python.framework"):
+            self.assertFalse(
+                objc._dyld_shared_cache_contains_path(
+                    os.path.realpath(
+                        "/Library/Frameworks/Python.framework/Versions/Current/Python"
+                    )
+                )
+            )
+
+    def test_contains_path_invalid(self):
+        with self.assertRaisesRegex(TypeError, "Expecting a string"):
+            objc._dyld_shared_cache_contains_path(42)
+
+        with self.assertRaisesRegex(
+            UnicodeEncodeError, "'utf-8' codec can't encode characters .*"
+        ):
+            objc._dyld_shared_cache_contains_path("\ud800\udc00")
 
     def test_dyld_library(self):
         for k in (

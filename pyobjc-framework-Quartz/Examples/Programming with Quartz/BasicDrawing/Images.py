@@ -1,4 +1,3 @@
-import objc
 import Cocoa
 import DataProvidersAndConsumers
 import Quartz
@@ -705,7 +704,7 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
 
 def createRedGreenRampImageData(width, height, size):
     try:
-        dataP = objc.allocateBuffer(size)
+        dataP = bytearray(size)
     except MemoryError:
         return None
 

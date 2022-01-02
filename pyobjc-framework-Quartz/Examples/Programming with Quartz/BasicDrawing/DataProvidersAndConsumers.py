@@ -2,7 +2,6 @@ import os
 import sys
 
 import Cocoa
-import objc
 import Quartz
 
 
@@ -29,7 +28,7 @@ def createRGBRampDataProvider():
     height = 256
     imageDataSize = width * height * 3
 
-    dataP = objc.allocateBuffer(imageDataSize)
+    dataP = bytearray(imageDataSize)
 
     #    Build an image that is RGB 24 bits per sample. This is a ramp
     #    where the red component value increases in red from left to
