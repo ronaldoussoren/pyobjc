@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
 
 class TestMetadataRegistry(TestCase):
@@ -122,18 +122,45 @@ class TestRescanClass(TestCase):
             objc._rescanClass(naam="NSObject")
 
     def test_valid_usage(self):
+        # Use '_updatingMetadata' to force a rescan
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
         objc._rescanClass(name="NSObject")
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
         objc._rescanClass("NSObject")
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
         objc._rescanClass("SomeNonexistingClass")
 
-        # XXX: add a convenience method for NSObject, rescan
-        #      and check that that method ends up in NSObject
+        def dummy_extender(klass, class_dict):
+            if klass.__name__ == "NSObject":
+                class_dict["_dummy_attribute_"] = 42
+
+        cls = objc.lookUpClass("NSObject")
+        self.assertNotHasAttr(cls, "_dummy_attribute_")
+        with pyobjc_options(_class_extender=dummy_extender):
+            objc._updatingMetadata(True)
+            objc._updatingMetadata(False)
+            objc._rescanClass("NSObject")
+            self.assertHasAttr(cls, "_dummy_attribute_")
 
     def test_rescan_raises(self):
-        # Temporarily replace the class extender function
-        # by one that raises, scan NSObject (which should raise),
-        # store and rescan.
-        self.fail()
+        def raising_extender(*args, **kwds):
+            raise RuntimeError("dont extend")
+
+        with pyobjc_options(_class_extender=raising_extender):
+            with self.assertRaisesRegex(RuntimeError, "dont extend"):
+                # Use '_updatingMetadata' to force a rescan
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+                objc._rescanClass("NSObject")
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+        objc._rescanClass("NSObject")
 
 
 class TestNameForSignature(TestCase):
