@@ -48,6 +48,12 @@ typedef struct {
 
 static NSOperatingSystemVersion gSystemVersion = {0, 0, 0};
 
+/*
+ * XXX:
+ * 1. Move function to a utility file and expose to ctests.m for testing.
+ * 2. Split the legacy code path to a separate function for testing.
+ * 3. Only enable the legacy code when the deployment target is 10.9
+ */
 static long
 calc_current_version(void)
 {
@@ -129,6 +135,7 @@ calc_current_version(void)
     [super dealloc];
 }
 
+/* XXX: This selector doesn't belong here... */
 + (void)targetForBecomingMultiThreaded:(id)sender
 {
     [sender self];
@@ -299,21 +306,23 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
     return Py_None;
 }
 
+static PyObject*
+have_autorelease_pool(PyObject* self __attribute__((__unused__)))
+{
+    PyObject* result = global_release_pool ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
+}
+
 PyDoc_STRVAR(remove_autorelease_pool_doc,
              "removeAutoreleasePool()\n" CLINIC_SEP "\n"
              "This removes the global NSAutoreleasePool. You should do this\n"
              "at the end of a plugin's initialization script.\n");
 
 static PyObject* _Nullable remove_autorelease_pool(PyObject* self
-                                                   __attribute__((__unused__)),
-                                                   PyObject* _Nullable args,
-                                                   PyObject* _Nullable kwds)
-{
-    static char* keywords[] = {NULL};
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
-        return NULL;
-    }
+                                                   __attribute__((__unused__)))
 
+{
     Py_BEGIN_ALLOW_THREADS
         @try {
             [global_release_pool release];
@@ -336,31 +345,20 @@ PyDoc_STRVAR(recycle_autorelease_pool_doc,
              "This 'releases' the global autorelease pool and creates a new one.\n"
              "This method is for system use only\n");
 static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
-                                                    __attribute__((__unused__)),
-                                                    PyObject* _Nullable args,
-                                                    PyObject* _Nullable kwds)
+                                                    __attribute__((__unused__)))
 {
-    static char* keywords[] = {NULL};
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            [global_release_pool release];
+            [OC_NSAutoreleasePoolCollector newAutoreleasePool];
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred())
         return NULL;
-    }
-
-    if (global_release_pool != NULL) {
-
-        Py_BEGIN_ALLOW_THREADS
-            @try {
-                [global_release_pool release];
-                [OC_NSAutoreleasePoolCollector newAutoreleasePool];
-
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-            }
-        Py_END_ALLOW_THREADS
-
-        if (PyErr_Occurred())
-            return NULL;
-    }
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -857,15 +855,8 @@ static PyObject* _Nullable createOpaquePointerType(PyObject* self
 PyDoc_STRVAR(copyMetadataRegistry_doc, "_copyMetadataRegistry()\n" CLINIC_SEP "\n"
                                        "Return a copy of the metadata registry.");
 static PyObject* _Nullable copyMetadataRegistry(PyObject* self
-                                                __attribute__((__unused__)),
-                                                PyObject* _Nullable args,
-                                                PyObject* _Nullable kwds)
+                                                __attribute__((__unused__)))
 {
-    static char* keywords[] = {NULL};
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
-        return NULL;
-    }
     return PyObjC_copyMetadataRegistry();
 }
 
@@ -1860,12 +1851,15 @@ static PyMethodDef mod_methods[] = {
      .ml_doc   = getClassList_doc},
     {.ml_name  = "recycleAutoreleasePool",
      .ml_meth  = (PyCFunction)recycle_autorelease_pool,
-     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_flags = METH_NOARGS,
      .ml_doc   = recycle_autorelease_pool_doc},
     {.ml_name  = "removeAutoreleasePool",
      .ml_meth  = (PyCFunction)remove_autorelease_pool,
-     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_flags = METH_NOARGS,
      .ml_doc   = remove_autorelease_pool_doc},
+    {.ml_name  = "_haveAutoreleasePool",
+     .ml_meth  = (PyCFunction)have_autorelease_pool,
+     .ml_flags = METH_NOARGS},
     {.ml_name  = "pyobjc_id",
      .ml_meth  = (PyCFunction)pyobjc_id,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
@@ -1940,7 +1934,7 @@ static PyMethodDef mod_methods[] = {
      .ml_doc   = registerMetaData_doc},
     {.ml_name  = "_copyMetadataRegistry",
      .ml_meth  = (PyCFunction)copyMetadataRegistry,
-     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_flags = METH_NOARGS,
      .ml_doc   = copyMetadataRegistry_doc},
     {.ml_name  = "_updatingMetadata",
      .ml_meth  = (PyCFunction)_updatingMetadata,

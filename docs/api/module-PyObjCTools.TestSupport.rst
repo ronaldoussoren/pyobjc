@@ -14,6 +14,19 @@ wrappers.
    This module is primarily used for testing PyObjC
    and the API isn't fully stable.
 
+.. function:: expectedFailureIf(condition)
+
+   Decorator that marks a test as an expected failure
+   if *condition* is true.
+
+.. function:: no_autorelease_pool
+
+   Decorator that disables the autorelease pool that's
+   used for specific tests.
+
+   .. versionadded: 8.2
+
+
 .. function:: pyobjc_options(\**kwds)
 
    Contextmanager that sets attributes of :data:`objc.options`

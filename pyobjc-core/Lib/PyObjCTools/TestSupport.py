@@ -1012,12 +1012,22 @@ class TestCase(_unittest.TestCase):
         self.assertEqual(clone, value)
         self.assertIsInstance(clone, type(value))
 
+    def __init__(self, methodName="runTest"):
+        super().__init__(methodName)
+
+        testMethod = getattr(self, methodName)
+
+        if getattr(testMethod, "_no_autorelease_pool", False):
+            self._skip_usepool = True
+        else:
+            self._skip_usepool = False
+
     def run(self, *args):
         """
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
         """
-        if _usepool:
+        if _usepool and not self._skip_usepool:
             p = _poolclass.alloc().init()
         else:
             p = 1
@@ -1040,3 +1050,8 @@ def expectedFailureIf(condition):
         return expectedFailure
     else:
         return lambda func: func
+
+
+def no_autorelease_pool(func):
+    func._no_autorelease_pool = True
+    return func

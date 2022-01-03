@@ -45,6 +45,9 @@ for edge cases that don't happen in normal programs.
 * The private function ``objc._setClassExtender`` is now implemented in Python
   and will be removed in PyObjC 9.
 
+* :func:`objc.recylceAutoReleasePool` will now restore the global release pool
+  when called after calling :func:`objc.removeAutoreleasePool`.
+
 * Removed ``objc.FSSpec``
 
   This is a wrapper for a C type that's only usable in 32-bit code, PyObjC
@@ -150,6 +153,9 @@ for edge cases that don't happen in normal programs.
 
 * Fix use of uninitialized variable in the code that converts a C struct
   from Objective-C to a Python tuple.
+
+* Added :func:`PyObjCTools.TestSupport.no_autorelease_pool` to disable
+  autorelease pool management by the test runnner for a specific test.
 
 Version 8.1
 -----------

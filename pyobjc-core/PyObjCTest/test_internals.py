@@ -1,5 +1,6 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from objc import super
+from PyObjCTools.TestSupport import TestCase, pyobjc_options, no_autorelease_pool
 
 
 class TestMetadataRegistry(TestCase):
@@ -181,3 +182,95 @@ class TestNameForSignature(TestCase):
 
         # XXX: The rest of the implementation is tested implicitly,
         #      add tests here as well.
+
+
+class OC_ReleasePool_Recorder(objc.lookUpClass("NSObject")):
+    def initWithCallback_(self, callback):
+        self = super().init()
+        self.callback = callback
+        return self
+
+    def dealloc(self):
+        self.callback()
+        super().dealloc()
+
+
+class TestReleasePoolManagement(TestCase):
+    # Tests that check various aspect of management of
+    # the global fallback release pool managed by the
+    # pyobjc extension.
+    #
+    # 1. recycle (check that pool gets drained)
+    # 2. clear (check that pool is removed, and that recycle reinstates)
+    # 3. check that draining an outer pool resets the pyobjc pool
+
+    def test_machinery(self):
+        record = []
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
+            lambda: record.append(True)
+        )
+        self.assertEqual(record, [])
+        del v
+        self.assertEqual(record, [True])
+
+    @no_autorelease_pool
+    def test_manual_recycle(self):
+        objc.recycleAutoreleasePool()
+        record = []
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
+            lambda: record.append(True)
+        )
+        self.assertEqual(record, [])
+        v.retain()
+        v.autorelease()
+        del v
+        self.assertEqual(record, [])
+        objc.recycleAutoreleasePool()
+        self.assertEqual(record, [True])
+        self.assertTrue(objc._haveAutoreleasePool())
+
+    @no_autorelease_pool
+    def test_manual_recycle_exception(self):
+        # XXX: Raise exception while draining the pool
+        pass
+
+    @no_autorelease_pool
+    def test_removing_pool(self):
+        self.assertTrue(objc._haveAutoreleasePool())
+        objc.removeAutoreleasePool()
+        self.assertFalse(objc._haveAutoreleasePool())
+        objc.recycleAutoreleasePool()
+        self.assertTrue(objc._haveAutoreleasePool())
+
+    @no_autorelease_pool
+    def test_removing_pool_exception(self):
+        # XXX: Raise exception while draining the pool
+        pass
+
+    @no_autorelease_pool
+    def test_draining_outer_pool(self):
+        objc.removeAutoreleasePool()
+
+        pool = objc.lookUpClass("NSAutoreleasePool").alloc().init()
+
+        objc.recycleAutoreleasePool()
+        record = []
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
+            lambda: record.append(True)
+        )
+        self.assertEqual(record, [])
+        v.retain()
+        v.autorelease()
+        del v
+        self.assertEqual(record, [])
+        del pool
+        self.assertEqual(record, [True])
+
+        # The automatic recycle pool is cleared when the
+        # pool it is nested in gets drained. In this
+        # scenario the pool managed by PyObjC isn't needed.
+        self.assertFalse(objc._haveAutoreleasePool())
+
+        # Restory the pool to get default behaviour back.
+        objc.recycleAutoreleasePool()
+        self.assertTrue(objc._haveAutoreleasePool())
