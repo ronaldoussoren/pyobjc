@@ -11,6 +11,7 @@ import os as _os
 import re as _re
 import struct as _struct
 import sys as _sys
+import typing as _typing
 import unittest as _unittest
 import subprocess as _subprocess
 import pickle as _pickle
@@ -366,6 +367,13 @@ class TestCase(_unittest.TestCase):
         #       look for these, but not in the test suite.
         # if not issubclass(tp, _nscftype):
         #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
+
+    def assertIsEnumType(self, tp):
+        if not isinstance(tp, _typing.NewType):
+            self.fail(f"{tp!r} is not a typing.NewType")
+
+        if tp.__supertype__ != int:
+            self.fail(f"{tp!r} is not a typing.NewType based on 'int'")
 
     def assertIsOpaquePointer(self, tp, message=None):
         if not hasattr(tp, "__pointer__"):

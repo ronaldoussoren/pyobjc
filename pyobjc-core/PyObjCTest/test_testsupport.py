@@ -7,6 +7,7 @@ except ImportError:
     ctypes = None
 
 import pickle
+import typing
 
 import objc
 from PyObjCTools import TestSupport
@@ -495,6 +496,22 @@ class TestTestSupport(TestCase):
             self.assertIsCFType(OC_OPAQUE_TEST_1)
         except self.failureException:
             self.fail("CFType subclass not recognized as CFType")
+
+    def test_assert_enumtype(self):
+        with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not a typing.NewType"
+        ):
+            self.assertIsEnumType(int)
+
+        with self.assertRaisesRegex(
+            self.failureException, ".*SomeType is not a typing.NewType based on 'int'"
+        ):
+            self.assertIsEnumType(typing.NewType("SomeType", str))
+
+        try:
+            self.assertIsEnumType(typing.NewType("SomeType", int))
+        except self.failureException:
+            self.fail("assertIsEnumType unexpectedly failed")
 
     def test_assert_opaque(self):
         with self.assertRaisesRegex(
