@@ -68,6 +68,7 @@ meth_dealloc(PyObject* self)
     PyObject_GC_Del(self);
 }
 
+#if PY_VERSION_HEX < 0x03090000
 static PyObject* _Nullable meth_call(PyObject* self, PyObject* args, PyObject* kwds)
 {
     if (((PyObjCPythonMethod*)self)->callable == NULL) { // LCOV_BR_EXCL_LINE
@@ -78,6 +79,7 @@ static PyObject* _Nullable meth_call(PyObject* self, PyObject* args, PyObject* k
     }
     return PyObject_Call(((PyObjCPythonMethod*)self)->callable, args, kwds);
 }
+#endif
 
 #if PY_VERSION_HEX >= 0x03090000
 static PyObject* _Nullable meth_vectorcall(PyObject* self, PyObject* const* args,
@@ -137,8 +139,10 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC
                 | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
     .tp_vectorcall_offset = offsetof(PyObjCPythonMethod, vectorcall),
+    .tp_call              = PyVectorcall_Call,
 #else
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+    .tp_call  = meth_call,
 #endif
     .tp_doc       = meth_doc,
     .tp_members   = meth_members,
@@ -146,7 +150,6 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_descr_get = meth_descr_get,
     .tp_traverse  = meth_traverse,
     .tp_clear     = meth_clear,
-    .tp_call      = meth_call,
 };
 
 NS_ASSUME_NONNULL_END
