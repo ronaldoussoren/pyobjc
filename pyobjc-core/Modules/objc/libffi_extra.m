@@ -24,32 +24,45 @@ alloc_prepped_closure(ffi_closure** cl, ffi_cif* cif, void** codeloc, void* func
 #else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    (*cl)     = ffi_closure_alloc(sizeof(**cl), codeloc);
+    (*cl) = ffi_closure_alloc(sizeof(**cl), codeloc);
 #pragma clang diagnostic pop
 #endif
     if (*cl == NULL) { // LCOV_BR_EXCL_LINE
         return -1;     // LCOV_EXCL_LINE
     }
 
+#ifdef __arm64__
+
+    /* XXX: This pragma is needed because we compile with deployment
+     *      target 10.9 even for arm64.
+     */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
+    rv = ffi_prep_closure_loc(*cl, cif, func, userdata, *codeloc);
+
+#pragma clang diagnostic pop
+
+#else /* x86_64 */
+
 #if PyObjC_BUILD_RELEASE >= 1015
+
     if (@available(macOS 10.15, *)) { // LCOV_BR_EXCL_LINE
         rv = ffi_prep_closure_loc(*cl, cif, func, userdata, *codeloc);
     } else {
-#ifdef __arm64__
-        rv = FFI_BAD_ABI;
-#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(*cl, cif, func, userdata);
 
 #pragma clang diagnostic pop
-#endif
     }
 
-#else /* PyObjC_BUILD_RELEASE < 1015 */
-    rv        = ffi_prep_closure(*cl, cif, func, userdata);
-#endif
+#else  /* PyObjC_BUILD_RELEASE < 1015 */
+    rv = ffi_prep_closure(*cl, cif, func, userdata);
+#endif /* PyObjC_BUILD_RELEASE < 1015 */
+
+#endif /* !__arm64__ */
 
     return rv == FFI_OK ? 0 : -1;
 }

@@ -1,4 +1,5 @@
 import objc
+import os
 from objc import super
 from PyObjCTools.TestSupport import TestCase, pyobjc_options, no_autorelease_pool
 
@@ -43,7 +44,8 @@ class TestMetadataRegistry(TestCase):
 
     def test_copyMetadataRegistry_invalid(self):
         with self.assertRaisesRegex(
-            TypeError, r"function takes at most 0 arguments \(1 given\)"
+            TypeError,
+            r"objc._objc._copyMetadataRegistry\(\) takes no arguments \(1 given\)",
         ):
             objc._copyMetadataRegistry(1)
 
@@ -195,6 +197,20 @@ class OC_ReleasePool_Recorder(objc.lookUpClass("NSObject")):
         super().dealloc()
 
 
+class RaisingRelease(objc.lookUpClass("NSObject")):
+    def init(self):
+        self = super().init()
+        self._raise = True
+        return self
+
+    def release(self):
+        if self._raise:
+            self._raise = False
+            objc.lookUpClass("NSException").exceptionWithName_reason_userInfo_(
+                "SomeException", "Reason", None
+            ).raise__()
+
+
 class TestReleasePoolManagement(TestCase):
     # Tests that check various aspect of management of
     # the global fallback release pool managed by the
@@ -231,21 +247,40 @@ class TestReleasePoolManagement(TestCase):
 
     @no_autorelease_pool
     def test_manual_recycle_exception(self):
-        # XXX: Raise exception while draining the pool
-        pass
+        self.assertTrue(objc._haveAutoreleasePool())
+        try:
+            o = RaisingRelease.alloc().init()
+            o.retain()
+            o.autorelease()
+            with self.assertRaisesRegex(objc.error, "SomeException - Reason"):
+                objc.removeAutoreleasePool()
+            self.assertFalse(objc._haveAutoreleasePool())
+        finally:
+            objc.recycleAutoreleasePool()
+            self.assertTrue(objc._haveAutoreleasePool())
 
     @no_autorelease_pool
     def test_removing_pool(self):
         self.assertTrue(objc._haveAutoreleasePool())
-        objc.removeAutoreleasePool()
-        self.assertFalse(objc._haveAutoreleasePool())
-        objc.recycleAutoreleasePool()
-        self.assertTrue(objc._haveAutoreleasePool())
+        try:
+            objc.removeAutoreleasePool()
+            self.assertFalse(objc._haveAutoreleasePool())
+        finally:
+            objc.recycleAutoreleasePool()
+            self.assertTrue(objc._haveAutoreleasePool())
 
     @no_autorelease_pool
     def test_removing_pool_exception(self):
-        # XXX: Raise exception while draining the pool
-        pass
+        # There's not much we can assert about the state of objects
+        # in the release pool when one of them raises in
+        # -release, just test that we still have a pool.
+        objc.recycleAutoreleasePool()
+        o = RaisingRelease.alloc().init()
+        o.retain()
+        o.autorelease()
+        with self.assertRaisesRegex(objc.error, "SomeException - Reason"):
+            objc.recycleAutoreleasePool()
+        self.assertTrue(objc._haveAutoreleasePool())
 
     @no_autorelease_pool
     def test_draining_outer_pool(self):
@@ -274,3 +309,50 @@ class TestReleasePoolManagement(TestCase):
         # Restory the pool to get default behaviour back.
         objc.recycleAutoreleasePool()
         self.assertTrue(objc._haveAutoreleasePool())
+
+
+NSBundle = objc.lookUpClass("NSBundle")
+
+
+class TestCurrentBundle(TestCase):
+    # Note: bugs in the test or the implementation will likely crash
+    # the interpreter as the implementation trusts that the
+    # value of an environment variable is a valid pointer...
+
+    def test_default(self):
+        self.assertIs(objc.currentBundle(), NSBundle.mainBundle())
+
+    def test_invalid_pointer(self):
+        os.putenv("PYOBJC_BUNDLE_ADDRESS", "rotzooi")
+        try:
+            self.assertIs(objc.currentBundle(), NSBundle.mainBundle())
+        finally:
+            os.unsetenv("PYOBJC_BUNDLE_ADDRESS")
+
+        os.putenv("PYOBJC_BUNDLE_ADDRESS", "0x12monkeys")
+        try:
+            self.assertIs(objc.currentBundle(), NSBundle.mainBundle())
+        finally:
+            os.unsetenv("PYOBJC_BUNDLE_ADDRESS")
+
+        os.putenv("PYOBJC_BUNDLE_ADDRESS", "")
+        try:
+            self.assertIs(objc.currentBundle(), NSBundle.mainBundle())
+        finally:
+            os.unsetenv("PYOBJC_BUNDLE_ADDRESS")
+
+    def test_invalid_use(self):
+        with self.assertRaisesRegex(
+            TypeError, r"objc._objc.currentBundle\(\) takes no arguments \(1 given\)"
+        ):
+            objc.currentBundle(None)
+
+    def test_alternate(self):
+        b = NSBundle.bundleWithPath_("/System/Library/Frameworks/Foundation.framework")
+        self.assertIsInstance(b, NSBundle)
+
+        os.putenv("PYOBJC_BUNDLE_ADDRESS", f"{hex(objc.pyobjc_id(b))}")
+        try:
+            self.assertIs(objc.currentBundle(), b)
+        finally:
+            os.unsetenv("PYOBJC_BUNDLE_ADDRESS")

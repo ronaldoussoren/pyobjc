@@ -42,6 +42,34 @@ class PurePython:
 
 
 class TestFromObjCSuperToObjCClass(TestCase):
+    def test_invalid_adding(self):
+        with self.assertRaisesRegex(
+            TypeError,
+            r"classAddMethods\(\) missing required argument 'methodsArray' \(pos 2\)",
+        ):
+            objc.classAddMethods(NSObject)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"classAddMethods\(\) missing required argument 'targetClass' \(pos 1\)",
+        ):
+            objc.classAddMethods(aClass=NSObject, methods=[])
+
+        with self.assertRaisesRegex(
+            TypeError, r"Argument 'targetClass' \(pos 1\) is not an Objective-C class"
+        ):
+            objc.classAddMethods(PurePython, [])
+
+        with self.assertRaisesRegex(
+            TypeError, r"Argument 'methodsArray' \(pos 2\) must be a sequence"
+        ):
+            objc.classAddMethods(NSObject, 42)
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot add a native selector to other classes"
+        ):
+            objc.classAddMethods(NSObject, [NSObject.description])
+
     def testClassAddMethod(self):
         import objc._category as mod
 

@@ -286,11 +286,13 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
     }
 
     if (!PyObjCClass_Check(classObject)) {
-        PyErr_SetString(PyExc_TypeError, "base class is not an Objective-C class");
+        PyErr_SetString(PyExc_TypeError,
+                        "Argument 'targetClass' (pos 1) is not an Objective-C class");
         return NULL;
     }
 
-    methodsArray = PySequence_Fast(methodsArray, "methodsArray must be a sequence");
+    methodsArray = PySequence_Fast(methodsArray,
+                                   "Argument 'methodsArray' (pos 2) must be a sequence");
     if (methodsArray == NULL)
         return NULL;
 
@@ -306,6 +308,9 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
     return Py_None;
 }
 
+PyDoc_STRVAR(have_autorelease_pool_doc,
+             "_haveAutoreleasePool()\n" CLINIC_SEP "\n"
+             "Return True iff the global release pool is present");
 static PyObject*
 have_autorelease_pool(PyObject* self __attribute__((__unused__)))
 {
@@ -323,14 +328,20 @@ static PyObject* _Nullable remove_autorelease_pool(PyObject* self
                                                    __attribute__((__unused__)))
 
 {
+    NSAutoreleasePool* pool;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            [global_release_pool release];
+            /* Unconditionally clear the global autorelease pool,
+             * there's not much we can do if releasing raises.
+             */
+            pool                = global_release_pool;
             global_release_pool = nil;
+            [pool release];
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
         }
+
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred())
@@ -347,14 +358,25 @@ PyDoc_STRVAR(recycle_autorelease_pool_doc,
 static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
                                                     __attribute__((__unused__)))
 {
+    NSAutoreleasePool* pool;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            [global_release_pool release];
-            [OC_NSAutoreleasePoolCollector newAutoreleasePool];
+            /* Unconditionally set global_release_pool to nil
+             * before calling release. There's not much we can
+             * do if draining fails with an exception.
+             */
+            pool                = global_release_pool;
+            global_release_pool = nil;
+            [pool release];
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
         }
+
+        /* No need to guard this with an @try, the API's we use
+         * should never raise.
+         */
+        [OC_NSAutoreleasePoolCollector newAutoreleasePool];
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred())
@@ -384,13 +406,23 @@ PyDoc_STRVAR(currentBundle_doc, "currentBundle()\n" CLINIC_SEP "\n"
                                 "NSBundle.bundleForClass_(ClassInYourBundle).");
 static PyObject* _Nullable currentBundle(PyObject* self __attribute__((__unused__)))
 {
-    void* rval;
-    /* XXX: Replace scanf */
     char* bundle_address = getenv("PYOBJC_BUNDLE_ADDRESS");
-    if (!(bundle_address && sscanf(bundle_address, "%p", &rval) == 1)) {
-        rval = [NSBundle mainBundle];
+    if (bundle_address) {
+        char* endptr = NULL;
+        long  rval   = strtol(bundle_address, &endptr, 16);
+
+        /* Check that the entire string is consumed and that the
+         * conversion didn't fail. The latter should also check
+         * errno, but error return values from strtol aren't valid
+         * pointers anyway.
+         */
+        if (endptr && *endptr == '\0') {
+            if (rval != 0 && rval != LONG_MIN && rval != LONG_MAX) {
+                return id_to_python((id)rval);
+            }
+        }
     }
-    return id_to_python((id)rval);
+    return id_to_python([NSBundle mainBundle]);
 }
 
 PyDoc_STRVAR(loadBundle_doc,
@@ -1859,7 +1891,8 @@ static PyMethodDef mod_methods[] = {
      .ml_doc   = remove_autorelease_pool_doc},
     {.ml_name  = "_haveAutoreleasePool",
      .ml_meth  = (PyCFunction)have_autorelease_pool,
-     .ml_flags = METH_NOARGS},
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = have_autorelease_pool_doc},
     {.ml_name  = "pyobjc_id",
      .ml_meth  = (PyCFunction)pyobjc_id,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
