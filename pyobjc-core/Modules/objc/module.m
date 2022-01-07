@@ -551,8 +551,8 @@ static PyObject* _Nullable objc_splitSignature(PyObject* self __attribute__((__u
     }
 
     result = PyList_New(0);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     while (signature && *signature != 0) {
         PyObject*   str;
@@ -571,15 +571,17 @@ static PyObject* _Nullable objc_splitSignature(PyObject* self __attribute__((__u
         t++;
 
         str = PyBytes_FromStringAndSize(signature, t - signature);
-        if (str == NULL) {
-            Py_DECREF(result);
-            return NULL;
+        if (str == NULL) {     // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
         }
 
-        if (PyList_Append(result, str) == -1) {
+        if (PyList_Append(result, str) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(str);
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(str);
 
@@ -636,8 +638,8 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
     }
 
     fields = PyList_New(0);
-    if (fields == NULL)
-        return NULL;
+    if (fields == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     while (signature && *signature != _C_STRUCT_E && *signature != 0) {
         PyObject*   str;
@@ -652,10 +654,12 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
                 end++;
             }
             name = PyUnicode_FromStringAndSize(signature, end - signature);
-            if (name == NULL) {
+            if (name == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(structname);
                 Py_DECREF(fields);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             signature = end + 1;
@@ -680,23 +684,29 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
         t++;
 
         str = PyBytes_FromStringAndSize(signature, t - signature);
-        if (str == NULL) {
+        if (str == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(structname);
             Py_DECREF(name);
             Py_DECREF(fields);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         item = Py_BuildValue("NN", name, str);
-        if (item == NULL) {
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(fields);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
-        if (PyList_Append(fields, item) == -1) {
+        if (PyList_Append(fields, item) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(fields);
             Py_DECREF(item);
             Py_DECREF(structname);
+            // LCOV_EXCL_STOP
             return NULL;
         }
         Py_DECREF(item);
@@ -772,16 +782,18 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
 
     protocols = PyList_New(protCount);
 
-    if (protocols == NULL) {
-        return NULL;
+    if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < protCount; i++) {
         PyObject* p = PyObjCFormalProtocol_ForProtocol(protlist[i]);
-        if (p == NULL) {
+        if (p == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(protocols);
             free(protlist);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyList_SET_ITEM(protocols, i, p);
@@ -837,8 +849,8 @@ static PyObject* _Nullable protocolsForClass(PyObject* self __attribute__((__unu
     }
 
     protocols = PyList_New(0);
-    if (protocols == NULL) {
-        return NULL;
+    if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     protocol_list = class_copyProtocolList(cls, &protocol_count);
@@ -848,10 +860,12 @@ static PyObject* _Nullable protocolsForClass(PyObject* self __attribute__((__unu
 
     for (i = 0; i < protocol_count; i++) {
         PyObject* protocol = PyObjCFormalProtocol_ForProtocol(protocol_list[i]);
-        if (protocol == NULL) {
+        if (protocol == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             free(protocol_list);
             Py_DECREF(protocols);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyList_Append(protocols, protocol);
         Py_DECREF(protocol);
@@ -975,23 +989,29 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
     }
 
     name = PyObjCUtil_Strdup(name);
-    if (name == NULL) {
+    if (name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
     typestr = PyObjCUtil_Strdup(typestr);
-    if (typestr == NULL) {
+    if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(name);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (docstr) {
         docstr = PyObjCUtil_Strdup(docstr);
-        if (docstr == NULL) {
+        if (docstr == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyMem_Free(name);
             PyMem_Free(typestr);
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -1001,15 +1021,13 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
 
         if (pyfieldnames == NULL)
             goto error_cleanup;
-        if (name == NULL || typestr == NULL) {
-            PyErr_NoMemory();
-            goto error_cleanup;
-        }
 
         fieldnames = PyMem_Malloc(sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
-        if (fieldnames == NULL) {
+        if (fieldnames == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             goto error_cleanup;
+            // LCOV_EXCL_STOP
         }
         memset(fieldnames, 0, sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
         for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
@@ -1120,16 +1138,14 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
 
     } else {
         PyObject* v = PyLong_FromLong(typeId);
-        int       r;
-
-        if (v == NULL) {
-            return NULL;
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
-        r = PyDict_SetItemString(PyObjC_TypeStr2CFTypeID, encoding, v);
+        int r = PyDict_SetItemString(PyObjC_TypeStr2CFTypeID, encoding, v);
         Py_DECREF(v);
-        if (r == -1) {
-            return NULL;
+        if (r == -1) {   // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 
@@ -1366,139 +1382,6 @@ static PyObject* _Nullable mod_propertiesForClass(PyObject* mod
     return PyObjCClass_ListProperties(object);
 }
 
-/*
- * Helper function for decoding XML metadata:
- *
- * This fixes an issue with metadata files: metadata files use
- * _C_BOOL to represent type 'BOOL', but that the string should
- * be used to represent 'bool' which has a different size on
- * PPC. Therefore swap usage of _C_BOOL and _C_NSBOOL in data
- * from metadata files.
- *
- * XXX: This function is similar, but not the same, as tc2tc
- *      in class-builder.m.
- */
-static void
-typecode2typecode(char* buf)
-{
-    /* Skip pointer declarations and anotations */
-    for (;;) {
-        switch (*buf) {
-        case _C_PTR:
-        case _C_IN:
-        case _C_OUT:
-        case _C_INOUT:
-        case _C_ONEWAY:
-        case _C_CONST:
-            buf++;
-            break;
-        default:
-            goto exit;
-        }
-    }
-exit:
-
-    switch (*buf) {
-    case _C_BOOL:
-        *buf = _C_NSBOOL;
-        break;
-    case _C_NSBOOL:
-        *buf = _C_BOOL;
-        break;
-    case _C_STRUCT_B:
-        while (buf && *buf != _C_STRUCT_E && *buf && *buf++ != '=') {
-        }
-        while (buf && *buf && *buf != _C_STRUCT_E) {
-            if (*buf == '"') {
-                /* embedded field name */
-                char* tmp = strchr(buf + 1, '"');
-                if (tmp == NULL) {
-                    return;
-                }
-                buf = tmp + 1;
-            }
-            typecode2typecode(buf);
-            // buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-        }
-        break;
-
-    case _C_UNION_B:
-        while (buf && *buf != _C_UNION_E && *buf && *buf++ != '=') {
-        }
-        while (buf && *buf && *buf != _C_UNION_E) {
-            if (*buf == '"') {
-                /* embedded field name */
-                char* tmp = strchr(buf + 1, '"');
-                if (tmp == NULL) {
-                    return;
-                }
-                buf = tmp + 1;
-            }
-            typecode2typecode(buf);
-            // buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-        }
-        break;
-
-    case _C_ARY_B:
-        while (isdigit(*++buf))
-            ;
-        typecode2typecode(buf);
-        break;
-    }
-}
-
-static PyObject* _Nullable typestr2typestr(PyObject* args)
-{
-    char* s;
-    char* buf;
-
-    if (PyUnicode_Check(args)) {
-        PyObject* bytes = PyUnicode_AsEncodedString(args, NULL, NULL);
-        if (bytes == NULL) {
-            return NULL;
-        }
-        buf = PyObjCUtil_Strdup(PyBytes_AsString(args));
-        Py_DECREF(bytes);
-
-    } else if (PyBytes_Check(args)) {
-        buf = PyObjCUtil_Strdup(PyBytes_AsString(args));
-    } else {
-        PyErr_SetString(PyExc_TypeError, "expecing string");
-        return NULL;
-    }
-
-    if (buf == NULL) {
-        PyErr_NoMemory();
-        return NULL;
-    }
-
-    s = buf;
-    while (s && *s) {
-        typecode2typecode(s);
-        if (s && *s == '\"') {
-            PyErr_Format(PyObjCExc_InternalError,
-                         "typecode2typecode: invalid typecode '%c' "
-                         "at \"%s\"",
-                         *s, s);
-            *s = '\0';
-            PyMem_Free(buf);
-            return NULL;
-
-        } else {
-            s = (char*)PyObjCRT_SkipTypeSpec(s);
-        }
-    }
-
-    PyObject* result = PyBytes_FromString(buf);
-    PyMem_Free(buf);
-
-    return result;
-}
-
-#if PyObjC_BUILD_RELEASE >= 1006
-/* Associated Object support. Functionality is available on OSX 10.6 or later.
- */
-
 PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
              "setAssociatedObject(object, key, value, "
              "policy=objc.OBJC_ASSOCIATION_RETAIN)\n" CLINIC_SEP "\n"
@@ -1514,12 +1397,6 @@ static PyObject* _Nullable PyObjC_setAssociatedObject(PyObject* self
     PyObject*    key;
     id           value;
     long         policy = OBJC_ASSOCIATION_RETAIN;
-
-    if (&objc_setAssociatedObject == NULL) {
-        PyErr_SetString(PyObjCExc_Error,
-                        "setAssociatedObject not available on this platform");
-        return NULL;
-    }
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO&|l", keywords,
                                      PyObjCObject_Convert, &object, &key,
@@ -1558,12 +1435,6 @@ static PyObject* _Nullable PyObjC_getAssociatedObject(PyObject* self
     PyObject*    key;
     id           value;
 
-    if (&objc_getAssociatedObject == NULL) {
-        PyErr_SetString(PyObjCExc_Error,
-                        "setAssociatedObject not available on this platform");
-        return NULL;
-    }
-
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O", keywords, PyObjCObject_Convert,
                                      &object, &key)) {
 
@@ -1600,12 +1471,6 @@ static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
     static char* keywords[] = {"object", NULL};
     id           object;
 
-    if (&objc_removeAssociatedObjects == NULL) {
-        PyErr_SetString(PyObjCExc_Error,
-                        "removeAssociatedObjects not available on this platform");
-        return NULL;
-    }
-
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&", keywords, PyObjCObject_Convert,
                                      &object)) {
 
@@ -1627,7 +1492,6 @@ static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
     Py_INCREF(Py_None);
     return Py_None;
 }
-#endif
 
 static PyObject* _Nullable PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)),
                                                PyObject* _Nullable args,
@@ -1789,6 +1653,9 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
         return NULL;
     }
 
+    /* This uses an availability check for 10.16 just in case
+     * we're loaded in a Python that was compiled with an old SDK.
+     */
     if (@available(macOS 10.16, *)) {
         const char* path = PyUnicode_AsUTF8(object);
         if (path == NULL) {
@@ -2003,14 +1870,6 @@ static PyMethodDef mod_methods[] = {
      .ml_flags = METH_O,
      "_block_signature(block)\n" CLINIC_SEP
      "\nreturn signature string for a block, or None"},
-    {.ml_name  = "_typestr2typestr",
-     .ml_meth  = (PyCFunction)typestr2typestr,
-     .ml_flags = METH_O,
-     .ml_doc   = "_typestr2typestr(value)\n" CLINIC_SEP
-               "\nReturns the standard Objective-C version for a PyObjC typestr"},
-
-#if PyObjC_BUILD_RELEASE >= 1006
-
     {.ml_name  = "setAssociatedObject",
      .ml_meth  = (PyCFunction)PyObjC_setAssociatedObject,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
@@ -2023,9 +1882,6 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)PyObjC_removeAssociatedObjects,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
      .ml_doc   = PyObjC_removeAssociatedObjects_doc},
-
-#endif /* PyObjC_BUILD_RELEASE >= 1006 */
-
     {.ml_name  = "_loadConstant",
      .ml_meth  = (PyCFunction)PyObjC_LoadConstant,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
@@ -2591,7 +2447,7 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     /* Allocate an auto-release pool for our own use, this avoids numerous
      * warnings during startup of a python script.
      */
-    global_release_pool = [[NSAutoreleasePool alloc] init];
+    global_release_pool = nil;
     [OC_NSAutoreleasePoolCollector newAutoreleasePool];
 
 #ifndef Py_ARG_NSInteger

@@ -690,8 +690,8 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 
     result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
                                                  &PyObjCFormalProtocol_Type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->objc = protocol;

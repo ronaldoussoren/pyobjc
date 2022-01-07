@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil))
-        return nil;
+    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
+        return nil;            // LCOV_EXCL_LINE
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
     /*
      * XXX: Check if 'value' can ever be NULL
      *      if not: replace by PyObjC_Assert check
+     *
+     * XXX: return [self __pyobjc_PythonObject__];
      */
     if (likely(value)) {
         Py_INCREF(value);

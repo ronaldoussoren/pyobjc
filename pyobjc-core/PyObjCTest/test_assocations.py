@@ -14,6 +14,37 @@ class OC_AssocSneakyCopy(NSObject):
 
 class TestAssocations(TestCase):
     @min_os_level("10.6")
+    def testInvalidCalls(self):
+        o = NSObject.alloc().init()
+        key1 = "key1"
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'value' \(pos 3\)"
+        ):
+            objc.setAssociatedObject(o, key1)
+
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'key' \(pos 2\)"
+        ):
+            objc.getAssociatedObject(o)
+
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'object' \(pos 1\)"
+        ):
+            objc.removeAssociatedObjects()
+
+    @min_os_level("10.6")
+    def test_assoc_raises(self):
+        # Testcase where setting the associated object raises an exception
+        # Create class that can raise when retain is called.
+
+        # Testcase where getting the associated object raises an exception
+        # Not sure how...
+
+        # Testcase where clearing assoc objects raises an exception
+        # Not sure how...
+        self.fail()
+
+    @min_os_level("10.6")
     def testKeysAreIdentityBased(self):
         o = NSObject.alloc().init()
 
