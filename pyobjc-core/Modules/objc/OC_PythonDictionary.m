@@ -96,11 +96,6 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (BOOL)supportsWeakPointers
-{
-    return YES;
-}
-
 + (BOOL)supportsSecureCoding
 {
     return NO;

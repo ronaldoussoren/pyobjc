@@ -60,11 +60,6 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
     return self;
 }
 
-- (BOOL)supportsWeakPointers
-{
-    return YES;
-}
-
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
