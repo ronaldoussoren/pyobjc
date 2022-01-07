@@ -119,6 +119,9 @@ def nsarray_insert(self, idx, item):
         idx += self.count()
         if idx < 0:
             idx = 0
+    if idx >= self.count():
+        self.addObject_(item)
+        return
     self.insertObject_atIndex_(container_wrap(item), idx)
 
 

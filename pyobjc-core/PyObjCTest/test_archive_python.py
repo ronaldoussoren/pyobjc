@@ -6,6 +6,7 @@ Testcases for NSArchive-ing python objects.
 import pickle
 import sys
 import test.pickletester
+import collections
 
 import objc
 import objc._pycoder as pycoder
@@ -1709,5 +1710,66 @@ class TestKeyedArchiveNative(TestArchiveNative):
 # And finally some tests to check if archiving of Python
 # subclasses of NSObject works correctly.
 #
+# XXX: This class is empty!
+#
 class TestArchivePythonObjCSubclass(TestCase):
     pass
+
+
+class TestSecureArchivingPython(TestCase):
+    def test_secure_archive_sequence(self):
+        archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
+        sequence = collections.UserList()
+        sequence.append(1)
+        sequence.append(2)
+
+        with self.assertRaisesRegex(
+            objc.error,
+            "Class 'OC_PythonArray' disallows secure coding. It must return YES from supportsSecureCoding",
+        ):
+            archive.encodeObject_forKey_(sequence, "sequence")
+
+        archive.finishEncoding()
+
+    def test_secure_archive_mapping(self):
+        archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
+        mapping = collections.UserDict()
+        mapping["key"] = 1
+
+        with self.assertRaisesRegex(
+            objc.error,
+            "Class 'OC_PythonDictionary' disallows secure coding. It must return YES from supportsSecureCoding",
+        ):
+            archive.encodeObject_forKey_(mapping, "mapping")
+
+        archive.finishEncoding()
+
+    def test_secure_archive_set(self):
+        archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
+
+        class UserSet(set):
+            pass
+
+        bag = UserSet()
+        bag.add(1)
+
+        with self.assertRaisesRegex(
+            objc.error,
+            "Class 'OC_PythonSet' disallows secure coding. It must return YES from supportsSecureCoding",
+        ):
+            archive.encodeObject_forKey_(bag, "bag")
+
+        archive.finishEncoding()
+
+    def test_secure_archive_object(self):
+        archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
+
+        value = object()
+
+        with self.assertRaisesRegex(
+            objc.error,
+            "This decoder will only decode classes that adopt NSSecureCoding. Class 'OC_PythonObject' does not adopt it.",
+        ):
+            archive.encodeObject_forKey_(value, "value")
+
+        archive.finishEncoding()

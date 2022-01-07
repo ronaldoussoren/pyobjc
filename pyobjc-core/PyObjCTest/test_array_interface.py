@@ -148,6 +148,15 @@ class ArrayTests(seq_tests.CommonTest):
 class MutableArrayTest(list_tests.CommonTest):
     type2test = NSMutableArray
 
+    def test_insert_beyond_end(self):
+        lst = [1]
+        lst.insert(99, "a")
+        self.assertEqual(lst, [1, "a"])
+
+        lst = NSMutableArray([1])
+        lst.insert(99, "a")
+        self.assertEqual(lst, [1, "a"])
+
     @expectedFailure
     def test_pop(self):
         list_tests.CommonTest.test_pop(self)

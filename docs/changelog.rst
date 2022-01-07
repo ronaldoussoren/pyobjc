@@ -45,6 +45,20 @@ for edge cases that don't happen in normal programs.
 * The private function ``objc._setClassExtender`` is now implemented in Python
   and will be removed in PyObjC 9.
 
+* Removed private function ``objc._typestr2typestr``.
+
+  This function was untested and is no longer used by PyObjC.
+
+* Removed the selector ``supportsWeakPointers`` from a number of classes.
+
+  This method may have been needed during Apple's transition to ARC, but is
+  no longer document and I've never seen it called during testing on recent
+  versions of the OS.
+
+  Furthermore the custom implementation of ``retain`` and ``release`` in PyObjC
+  is a thin wrapper around the default one with additional locking to avoid
+  race conditions during deallocation.
+
 * :func:`objc.recylceAutoReleasePool` will now restore the global release pool
   when called after calling :func:`objc.removeAutoreleasePool`.
 
@@ -156,6 +170,10 @@ for edge cases that don't happen in normal programs.
 
 * Added :func:`PyObjCTools.TestSupport.no_autorelease_pool` to disable
   autorelease pool management by the test runnner for a specific test.
+
+* ``NSMutableArray.insert(idx, value)`` would fail when ``idx`` is beyond
+  the length of the array. It now behaves the same as :meth:`list.insert`,
+  the item will be appended to the array.
 
 Version 8.1
 -----------

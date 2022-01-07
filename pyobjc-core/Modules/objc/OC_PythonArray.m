@@ -51,17 +51,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
     PyObjC_BEGIN_WITH_GIL
 
         @try {
             [super release];
-        } @catch (NSException* exc) {
+        } @catch (NSException* exc) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyObjC_LEAVE_GIL;
-            [exc raise];
+            @throw;
+            // LCOV_EXCL_STOP
         }
 
     PyObjC_END_WITH_GIL
@@ -69,9 +73,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super dealloc];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -169,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getObjects:(id*)buffer inRange:(NSRange)range
 {
-    unsigned int i;
+    NSUInteger i;
 
     for (i = 0; i < range.length; i++) {
         buffer[i] = [self objectAtIndex:i + range.location];
@@ -240,8 +246,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObject* args[4] = {NULL, value, NULL, v};
         args[2]           = PyLong_FromUnsignedLong(idx);
-        if (args[2] == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (args[2] == NULL) {        // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         }
 
         w = PyObject_VectorcallMethod(PyObjCNM_insert, args + 1,
@@ -317,9 +323,14 @@ NS_ASSUME_NONNULL_BEGIN
         Py_ssize_t size = PyTuple_Size(value);
 
         if ([coder allowsKeyedCoding]) {
-            if (size > INT_MAX) {
+            if (size > INT_MAX) { // LCOV_BT_EXCL_LINE
+                /* Excluded from coverage tests because this would require creating
+                 * rather huge tuples, with corresponding memory usage.
+                 */
+                // LCOV_EXCL_START
                 [coder encodeInt32:5 forKey:@"pytype"];
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
+                // LCOV_EXCL_STOP
 
             } else {
                 [coder encodeInt32:4 forKey:@"pytype"];
@@ -392,12 +403,12 @@ NS_ASSUME_NONNULL_BEGIN
 
                 } else {
                     v = id_to_python(objects[i]);
+                    if (v == NULL) {
+                        PyObjC_GIL_FORWARD_EXC();
+                    }
                 }
 
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
+                /* XXX: Can this every be true? */
                 if (PyTuple_GET_ITEM(value, i) != NULL) {
                     /* use temporary object to avoid race condition */
                     PyObject* t = PyTuple_GET_ITEM(value, i);
@@ -418,15 +429,14 @@ NS_ASSUME_NONNULL_BEGIN
 
                 } else {
                     v = id_to_python(objects[i]);
-                }
-
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                    if (v == NULL) {
+                        PyObjC_GIL_FORWARD_EXC();
+                    }
                 }
 
                 r = PyList_Append(value, v);
-                if (r == -1) {
-                    PyObjC_GIL_FORWARD_EXC();
+                if (r == -1) {                // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
 
                 Py_DECREF(v);
@@ -469,11 +479,15 @@ NS_ASSUME_NONNULL_BEGIN
     case 1:
         /* This code was used by some previous versions of PyObjC
          * (before 2.2) and is kept around for backward compatibility.
+         *
+         * Excluded from coverage testing because I don't have
+         * old archives that can be used for testing.
          */
+        // LCOV_EXCL_START
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -489,17 +503,18 @@ NS_ASSUME_NONNULL_BEGIN
             t     = value;
             value = PyList_AsTuple(t);
             Py_DECREF(t);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
         PyObjC_END_WITH_GIL
         return self;
+        // LCOV_EXCL_STOP
 
     case 2:
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -511,8 +526,8 @@ NS_ASSUME_NONNULL_BEGIN
     case 3:
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -570,8 +585,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_BEGIN_WITH_GIL
             value = PyTuple_New(size);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -582,6 +597,10 @@ NS_ASSUME_NONNULL_BEGIN
 
     case 5:
         /* tuple with more than MAX_INT elements */
+        /* Excluded from coverage check because testing this would
+         * require creating too large tuples, with corresponding memory use
+         */
+        // LCOV_BR_EXCL_START
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
@@ -590,13 +609,14 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_BEGIN_WITH_GIL
             value = PyTuple_New(size);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
         tmpVal = [super initWithCoder:coder];
         PyObjC_Assert(tmpVal == self, nil);
+        // LCOV_EXCL_STOP
         return tmpVal;
 
     default:
