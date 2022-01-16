@@ -823,7 +823,7 @@ def _structConvenience(structname, structencoding):
     if hasattr(objc.ivar, "__qualname__"):  # pragma: no branch
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
 
-    objc.ivar._add_attribute(structname, classmethod(makevar))
+    objc.ivar._add_attribute(sys.intern(structname), classmethod(makevar))
 
 
 # Fake it for basic C types

@@ -15,7 +15,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     expectedFailure,
     skipUnless,
-    min_python_release,
 )
 
 from importlib import reload
@@ -2962,7 +2961,6 @@ class TestMisc(TestCase):
         o = objc.ivar.TestStruct3()
         self.assertEqual(o.__typestr__, b"{TestStruct1=dd}")
 
-    @min_python_release("3.8")
     def test_ivar_slots(self):
         # XXX: This test is disabled for Python 3.7 because it crashes
         #      the interpreter fairly consistently. See #423

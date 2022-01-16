@@ -316,6 +316,8 @@ static PyObject* _Nullable ivar_add_attribute(PyObject* self, PyObject* _Nullabl
         return NULL;
     }
 
+    PyType_Modified((PyTypeObject*)self);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
