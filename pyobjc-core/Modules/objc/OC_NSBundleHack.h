@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OC_NSBundleHack : NSBundle {
 }
 + (void)installBundleHack;
++ (BOOL)bundleHackUsed;
 @end
 
 @interface OC_NSBundleHackCheck : NSObject {

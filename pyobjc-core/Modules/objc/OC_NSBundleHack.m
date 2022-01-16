@@ -24,7 +24,7 @@ static NSMapTableValueCallBacks PyObjC_ObjCValueCallBacks = {
     NULL // generic description
 };
 
-static id (*bundleForClassIMP)(id, SEL, Class);
+static id (*bundleForClassIMP)(id, SEL, Class) = nil;
 
 @implementation OC_NSBundleHackCheck
 + (NSBundle* _Nullable)bundleForClass
@@ -109,6 +109,12 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS
                                  [self methodForSelector:@selector(bundleForClass:)]);
     }
 }
+
++ (BOOL)bundleHackUsed
+{
+    return (bundleForClassIMP != nil);
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

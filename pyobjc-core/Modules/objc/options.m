@@ -146,6 +146,13 @@ OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes, NULL)
 OBJECT_PROP(_set_types, PyObjC_SetLikeTypes, NULL)
 OBJECT_PROP(_date_types, PyObjC_DateLikeTypes, NULL)
 
+static PyObject*
+bundle_hack_get(PyObject* s __attribute__((__unused__)),
+                void*     c __attribute__((__unused__)))
+{
+    return PyBool_FromLong([OC_NSBundleHack bundleHackUsed]);
+}
+
 static PyGetSetDef object_getset[] = {
     /* Public properties */
     GETSET(verbose, "If True the bridge is more verbose"),
@@ -175,6 +182,11 @@ static PyGetSetDef object_getset[] = {
            "Private helper function for generating __signature__ for selectors"),
     GETSET(deprecation_warnings,
            "If not 0 give deprecation warnings for the given SDK version"),
+    {
+        .name = "_bundle_hack_used",
+        .get  = bundle_hack_get,
+        .doc  = "[R/O] True iff OC_BundleHack is used on this system",
+    },
 
     {0, 0, 0, 0, 0} /* Sentinel */
 };
