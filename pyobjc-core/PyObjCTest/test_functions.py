@@ -113,7 +113,7 @@ class TestFunctions(TestCase):
     def test_no_keywords(self):
         with self.assertRaisesRegex(
             TypeError,
-            "<objc.function 'NSRectClipList' at 0x[0-9a-f]+> does not accept keyword arguments",
+            "(<objc.function 'NSRectClipList' at 0x[0-9a-f]+> does not accept keyword arguments)|(keyword arguments not supported)",
         ):
             NSRectClipList(list=[], size=0)  # noqa: F821
 

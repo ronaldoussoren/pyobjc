@@ -39,6 +39,7 @@ class TestVersionSupport(TestCase):
             objc.macos_available()
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.macos_available("42", 0)

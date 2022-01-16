@@ -112,7 +112,10 @@ class TestObjCWeakRef(TestCase):
         with self.assertRaisesRegex(TypeError, ".*expected no arguments, got 1"):
             r(1)
 
-        with self.assertRaisesRegex(TypeError, ".*does not accept keyword arguments"):
+        with self.assertRaisesRegex(
+            TypeError,
+            "(.*does not accept keyword arguments)|(keyword arguments not supported)",
+        ):
             r(x=1)
 
         with self.assertRaisesRegex(

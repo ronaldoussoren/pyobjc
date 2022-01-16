@@ -76,7 +76,8 @@ class TestBasicIMP(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "<IMP description at 0x[0-9a-f]+ for 0x[0-9a-f]+> does not accept keyword arguments",
+            "(<IMP description at 0x[0-9a-f]+ for 0x[0-9a-f]+> does not accept keyword arguments)"
+            "|(keyword arguments not supported)",
         ):
             imp(self=o)
 

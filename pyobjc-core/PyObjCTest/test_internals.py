@@ -45,7 +45,7 @@ class TestMetadataRegistry(TestCase):
     def test_copyMetadataRegistry_invalid(self):
         with self.assertRaisesRegex(
             TypeError,
-            r"objc._objc._copyMetadataRegistry\(\) takes no arguments \(1 given\)",
+            r".*_copyMetadataRegistry\(\) takes no arguments \(1 given\)",
         ):
             objc._copyMetadataRegistry(1)
 
@@ -170,7 +170,7 @@ class TestNameForSignature(TestCase):
     def test_invalid_usage(self):
         with self.assertRaisesRegex(
             TypeError,
-            r"objc._objc._nameForSignature\(\) takes exactly one argument \(0 given\)",
+            r".*_nameForSignature\(\) takes exactly one argument \(0 given\)",
         ):
             objc._nameForSignature()
 
@@ -343,7 +343,7 @@ class TestCurrentBundle(TestCase):
 
     def test_invalid_use(self):
         with self.assertRaisesRegex(
-            TypeError, r"objc._objc.currentBundle\(\) takes no arguments \(1 given\)"
+            TypeError, r".*currentBundle\(\) takes no arguments \(1 given\)"
         ):
             objc.currentBundle(None)
 
