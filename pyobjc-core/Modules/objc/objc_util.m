@@ -370,9 +370,9 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
     if (state) {
         PyGILState_Release(*state);
     }
-    if (PyGILState_Check()) {
-        printf("Still own GIL!\n");
-    }
+    // if (PyGILState_Check()) {
+    //     printf("Still own GIL!\n");
+    // }
     @throw exc;
     __builtin_unreachable();
 }
