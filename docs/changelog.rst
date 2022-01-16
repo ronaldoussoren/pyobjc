@@ -10,6 +10,15 @@ This release contains a lot of little fixes due to improving
 test coverage of the C code in pyobjc-core. These are mostly fixes
 for edge cases that don't happen in normal programs.
 
+* Reintroduce binary wheels for Python 3.6
+
+  PyObjC 8.x still supports Python 3.6, but I didn't ship binary wheels
+  until now.
+
+  I plan to explicitly remove support for Python 3.6 in PyObjC 9, which
+  will include updating package metadata to ensure that users of Python 3.6
+  will keep using PyObjC 8.x.
+
 * #414: [Python 3.10] The representation for C structures, like
   ``Foundation.NSPoint`` now have a ``__match_args__`` attribute, which means
   it is now possible to use positional arguments to these types in match expressions.
@@ -174,6 +183,12 @@ for edge cases that don't happen in normal programs.
 * ``NSMutableArray.insert(idx, value)`` would fail when ``idx`` is beyond
   the length of the array. It now behaves the same as :meth:`list.insert`,
   the item will be appended to the array.
+
+* Change the way type specific class methods are added to :class:`objc.ivar`.
+
+  This changes the way class methods are added to :class:`objc.ivar` to
+  be more correct in the CPython interpreter.
+
 
 Version 8.1
 -----------
