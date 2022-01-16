@@ -811,11 +811,6 @@ def initFrameworkWrapper(
     return bundle
 
 
-_ivar_dict = objc._objc._ivar_dict()
-if hasattr(objc, "_ivar_dict"):
-    del objc._ivar_dict
-
-
 def _structConvenience(structname, structencoding):
     def makevar(cls, name=None):
         if name is None:
@@ -827,7 +822,8 @@ def _structConvenience(structname, structencoding):
     makevar.__doc__ = f"Create *ivar* for type encoding {structencoding!r}"
     if hasattr(objc.ivar, "__qualname__"):  # pragma: no branch
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
-    _ivar_dict[structname] = classmethod(makevar)
+
+    objc.ivar._add_attribute(structname, classmethod(makevar))
 
 
 # Fake it for basic C types

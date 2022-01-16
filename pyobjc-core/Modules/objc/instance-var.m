@@ -302,15 +302,42 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
     return Py_None;
 }
 
-static PyMethodDef ivar_methods[] = {{
-                                         .ml_name  = "__pyobjc_class_setup__",
-                                         .ml_meth  = (PyCFunction)ivar_class_setup,
-                                         .ml_flags = METH_VARARGS | METH_KEYWORDS,
-                                     },
+static PyObject* _Nullable ivar_add_attribute(PyObject* self, PyObject* _Nullable args)
+{
+    PyObject* name;
+    PyObject* value;
 
-                                     {
-                                         .ml_name = NULL /* SENTINEL */
-                                     }};
+    if (!PyArg_ParseTuple(args, "UO", &name, &value)) {
+        return NULL;
+    }
+
+    /* XXX: This is suboptimal, convert this type to a heap type instead */
+    if (_PyObject_GenericSetAttrWithDict(self, name, value, NULL) == -1) {
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyMethodDef ivar_methods[] = {
+    {
+        .ml_name  = "__pyobjc_class_setup__",
+        .ml_meth  = (PyCFunction)ivar_class_setup,
+        .ml_flags = METH_VARARGS | METH_KEYWORDS,
+    },
+    {
+        .ml_name  = "_add_attribute",
+        .ml_meth  = (PyCFunction)ivar_add_attribute,
+        .ml_flags = METH_VARARGS | METH_CLASS,
+        .ml_doc   = "_add_attribute(name, value)\n" CLINIC_SEP "\n"
+                    "(private) add a named attribute to the class",
+
+    },
+
+    {
+        .ml_name = NULL /* SENTINEL */
+    }};
 
 PyDoc_STRVAR(
     ivar_doc,

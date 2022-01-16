@@ -1368,13 +1368,6 @@ static PyObject* _Nullable _closurePointer(PyObject* self __attribute__((__unuse
     return PyLong_FromVoidPtr(pointer);
 }
 
-static PyObject* _Nullable ivar_dict(PyObject* self __attribute__((__unused__)))
-{
-    /* XXX: How safe is this... */
-    Py_INCREF(PyObjCInstanceVariable_Type.tp_dict);
-    return PyObjCInstanceVariable_Type.tp_dict;
-}
-
 static PyObject* _Nullable mod_propertiesForClass(PyObject* mod
                                                   __attribute__((__unused__)),
                                                   PyObject* object)
@@ -1848,10 +1841,6 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)_closurePointer,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
      .ml_doc   = _closurePointer_doc},
-    {.ml_name  = "_ivar_dict",
-     .ml_meth  = (PyCFunction)ivar_dict,
-     .ml_flags = METH_NOARGS,
-     .ml_doc   = "_ivar_dict()\n" CLINIC_SEP "\nPRIVATE FUNCTION\n"},
     {.ml_name  = "_objc_sync_enter",
      .ml_meth  = (PyCFunction)PyObjC_objc_sync_enter,
      .ml_flags = METH_VARARGS,
@@ -2141,6 +2130,7 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyType_Ready(&PyObjCInstanceVariable_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                                      // LCOV_EXCL_LINE
     }
+
     if (PyType_Ready(&PyObjCInformalProtocol_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                                      // LCOV_EXCL_LINE
     }

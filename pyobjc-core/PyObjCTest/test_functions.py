@@ -119,13 +119,13 @@ class TestFunctions(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "<objc.function 'oldDoubleFunc' at 0x[0-9a-f]+> does not accept keyword arguments",
+            r"(<objc.function 'oldDoubleFunc' at 0x[0-9a-f]+> does not accept keyword arguments)|(keyword arguments not supported)",
         ):
             oldDoubleFunc(list=[], size=0)
 
         with self.assertRaisesRegex(
             TypeError,
-            "<objc.function at 0x[0-9a-f]+> does not accept keyword arguments",
+            r"(<objc.function at 0x[0-9a-f]+> does not accept keyword arguments)|(keyword arguments not supported)",
         ):
             doubleFunc(orig=1)
 
