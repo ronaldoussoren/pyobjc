@@ -504,7 +504,7 @@ class TestTestSupport(TestCase):
             self.assertIsEnumType(int)
 
         with self.assertRaisesRegex(
-            self.failureException, ".*SomeType is not a typing.NewType based on 'int'"
+            self.failureException, ".* is not a typing.NewType based on 'int'"
         ):
             self.assertIsEnumType(typing.NewType("SomeType", str))
 
