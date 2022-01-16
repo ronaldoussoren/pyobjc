@@ -1,4 +1,4 @@
-from PyObjCTest.coding import PyObjC_TestClass4
+from PyObjCTest.coding import PyObjC_TestCodingClass
 from PyObjCTools.TestSupport import TestCase
 import objc
 
@@ -93,7 +93,7 @@ class TestPythonCoder(TestCase):
     #
     def testEncoding(self):
         coder = MyCoder.alloc().init()
-        o = PyObjC_TestClass4.alloc().init()
+        o = PyObjC_TestCodingClass.alloc().init()
         o.encodeWithCoder_(coder)
         self.assertEqual(
             coder.coded,
@@ -106,7 +106,7 @@ class TestPythonCoder(TestCase):
 
     def testDecoding(self):
         coder = MyCoder.alloc().init()
-        o = PyObjC_TestClass4
+        o = PyObjC_TestCodingClass
 
         self.assertEqual(o.fetchInt_(coder), 42)
         self.assertEqual(o.fetchDouble_(coder), 1.5)

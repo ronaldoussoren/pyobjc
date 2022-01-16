@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PyObjC_TestClass4 : NSObject {
+@interface PyObjC_TestCodingClass : NSObject {
     id returnObject;
 }
 - (void)encodeWithCoder:(NSCoder*)coder;
@@ -23,7 +23,7 @@ NSObject (IKnowWhatImDoing)
 - (id)call;
 @end
 
-@implementation PyObjC_TestClass4
+@implementation PyObjC_TestCodingClass
 - (int)_privateMethodWithArg:(float)arg
 {
     return (int)arg;
@@ -117,8 +117,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_coding(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "PyObjC_TestClass4",
-                           PyObjC_IdToPython([PyObjC_TestClass4 class]))
+    if (PyModule_AddObject(m, "PyObjC_TestCodingClass",
+                           PyObjC_IdToPython([PyObjC_TestCodingClass class]))
         == -1) {
         return NULL;
     }
