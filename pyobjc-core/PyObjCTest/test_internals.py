@@ -356,3 +356,10 @@ class TestCurrentBundle(TestCase):
             self.assertIs(objc.currentBundle(), b)
         finally:
             os.unsetenv("PYOBJC_BUNDLE_ADDRESS")
+
+
+class TestOCBundleHack(TestCase):
+    def test_bundle_hack_not_used(self):
+        # XXX: Temporary test to check if the code in OC_NSBunldeHack is needed on
+        # one of the supported platforms.
+        self.assertFalse(objc.options._bundle_hack_used)
