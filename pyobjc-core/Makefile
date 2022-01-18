@@ -54,7 +54,7 @@ c-coverage:
 	mkdir build dist
 	python3 -mvenv build/cov-env
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE -coverage -fprofile-arcs -ftest-coverage" LDFLAGS="-coverage -fprofile-arcs -ftest-coverage" build/cov-env/bin/python3 setup.py develop
-	lcov --config-file .lcovrc --directory .  --zerocounters
+	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test --verbosity=3
 	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|ASSERT_IS_IMP|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert"  --no-external --capture --directory . --output-file build/coverage.info
 	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|ASSERT_IS_IMP|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert" --legend build/coverage.info --output-directory dist/c-coverage

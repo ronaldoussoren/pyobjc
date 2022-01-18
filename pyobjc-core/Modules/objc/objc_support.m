@@ -211,7 +211,13 @@ NSString (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
-    PyObject* rval = (PyObject*)PyObjCUnicode_New(self);
+    PyObject* rval = PyObjC_FindPythonProxy(self);
+    if (rval == NULL) {
+        rval = (PyObject*)PyObjCUnicode_New(self);
+        if (rval != NULL) {
+            PyObjC_RegisterPythonProxy(self, rval);
+        }
+    }
     return rval;
 }
 
@@ -2241,7 +2247,7 @@ depythonify_python_object(PyObject* argument, id* datum)
     } else if (PyDict_Check(argument)) {
         *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
 
-    } else if (PyBytes_CheckExact(argument)) {
+    } else if (PyBytes_CheckExact(argument) || PyByteArray_CheckExact(argument)) {
         *datum = [OC_BuiltinPythonData dataWithPythonObject:argument];
 
     } else if (PyObject_CheckBuffer(argument)) {

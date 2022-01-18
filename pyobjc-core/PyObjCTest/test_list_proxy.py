@@ -4,13 +4,25 @@ Minimal tests for sequence proxies
 NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
 import objc
+import collections.abc
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.arrayint import OC_ArrayInt
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
+# XXX: OC_TestSet usage should be moved to a different helper class.
+
+OC_PythonArray = objc.lookUpClass("OC_PythonArray")
 OC_BuiltinPythonArray = objc.lookUpClass("OC_BuiltinPythonArray")
 NSException = objc.lookUpClass("NSException")
+NSArray = objc.lookUpClass("NSArray")
 NSNull = objc.lookUpClass("NSNull")
+
+
+class Fake:
+    # XXX: Move to utility module
+    @property
+    def __pyobjc_object__(self):
+        raise TypeError("Cannot proxy")
 
 
 class BasicSequenceTests:
@@ -55,6 +67,12 @@ class BasicSequenceTests:
         self.assertEqual(OC_ArrayInt.getNthElement_offset_(seq, 1), NSNull.null())
         self.assertEqual(OC_ArrayInt.getNthElement_offset_(seq, 2), 2)
 
+        seq = self.seqClass([Fake()])
+        self.assertIsInstance(seq[0], Fake)
+        v = OC_ArrayInt.getNthElement_offset_(seq, 0)
+        self.assertIsInstance(v, NSException)
+        self.assertRegex(str(v), "Cannot proxy")
+
     def test_getting_range(self):
         seq = self.seqClass(range(10))
 
@@ -70,6 +88,10 @@ class BasicSequenceTests:
             IndexError, r"range {2, 22} extends beyond bounds \[0 .. 9\]"
         ):
             OC_ArrayInt.getSub_range_(seq, (2, 22))
+
+        seq = self.seqClass([Fake(), Fake(), Fake()])
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            OC_ArrayInt.getSub_range_(seq, (0, 1))
 
 
 class TestImmutableSequence(TestCase, BasicSequenceTests):
@@ -200,8 +222,85 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
             str(r), "<class 'IndexError'>: list assignment index out of range"
         )
 
+        r = OC_ArrayInt.remove_offset_(s, 2 ** 63 + 5)
+        self.assertEqual(str(r), "<class 'IndexError'>: No such index")
+
         r = OC_ArrayInt.remove_offset_((1,), 0)
         self.assertIsInstance(r, NSException)
         self.assertEqual(
             str(r), "<class 'TypeError'>: 'tuple' object doesn't support item deletion"
         )
+
+
+class SequenceWithoutLen(collections.abc.Sequence):
+    def __getitem__(self, idx):
+        return idx ** 2
+
+    def __len__(self):
+        raise RuntimeError("no length")
+
+    def __length_hint__(self):
+        raise RuntimeError("no length")
+
+
+class SequenceWithNegativeLen(collections.abc.Sequence):
+    def __getitem__(self, idx):
+        return idx ** 2
+
+    def __len__(self):
+        return -4
+
+
+class TestSequencesWithErrors(TestCase):
+    def test_len_raises(self):
+        s = SequenceWithoutLen()
+
+        self.assertIs(OC_TestSet.classOf_(s), OC_PythonArray)
+
+        r = OC_ArrayInt.countOf_(s)
+        self.assertIsInstance(r, NSException)
+        self.assertEqual(str(r), "<class 'RuntimeError'>: no length")
+
+    def test_negative_len(self):
+        s = SequenceWithNegativeLen()
+
+        self.assertIs(OC_TestSet.classOf_(s), OC_PythonArray)
+
+        r = OC_ArrayInt.countOf_(s)
+        self.assertIsInstance(r, NSException)
+        self.assertEqual(str(r), "<class 'ValueError'>: __len__() should return >= 0")
+
+    def test_copy_without_helper(self):
+        with pyobjc_options(_copy=None):
+            s = [1, 2, 3]
+            o = OC_TestSet.set_copyWithZone_(s, None)
+            self.assertIsInstance(o, NSArray)
+            self.assertNotIsInstance(o, OC_PythonArray)
+
+            self.assertEqual(o, s)
+
+    def test_copy_raises(self):
+        def copy_func(value):
+            raise RuntimeError("no copy")
+
+        with pyobjc_options(_copy=copy_func):
+            s = [1, 2, 3]
+
+            with self.assertRaisesRegex(RuntimeError, "no copy"):
+                OC_TestSet.set_copyWithZone_(s, None)
+
+    def test_copy_cannot_be_proxied(self):
+        def copy_func(value):
+            return Fake()
+
+        with pyobjc_options(_copy=copy_func):
+            s = [1, 2, 3]
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                OC_TestSet.set_copyWithZone_(s, None)
+
+    def test_copy_fails(self):
+        seq = SequenceWithoutLen()
+
+        with self.assertRaisesRegex(RuntimeError, "no length"):
+            OC_TestSet.set_mutableCopyWithZone_(seq, None)

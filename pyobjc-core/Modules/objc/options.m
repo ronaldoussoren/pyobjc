@@ -238,13 +238,13 @@ static PyTypeObject PyObjCOptions_Type = {
 int
 PyObjC_SetupOptions(PyObject* m)
 {
-    if (PyType_Ready(&PyObjCOptions_Type) < 0) {
-        return -1; // LCOV_EXCL_LINE
+    if (PyType_Ready(&PyObjCOptions_Type) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
     }
 
     PyObject* o = (PyObject*)PyObject_New(struct object, &PyObjCOptions_Type);
-    if (o == NULL) {
-        return -1; // LCOV_EXCL_LINE
+    if (o == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;   // LCOV_EXCL_LINE
     }
 
     return PyModule_AddObject(m, "options", o);

@@ -215,6 +215,10 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                                      &skip_undefined)) {
         return NULL;
     }
+    if (!PyDict_Check(module_globals)) {
+        PyErr_SetString(PyExc_TypeError, "'module_globals' (arg 2) must be a dict");
+        return NULL;
+    }
 
     if (bundle == NULL) {
         cfBundle = NULL;

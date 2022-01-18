@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil))
-        return nil;
+    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
+        return nil;            // LCOV_EXCL_LINE
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -59,9 +59,11 @@ NS_ASSUME_NONNULL_BEGIN
      * the call to Py_Finalize (shutting down the interpreter) and the
      * cleanup performed by Cocoa, possible on other threads.
      */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -77,26 +79,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super dealloc];
         return;
+        // LCOV_EXCL_STOP
     }
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
         @try {
             [realObject release];
-        } @catch (NSObject* exc) {
+        } @catch (NSObject* exc) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyObjC_LEAVE_GIL;
             @throw;
+            // LCOV_EXCL_STOP
         }
         realObject = nil;
         Py_CLEAR(value);
-
-#ifdef PyObjC_STR_CACHE_IMP
-        imp_length        = 0xDEADBEEF;
-        imp_charAtIndex   = 0xDEADBEEF;
-        imp_getCharacters = 0xDEADBEEF;
-#endif /* PyObjC_STR_CACHE_IMP */
 
     PyObjC_END_WITH_GIL
 
@@ -106,13 +106,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)__realObject__
 {
 #ifdef Py_DEBUG
-    if (!PyUnicode_IS_READY(value)) {
+    if (!PyUnicode_IS_READY(value)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         /* Object should be ready, ensure we crash with the GIL
          * held when it's not.
          */
         PyObjC_BEGIN_WITH_GIL
             PyUnicode_GET_LENGTH(value);
         PyObjC_END_WITH_GIL
+        // LCOV_EXCL_STOP
     }
 #endif
 
@@ -220,8 +222,8 @@ NS_ASSUME_NONNULL_BEGIN
      * Call the super initializer first.
      */
     self = [super init];
-    if (self == nil) {
-        return nil;
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil;    // LCOV_EXCL_LINE
     }
 
     /* Detect some often used single-byte encodings that can be created in Python without

@@ -7,6 +7,52 @@
 
 #import <Foundation/Foundation.h>
 
+struct objc_class;
+
+static CFStringRef aString = CFSTR("a static string");
+
+@interface OC_PointerSupport : NSObject {
+}
+@end
+
+@implementation OC_PointerSupport
++ (Py_ssize_t)getObjectLen:(PyObject*)value
+{
+    return PyObject_Length(value);
+}
+
++ (PyObject*)getNone
+{
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
++ (struct objc_class*)getClass
+{
+    return (struct objc_class*)[OC_PointerSupport class];
+}
+
++ (id)className:(struct objc_class*)class
+{
+    if (class == Nil) {
+        return @"No class given";
+    }
+    return [NSString
+        stringWithUTF8String:(const char* _Nonnull)class_getName((Class) class)];
+}
+
++ (CFStringRef)getString
+{
+    return aString;
+}
+
++ (CFStringRef)getContext
+{
+    return (CFStringRef)kCFAllocatorUseContext;
+}
+
+@end
+
 static PyObject*
 make_opaque_capsule(PyObject* mod __attribute__((__unused__)))
 {
@@ -56,6 +102,12 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_pointersupport(void)
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
+        return NULL;
+    }
+
+    if (PyModule_AddObject(m, "OC_PointerSupport",
+                           PyObjC_IdToPython([OC_PointerSupport class]))
+        < 0) {
         return NULL;
     }
 

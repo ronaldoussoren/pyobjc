@@ -60,7 +60,8 @@ static PyObject* _Nullable meth_nsstring(PyObject* self)
     PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)self;
 
     if (uobj->py_nsstr == NULL) {
-        uobj->py_nsstr = PyObjCObject_New(uobj->nsstr, PyObjCObject_kDEFAULT, YES);
+        uobj->py_nsstr = PyObjCObject_New(
+            uobj->nsstr, PyObjCObject_kDEFAULT | PyObjCObject_kNEW_WRAPPER, YES);
         if (uobj->py_nsstr == NULL) {
             return NULL;
         }

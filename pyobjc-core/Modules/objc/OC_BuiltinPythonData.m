@@ -9,11 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
     return YES;
 }
 
-- (Class _Nullable)classForKeyedArchiver
-{
-    return [OC_BuiltinPythonData class];
-}
-
 + (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObjects:@"OC_PythonData", @"NSData", nil];

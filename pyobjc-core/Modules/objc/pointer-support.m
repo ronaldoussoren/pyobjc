@@ -37,8 +37,7 @@ static Py_ssize_t      item_count = 0;
  * just beyond the end of the struct name. This information is needed because
  * @encode(struct foo*) can return two different strings:
  * 1) ^{foo} if the compiler has not yet seen a full definition of struct foo
- * 2) ^{foo=...} if the compiler has not yet seen a full definition of
- *    the struct
+ * 2) ^{foo=...} if the compiler has seen a full definition of the struct
  * We want to treat those two pointer as the same type, therefore we need to
  * ignore everything beyond the end of the struct name.
  */
@@ -94,7 +93,30 @@ static struct wrapper* _Nullable FindWrapper(const char* signature)
     return NULL;
 }
 
-static PyObject* _Nullable ID_to_py(void* idValue) { return id_to_python((id)idValue); }
+static PyObject* _Nullable ID_to_py(void* idValue)
+{
+    if (idValue == kCFAllocatorUseContext) {
+        /* kCFAllocatorUseContext is a bit too magic for its
+         * own good.
+         *
+         * Note that this is a crude hack, but as long as this
+         * is the only such object I don't think its worthwhile
+         * to add generic support for this.
+         */
+        PyObject* result = PyObjC_FindPythonProxy((id)idValue);
+        if (result != NULL) {
+            return result;
+        }
+
+        result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), idValue);
+
+        if (result != NULL) {
+            PyObjC_RegisterPythonProxy(idValue, result);
+        }
+        return result;
+    }
+    return id_to_python((id)idValue);
+}
 
 static int
 py_to_ID(PyObject* obj, void* output)
@@ -175,29 +197,6 @@ PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, void* datum)
     item = FindWrapper(type);
     if (item == NULL) {
         return NULL;
-    }
-
-    if (item->pythonify == ID_to_py) {
-        result = PyObjC_FindPythonProxy(*(id*)datum);
-        if (result != NULL) {
-            return result;
-
-        } else if (*(void**)datum == kCFAllocatorUseContext) {
-            /* kCFAllocatorUseContext is a bit too magic for its
-             * own good.
-             *
-             * Note that this is a crude hack, but as long as this
-             * is the only such object I don't think its worthwhile
-             * to add generic support for this.
-             */
-            result =
-                PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), *(void**)datum);
-
-            if (result != NULL) {
-                PyObjC_RegisterPythonProxy(*(id*)datum, result);
-            }
-            return result;
-        }
     }
 
     result = item->pythonify(*(void**)datum);

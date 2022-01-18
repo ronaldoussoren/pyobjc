@@ -81,21 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)replaceObjectAtIndex:(NSUInteger)idx withObject:(id)newValue;
 
 /*!
- * @method getObjects:inRange:
- * @abstract Fetch objects in the specified range
- * @discussion The output buffer must have enough space to contain all
- *             requested objects, the range must be valid.
- *
- *             This method is not documented in the NSArray interface, but
- *             is used by Cocoa on MacOS X 10.3 when an instance of this
- *             class is used as the value for -setObject:forKey: in
- *             NSUserDefaults.
- * @param buffer  The output buffer
- * @param range   The range of objects to fetch.
- */
-- (void)getObjects:(id _Nonnull* _Nonnull)buffer inRange:(NSRange)range;
-
-/*!
  * @method addObject:
  * @abstract Append an object
  * @param anObject The object that will be append

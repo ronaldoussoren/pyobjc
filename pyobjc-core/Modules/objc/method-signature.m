@@ -188,10 +188,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     /* TODO: simple pass-by-reference objects args should work (NSError** arguments) */
     /* FIXME: structs/unions/... also use byref */
 
-    if (methinfo == 0) {
-        PyErr_SetString(PyObjCExc_InternalError, "methinfo not set");
-        return -1;
-    }
+    PyObjC_Assert(methinfo, -1);
     methinfo->shortcut_signature   = NO;
     methinfo->shortcut_argbuf_size = 0;
     methinfo->shortcut_result_size = 0;
@@ -213,8 +210,8 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
 
 #ifdef PyObjC_DEBUG
-    if (PyObjCMethodSignature_Validate(methinfo) == -1)
-        return -1;
+    if (PyObjCMethodSignature_Validate(methinfo) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                                      // LCOV_EXCL_LINE
 #endif /* PyObjC_DEBUG */
 
     for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
@@ -289,9 +286,11 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
     struct _PyObjC_ArgDescr* _Nullable tmpl)
 {
     struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
-    if (retval == NULL) {
+    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
     /* XXX: Try to refactor this to ensure the type value can be _Nonnull */
     retval->type              = tmpl ? tmpl->type : NULL;
@@ -358,8 +357,8 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
         e                  = PyObjCRT_SkipTypeSpec(c);
         meta->typeOverride = YES;
         meta->type         = PyMem_Malloc((withoutModifiers - type) + (e - c) + 3);
-        if (meta->type == NULL) {
-            return -1;
+        if (meta->type == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;            // LCOV_EXCL_LINE
         }
 
         char* cur;
@@ -374,6 +373,7 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
         memcpy(cur, c, e - c);
         cur[e - c] = '\0';
 #ifdef PyObjC_DEBUG
+        /* XXX: Why is this in a DEBUG block? */
         meta->type =
             PyMem_Realloc((void*)(meta->type), (withoutModifiers - type) + (e - c) + 4);
 #endif /* PyObjC_DEBUG */
@@ -415,8 +415,8 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     }
 
     char* signature_copy = PyObjCUtil_Strdup(signature);
-    if (signature_copy == NULL) {
-        return NULL;
+    if (signature_copy == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
 
     retval =
@@ -529,9 +529,9 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
 
 #ifdef PyObjC_DEBUG
     PyObjC_Assert(Py_SIZE(retval) == nargs, NULL);
-    if (PyObjCMethodSignature_Validate(retval) == -1)
-        return NULL;
-#endif /* PyObjC_DEBUG */
+    if (PyObjCMethodSignature_Validate(retval) == -1) // LCOV_BR_EXCL_LINE
+        return NULL;                                  // LCOV_EXCL_LINE
+#endif                                                /* PyObjC_DEBUG */
 
     if (determine_if_shortcut(retval) < 0) {
         Py_DECREF(retval);
@@ -712,8 +712,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
                 Py_DECREF(bytes);
-                if (descr->sel_type == NULL) {
-                    return -1;
+                if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;                 // LCOV_EXCL_LINE
                 }
 
             } else if (PyBytes_Check(d)) {
@@ -721,8 +721,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                     return -2;
 
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
-                if (descr->sel_type == NULL) {
-                    return -1;
+                if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;                 // LCOV_EXCL_LINE
                 }
             }
         }
@@ -978,10 +978,12 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
         char*       tp               = PyMem_Malloc(strlen(withoutModifiers) + 2);
-        if (tp == NULL) {
+        if (tp == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_XDECREF(bytes);
             PyErr_NoMemory();
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         /*PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);*/
@@ -1018,9 +1020,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                 return -2;
 
             char* tp = PyMem_Malloc(strlen(withoutModifiers) + 2);
-            if (tp == NULL) {
+            if (tp == NULL) { // LCOV_BR_EXCL_START
+                // LCOV_EXCL_START
                 PyErr_NoMemory();
                 return -1;
+                // LCOV_EXCL_STOP
             }
 
             tp[0] = typeModifier;
@@ -1389,12 +1393,14 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
     }
     if (meta->sel_type) {
         descr->sel_type = PyObjCUtil_Strdup(meta->sel_type);
-        if (descr->sel_type == NULL) {
+        if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             if (copied) {
                 PyMem_Free(descr);
             }
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     } else {
         descr->sel_type = NULL;
@@ -1427,12 +1433,14 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
         } else {
             char* tp      = PyMem_Malloc(strlen(withoutModifiers) + 2);
             char* to_free = NULL;
-            if (tp == NULL) {
+            if (tp == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (copied) {
                     PyMem_Free(descr);
                 }
                 PyErr_NoMemory();
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             if (descr->typeOverride) {
@@ -1587,9 +1595,9 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
     }
 
 #ifdef PyObjC_DEBUG
-    if (PyObjCMethodSignature_Validate(methinfo) == -1)
-        return NULL;
-#endif /* PyObjC_DEBUG */
+    if (PyObjCMethodSignature_Validate(methinfo) == -1) // LCOV_BR_EXCL_LINE
+        return NULL;                                    // LCOV_EXCL_LINE
+#endif                                                  /* PyObjC_DEBUG */
 
     Py_XDECREF(metadata);
     return methinfo;

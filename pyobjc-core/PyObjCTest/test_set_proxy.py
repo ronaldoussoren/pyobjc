@@ -92,6 +92,9 @@ class BasicSetTests:
         self.assertFalse(OC_TestSet.set_containsObject_(s, 4))
         self.assertTrue(OC_TestSet.set_containsObject_(s, 2))
 
+        s = self.setClass([1, None])
+        self.assertTrue(OC_TestSet.set_containsObject_(s, NSNull.null()))
+
     def testFilteredSetUsingPredicate(self):
         s = self.setClass(range(10))
         p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)

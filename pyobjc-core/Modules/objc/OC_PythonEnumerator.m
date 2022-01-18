@@ -23,9 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -41,9 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -93,8 +97,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject*       cur;
 
     array = [NSMutableArray array];
-    if (array == nil)
-        return nil;
+    if (array == nil) // LCOV_BR_EXCL_LINE
+        return nil;   // LCOV_EXCL_LINE
 
     while ((cur = [self nextObject]) != nil) {
         [array addObject:cur];

@@ -1268,6 +1268,9 @@ static CFTypeID _NSObjectTypeID;
 void
 PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 {
+    /* XXX: This should be called with the GIL held, and should
+     * return an error indicator.
+     */
     if (PyObjC_Encoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = id_to_python(coder);

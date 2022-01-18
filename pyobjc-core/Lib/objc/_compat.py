@@ -24,7 +24,6 @@ def getUseKVOForSetattr():
 
 
 def _setClassExtender(value):
-    # XXX: Remove in PyObjC 9, internal function
     warnings.warn("Set objc.options._class_extender instead", DeprecationWarning, 2)
     _options._class_extender = value
 

@@ -35,7 +35,7 @@ PyObjC_GetClassList(void)
         bufferLen = neededLen;
 
         newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
-        if (newBuffer == NULL) {
+        if (newBuffer == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_NoMemory();
             goto error;
@@ -49,16 +49,16 @@ PyObjC_GetClassList(void)
     bufferLen = neededLen;
 
     result = PyTuple_New(bufferLen);
-    if (result == NULL) {
-        goto error; // LCOV_EXCL_LINE
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        goto error;       // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < bufferLen; i++) {
         PyObject* pyclass;
 
         pyclass = PyObjCClass_New(buffer[i]);
-        if (pyclass == NULL) {
-            goto error; // LCOV_EXCL_LINE
+        if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
+            goto error;        // LCOV_EXCL_LINE
         }
         PyTuple_SET_ITEM(result, i, pyclass);
     }

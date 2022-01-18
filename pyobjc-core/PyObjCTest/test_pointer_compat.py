@@ -4,7 +4,7 @@ except ImportError:
     ctypes = None
 
 import objc
-from PyObjCTest.pointersupport import object_capsule, opaque_capsule
+from PyObjCTest.pointersupport import object_capsule, opaque_capsule, OC_PointerSupport
 from PyObjCTools.TestSupport import TestCase, skipUnless
 
 OpaqueType = objc.createOpaquePointerType("OpaqueType", b"^{OpaqueType}", None)
@@ -97,3 +97,68 @@ class TestProxySupport(TestCase):
             NSObject(cobject=opaque_capsule())
         with self.assertRaisesRegex(TypeError, "cobject' argument is not a PyCapsule"):
             NSObject(cobject=42)
+
+
+objc.loadBundleFunctions(
+    None,
+    globals(),
+    [
+        ("CFStringGetTypeID", b"Q"),
+        ("CFAllocatorGetTypeID", b"Q"),
+    ],
+)
+
+objc.registerCFSignature(
+    "CFStringRef", b"^{__CFString=}", CFStringGetTypeID(), "NSString"  # noqa: F821
+)
+objc.registerCFSignature(
+    "CFAllocatorRef", b"^{__CFAllocator=}", CFAllocatorGetTypeID()  # noqa: F821
+)
+
+objc.registerMetaDataForSelector(
+    b"OC_PointerSupport", b"getClass", {"retval": {"type": b"^{objc_class=}"}}
+)
+objc.registerMetaDataForSelector(
+    b"OC_PointerSupport", b"className:", {"arguments": {2: {"type": b"^{objc_class=}"}}}
+)
+
+
+class TestMiscTypes(TestCase):
+    def test_pyobject(self):
+        v = OC_PointerSupport.getObjectLen_([1, 2, 3])
+        self.assertEqual(v, 3)
+
+        v = OC_PointerSupport.getObjectLen_(
+            [
+                1,
+            ]
+        )
+        self.assertEqual(v, 1)
+
+        v = OC_PointerSupport.getNone()
+        self.assertIs(v, None)
+
+    def test_class_alias(self):
+        self.assertEqual(OC_PointerSupport.getClass(), OC_PointerSupport)
+        self.assertEqual(
+            OC_PointerSupport.className_(objc.lookUpClass("NSObject")), "NSObject"
+        )
+
+    def test_string_ref(self):
+
+        v1 = OC_PointerSupport.getString()
+        self.assertEqual(v1, "a static string")
+
+        v2 = OC_PointerSupport.getString()
+        self.assertEqual(v2, "a static string")
+
+        self.assertEqual(
+            objc.pyobjc_id(v1.__pyobjc_object__), objc.pyobjc_id(v2.__pyobjc_object__)
+        )
+        self.assertIs(v1, v2)
+
+    def test_context(self):
+        v1 = OC_PointerSupport.getContext()
+        v2 = OC_PointerSupport.getContext()
+
+        self.assertIs(v1, v2)

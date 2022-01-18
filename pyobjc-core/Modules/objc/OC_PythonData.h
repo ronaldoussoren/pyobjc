@@ -17,7 +17,7 @@
  */
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OC_PythonData : NSData {
+@interface OC_PythonData : NSMutableData {
     PyObject* value;
 }
 
@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @result Returns a pointer to the contents of the Python buffer
  */
 - (const void*)bytes;
+- (void*)mutableBytes;
 
 @end
 

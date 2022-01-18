@@ -34,8 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)initWithWrappedDictionary:(OC_PythonDictionary*)v
 {
     self = [super init];
-    if (unlikely(self == nil))
-        return nil;
+    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
+        return nil;            // LCOV_EXCL_LINE
 
     value = [v retain];
     valid = YES;
@@ -89,8 +89,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil))
-        return nil;
+    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
+        return nil;            // LCOV_EXCL_LINE
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -104,9 +104,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -122,9 +124,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super dealloc];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -248,6 +252,9 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(key == nil)) {
             Py_INCREF(Py_None);
             k = Py_None;
+        } else if (unlikely(key == null)) {
+            Py_INCREF(Py_None);
+            k = Py_None;
 
         } else {
             k = id_to_python(key);
@@ -296,12 +303,24 @@ NS_ASSUME_NONNULL_BEGIN
         if (PyDict_CheckExact(value)) {
             if (unlikely(PyDict_DelItem(value, k) < 0)) {
                 Py_DECREF(k);
+                if (PyErr_ExceptionMatches(PyExc_KeyError)) {
+                    PyObjC_LEAVE_GIL;
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                                   reason:@"key does not exist"
+                                                 userInfo:@{@"key" : key}];
+                }
                 PyObjC_GIL_FORWARD_EXC();
             }
 
         } else {
             if (unlikely(PyObject_DelItem(value, k) < 0)) {
                 Py_DECREF(k);
+                if (PyErr_ExceptionMatches(PyExc_KeyError)) {
+                    PyObjC_LEAVE_GIL;
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                                   reason:@"key does not exist"
+                                                 userInfo:@{@"key" : key}];
+                }
                 PyObjC_GIL_FORWARD_EXC();
             }
         }
@@ -424,8 +443,8 @@ NS_ASSUME_NONNULL_BEGIN
     case 1:
         PyObjC_BEGIN_WITH_GIL
             value = PyDict_New();
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -441,8 +460,8 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObject* selfAsPython;
                 PyObject* v;
 
-                if (cdr == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
@@ -473,11 +492,14 @@ NS_ASSUME_NONNULL_BEGIN
                         format:@"decoding Python objects is not supported"];
             return nil;
         }
+
+    default:
+        // LCOV_EXCL_START
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"decoding Python objects is not supported"
+                                     userInfo:nil];
+        // LCOV_EXCL_STOP
     }
-    [NSException raise:NSInvalidArgumentException
-                format:@"decoding Python objects is not supported"];
-    [self release];
-    return nil;
 }
 
 - (Class)classForCoder
@@ -547,34 +569,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc) {
-        NSObject* result;
+    NSObject* result;
 
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* copy = PyDict_New();
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* copy = PyDict_New();
+        if (copy == NULL) {           // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+        }
 
-            int r = PyDict_Update(copy, value);
-            if (r == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        int r = PyDict_Update(copy, value);
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        if (depythonify_python_object( // LCOV_BR_EXCL_LINE
+                copy, &result)
+            == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
+        }
+        Py_DECREF(copy);
 
-        PyObjC_END_WITH_GIL
+    PyObjC_END_WITH_GIL
 
-        [result retain];
-        return result;
-
-    } else {
-        return [super mutableCopyWithZone:zone];
-    }
+    [result retain];
+    return result;
 }
 
 @end /* interface OC_PythonDictionary */

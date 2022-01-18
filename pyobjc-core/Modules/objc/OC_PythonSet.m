@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil))
-        return nil;
+    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
+        return nil;            // LCOV_EXCL_LINE
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -45,9 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -63,9 +65,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super dealloc];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -230,9 +234,11 @@ NS_ASSUME_NONNULL_BEGIN
         return self;
 
     } else {
+        // LCOV_EXCL_START
         [NSException raise:NSInvalidArgumentException
                     format:@"decoding Python objects is not supported"];
         return nil;
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -302,9 +308,13 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        if (depythonify_python_object(tmp, &result) == -1) {
+        if (depythonify_python_object( // LCOV_BR_EXCL_LINE
+                tmp, &result)
+            == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
         }
 
         Py_DECREF(tmp);

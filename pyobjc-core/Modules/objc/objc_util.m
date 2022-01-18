@@ -19,6 +19,7 @@ PyObject* PyObjCExc_ObjCPointerWarning;
 
 PyObject* PyObjCNM_insert;
 PyObject* PyObjCNM_append;
+PyObject* PyObjCNM_timestamp;
 PyObject* PyObjCNM_strftime;
 PyObject* PyObjCNM_keys;
 PyObject* PyObjCNM_clear;
@@ -65,6 +66,7 @@ PyObjCUtil_Init(PyObject* module)
 
     NEW_STR(PyObjCNM_insert, "insert");
     NEW_STR(PyObjCNM_append, "append");
+    NEW_STR(PyObjCNM_timestamp, "timestamp");
     NEW_STR(PyObjCNM_strftime, "strftime");
     NEW_STR(PyObjCNM_keys, "keys");
     NEW_STR(PyObjCNM_clear, "clear");
@@ -73,7 +75,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_values, "values");
     NEW_STR(PyObjCNM_description, "description");
     NEW_STR(PyObjCNM___get__, "__get__");
-    NEW_STR(PyObjCNM_date_format_string, "%Y-%m-%d %H:%M:%S %z");
+    NEW_STR(PyObjCNM_date_format_string, "%s");
     NEW_STR(PyObjCNM_objc_memview_object, "objc.memview object");
     NEW_STR(PyObjCNM_objc_NULL, "objc.NULL");
 

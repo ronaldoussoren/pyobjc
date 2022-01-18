@@ -1184,9 +1184,13 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
     PyTypeObject* cls_type;
     PyObject*     res;
 
-    res = PyObjC_FindPythonProxy(objc_object);
-    if (res)
-        return res;
+    if ((flags & PyObjCObject_kNEW_WRAPPER) == 0) {
+        res = PyObjC_FindPythonProxy(objc_object);
+        if (res)
+            return res;
+    } else {
+        flags &= ~PyObjCObject_kNEW_WRAPPER;
+    }
 
     cls_type = (PyTypeObject*)PyObjCClass_New(cls);
     if (cls_type == NULL) {

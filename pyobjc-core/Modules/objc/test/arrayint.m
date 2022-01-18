@@ -80,6 +80,16 @@
     }
 }
 
++ (id)countOf:(NSArray*)array
+{
+    @try {
+        NSUInteger result = [array count];
+        return [NSNumber numberWithUnsignedLongLong:result];
+    } @catch (NSException* exc) {
+        return exc;
+    }
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

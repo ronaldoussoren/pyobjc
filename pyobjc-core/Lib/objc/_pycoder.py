@@ -77,6 +77,7 @@ NSDictionary = objc.lookUpClass("NSDictionary")
 NSString = objc.lookUpClass("NSString")
 NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
+NSData = objc.lookUpClass("NSData")
 
 kOP_REDUCE = 0
 kOP_INST = 1
@@ -441,7 +442,23 @@ def load_reduce(coder, setValue):
         args = new_args
         del new_args
 
-    value = func(*args)
+    if (
+        not coder.allowsKeyedCoding()
+        and len(args) in (1, 2)
+        and isinstance(args[0], NSData)
+    ):
+        # XXX: This is a crude hack to fix roundtripping
+        # datetime.datetime instances through an NSArchiver.
+        # The underlying problem is twofold:
+        # 1. For non-keyed coders "bytes" is read back as "NSData"
+        # 2. The datetime.datetime constructor checks if the type of the first
+        #    argument is bytes and assumes it is an integer otherwise.
+
+        args = list(args)
+        args[0] = bytes(args[0])
+        value = func(*args)
+    else:
+        value = func(*args)
 
     # We now have the object, but haven't set the correct
     # state yet.  Tell the bridge about this value right

@@ -102,10 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_END_WITH_GIL
 
-    if (unlikely(result < 0)) {
-        return 0;
-    }
-
+    /* CPython ensures that 'result' is >= 0 */
     return result;
 }
 
@@ -130,12 +127,13 @@ NS_ASSUME_NONNULL_BEGIN
             result = [NSNull null];
 
         } else {
-            err = depythonify_c_value(@encode(id), v, &result);
+            err = depythonify_python_object(v, &result);
             if (unlikely(err == -1)) {
+                Py_CLEAR(v);
                 PyObjC_GIL_FORWARD_EXC();
             }
-            Py_CLEAR(v);
         }
+        Py_CLEAR(v);
 
     PyObjC_END_WITH_GIL
 
@@ -171,15 +169,6 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(v);
 
     PyObjC_END_WITH_GIL;
-}
-
-- (void)getObjects:(id*)buffer inRange:(NSRange)range
-{
-    NSUInteger i;
-
-    for (i = 0; i < range.length; i++) {
-        buffer[i] = [self objectAtIndex:i + range.location];
-    }
 }
 
 - (void)addObject:(id)anObject
@@ -230,7 +219,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
-        PyObjC_END_WITH_GIL
+        PyObjC_END_WITH_GIL // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -332,7 +321,7 @@ NS_ASSUME_NONNULL_BEGIN
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
                 // LCOV_EXCL_STOP
 
-            } else {
+            } else { // LCOV_BR_EXCL_LINE
                 [coder encodeInt32:4 forKey:@"pytype"];
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
@@ -539,8 +528,8 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObject* selfAsPython;
                 PyObject* v;
 
-                if (cdr == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
@@ -551,8 +540,8 @@ NS_ASSUME_NONNULL_BEGIN
                 setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
                 Py_DECREF(selfAsPython);
 
-                if (setValue == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                if (setValue == NULL) {       // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
 
                 v = PyObjC_CallDecoder(cdr, setValue);
@@ -600,7 +589,7 @@ NS_ASSUME_NONNULL_BEGIN
         /* Excluded from coverage check because testing this would
          * require creating too large tuples, with corresponding memory use
          */
-        // LCOV_BR_EXCL_START
+        // LCOV_EXCL_START
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
@@ -620,16 +609,18 @@ NS_ASSUME_NONNULL_BEGIN
         return tmpVal;
 
     default:
+        // LCOV_EXCL_START
         [self release];
         [NSException raise:NSInvalidArgumentException
                     format:@"Cannot decode OC_PythonArray with type-id %d", code];
         return nil;
+        // LCOV_EXCL_STOP
     }
 }
 
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc) {
+    if (PyObjC_CopyFunc && PyObjC_CopyFunc != Py_None) {
         NSObject* result;
         PyObjC_BEGIN_WITH_GIL
 
@@ -658,28 +649,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc) {
-        NSObject* result;
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* copy = PySequence_List(value);
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+    NSObject* result;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* copy = PySequence_List(value);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-        PyObjC_END_WITH_GIL
+        Py_DECREF(copy);
 
-        [result retain];
-        return result;
-    } else {
-        return [super mutableCopyWithZone:zone];
-    }
+    PyObjC_END_WITH_GIL
+
+    [result retain];
+    return result;
 }
 
 + (NSArray*)classFallbacksForKeyedArchiver

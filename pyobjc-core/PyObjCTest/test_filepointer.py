@@ -12,6 +12,11 @@ fp.close()
 
 
 class TestFilePointer(TestCase):
+    def test_reading_from_null(self):
+        o = OC_TestFilePointer.new()
+        line = o.readline_(objc.NULL)
+        self.assertIs(line, None)
+
     def testOpenInPython(self):
         with self.subTest("positional"):
             fp = objc.FILE("/etc/passwd", "r")

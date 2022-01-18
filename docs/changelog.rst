@@ -3,6 +3,83 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.3b1
+-------------
+
+This release contains a lot of small fixes dueo to the continued improvement
+of test coverage for the C code in pyobjc-core.
+
+* Backward incompatible change:
+
+  ``-[OC_PythonDictionary setObject:value forKey:[NSNull null]]`` now sets
+  key :data:`None` in the Python dictionary instead of ``NSNull.null()``.
+
+  This is for consistency with ``-[OC_PythonDictionary objectForKey:]`` and
+  other collection classes. Getting and setting key ``[NSNull null]`` now
+  actually works.
+
+* Backward incompatible change:
+
+  ``-[OC_PythonDictionary removeObjectForKey:]`` now raises ``NSInvalidArgumentException``
+  instead of Python's ``KeyError`` for missing keys. This matches the documented
+  behaviour of ``NSDictionary``.
+
+* Two ``NSString*`` values in Objective-C are now proxied to the
+  same :class:`objc.pyobjc_unicode` instance when the two pointers are
+  equal in Objective-C.
+
+  That is, given ``NSString* value1`` and ``NSString* value2``
+  ``value1 == value2`` in Objective-C can be replaced by
+  ``value1 is value2`` in Python.  In older versions of PyObjC
+  this invariant was not maintained, requiring more involved code to
+  check if two strings represent the same object.
+
+  This invariant was already maintained for other instances of other
+  Objective-C classes.
+
+* The proxy for python's :class:`bytearray` (and other writable buffers) now
+  supports the ``mutableBytes`` method in Objective-C.
+
+  As a side effect of this ``OC_PythonData`` is now a sublcass of
+  ``NSMutableData`` instead of ``NSData``.
+
+* Fixed retrieving an :class:`bytearray` value from a Cocoa archive
+
+  In previous versions this resulted in garbage data.
+
+* Instances of :class:`bytearray` can now be included in "secure" Cocoa archives
+
+* Remove ``-[OC_PythonArray getObjects:inRange:]``, it is not part of the
+  regular ``NSArray`` interface and was never used.
+
+* The proxy for python datetime objects was rewritten to be a lot simpler.
+
+  User visible changes:
+
+  * The new implementation is more correct, the old implementation truncated
+    timestamps at whole seconds.
+
+  * Calculating in Objective-C (such as calling ``-[NSDate dateByAddingTimeInterval:]``
+    will now always result in an ``NSDate`` value, not a Python value.
+
+  * The proxy code now calls the "timestamp" method instead of "strftime" during
+    conversion from Python to Objective-C.
+
+* Adding :class:`datetime.datetime` and :class:`datetime.date`  instances to an
+  archive now works, both for keyed and classic archives.
+
+  The encoding is not compatible with the native ``NSDate`` encoding and cannot
+  be used to communicate archives with pure Objective-C code.
+
+  The encoding is currently not compatible with Secure Coding.
+
+  Note that both :class:`datetime.datetime` and :class:`datetime.date` are
+  represented as an ``NSDate`` in Objective-C land, even though this Objective-C has
+  semantics of the latter class don't fully match that of the Cocoa class.
+
+* Fix python internal error when the "module_globals" argument to
+  :func:`objc.loadBundleFunctions` is not a :class:`dict`.
+
 Version 8.2b1
 -------------
 
@@ -174,6 +251,7 @@ for edge cases that don't happen in normal programs.
 * ``NSMutableArray.insert(idx, value)`` would fail when ``idx`` is beyond
   the length of the array. It now behaves the same as :meth:`list.insert`,
   the item will be appended to the array.
+
 
 Version 8.1
 -----------

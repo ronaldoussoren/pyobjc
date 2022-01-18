@@ -7,6 +7,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/* This code is never used on systems I use for coverage testing */
+// LCOV_EXCL_START
+
 static void
 nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
 {
@@ -90,7 +93,7 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS
 {
     if ([[NSBundle bundleForClass:[NSObject class]]
             isEqual:[NSBundle bundleForClass:[OC_NSBundleHackCheck class]]]) {
-        // implementation is already fine
+        // implementation is already correct
         return;
     }
 
@@ -116,5 +119,7 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS
 }
 
 @end
+
+// LCOV_EXCL_STOP
 
 NS_ASSUME_NONNULL_END

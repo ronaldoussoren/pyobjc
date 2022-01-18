@@ -25,7 +25,7 @@ static void
 obj_dealloc(PyObject* self)
 {
     /* Users or this type must release the buffer after use */
-    if (((((struct pyobjc_memview*)self))->view).obj != NULL) {
+    if (((((struct pyobjc_memview*)self))->view).obj != NULL) { // LCOV_BR_EXCL_LINE
         /* Users of this API must release the buffer, enforce this
          * at runtime.
          *

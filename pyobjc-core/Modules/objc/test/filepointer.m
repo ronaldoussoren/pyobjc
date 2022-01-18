@@ -29,6 +29,10 @@
 {
     char buf[1024];
 
+    if (!fp) {
+        return nil;
+    }
+
     return [NSString stringWithCString:fgets(buf, sizeof(buf), fp)
                               encoding:NSASCIIStringEncoding];
 }
