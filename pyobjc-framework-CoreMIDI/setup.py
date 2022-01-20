@@ -22,6 +22,7 @@ setup(
             "CoreMIDI._inlines",
             ["Modules/_CoreMIDI_inlines.m"],
             extra_link_args=["-framework", "CoreMIDI"],
+            py_limited_api=True,
         ),
         Extension(
             "CoreMIDI._CoreMIDI",

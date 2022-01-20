@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 8.2b1
--------------
+Version 8.2
+-----------
 
 This release contains a lot of little fixes due to improving
 test coverage of the C code in pyobjc-core. These are mostly fixes
@@ -189,6 +189,11 @@ for edge cases that don't happen in normal programs.
   This changes the way class methods are added to :class:`objc.ivar` to
   be more correct in the CPython interpreter.
 
+* #425: Fix CoreMIDI bindings
+
+  The CoreMIDI is a wheel with a limited ABI tag, but one of the two
+  extensions was build without using the limited ABI, resulting in a wheel
+  that worked only for one python version.
 
 Version 8.1
 -----------
