@@ -292,11 +292,14 @@ def callable_signature(callable_object):
         return None
 
     ismethod = isinstance(callable_object, objc.selector)
+    isimp = isinstance(callable_object, objc.IMP)
 
     if ismethod:
-        args = metadata["arguments"][
-            2:
-        ]  # Skip 'self' and 'selector' implicit arguments
+        # Skip 'self' and 'selector' implicit arguments
+        args = metadata["arguments"][2:]
+    elif isimp:
+        # Ignore the 'selector' argument
+        args = (metadata["arguments"][0],) + metadata["arguments"][2:]
     else:
         args = metadata["arguments"]
 

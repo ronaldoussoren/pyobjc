@@ -99,9 +99,7 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
     }
 
     pyself = args[0];
-    if (pyself == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(pyself != NULL, NULL);
 
     execute = self->callfunc;
 
@@ -165,9 +163,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
     }
 
     pyself = args[0];
-    if (pyself == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(pyself != NULL, NULL);
 
     pyres = res = PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
 
@@ -475,12 +471,8 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         }
     }
 
-    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
-    if (methinfo == NULL) {
-        return NULL;
-    }
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        methinfo, PyObjCSelector_GetFlags(attr));
+                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }

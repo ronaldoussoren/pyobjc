@@ -81,6 +81,11 @@ of test coverage for the C code in pyobjc-core.
 * Fix python internal error when the "module_globals" argument to
   :func:`objc.loadBundleFunctions` is not a :class:`dict`.
 
+* Fix the result of :func:`inspect.signature` for :class:`objc.IMP`.
+
+  In previous versions this included the implicit "selector" argument that isn't used
+  by Python callers.
+
 Version 8.2b1
 -------------
 

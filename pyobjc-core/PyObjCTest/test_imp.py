@@ -1,7 +1,10 @@
 import objc
 from PyObjCTools.TestSupport import TestCase
+from PyObjCTest.test_metadata import OC_MetaDataTest
+
 
 NSObject = objc.lookUpClass("NSObject")
+NSMutableArray = objc.lookUpClass("NSMutableArray")
 
 
 class TestBasicIMP(TestCase):
@@ -73,6 +76,7 @@ class TestBasicIMP(TestCase):
         o = NSObject.alloc().init()
 
         imp = o.methodForSelector_(b"description")
+        self.assertIsInstance(imp, objc.IMP)
 
         with self.assertRaisesRegex(
             TypeError,
@@ -81,10 +85,73 @@ class TestBasicIMP(TestCase):
         ):
             imp(self=o)
 
-    def test_too_rew(self):
+        o = NSMutableArray.alloc().init()
+        imp = o.methodForSelector_(b"addObject:")
+        self.assertIsInstance(imp, objc.IMP)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "(<IMP addObject: at 0x[0-9a-f]+ for 0x[0-9a-f]+> does not accept keyword arguments)"
+            "|(keyword arguments not supported)",
+        ):
+            imp(o, value=42)
+
+        o = OC_MetaDataTest.alloc().init()
+        imp = o.methodForSelector_(b"unknownLengthArray")
+        with self.assertRaisesRegex(
+            TypeError,
+            "(<IMP unknownLengthArray at 0x[0-9a-f]+ for 0x[0-9a-f]+> does not accept keyword arguments)"
+            "|(keyword arguments not supported)",
+        ):
+            imp(o, value=42)
+
+    def test_too_few(self):
         o = NSObject.alloc().init()
 
         imp = o.methodForSelector_(b"description")
 
         with self.assertRaisesRegex(TypeError, "Missing argument: self"):
             imp()
+
+        o = NSMutableArray.alloc().init()
+        imp = o.methodForSelector_(b"addObject:")
+        self.assertIsInstance(imp, objc.IMP)
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            imp()
+
+    def test_imp_signature(self):
+        o = NSMutableArray.alloc().init()
+        imp = o.methodForSelector_(b"addObject:")
+
+        self.assertEqual(imp.signature, o.addObject_.signature)
+        self.assertEqual(len(imp.__signature__.parameters), 2)
+
+
+class TestGettingIMPs(TestCase):
+    def test_too_few_arguments(self):
+        o = NSMutableArray.alloc().init()
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            o.methodForSelector_()
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            NSMutableArray.instanceMethodForSelector_()
+
+    def test_too_many_arguments(self):
+        o = NSMutableArray.alloc().init()
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            o.methodForSelector_(b"addObject:", b"bar")
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            NSMutableArray.instanceMethodForSelector_(b"addObject:", b"bar")
+
+    def test_not_sel(self):
+        o = NSMutableArray.alloc().init()
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
+            o.methodForSelector_(42)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
+            NSMutableArray.instanceMethodForSelector_(42)
