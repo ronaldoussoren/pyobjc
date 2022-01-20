@@ -68,10 +68,11 @@ of test coverage for the C code in pyobjc-core.
 * Adding :class:`datetime.datetime` and :class:`datetime.date`  instances to an
   archive now works, both for keyed and classic archives.
 
-  The encoding is not compatible with the native ``NSDate`` encoding and cannot
-  be used to communicate archives with pure Objective-C code.
+  For the exact types :class:`datetime.datetime` and :class:`datetime.date` the encoding
+  is compatible with that of ``NSDate`` and supports ``NSSecureCoding`` as long as the
+  values are not timezone aware.
 
-  The encoding is currently not compatible with Secure Coding.
+  When communicating with pure Objective-C code any timezone information will be lost.
 
   Note that both :class:`datetime.datetime` and :class:`datetime.date` are
   represented as an ``NSDate`` in Objective-C land, even though this Objective-C has

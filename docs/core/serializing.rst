@@ -146,6 +146,10 @@ versions of PyObjC can read back newer archives.
   |           |                    |                    | back by pure Objective-C code when   |
   |           |                    |                    | using keyed archiving.               |
   +-----------+--------------------+--------------------+--------------------------------------+
+  | 8.3       | No                 | Yes                | OC_PythonDate and                    |
+  |           |                    |                    | OC_BuiltinPythonData can now be      |
+  |           |                    |                    | used with archiving                  |
+  +-----------+--------------------+--------------------+--------------------------------------+
 
 
 Interoperability with pure Objective-C programs
@@ -172,3 +176,24 @@ a way that they can be read back by pure Objective-C programs:
 * Instances of :class:`bytes`, but only for Python 3
 
 * Instances of Cocoa objects that implement the NSCoding protocol.
+
+
+NSSecureCoding support
+----------------------
+
+Most builtin Python classes support the NSSecureCoding protocol, for those specific
+classes but not subclasses.  Other python classes only support the non-secure
+NSCoding protocol because NSCoding support for these classes is based on the
+non-secure Pickle protocol.
+
+The following classes support secure coding:
+
+* :class:`int`
+* :class:`float`
+* :class:`list`
+* :class:`tuple`
+* :class:`dict`
+* :class:`set`
+* :class:`frozenset`
+* :class:`datime.date` (as of PyObjC 8.3)
+* :class:`datime.datetime` (as of PyObjC 8.3)

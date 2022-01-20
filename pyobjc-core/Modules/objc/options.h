@@ -26,6 +26,9 @@ extern PyObject* _Nullable PyObjC_ListLikeTypes;
 extern PyObject* _Nullable PyObjC_SetLikeTypes;
 extern PyObject* _Nullable PyObjC_DateLikeTypes;
 
+extern PyObject* _Nullable PyObjC_DateTime_Date_Type;
+extern PyObject* _Nullable PyObjC_DateTime_DateTime_Type;
+
 extern int PyObjC_SetupOptions(PyObject* m);
 
 NS_ASSUME_NONNULL_END

@@ -207,8 +207,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* selfAsPython;
             PyObject* v;
 
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
@@ -222,9 +222,8 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(setValue);
             Py_DECREF(selfAsPython);
 
-            if (v == NULL) {
+            if (v == NULL)
                 PyObjC_GIL_FORWARD_EXC();
-            }
 
             SET_FIELD(value, v);
 
@@ -282,8 +281,8 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
 
         PyObject* tmp = PySet_New(value);
-        if (tmp == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         }
 
         if (depythonify_python_object(tmp, &result) == -1) {
@@ -304,8 +303,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp = PySequence_List(value);
-        if (tmp == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         }
 
         if (depythonify_python_object( // LCOV_BR_EXCL_LINE
@@ -501,7 +500,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        if (PyAnySet_Check(value)) {
+        if (PyAnySet_Check(value)) { // XXX: >>Check for non-frozenset, or just call
+                                     // 'clear' unconditionally.
             int r = PySet_Clear(value);
             if (r == -1) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -520,6 +520,7 @@ NS_ASSUME_NONNULL_BEGIN
             }
             Py_DECREF(r);
         }
+
     PyObjC_END_WITH_GIL
 }
 

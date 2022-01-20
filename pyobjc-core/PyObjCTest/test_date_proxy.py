@@ -1,6 +1,9 @@
 from PyObjCTools.TestSupport import TestCase
 from unittest import SkipTest
 from PyObjCTest.dateint import OC_DateInt
+from PyObjCTest.pythonset import OC_TestSet
+
+
 import datetime
 import time
 import objc
@@ -13,6 +16,7 @@ NSUnarchiver = objc.lookUpClass("NSUnarchiver")
 NSDate = objc.lookUpClass("NSDate")
 NSData = objc.lookUpClass("NSData")
 OC_PythonDate = objc.lookUpClass("OC_PythonDate")
+OC_BuiltinPythonDate = objc.lookUpClass("OC_BuiltinPythonDate")
 
 # XXX: Move register calls to utility module
 objc.registerMetaDataForSelector(
@@ -51,6 +55,12 @@ def as_datetime(value):
 
 class TestDateInObjC(TestCase):
     value = datetime.datetime.now() - datetime.timedelta(days=30)
+
+    def test_proxy_class(self):
+        if type(self.value) in (datetime.date, datetime.datetime):
+            self.assertIs(OC_TestSet.classOf_(self.value), OC_BuiltinPythonDate)
+        else:
+            self.assertIs(OC_TestSet.classOf_(self.value), OC_PythonDate)
 
     def assert_same_timestamp(self, py, oc):
         if isinstance(self.value, datetime.date):
@@ -148,6 +158,37 @@ class TestDateInObjC(TestCase):
         copy = NSUnarchiver.unarchiveObjectWithData_(blob)
         self.assertEqual(copy, self.value)
 
+    def test_roundtrip_through_secure_keyedarchive(self):
+        if (
+            type(self.value) in (datetime.date, datetime.datetime)
+            and getattr(self.value, "tzinfo", None) is None
+        ):
+            (
+                blob,
+                err,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                self.value, True, None
+            )
+            self.assertIs(err, None)
+            self.assertIsInstance(blob, NSData)
+
+            copy = NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
+            self.assertEqual(copy, self.value)
+
+        else:
+            (
+                blob,
+                err,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                self.value, True, None
+            )
+            self.assertIs(blob, None)
+            self.assertIsNot(err, None)
+            self.assertRegex(
+                str(err),
+                r"(Class 'OC_PythonDate' disallows secure)|(Class 'OC_PythonObject' does not adopt it)",
+            )
+
 
 class TestTZAwareDateInObjC(TestDateInObjC):
     value = datetime.datetime.now(TIMEZONE) - datetime.timedelta(days=28)
@@ -155,7 +196,15 @@ class TestTZAwareDateInObjC(TestDateInObjC):
 
 class TestDate(TestDateInObjC):
     value = datetime.date.today()
-    print(value)
+
+
+class MyDateTime(datetime.datetime):
+    pass
+
+
+class TestDatimetimeSubclass(TestDateInObjC):
+    value = MyDateTime.now()
+    value.attr = 42
 
 
 class TestInteractingWithNSDate(TestCase):

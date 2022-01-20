@@ -57,8 +57,10 @@ PyObject* _Nullable PyBytes_InternFromString(const char* v)
     }
     value = PyDict_GetItemWithError(registry, key);
     if (value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(key);                      // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(key);
         return NULL;
+        // LCOV_EXCL_STOP
     } else if (value == NULL) {
         int r = PyDict_SetItem(registry, key, key);
         if (r == -1) { // LCOV_BR_EXCL_LINE

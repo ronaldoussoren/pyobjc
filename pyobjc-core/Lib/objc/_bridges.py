@@ -10,6 +10,9 @@ __all__ = [
     "registerDateType",
 ]
 
+_objc.options._datetime_date_type = datetime.date
+_objc.options._datetime_datetime_type = datetime.datetime
+
 
 def registerListType(type_object):
     """

@@ -31,12 +31,12 @@ main(int argc, char** argv)
         NSError* error = nil;
 
         value = [NSKeyedUnarchiver
-            unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class],
-                                                            [NSDictionary class],
-                                                            [NSString class],
-                                                            [NSData class],
-                                                            [NSNumber class],
-                                                            [NSSet class], nil]
+            unarchivedObjectOfClasses:[NSSet
+                                          setWithObjects:[NSArray class],
+                                                         [NSDictionary class],
+                                                         [NSString class], [NSData class],
+                                                         [NSNumber class], [NSDate class],
+                                                         [NSSet class], nil]
                              fromData:data
                                 error:&error];
         if (value == nil) {

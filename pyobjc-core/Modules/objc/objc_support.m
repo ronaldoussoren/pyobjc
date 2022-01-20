@@ -66,28 +66,18 @@ NSObject (PyObjCSupport)
 
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (rval == NULL) {
-            return NULL;
+        if (rval == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
         }
     }
 
-    if (rval != NULL) {
-        PyObjC_RegisterPythonProxy(self, rval);
-    }
-
+    PyObjC_RegisterPythonProxy(self, rval);
     return rval;
 }
 
 + (PyObject* _Nullable)__pyobjc_PythonObject__
 {
-    PyObject* rval;
-
-    rval = NULL;
-    if (rval == NULL) {
-        rval = (PyObject*)PyObjCClass_New(self);
-    }
-
-    return rval;
+    return (PyObject*)PyObjCClass_New(self);
 }
 
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
@@ -2307,6 +2297,26 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonSet setWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
+                }
+            }
+        }
+
+        if (*datum == nil && PyObjC_DateTime_Date_Type != NULL
+            && PyObjC_DateTime_Date_Type != Py_None) {
+            if ((PyObject*)Py_TYPE(argument) == PyObjC_DateTime_Date_Type) {
+                *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
+                }
+            }
+        }
+
+        if (*datum == nil && PyObjC_DateTime_DateTime_Type != NULL
+            && PyObjC_DateTime_DateTime_Type != Py_None) {
+            if ((PyObject*)Py_TYPE(argument) == PyObjC_DateTime_DateTime_Type) {
+                *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
                 if (*datum == nil) {
                     return -1;
                 }

@@ -6,6 +6,7 @@
 # that archive as a datastructure with the corresponding Cocoa
 # classes.
 import os
+import datetime
 import platform
 import subprocess
 import tempfile
@@ -51,19 +52,50 @@ class TestNSKeyedArchivingInterop(TestCase):
         if os.path.exists(cls.progpath):
             os.unlink(cls.progpath)
 
-    def test_interop_string(self):
-        for testval in ("hello world", "goodbye moon"):
-            v = NSArray.arrayWithObject_(testval)
-            data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+    def test_interop_date(self):
+        testval = datetime.date.today()
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+        v = NSArray.arrayWithObject_(testval)
+        data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+        if data is None:
+            self.fail("Cannot create archive")
 
-                converted = subprocess.check_output([self.progpath, "keyed", fp.name])
+        with tempfile.NamedTemporaryFile() as fp:
+            fp.write(data.bytes())
+            fp.flush()
 
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
+            converted = subprocess.check_output([self.progpath, "keyed", fp.name])
+
+        converted = loads(converted)
+        value = converted[0]
+        self.assertIsInstance(value, datetime.datetime)
+        # XXX: Checking the value itself is problematic because
+        #      the datetime parser in plistlib is not timezone aware.
+        # self.assertEqual(value.year, testval.year)
+        # self.assertEqual(value.month, testval.month)
+        # self.assertEqual(value.day, testval.day)
+
+    def test_interop_datetime(self):
+        testval = datetime.datetime.now()
+
+        v = NSArray.arrayWithObject_(testval)
+        data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+        if data is None:
+            self.fail("Cannot create archive")
+
+        with tempfile.NamedTemporaryFile() as fp:
+            fp.write(data.bytes())
+            fp.flush()
+
+            converted = subprocess.check_output([self.progpath, "keyed", fp.name])
+
+        converted = loads(converted)
+        value = converted[0]
+        self.assertIsInstance(value, datetime.datetime)
+
+        # XXX: Checking the value itself is problematic because
+        #      the datetime parser in plistlib is not timezone aware.
+        # self.assertEqual(value, testval)
 
     def test_interop_float(self):
         for testval in (-4.5, 0, 5.5e10):

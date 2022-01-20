@@ -147,9 +147,16 @@ class TestBridgedClasses(TestCase):
     def test_date(self):
         value = datetime.date.today()
         cls = OCTestClasses.classForObject_(value)
-        self.assertEqual(cls.__name__, "OC_PythonDate")
+        self.assertEqual(cls.__name__, "OC_BuiltinPythonDate")
 
         value = datetime.datetime.now()
+        cls = OCTestClasses.classForObject_(value)
+        self.assertEqual(cls.__name__, "OC_BuiltinPythonDate")
+
+        class MyDate(datetime.datetime):
+            pass
+
+        value = MyDate.now()
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonDate")
 

@@ -102,6 +102,7 @@
 
 #import "OC_BuiltinPythonArray.h"
 #import "OC_BuiltinPythonData.h"
+#import "OC_BuiltinPythonDate.h"
 #import "OC_BuiltinPythonDictionary.h"
 #import "OC_BuiltinPythonNumber.h"
 #import "OC_BuiltinPythonSet.h"

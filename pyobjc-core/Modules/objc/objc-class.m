@@ -2482,7 +2482,7 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         if (e == NULL) {
             goto error;
         }
-        if (e - (attr + 1) > 127) {
+        if (e - (attr + 1) > 127) { /* XXX: What does this do??? */
             v = PyBytes_InternFromStringAndSize(attr + 1, e - (attr + 1));
         } else {
             PyObjCRT_RemoveFieldNames(buf, attr + 1);
