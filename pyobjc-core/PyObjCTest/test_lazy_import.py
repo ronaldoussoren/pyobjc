@@ -445,6 +445,7 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.makeArrayWithCFormat_, objc.function)
 
     def test_cftype(self):
+        # XXX: Need test for a magic cookie constant for a type that is unknown to the bridge
         metadict = {
             "cftypes": [
                 ("CFAllocatorRef", b"^{__CFAllocator=}", "CFAllocatorGetTypeID", None),
@@ -467,7 +468,8 @@ class TestLazyImport(TestCase):
                 "CFAllocatorGetTypeID": (objc._C_NSUInteger, ""),
                 "CFArrayGetTypeID": (objc._C_NSUInteger, ""),
             },
-            "constants": "$kCFAllocatorDefault@=^{__CFAllocator=}$kCFAllocatorMalloc@=^{__CFAllocator=}$kCFAllocatorMissing@=^{__CFAllocator=}$",  # noqa: B950
+            "constants": "$kCFAllocatorDefault@=^{__CFAllocator=}$"
+            "kCFAllocatorMalloc@=^{__CFAllocator=}$kCFAllocatorMissing@=^{__CFAllocator=}$",  # noqa: B950
             "constants_dict": {
                 "kCFAllocatorSystemDefault": "=^{__CFAllocator=}",
                 "kCFAllocatorMallocZone": "=^{__CFAllocator=}",

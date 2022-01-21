@@ -13,6 +13,7 @@
 + (CFUUIDRef)createUUID;
 + (NSString*)formatUUID:(CFUUIDRef)uuid;
 + (NSObject*)anotherUUID;
++ (NSObject*)runloop;
 
 // tollfree bridged:
 + (char*)signatureForCFDateRef;
@@ -55,6 +56,11 @@
     [(NSObject*)result autorelease];
 
     return (NSObject*)result;
+}
+
++ (NSObject*)runloop
+{
+    return (NSObject*)CFRunLoopGetCurrent();
 }
 
 + (NSString*)formatUUID:(CFUUIDRef)uuid

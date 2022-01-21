@@ -2340,6 +2340,7 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
 
         if (*datum == nil) {
+            PyObjC_Assert(!PyObjCObject_Check(argument), -1);
             *datum = [OC_PythonObject objectWithPythonObject:argument];
         }
     }

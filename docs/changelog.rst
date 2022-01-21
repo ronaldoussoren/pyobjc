@@ -86,6 +86,9 @@ of test coverage for the C code in pyobjc-core.
   In previous versions this included the implicit "selector" argument that isn't used
   by Python callers.
 
+* Avoid crash when trying to load a "magic" cookie CoreFoundation value for a
+  type unknown to the PyObjC bridge.
+
 Version 8.2b1
 -------------
 

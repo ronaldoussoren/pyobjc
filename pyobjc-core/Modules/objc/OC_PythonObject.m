@@ -31,28 +31,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Is this still needed? */
-extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
-
 @implementation OC_PythonObject
 + (id<NSObject> _Nullable)objectWithPythonObject:(PyObject*)obj
 {
-    id instance;
-    if (likely(PyObjCObject_Check(obj))) {
-        instance = PyObjCObject_GetObject(obj);
-    } else {
-        instance = [[[self alloc] initWithPyObject:obj] autorelease];
-    }
-    return instance;
+    return [[[self alloc] initWithPyObject:obj] autorelease];
 }
 
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
-    /* XXX: Why check for NULL here? */
-    if (pyObject) {
-        PyObjC_UnregisterObjCProxy(pyObject, self);
-    }
-
     PyObjC_RegisterObjCProxy(obj, self);
 
     SET_FIELD_INCREF(pyObject, obj);
@@ -63,9 +49,11 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 - (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super release];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -81,9 +69,11 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
 - (void)dealloc
 {
-    if (unlikely(!Py_IsInitialized())) {
+    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [super dealloc];
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -142,8 +132,8 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 {
     PyObject* repr;
 
-    if (pyObject == NULL)
-        return @"no python object";
+    if (pyObject == NULL)           // LCOV_BR_EXCL_LINE
+        return @"no python object"; // LCOV_EXCL_LINE
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -153,8 +143,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
             int       err;
             NSString* result;
 
-            /* XXX: use other function */
-            err = depythonify_c_value(@encode(id), repr, &result);
+            err = depythonify_python_object(repr, &result);
             Py_DECREF(repr);
             if (err == -1) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -924,7 +913,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)unableToSetNilForKey:(NSString*)key
 {
-    [NSException raise:NSUnknownKeyException format:@"cannot set Nil for key: %@", key];
+    [NSException raise:NSUndefinedKeyException format:@"cannot set Nil for key: %@", key];
 }
 
 - (void)handleQueryWithUnboundKey:(NSString*)key
@@ -934,7 +923,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)valueForUndefinedKey:(NSString*)key
 {
-    [NSException raise:NSUnknownKeyException format:@"query for unknown key: %@", key];
+    [NSException raise:NSUndefinedKeyException format:@"query for unknown key: %@", key];
 }
 
 - (void)handleTakeValue:value forUnboundKey:(NSString*)key
@@ -944,7 +933,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)setValue:value forUndefinedKey:(NSString*)key
 {
-    [NSException raise:NSUnknownKeyException
+    [NSException raise:NSUndefinedKeyException
                 format:@"setting unknown key: %@ to <%@>", key, value];
 }
 
@@ -1274,8 +1263,8 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
     if (PyObjC_Encoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = id_to_python(coder);
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
             PyObject* args[3] = {NULL, pyObject, cdr};
@@ -1283,11 +1272,9 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
             PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args + 1,
                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(cdr);
+            Py_XDECREF(r);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-
-            } else {
-                Py_DECREF(r);
             }
 
         PyObjC_END_WITH_GIL

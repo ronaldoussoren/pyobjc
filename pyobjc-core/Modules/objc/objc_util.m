@@ -242,7 +242,6 @@ PyObjCErr_AsExc(void)
      */
     PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
     if (exc_type == NULL) {
-        printf("No exception!\n");
         return nil;
     }
 
@@ -312,6 +311,11 @@ PyObjCErr_AsExc(void)
     repr     = PyObject_Str(exc_value);
     typerepr = PyObject_Str(exc_type);
     userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
+
+    /* XXX: For recent enough versions of Python we don't need to store all three */
+    // PyObjC_Assert(exc_type != NULL, nil);
+    // PyObjC_Assert(exc_value != NULL, nil);
+    // PyObjC_Assert(exc_traceback != NULL, nil);
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 

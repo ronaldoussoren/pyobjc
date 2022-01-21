@@ -18,6 +18,10 @@
 
 #include <objc/objc.h>
 
+#ifndef __LP64__
+#error "No in 64-bit mode"
+#endif
+
 #ifndef NS_ASSUME_NONNULL_BEGIN
 /*
  * Old compiler without nullability support

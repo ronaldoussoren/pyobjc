@@ -2,6 +2,7 @@
 Testcases for the CoreFoundation wrappers introduced in 1.5
 """
 import re
+import datetime
 
 import objc
 from PyObjCTest.corefoundation import OC_TestCoreFoundation
@@ -40,6 +41,9 @@ class TestCoreFoundation(TestCase):
         v2 = formatter.stringForObjectValue_(obj)
         self.assertEqual(v2, v)
 
+        self.assertIsInstance(repr(obj), str)
+        self.assertIn(str(datetime.date.today()), repr(obj))
+
     def testBridged(self):
 
         obj = OC_TestCoreFoundation.createUUID()
@@ -74,6 +78,17 @@ class TestCoreFoundation(TestCase):
                 formatted,
             )
         )
+
+        self.assertIsInstance(repr(obj), str)
+        self.assertIn("<CFUUID", repr(obj))
+        self.assertIsInstance(str(obj), str)
+        self.assertIn("<CFUUID", str(obj))
+
+    def test_default_bridged(self):
+        value = OC_TestCoreFoundation.runloop()
+        self.assertIsInstance(value, objc.lookUpClass("NSObject"))
+        self.assertIn("CFType", str(type(value)))
+        self.assertIn("<CFRunLoop ", str(value))
 
     # TODO: testcases that check that
     # 1) you cannot delete selectors
