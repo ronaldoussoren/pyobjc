@@ -51,7 +51,8 @@ class TestProxySupport(TestCase):
 
     def test_pyobjc_id_invalid(self):
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'obj' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'obj' \(pos 1\))|(Required argument 'obj' \(pos 1\) not found)",
         ):
             objc.pyobjc_id()
 

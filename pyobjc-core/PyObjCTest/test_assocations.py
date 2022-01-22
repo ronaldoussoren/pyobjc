@@ -18,17 +18,20 @@ class TestAssocations(TestCase):
         o = NSObject.alloc().init()
         key1 = "key1"
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'value' \(pos 3\)"
+            TypeError,
+            r"(function missing required argument 'value' \(pos 3\))|(Required argument 'value' \(pos 3\) not found)",
         ):
             objc.setAssociatedObject(o, key1)
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'key' \(pos 2\)"
+            TypeError,
+            r"(function missing required argument 'key' \(pos 2\))|(Required argument 'key' \(pos 2\) not found)",
         ):
             objc.getAssociatedObject(o)
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'object' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'object' \(pos 1\))|(Required argument 'object' \(pos 1\) not found)",
         ):
             objc.removeAssociatedObjects()
 

@@ -34,7 +34,8 @@ class TestVersionSupport(TestCase):
             )
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'major' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'major' \(pos 1\))|(Required argument 'major' \(pos 1\) not found)",
         ):
             objc.macos_available()
 

@@ -119,7 +119,8 @@ class TestObjCWeakRef(TestCase):
             r(x=1)
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'object' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'object' \(pos 1\))|(Required argument 'object' \(pos 1\) not found)",
         ):
             objc.WeakRef(value=o)
 

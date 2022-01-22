@@ -45,13 +45,13 @@ class TestFromObjCSuperToObjCClass(TestCase):
     def test_invalid_adding(self):
         with self.assertRaisesRegex(
             TypeError,
-            r"classAddMethods\(\) missing required argument 'methodsArray' \(pos 2\)",
+            r"(classAddMethods\(\) missing required argument 'methodsArray' \(pos 2\))|(Required argument 'methodsArray' \(pos 2\) not found)",  # noqa: B950
         ):
             objc.classAddMethods(NSObject)
 
         with self.assertRaisesRegex(
             TypeError,
-            r"classAddMethods\(\) missing required argument 'targetClass' \(pos 1\)",
+            r"(classAddMethods\(\) missing required argument 'targetClass' \(pos 1\))|(Required argument 'targetClass' \(pos 1\) not found)",  # noqa: B950
         ):
             objc.classAddMethods(aClass=NSObject, methods=[])
 
