@@ -10,6 +10,8 @@ import os
 import shutil
 import subprocess
 import time
+from _topsort import topological_sort
+
 
 PY_VERSIONS = ["3.6", "3.7", "3.8", "3.9", "3.10"]
 
@@ -149,3 +151,50 @@ def setup_variant(ver, variant):
         os.unlink(tgt)
 
     os.symlink(variant, tgt)
+
+
+def sort_framework_wrappers():
+    """
+    Returns a list of framework wrappers in the order they should
+    be build in.
+    """
+    frameworks = []
+    partial_order = []
+
+    for subdir in os.listdir(TOP_DIR):
+        if not subdir.startswith("pyobjc-framework-"):
+            continue
+
+        setup = os.path.join(TOP_DIR, subdir, "setup.py")
+
+        requires = None
+        with open(setup) as fp:
+            for ln in fp:
+                if requires is None:
+                    if ln.strip().startswith("install_requires"):
+                        requires = []
+
+                        if "]" in ln:
+                            # Dependencies on a single line
+                            start = ln.find("[")
+                            deps = ln[start + 1 :].strip().split(",")
+                            for d in deps:
+                                d = d.strip()[1:]
+                                if d.startswith("pyobjc-framework-"):
+                                    d = d.split(">")[0]
+                                    requires.append(d)
+                else:
+                    if ln.strip().startswith("]"):
+                        break
+
+                    dep = ln.strip()[1:-1]
+                    if dep.startswith("pyobjc-framework"):
+                        dep = dep.split(">")[0]
+                        requires.append(dep)
+
+        frameworks.append(subdir)
+        for dep in requires:
+            partial_order.append((dep, subdir))
+
+    frameworks = topological_sort(frameworks, partial_order)
+    return frameworks
