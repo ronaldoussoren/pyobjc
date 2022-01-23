@@ -28,6 +28,7 @@
    "DISPATCH_API_VERSION": { "ignore": true },
    "DISPATCH_APPLY_AUTO_AVAILABLE": { "ignore": true },
    "DISPATCH_SWIFT3_OVERLAY": { "ignore": true },
+   "DISPATCH_WALLTIME_NOW": { "value": 18446744073709551615  },
    "DISPATCH_TIME_FOREVER": { "value": 18446744073709551614  },
    "DISPATCH_MACH_SEND_DEAD": { "value": 1 },
    "DISPATCH_TIMER_STRICT": { "value": 1 },
@@ -90,6 +91,20 @@
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
   },
   "functions": {
+   "dispatch_workloop_set_autorelease_frequency": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "L" }
+    }
+   },
+   "dispatch_workloop_set_os_workgroup": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
    "dispatch_retain": { "ignore": true },
    "dispatch_release": { "ignore": true },
    "dispatch_debug": { "ignore": true },
@@ -1648,11 +1663,11 @@
    },
    "dispatch_workloop_create": {
      "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
-     "retval": { "already_retained": true }
+     "retval": { "type_override": "@", "already_retained": true }
    },
    "dispatch_workloop_create_inactive": {
      "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
-     "retval": { "already_retained": true }
+     "retval": { "type_override": "@", "already_retained": true }
    },
    "dispatch_write": {
     "args": {

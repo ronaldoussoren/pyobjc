@@ -2445,10 +2445,10 @@
    },
    "SCNMatrix4Translate": {
     "retval": {
-     "type_override": "[16f]"
+     "type_override": "{CATransform3D=dddddddddddddddd}"
     },
     "args": {
-      "0": { "type_override": "[16f]" }
+      "0": { "type_override": "{CATransform3D=dddddddddddddddd}" }
     }
    },
    "SCNExportJavaScriptModule": {

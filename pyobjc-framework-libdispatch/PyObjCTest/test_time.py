@@ -1,6 +1,6 @@
 import libdispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, cast_ulonglong
 
 
 class TestTime(TestCase):
@@ -15,7 +15,7 @@ class TestTime(TestCase):
         self.assertEqual(libdispatch.DISPATCH_TIME_NOW, 0)
         self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 
-        self.assertEqual(libdispatch.DISPATCH_WALLTIME_NOW, 0xFFFFFFFFFFFFFFFE)
+        self.assertEqual(libdispatch.DISPATCH_WALLTIME_NOW, cast_ulonglong(-1))
 
     def test_structs(self):
 
