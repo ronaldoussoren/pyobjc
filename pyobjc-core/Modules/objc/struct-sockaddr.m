@@ -20,9 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 static PyObject* socket_error    = NULL;
 static PyObject* socket_gaierror = NULL;
 
-static int
-setup_exceptions(void)
+int
+PyObjC_SockAddr_Setup(void)
 {
+    /* XXX: Condider moving setting these through options.m */
     PyObject* mod;
 
     mod = PyImport_ImportModule("socket");
@@ -51,22 +52,12 @@ setup_exceptions(void)
 static PyObject* _Nullable set_gaierror(int error)
 {
     if (error == EAI_SYSTEM) {
-        if (socket_error == NULL) {
-            if (setup_exceptions() == -1) {
-                return NULL;
-            }
-        }
         PyErr_SetFromErrno(socket_error);
         return NULL;
     }
 
     PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
     if (v != NULL) {
-        if (socket_gaierror == NULL) {
-            if (setup_exceptions() == -1) {
-                return NULL;
-            }
-        }
         PyErr_SetObject(socket_gaierror, v);
         Py_DECREF(v);
         return NULL;

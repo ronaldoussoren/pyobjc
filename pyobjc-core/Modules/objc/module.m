@@ -2099,6 +2099,10 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                 // LCOV_EXCL_LINE
     }
 
+    if (PyObjC_SockAddr_Setup() == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;                     // LCOV_EXCL_LINE
+    }
+
     /* XXX:
      *  Come up with an abstraction that readies a list of types and adds
      *  tem to the module dict
