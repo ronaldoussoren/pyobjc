@@ -2401,13 +2401,55 @@
    }
   },
   "functions": {
-   "SCNMatrix4FromMat4": {
-    "args": {
-     "0": { "type_override": "{_matrix_float4x4=[4$]}" }
+   "SCNVector3ToGLKVector3": {
+    "retval": {
+     "type_override": "[3f]"
     }
    },
+   "SCNVector3FromGLKVector3": {
+    "args": {
+      "0": { "type_override": "[3f]" }
+    }
+   },
+   "SCNVector4ToGLKVector4": {
+    "retval": {
+     "type_override": "[4f]"
+    }
+   },
+   "SCNVector4FromGLKVector4": {
+    "args": {
+      "0": { "type_override": "[4f]" }
+    }
+   },
+   "SCNVector4ToFloat4": {
+    "ignore": true, "comment": "simd"
+   },
+   "SCNVector4FromFloat4": {
+    "ignore": true, "comment": "simd"
+   },
+   "SCNMatrix4FromMat4": {
+    "ignore": true, "comment": "simd"
+   },
    "SCNMatrix4ToMat4": {
-    "retval": { "type_override": "{_matrix_float4x4=[4$]}" }
+    "ignore": true, "comment": "simd"
+   },
+   "SCNMatrix4ToGLKMatrix4": {
+    "retval": {
+     "type_override": "[16f]"
+    }
+   },
+   "SCNMatrix4FromGLKMatrix4": {
+    "args": {
+      "0": { "type_override": "[16f]" }
+    }
+   },
+   "SCNMatrix4Translate": {
+    "retval": {
+     "type_override": "[16f]"
+    },
+    "args": {
+      "0": { "type_override": "[16f]" }
+    }
    },
    "SCNExportJavaScriptModule": {
     "args": {

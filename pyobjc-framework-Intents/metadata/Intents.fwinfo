@@ -1395,6 +1395,9 @@
    }
   },
   "externs": {
+   "IntentsVersionString": {
+    "ignore": true
+   },
    "INPersonHandleLabelHome": {
     "typestr": "@"
    },

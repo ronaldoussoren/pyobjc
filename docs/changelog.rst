@@ -104,6 +104,10 @@ of test coverage for the C code in pyobjc-core.
   raising an exception when the queried selector does not exist. This matches
   the behaviour of ``NSObject``.
 
+* Fix the metadata in the bindings for DiscRecording, Intents, SceneKit, and libdispatch
+  to ensure that the ``__all__`` variable actually works.
+
+
 Version 8.2
 -----------
 

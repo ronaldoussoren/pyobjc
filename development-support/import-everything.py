@@ -8,6 +8,16 @@ import ast
 import functools
 import platform
 import traceback
+import sys
+
+# Reconfigure stdout/stderr to be line buffered,
+# that # makes it easier to redirect output to a
+# file, # including stderr.
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except AttributeError:
+    pass
 
 
 @functools.total_ordering
@@ -93,12 +103,12 @@ def main():
 
         if min_os_level is not None:
             if MacVersion(min_os_level) > sys_version:
-                print(f"Skipped {min_os_level} is too new")
+                print(f"  skipped {min_os_level} is too new")
                 continue
 
         if max_os_level is not None:
             if MacVersion(max_os_level) < sys_version:
-                print(f"Skipped {max_os_level} is too old")
+                print(f"  skipped {max_os_level} is too old")
                 continue
 
         for name in to_import:
@@ -120,6 +130,8 @@ def main():
                 mod.__all__
             except Exception:
                 traceback.print_exc()
+
+        print()
 
     import PyObjCTools
 

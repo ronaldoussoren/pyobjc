@@ -73,6 +73,8 @@
    "DISPATCH_BLOCK_ENFORCE_QOS_CLASS": { "value": 32 }
   },
   "externs": {
+   "_dispatch_data_destructor_free": { "ignore": true },
+   "": { "ignore": true }
   },
   "aliases": {
   },

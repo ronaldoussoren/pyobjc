@@ -244,13 +244,16 @@ class ObjCLazyModule(ModuleType):
             for nm, tp in re.findall(
                 r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap
             ):
+                if not nm:
+                    continue  # XXX: needed for libdispatch, likely bug
                 if tp and tp.startswith("@="):
                     specials.append((nm, tp[2:]))
                 else:
                     varmap.append((nm, b"@" if not tp else tp[1:].encode("ascii")))
 
             dct = {}
-            objc.loadBundleVariables(self.__bundle, dct, varmap)
+            if varmap:  # XXX: See XXX above
+                objc.loadBundleVariables(self.__bundle, dct, varmap)
 
             for nm in dct:
                 if nm not in self.__dict__:
