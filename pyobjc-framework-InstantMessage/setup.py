@@ -13,7 +13,7 @@ instead if you target that OSX release.
 """
 from pyobjc_setup import setup
 
-VERSION = "8.2"
+VERSION = "8.3b1"
 
 setup(
     name="pyobjc-framework-InstantMessage",

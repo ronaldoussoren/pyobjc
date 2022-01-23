@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.2"
+VERSION = "8.3b1"
 
 setup(
     name="pyobjc-framework-ClassKit",
