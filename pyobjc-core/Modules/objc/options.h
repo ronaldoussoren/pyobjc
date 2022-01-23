@@ -20,6 +20,10 @@ extern PyObject* _Nullable PyObjC_MakeBundleForClass;
 extern PyObject* _Nullable PyObjC_NSNumberWrapper;
 extern PyObject* _Nullable PyObjC_CallableDocFunction;
 extern PyObject* _Nullable PyObjC_CallableSignatureFunction;
+extern PyObject* _Nullable PyObjC_getKey;
+extern PyObject* _Nullable PyObjC_setKey;
+extern PyObject* _Nullable PyObjC_getKeyPath;
+extern PyObject* _Nullable PyObjC_setKeyPath;
 
 extern PyObject* _Nullable PyObjC_DictLikeTypes;
 extern PyObject* _Nullable PyObjC_ListLikeTypes;

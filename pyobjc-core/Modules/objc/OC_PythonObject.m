@@ -19,13 +19,10 @@
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSEnumerator.h>
 #import <Foundation/NSInvocation.h>
+#import <Foundation/NSKeyValueObserving.h>
 #import <Foundation/NSMethodSignature.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
-
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#import <Foundation/NSKeyValueObserving.h>
-#endif
 
 #import "OC_PythonUnicode.h"
 
@@ -60,9 +57,15 @@ NS_ASSUME_NONNULL_BEGIN
         @try {
             [super release];
 
-        } @catch (NSObject* exc) {
+        } @catch (NSObject* exc) { // LCOV_BR_EXCL_LINE
+            /* This catch statement is here mostly
+             * for code consistency, [NSProxy release]
+             * should never raise.
+             */
+            // LCOV_EXCL_START
             PyObjC_LEAVE_GIL;
             @throw;
+            // LCOV_EXCL_STOP
         }
     PyObjC_END_WITH_GIL
 }
@@ -91,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject* result;
     PyObject* copy;
 
-    if (PyObjC_CopyFunc == NULL) {
+    if (PyObjC_CopyFunc == NULL || PyObjC_CopyFunc == Py_None) {
         [NSException raise:NSInvalidArgumentException
                     format:@"cannot copy Python objects"];
 
@@ -150,14 +153,10 @@ NS_ASSUME_NONNULL_BEGIN
             }
 
             PyObjC_GIL_RETURN(result);
-        } else {
-            PyObjC_GIL_FORWARD_EXC();
         }
+        PyObjC_GIL_FORWARD_EXC();
 
     PyObjC_END_WITH_GIL
-
-    /* not reached */
-    return @"a python object";
 }
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
@@ -166,24 +165,25 @@ NS_ASSUME_NONNULL_BEGIN
                 format:@"%@ does not recognize -%s", self, sel_getName(aSelector)];
 }
 
-static inline PyObject* _Nullable check_argcount(PyObject* pymethod, Py_ssize_t argcount)
+static inline int
+check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 {
     PyCodeObject* func_code;
 
     if (PyFunction_Check(pymethod)) {
         func_code = (PyCodeObject*)PyFunction_GetCode(pymethod);
         if (argcount == func_code->co_argcount) {
-            return pymethod;
+            return 0;
         }
 
     } else if (PyMethod_Check(pymethod)) {
         func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(pymethod));
         if (argcount == func_code->co_argcount - 1) {
-            return pymethod;
+            return 0;
         }
     }
 
-    return NULL;
+    return -1;
 }
 
 /*#F If the Python object @var{obj} implements a method whose name matches
@@ -196,10 +196,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     Py_ssize_t  argcount;
     PyObject*   pymethod;
     const char* p;
-    PyObject*   result;
 
-    if (!aSelector) {
+    if (!aSelector) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [NSException raise:NSInvalidArgumentException format:@"nil selector"];
+        // LCOV_EXCL_STOP
     }
 
     meth_name = sel_getName(aSelector);
@@ -211,7 +212,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     }
 
     const char* py_meth_name =
-        PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name));
+        PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name) - 1);
     if (py_meth_name == NULL) {
         return NULL;
     }
@@ -219,40 +220,30 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (pymethod == NULL) {
         return NULL;
     }
-
-    result = check_argcount(pymethod, argcount);
-    if (result == NULL) {
+    if (check_argcount(pymethod, argcount) == -1) {
         Py_DECREF(pymethod);
+        return NULL;
     }
-    return result;
+    return pymethod;
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
-    PyObject*    m;
-    Method*      methods;
-    unsigned int method_count;
-    unsigned int i;
-    void*        cookie;
+    PyObject* m;
+    Method    method;
+    void*     cookie;
 
     /*
      * We cannot rely on NSProxy, it doesn't implement most of the
      * NSObject interface anyway.
      */
 
-    cookie  = NULL;
-    methods = class_copyMethodList(object_getClass(self), &method_count);
-    if (methods == NULL) {
-        return NO;
-    }
+    cookie = NULL;
 
-    for (i = 0; i < method_count; i++) {
-        if (sel_isEqual(method_getName(methods[i]), aSelector)) {
-            free(methods);
-            return YES;
-        }
+    method = class_getInstanceMethod(object_getClass(self), aSelector);
+    if (method != NULL) {
+        return YES;
     }
-    free(methods);
 
     PyObjC_BEGIN_WITH_GIL
         m = get_method_for_selector(pyObject, aSelector);
@@ -281,10 +272,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
-
-    [NSException
-         raise:NSInvalidArgumentException
-        format:@"Class %s: no such selector: %s", class_getName(self), sel_getName(sel)];
     return nil;
 }
 
@@ -303,11 +290,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
     cls = object_getClass(self);
     m   = class_getInstanceMethod(cls, sel);
-    if (m) {
+    if (m != NULL) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) {
-            return nil;
+        if (typestr == NULL) { // LCOv_BR_EXCL_LINE
+            return nil;        // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
@@ -317,11 +304,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         pymethod = get_method_for_selector(pyObject, sel);
         if (!pymethod) {
             PyErr_Clear();
-            PyObjC_LEAVE_GIL;
-            /* XXX: Use @throw */
-            [NSException raise:NSInvalidArgumentException
-                        format:@"Class %s: no such selector: %s",
-                               object_getClassName(self), sel_getName(sel)];
+            PyObjC_GIL_RETURN(nil);
         }
 
         if (PyMethod_Check(pymethod)) {
@@ -515,11 +498,19 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             return;
         }
 
-        argcount = [msign numberOfArguments];
-        args     = PyTuple_New(argcount - 2);
-        if (args == NULL) {
+        @try {
+            argcount = [msign numberOfArguments];
+        } @catch (NSObject* exc) {
+            PyObjC_LEAVE_GIL;
+            @throw;
+        }
+
+        args = PyTuple_New(argcount - 2);
+        if (args == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(pymethod);
             PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
         }
         for (i = 2; i < argcount; i++) {
             const char* argtype;
@@ -589,12 +580,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
 
     PyObjC_END_WITH_GIL
-}
-
-/* XXX: Remove this method */
-- (PyObject*)pyObject
-{
-    return pyObject;
 }
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
@@ -913,17 +898,23 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)unableToSetNilForKey:(NSString*)key
 {
-    [NSException raise:NSUndefinedKeyException format:@"cannot set Nil for key: %@", key];
+    @throw [NSException
+        exceptionWithName:NSUndefinedKeyException
+                   reason:[NSString stringWithFormat:@"cannot set Nil for key: %@", key]
+                 userInfo:nil];
 }
 
-- (void)handleQueryWithUnboundKey:(NSString*)key
+- (id)handleQueryWithUnboundKey:(NSString*)key
 {
-    [self valueForUndefinedKey:key];
+    return [self valueForUndefinedKey:key];
 }
 
-- (void)valueForUndefinedKey:(NSString*)key
+- (id)valueForUndefinedKey:(NSString*)key
 {
-    [NSException raise:NSUndefinedKeyException format:@"query for unknown key: %@", key];
+    @throw [NSException
+        exceptionWithName:NSUndefinedKeyException
+                   reason:[NSString stringWithFormat:@"query for unknown key: %@", key]
+                 userInfo:nil];
 }
 
 - (void)handleTakeValue:value forUnboundKey:(NSString*)key
@@ -937,7 +928,6 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
                 format:@"setting unknown key: %@ to <%@>", key, value];
 }
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
 - (void)addObserver:(NSObject*)observer
          forKeyPath:(NSString*)keyPath
             options:(NSKeyValueObservingOptions)options
@@ -952,7 +942,6 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
     NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath,
           observer);
 }
-#endif
 
 /* NSObject protocol */
 - (NSUInteger)hash
@@ -960,10 +949,10 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
     Py_hash_t rval;
 
     PyObjC_BEGIN_WITH_GIL
-        rval = PyObject_Hash([self pyObject]);
+        rval = PyObject_Hash(pyObject);
         if (rval == -1) {
             PyErr_Clear();
-            rval = (NSUInteger)[self pyObject];
+            rval = (NSUInteger)pyObject;
         }
 
     PyObjC_END_WITH_GIL
@@ -986,10 +975,10 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
         }
-        if (otherPyObject == [self pyObject]) {
+        if (otherPyObject == pyObject) {
             PyObjC_GIL_RETURN(YES);
         }
-        switch (PyObject_RichCompareBool([self pyObject], otherPyObject, Py_EQ)) {
+        switch (PyObject_RichCompareBool(pyObject, otherPyObject, Py_EQ)) {
         case -1:
             PyErr_Clear();
         case 0:
@@ -1014,11 +1003,11 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
-        if (otherPyObject == [self pyObject]) {
+        if (otherPyObject == pyObject) {
             PyObjC_GIL_RETURN(NSOrderedSame);
         }
         int r;
-        if (PyObjC_Cmp([self pyObject], otherPyObject, &r) == -1) {
+        if (PyObjC_Cmp(pyObject, otherPyObject, &r) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
         NSComparisonResult rval;
@@ -1061,7 +1050,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 {
     pyObject = NULL;
 
-    if (PyObjC_Decoder != NULL) {
+    if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = id_to_python(coder);
             PyObject* setValue;
@@ -1073,10 +1062,16 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
             setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            if (setValue == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_STOP
+                Py_DECREF(selfAsPython);
+                PyObjC_GIL_FORWARD_EXC();
+                // LCOV_EXCL_STOP
+            }
 
             v = PyObjC_CallDecoder(cdr, setValue);
             Py_DECREF(cdr);
@@ -1154,11 +1149,6 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 }
 
 - (Class)classForKeyedArchiver
-{
-    return [OC_PythonObject class];
-}
-
-+ (Class)classForUnarchiver
 {
     return [OC_PythonObject class];
 }
@@ -1260,7 +1250,7 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
     /* XXX: This should be called with the GIL held, and should
      * return an error indicator.
      */
-    if (PyObjC_Encoder != NULL) {
+    if (PyObjC_Encoder != NULL && PyObjC_Encoder != Py_None) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = id_to_python(coder);
             if (cdr == NULL) {            // LCOV_BR_EXCL_LINE

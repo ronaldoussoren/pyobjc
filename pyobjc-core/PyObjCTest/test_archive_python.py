@@ -31,6 +31,7 @@ from PyObjCTools.TestSupport import (
     expectedFailureIf,
     os_level_key,
     os_release,
+    pyobjc_options,
 )
 
 import copyreg
@@ -1773,3 +1774,20 @@ class TestSecureArchivingPython(TestCase):
             archive.encodeObject_forKey_(value, "value")
 
         archive.finishEncoding()
+
+    def test_archive_without_encoder(self):
+        with pyobjc_options(_nscoding_encoder=None):
+            with self.assertRaisesRegex(
+                ValueError,
+                "NSInvalidArgumentException - encoding Python objects is not supported",
+            ):
+                NSKeyedArchiver.archivedDataWithRootObject_(object())
+
+        buf = NSKeyedArchiver.archivedDataWithRootObject_(object())
+
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError,
+                "NSInvalidArgumentException - decoding Python objects is not supported",
+            ):
+                NSKeyedUnarchiver.unarchiveObjectWithData_(buf)

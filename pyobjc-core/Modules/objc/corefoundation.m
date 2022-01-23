@@ -26,14 +26,16 @@ static PyObject* _Nullable cf_repr(PyObject* self)
     }
 
     CFStringRef repr = CFCopyDescription(PyObjCObject_GetObject(self));
-    if (repr) {
+    if (repr) { // LCOV_BR_EXCL_LINE
         PyObject* result = id_to_python((id)repr);
         CFRelease(repr);
         return result;
 
     } else {
+        // LCOV_EXCL_START
         return PyUnicode_FromFormat("<%s object at %p>", Py_TYPE(self)->tp_name,
                                     PyObjCObject_GetObject(self));
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -47,8 +49,8 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
     PyTypeObject* tp;
 
     cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
-    if (cfid == NULL) {
-        return NULL;
+    if (cfid == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
     tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
     Py_DECREF(cfid);
@@ -113,13 +115,17 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         }
     }
 
-    if (typeID == 0) {
+    if (typeID == 0) { // LCOV_BR_EXCL_LINE
         /* Partially registered type, just wrap as a
          * a plain CFTypeRef
+         *
+         * XXX: Can we reproduce this in testing?
          */
+        // LCOV_EXCL_START
         PyObjC_Assert(PyObjC_NSCFTypeClass != NULL, NULL);
         Py_INCREF(PyObjC_NSCFTypeClass);
         return PyObjC_NSCFTypeClass;
+        // LCOV_EXCL_STOP
     }
 
     Class cf_class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
@@ -202,7 +208,9 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
             result, "__module__", PyObjCClass_DefaultModule)
         < 0) {
-        PyErr_Clear(); // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_Clear();
+        // LCOV_EXCL_STOP
     }
 
     if (PyDict_SetItem(gTypeid2class, cf, result) == -1) { // LCOV_BR_EXCL_LINE
@@ -329,12 +337,12 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
     Py_DECREF(cfid);
     if (tp == NULL) {
-        if (!PyErr_Occurred()) {
+        if (!PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return (PyObject*)PyObjCObject_New(
                 (id)datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE,
                 NO);
         }
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     rval = tp->tp_alloc(tp, 0);

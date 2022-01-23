@@ -37,12 +37,6 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (id _Nullable)initWithPyObject:(PyObject*)obj;
 
 /*!
- * @method pyObject
- * @result Returns a borrowed reference to the wrapped object
- */
-- (PyObject*)pyObject;
-
-/*!
  * @method __pyobjc_PythonObject__
  * @result Returns a new reference to the wrapped object
  * @discussion
@@ -76,7 +70,7 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (void)takeValuesFromDictionary:(NSDictionary*)aDictionary;
 - (void)setValuesForKeysWithDictionary:(NSDictionary*)aDictionary;
 - (void)unableToSetNilForKey:(NSString*)key;
-- (void)valueForUndefinedKey:(NSString*)key;
+- (id)valueForUndefinedKey:(NSString*)key;
 - (void)handleTakeValue:value forUnboundKey:(NSString*)key;
 - (void)setValue:value forUndefinedKey:(NSString*)key;
 
@@ -93,7 +87,6 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (NSObject*)replacementObjectForCoder:(NSCoder*)archiver;
 - (Class)classForArchiver;
 - (Class)classForKeyedArchiver;
-+ (Class)classForUnarchiver;
 + (Class)classForKeyedUnarchiver;
 - (Class)classForCoder;
 - (Class)classForPortCoder;

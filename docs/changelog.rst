@@ -89,6 +89,21 @@ of test coverage for the C code in pyobjc-core.
 * Avoid crash when trying to load a "magic" cookie CoreFoundation value for a
   type unknown to the PyObjC bridge.
 
+* Removed ``-[OC_PythonObject pyObject]``.
+
+  The method is no longer used by PyObjC itself, and these proxy objects are considered
+  a private API that may change at any time.
+
+* Removed ``+[OC_PythonObject classForUnarchiver]``
+
+  This method was present for compatibility with the ``NSObject`` interface, but isn't
+  actually part of Cocoa.
+
+* ``-[OC_PythonObject methodSignatureForSelector:]`` and
+  ``+[OC_PythonObject methodSignatureForSelector:]`` now return ``nil`` instead of
+  raising an exception when the queried selector does not exist. This matches
+  the behaviour of ``NSObject``.
+
 Version 8.2b1
 -------------
 

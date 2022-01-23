@@ -147,6 +147,10 @@ OBJECT_PROP(_set_types, PyObjC_SetLikeTypes, NULL)
 OBJECT_PROP(_date_types, PyObjC_DateLikeTypes, NULL)
 OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type, NULL)
 OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type, NULL)
+OBJECT_PROP(_getKey, PyObjC_getKey, NULL)
+OBJECT_PROP(_setKey, PyObjC_setKey, NULL)
+OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath, NULL)
+OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -186,6 +190,10 @@ static PyGetSetDef object_getset[] = {
            "Private helper function for generating __signature__ for selectors"),
     GETSET(deprecation_warnings,
            "If not 0 give deprecation warnings for the given SDK version"),
+    GETSET(_getKey, "Private helper used for KeyValueCoding support"),
+    GETSET(_setKey, "Private helper used for KeyValueCoding support"),
+    GETSET(_getKeyPath, "Private helper used for KeyValueCoding support"),
+    GETSET(_setKeyPath, "Private helper used for KeyValueCoding support"),
     {
         .name = "_bundle_hack_used",
         .get  = bundle_hack_get,

@@ -150,11 +150,11 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
-                    exc_type = [val pyObject];
+                    exc_type = id_to_python(val);
                     exc_value =
-                        [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
+                        id_to_python([userInfo objectForKey:@"__pyobjc_exc_value__"]);
                     exc_traceback =
-                        [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
+                        id_to_python([userInfo objectForKey:@"__pyobjc_exc_traceback__"]);
 
                     /* -pyObject returns a borrowed reference and
                      * PyErr_Restore steals one from us.

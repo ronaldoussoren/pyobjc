@@ -10,11 +10,20 @@ from objc._objc import (
     options,
     selector,
 )
+import PyObjCTools.KeyValueCoding as kvc
 
 __all__ = ("addConvenienceForClass", "registerABCForClass")
 
 CLASS_METHODS = {}
 CLASS_ABC = {}
+
+
+options._getKey = kvc.getKey
+options._setKey = kvc.setKey
+options._getKeyPath = kvc.getKeyPath
+options._setKeyPath = kvc.setKeyPath
+
+del kvc
 
 
 def register(f):

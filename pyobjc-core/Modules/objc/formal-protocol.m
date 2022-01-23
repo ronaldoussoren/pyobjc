@@ -32,9 +32,8 @@ static PyObject* _Nullable proto_repr(PyObject* object)
     const char*           name;
 
     name = protocol_getName(self->objc);
-    if (name == NULL) { // LCOV_BR_EXCL_LINE
+    if (name == NULL)   // LCOV_BR_EXCL_LINE
         name = "<nil>"; // LCOV_EXCL_LINE
-    }
 
     return PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name,
                                 (void*)self);
@@ -53,9 +52,11 @@ static PyObject* _Nullable proto_get__name__(PyObject* object,
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
 
-    if (name == NULL) {
+    if (name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     return PyUnicode_FromString(name);
@@ -207,16 +208,20 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     if (PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
             result->objc, (PyObject*)result)
         < 0) {
-        Py_DECREF(result); // LCOV_EXCL_LINE
-        goto error;        // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(result);
+        goto error;
+        // LCOV_EXCL_STOP
     }
     return (PyObject*)result;
 
 error:
+    // LCOV_EXCL_START
     Py_DECREF(selectors);
     Py_DECREF(supers);
 
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 static PyObject* _Nullable proto_name(PyObject* object)
@@ -276,14 +281,18 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
         PyObject* item =
             Py_BuildValue("{sysysO}", "selector", sel_getName(methods[i].name), "typestr",
                           buf, "required", isRequired ? Py_True : Py_False);
-        if (item == NULL) {
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             free(methods);
             return -1;
+            // LCOV_EXCL_STOP
         }
-        if (PyList_Append(lst, item) < 0) {
+        if (PyList_Append(lst, item) < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(item);
             free(methods);
             return -1;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(item);
     }
@@ -298,20 +307,24 @@ static PyObject* _Nullable instanceMethods(PyObject* object)
     int                   r;
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     r = append_method_list(result, self->objc, YES, YES);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     r = append_method_list(result, self->objc, NO, YES);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return result;
@@ -323,20 +336,24 @@ static PyObject* _Nullable classMethods(PyObject* object)
     int                   r;
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_START
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     r = append_method_list(result, self->objc, YES, NO);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_START
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     r = append_method_list(result, self->objc, NO, NO);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_START
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return result;
@@ -348,23 +365,8 @@ static PyObject* _Nullable descriptionForInstanceMethod_(PyObject* object, PyObj
     SEL                            aSelector = NULL;
     struct objc_method_description descr;
 
-    if (PyObjCSelector_Check(sel)) {
-        aSelector = PyObjCSelector_GetSelector(sel);
-
-    } else if (PyBytes_Check(sel)) {
-        char* s = PyBytes_AsString(sel);
-
-        if (*s == '\0') {
-            PyErr_SetString(PyExc_ValueError, "empty selector name");
-            return NULL;
-        }
-
-        aSelector = sel_getUid(s);
-    } else {
-        PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
-                     Py_TYPE(sel)->tp_name);
+    if (depythonify_c_value(@encode(SEL), sel, &aSelector) == -1)
         return NULL;
-    }
 
     descr = protocol_getMethodDescription(self->objc, aSelector, YES, YES);
     if (descr.name == NULL) {

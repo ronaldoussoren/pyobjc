@@ -62,8 +62,8 @@ static PyObject* _Nullable meth_nsstring(PyObject* self)
     if (uobj->py_nsstr == NULL) {
         uobj->py_nsstr = PyObjCObject_New(
             uobj->nsstr, PyObjCObject_kDEFAULT | PyObjCObject_kNEW_WRAPPER, YES);
-        if (uobj->py_nsstr == NULL) {
-            return NULL;
+        if (uobj->py_nsstr == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
     }
     Py_INCREF(uobj->py_nsstr);
@@ -79,8 +79,8 @@ static PyObject* _Nullable meth_getattro(PyObject* o, PyObject* attr_name)
 
         PyErr_Clear();
         py_nsstr = meth_nsstring(o);
-        if (py_nsstr == NULL) {
-            return NULL;
+        if (py_nsstr == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
         res = PyObject_GetAttr(py_nsstr, attr_name);
         Py_DECREF(py_nsstr);
@@ -95,29 +95,31 @@ static PyObject* _Nullable meth_reduce(PyObject* self)
     PyObject* v2     = NULL;
 
     retVal = PyTuple_New(2);
-    if (retVal == NULL)
-        goto error;
+    if (retVal == NULL) // LCOV_BR_EXCL_LINE
+        goto error;     // LCOV_EXCL_LINE
 
     v = (PyObject*)&PyUnicode_Type;
     Py_INCREF(v);
     PyTuple_SET_ITEM(retVal, 0, v);
 
     v = PyUnicode_FromObject(self);
-    if (v == NULL)
-        goto error;
+    if (v == NULL)  // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
     v2 = PyTuple_New(1);
-    if (v2 == NULL)
-        goto error;
+    if (v2 == NULL) // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     PyTuple_SET_ITEM(v2, 0, v);
     PyTuple_SET_ITEM(retVal, 1, v2);
 
     return retVal;
 
 error:
+    // LCOV_EXCL_START
     Py_XDECREF(retVal);
     Py_XDECREF(v);
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 static PyMethodDef class_methods[] = {{.ml_name  = "nsstring",
@@ -206,9 +208,11 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     length = [value length];
 
     characters = PyObject_MALLOC(sizeof(unichar) * (length + 1));
-    if (characters == NULL) {
+    if (characters == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -219,10 +223,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             characters[length] = 0;
 
         } @catch (NSObject* localException) {
-            if (characters) {
-                PyMem_Free(characters);
-                characters = NULL;
-            }
+            PyMem_Free(characters);
+            characters = NULL;
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
@@ -298,9 +300,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         result->base.data.latin1 =
             PyObject_MALLOC(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
-        if (result->base.data.latin1 == NULL) {
-            goto error;
-        }
+        if (result->base.data.latin1 == NULL) // LCOV_BR_EXCL_LINE
+            goto error;                       // LCOV_EXCL_LINE
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
@@ -340,9 +341,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
             result->base.data.ucs2 =
                 PyObject_MALLOC(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
-            if (result->base.data.ucs2 == NULL) {
-                goto error;
-            }
+            if (result->base.data.ucs2 == NULL) // LCOV_BR_EXCL_LINE
+                goto error;                     // LCOV_EXCL_LINE
 
             ucs2_cur = result->base.data.ucs2;
             for (i = 0; i < length; i++) {
@@ -365,8 +365,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         result->base.data.ucs4 =
             PyObject_MALLOC(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
-        if (result->base.data.ucs4 == NULL) {
-            goto error;
+        if (result->base.data.ucs4 == NULL) { // LCOV_BR_EXCL_LINE
+            goto error;                       // LCOV_EXCL_LINE
         }
 
         ucs4_cur = result->base.data.ucs4;
@@ -375,12 +375,15 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
                 && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
 
-                if (ch > 0x10ffff) {
+                if (ch > 0x10ffff) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    /* XXX: Cannot happen */
                     /* Unicode spec has a maximum code point value and
                      * Python 3.3 enforces this, keep surrogate pair
                      * to avoid an error.
                      */
                     *ucs4_cur++ = (Py_UCS4)characters[i];
+                    // LCOV_EXCL_STOP
                 } else {
                     *ucs4_cur++ = (Py_UCS4)ch;
                     i++;
@@ -409,11 +412,13 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     return (PyObject*)result;
 
 error:
+    // LCOV_EXCL_START
     Py_DECREF((PyObject*)result);
     PyMem_Free(characters);
     characters = NULL;
     PyErr_NoMemory();
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 NS_ASSUME_NONNULL_END

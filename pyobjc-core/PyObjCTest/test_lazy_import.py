@@ -508,6 +508,8 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.kCFAllocatorDefault, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorDefault.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorDefault, mod.CFAllocatorRef)
+        self.assertIsInstance(repr(mod.kCFAllocatorDefault), str)
+        self.assertIn("magic instance", repr(mod.kCFAllocatorDefault))
 
         # XXX: These need to be in a different test file
         self.assertTrue(getattr(mod.kCFAllocatorDefault, "__is_magic")())  # noqa: B009
