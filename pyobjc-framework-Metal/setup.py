@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "8.2b1"
+VERSION = "8.2"
 
 setup(
     name="pyobjc-framework-Metal",

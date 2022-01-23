@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.2b1"
+VERSION = "8.2"
 
 setup(
     name="pyobjc-framework-CoreMIDI",
@@ -22,6 +22,7 @@ setup(
             "CoreMIDI._inlines",
             ["Modules/_CoreMIDI_inlines.m"],
             extra_link_args=["-framework", "CoreMIDI"],
+            py_limited_api=True,
         ),
         Extension(
             "CoreMIDI._CoreMIDI",

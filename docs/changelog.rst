@@ -104,12 +104,21 @@ of test coverage for the C code in pyobjc-core.
   raising an exception when the queried selector does not exist. This matches
   the behaviour of ``NSObject``.
 
-Version 8.2b1
--------------
+Version 8.2
+-----------
 
 This release contains a lot of little fixes due to improving
 test coverage of the C code in pyobjc-core. These are mostly fixes
 for edge cases that don't happen in normal programs.
+
+* Reintroduce binary wheels for Python 3.6
+
+  PyObjC 8.x still supports Python 3.6, but I didn't ship binary wheels
+  until now.
+
+  I plan to explicitly remove support for Python 3.6 in PyObjC 9, which
+  will include updating package metadata to ensure that users of Python 3.6
+  will keep using PyObjC 8.x.
 
 * #414: [Python 3.10] The representation for C structures, like
   ``Foundation.NSPoint`` now have a ``__match_args__`` attribute, which means
@@ -276,6 +285,16 @@ for edge cases that don't happen in normal programs.
   the length of the array. It now behaves the same as :meth:`list.insert`,
   the item will be appended to the array.
 
+* Change the way type specific class methods are added to :class:`objc.ivar`.
+
+  This changes the way class methods are added to :class:`objc.ivar` to
+  be more correct in the CPython interpreter.
+
+* #425: Fix CoreMIDI bindings
+
+  The CoreMIDI is a wheel with a limited ABI tag, but one of the two
+  extensions was build without using the limited ABI, resulting in a wheel
+  that worked only for one python version.
 
 Version 8.1
 -----------

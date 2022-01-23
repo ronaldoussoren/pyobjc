@@ -316,7 +316,8 @@ class TestAllInstanceVariables(TestCase):
             setter(obj, "rectValue", 42)
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'name' \(pos 2\)"
+            TypeError,
+            r"(function missing required argument 'name' \(pos 2\))|(Required argument 'name' \(pos 2\) not found)",
         ):
             setter(obj)
 

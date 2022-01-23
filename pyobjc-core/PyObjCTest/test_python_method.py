@@ -8,7 +8,8 @@ NSObject = objc.lookUpClass("NSObject")
 class TestPythonMethod(TestCase):
     def test_creation(self):
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'callable' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'callable' \(pos 1\))|(Required argument 'callable' \(pos 1\) not found)",
         ):
             objc.python_method()
         with self.assertRaisesRegex(

@@ -369,7 +369,8 @@ class TestCase(_unittest.TestCase):
         #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
     def assertIsEnumType(self, tp):
-        if _sys.version_info < (3, 8):
+        tmp = _typing.NewType("tmp", int)
+        if isinstance(tmp, type(lambda: 1)):
             # typing.NewType is not a type in Python 3.7 or earlier
             if not isinstance(tp, type(lambda: 1)):
                 self.fail(f"{tp!r} is not a typing.NewType")

@@ -23,6 +23,7 @@ from ExceptionHandling import *  # noqa: F401, F403
 from GameController import *  # noqa: F401, F403
 from HIServices import *  # noqa: F401, F403
 from Quartz import *  # noqa: F401, F403
+from CoreMIDI import *  # noqa: F401, F403
 
 
 @functools.total_ordering

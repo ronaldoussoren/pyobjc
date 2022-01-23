@@ -115,12 +115,14 @@ class TestMetadataRegistry(TestCase):
 class TestRescanClass(TestCase):
     def test_invalid_usage(self):
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'name' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'name' \(pos 1\))|(Required argument 'name' \(pos 1\) not found)",
         ):
             objc._rescanClass()
 
         with self.assertRaisesRegex(
-            TypeError, r"function missing required argument 'name' \(pos 1\)"
+            TypeError,
+            r"(function missing required argument 'name' \(pos 1\))|(Required argument 'name' \(pos 1\) not found)",
         ):
             objc._rescanClass(naam="NSObject")
 
