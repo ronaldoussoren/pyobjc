@@ -6,37 +6,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype _Nullable)numberWithPythonObject:(PyObject*)v
 {
-    if (PyLong_Check(v)) {
-        unsigned long long lv = PyLong_AsUnsignedLongLong(v);
-        if (PyErr_Occurred()) {
-            PyErr_Clear();
-        } else if (lv >= 1ULL << 63) {
-            /* Workaround for round-trip problems... */
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
-#endif
-            /*
-             * This should return an autoreleased value, but that causes
-             * a crash in pyobjc-framework-Cocoa/test_regr.py
-             *
-             * XXX: Further investigate (in particular
-             *
-             *      This is caused by callers of this method assuming
-             *      that the result is an instance of an OC_ class that
-             *      will unregister itself in dealloc. That's not true
-             *      of instances like this.
-             *
-             *      I'm leaving the code like this for now and need
-             *      to perform more testing before fixing this.
-             */
-            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-        }
-    }
-
     return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
@@ -45,6 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
     self = [super init];
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
         return nil;            // LCOV_EXCL_LINE
+
+#ifdef PyObjC_DEBUG
+    if (!PyLong_Check(v) && !PyFloat_Check(v)) { // LCOV_BR_EXCL_LINE
+        PyObjCErr_InternalError();               // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_DEBUG */
 
     SET_FIELD_INCREF(value, v);
     return self;
@@ -111,12 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (const char*)objCType
 {
     PyObjC_BEGIN_WITH_GIL
-        if (PyBool_Check(value)) {
-            /* XXX: Switch to @encode(bool)?
-             * That would need tests to ensure this doesn't change behaviour.
-             */
-            PyObjC_GIL_RETURN(@encode(BOOL));
-        } else if (PyFloat_Check(value)) {
+        if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
         } else if (PyLong_Check(value)) {
             (void)PyLong_AsLongLong(value);
@@ -135,9 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
             }
         }
     PyObjC_END_WITH_GIL
-    [NSException raise:NSInvalidArgumentException
-                format:@"Cannot determine objective-C type of this number"];
-    return @encode(char);
+
+    __builtin_unreachable(); // LCOV_EXCL_LINE
 }
 
 - (void)getValue:(void*)buffer
@@ -154,6 +123,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getValue:(void*)buffer forType:(const char*)type
 {
+    /* XXX: This method is not part of the NSNumber API,
+     * remove in PyObjC 9
+     */
     int r;
     PyObjC_BEGIN_WITH_GIL
         r = depythonify_c_value(type, value, buffer);
@@ -264,9 +236,11 @@ NS_ASSUME_NONNULL_BEGIN
         }
     PyObjC_END_WITH_GIL
 
+    // LCOV_EXCL_START
     [NSException raise:NSInvalidArgumentException
                 format:@"Cannot determine objective-C type of this number"];
     return -1;
+    // LCOV_EXCL_STOP
 }
 
 - (unsigned long long)unsignedLongLongValue
@@ -296,9 +270,11 @@ NS_ASSUME_NONNULL_BEGIN
         }
     PyObjC_END_WITH_GIL
 
+    // LCOV_EXCL_START
     [NSException raise:NSInvalidArgumentException
                 format:@"Cannot determine objective-C type of this number"];
     return -1;
+    // LCOV_EXCL_STOP
 }
 
 - (NSString*)description
@@ -339,19 +315,24 @@ NS_ASSUME_NONNULL_BEGIN
              */
             use_super = 1;
         } else if (PyLong_CheckExact(value)) {
-            /* Long object that fits in a long long */
+            /* Encode using super() when the value
+             * fits in a long long or unsigned long long,
+             * otherwise use the pickle protocol.
+             *
+             * Logic needs to match that in classForArchiver.
+             */
             (void)PyLong_AsLongLong(value);
-            if (PyErr_Occurred()) {
-                PyErr_Clear();
-                (void)PyLong_AsUnsignedLongLong(value);
-                if (PyErr_Occurred()) {
-                    PyErr_Clear();
-                    use_super = 0;
-                } else {
-                    use_super = 1;
-                }
-            } else {
+            if (!PyErr_Occurred()) {
                 use_super = 1;
+            } else {
+                PyErr_Clear();
+
+                (void)PyLong_AsUnsignedLongLong(value);
+                if (!PyErr_Occurred()) {
+                    use_super = 1;
+                } else {
+                    PyErr_Clear();
+                }
             }
         }
     PyObjC_END_WITH_GIL
@@ -359,9 +340,6 @@ NS_ASSUME_NONNULL_BEGIN
     if (use_super) {
         [super encodeWithCoder:coder];
     } else {
-        /* XXX: Should check if coder requiresSecureCoding, and bail out in
-         * that case.
-         */
         PyObjC_encodeWithCoder(value, coder);
     }
 }
@@ -383,18 +361,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = id_to_python(coder);
             PyObject* setValue;
             PyObject* selfAsPython;
             PyObject* v;
 
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            PyObject* cdr = id_to_python(coder);
+            if (cdr == NULL) {            // LCOV_BR_EXC_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
             setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
@@ -530,21 +508,38 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
                  */
                 PyObjC_GIL_RETURN([NSNumber class]);
             } else if (PyLong_CheckExact(value)) {
-                /* Long object that fits in a long long */
+                /* If the value fits inside a long long or
+                 * unsigned long long encode as an NSNumber,
+                 * else encode as OC_PythonNumber.
+                 *
+                 * The logic below needs to match that in
+                 * encodeWithCoder:
+                 */
                 (void)PyLong_AsLongLong(value);
-                if (PyErr_Occurred()) {
-                    PyErr_Clear();
-                    PyObjC_GIL_RETURN([self class]);
-                } else {
+                if (!PyErr_Occurred()) {
                     PyObjC_GIL_RETURN([NSNumber class]);
+                } else {
+                    PyErr_Clear();
+
+                    (void)PyLong_AsUnsignedLongLong(value);
+                    if (!PyErr_Occurred()) {
+                        PyObjC_GIL_RETURN([NSNumber class]);
+                    } else {
+                        PyErr_Clear();
+
+                        PyObjC_GIL_RETURN([self class]);
+                    }
                 }
             } else {
                 PyObjC_GIL_RETURN([self class]);
             }
+
+            // LCOV_EXCL_START
         } @catch (NSObject* exc) {
             PyObjC_LEAVE_GIL;
             @throw;
         }
+        // LCOV_EXCL_STOP
     PyObjC_END_WITH_GIL
 }
 

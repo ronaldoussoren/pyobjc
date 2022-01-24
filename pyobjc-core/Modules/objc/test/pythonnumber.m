@@ -3,7 +3,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OC_TestNumber : NSObject {
+@interface
+NSNumber ()
+- (void)getValue:(void*)buffer forType:(const char*)type;
+@end
+
+@interface OC_NumberInt : NSObject {
 }
 + (Class)numberClass:(NSNumber*)number;
 + (BOOL)numberAsBOOL:(NSNumber*)number;
@@ -17,7 +22,7 @@
 + (unsigned int)numberAsUnsignedInt:(NSNumber*)number;
 + (unsigned long)numberAsUnsignedLong:(NSNumber*)number;
 + (unsigned long long)numberAsUnsignedLongLong:(NSNumber*)number;
-+ (NSDecimal)numberAsDecimal:(NSNumber*)number;
++ (NSDecimalNumber*)numberAsDecimal:(NSNumber*)number;
 + (float)numberAsFloat:(NSNumber*)number;
 + (double)numberAsDouble:(NSNumber*)number;
 
@@ -26,9 +31,19 @@
 + (BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b;
 + (NSString*)numberDescription:(NSNumber*)number;
 + (NSString*)numberDescription:(NSNumber*)number withLocale:(id)aLocale;
+
++ (bool)number:(NSNumber*)left isEquualTo:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isNotEqualTo:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isGreaterThan:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isGreaterThanOrEqualTo:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isLessThan:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isLessThanOrEqualTo:(NSNumber*)right;
+
++ (NSData*)getValueOf:(NSNumber*)value;
++ (NSData*)getValueOf:(NSNumber*)value forType:(char*)encoding;
 @end
 
-@implementation OC_TestNumber
+@implementation OC_NumberInt
 
 + (Class)numberClass:(NSNumber*)number
 {
@@ -48,6 +63,11 @@
 + (BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b
 {
     return [a isEqualToNumber:b];
+}
+
++ (BOOL)number:(NSNumber*)a isEqualToValue:(NSNumber*)b
+{
+    return [a isEqualToValue:b];
 }
 
 + (NSString*)numberDescription:(NSNumber*)number
@@ -85,6 +105,16 @@
     return [number intValue];
 }
 
++ (NSInteger)numberAsInteger:(NSNumber*)number
+{
+    return [number integerValue];
+}
+
++ (NSUInteger)numberAsUnsignedInteger:(NSNumber*)number
+{
+    return [number unsignedIntegerValue];
+}
+
 + (long)numberAsLong:(NSNumber*)number
 {
     return [number longValue];
@@ -120,9 +150,9 @@
     return [number unsignedLongLongValue];
 }
 
-+ (NSDecimal)numberAsDecimal:(NSNumber*)number
++ (NSDecimalNumber*)numberAsDecimal:(NSNumber*)number
 {
-    return [number decimalValue];
+    return [NSDecimalNumber decimalNumberWithDecimal:[number decimalValue]];
 }
 
 + (float)numberAsFloat:(NSNumber*)number
@@ -133,6 +163,45 @@
 + (double)numberAsDouble:(NSNumber*)number
 {
     return [number doubleValue];
+}
+
++ (bool)number:(NSNumber*)left isEquualTo:(NSNumber*)right
+{
+    return [left isEqualTo:right];
+}
++ (bool)number:(NSNumber*)left isNotEqualTo:(NSNumber*)right
+{
+    return [left isNotEqualTo:right];
+}
++ (bool)number:(NSNumber*)left isGreaterThan:(NSNumber*)right
+{
+    return [left isGreaterThan:right];
+}
++ (bool)number:(NSNumber*)left isGreaterThanOrEqualTo:(NSNumber*)right
+{
+    return [left isGreaterThanOrEqualTo:right];
+}
++ (bool)number:(NSNumber*)left isLessThan:(NSNumber*)right
+{
+    return [left isLessThan:right];
+}
++ (bool)number:(NSNumber*)left isLessThanOrEqualTo:(NSNumber*)right
+{
+    return [left isLessThanOrEqualTo:right];
+}
+
++ (NSData*)getValueOf:(NSNumber*)value
+{
+    char buffer[32];
+    [value getValue:buffer];
+    return [NSData dataWithBytes:buffer length:32];
+}
+
++ (NSData*)getValueOf:(NSNumber*)value forType:(char*)encoding
+{
+    char buffer[32];
+    [value getValue:buffer forType:encoding];
+    return [NSData dataWithBytes:buffer length:32];
 }
 
 @end
@@ -157,7 +226,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_pythonnumber(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_TestNumber", PyObjC_IdToPython([OC_TestNumber class]))
+    if (PyModule_AddObject(m, "OC_NumberInt", PyObjC_IdToPython([OC_NumberInt class]))
         < 0) {
         return NULL;
     }

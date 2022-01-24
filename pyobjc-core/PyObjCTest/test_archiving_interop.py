@@ -112,7 +112,28 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
-        for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
+        # for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62, 2**63+10):
+        for testval in (2 ** 63 + 10,):
+            with self.subTest(testval):
+                v = NSArray.arrayWithObject_(testval)
+                data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+
+                out = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
+                self.assertEqual(out[0], testval)
+
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
+
+                    converted = subprocess.check_output(
+                        [self.progpath, "keyed", fp.name]
+                    )
+
+                converted = loads(converted)
+                self.assertEqual(converted, [testval])
+
+        with self.subTest("overflow"):
+            testval = 2 ** 64
             v = NSArray.arrayWithObject_(testval)
             data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
@@ -120,21 +141,8 @@ class TestNSKeyedArchivingInterop(TestCase):
                 fp.write(data.bytes())
                 fp.flush()
 
-                converted = subprocess.check_output([self.progpath, "keyed", fp.name])
-
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
-
-        testval = 2 ** 64
-        v = NSArray.arrayWithObject_(testval)
-        data = NSKeyedArchiver.archivedDataWithRootObject_(v)
-
-        with tempfile.NamedTemporaryFile() as fp:
-            fp.write(data.bytes())
-            fp.flush()
-
-            with self.assertRaises(subprocess.CalledProcessError):
-                subprocess.check_output([self.progpath, "keyed", fp.name])
+                with self.assertRaises(subprocess.CalledProcessError):
+                    subprocess.check_output([self.progpath, "keyed", fp.name])
 
     def test_interop_data(self):
         for testval in (b"hello world",):

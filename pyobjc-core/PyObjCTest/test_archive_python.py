@@ -1188,11 +1188,18 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
 
         self.assertEqual(v, x)
 
-        for val in (int(0), int(1), int(sys.maxsize), int(sys.maxsize * 128)):
+        for val in (
+            int(0),
+            int(1),
+            int(sys.maxsize),
+            int(sys.maxsize * 128),
+            2 ** 63 + 1,
+        ):
             for x in val, -val:
-                buf = self.dumps(x)
-                v = self.loads(buf)
-                self.assertEqual(v, x)
+                with self.subTest(x=x):
+                    buf = self.dumps(x)
+                    v = self.loads(buf)
+                    self.assertEqual(v, x)
 
     # Overriden tests for extension codes, the test code checks
     # the actual byte stream.

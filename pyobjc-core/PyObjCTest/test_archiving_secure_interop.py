@@ -168,37 +168,42 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 self.assertEqual(converted, [testval])
 
         def test_interop_int(self):
-            for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
-                v = NSArray.arrayWithObject_(testval)
-                (
-                    data,
-                    error,
-                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                    v, True, None
-                )
+            for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62, 2 ** 63 + 10):
+                with self.subTest(testval):
+                    v = NSArray.arrayWithObject_(testval)
+                    (
+                        data,
+                        error,
+                    ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                        v, True, None
+                    )
 
-                if data is None:
-                    self.fail(f"Cannot create archive: {error}")
+                    if data is None:
+                        self.fail(f"Cannot create archive: {error}")
+
+                    out = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
+                    self.assertEqual(out[0], testval)
+
+                    with tempfile.NamedTemporaryFile() as fp:
+                        fp.write(data.bytes())
+                        fp.flush()
+
+                        converted = subprocess.check_output([self.progpath, fp.name])
+
+                    converted = loads(converted)
+                    self.assertEqual(converted, [testval])
+
+            with self.subTest("overflow"):
+                testval = 2 ** 64
+                v = NSArray.arrayWithObject_(testval)
+                data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
                     fp.flush()
 
-                    converted = subprocess.check_output([self.progpath, fp.name])
-
-                converted = loads(converted)
-                self.assertEqual(converted, [testval])
-
-            testval = 2 ** 64
-            v = NSArray.arrayWithObject_(testval)
-            data = NSKeyedArchiver.archivedDataWithRootObject_(v)
-
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
-
-                with self.assertRaises(subprocess.CalledProcessError):
-                    subprocess.check_output([self.progpath, fp.name])
+                    with self.assertRaises(subprocess.CalledProcessError):
+                        subprocess.check_output([self.progpath, fp.name])
 
         def test_interop_data(self):
             for testval in (b"hello world",):
