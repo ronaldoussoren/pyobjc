@@ -61,20 +61,24 @@ is_builtin_datetime(PyObject* object)
                   PyObjCNM_strftime, fargs + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
             if (ts_str == NULL) {
+                [self release];
                 return nil;
             }
 
             ts = PyFloat_FromString(ts_str);
             Py_DECREF(ts_str);
             if (ts == NULL) {
+                [self release];
                 return nil;
             }
         } else {
+            [self release];
             return nil;
         }
     }
     PyObjC_Assert(ts != NULL, nil);
     if (depythonify_c_value(@encode(NSTimeInterval), ts, &timeSinceEpoch) == -1) {
+        [self release];
         return nil;
     }
 
@@ -176,7 +180,7 @@ is_builtin_datetime(PyObject* object)
 
             PyObjC_BEGIN_WITH_GIL
                 PyObject* tzinfo = PyObject_GetAttrString(value, "tzinfo");
-                if (tzinfo != NULL || tzinfo != Py_None) {
+                if (tzinfo != NULL && tzinfo != Py_None) {
                     if (depythonify_python_object(tzinfo, &c_info)
                         == -1) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
@@ -234,6 +238,12 @@ is_builtin_datetime(PyObject* object)
         [coder decodeValueOfObjCType:@encode(int) at:&pytype];
     }
 
+    self = [super init];
+    if (!self) {    // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
+    }
+    /* XXX: Assert that type has the correct type */
+
     switch (pytype) {
     case 1: {
         PyObjC_BEGIN_WITH_GIL
@@ -244,6 +254,7 @@ is_builtin_datetime(PyObject* object)
                 PyFloat_FromDouble([temp timeIntervalSince1970]),
             };
             [temp release];
+
             value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (value == NULL) {
@@ -254,6 +265,7 @@ is_builtin_datetime(PyObject* object)
     }
     case 2: {
         PyObjC_BEGIN_WITH_GIL
+
             id        c_info = [coder decodeObjectForKey:@"py_tzinfo"];
             PyObject* tzinfo = NULL;
             NSDate*   temp   = [[NSDate alloc] initWithCoder:coder];

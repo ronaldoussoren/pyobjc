@@ -66,7 +66,7 @@ NSObject (TestMethods)
 /* copying */
 + (id)copyObject:(NSObject<NSCopying>*)object withZone:(NSZone*)zone
 {
-    return [[object copyWithZone:zone] autorelease];
+    return [object copyWithZone:zone];
 }
 
 + (id)copyObject:(NSObject<NSCopying>*)object

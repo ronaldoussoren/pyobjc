@@ -18,7 +18,7 @@ test:
 # sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
+	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
 
 clean:
 	rm -rf build dist

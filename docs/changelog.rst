@@ -107,6 +107,12 @@ of test coverage for the C code in pyobjc-core.
 * Fix the metadata in the bindings for DiscRecording, Intents, SceneKit, and libdispatch
   to ensure that the ``__all__`` variable actually works.
 
+* Eliminated usage of sscanf in pyobjc-core
+
+  A possible user visible change is that the use of sscanf
+  to parse an IPv4 address has been replaced by a call
+  to ``inet_pton()``, which may affect different representations
+  of an IPv4 address.
 
 Version 8.2
 -----------

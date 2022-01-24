@@ -150,20 +150,17 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
+                    id temp;
                     exc_type = id_to_python(val);
-                    exc_value =
-                        id_to_python([userInfo objectForKey:@"__pyobjc_exc_value__"]);
-                    exc_traceback =
-                        id_to_python([userInfo objectForKey:@"__pyobjc_exc_traceback__"]);
 
-                    /* -pyObject returns a borrowed reference and
-                     * PyErr_Restore steals one from us.
-                     */
-                    Py_INCREF(exc_type);
-                    Py_XINCREF(exc_value);
-                    Py_XINCREF(exc_traceback);
+                    temp          = [userInfo objectForKey:@"__pyobjc_exc_value__"];
+                    exc_value     = temp != NULL ? id_to_python(temp) : NULL;
+                    temp          = [userInfo objectForKey:@"__pyobjc_exc_traceback__"];
+                    exc_traceback = temp != NULL ? id_to_python(temp) : NULL;
 
-                    PyErr_Restore(exc_type, exc_value, exc_traceback);
+                    if (exc_type != NULL) {
+                        PyErr_Restore(exc_type, exc_value, exc_traceback);
+                    }
 
                     PyObjC_GIL_RETURNVOID;
                 }

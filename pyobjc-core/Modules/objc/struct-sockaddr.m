@@ -49,20 +49,19 @@ PyObjC_SockAddr_Setup(void)
     return 0;
 }
 
-static PyObject* _Nullable set_gaierror(int error)
+static void
+set_gaierror(int error)
 {
     if (error == EAI_SYSTEM) {
         PyErr_SetFromErrno(socket_error);
-        return NULL;
+        return;
     }
 
     PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
     if (v != NULL) {
         PyErr_SetObject(socket_gaierror, v);
         Py_DECREF(v);
-        return NULL;
     }
-    return NULL;
 }
 
 static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
@@ -72,7 +71,8 @@ static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
 
     r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
     if (r != 0) {
-        return set_gaierror(r);
+        set_gaierror(r);
+        return NULL;
     }
     return PyUnicode_FromString(buf);
 }
@@ -82,8 +82,6 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 {
     struct addrinfo hints, *res;
     int             error;
-    unsigned int    d1, d2, d3, d4;
-    char            ch;
 
     memset((void*)addr_ret, '\0', sizeof(*addr_ret));
     if (name[0] == '\0') {
@@ -93,10 +91,6 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         hints.ai_socktype = SOCK_DGRAM; /*dummy*/
         hints.ai_flags    = AI_PASSIVE;
         error             = getaddrinfo(NULL, "0", &hints, &res);
-        /* We assume that those thread-unsafe getaddrinfo() versions
-           *are* safe regarding their return value, ie. that a
-           subsequent call to getaddrinfo() does not destroy the
-           outcome of the first call. */
         if (error) {
             set_gaierror(error);
             return -1;
@@ -139,14 +133,11 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         sinaddr->sin_addr.s_addr = INADDR_BROADCAST;
         return sizeof(sinaddr->sin_addr);
     }
-    /* XXX: Replace sscanf */
-    if (sscanf(name, "%u.%u.%u.%u%c", &d1, &d2, &d3, &d4, &ch) == 4 && d1 <= 255
-        && d2 <= 255 && d3 <= 255 && d4 <= 255) {
+    if (inet_pton(AF_INET, name, &(((struct sockaddr_in*)addr_ret)->sin_addr)) == 1) {
         struct sockaddr_in* sinaddr;
-        sinaddr                  = (struct sockaddr_in*)addr_ret;
-        sinaddr->sin_addr.s_addr = htonl((d1 << 24) | (d2 << 16) | (d3 << 8) | (d4 << 0));
-        sinaddr->sin_family      = AF_INET;
-        sinaddr->sin_len         = sizeof(*sinaddr);
+        sinaddr             = (struct sockaddr_in*)addr_ret;
+        sinaddr->sin_family = AF_INET;
+        sinaddr->sin_len    = sizeof(*sinaddr);
         return 4;
     }
     memset(&hints, 0, sizeof(hints));

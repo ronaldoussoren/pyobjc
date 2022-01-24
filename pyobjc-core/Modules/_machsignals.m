@@ -36,8 +36,10 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
     }
     PyObjC_BEGIN_WITH_GIL
         tmp = PyLong_FromLong((long)signum);
-        if (tmp == NULL)              // LCOV_BR_EXCL_LINE
+        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            __builtin_unreachable();
+        }
 
         callable = PyDict_GetItem(signalmapping, tmp);
         if (!callable) {

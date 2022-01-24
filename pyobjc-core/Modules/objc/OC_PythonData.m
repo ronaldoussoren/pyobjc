@@ -11,7 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
+#ifndef USE_STATIC_ANALYZER
     PyObjC_Assert(PyObject_CheckBuffer(v), nil);
+#endif
 
     self = [super init];
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE

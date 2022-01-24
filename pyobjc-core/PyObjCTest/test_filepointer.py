@@ -260,7 +260,7 @@ class TestFilePointer(TestCase):
         self.assertEqual(blob, b"")
 
         with self.assertRaises(MemoryError):
-            fp.read(2 ** 60)
+            fp.read(2 ** 50)
 
         with self.assertRaises(TypeError):
             fp.read(count=100)
