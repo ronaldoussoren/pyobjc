@@ -4,7 +4,8 @@ Tests for the proxy of Python sets
 import objc
 from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from PyObjCTest.test_object_proxy import NoObjectiveC
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
@@ -286,3 +287,144 @@ class TestMutableSet(TestCase, BasicSetTests):
 
         OC_TestSet.removeAllObjecsFromSet_(s)
         self.assertEqual(s, self.setClass())
+
+
+class TestMisc(TestCase):
+    def test_no_copy_helper(self):
+        s = {1, 2, 3}
+        with pyobjc_options(_copy=None):
+            with self.assertRaisesRegex(
+                ValueError, "NSInvalidArgumentException - cannot copy python set"
+            ):
+                OC_TestSet.set_copyWithZone_(s, None)
+
+    def test_copy_failure(self):
+        class S(set):
+            def __copy__(self):
+                raise RuntimeError("don't copy me")
+
+        s = S()
+
+        with self.assertRaisesRegex(RuntimeError, "don't copy me"):
+            OC_TestSet.set_copyWithZone_(s, None)
+
+    def test_copy_not_in_objc(self):
+        class S(set):
+            def __copy__(self):
+                return NoObjectiveC()
+
+        s = S()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            OC_TestSet.set_copyWithZone_(s, None)
+
+    def test_anyObject_not_iterable(self):
+        class S(set):
+            def __iter__(self):
+                raise RuntimeError("no way")
+
+        s = S({1, 2, 3})
+
+        with self.assertRaisesRegex(RuntimeError, "no way"):
+            OC_TestSet.anyObjectOfSet_(s)
+
+        class S(set):
+            def __iter__(self):
+                raise RuntimeError("whoops")
+                yield 42
+
+        s = S({1})
+        with self.assertRaisesRegex(RuntimeError, "whoops"):
+            OC_TestSet.anyObjectOfSet_(s)
+
+    def test_anyObject_not_objc(self):
+        class S(set):
+            def __iter__(self):
+                yield NoObjectiveC()
+
+        s = S({1, 2, 3})
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            OC_TestSet.anyObjectOfSet_(s)
+
+    def test_contains_fails(self):
+        class S(set):
+            def __contains__(self, o):
+                raise TypeError("no containment")
+
+        s = S()
+
+        with self.assertRaisesRegex(TypeError, "no containment"):
+            OC_TestSet.set_containsObject_(s, 42)
+
+    def test_len_fails(self):
+        class S(set):
+            def __len__(self):
+                raise TypeError("no length")
+
+        s = S()
+
+        with self.assertRaisesRegex(TypeError, "no length"):
+            OC_TestSet.countOfSet_(s)
+
+    def test_objectEnumerator_not_iterable(self):
+        class S(set):
+            def __iter__(self):
+                raise RuntimeError("no way")
+
+        s = S({1, 2, 3})
+
+        with self.assertRaisesRegex(RuntimeError, "no way"):
+            OC_TestSet.objectEnumeratorOfSet_(s)
+
+    def test_member_failures(self):
+        class S(set):
+            def __contains__(self, o):
+                raise TypeError("no containment")
+
+        s = S()
+
+        with self.assertRaisesRegex(TypeError, "no containment"):
+            OC_TestSet.set_member_(s, 1)
+
+        class S(set):
+            def __iter__(self):
+                raise TypeError("no iter")
+
+        s = S({1, 2})
+        with self.assertRaisesRegex(TypeError, "no iter"):
+            OC_TestSet.set_member_(s, 1)
+
+        s = set({NoObjectiveC()})
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            OC_TestSet.set_member_(s, "")
+
+    def test_clear_fails(self):
+        class S(set):
+            def clear(self):
+                raise TypeError("Cannot clear")
+
+        s = S()
+
+        with self.assertRaisesRegex(TypeError, "Cannot clear"):
+            OC_TestSet.removeAllObjecsFromSet_(s)
+
+    def test_discard_fails(self):
+        class S(set):
+            def discard(self, value):
+                raise TypeError("Cannot discard")
+
+        s = S({1, 2})
+
+        with self.assertRaisesRegex(TypeError, "Cannot discard"):
+            OC_TestSet.set_removeObject_(s, 2)
+
+    def test_add_fails(self):
+        class S(set):
+            def add(self, value):
+                raise TypeError("Cannot add")
+
+        s = S({1, 2})
+
+        with self.assertRaisesRegex(TypeError, "Cannot add"):
+            OC_TestSet.set_addObject_(s, 2)

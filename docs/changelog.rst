@@ -120,6 +120,10 @@ of test coverage for the C code in pyobjc-core.
   to ``inet_pton()``, which may affect different representations
   of an IPv4 address.
 
+* ``OC_PythonSet`` now epxlictly calls set related methods instead
+  of using C-API functions like :func:`PySet_Clear`. This simplifies
+  the pyobjc-core code, and gives fewer problems with set subclasses.
+
 Version 8.2
 -----------
 

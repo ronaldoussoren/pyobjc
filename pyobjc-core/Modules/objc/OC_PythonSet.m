@@ -212,8 +212,8 @@ NS_ASSUME_NONNULL_BEGIN
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
             setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
@@ -249,7 +249,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject* result;
 
     (void)zone;
-    if (PyObjC_CopyFunc != NULL) {
+    if (PyObjC_CopyFunc != NULL && PyObjC_CopyFunc != Py_None) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* tmp = PyObjC_CallCopyFunc(value);
             if (tmp == NULL) {
@@ -285,9 +285,11 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         }
 
-        if (depythonify_python_object(tmp, &result) == -1) {
+        if (depythonify_python_object(tmp, &result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(tmp);
 
@@ -329,7 +331,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (PySet_Size(value) == 0) {
+        if (PyObject_Size(value) == 0) {
             result = nil;
         } else {
             PyObject* tmp;
@@ -495,31 +497,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeAllObjects
 {
     PyObjC_BEGIN_WITH_GIL
+        /* Assume an object that conforms to
+         * the set interface
+         */
+
         if (PyFrozenSet_CheckExact(value)) {
             PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        if (PyAnySet_Check(value)) { // XXX: >>Check for non-frozenset, or just call
-                                     // 'clear' unconditionally.
-            int r = PySet_Clear(value);
-            if (r == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        } else {
-            /* Assume an object that conforms to
-             * the set interface
-             */
-            PyObject* r;
-
-            PyObject* args[3] = {NULL, value};
-            r                 = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
-                                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            if (r == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            Py_DECREF(r);
+        PyObject* args[3] = {NULL, value};
+        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
+                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (r == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
         }
+        Py_DECREF(r);
 
     PyObjC_END_WITH_GIL
 }
@@ -537,27 +530,14 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        /* XXX: Maybe just always use the vectorcall path? */
-
-        if (PyAnySet_Check(value)) {
-            int r = PySet_Discard(value, tmp);
-            Py_DECREF(tmp);
-            if (r == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-        } else {
-            PyObject* r;
-
-            PyObject* args[3] = {NULL, value, tmp};
-            r                 = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
-                                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(tmp);
-            if (r == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            Py_DECREF(r);
+        PyObject* args[3] = {NULL, value, tmp};
+        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
+                                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(tmp);
+        if (r == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
         }
+        Py_DECREF(r);
 
     PyObjC_END_WITH_GIL
 }
@@ -575,27 +555,14 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        /* XXX: Maybe just always use the vectorcall path? */
-
-        if (PyAnySet_Check(value)) {
-            int r = PySet_Add(value, tmp);
-            Py_DECREF(tmp);
-            if (r == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-        } else {
-            PyObject* r;
-
-            PyObject* args[3] = {NULL, value, tmp};
-            r                 = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
-                                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(tmp);
-            if (r == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-            Py_DECREF(r);
+        PyObject* args[3] = {NULL, value, tmp};
+        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
+                                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(tmp);
+        if (r == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
         }
+        Py_DECREF(r);
 
     PyObjC_END_WITH_GIL
 }
