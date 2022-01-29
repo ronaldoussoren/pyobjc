@@ -5,6 +5,12 @@
 #ifndef PyObjC_CLOSURE_POOL
 #define PyObjC_CLOSURE_POOL
 
+#import <Foundation/Foundation.h>
+
+#ifndef MAC_OS_X_VERSION_10_15
+#define MAC_OS_X_VERSION_10_15 101500
+#endif
+
 #if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
 
 NS_ASSUME_NONNULL_BEGIN

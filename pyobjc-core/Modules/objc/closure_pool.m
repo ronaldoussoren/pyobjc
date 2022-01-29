@@ -4,6 +4,7 @@
  *
  * These functions are only used when deploying to macOS 10.14 or earlier.
  */
+#include "pyobjc.h"
 #include "closure_pool.h"
 
 #if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15

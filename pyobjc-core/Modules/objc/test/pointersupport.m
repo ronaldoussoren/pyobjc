@@ -7,8 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-struct objc_class;
-
 static CFStringRef aString = CFSTR("a static string");
 
 @interface OC_PointerSupport : NSObject {
@@ -27,12 +25,12 @@ static CFStringRef aString = CFSTR("a static string");
     return Py_None;
 }
 
-+ (struct objc_class*)getClass
++ (Class)getClass
 {
-    return (struct objc_class*)[OC_PointerSupport class];
+    return (Class)[OC_PointerSupport class];
 }
 
-+ (id)className:(struct objc_class*)class
++ (id)className:(Class)class
 {
     if (class == Nil) {
         return @"No class given";

@@ -24,6 +24,8 @@ of test coverage for the C code in pyobjc-core.
   instead of Python's ``KeyError`` for missing keys. This matches the documented
   behaviour of ``NSDictionary``.
 
+* Fix build problem on macOS 10.14 or earlier
+
 * The Objective-C proxy for a python :class:`int` is now always ``OC_PythonNumber``,
   in previous versions instances were proxied as ``NSNumber`` when the
   value was in the range of an ``unsigned long long`` that's outside of the

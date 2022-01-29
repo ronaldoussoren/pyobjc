@@ -2,6 +2,7 @@
  * Generic support for opaque pointer types, such as NSZone*
  */
 #include "pyobjc.h"
+#include "closure_pool.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
