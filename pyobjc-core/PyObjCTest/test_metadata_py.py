@@ -616,7 +616,7 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
 
     # pass-by-reference
     def sumX_andY_(self, x, y):
-        return x ** 2 + y ** 2
+        return x**2 + y**2
 
     def divBy5_remainder_(self, v, r):
         if r is None:
@@ -961,10 +961,10 @@ class TestByReference(TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         r = OC_MetaDataTest.sumX_andY_on_(1, 2, o)
-        self.assertEqual(r, 1 ** 2 + 2 ** 2)
+        self.assertEqual(r, 1**2 + 2**2)
 
         r = OC_MetaDataTest.sumX_andY_on_(2535, 5325, o)
-        self.assertEqual(r, 2535 ** 2 + 5325 ** 2)
+        self.assertEqual(r, 2535**2 + 5325**2)
 
         with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
             OC_MetaDataTest.sumX_andY_on_(42, objc.NULL, o)

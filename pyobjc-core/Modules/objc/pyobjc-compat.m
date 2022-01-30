@@ -37,23 +37,21 @@ PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
 
 static PyObject* registry = NULL;
 
-PyObject* _Nullable PyBytes_InternFromString(const char* v)
+static PyObject* _Nullable _intern_bytes(PyObject* key)
 {
-    PyObject* key;
     PyObject* value;
-
-    /* XXX: Move registry to module state and initialize during
-     *      module setup.
-     */
-    if (registry == NULL) {
-        registry = PyDict_New();
-        if (registry == NULL) // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
-    }
-
-    key = PyBytes_FromString(v);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
+    }
+
+    if (registry == NULL) {
+        registry = PyDict_New();
+        if (registry == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(key);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
     }
     value = PyDict_GetItemWithError(registry, key);
     if (value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
@@ -78,40 +76,14 @@ PyObject* _Nullable PyBytes_InternFromString(const char* v)
     }
 }
 
-PyObject* _Nullable PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
+PyObject* _Nullable PyObjCBytes_InternFromString(const char* v)
 {
-    PyObject* key;
-    PyObject* value;
+    return _intern_bytes(PyBytes_FromString(v));
+}
 
-    if (registry == NULL) {
-        registry = PyDict_New();
-        if (registry == NULL) {
-            return NULL;
-        }
-    }
-
-    key = PyBytes_FromStringAndSize(v, l);
-    if (key == NULL) {
-        return NULL;
-    }
-
-    value = PyDict_GetItemWithError(registry, key);
-    if (value == NULL && PyErr_Occurred()) {
-        Py_DECREF(key);
-        return NULL;
-    } else if (value == NULL) {
-        int r = PyDict_SetItem(registry, key, key);
-        if (r == -1) {
-            Py_DECREF(key);
-            return NULL;
-        } else {
-            return key;
-        }
-    } else {
-        Py_DECREF(key);
-        Py_INCREF(value);
-        return value;
-    }
+PyObject* _Nullable PyObjCBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
+{
+    return _intern_bytes(PyBytes_FromStringAndSize(v, l));
 }
 
 /* XXX: Can we do without this function, it is a little too intimate with

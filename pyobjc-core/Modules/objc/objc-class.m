@@ -42,7 +42,7 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
         }
     }
 
-    v = PyBytes_InternFromString(sel_getName(sel));
+    v = PyObjCBytes_InternFromString(sel_getName(sel));
     if (v == NULL) {
         return -1;
     }
@@ -79,7 +79,7 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
             }
 
             if (hidden != NULL) {
-                PyObject* v = PyBytes_InternFromString(sel_getName(sel));
+                PyObject* v = PyObjCBytes_InternFromString(sel_getName(sel));
 
                 if (v == NULL) {
                     PyErr_Clear();
@@ -2483,10 +2483,10 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             goto error;
         }
         if (e - (attr + 1) > 127) { /* XXX: What does this do??? */
-            v = PyBytes_InternFromStringAndSize(attr + 1, e - (attr + 1));
+            v = PyObjCBytes_InternFromStringAndSize(attr + 1, e - (attr + 1));
         } else {
             PyObjCRT_RemoveFieldNames(buf, attr + 1);
-            v = PyBytes_InternFromString(buf);
+            v = PyObjCBytes_InternFromString(buf);
         }
         if (v == NULL) {
             goto error;

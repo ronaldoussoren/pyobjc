@@ -6,7 +6,7 @@ import sys
 
 import objc
 
-if sys.maxsize > 2 ** 32:
+if sys.maxsize > 2**32:
 
     def sel32or64(a, b):
         return b

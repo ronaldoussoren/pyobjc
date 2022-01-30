@@ -315,7 +315,7 @@ class TestLazyImport(TestCase):
         )
         self.assertIsInstance(mod, objc.ObjCLazyModule)
 
-        self.assertEqual(mod.umax, 2 ** 64 - 1)
+        self.assertEqual(mod.umax, 2**64 - 1)
         self.assertEqual(mod.max, sys.maxsize)
         self.assertEqual(mod.min, -sys.maxsize - 1)
         self.assertEqual(mod.dblmx, sys.float_info.max)
@@ -323,7 +323,7 @@ class TestLazyImport(TestCase):
         self.assertEqual(mod.fltmx, objc._FLT_MAX)
         self.assertEqual(mod.fltmn, objc._FLT_MIN)
         self.assertEqual(mod.null, objc.NULL)
-        self.assertEqual(mod.umx, 2 ** 32 - 1)
+        self.assertEqual(mod.umx, 2**32 - 1)
 
     def test_existing_submodules(self):
         try:

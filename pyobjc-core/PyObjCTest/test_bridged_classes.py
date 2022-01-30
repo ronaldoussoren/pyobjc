@@ -112,7 +112,7 @@ class TestBridgedClasses(TestCase):
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_BuiltinPythonNumber")
 
-        value = sys.maxsize ** 2
+        value = sys.maxsize**2
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_BuiltinPythonNumber")
 

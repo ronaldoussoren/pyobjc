@@ -11,7 +11,7 @@ from PyObjCTools.TestSupport import TestCase
 BaseName = "NSAttributedString"
 BaseClass = objc.lookUpClass(BaseName)
 
-if sys.maxsize >= 2 ** 32:
+if sys.maxsize >= 2**32:
     # -poseAsClass: is not supported in 64-bit mode (the functionality is
     # not present in the 64-bit runtime and will never be because it
     # conflicts with new functionality such as non-fragile class layouts)

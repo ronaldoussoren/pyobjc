@@ -92,9 +92,9 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(Foundation.NSIntegerMax, int)
         self.assertIsInstance(Foundation.NSIntegerMin, int)
         self.assertIsInstance(Foundation.NSUIntegerMax, int)
-        self.assertEqual(Foundation.NSIntegerMax, 2 ** 63 - 1)
-        self.assertEqual(Foundation.NSIntegerMin, -(2 ** 63))
-        self.assertEqual(Foundation.NSUIntegerMax, 2 ** 64 - 1)
+        self.assertEqual(Foundation.NSIntegerMax, 2**63 - 1)
+        self.assertEqual(Foundation.NSIntegerMin, -(2**63))
+        self.assertEqual(Foundation.NSUIntegerMax, 2**64 - 1)
 
         self.assertTrue(objc.YES)
         self.assertFalse(objc.NO)

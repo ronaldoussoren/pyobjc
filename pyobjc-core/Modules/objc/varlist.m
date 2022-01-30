@@ -434,6 +434,7 @@ PyObjC_VarList_New(const char* tp, void* array)
         end--;
     }
 
+    /* XXX: Use PyObject_New() + separate buffer for the encoding */
     result = (PyObjC_VarList*)PyObject_Malloc(_PyObject_SIZE(&PyObjC_VarList_Type)
                                               + (end - tp) + 1);
     if (result == NULL) { // LCOV_BR_EXCL_LINE

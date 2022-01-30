@@ -47,7 +47,7 @@ def evaluate1(components, input_value, output_value):
 
 
 def getFunction1(colorspace):
-    if sys.maxsize > 2 ** 32:
+    if sys.maxsize > 2**32:
         a_type = "d"
     else:
         a_type = "f"

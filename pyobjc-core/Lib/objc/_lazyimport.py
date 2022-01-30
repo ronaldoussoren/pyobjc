@@ -368,7 +368,7 @@ class ObjCLazyModule(ModuleType):
                 return result
 
         if self.__varmap:
-            m = re.search(fr"\${name}(@[^$]*)?\$", self.__varmap)
+            m = re.search(rf"\${name}(@[^$]*)?\$", self.__varmap)
             if m is not None:
                 tp = m.group(1)
                 if not tp:
@@ -394,7 +394,7 @@ class ObjCLazyModule(ModuleType):
                 return result
 
         if self.__enummap:
-            m = re.search(fr"\${name}@([^$]*)\$", self.__enummap)
+            m = re.search(rf"\${name}@([^$]*)\$", self.__enummap)
             if m is not None:
                 result = self.__prs_enum(m.group(1))
                 if name in self.__enum_deprecated:

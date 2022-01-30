@@ -50,7 +50,7 @@ class TestNSNumber(TestCase):
         n = Foundation.NSNumber.numberWithInt_(1)
         self.assertRaises(AttributeError, setattr, n, "foo", 2)
 
-        n = Foundation.NSNumber.numberWithLongLong_(2 ** 32 + 2)
+        n = Foundation.NSNumber.numberWithLongLong_(2**32 + 2)
         self.assertRaises(AttributeError, setattr, n, "foo", 2)
 
     def testUseAsBasicType(self):
@@ -72,18 +72,18 @@ class TestNSNumber(TestCase):
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
         if sdkForPython() is not None and sdkForPython() < (10, 5):
             self.assertEqual(
-                Foundation.NSNumber.numberWithUnsignedInt_(2 ** 31), -(2 ** 31)
+                Foundation.NSNumber.numberWithUnsignedInt_(2**31), -(2**31)
             )
         else:
             self.assertEqual(
-                Foundation.NSNumber.numberWithUnsignedInt_(2 ** 31), (2 ** 31)
+                Foundation.NSNumber.numberWithUnsignedInt_(2**31), (2**31)
             )
 
     def testMethods(self):
-        v = Foundation.NSNumber.numberWithUnsignedInt_(2 ** 31)
+        v = Foundation.NSNumber.numberWithUnsignedInt_(2**31)
 
-        self.assertEqual(v.unsignedIntValue(), 2 ** 31)
-        self.assertEqual(v.intValue(), -(2 ** 31))
+        self.assertEqual(v.unsignedIntValue(), 2**31)
+        self.assertEqual(v.intValue(), -(2**31))
 
         v = Foundation.NSNumber.numberWithInt_(10)
         self.assertEqual(v.doubleValue(), float(10))
@@ -105,7 +105,7 @@ class TestNSNumber(TestCase):
                 self.assertEqual(x * y, Nx * Ny)
                 self.assertEqual(x / y, Nx / Ny)
                 self.assertEqual(x % y, Nx % Ny)
-                self.assertEqual(x ** y, Nx ** Ny)
+                self.assertEqual(x**y, Nx**Ny)
 
                 Nx = Foundation.NSNumber.numberWithFloat_(x + 0.5)
                 Ny = Foundation.NSNumber.numberWithFloat_(y + 0.5)
@@ -115,7 +115,7 @@ class TestNSNumber(TestCase):
                 self.assertEqual((x + 0.5) * (y + 0.5), Nx * Ny)
                 self.assertEqual((x + 0.5) / (y + 0.5), Nx / Ny)
                 self.assertEqual((x + 0.5) % (y + 0.5), Nx % Ny)
-                self.assertEqual((x + 0.5) ** (y + 0.5), Nx ** Ny)
+                self.assertEqual((x + 0.5) ** (y + 0.5), Nx**Ny)
 
                 Nx = Foundation.NSNumber.numberWithLongLong_(x)
                 Ny = Foundation.NSNumber.numberWithLongLong_(y)
@@ -125,7 +125,7 @@ class TestNSNumber(TestCase):
                 self.assertEqual((x) * (y), Nx * Ny)
                 self.assertEqual((x) / (y), Nx / Ny)
                 self.assertEqual((x) % (y), Nx % Ny)
-                self.assertEqual((x) ** (y), Nx ** Ny)
+                self.assertEqual((x) ** (y), Nx**Ny)
 
     def testTyping(self):
         # Thanks to some tricks and a cooperating Python runtime,
@@ -149,13 +149,13 @@ class TestNSNumber(TestCase):
         self.assertIsInstance(n, int)
         self.assertIsInstance(n, Foundation.NSNumber)
 
-        n = Foundation.NSNumber.numberWithLongLong_(2 ** 32 * 1024)
-        self.assertEqual(n, 2 ** 32 * 1024)
+        n = Foundation.NSNumber.numberWithLongLong_(2**32 * 1024)
+        self.assertEqual(n, 2**32 * 1024)
         self.assertIsInstance(n, int)
         self.assertIsInstance(n, Foundation.NSNumber)
 
-        n = Foundation.NSNumber.numberWithUnsignedLongLong_(2 ** 32 + 100)
-        self.assertEqual(n, 2 ** 32 + 100)
+        n = Foundation.NSNumber.numberWithUnsignedLongLong_(2**32 + 100)
+        self.assertEqual(n, 2**32 + 100)
         self.assertIsInstance(n, int)
         self.assertIsInstance(n, Foundation.NSNumber)
 

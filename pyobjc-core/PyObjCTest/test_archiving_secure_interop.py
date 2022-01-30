@@ -168,7 +168,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 self.assertEqual(converted, [testval])
 
         def test_interop_int(self):
-            for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62, 2 ** 63 + 10):
+            for testval in (-42, 0, 42, -(2**62), 2**62, 2**63 + 10):
                 with self.subTest(testval):
                     v = NSArray.arrayWithObject_(testval)
                     (
@@ -194,7 +194,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                     self.assertEqual(converted, [testval])
 
             with self.subTest("overflow"):
-                testval = 2 ** 64
+                testval = 2**64
                 v = NSArray.arrayWithObject_(testval)
                 data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 

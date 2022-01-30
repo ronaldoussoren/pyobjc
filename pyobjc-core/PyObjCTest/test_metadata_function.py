@@ -810,7 +810,7 @@ class TestArrayReturns(TestCase):
         v = makeIntArrayOf_(10)  # noqa: F821
         self.assertEqual(len(v), 10)
         for i in range(10):
-            self.assertEqual(v[i], i ** 3)
+            self.assertEqual(v[i], i**3)
 
         v = nullIntArrayOf_(100)  # noqa: F821
         self.assertEqual(v, objc.NULL)

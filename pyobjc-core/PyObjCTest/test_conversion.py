@@ -205,7 +205,7 @@ class TestNumbers(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-            if sys.maxsize < 2 ** 32:
+            if sys.maxsize < 2**32:
                 self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, float(ULONG_MAX)))
                 with self.assertRaisesRegex(ValueError, "foo"):
                     pyObjCPy(objc._C_ULNG, LONG_MIN)
@@ -226,7 +226,7 @@ class TestNumbers(TestCase):
         self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, LONG_MAX))
         self.assertEqual(LONG_MIN, pyObjCPy(objc._C_LNG, LONG_MIN))
         self.assertEqual(0, pyObjCPy(objc._C_LNG, float(0)))
-        if sys.maxsize < 2 ** 32:
+        if sys.maxsize < 2**32:
             self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, float(LONG_MAX)))
             self.assertEqual(LONG_MIN, pyObjCPy(objc._C_LNG, float(LONG_MIN)))
 
@@ -281,7 +281,7 @@ class TestNumbers(TestCase):
     def test_long_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_LNG_LNG, 0))
 
-        if sys.maxsize < 2 ** 32:
+        if sys.maxsize < 2**32:
             self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG_LNG, float(LONG_MAX)))
         self.assertEqual(LLONG_MAX, pyObjCPy(objc._C_LNG_LNG, LLONG_MAX))
         self.assertEqual(LLONG_MIN, pyObjCPy(objc._C_LNG_LNG, LLONG_MIN))

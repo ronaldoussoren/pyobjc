@@ -351,7 +351,7 @@ class TestArrayReturns(TestCase):
         v = m(o, 10)
         self.assertEqual(len(v), 10)
         for i in range(10):
-            self.assertEqual(v[i], i ** 3)
+            self.assertEqual(v[i], i**3)
 
         m = o.methodForSelector_(b"nullIntArrayOf:")
         v = m(o, 100)

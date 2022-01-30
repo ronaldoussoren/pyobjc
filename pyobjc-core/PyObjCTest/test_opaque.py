@@ -143,7 +143,7 @@ class TestFromC(TestCase):
         with self.assertRaisesRegex(
             OverflowError, "Python int too large to convert to C unsigned long"
         ):
-            FooHandle(c_void_p=2 ** 65 + 3)
+            FooHandle(c_void_p=2**65 + 3)
 
         with self.assertRaisesRegex(
             AttributeError, "'str' object has no attribute 'value'"

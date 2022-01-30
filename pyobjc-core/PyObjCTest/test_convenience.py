@@ -77,8 +77,8 @@ class TestBasicConvenience(TestCase):
         self.assertEqual(hash(v), -2)
 
     def test_hash_not_enormous(self):
-        v = OC_WithHash.alloc().initWithHash_(2 ** 64 - 1)
-        self.assertEqual(v.hash(), 2 ** 64 - 1)
+        v = OC_WithHash.alloc().initWithHash_(2**64 - 1)
+        self.assertEqual(v.hash(), 2**64 - 1)
         self.assertTrue(-sys.maxsize - 1 <= hash(v) <= sys.maxsize)
 
     def test_comparisons(self):

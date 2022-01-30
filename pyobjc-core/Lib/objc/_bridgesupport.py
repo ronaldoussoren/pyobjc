@@ -140,7 +140,7 @@ class _BridgeSupportParser:
                 result.append(stop)
 
             elif item.startswith(objc._C_ARY_B):
-                m = re.match(br"^.(\d*)(.*).$", item)
+                m = re.match(rb"^.(\d*)(.*).$", item)
                 result.append(objc._C_ARY_B)
                 result.append(m.group(1))
                 result.append(self.typestr2typestr(m.group(2)))
@@ -151,7 +151,7 @@ class _BridgeSupportParser:
 
         return b"".join(result)
 
-    if sys.maxsize > 2 ** 32:
+    if sys.maxsize > 2**32:
 
         def attribute_string(self, node, name, name64):
             if name64 is not None:

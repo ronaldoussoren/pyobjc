@@ -99,7 +99,7 @@ def _setup_conveniences():
         "NSIndexPath", (("__len__", lambda self: self.count()),)
     )
 
-    if sys.maxsize > 2 ** 32:
+    if sys.maxsize > 2**32:
         NSNotFound = 0x7FFFFFFFFFFFFFFF
     else:
         NSNotFound = 0x7FFFFFFF

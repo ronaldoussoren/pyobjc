@@ -963,7 +963,7 @@ class TestArrayReturns(TestCase):
         v = o.makeIntArrayOf_(10)
         self.assertEqual(len(v), 10)
         for i in range(10):
-            self.assertEqual(v[i], i ** 3)
+            self.assertEqual(v[i], i**3)
 
         v = o.nullIntArrayOf_(100)
         self.assertEqual(v, objc.NULL)
@@ -1527,11 +1527,11 @@ class TestVariableLengthValue(TestCase):
         with self.assertRaisesRegex(
             IndexError, "cannot fit 'int' into an index-sized integer"
         ):
-            v[2 ** 67]
+            v[2**67]
         with self.assertRaisesRegex(
             IndexError, "cannot fit 'int' into an index-sized integer"
         ):
-            v[2 ** 67] = 1
+            v[2**67] = 1
         with self.assertRaisesRegex(
             TypeError, "objc.varlist indices must be integers, got str"
         ):

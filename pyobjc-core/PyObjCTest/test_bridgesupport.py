@@ -596,7 +596,7 @@ class TestBridgeSupportParser(TestCase):
 
         try:
             for is32bit in (True, False):
-                sys.maxsize = 2 ** 31 - 1 if is32bit else 2 ** 63 - 1
+                sys.maxsize = 2**31 - 1 if is32bit else 2**63 - 1
 
                 for endian in ("little", "big"):
                     sys.byteorder = endian
@@ -625,27 +625,27 @@ class TestBridgeSupportParser(TestCase):
 
         all_constants = [
             ("constant1", b"@", False),
-            ("constant2", b"I" if sys.maxsize < 2 ** 32 else b"Q", False),
+            ("constant2", b"I" if sys.maxsize < 2**32 else b"Q", False),
             ("constant5", objc._C_NSBOOL, False),
             ("constant6", objc._C_BOOL, False),
             ("constant7", b"@", False),
             ("constant8", b"@", True),
         ]
-        if sys.maxsize > 2 ** 32:
+        if sys.maxsize > 2**32:
             all_constants.append(("constant4", b"Q", False))
 
         all_values = {
             "strconst1": b"string constant1",
             "strconst2": b"string constant 2"
-            if sys.maxsize < 2 ** 32
+            if sys.maxsize < 2**32
             else b"string constant two",
             "strconst1u": "string constant1 unicode",
             "strconst2u": "string constant 2 unicode"
-            if sys.maxsize < 2 ** 32
+            if sys.maxsize < 2**32
             else "string constant two unicode",
             "strconst7": "zee\xebn",
             "enum1": 1,
-            "enum2": 3 if sys.maxsize < 2 ** 32 else 4,
+            "enum2": 3 if sys.maxsize < 2**32 else 4,
             "enum3": 5 if sys.byteorder == "little" else 6,
             "enum4": 7,
             "enum9": 2.5,
@@ -660,7 +660,7 @@ class TestBridgeSupportParser(TestCase):
             "enum_posinf2": float("+inf"),
             "null1": None,
         }
-        if sys.maxsize > 2 ** 32:
+        if sys.maxsize > 2**32:
             all_values["strconst5"] = b"string five"
             all_values["strconst6"] = "string five unicode"
             all_values["enum6"] = 4
@@ -672,9 +672,9 @@ class TestBridgeSupportParser(TestCase):
 
         all_opaque = [
             ("opaque1", b"^{opaque1}"),
-            ("opaque2", b"^{opaque2=f}" if sys.maxsize < 2 ** 32 else b"^{opaque2=d}"),
+            ("opaque2", b"^{opaque2=f}" if sys.maxsize < 2**32 else b"^{opaque2=d}"),
         ]
-        if sys.maxsize > 2 ** 32:
+        if sys.maxsize > 2**32:
             all_opaque.append(("opaque4", b"^{opaque4=d}"))
 
         all_func_aliases = [("func1", "orig_function")]
@@ -685,7 +685,7 @@ class TestBridgeSupportParser(TestCase):
             ("CFProxy1Ref", b"^{CFProxy}", CFArrayTypeID),
             (
                 "CFProxy2Ref",
-                b"^{CFProxy32}" if sys.maxsize < 2 ** 32 else b"^{CFProxy64}",
+                b"^{CFProxy32}" if sys.maxsize < 2**32 else b"^{CFProxy64}",
                 CFArrayTypeID,
             ),
             ("CFProxy3Ref", b"^{CFProxy3}", None, "NSProxy"),
@@ -694,12 +694,12 @@ class TestBridgeSupportParser(TestCase):
             ("CFProxy6Ref", b"^{CFProxy}", None, "NSCFType"),
             (
                 "CFProxy7Ref",
-                b"^{CFProxy32}" if sys.maxsize < 2 ** 32 else b"^{CFProxy64}",
+                b"^{CFProxy32}" if sys.maxsize < 2**32 else b"^{CFProxy64}",
                 None,
                 "NSCFType",
             ),
         ]
-        if sys.maxsize > 2 ** 32:
+        if sys.maxsize > 2**32:
             all_cftypes.append(("CFProxy9Ref", b"^{CFProxy64}", CFArrayTypeID))
 
         all_methods = {
@@ -719,14 +719,14 @@ class TestBridgeSupportParser(TestCase):
             (b"MyClass2", b"method9", False): {"retval": {"type": b"d"}},
             (b"MyClass2", b"method10", False): {"retval": {"type": b"d"}},
             (b"MyClass2", b"method11", False): {
-                "retval": {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}
+                "retval": {"type": b"f" if sys.maxsize < 2**32 else b"d"}
             },
             (b"MyClass2", b"method13", True): {"retval": {"type_modifier": b"n"}},
             (b"MyClass2", b"method13b", False): {
                 "retval": {"sel_of_type": b"v@:f", "c_array_of_fixed_length": 4}
             },
             (b"MyClass2", b"method14", False): {
-                "retval": {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
+                "retval": {"sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d"}
             },
             (b"MyClass2", b"method15", False): {
                 "retval": {"null_accepted": False, "already_retained": True}
@@ -802,7 +802,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method10", False): {"arguments": {2 + 1: {"type": b"d"}}},
             (b"MyClass3", b"method11", False): {
-                "arguments": {2 + 1: {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}}
+                "arguments": {2 + 1: {"type": b"f" if sys.maxsize < 2**32 else b"d"}}
             },
             (b"MyClass3", b"method13", False): {
                 "arguments": {2 + 1: {"type_modifier": b"n"}}
@@ -815,7 +815,7 @@ class TestBridgeSupportParser(TestCase):
             (b"MyClass3", b"method14", False): {
                 "arguments": {
                     2
-                    + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
+                    + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d"}
                 }
             },
             (b"MyClass3", b"method15", False): {
@@ -922,9 +922,9 @@ class TestBridgeSupportParser(TestCase):
             ("function10", b"d", "", {"retval": {"type": b"d"}}),
             (
                 "function11",
-                b"f" if sys.maxsize < 2 ** 32 else b"d",
+                b"f" if sys.maxsize < 2**32 else b"d",
                 "",
-                {"retval": {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}},
+                {"retval": {"type": b"f" if sys.maxsize < 2**32 else b"d"}},
             ),
             ("function13", b"i", "", {"retval": {"type": b"i", "type_modifier": b"n"}}),
             (
@@ -946,7 +946,7 @@ class TestBridgeSupportParser(TestCase):
                 {
                     "retval": {
                         "type": b":",
-                        "sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        "sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                     }
                 },
             ),
@@ -1082,9 +1082,9 @@ class TestBridgeSupportParser(TestCase):
             ("function29", b"vd", "", {"arguments": {0: {"type": b"d"}}}),
             (
                 "function30",
-                b"vf" if sys.maxsize < 2 ** 32 else b"vd",
+                b"vf" if sys.maxsize < 2**32 else b"vd",
                 "",
-                {"arguments": {0: {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}}},
+                {"arguments": {0: {"type": b"f" if sys.maxsize < 2**32 else b"d"}}},
             ),
             (
                 "function32",
@@ -1115,7 +1115,7 @@ class TestBridgeSupportParser(TestCase):
                         0: {
                             "type": b":",
                             "sel_of_type": b"v@:f"
-                            if sys.maxsize < 2 ** 32
+                            if sys.maxsize < 2**32
                             else b"v@:d",
                         }
                     }
@@ -1251,7 +1251,7 @@ class TestBridgeSupportParser(TestCase):
         ]
 
         self.maxDiff = None
-        if sys.maxsize <= 2 ** 32:
+        if sys.maxsize <= 2**32:
             all_protocols = [
                 (
                     "protocol2",
@@ -1259,23 +1259,23 @@ class TestBridgeSupportParser(TestCase):
                         objc.selector(
                             None,
                             b"selector1",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(
                             None,
                             b"selector2",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(
                             None,
                             b"selector3",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                             isClassMethod=True,
                         ),
                         objc.selector(
                             None,
                             b"selector4",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(None, b"selector7", b"v@:f"),
                         objc.selector(None, b"selector8", b"v@:f", isClassMethod=True),
@@ -1290,23 +1290,23 @@ class TestBridgeSupportParser(TestCase):
                         objc.selector(
                             None,
                             b"selector1",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(
                             None,
                             b"selector2",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(
                             None,
                             b"selector3",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                             isClassMethod=True,
                         ),
                         objc.selector(
                             None,
                             b"selector4",
-                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         ),
                         objc.selector(None, b"selector6", b"v@:@"),
                         objc.selector(None, b"selector7", b"v@:f"),
@@ -1319,7 +1319,7 @@ class TestBridgeSupportParser(TestCase):
             ("struct3", b"{struct3=@@}", None),
             (
                 "struct4",
-                b"{struct3=ff}" if sys.maxsize < 2 ** 32 else b"{struct4=dd}",
+                b"{struct3=ff}" if sys.maxsize < 2**32 else b"{struct4=dd}",
                 None,
             ),
             ("struct5", b"{struct3=@@}", None),
@@ -2910,13 +2910,13 @@ class TestInitFrameworkWrapper(TestCase):
         path_elem = os.path.dirname(objc.__file__)
 
         if sys.byteorder == "big":
-            if sys.maxsize < 2 ** 32:
+            if sys.maxsize < 2**32:
                 arch = "-ppc"
             else:
                 arch = "-ppc64"
 
         else:
-            if sys.maxsize < 2 ** 32:
+            if sys.maxsize < 2**32:
                 arch = "-i386"
             else:
                 arch = "-x86_64"

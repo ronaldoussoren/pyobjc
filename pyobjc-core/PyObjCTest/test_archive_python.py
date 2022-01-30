@@ -604,11 +604,11 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, int)
         self.assertEqual(v, sys.maxsize * 4)
 
-        buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize ** 4)
+        buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize**4)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, int)
-        self.assertEqual(v, sys.maxsize ** 4)
+        self.assertEqual(v, sys.maxsize**4)
 
     def testSimpleLists(self):
         o = []
@@ -1193,7 +1193,7 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
             int(1),
             int(sys.maxsize),
             int(sys.maxsize * 128),
-            2 ** 63 + 1,
+            2**63 + 1,
         ):
             for x in val, -val:
                 with self.subTest(x=x):

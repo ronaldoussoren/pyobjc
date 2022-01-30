@@ -15,7 +15,7 @@ class TestQueueAPI(TestCase):
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_HIGH, 2)
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_LOW, -2)
-        self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_BACKGROUND, -(2 ** 15))
+        self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_BACKGROUND, -(2**15))
 
         self.assertEqual(libdispatch.DISPATCH_AUTORELEASE_FREQUENCY_INHERIT, 0)
         self.assertEqual(libdispatch.DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM, 1)

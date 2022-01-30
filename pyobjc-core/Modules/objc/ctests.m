@@ -933,6 +933,32 @@ PyErr_Clear();
 
 END_UNITTEST
 
+BEGIN_UNITTEST(BytesInterning)
+PyObject* b1;
+PyObject* b2;
+
+b1 = PyObjCBytes_InternFromString("hello");
+FAIL_IF(b1 == NULL);
+if (!PyBytes_Check(b1)) {
+    Py_DECREF(b1);
+    ASSERT(0);
+}
+ASSERT_EQUALS(strcmp(PyBytes_AsString(b1), "hello"), 0, "%d");
+
+b2 = PyObjCBytes_InternFromStringAndSize("hello world", 5);
+FAIL_IF(b2 == NULL);
+if (!PyBytes_Check(b2)) {
+    Py_DECREF(b2);
+    ASSERT(0);
+}
+
+ASSERT_EQUALS(b1, b2, "%p");
+
+Py_DECREF(b1);
+Py_DECREF(b2);
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(StructSize),
@@ -967,6 +993,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(AlwaysFails),
                                     TESTDEF(InvalidObjCPointer),
                                     TESTDEF(InvalidRegistryUsage),
+                                    TESTDEF(BytesInterning),
                                     {0, 0, 0, 0}};
 
 int

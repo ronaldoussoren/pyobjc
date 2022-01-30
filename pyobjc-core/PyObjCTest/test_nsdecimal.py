@@ -29,10 +29,10 @@ class TestNSDecimalWrapper(TestCase):
         self.assertEqual(str(d), "1.24")
 
         d = objc.NSDecimal(500, 3, False)
-        self.assertEqual(str(d), str(500 * 10 ** 3))
+        self.assertEqual(str(d), str(500 * 10**3))
 
         d = objc.NSDecimal(500, -6, True)
-        self.assertEqual(str(d), str(500 * 10 ** -6 * -1))
+        self.assertEqual(str(d), str(500 * 10**-6 * -1))
 
     def test_comparing(self):
         d1 = objc.NSDecimal("1.500")

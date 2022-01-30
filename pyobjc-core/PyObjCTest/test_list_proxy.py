@@ -58,7 +58,7 @@ class BasicSequenceTests:
         self.assertIsInstance(v, NSException)
         self.assertRegex(str(v), "IndexError.*:.* out of range")
 
-        v = OC_ArrayInt.getNthElement_offset_(seq, 2 ** 63)
+        v = OC_ArrayInt.getNthElement_offset_(seq, 2**63)
         self.assertIsInstance(v, NSException)
         self.assertRegex(str(v), "IndexError.*: out of range")
 
@@ -144,7 +144,7 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         self.assertIsInstance(v, NSException)
         self.assertRegex(str(v), "IndexError.*:.* out of range")
 
-        v = OC_ArrayInt.setNthElement_offset_replacement_(s, 2 ** 63, "world")
+        v = OC_ArrayInt.setNthElement_offset_replacement_(s, 2**63, "world")
         self.assertIsInstance(v, NSException)
         self.assertRegex(str(v), "IndexError.*: out of range")
 
@@ -170,7 +170,7 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         self.assertIs(r, None)
         self.assertEqual(s, [0, None, "hello", 1, 2, 3, 4])
 
-        r = OC_ArrayInt.insertIntoArray_offset_value_(s, 2 ** 63, "world")
+        r = OC_ArrayInt.insertIntoArray_offset_value_(s, 2**63, "world")
         self.assertIsInstance(r, NSException)
         self.assertEqual(str(r), "<class 'IndexError'>: No such index")
 
@@ -222,7 +222,7 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
             str(r), "<class 'IndexError'>: list assignment index out of range"
         )
 
-        r = OC_ArrayInt.remove_offset_(s, 2 ** 63 + 5)
+        r = OC_ArrayInt.remove_offset_(s, 2**63 + 5)
         self.assertEqual(str(r), "<class 'IndexError'>: No such index")
 
         r = OC_ArrayInt.remove_offset_((1,), 0)
@@ -234,7 +234,7 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
 
 class SequenceWithoutLen(collections.abc.Sequence):
     def __getitem__(self, idx):
-        return idx ** 2
+        return idx**2
 
     def __len__(self):
         raise RuntimeError("no length")
@@ -245,7 +245,7 @@ class SequenceWithoutLen(collections.abc.Sequence):
 
 class SequenceWithNegativeLen(collections.abc.Sequence):
     def __getitem__(self, idx):
-        return idx ** 2
+        return idx**2
 
     def __len__(self):
         return -4

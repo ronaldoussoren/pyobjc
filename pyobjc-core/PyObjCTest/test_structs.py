@@ -341,10 +341,10 @@ class TestStructs(TestCase):
             with self.assertRaisesRegex(
                 IndexError, "cannot fit 'int' into an index-sized integer"
             ):
-                v[2 ** 68]
+                v[2**68]
 
-            self.assertEqual(v[2 ** 68 :], ())
-            self.assertEqual(v[2 ** 68 : 2 ** 68 + 3], ())
+            self.assertEqual(v[2**68 :], ())
+            self.assertEqual(v[2**68 : 2**68 + 3], ())
 
             # Write (item, slice)
             v[0] = 4
@@ -377,12 +377,12 @@ class TestStructs(TestCase):
             with self.assertRaisesRegex(
                 IndexError, "cannot fit 'int' into an index-sized integer"
             ):
-                v[2 ** 68] = 4
+                v[2**68] = 4
 
             with self.assertRaisesRegex(
                 TypeError, "Slice assignment would change size of FooStruct2 instance"
             ):
-                v[2 ** 68 :] = (4,)
+                v[2**68 :] = (4,)
 
             # Delete (item slice)
             with self.assertRaisesRegex(

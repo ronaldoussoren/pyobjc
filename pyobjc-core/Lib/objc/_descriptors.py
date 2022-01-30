@@ -40,7 +40,7 @@ from objc._objc import (
 
 from inspect import getfullargspec
 
-_C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2 ** 32]
+_C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2**32]
 
 
 #

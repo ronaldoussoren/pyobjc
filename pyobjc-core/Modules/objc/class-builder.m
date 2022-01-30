@@ -909,7 +909,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             sel->sel_class = new_class;
 
             if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
-                PyObject* v = PyBytes_InternFromString(
+                PyObject* v = PyObjCBytes_InternFromString(
                     sel_getName(PyObjCSelector_GetSelector(value)));
                 if (v == NULL) {
                     goto error_cleanup;
@@ -955,7 +955,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             sel->sel_class = new_class;
 
             if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
-                PyObject* v = PyBytes_InternFromString(
+                PyObject* v = PyObjCBytes_InternFromString(
                     sel_getName(PyObjCSelector_GetSelector(value)));
                 if (v == NULL) {
                     goto error_cleanup;

@@ -10,7 +10,7 @@ class MyClass(NSObject):
     result = objc.ivar("result", objc._C_INT)
 
     def result(self):
-        return self.base ** self.power
+        return self.base**self.power
 
 
 MyClass.setKeys_triggerChangeNotificationsForDependentKey_(["base", "power"], "result")

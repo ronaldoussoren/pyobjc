@@ -412,10 +412,10 @@ class TestByReference_AllArgs(TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         r = o.sumX_andY_(1, 2)
-        self.assertEqual(r, 1 ** 2 + 2 ** 2)
+        self.assertEqual(r, 1**2 + 2**2)
 
         r = o.sumX_andY_(2535, 5325)
-        self.assertEqual(r, 2535 ** 2 + 5325 ** 2)
+        self.assertEqual(r, 2535**2 + 5325**2)
 
         # self.assertRaises(ValueError, o.sumX_andY_, 42, objc.NULL)
 
