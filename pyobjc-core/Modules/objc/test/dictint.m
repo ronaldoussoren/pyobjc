@@ -9,6 +9,34 @@
 @end
 
 @implementation OC_DictInt
++ (id)dictWithKeyOfClass:(Class)keyClass valueOfClass:(Class)valueClass
+{
+    NSInvocation*        inv;
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    NSObject<NSCopying>* key;
+    NSObject*            value;
+
+    inv = [NSInvocation
+        invocationWithMethodSignature:[NSObject
+                                          methodSignatureForSelector:@selector(new)]];
+    if (inv == nil) {
+        [dict release];
+        return nil;
+    }
+    inv.selector = @selector(new);
+
+    inv.target = keyClass;
+    [inv invoke];
+    [inv getReturnValue:&key];
+
+    inv.target = valueClass;
+    [inv invoke];
+    [inv getReturnValue:&value];
+
+    [dict setObject:value forKey:key];
+    return [dict autorelease];
+}
+
 + (NSArray*)allKeys:(NSDictionary*)dict
 {
     return [[dict keyEnumerator] allObjects];

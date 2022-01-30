@@ -15,6 +15,28 @@ typedef unsigned int NSUInteger;
 
 @implementation OC_TestSet
 
++ (id)setWithInstanceOfClass:(Class)aClass
+{
+    NSInvocation*        inv;
+    NSMutableSet*        set = [[NSMutableSet alloc] init];
+    NSObject<NSCopying>* value;
+
+    inv = [NSInvocation
+        invocationWithMethodSignature:[NSObject
+                                          methodSignatureForSelector:@selector(new)]];
+    if (inv == nil) {
+        [set release];
+        return nil;
+    }
+    inv.target   = aClass;
+    inv.selector = @selector(new);
+
+    [inv invoke];
+    [inv getReturnValue:&value];
+    [set addObject:value];
+    return [set autorelease];
+}
+
 + (Class)classOf:(NSObject*)value
 {
     return [value class];

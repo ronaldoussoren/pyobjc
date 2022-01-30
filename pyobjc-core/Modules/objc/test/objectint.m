@@ -17,6 +17,7 @@ NSObject ()
 - (BOOL)isNSValue__;
 - (CFTypeID)_cfTypeID;
 - (NSComparisonResult)compare:(NSObject*)other;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
 @end
 
 @interface
@@ -634,6 +635,66 @@ NSObject (TestMethods)
 
 @end
 
+@interface OC_NoPythonRepresentation : NSObject <NSCopying>
+/*
+ * Helper class that can be used to test error paths
+ * in creating a proxy for an ObjC object.
+ */
+{
+    bool _allowPython;
+}
+@end
+
+@implementation OC_NoPythonRepresentation
+- (instancetype _Nullable)init
+{
+    self = [super init];
+    if (!self)
+        return nil;
+
+    _allowPython = false;
+    return self;
+}
+
+- (instancetype)copyWithZone:(NSZone*)zone
+{
+    return [self retain];
+}
+
+- (instancetype)copy
+{
+    return [self retain];
+}
+
+- (instancetype _Nullable)initAllowPython:(bool)allowPython
+{
+    self = [super init];
+    if (!self)
+        return nil;
+
+    _allowPython = allowPython;
+    return self;
+}
+
+- (void)setAllowPython:(bool)allow
+{
+    _allowPython = allow;
+}
+- (bool)allowPython
+{
+    return _allowPython;
+}
+- (PyObject* _Nullable)__pyobjc_PythonObject__
+{
+    if (_allowPython) {
+        return [super __pyobjc_PythonObject__];
+    } else {
+        PyErr_SetString(PyExc_ValueError, "cannot have Python representation");
+        return NULL;
+    }
+}
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
@@ -655,6 +716,12 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_objectint(void)
     }
 
     if (PyModule_AddObject(m, "OC_ObjectInt", PyObjC_IdToPython([OC_ObjectInt class]))
+        < 0) {
+        return NULL;
+    }
+
+    if (PyModule_AddObject(m, "OC_NoPythonRepresentation",
+                           PyObjC_IdToPython([OC_NoPythonRepresentation class]))
         < 0) {
         return NULL;
     }

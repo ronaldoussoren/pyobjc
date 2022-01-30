@@ -10,6 +10,31 @@
 @end
 
 @implementation OC_ArrayInt
++ (id)arrayWithInstancesOfClass:(Class)aClass count:(NSUInteger)count
+{
+    NSUInteger      i;
+    NSInvocation*   inv;
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+
+    inv = [NSInvocation
+        invocationWithMethodSignature:[NSObject
+                                          methodSignatureForSelector:@selector(new)]];
+    if (inv == nil) {
+        [array release];
+        return nil;
+    }
+    inv.target   = aClass;
+    inv.selector = @selector(new);
+
+    for (i = 0; i < count; i++) {
+        id value;
+        [inv invoke];
+        [inv getReturnValue:&value];
+        [array addObject:value];
+    }
+    return [array autorelease];
+}
+
 + (id)getNthElement:(NSArray*)array offset:(NSUInteger)offset
 {
     @try {
