@@ -289,15 +289,24 @@ class TestPlainPythonMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_ObjectInt.idSelectorOf_(value)
 
+    def assert_typestr_similar(self, left, right):
+        if left in (objc._C_CHR, objc._C_NSBOOL, objc._C_BOOL):
+            if right not in (objc._C_CHR, objc._C_NSBOOL, objc._C_BOOL):
+                self.fail(f"{left!r} not compatible with {right!r}")
+
+            return
+
+        self.assertEqual(left, right)
+
     def assert_method_signature(self, signature, typestr):
         parts = objc.splitSignature(typestr)
         rval = parts[0]
         args = parts[1:]
 
-        self.assertEqual(signature.methodReturnType(), rval)
+        self.assert_typestr_similar(signature.methodReturnType(), rval)
         self.assertEqual(signature.numberOfArguments(), len(args))
         for idx, arg in enumerate(args):
-            self.assertEqual(signature.getArgumentTypeAtIndex_(idx), arg)
+            self.assert_typestr_similar(signature.getArgumentTypeAtIndex_(idx), arg)
 
     def test_methodsignature_python(self):
         forwarder = Forwarder()
