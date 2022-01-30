@@ -413,8 +413,154 @@ class TestPlainPythonMethods(TestCase):
                     self.assertIsNot(m, None)
                     self.assert_method_signature(m, typestr)
 
-    def test_forwarding_native(self):
-        self.fail("Use NSInvocation to call methods implemented in objc")
+    def test_cfTypeId(self):
+        value = object()
+
+        result = OC_ObjectInt.cfTypeIDOf_(value)
+        self.assertIsInstance(result, int)
+
+        result2 = OC_ObjectInt.directCfTypeIDOf_(value)
+        self.assertIsInstance(result2, int)
+
+        self.assertEqual(result, result2)
+
+    def test_isKindOfClass(self):
+        value = object()
+
+        self.assertTrue(
+            OC_ObjectInt.isKindOfClass_of_(objc.lookUpClass("NSProxy"), value)
+        )
+        self.assertTrue(
+            OC_ObjectInt.isKindOfClass_of_(objc.lookUpClass("OC_PythonObject"), value)
+        )
+        self.assertFalse(
+            OC_ObjectInt.isKindOfClass_of_(objc.lookUpClass("NSObject"), value)
+        )
+
+    def test_useStoredAccessor(self):
+        value = object()
+
+        self.assertTrue(OC_ObjectInt.useStoredAccessorForClassOf_(value))
+
+    def test_accessInstanceVariablesDirectly(self):
+        value = object()
+
+        self.assertTrue(OC_ObjectInt.accessInstanceVariablesDirectlyForClassOf_(value))
+
+    def test_fowarding_copy(self):
+        class H:
+            pass
+
+        value = H()
+        value.x = 42
+
+        result = OC_ObjectInt.invokeCopyOf_(value)
+        self.assertIsInstance(result, H)
+        self.assertEqual(result.x, value.x)
+
+    def test_fowarding_copyWithZone(self):
+        class H:
+            pass
+
+        value = H()
+        value.x = 42
+
+        result = OC_ObjectInt.invokeCopyWithZoneOf_(value)
+        self.assertIsInstance(result, H)
+        self.assertEqual(result.x, value.x)
+
+    def test_fowarding_description(self):
+        val = object()
+        result = OC_ObjectInt.invokeDescriptionOf_(val)
+        self.assertEqual(result, repr(val))
+
+    def test_fowarding_copyDescription(self):
+        val = object()
+        result = OC_ObjectInt.invokeCopyDescriptionOf_(val)
+        self.assertEqual(result, repr(val))
+
+    def test_fowarding_methodSignatureForSelector(self):
+        value = object()
+        result = OC_ObjectInt.invokeMethodSignatureForSelector_of_(
+            b"description", value
+        )
+        result2 = OC_ObjectInt.methodSignatureForSelector_of_(b"description", value)
+
+        self.assertEqual(result, result2)
+
+    def test_fowarding_doesNotRecognizeSelector(self):
+        value = object()
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "NSInvalidArgumentException - <object object at .*> does not recognize -description",
+        ):
+            OC_ObjectInt.invokeDoesNotRecognizeSelector_of_(b"description", value)
+
+    def test_forwarding_hash(self):
+        value = object()
+
+        result = OC_ObjectInt.invokeHashOf_(value)
+        self.assertEqual(result, cast_ulonglong(hash(value)))
+
+    def test_forwarding_responsToSelector(self):
+        class Forwarder:
+            def idSelector(self):
+                return 42
+
+        value = Forwarder()
+        self.assertTrue(OC_ObjectInt.invokeRespondsToSelector_of_("idSelector", value))
+        self.assertFalse(
+            OC_ObjectInt.invokeRespondsToSelector_of_("voidSelector", value)
+        )
+
+    def test_forwarding_classForKeyedArchiver(self):
+        self.assertIs(
+            OC_ObjectInt.invokeClassForKeyedArchiverOf_(object()),
+            objc.lookUpClass("OC_PythonObject"),
+        )
+
+    def test_forwarding_classForArchiver(self):
+        self.assertIs(
+            OC_ObjectInt.invokeClassForArchiverOf_(object()),
+            objc.lookUpClass("OC_PythonObject"),
+        )
+
+    def test_forwarding_classForCoder(self):
+        self.assertIs(
+            OC_ObjectInt.invokeClassForCoderOf_(object()),
+            objc.lookUpClass("OC_PythonObject"),
+        )
+
+    def test_forwarding_classForPortCoder(self):
+        self.assertIs(
+            OC_ObjectInt.invokeClassForPortCoderOf_(object()),
+            objc.lookUpClass("OC_PythonObject"),
+        )
+
+    def test_forwarding_replacementObjectForCoder_of_(self):
+        value = object()
+        self.assertIs(
+            OC_ObjectInt.invokeReplacementObjectForCoder_of_(None, value), value
+        )
+
+    def test_forwarding_replacementObjectForPortCoder_of_(self):
+        value = object()
+        self.assertIs(
+            OC_ObjectInt.invokeReplacementObjectForPortCoder_of_(None, value), value
+        )
+
+    def test_forwarding_replacementObjectForArchiver_(self):
+        value = object()
+        self.assertIs(
+            OC_ObjectInt.invokeReplacementObjectForArchiver_of_(None, value), value
+        )
+
+    def test_forwarding_replacementObjectForKeyedArchiver_(self):
+        value = object()
+        self.assertIs(
+            OC_ObjectInt.invokeReplacementObjectForKeyedArchiver_of_(None, value), value
+        )
 
     # def test_forwarding_python(self):
     #     ... # This method is not needed, normal invocations get turned
@@ -471,7 +617,7 @@ class TestPythonMisc(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot find repr"):
             OC_ObjectInt.descriptionOf_(value)
 
-    def test_has_unhashable(self):
+    def test_hash_unhashable(self):
         class Helper:
             __hash__ = None
 

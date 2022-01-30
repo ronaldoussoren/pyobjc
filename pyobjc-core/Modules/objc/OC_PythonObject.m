@@ -267,8 +267,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (m) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) {
-            return nil;
+        if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+            return nil;        // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
@@ -334,7 +334,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (sel_isEqual(aSelector, @selector(description))) {
         id res = [self description];
         [invocation setReturnValue:&res];
-
         return YES;
 
     } else if (sel_isEqual(aSelector, @selector(_copyDescription))) {
@@ -453,8 +452,32 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         [invocation setReturnValue:&c];
 
         return YES;
-    }
 
+    } else if (sel_isEqual(aSelector, @selector(doesNotRecognizeSelector:))) {
+        SEL sel;
+
+        [invocation getArgument:&sel atIndex:2];
+        [self doesNotRecognizeSelector:sel];
+
+        return YES;
+
+    } else if (sel_isEqual(aSelector, @selector(hash))) {
+        NSUInteger hash;
+
+        hash = [self hash];
+        [invocation setReturnValue:&hash];
+
+        return YES;
+    } else if (sel_isEqual(aSelector, @selector(methodSignatureForSelector:))) {
+        SEL       sel;
+        NSObject* result;
+
+        [invocation getArgument:&sel atIndex:2];
+        result = [self methodSignatureForSelector:sel];
+        [invocation setReturnValue:&result];
+
+        return YES;
+    }
     return NO;
 }
 
@@ -500,10 +523,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
         @try {
             argcount = [msign numberOfArguments];
+
+            // LCOV_EXCL_START
         } @catch (NSObject* exc) {
             PyObjC_LEAVE_GIL;
             @throw;
         }
+        // LCOV_EXCL_STOP
 
         args = PyTuple_New(argcount - 2);
         if (args == NULL) { // LCOV_BR_EXCL_LINE
@@ -520,10 +546,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
             @try {
                 argtype = [msign getArgumentTypeAtIndex:i];
+                // LCOV_EXCL_START
             } @catch (NSObject* exc) {
                 PyObjC_LEAVE_GIL;
                 @throw;
             }
+            // LCOV_EXCL_STOP
 
             argsize = PyObjCRT_SizeOfType(argtype);
             if (argsize == -1) {
@@ -537,10 +565,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 @try {
                     [invocation getArgument:argbuffer atIndex:i];
 
+                    // LCOV_EXCL_START
                 } @catch (NSObject* exc) {
                     PyObjC_LEAVE_GIL;
                     @throw;
                 }
+            // LCOV_EXCL_STOP
             Py_END_ALLOW_THREADS
 
             pyarg = pythonify_c_value(argtype, argbuffer);
@@ -572,10 +602,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 @try {
                     [invocation setReturnValue:retbuffer];
 
+                    // LCOV_EXCL_START
                 } @catch (NSObject* localException) {
                     PyObjC_LEAVE_GIL;
                     @throw;
                 }
+            // LCOV_EXCL_STOP
             Py_END_ALLOW_THREADS
         }
 
@@ -636,58 +668,19 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     return YES;
 }
 
-/* XXX:
- * - Try to use PyImport_ImportModuleLevel here
- * - Preferably switch to an objc.option for setting
- *   the function.
- */
-static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
-{
-    PyObject* func;
-    PyObject* name;
-    PyObject* mod;
-
-    name = PyUnicode_FromString(modname);
-    if (name == NULL) {
-        return NULL;
-    }
-
-    mod = PyImport_Import(name);
-    if (mod == NULL) {
-        Py_DECREF(name);
-        return NULL;
-    }
-    func = PyObject_GetAttrString(mod, funcname);
-    if (func == NULL) {
-        Py_DECREF(name);
-        Py_DECREF(mod);
-        return NULL;
-    }
-    Py_DECREF(name);
-    Py_DECREF(mod);
-
-    return func;
-}
-
-/*
- *  Call PyObjCTools.KeyValueCoding.getKey to get the value for a key
- */
 - (id)valueForKey:(NSString*)key
 {
-    static PyObject* getKeyFunc = NULL;
-
     PyObject* keyName;
     PyObject* val;
     id        res = nil;
 
-    PyObjC_BEGIN_WITH_GIL
+    if (PyObjC_getKey == NULL || PyObjC_getKey == Py_None) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"helper function for getKey not set"
+                                     userInfo:nil];
+    }
 
-        if (getKeyFunc == NULL) {
-            getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKey");
-            if (getKeyFunc == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
+    PyObjC_BEGIN_WITH_GIL
 
         keyName = id_to_python(key);
         if (keyName == NULL) {
@@ -696,7 +689,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
         PyObject* args[3] = {NULL, pyObject, keyName};
 
-        val = PyObject_Vectorcall(getKeyFunc, args + 1,
+        val = PyObject_Vectorcall(PyObjC_getKey, args + 1,
                                   2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
@@ -726,20 +719,17 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)setValue:value forKey:(NSString*)key
 {
-    static PyObject* setKeyFunc = NULL;
-
     PyObject* keyName;
     PyObject* pyValue;
     PyObject* val;
 
-    PyObjC_BEGIN_WITH_GIL
+    if (PyObjC_setKey == NULL || PyObjC_setKey == Py_None) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"helper function for setKey not set"
+                                     userInfo:nil];
+    }
 
-        if (setKeyFunc == NULL) {
-            setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKey");
-            if (setKeyFunc == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
+    PyObjC_BEGIN_WITH_GIL
 
         keyName = id_to_python(key);
         if (keyName == NULL) {
@@ -754,7 +744,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
         PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
 
-        val = PyObject_Vectorcall(setKeyFunc, args + 1,
+        val = PyObject_Vectorcall(PyObjC_setKey, args + 1,
                                   3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);
@@ -791,21 +781,17 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (id _Nullable)valueForKeyPath:(NSString*)keyPath
 {
-    static PyObject* getKeyFunc = NULL;
-
     PyObject* keyName;
     PyObject* val;
     id        res = nil;
 
+    if (PyObjC_getKeyPath == NULL || PyObjC_getKeyPath == Py_None) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"helper function for getKeyPath not set"
+                                     userInfo:nil];
+    }
+
     PyObjC_BEGIN_WITH_GIL
-
-        if (getKeyFunc == NULL) {
-            getKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "getKeyPath");
-            if (getKeyFunc == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-
         keyName = id_to_python(keyPath);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -813,7 +799,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
         PyObject* args[3] = {NULL, pyObject, keyName};
 
-        val = PyObject_Vectorcall(getKeyFunc, args + 1,
+        val = PyObject_Vectorcall(PyObjC_getKeyPath, args + 1,
                                   2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
@@ -838,21 +824,17 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
 - (void)setValue:value forKeyPath:(NSString*)keyPath
 {
-    static PyObject* setKeyFunc = NULL;
-
     PyObject* keyName;
     PyObject* pyValue;
     PyObject* val;
 
+    if (PyObjC_setKeyPath == NULL || PyObjC_setKeyPath == Py_None) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"helper function for setKeyPath not set"
+                                     userInfo:nil];
+    }
+
     PyObjC_BEGIN_WITH_GIL
-
-        if (setKeyFunc == NULL) {
-            setKeyFunc = getModuleFunction("PyObjCTools.KeyValueCoding", "setKeyPath");
-            if (setKeyFunc == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-
         keyName = id_to_python(keyPath);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -866,7 +848,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
         PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
 
-        val = PyObject_Vectorcall(setKeyFunc, args + 1,
+        val = PyObject_Vectorcall(PyObjC_setKeyPath, args + 1,
                                   3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);

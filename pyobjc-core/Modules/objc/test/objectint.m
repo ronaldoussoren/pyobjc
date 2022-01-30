@@ -277,6 +277,11 @@ NSObject (TestMethods)
     return CFGetTypeID((CFTypeRef)object);
 }
 
++ (CFTypeID)directCfTypeIDOf:(NSObject*)object
+{
+    return [object _cfTypeID];
+}
+
 + (void)nosuchSelectorOf:(NSObject*)object
 {
     [object nosuchSelector];
@@ -295,6 +300,336 @@ NSObject (TestMethods)
 + (id)selectorWithArg:(id)arg1 andArg:(id)arg2 of:(NSObject*)object
 {
     return [object selectorWithArg:arg1 andArg:arg2];
+}
+
++ (Class)invokeClassForCoderOf:(NSObject*)object
+{
+    Class              result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(classForCoder)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(classForCoder);
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (Class)invokeClassForPortCoderOf:(NSObject*)object
+{
+    Class              result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(classForPortCoder)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(classForPortCoder);
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (Class)invokeClassForArchiverOf:(NSObject*)object
+{
+    Class              result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(classForArchiver)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(classForArchiver);
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (Class)invokeClassForKeyedArchiverOf:(NSObject*)object
+{
+    Class              result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(classForKeyedArchiver)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(classForKeyedArchiver);
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeReplacementObjectForCoder:(id)arg of:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(replacementObjectForCoder:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(replacementObjectForCoder:);
+    [inv setArgument:&arg atIndex:2];
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeReplacementObjectForPortCoder:(id)arg of:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(replacementObjectForPortCoder:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(replacementObjectForPortCoder:);
+    [inv setArgument:&arg atIndex:2];
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeReplacementObjectForArchiver:(id)arg of:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(replacementObjectForArchiver:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(replacementObjectForArchiver:);
+    [inv setArgument:&arg atIndex:2];
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeReplacementObjectForKeyedArchiver:(id)arg of:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(replacementObjectForKeyedArchiver:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(replacementObjectForKeyedArchiver:);
+    [inv setArgument:&arg atIndex:2];
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeDescriptionOf:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(description)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(description);
+
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeCopyDescriptionOf:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(_copyDescription)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(_copyDescription);
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeCopyOf:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature = [object methodSignatureForSelector:@selector(copy)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(copy);
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSObject*)invokeCopyWithZoneOf:(NSObject*)object
+{
+    NSObject*          result;
+    NSZone*            zone = nil;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(copyWithZone:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(copyWithZone:);
+    [inv setArgument:&zone atIndex:2];
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (void)invokeDoesNotRecognizeSelector:(SEL)selector of:(NSObject*)object
+{
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(doesNotRecognizeSelector:)];
+    if (signature == nil) {
+        return;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return;
+    }
+    inv.target   = object;
+    inv.selector = @selector(doesNotRecognizeSelector:);
+    [inv setArgument:&selector atIndex:2];
+    [object forwardInvocation:inv];
+}
+
++ (NSObject*)invokeMethodSignatureForSelector:(SEL)selector of:(NSObject*)object
+{
+    NSObject*          result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(methodSignatureForSelector:)];
+    if (signature == nil) {
+        return nil;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return nil;
+    }
+    inv.target   = object;
+    inv.selector = @selector(methodSignatureForSelector:);
+    [inv setArgument:&selector atIndex:2];
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (NSUInteger)invokeHashOf:(NSObject*)object
+{
+    NSUInteger         result;
+    NSMethodSignature* signature = [object methodSignatureForSelector:@selector(hash)];
+    if (signature == nil) {
+        return 0;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return 0;
+    }
+    inv.target   = object;
+    inv.selector = @selector(hash);
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (bool)invokeRespondsToSelector:(SEL)sel of:(NSObject*)object
+{
+    BOOL               result;
+    NSMethodSignature* signature =
+        [object methodSignatureForSelector:@selector(respondsToSelector:)];
+    if (signature == nil) {
+        return 0;
+    }
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    if (inv == nil) {
+        return 0;
+    }
+    inv.target   = object;
+    inv.selector = @selector(respondsToSelector:);
+    [inv setArgument:&sel atIndex:2];
+    [object forwardInvocation:inv];
+    [inv getReturnValue:&result];
+    return result;
+}
+
++ (bool)useStoredAccessorForClassOf:(NSObject*)object
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    return [[object class] useStoredAccessor];
+#pragma clang diagnostic pop
+}
+
++ (bool)accessInstanceVariablesDirectlyForClassOf:(NSObject*)object
+{
+    return [[object class] accessInstanceVariablesDirectly];
 }
 
 @end

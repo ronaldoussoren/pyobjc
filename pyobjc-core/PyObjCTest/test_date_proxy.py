@@ -87,7 +87,7 @@ class TestDateInObjC(TestCase):
         py1 = self.value.timestamp() - datetime.datetime.now().timestamp()
         oc = OC_DateInt.timeIntervalSinceNowFor_(self.value)
         py2 = self.value.timestamp() - datetime.datetime.now().timestamp()
-        self.assertTrue(py1 >= oc >= py2)
+        self.assertTrue(py1 >= oc >= py2, f"not {py1} >= {oc} >= {py2}")
 
     def test_add_interval(self):
         seconds = 545.5
