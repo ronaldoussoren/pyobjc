@@ -126,6 +126,8 @@ of test coverage for the C code in pyobjc-core.
   of using C-API functions like :func:`PySet_Clear`. This simplifies
   the pyobjc-core code, and gives fewer problems with set subclasses.
 
+* Fix the buffer size used to for "struct sockaddr" arguments
+
 Version 8.2
 -----------
 

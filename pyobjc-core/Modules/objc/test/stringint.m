@@ -55,6 +55,14 @@
     return [NSString stringWithFormat:@"%C%C", 0xdbff, 0xdfff];
 }
 
++ (id)createNonUTF8WithClass:(Class)stringClass
+{
+#define BYTES "hello world"
+    return [[[stringClass alloc] initWithBytes:BYTES
+                                        length:sizeof(BYTES) - 1
+                                      encoding:NSASCIIStringEncoding] autorelease];
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

@@ -12,10 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PyObjCTestSockAddr : NSObject {
 }
-+ (NSObject* _Nullable)sockAddrToValue:(struct sockaddr*)addr;
-+ (void)getIPv4Addr:(struct sockaddr*)buf;
-+ (void)getIPv6Addr:(struct sockaddr*)buf;
-+ (void)getUnixAddr:(struct sockaddr*)buf;
 @end
 
 static NSString* _Nullable addr2string(void* addr, int addrlen)
@@ -127,6 +123,13 @@ static NSString* _Nullable addr2string(void* addr, int addrlen)
     strcpy(addr->sun_path, "/tmp/socket.addr");
     addr->sun_len = sizeof(*addr);
 }
+
++ (void)getSystemAddr:(struct sockaddr*)buf
+{
+    buf->sa_len    = sizeof(struct sockaddr);
+    buf->sa_family = AF_SYSTEM;
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

@@ -1,8 +1,8 @@
 import objc
+import socket
 import os
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
 from PyObjCTools.TestSupport import TestCase
-import socket
 
 FUNCTION_LIST = [
     (
@@ -44,6 +44,11 @@ objc.registerMetaDataForSelector(
     b"getUnixAddr:",
     {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
 )
+objc.registerMetaDataForSelector(
+    b"PyObjCTestSockAddr",
+    b"getSystemAddr:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
+)
 
 
 class TestSockAddrSupport(TestCase):
@@ -58,6 +63,57 @@ class TestSockAddrSupport(TestCase):
 
         v = o.sockAddrToValue_("/tmp/my.sock")
         self.assertEqual(v, ("UNIX", "/tmp/my.sock"))
+
+        v = o.sockAddrToValue_(b"/tmp/my.sock")
+        self.assertEqual(v, ("UNIX", "/tmp/my.sock"))
+
+        with self.assertRaisesRegex(UnicodeEncodeError, "can't encode characters"):
+            o.sockAddrToValue_("\ud800\udc00")
+
+        v = o.sockAddrToValue_(("<broadcast>", 99))
+        self.assertEqual(v, ("IPv4", "255.255.255.255", 99))
+
+        with self.assertRaisesRegex(socket.error, "address family mismatched"):
+            o.sockAddrToValue_(("<broadcast>", 99, 0))
+
+        v = o.sockAddrToValue_(("", 100))
+        self.assertEqual(v, ("IPv4", "0.0.0.0", 100))
+
+        v = o.sockAddrToValue_(("", 100, 0))
+        self.assertEqual(v, ("IPv6", "::", 100, 0, 0))
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99, 0))
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99))
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            o.sockAddrToValue_(("127.0.0.1", "http"))
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            o.sockAddrToValue_(("::1", "http", 0))
+
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 4 arguments \(7 given\)"
+        ):
+            o.sockAddrToValue_(("::1", 80, 0, 0, 0, 0, 0))
+
+        info = o.sockAddrToValue_(("mail.python.org", 99))
+        sockinfo = socket.getaddrinfo("mail.python.org", 99, socket.AF_INET)
+        self.assertEqual(info, ("IPv4",) + sockinfo[0][4])
+
+        info = o.sockAddrToValue_(("mail.python.org", 99, 0))
+        sockinfo = socket.getaddrinfo("mail.python.org", 99, socket.AF_INET6)
+        self.assertEqual(info, ("IPv6",) + sockinfo[0][4])
 
     def testIPv4FromC(self):
         o = PyObjCTestSockAddr
@@ -76,6 +132,14 @@ class TestSockAddrSupport(TestCase):
 
         v = o.getUnixAddr_(None)
         self.assertEqual(v, "/tmp/socket.addr")
+
+    def testSystemFromC(self):
+        o = PyObjCTestSockAddr
+
+        with self.assertRaisesRegex(
+            ValueError, r"Don't know how to convert sockaddr family \d+"
+        ):
+            o.getSystemAddr_(None)
 
 
 class TestSocketInterop(TestCase):

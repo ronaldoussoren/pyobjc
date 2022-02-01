@@ -215,8 +215,7 @@ NS_ASSUME_NONNULL_BEGIN
                        length:(NSUInteger)length
                      encoding:(NSStringEncoding)encoding
 {
-    char* py_encoding = NULL;
-    int   byteorder   = 0;
+    int byteorder = 0;
 
     /*
      * Call the super initializer first.
@@ -226,53 +225,17 @@ NS_ASSUME_NONNULL_BEGIN
         return nil;    // LCOV_EXCL_LINE
     }
 
-    /* Detect some often used single-byte encodings that can be created in Python without
-     * creating an intermediate object.
+    /*
+     * The most common encoding is UTF-8, use a shortcut
+     * for that.
      */
-    switch (encoding) {
-    case NSASCIIStringEncoding:
-        py_encoding = "ascii";
-        break;
-    case NSUTF8StringEncoding:
-        py_encoding = "UTF-8";
-        break;
-    case NSISOLatin1StringEncoding:
-        py_encoding = "latin1";
-        break;
-    }
-
-    if (py_encoding != NULL) {
+    if (encoding == NSUTF8StringEncoding) {
         PyObjC_BEGIN_WITH_GIL
-            value = PyUnicode_Decode(bytes, length, py_encoding, NULL);
+            value = PyUnicode_DecodeUTF8(bytes, length, NULL);
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
         PyObjC_END_WITH_GIL
-        return self;
-    }
-
-    /* UTF-16 encodings can also be decoded without an intermediate object */
-    byteorder = 2;
-    switch (encoding) {
-    case NSASCIIStringEncoding:
-        byteorder = 0;
-        break;
-    case NSUTF8StringEncoding:
-        byteorder = -1;
-        break;
-    case NSISOLatin1StringEncoding:
-        byteorder = 1;
-        break;
-    }
-    if (byteorder != 2) {
-        PyObjC_BEGIN_WITH_GIL
-            /* Decode as a UTF-16 string in native byteorder */
-            value = PyUnicode_DecodeUTF16(bytes, length, NULL, &byteorder);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-        PyObjC_END_WITH_GIL;
         return self;
     }
 
@@ -295,12 +258,14 @@ NS_ASSUME_NONNULL_BEGIN
      */
     unichar* chars = malloc(charcount * 2);
 
-    if (chars == NULL) {
+    if (chars == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [tmpval release];
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
-    [tmpval getCharacters:chars];
+    [tmpval getCharacters:chars range:NSMakeRange(0, charcount)];
     [tmpval release];
 
     PyObjC_BEGIN_WITH_GIL
@@ -308,8 +273,10 @@ NS_ASSUME_NONNULL_BEGIN
         byteorder = 0;
         value = PyUnicode_DecodeUTF16((const char*)chars, length * 2, NULL, &byteorder);
         free(chars);
-        if (value == NULL) {
+        if (value == NULL) { // LCOV_BR_EXCL_LINE
+            //  LCOV_EXCL_START
             PyObjC_GIL_FORWARD_EXC();
+            //  LCOV_EXCL_STOP
         }
 
     PyObjC_END_WITH_GIL;
@@ -345,20 +312,20 @@ NS_ASSUME_NONNULL_BEGIN
         return self;
     } else if (ver == 2) {
 
-        if (PyObjC_Decoder != NULL) {
+        if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
             PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
                 PyObject* setValue;
                 PyObject* selfAsPython;
                 PyObject* v;
 
-                if (cdr == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                PyObject* cdr = id_to_python(coder);
+                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
+                if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 }
                 setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
@@ -379,14 +346,16 @@ NS_ASSUME_NONNULL_BEGIN
 
             return self;
 
-        } else {
+        } else { // LCOV_BR_EXCL_LINE
+            // LOCV_EXCL_START
             [NSException raise:NSInvalidArgumentException
                         format:@"decoding Python objects is not supported"];
             return nil;
+            // LOCV_EXCL_STOP
         }
     } else {
         [NSException raise:NSInvalidArgumentException
-                    format:@"encoding Python unicode objects is not supported"];
+                    format:@"decoding Python unicode objects is not supported"];
         return nil;
     }
 }

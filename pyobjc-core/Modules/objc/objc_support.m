@@ -936,7 +936,7 @@ PyObjCRT_SizeOfType(const char* start_type)
             == 0) {
 
             /* XXX: What about struct sockaddr_un? */
-            return sizeof(struct sockaddr_in6);
+            return sizeof(struct sockaddr_storage);
         }
 
         if (unlikely(IS_DECIMAL(type))) {

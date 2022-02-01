@@ -130,6 +130,11 @@ NSObject (TestMethods)
     return [object replacementObjectForKeyedArchiver:archiver];
 }
 
++ (id)replacementObjectForCoder:(NSCoder*)archiver of:(NSObject*)object
+{
+    return [object replacementObjectForCoder:archiver];
+}
+
 + (Class)classForArchiverOf:(NSObject*)object
 {
     return [object classForArchiver];

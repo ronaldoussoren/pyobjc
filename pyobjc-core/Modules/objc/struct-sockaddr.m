@@ -27,22 +27,26 @@ PyObjC_SockAddr_Setup(void)
     PyObject* mod;
 
     mod = PyImport_ImportModule("socket");
-    if (mod == NULL) {
-        return -1;
+    if (mod == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
 
     Py_XDECREF(socket_error);
     socket_error = PyObject_GetAttrString(mod, "error");
-    if (socket_error == NULL) {
+    if (socket_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(mod);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     Py_XDECREF(socket_gaierror);
     socket_gaierror = PyObject_GetAttrString(mod, "gaierror");
-    if (socket_gaierror == NULL) {
+    if (socket_gaierror == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(mod);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     Py_DECREF(mod);
@@ -70,9 +74,16 @@ static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
     int  r;
 
     r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
-    if (r != 0) {
+    if (r != 0) { // LCOV_BR_EXCL_LINE
+        /*
+         * This should never fail due to NI_NUMERICHOST and having
+         * a large enough buffer.
+         */
+
+        // LCOV_EXCL_START
         set_gaierror(r);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     return PyUnicode_FromString(buf);
 }
@@ -91,9 +102,11 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         hints.ai_socktype = SOCK_DGRAM; /*dummy*/
         hints.ai_flags    = AI_PASSIVE;
         error             = getaddrinfo(NULL, "0", &hints, &res);
-        if (error) {
+        if (error) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             set_gaierror(error);
             return -1;
+            // LCOV_EXCL_STOP
         }
         switch (res->ai_family) {
         case AF_INET:
@@ -105,24 +118,28 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
             break;
 
         default:
+            // LCOV_EXCL_START
             freeaddrinfo(res);
             PyErr_SetString(socket_error, "unsupported address family");
             return -1;
+            // LCOV_EXCL_STOP
         }
-        if (res->ai_next) {
+        if (res->ai_next) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             freeaddrinfo(res);
             PyErr_SetString(socket_error, "wildcard resolved to multiple address");
             return -1;
+            // LCOV_EXCL_STOP
         }
-        if (res->ai_addrlen < addr_ret_size)
-            addr_ret_size = res->ai_addrlen;
+        if (res->ai_addrlen < addr_ret_size) // LCOV_BR_EXCL_LINE
+            addr_ret_size = res->ai_addrlen; // LCOV_EXCL_LINE
         memcpy(addr_ret, res->ai_addr, addr_ret_size);
         freeaddrinfo(res);
         return siz;
     }
     if (name[0] == '<' && strcmp(name, "<broadcast>") == 0) {
         struct sockaddr_in* sinaddr;
-        if (af != AF_INET && af != AF_UNSPEC) {
+        if (af != AF_INET) {
             PyErr_SetString(socket_error, "address family mismatched");
             return -1;
         }
@@ -147,8 +164,8 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         set_gaierror(error);
         return -1;
     }
-    if (res->ai_addrlen < addr_ret_size) {
-        addr_ret_size = res->ai_addrlen;
+    if (res->ai_addrlen < addr_ret_size) { // LCOV_BR_EXCL_LINE
+        addr_ret_size = res->ai_addrlen;   // LCOV_EXCL_LINE
     }
     memcpy((char*)addr_ret, res->ai_addr, addr_ret_size);
     freeaddrinfo(res);
@@ -157,9 +174,11 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         return 4;
     case AF_INET6:
         return 16;
+        // LCOV_EXCL_START
     default:
         PyErr_SetString(socket_error, "unknown address family");
         return -1;
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -170,20 +189,22 @@ PyObjC_SockAddrToPython(void* value)
     case AF_INET: {
         struct sockaddr_in* a       = (struct sockaddr_in*)value;
         PyObject*           addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-        if (addrobj != NULL) {
-            return Py_BuildValue("Ni", addrobj, ntohs(a->sin_port));
+        if (addrobj == NULL) { // LCOV_BR_EXCL_LINE
+            /* see comment in makeipaddr */
+            return NULL; // LCOV_EXCL_LINE
         }
-        return NULL;
+        return Py_BuildValue("Ni", addrobj, ntohs(a->sin_port));
     }
 
     case AF_INET6: {
         struct sockaddr_in6* a       = (struct sockaddr_in6*)value;
         PyObject*            addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-        if (addrobj != NULL) {
-            return Py_BuildValue("Niii", addrobj, ntohs(a->sin6_port), a->sin6_flowinfo,
-                                 a->sin6_scope_id);
+        if (addrobj == NULL) { // LCOV_BR_EXCL_LINE
+            /* see comment in makeipaddr */
+            return NULL; // LCOV_EXCL_LINE
         }
-        return NULL;
+        return Py_BuildValue("Niii", addrobj, ntohs(a->sin6_port), a->sin6_flowinfo,
+                             a->sin6_scope_id);
     }
 
     case AF_UNIX: {
@@ -223,7 +244,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             Py_DECREF(value);
             return -1;
         }
-        /* XXX: Check for correctnless (NUL byte at end, embedded NUL?) */
+        /* XXX: Check for correctless (NUL byte at end, embedded NUL?) */
         if (len >= (Py_ssize_t)sizeof(addr->sun_path) - 1) {
             PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
             Py_DECREF(value);
