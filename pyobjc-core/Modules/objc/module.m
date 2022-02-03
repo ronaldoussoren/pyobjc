@@ -1967,6 +1967,8 @@ struct objc_typestr_long_values {
                                 {"_C_CFIndex", @encode(CFIndex)},
                                 {"_C_CGFloat", @encode(CGFloat)},
                                 {"_C_FSRef", @encode(FSRef)},
+                                {"_C_NSRange", @encode(NSRange)},
+                                {"_C_CFRange", @encode(CFRange)},
                                 {"_sockaddr_type", @encode(struct sockaddr)},
                                 {NULL, 0}};
 

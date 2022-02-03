@@ -128,6 +128,15 @@ of test coverage for the C code in pyobjc-core.
 
 * Fix the buffer size used to for "struct sockaddr" arguments
 
+* Added ``objc._C_CFRange`` and ``objc._C_NSRange`` with the type
+  encodings of the C types ``CFRange`` and ``NSRange``.
+
+* Functions and methods where the length of a C array argument is passed
+  in another argument (such as ``int function(int* buffer, size_t bufsize)``)
+  now also work when the argument with the size is a pointer to
+  a ``CFRange`` or a pointer to a ``char``.
+
+
 Version 8.2
 -----------
 

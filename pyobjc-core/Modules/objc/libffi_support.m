@@ -451,6 +451,9 @@ extract_count(const char* type, void* pvalue)
     type = PyObjCRT_SkipTypeQualifiers(type);
     switch (*type) {
     case _C_ID: {
+        /* XXX: Not sure why this (only) works for contains with
+         * a count, supporting NSNumber could be useful as well.
+         */
         NSArray* value = *(id*)pvalue;
         if (!value) {
             return 0;
@@ -483,8 +486,28 @@ extract_count(const char* type, void* pvalue)
         return (Py_ssize_t) * (long long*)pvalue;
     case _C_ULNG_LNG:
         return (Py_ssize_t) * (unsigned long long*)pvalue;
+    case _C_CHARPTR:
+        return (Py_ssize_t) * *(char**)pvalue;
+
     case _C_PTR:
         switch (type[1]) {
+        case _C_ID: {
+            /* XXX: Not sure why this (only) works for contains with
+             * a count, supporting NSNumber could be useful as well.
+             */
+            if ((!*(id**)pvalue)) {
+                return 0;
+            }
+
+            NSArray* value = **(id**)pvalue;
+            if (!value) {
+                return 0;
+            } else if ([value respondsToSelector:@selector(count)]) {
+                return [value count];
+            } else {
+                /* Fall through to error case */
+            }
+        } break;
         case _C_CHR:
             return (Py_ssize_t) * *(char**)pvalue;
         case _C_CHAR_AS_INT:
@@ -513,6 +536,22 @@ extract_count(const char* type, void* pvalue)
             return (Py_ssize_t)((*(NSRange**)pvalue)->length);
         }
 
+        if (strncmp(type + 1, @encode(CFRange), sizeof(@encode(CFRange)) - 1) == 0) {
+            return (Py_ssize_t)((*(CFRange**)pvalue)->length);
+        }
+
+        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                    "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1)
+            == 0) {
+            return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
+        }
+
+        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                    "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1)
+            == 0) {
+            return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
+        }
+
         /* Fall through: */
     }
 
@@ -524,12 +563,16 @@ extract_count(const char* type, void* pvalue)
         return (Py_ssize_t)(((CFRange*)pvalue)->length);
     }
 
-    if (strncmp(type, "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1) == 0) {
-        return (Py_ssize_t)(((CFRange*)pvalue)->length);
+    if (strncmp(type, // LCOV_BR_EXCL_LINE
+                "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1)
+        == 0) {
+        return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }
 
-    if (strncmp(type, "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1) == 0) {
-        return (Py_ssize_t)(((CFRange*)pvalue)->length);
+    if (strncmp(type, // LCOV_BR_EXCL_LINE
+                "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1)
+        == 0) {
+        return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }
 
     if (strncmp(type, @encode(CFArrayRef), sizeof(@encode(CFArrayRef)) - 1) == 0
@@ -538,6 +581,13 @@ extract_count(const char* type, void* pvalue)
                == 0) {
 
         return (Py_ssize_t)CFArrayGetCount(*(CFArrayRef*)pvalue);
+    }
+    if (strncmp(type, @encode(CFArrayRef*), sizeof(@encode(CFArrayRef*)) - 1) == 0
+        || strncmp(type, @encode(CFMutableArrayRef*),
+                   sizeof(@encode(CFMutableArrayRef*)) - 1)
+               == 0) {
+
+        return (Py_ssize_t)CFArrayGetCount(**(CFArrayRef**)pvalue);
     }
 
     PyErr_Format(PyExc_TypeError, "Don't know how to extract count from encoding: %s",

@@ -1393,8 +1393,16 @@ in Cocoa but are not basic C types.
   ----------------------- ------------------------------
   :const:`_C_CGFloat`     *CGFloat*
   ----------------------- ------------------------------
+  :const:`_C_NSRange`     *NSRange*
+  ----------------------- ------------------------------
+  :const:`_C_CFRange`     *CFRange*
+  ----------------------- ------------------------------
   :const:`_sockaddr_type` *struct sockaddr*
   ======================= ==============================
+
+..versionadded:: 8.3
+
+  _C_NSRange, _C_CFRange
 
 
 Context pointers
