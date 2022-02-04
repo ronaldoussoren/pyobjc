@@ -161,8 +161,10 @@ object_dealloc(PyObject* obj)
             char buf[256];
             snprintf(buf, sizeof(buf), "leaking an uninitialized object of type %s",
                      Py_TYPE(obj)->tp_name);
-            PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf);
             ((PyObjCObject*)obj)->objc_object = nil;
+            if (PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf) == -1) {
+                PyErr_WriteUnraisable(obj);
+            }
 
         } else {
             Py_BEGIN_ALLOW_THREADS
@@ -1149,8 +1151,6 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
                  "revived Objective-C object of type %s. Object is zero-ed out.",
                  Py_TYPE(obj)->tp_name);
 
-        PyErr_Warn(PyObjCExc_ObjCRevivalWarning, buf);
-
         id objc_object = PyObjCObject_GetObject(obj);
         if (objc_object != nil) {
 
@@ -1169,6 +1169,10 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
         ((PyObjCObject*)obj)->objc_object = nil;
 
         Py_DECREF(obj);
+
+        if (PyErr_Warn(PyObjCExc_ObjCRevivalWarning, buf) == -1) {
+            PyErr_WriteUnraisable(obj);
+        }
 
         return;
     }

@@ -23,6 +23,38 @@ class TestNSCoderUsage(TestCase):
                 )
                 coder.encodeBytes_length_(b"hello world!", 5)
 
+                try:
+                    coder.encodeValueOfObjCType_at_(objc._C_INT, 2, 3)
+                except TypeError as exc:
+                    if "expected 2 arguments, got 3" not in str(exc):
+                        raise
+                else:
+                    raise AssertionError("Too many arguments didn't raise")
+
+                try:
+                    coder.encodeValueOfObjCType_at_(objc._C_INT)
+                except TypeError as exc:
+                    if "expected 2 arguments, got 1" not in str(exc):
+                        raise
+                else:
+                    raise AssertionError("Too few arguments didn't raise")
+
+                try:
+                    coder.encodeValueOfObjCType_at_("i", 2)
+                except TypeError as exc:
+                    if "a bytes-like object is required, not 'str'" not in str(exc):
+                        raise
+                else:
+                    raise AssertionError("Bad encoding type")
+
+                try:
+                    coder.encodeValueOfObjCType_at_(b"X", 2)
+                except objc.error as exc:
+                    if "PyObjCRT_SizeOfType: Unhandled type" not in str(exc):
+                        raise
+                else:
+                    raise AssertionError("Bad encoding value")
+
             def initWithCoder_(self, coder):
                 # NSObject does not implement NSCoding, no need to
                 # call superclass implementation:

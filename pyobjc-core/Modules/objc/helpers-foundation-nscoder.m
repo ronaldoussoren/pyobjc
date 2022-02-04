@@ -28,10 +28,12 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
     }
 
     buf = PyMem_Malloc(size);
-    if (buf == NULL) {
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     err = depythonify_c_value(view.buf, value, buf);
@@ -281,7 +283,7 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused
         PyObject* v = pythonify_c_value(typestr, ((char*)buf) + (i * size));
         if (v == NULL)
             goto error;
-        PyTuple_SetItem(values, i, v);
+        PyTuple_SET_ITEM(values, i, v);
     }
 
     PyObject* arglist[5] = {NULL, pyself, v1, v2, values};
@@ -660,8 +662,8 @@ static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
     }
 
     for (i = 0; i < count; i++) {
-        PyTuple_SetItem(result, i,
-                        pythonify_c_value(view.buf, ((char*)buf) + (size * i)));
+        PyTuple_SET_ITEM(result, i,
+                         pythonify_c_value(view.buf, ((char*)buf) + (size * i)));
         if (PyTuple_GetItem(result, i) == NULL) {
             Py_DECREF(result);
             PyMem_Free(buf);
@@ -925,7 +927,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
             return NULL;
         }
 
-        PyTuple_SetItem(result, 0, Py_None);
+        PyTuple_SET_ITEM(result, 0, Py_None);
         Py_INCREF(Py_None);
 
         v = pythonify_c_value(@encode(unsigned), &size);
@@ -933,7 +935,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, 1, v);
+        PyTuple_SET_ITEM(result, 1, v);
         return result;
     }
 
@@ -948,14 +950,14 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
         return NULL;
     }
 
-    PyTuple_SetItem(result, 0, v);
+    PyTuple_SET_ITEM(result, 0, v);
 
     v = pythonify_c_value(@encode(unsigned), &size);
     if (v == NULL) {
         Py_DECREF(result);
         return NULL;
     }
-    PyTuple_SetItem(result, 1, v);
+    PyTuple_SET_ITEM(result, 1, v);
 
     return result;
 }
@@ -1070,7 +1072,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
             return NULL;
         }
 
-        PyTuple_SetItem(result, 0, Py_None);
+        PyTuple_SET_ITEM(result, 0, Py_None);
         Py_INCREF(Py_None);
 
         v = pythonify_c_value(@encode(unsigned), &size);
@@ -1078,7 +1080,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, 1, v);
+        PyTuple_SET_ITEM(result, 1, v);
         return result;
     }
 
@@ -1093,14 +1095,14 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
         return NULL;
     }
 
-    PyTuple_SetItem(result, 0, v);
+    PyTuple_SET_ITEM(result, 0, v);
 
     v = pythonify_c_value(@encode(NSUInteger), &size);
     if (v == NULL) {
         Py_DECREF(result);
         return NULL;
     }
-    PyTuple_SetItem(result, 1, v);
+    PyTuple_SET_ITEM(result, 1, v);
 
     return result;
 }

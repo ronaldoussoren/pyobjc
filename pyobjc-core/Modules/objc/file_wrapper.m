@@ -27,8 +27,7 @@ static PyObject* _Nullable file_new(PyTypeObject* type __attribute__((__unused__
     fp = fopen(fname, mode);
 
     if (fp == NULL) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
+        return PyErr_SetFromErrno(PyExc_OSError);
     }
 
     return FILE_create(fp);
@@ -53,8 +52,7 @@ static PyObject* _Nullable file_close(PyObject* _self)
     }
 
     if (fclose(self->fp) < 0) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
+        return PyErr_SetFromErrno(PyExc_OSError);
     }
 
     self->fp = NULL;
@@ -75,8 +73,7 @@ static PyObject* _Nullable file_flush(PyObject* _self)
 
     result = fflush(self->fp);
     if (result != 0) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
+        return PyErr_SetFromErrno(PyExc_OSError);
     }
 
     Py_INCREF(Py_None);
@@ -125,8 +122,7 @@ static PyObject* _Nullable file_tell(PyObject* _self)
 
     offset = ftell(self->fp);
     if (offset < 0) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
+        return PyErr_SetFromErrno(PyExc_OSError);
     }
 
     return PyLong_FromLong(offset);
@@ -152,8 +148,7 @@ static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* 
 
     result = fseek(self->fp, offset, whence);
     if (result < 0) {
-        PyErr_SetFromErrno(PyExc_OSError);
-        return NULL;
+        return PyErr_SetFromErrno(PyExc_OSError);
     }
 
     Py_INCREF(Py_None);

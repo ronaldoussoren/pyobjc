@@ -136,6 +136,11 @@ of test coverage for the C code in pyobjc-core.
   now also work when the argument with the size is a pointer to
   a ``CFRange`` or a pointer to a ``char``.
 
+* A :class:`memoryview` of an ``NSMutableData`` instance is now writable.
+
+* Fix crash when trying to create an :class:`objc.informal_protocol` with
+  a sequence of selectors that contains a value that isn't an instance
+  of :class:`objc.selector`.
 
 Version 8.2
 -----------

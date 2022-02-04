@@ -136,7 +136,9 @@ PyObjCErr_FromObjC(NSObject* localException)
             if (exc == NULL) {
                 PyErr_Clear();
             } else {
-                PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc);
+                if (PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc) == -1) {
+                    PyErr_Clear();
+                }
             }
             Py_CLEAR(exc);
             PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -187,21 +189,29 @@ PyObjCErr_FromObjC(NSObject* localException)
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
              */
-            PyDict_SetItemString(dict, "name", c_localException_name);
+            if (PyDict_SetItemString(dict, "name", c_localException_name) == -1) {
+                PyErr_Clear();
+            }
             Py_DECREF(c_localException_name);
 
-            PyDict_SetItemString(dict, "reason", c_localException_reason);
+            if (PyDict_SetItemString(dict, "reason", c_localException_reason) == -1) {
+                PyErr_Clear();
+            }
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
                 if (v != NULL) {
-                    PyDict_SetItemString(dict, "userInfo", v);
+                    if (PyDict_SetItemString(dict, "userInfo", v) == -1) {
+                        PyErr_Clear();
+                    }
                     Py_DECREF(v);
                 } else {           // LCOV_BR_EXCL_LINE
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
-                PyDict_SetItemString(dict, "userInfo", Py_None);
+                if (PyDict_SetItemString(dict, "userInfo", Py_None) == -1) {
+                    PyErr_Clear();
+                }
             }
 
             const char* name   = [[(NSException*)localException name] UTF8String];
@@ -214,9 +224,13 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
-            PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict);
+            if (PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict) == -1) {
+                PyErr_Clear();
+            }
             Py_CLEAR(dict);
-            PyObject_SetAttrString(exc_value, "name", c_localException_name);
+            if (PyObject_SetAttrString(exc_value, "name", c_localException_name) == -1) {
+                PyErr_Clear();
+            }
             PyErr_Restore(exc_type, exc_value, exc_traceback);
         }
     PyObjC_END_WITH_GIL

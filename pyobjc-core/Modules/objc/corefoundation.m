@@ -162,7 +162,14 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
-    PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
+    if (PyDict_SetItemString(dict, "__slots__", PyTuple_New(0))
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(dict);
+        Py_DECREF(cf);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
 
     bases = PyTuple_New(1);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
@@ -176,10 +183,28 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     PyTuple_SET_ITEM(bases, 0, PyObjC_NSCFTypeClass);
     Py_INCREF(PyObjC_NSCFTypeClass);
 
+    PyObject* nm = PyUnicode_FromString(name);
+    if (nm == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(bases);
+        Py_DECREF(dict);
+        Py_DECREF(cf);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
     args = PyTuple_New(3);
-    PyTuple_SetItem(args, 0, PyUnicode_FromString(name));
-    PyTuple_SetItem(args, 1, bases);
-    PyTuple_SetItem(args, 2, dict);
+    if (args == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(nm);
+        Py_DECREF(bases);
+        Py_DECREF(dict);
+        Py_DECREF(cf);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    PyTuple_SET_ITEM(args, 0, nm);
+    PyTuple_SET_ITEM(args, 1, bases);
+    PyTuple_SET_ITEM(args, 2, dict);
 
     /* XXX: Check if this always equivalent to PyObject_Call(PyObjCClass_Type, args, NULL)
      *      if so, switch to vectorcall.

@@ -1448,9 +1448,9 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
             }
 
             /* Skip existing modifiers, we're overriding those */
-            strcpy(tp + 1, withoutModifiers);
-            tp[0] = meta->modifier;
             PyObjC_Assert(tp != NULL, NULL);
+            strcpy(tp + 1, withoutModifiers);
+            tp[0]               = meta->modifier;
             descr->typeOverride = YES;
             descr->type         = tp;
 

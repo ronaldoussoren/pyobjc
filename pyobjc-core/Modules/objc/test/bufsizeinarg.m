@@ -10,7 +10,7 @@
 #define BODY                                                                             \
     {                                                                                    \
         size_t          i, len = count;                                                  \
-        NSMutableArray* result = [NSMutableArray new];                                   \
+        NSMutableArray* result = [NSMutableArray array];                                 \
         if (result == nil)                                                               \
             return nil;                                                                  \
         for (i = 0; i < len; i++) {                                                      \
@@ -22,7 +22,7 @@
 #define PBODY                                                                            \
     {                                                                                    \
         size_t          i, len = *count;                                                 \
-        NSMutableArray* result = [NSMutableArray new];                                   \
+        NSMutableArray* result = [NSMutableArray array];                                 \
         if (result == nil)                                                               \
             return nil;                                                                  \
         for (i = 0; i < len; i++) {                                                      \
@@ -35,7 +35,7 @@
 + (NSArray*)nsrange:(NSRange)count array:(int*)values
 {
     size_t          i, len = count.length;
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -47,7 +47,7 @@
 + (NSArray*)cfrange:(CFRange)count array:(int*)values
 {
     size_t          i, len = count.length;
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -59,7 +59,7 @@
 + (NSArray*)id:(NSArray*)count array:(int*)values
 {
     size_t          i, len = [count count];
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -71,7 +71,7 @@
 + (NSArray*)cfarray:(CFArrayRef)count array:(int*)values
 {
     size_t          i, len = [(NSArray*)count count];
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -83,7 +83,7 @@
 + (NSArray*)pnsrange:(NSRange*)count array:(int*)values
 {
     size_t          i, len = count->length;
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -95,7 +95,7 @@
 + (NSArray*)pcfrange:(CFRange*)count array:(int*)values
 {
     size_t          i, len = count->length;
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -110,7 +110,7 @@
         return nil;
     }
     size_t          i, len = [*count count];
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {
@@ -122,7 +122,7 @@
 + (NSArray*)pcfarray:(CFArrayRef*)count array:(int*)values
 {
     size_t          i, len = [*(NSArray**)count count];
-    NSMutableArray* result = [NSMutableArray new];
+    NSMutableArray* result = [NSMutableArray array];
     if (result == nil)
         return nil;
     for (i = 0; i < len; i++) {

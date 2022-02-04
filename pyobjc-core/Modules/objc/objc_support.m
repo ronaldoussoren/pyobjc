@@ -29,6 +29,10 @@
 
 #include <CoreFoundation/CFNumber.h>
 
+#ifndef __LP64__
+#error "Requires LP64"
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 /*
@@ -715,8 +719,10 @@ PyObjCRT_AlignOfType(const char* start_type)
     case _C_UINT:
         return __alignof__(unsigned int);
     case _C_LNG:
+    case _C_LNG_LNG:
         return __alignof__(long);
     case _C_ULNG:
+    case _C_ULNG_LNG:
         return __alignof__(unsigned long);
     case _C_FLT:
         return __alignof__(float);
@@ -730,10 +736,6 @@ PyObjCRT_AlignOfType(const char* start_type)
 #endif
     case _C_PTR:
         return __alignof__(void*);
-    case _C_LNG_LNG:
-        return __alignof__(long long);
-    case _C_ULNG_LNG:
-        return __alignof__(unsigned long long);
     case _C_ARY_B:
         while (isdigit(*++type)) /* do nothing */
             ;
@@ -880,17 +882,15 @@ PyObjCRT_SizeOfType(const char* start_type)
     case _C_UINT:
         return sizeof(unsigned int);
     case _C_LNG:
+    case _C_LNG_LNG:
         return sizeof(long);
     case _C_ULNG:
+    case _C_ULNG_LNG:
         return sizeof(unsigned long);
     case _C_FLT:
         return sizeof(float);
     case _C_DBL:
         return sizeof(double);
-    case _C_LNG_LNG:
-        return sizeof(long long);
-    case _C_ULNG_LNG:
-        return sizeof(unsigned long long);
     case _C_UNICHAR:
         return sizeof(UniChar);
     case _C_CHAR_AS_TEXT:
@@ -1125,20 +1125,6 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
 
     case _C_LNG:
         while (*(long*)curdatum != 0) {
-            count++;
-            curdatum += sizeofitem;
-        }
-        break;
-
-    case _C_ULNG_LNG:
-        while (*(unsigned long long*)curdatum != 0) {
-            count++;
-            curdatum += sizeofitem;
-        }
-        break;
-
-    case _C_LNG_LNG:
-        while (*(long long*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
@@ -1839,16 +1825,7 @@ pythonify_c_value(const char* type, void* datum)
         break;
 
     case _C_UINT:
-#if __LP64__
         retobject = (PyObject*)PyLong_FromLong(*(unsigned int*)datum);
-
-#else
-        if (*(unsigned int*)datum > LONG_MAX) {
-            retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned int*)datum);
-        } else {
-            retobject = (PyObject*)PyLong_FromLong(*(unsigned int*)datum);
-        }
-#endif
         break;
 
     case _C_SHT:
@@ -1860,21 +1837,11 @@ pythonify_c_value(const char* type, void* datum)
         break;
 
     case _C_LNG_LNG:
-#ifndef __LP64__ /* else: fall-through to _C_LNG case */
-        retobject = (PyObject*)PyLong_FromLongLong(*(long long*)datum);
-        break;
-#endif
-
     case _C_LNG:
         retobject = (PyObject*)PyLong_FromLong(*(long*)datum);
         break;
 
     case _C_ULNG_LNG:
-#ifndef __LP64__ /* else: fallthrough to the ULNG case */
-        retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned long long*)datum);
-        break;
-#endif
-
     case _C_ULNG:
         retobject = PyLong_FromUnsignedLong(*(unsigned long*)datum);
         break;

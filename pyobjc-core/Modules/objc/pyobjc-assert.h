@@ -28,8 +28,9 @@ extern PyObject* PyObjCExc_InternalError;
 /* XXX: Always abort here because continuing is not really possible */
 #define PyObjCErr_InternalError()                                                        \
     do {                                                                                 \
-        PyErr_Format(PyObjCExc_InternalError, "PyObjC: internal error in %s at %s:%d",   \
-                     __FUNCTION__, __FILE__, __LINE__);                                  \
+        (void)PyErr_Format(PyObjCExc_InternalError,                                      \
+                           "PyObjC: internal error in %s at %s:%d", __FUNCTION__,        \
+                           __FILE__, __LINE__);                                          \
         _PyObjC_InternalError_Bailout("PyObjC: internal error in %s at %s:%d\n",         \
                                       __FUNCTION__, __FILE__, __LINE__);                 \
         abort();                                                                         \
@@ -37,9 +38,9 @@ extern PyObject* PyObjCExc_InternalError;
 
 #define PyObjCErr_InternalErrorMesg(msg)                                                 \
     do {                                                                                 \
-        PyErr_Format(PyObjCExc_InternalError,                                            \
-                     "PyObjC: internal error in %s at %s:%d: %s", __FUNCTION__,          \
-                     __FILE__, __LINE__, msg);                                           \
+        (void)PyErr_Format(PyObjCExc_InternalError,                                      \
+                           "PyObjC: internal error in %s at %s:%d: %s", __FUNCTION__,    \
+                           __FILE__, __LINE__, msg);                                     \
         _PyObjC_InternalError_Bailout("PyObjC: internal error in %s at %s:%d: %s\n",     \
                                       __FUNCTION__, __FILE__, __LINE__, msg);            \
     } while (0)

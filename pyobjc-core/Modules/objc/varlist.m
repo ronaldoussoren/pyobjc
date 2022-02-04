@@ -440,7 +440,7 @@ PyObjC_VarList_New(const char* tp, void* array)
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
-    PyObject_Init((PyObject*)result, &PyObjC_VarList_Type);
+    (void)PyObject_Init((PyObject*)result, &PyObjC_VarList_Type);
     result->array    = array;
     result->itemsize = PyObjCRT_AlignedSize(tp);
     if (unlikely(result->itemsize == -1)) {

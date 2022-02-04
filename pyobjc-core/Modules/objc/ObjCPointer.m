@@ -89,8 +89,7 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     PyObjCPointer* self;
 
     if (PyObjCPointer_RaiseException) {
-        PyErr_Format(PyObjCExc_UnknownPointerError, "pointer of type %s", t);
-        return NULL;
+        return PyErr_Format(PyObjCExc_UnknownPointerError, "pointer of type %s", t);
     }
 
     if (PyErr_WarnFormat(PyObjCExc_ObjCPointerWarning, 0,

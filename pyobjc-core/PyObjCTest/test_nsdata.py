@@ -25,6 +25,10 @@ class TestNSDataSupport(TestCase):
         with self.assertRaises(TypeError):
             buf.bytes(1)
 
+        view = memoryview(buf)
+        self.assertEqual(bytes(view), buf.bytes())
+        self.assertTrue(view.readonly)
+
     def testyRwBuffer(self):
         cls = objc.lookUpClass("NSMutableData")
         buf = cls.alloc().init()
@@ -56,6 +60,10 @@ class TestNSDataSupport(TestCase):
         self.assertIsInstance(vw, memoryview)
         vw[0:1] = b"Y"
         self.assertEqual(buf.bytes(), b"YEllo")
+
+        view = memoryview(buf)
+        self.assertEqual(bytes(view), buf.bytes())
+        self.assertFalse(view.readonly)
 
     def testNullHandling(self):
         nullBuffer = OC_MutableDataHelper.alloc().initWithScenario_(0)

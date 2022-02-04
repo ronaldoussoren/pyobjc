@@ -19,24 +19,26 @@ typedef struct {
     PyObject_HEAD
 
     /*  XXX: _Nullable because of dealloc impl, can this be avoided? */
-    PyObject* _Nullable name;
-    PyObject* _Nullable selectors;
+    PyObject* name;
+    PyObject* selectors;
 } PyObjCInformalProtocol;
 
 static PyObject* selToProtocolMapping = NULL;
 
+/*
+ * XXX: This type will never be deallocated once fully created:
+ *      during creation the type is added as a value in
+ *      selToProtocolMapping and hence the refcount will never
+ *      drop to 0.
+ */
 static void
 proto_dealloc(PyObject* object)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;
-    /*
-     * For some reason this code causes a crash, while it should
-     * be the reverse of the code in proto_new.
-     */
-    Py_ssize_t len = PyTuple_Size(self->selectors);
-    Py_ssize_t i;
+    Py_ssize_t              len  = PyTuple_GET_SIZE(self->selectors);
+    Py_ssize_t              i;
 
-    if (selToProtocolMapping) {
+    if (selToProtocolMapping) { // LCOV_BR_EXCL_LINE
         for (i = 0; i < len; i++) {
             PyObject*       cur;
             int             r;
@@ -47,43 +49,29 @@ proto_dealloc(PyObject* object)
              */
             cur = PyDict_GetItemStringWithError(selToProtocolMapping,
                                                 (char*)sel_getName(tmp->sel_selector));
-            if (cur == NULL && PyErr_Occurred()) {
-                PyErr_WriteUnraisable(NULL);
+            if (cur == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                PyErr_WriteUnraisable(NULL);       // LCOV_EXCL_LINE
             } else if (cur == (PyObject*)self) {
                 r = PyDict_DelItemString(selToProtocolMapping,
                                          sel_getName(tmp->sel_selector));
-                if (r == -1) {
-                    PyErr_WriteUnraisable(NULL);
+                if (r == -1) {                   // LCOV_BR_EXCL_LINE
+                    PyErr_WriteUnraisable(NULL); // LCOV_EXCL_LINE
                 }
             }
         }
     }
-
-    Py_CLEAR(self->name);
-    Py_CLEAR(self->selectors);
-    Py_TYPE(object)->tp_free(object);
+    PyObject_GC_UnTrack(object);
+    Py_XDECREF(self->name);
+    Py_XDECREF(self->selectors);
+    PyObject_GC_Del(object);
 }
 
 static PyObject* _Nullable proto_repr(PyObject* object)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;
-    PyObject*               b    = NULL;
 
-    if (PyUnicode_Check(self->name)) {
-        b = PyUnicode_AsEncodedString(self->name, NULL, NULL);
-
-    } else {
-        b = PyBytes_FromString("<null>");
-    }
-
-    if (b == NULL) {
-        return NULL;
-    }
-
-    PyObject* r = PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name,
-                                       PyBytes_AsString(b), (void*)self);
-    Py_XDECREF(b);
-    return r;
+    return PyUnicode_FromFormat("<%s %R at %p>", Py_TYPE(self)->tp_name, self->name,
+                                (void*)self);
 }
 
 static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused__)),
@@ -96,57 +84,63 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     PyObject*               selectors;
     Py_ssize_t              i, len;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol", keywords, &name,
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "UO:informal_protocol", keywords, &name,
                                      &selectors)) {
         return NULL;
     }
 
-    if (PyUnicode_Check(name)) {
-        /* pass */
-
-    } else {
-        PyErr_SetString(PyExc_TypeError, "Name must be a string");
-        return NULL;
-    }
-
+    /* XXX: Use PySequence_Fast? */
     selectors = PySequence_Tuple(selectors);
     if (selectors == NULL) {
         return NULL;
     }
-
-    result = (PyObjCInformalProtocol*)PyObject_New(PyObjCInformalProtocol,
-                                                   &PyObjCInformalProtocol_Type);
-    if (result == NULL) {
-        return NULL;
-    }
-
-    result->name = name;
-    Py_INCREF(name);
-    result->selectors = selectors;
 
     len = PyTuple_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
         if (!PyObjCSelector_Check(PyTuple_GET_ITEM(selectors, i))) {
             PyErr_Format(PyExc_TypeError, "Item %" PY_FORMAT_SIZE_T "d is not a selector",
                          i);
-            Py_DECREF(result);
+            Py_DECREF(selectors);
             return NULL;
         }
     }
 
+    result = (PyObjCInformalProtocol*)PyObject_GC_New(PyObjCInformalProtocol,
+                                                      &PyObjCInformalProtocol_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(selectors);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    result->name = name;
+    Py_INCREF(name);
+    result->selectors = selectors;
+    PyObject_GC_Track((PyObject*)result);
+
     if (selToProtocolMapping == NULL) {
         selToProtocolMapping = PyDict_New();
-        if (selToProtocolMapping == NULL) {
+        if (selToProtocolMapping == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
     for (i = 0; i < len; i++) {
         PyObjCSelector* tmp = (PyObjCSelector*)PyTuple_GET_ITEM(selectors, i);
 
-        PyDict_SetItemString(selToProtocolMapping, (char*)sel_getName(tmp->sel_selector),
-                             (PyObject*)result);
+        if (PyDict_SetItemString( // LCOV_BR_EXL_LINE
+                selToProtocolMapping, (char*)sel_getName(tmp->sel_selector),
+                (PyObject*)result)
+            == -1) {
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
     }
 
     return (PyObject*)result;
@@ -185,11 +179,11 @@ PyTypeObject PyObjCInformalProtocol_Type = {
     .tp_dealloc                                    = proto_dealloc,
     .tp_repr                                       = proto_repr,
     .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = proto_cls_doc,
-    .tp_traverse                                   = proto_traverse,
-    .tp_members                                    = proto_members,
-    .tp_new                                        = proto_new,
+    .tp_flags    = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+    .tp_doc      = proto_cls_doc,
+    .tp_traverse = proto_traverse,
+    .tp_members  = proto_members,
+    .tp_new      = proto_new,
 };
 
 /*
@@ -204,26 +198,15 @@ PyObject* _Nullable PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selec
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;
     Py_ssize_t              i, len;
     PyObject*               cur;
-    PyObject*               seq;
 
-    if (!PyObjCInformalProtocol_Check(obj)) {
-        PyErr_Format(PyExc_TypeError,
-                     "First argument is not an 'objc.informal_protocol' "
-                     "but '%s'",
-                     Py_TYPE(obj)->tp_name);
-        return NULL;
-    }
+    PyObjC_Assert(PyObjCInformalProtocol_Check(obj), NULL);
+    PyObjC_Assert(PyTuple_Check(self->selectors), NULL);
 
-    seq = PySequence_Fast(self->selectors, "selector list not a sequence?");
-    if (seq == NULL) {
-        return 0;
-    }
-
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(self->selectors);
     for (i = 0; i < len; i++) {
-        cur = PySequence_Fast_GET_ITEM(self->selectors, i);
-        if (cur == NULL) {
-            continue;
+        cur = PyTuple_GET_ITEM(self->selectors, i);
+        if (cur == NULL) { // LCOV_BR_EXCL_LINE
+            continue;      // LCOV_EXCL_LINE
         }
 
         if (PyObjCSelector_Check(cur)) {
@@ -235,13 +218,11 @@ PyObject* _Nullable PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selec
             }
 
             if (sel_isEqual(PyObjCSelector_GetSelector(cur), selector)) {
-                Py_DECREF(seq);
                 return cur;
             }
         }
     }
 
-    Py_DECREF(seq);
     return NULL;
 }
 
@@ -255,48 +236,23 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;
     Py_ssize_t              i, len;
     PyObject*               cur;
-    PyObject*               seq;
 
-    if (!PyObjCInformalProtocol_Check(obj)) {
-        PyErr_Format(PyExc_TypeError,
-                     "First argument is not an 'objc.informal_protocol' "
-                     "but '%s'",
-                     Py_TYPE(obj)->tp_name);
-        return 0;
-    }
+    PyObjC_Assert(PyObjCInformalProtocol_Check(obj), -1);
+    PyObjC_Assert(PyObjCClass_Check(super_class), -1);
+    PyObjC_Assert(PyDict_Check(clsdict), -1);
+    PyObjC_Assert(PyTuple_Check(self->selectors), -1);
 
-    if (!PyObjCClass_Check(super_class)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Third argument is not an 'objc.objc_class' but "
-                     "'%s'",
-                     Py_TYPE(super_class)->tp_name);
-        return 0;
-    }
-
-    if (!PyDict_Check(clsdict)) {
-        PyErr_Format(PyExc_TypeError, "Fourth argument is not a 'dict' but '%s'",
-                     Py_TYPE(clsdict)->tp_name);
-        return 0;
-    }
-
-    seq = PySequence_Fast(self->selectors, "selector list not a sequence");
-    if (seq == NULL) {
-        return 0;
-    }
-
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(self->selectors);
     for (i = 0; i < len; i++) {
         SEL       sel;
         PyObject* m;
 
-        cur = PySequence_Fast_GET_ITEM(seq, i);
-        if (cur == NULL) {
-            continue;
+        cur = PyTuple_GET_ITEM(self->selectors, i);
+        if (cur == NULL) { // LCOV_BR_EXCL_LINE
+            continue;      // LCOV_EXCL_LINE
         }
 
-        if (!PyObjCSelector_Check(cur)) {
-            continue;
-        }
+        PyObjC_Assert(PyObjCSelector_Check(cur), -1);
 
         sel = PyObjCSelector_GetSelector(cur);
 
@@ -313,8 +269,7 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
                              "class %s does not fully implement "
                              "protocol %S: no implementation for %s",
                              name, self->name, sel_getName(sel));
-                Py_DECREF(seq);
-                return 0;
+                return -1;
 
             } else {
                 PyErr_Clear();
@@ -324,7 +279,7 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
             const char* l_sig = PyObjCSelector_Signature(m);
             const char* r_sig = PyObjCSelector_Signature(cur);
             if (l_sig == NULL || r_sig == NULL) {
-                return 0;
+                return -1;
             }
             if (!PyObjCRT_SignaturesEqual(l_sig, r_sig)) {
 
@@ -336,15 +291,13 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
                              name, self->name, sel_getName(sel),
                              PyObjCSelector_Signature(m), PyObjCSelector_Signature(cur));
 
-                Py_DECREF(seq);
                 Py_DECREF(m);
-                return 0;
+                return -1;
             }
             Py_DECREF(m);
         }
     }
-    Py_DECREF(seq);
-    return 1;
+    return 0;
 }
 
 PyObject* _Nullable PyObjCInformalProtocol_FindProtocol(SEL selector)

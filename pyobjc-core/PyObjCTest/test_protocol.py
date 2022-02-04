@@ -24,6 +24,36 @@ MyProto3 = objc.informal_protocol(
 
 
 class TestInformalProtocols(TestCase):
+    def test_repr(self):
+        v = repr(MyProto)
+        self.assertRegex(v, "<objc.informal_protocol 'MyProto' at .*>")
+
+    def test_creation_errors(self):
+        with self.assertRaisesRegex(
+            TypeError, r"informal_protocol\(\) argument 1 must be str, not int"
+        ):
+            objc.informal_protocol(42, ())
+
+        with self.assertRaisesRegex(TypeError, r"'int' object is not iterable"):
+            objc.informal_protocol("name", 42)
+
+        with self.assertRaisesRegex(TypeError, r"Item 0 is not a selector"):
+            objc.informal_protocol("name", (42,))
+
+        with self.assertRaisesRegex(TypeError, r"Item 1 is not a selector"):
+            objc.informal_protocol(
+                "name",
+                (
+                    objc.selector(
+                        None,
+                        selector=b"incompleteMethod",
+                        signature=b"I@:",
+                        isRequired=1,
+                    ),
+                    42,
+                ),
+            )
+
     def testMissingProto(self):
         class ProtoClass1(NSObject):
             def testMethod(self):
@@ -34,11 +64,11 @@ class TestInformalProtocols(TestCase):
     def testIncompleteClass(self):
         with self.assertRaisesRegex(
             TypeError,
-            r"metaclass conflict: the metaclass of a derived class must be "
-            r"a \(non-strict\) subclass of the metaclasses of all its bases",
+            "class ProtoClass2 does not fully implement protocol MyProto: "
+            "no implementation for testMethod",
         ):
 
-            class ProtoClass2(NSObject, MyProto):
+            class ProtoClass2(NSObject, protocols=[MyProto]):
                 def testMethod2_(self, x):
                     pass
 
@@ -47,6 +77,53 @@ class TestInformalProtocols(TestCase):
 
         for cls in objc.getClassList():
             self.assertNotEqual(cls.__name__, "ProtoClass2")
+
+    def testInvalidMethodType(self):
+        with self.assertRaisesRegex(
+            TypeError,
+            "class ProtoClass2 does not correctly implement protocol MyProto: "
+            "the signature for method testMethod is @@: instead of I@:",
+        ):
+
+            class ProtoClass2(NSObject, protocols=[MyProto]):
+                def testMethod2_(self, x):
+                    pass
+
+                @objc.typedSelector(b"@@:")
+                def testMethod(self):
+                    pass
+
+        with self.assertRaisesRegex(objc.error, "^ProtoClass2$"):
+            objc.lookUpClass("ProtoClass2")
+
+        for cls in objc.getClassList():
+            self.assertNotEqual(cls.__name__, "ProtoClass2")
+
+    def test_cleanup_protocol(self):
+        SomeProto = objc.informal_protocol(
+            "SomeProto",
+            (
+                objc.selector(
+                    None, selector=b"cleanupMethod", signature=b"I@:", isRequired=1
+                ),
+            ),
+        )
+
+        class ClassImplementingSomeProto1(NSObject):
+            def cleanupMethod(self):
+                return 1
+
+        self.assertResultHasType(ClassImplementingSomeProto1.cleanupMethod, b"I")
+
+        # XXX: This won't cause GC for the value due to how
+        #      the bridge is implemented...
+        del SomeProto
+
+        class ClassImplementingSomeProto2(NSObject):
+            def cleanupMethod(self):
+                return 1
+
+        self.assertResultHasType(ClassImplementingSomeProto2.cleanupMethod, b"I")
 
 
 EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())

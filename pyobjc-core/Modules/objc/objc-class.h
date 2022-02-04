@@ -82,8 +82,8 @@ typedef struct _PyObjCClassObject {
     Class class;
     PyObject* _Nullable sel_to_py;
     PyObject* _Nullable delmethod;
-    PyObject* _Nullable hiddenSelectors;
-    PyObject* _Nullable hiddenClassSelectors;
+    PyObject* hiddenSelectors;
+    PyObject* hiddenClassSelectors;
     PyObject* _Nullable lookup_cache;
 
     Py_ssize_t   dictoffset;

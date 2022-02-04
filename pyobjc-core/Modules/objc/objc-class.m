@@ -18,33 +18,16 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
 
     if (classMethod) {
         hidden = ((PyObjCClassObject*)tp)->hiddenClassSelectors;
-        if (hidden == NULL) {
-            hidden = PyDict_New();
-
-            if (hidden == NULL) {
-                return -1;
-            }
-
-            ((PyObjCClassObject*)tp)->hiddenClassSelectors = hidden;
-        }
+        PyObjC_Assert(hidden != NULL, -1);
 
     } else {
         hidden = ((PyObjCClassObject*)tp)->hiddenSelectors;
-
-        if (hidden == NULL) {
-            hidden = PyDict_New();
-
-            if (hidden == NULL) {
-                return -1;
-            }
-
-            ((PyObjCClassObject*)tp)->hiddenSelectors = hidden;
-        }
+        PyObjC_Assert(hidden != NULL, -1);
     }
 
     v = PyObjCBytes_InternFromString(sel_getName(sel));
-    if (v == NULL) {
-        return -1;
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;   // LCOV_EXCL_LINE
     }
     r = PyDict_SetItem(hidden, v, metadata);
     Py_DECREF(v);
@@ -60,8 +43,8 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
     }
 
     mro = ((PyTypeObject*)tp)->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -81,8 +64,8 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
             if (hidden != NULL) {
                 PyObject* v = PyObjCBytes_InternFromString(sel_getName(sel));
 
-                if (v == NULL) {
-                    PyErr_Clear();
+                if (v == NULL) {   // LCOV_BR_EXCL_LINE
+                    PyErr_Clear(); // LCOV_EXCL_LINE
 
                 } else {
                     /* XXX: Should change to PyDict_GetItemWithError */
@@ -110,32 +93,17 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
 static int
 nsdata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
-    NSData* self = (NSData*)PyObjCObject_GetObject(obj);
-    int r = PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
-    return r;
-}
-
-static int
-nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
-{
     NSMutableData* self = (NSMutableData*)PyObjCObject_GetObject(obj);
-    int            r;
-    if ((flags & PyBUF_WRITABLE) == PyBUF_WRITABLE) {
-        r = PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0,
-                              flags);
-
+    if ([self respondsToSelector:@selector(mutableBytes)]) {
+        return PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0,
+                                 flags);
     } else {
-        r = PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+        return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
     }
-    return r;
 }
 
 static PyBufferProcs nsdata_as_buffer = {
     .bf_getbuffer = nsdata_getbuffer,
-};
-
-static PyBufferProcs nsmutabledata_as_buffer = {
-    .bf_getbuffer = nsmutabledata_getbuffer,
 };
 
 PyDoc_STRVAR(class_doc,
@@ -184,16 +152,20 @@ objc_class_register(Class objc_class, PyObject* py_class)
         class_registry = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                           PyObjCUtil_PointerValueCallBacks,
                                           PYOBJC_EXPECTED_CLASS_COUNT);
-        if (class_registry == NULL) {
+        if (class_registry == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_InternalError, "Cannot create class registry");
             return -1;
+            // LCOV_EXCL_STOP
         }
     }
 
-    if (NSMapGet(class_registry, objc_class)) {
+    if (NSMapGet(class_registry, objc_class)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_InternalError, "Registering class '%.100s' more than once",
                      class_getName(objc_class));
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(py_class);
@@ -209,15 +181,19 @@ objc_metaclass_register(PyTypeObject* meta_class, Class class)
         metaclass_to_class = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                               PyObjCUtil_PointerValueCallBacks,
                                               PYOBJC_EXPECTED_CLASS_COUNT);
-        if (metaclass_to_class == NULL) {
+        if (metaclass_to_class == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_InternalError, "Cannot create metaclass registry");
             return -1;
+            // LCOV_EXCL_STOP
         }
     }
 
-    if (NSMapGet(metaclass_to_class, meta_class)) {
+    if (NSMapGet(metaclass_to_class, meta_class)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Registering metaclass more than once");
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(meta_class);
@@ -230,10 +206,10 @@ static Class _Nullable objc_metaclass_locate(PyObject* meta_class)
 {
     Class result;
 
-    if (metaclass_to_class == NULL)
-        return NULL;
-    if (meta_class == NULL)
-        return NULL;
+    if (metaclass_to_class == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
+    if (meta_class == NULL)         // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
 
     result = NSMapGet(metaclass_to_class, meta_class);
     return result;
@@ -257,8 +233,8 @@ PyObject* _Nullable objc_class_locate(Class objc_class)
 
     if (class_registry == NULL)
         return NULL;
-    if (objc_class == NULL)
-        return NULL;
+    if (objc_class == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
 
     result = NSMapGet(class_registry, objc_class);
     Py_XINCREF(result);
@@ -278,9 +254,11 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
         objc_meta_class = objc_class;
     }
 
-    if (objc_meta_class == nil) {
+    if (objc_meta_class == nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(&PyObjCClass_Type);
         return &PyObjCClass_Type;
+        // LCOV_EXCL_STOP
     }
 
     /* Create a metaclass proxy for the metaclass of the given class */
@@ -291,13 +269,15 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 
     Class super_class = nil;
 
-    if (unlikely(class_isMetaClass(objc_class))) {
+    if (unlikely(class_isMetaClass(objc_class))) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         super_class = class_getSuperclass(objc_meta_class);
         if (!class_isMetaClass(super_class)) {
             /* NSObject's metaclass inherits from NSObject, don't
              * model that in Python. */
             super_class = nil;
         }
+        // LCOV_EXCL_STOP
 
     } else {
         super_class = class_getSuperclass(objc_class);
@@ -310,8 +290,8 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 
     } else {
         py_super_class = PyObjCClass_NewMetaClass(super_class);
-        if (py_super_class == NULL) {
-            return NULL;
+        if (py_super_class == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
     }
 
@@ -324,9 +304,9 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
     PyTuple_SET_ITEM(bases, 0, (PyObject*)py_super_class);
 
     PyObject* args = PyTuple_New(3);
-    PyTuple_SetItem(args, 0, PyUnicode_FromString(class_getName(objc_class)));
-    PyTuple_SetItem(args, 1, bases);
-    PyTuple_SetItem(args, 2, dict);
+    PyTuple_SET_ITEM(args, 0, PyUnicode_FromString(class_getName(objc_class)));
+    PyTuple_SET_ITEM(args, 1, bases);
+    PyTuple_SET_ITEM(args, 2, dict);
 
     result = (PyTypeObject*)PyType_Type.tp_new(&PyType_Type, args, NULL);
     Py_DECREF(args);
@@ -336,16 +316,21 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 
     ((PyObjCClassObject*)result)->class = objc_meta_class;
 
-    if (objc_class_register(objc_meta_class, (PyObject*)result) == -1) {
+    if (objc_class_register(objc_meta_class, (PyObject*)result)
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (objc_metaclass_register(result, objc_class) == -1) {
+    if (objc_metaclass_register(result, objc_class) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         /* Whoops, no such thing */
         /* XXX */
         // objc_class_unregister(objc_meta_class);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return (PyTypeObject*)result;
@@ -365,8 +350,8 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
 
             PyObject* v = PyDict_GetItemStringWithError(kwds, "protocols");
-            if (v == NULL && PyErr_Occurred()) {
-                return -1;
+            if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1;                       // LCOV_EXCL_LINE
             }
 
             /* XXX: Not clear what this tries to accomplish */
@@ -427,9 +412,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     py_super_class = PyTuple_GET_ITEM(bases, 0);
-    if (py_super_class == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(py_super_class != NULL, NULL);
 
     if (py_super_class == PyObjC_NSCFTypeClass) {
         /* A new subclass of NSCFType
@@ -455,26 +438,32 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     super_class = PyObjCClass_GetClass(py_super_class);
-    if (super_class == Nil) {
+    if (super_class == Nil) { // LCOV_BR_EXCL_LINE
         /* This will always set an exception, only the root has
          * a Nil class and that's excluded above.
          */
+        // LCOV_EXCL_START
         PyObjC_Assert(PyErr_Occurred(), NULL);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
         return NULL;
     }
 
     hiddenSelectors = PyDict_New();
-    if (hiddenSelectors == NULL) {
+    if (hiddenSelectors == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     hiddenClassSelectors = PyDict_New();
-    if (hiddenClassSelectors == NULL) {
+    if (hiddenClassSelectors == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /*
@@ -485,10 +474,12 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     if (protocols == NULL) {
         PyErr_Clear();
         protocols = PyList_New(0);
-        if (protocols == NULL) {
+        if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
     } else {
@@ -507,10 +498,12 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         protocols_len = PySequence_Fast_GET_SIZE(seq);
         protocols     = PyList_New(protocols_len);
-        if (protocols == NULL) {
+        if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         for (i = 0; i < protocols_len; i++) {
@@ -522,31 +515,28 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     real_bases = PyList_New(0);
-    if (real_bases == NULL) {
+    if (real_bases == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(protocols);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    PyList_Append(real_bases, py_super_class);
-    if (PyErr_Occurred()) {
+    if (PyList_Append(real_bases, py_super_class) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         Py_DECREF(protocols);
         Py_DECREF(real_bases);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 1; i < len; i++) {
         v = PyTuple_GET_ITEM(bases, i);
-        if (v == NULL) {
-            Py_DECREF(protocols);
-            Py_DECREF(real_bases);
-            Py_DECREF(hiddenSelectors);
-            Py_DECREF(hiddenClassSelectors);
-            return NULL;
-        }
+        PyObjC_Assert(v != NULL, NULL);
 
         if (PyObjCClass_Check(v)) {
             Py_DECREF(protocols);
@@ -557,21 +547,25 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
 
         } else if (PyObjCInformalProtocol_Check(v)) {
-            r = PyList_Append(protocols, v);
-            if (r == -1) {
+            /* XXX: Can this path be reached in Python 3? */
+            if (PyList_Append(protocols, v) == -1) { // LCOV_BR_EXCL_START
+                // LCOV_EXCL_START
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
+                // LCOV_EXCL_STOP
             }
 
         } else if (PyObjCFormalProtocol_Check(v)) {
-            r = PyList_Append(protocols, v);
-            if (r == -1) {
+            /* XXX: Can this path be reached in Python 3? */
+            if (PyList_Append(protocols, v) == -1) { // LCOV_BR_EXCL_START
+                // LCOV_EXCL_START
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
+                // LCOV_EXCL_STOP
             }
 
         } else {
@@ -603,14 +597,16 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < seqlen; i++) {
             if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
                 || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                r = PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i));
-                if (r == -1) {
+                if (PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i))
+                    == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(seq);
                     Py_DECREF(protocols);
                     Py_DECREF(real_bases);
                     Py_DECREF(hiddenSelectors);
                     Py_DECREF(hiddenClassSelectors);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
             } else {
@@ -651,14 +647,16 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < seqlen; i++) {
             if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
                 || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                r = PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i));
-                if (r == -1) {
+                if (PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i))
+                    == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(seq);
                     Py_DECREF(protocols);
                     Py_DECREF(real_bases);
                     Py_DECREF(hiddenSelectors);
                     Py_DECREF(hiddenClassSelectors);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
             } else {
@@ -678,12 +676,14 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     metadict = PyDict_New();
-    if (metadict == NULL) {
+    if (metadict == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(protocols);
         Py_DECREF(real_bases);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (isCFProxyClass) {
@@ -708,7 +708,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         /* This is a subclass of an existing class, the superclass will never be Nil */
         super_class    = (Class _Nonnull)class_getSuperclass(objc_class);
         py_super_class = PyObjCClass_New(super_class);
-        if (py_super_class == NULL) {
+        if (py_super_class == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -716,6 +717,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
+            // LCOV_EXCL_STOP
 
         } else {
             if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
@@ -734,7 +736,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     v = PyList_AsTuple(real_bases);
-    if (v == NULL) {
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (objc_class != nil) {
             (void)PyObjCClass_UnbuildClass(objc_class);
         }
@@ -744,6 +747,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     Py_DECREF(real_bases);
     real_bases = v;
@@ -761,7 +765,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
 
         if (PyObjCInformalProtocol_Check(p)) {
-            if (!PyObjCInformalProtocol_CheckClass(p, name, py_super_class, dict)) {
+            if (PyObjCInformalProtocol_CheckClass(p, name, py_super_class, dict) == -1) {
                 Py_DECREF(real_bases);
                 Py_DECREF(protocols);
                 Py_DECREF(metadict);
@@ -789,7 +793,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
      * add __pyobjc_protocols__ to the class-dict.
      */
     v = PyList_AsTuple(protocols);
-    if (v == NULL) {
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
         Py_DECREF(metadict);
@@ -797,9 +802,23 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(hiddenClassSelectors);
         (void)PyObjCClass_UnbuildClass(objc_class);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    PyDict_SetItemString(dict, "__pyobjc_protocols__", v);
+    if (PyDict_SetItemString(dict, "__pyobjc_protocols__", v)
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(v);
+        Py_DECREF(real_bases);
+        Py_DECREF(protocols);
+        Py_DECREF(metadict);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        (void)PyObjCClass_UnbuildClass(objc_class);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
     Py_DECREF(v);
 
     /*
@@ -826,7 +845,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
 
         } else {
-            if (PyDict_DelItemString(dict, "__del__") < 0) {
+            if (PyDict_DelItemString(dict, "__del__") < 0) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (objc_class != nil) {
                     (void)PyObjCClass_UnbuildClass(objc_class);
                 }
@@ -836,6 +856,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
     }
@@ -845,7 +866,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
      * are treated specially there.
      */
     old_dict = PyDict_Copy(dict);
-    if (old_dict == NULL) {
+    if (old_dict == NULL) { // LCOV_BR_EXCL_START
+        // LCOV_EXCL_START
         if (objc_class != nil) {
             (void)PyObjCClass_UnbuildClass(objc_class);
         }
@@ -855,6 +877,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjC_MakeBundleForClass != NULL && PyObjC_MakeBundleForClass != Py_None) {
@@ -893,7 +916,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     PyTypeObject* metatype;
     if (objc_class != nil) {
         metatype = PyObjCClass_NewMetaClass(objc_class);
-        if (metatype == NULL) {
+        if (metatype == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -901,9 +925,11 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
-        if (PyDict_Update(metatype->tp_dict, metadict) == -1) {
+        if (PyDict_Update(metatype->tp_dict, metadict) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -911,6 +937,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
     } else {
@@ -922,7 +949,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     /* call super-class implementation */
     args = Py_BuildValue("(sOO)", name, real_bases, dict);
-    if (args == NULL) {
+    if (args == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(metatype);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
@@ -930,6 +958,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /* The actual superclass might be different due to introduction
@@ -962,7 +991,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
          */
         PyObjC_RegisterPythonProxy(objc_class, res);
 
-        if (objc_class_register(objc_class, res) < 0) {
+        if (objc_class_register(objc_class, res) < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyObjC_UnregisterPythonProxy(objc_class, res);
             Py_DECREF(res);
             Py_DECREF(old_dict);
@@ -970,6 +1000,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(hiddenClassSelectors);
             (void)PyObjCClass_UnbuildClass(objc_class);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObjCClass_FinishClass(objc_class);
@@ -1008,9 +1039,11 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         info->useKVO = 0;
     }
     keys = PyDict_Keys(dict);
-    if (keys == NULL) {
+    if (keys == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(old_dict);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /* Merge the "difference" to pick up new selectors */
@@ -1036,12 +1069,12 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     /* This is an "extra" ref */
     if (all_python_classes == NULL) {
         all_python_classes = PyList_New(0);
-        if (all_python_classes == NULL) {
-            Py_FatalError("Cannot create internal list");
+        if (all_python_classes == NULL) {                 // LCOV_BR_EXCL_LINE
+            Py_FatalError("Cannot create internal list"); // LCOV_EXCL_LINE
         }
     }
-    if (PyList_Append(all_python_classes, res) < 0) {
-        Py_FatalError("Cannot store generated class");
+    if (PyList_Append(all_python_classes, res) == -1) { // LCOV_BR_EXCL_LINE
+        Py_FatalError("Cannot store generated class");  // LCOV_EXCL_LINE
     }
 
     Py_INCREF(res);
@@ -1065,9 +1098,13 @@ static PyObject* _Nullable class_repr(PyObject* obj)
     }
 }
 
+// LCOV_EXCL_START
 static void
 class_dealloc(PyObject* cls)
 {
+    /* XXX: This method should never be called because it is impossible to
+     * unregister and Objective-C class from the Objective-C runtime.
+     */
     char buf[1024];
 
     snprintf(buf, sizeof(buf), "Deallocating objective-C class %s",
@@ -1077,6 +1114,7 @@ class_dealloc(PyObject* cls)
     Py_INCREF(cls);
     return;
 }
+// LCOV_EXCL_STOP
 
 int
 PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
@@ -1111,12 +1149,14 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
             break;
         /* class_getSuperclass returns Nil only if its argument is Nil */
         cls = PyObjCClass_New((Class _Nonnull)class_getSuperclass(info->class));
-        if (cls == NULL) {
+        if (cls == NULL) { // LCOV_BR_EXCL_LINErg 4¬øª≥
             /* Abort checking if the class object cannot be created. Should
              * never happen in practice...
              */
+            // LCOV_EXCL_START
             PyErr_Clear();
             break;
+            // LCOV_EXCL_STOP
         }
 
         Py_DECREF(
@@ -1136,8 +1176,8 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     cls = objc_metaclass_locate(self);
@@ -1147,9 +1187,11 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
     }
 
     PyObject* self_class = PyObjCClass_ClassForMetaClass(self);
-    if (self_class == NULL) {
+    if (self_class == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     while (cls != NULL) {
@@ -1164,9 +1206,9 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
             const char* name;
             PyObject*   item;
             SEL         meth_name = method_getName(methods[i]);
-            if (meth_name == NULL) {
+            if (meth_name == NULL) { // LCOV_BR_EXCL_LINE
                 /* Ignore methods without a selector */
-                continue;
+                continue; // LCOV_EXCL_LINE
             }
 
             /* Check if the selector should be hidden */
@@ -1184,11 +1226,13 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
             }
 
             item = PyUnicode_FromString(name);
-            if (item == NULL) {
+            if (item == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(self_class);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             if (PyList_Append(result, item) == -1) {
@@ -1226,8 +1270,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -1240,11 +1284,12 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
             }
             dict = ((PyTypeObject*)base)->tp_dict;
 
-        } else if (PyType_Check(base)) {
+        } else if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
             dict = ((PyTypeObject*)base)->tp_dict;
 
         } else {
-            return NULL;
+            /* Cannot happen: non-class on MRO  */
+            return NULL; // LCOV_EXCL_LINE
         }
 
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
@@ -1279,8 +1324,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -1308,8 +1353,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         PyObjC_Assert(cls != Nil, NULL);
 
         PyObject* class_for_base = PyObjCClass_ClassForMetaClass(base);
-        if (class_for_base == NULL) {
-            return NULL;
+        if (class_for_base == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
 
         /* class_copyMethodList only returns NULL when it sets method_count
@@ -1338,24 +1383,29 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             if (strcmp(sel_name, name_bytes) == 0) {
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
-                if (encoding == NULL) {
+                if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(class_for_base);
                     free(methods);
                     PyErr_SetString(PyObjCExc_Error,
-                                    "Native selector with Nil type encoding");
+                                    "Native selector with NULL type encoding");
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
                 descr = PyObjCSelector_NewNative(cls, method_getName(m), encoding, 1);
                 free(methods);
                 Py_DECREF(class_for_base);
-                if (descr == NULL) {
-                    return NULL;
+                if (descr == NULL) { // LCOV_BR_EXCL_LINE
+                    return NULL;     //  LCOV_EXCL_LINE
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr) == -1) {
+                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr)
+                    == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(descr);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* and return, as a borrowed reference, safe because
@@ -1371,7 +1421,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
     /* XXX: just checking... */
     PyObjC_Assert(descr == NULL, NULL);
-    return descr;
+    return NULL;
 }
 
 PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
@@ -1419,14 +1469,16 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         /* Create (unbound) selector */
         PyObject* result =
             PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 1);
-        if (result == NULL) {
-            return NULL;
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         /* add to __dict__ 'cache' */
-        if (PyDict_SetItem(dict, name, result) == -1) {
+        if (PyDict_SetItem(dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         /* and return, as a borrowed reference */
@@ -1450,19 +1502,20 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
-        if (PyType_Check(base)) {
+        if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
             dict = ((PyTypeObject*)base)->tp_dict;
 
         } else {
-            return NULL;
+            /* Cannot happen: non-type in MRO */
+            return NULL; // LCOV_EXCL_LINE
         }
 
         descr = PyDict_GetItem(dict, name);
@@ -1504,14 +1557,16 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
                 /* Create (unbound) selector */
                 PyObject* result =
                     PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 0);
-                if (result == NULL) {
-                    return NULL;
+                if (result == NULL) { // LCOV_BR_EXCL_LINE
+                    return NULL;      // LCOV_EXCL_LINE
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(class_dict, name, result) == -1) {
+                if (PyDict_SetItem(class_dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(result);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* and return, as a borrowed reference */
@@ -1540,8 +1595,8 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -1579,22 +1634,26 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
             if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
-                if (encoding == NULL) {
+                if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     free(methods);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
                 PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
                 free(methods);
-                if (result == NULL) {
-                    return NULL;
+                if (result == NULL) { // LCOV_BR_EXCL_LINE
+                    return NULL;      // LCOV_EXCL_LINE
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(class_dict, name, result) == -1) {
+                if (PyDict_SetItem(class_dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_BR_EXCL_START
                     Py_DECREF(result);
                     return NULL;
+                    // LCOV_BR_EXCL_STOP
                 }
 
                 /* and return, as a borrowed reference */
@@ -1747,13 +1806,15 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             x->base.sel_self = self;
             Py_INCREF(x->base.sel_self);
         }
-        if (res < 0) {
+        if (res < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             if (PyObjC_Verbose) {
                 PySys_WriteStderr("PyObjC[class_getattro]: Cannot "
                                   "add new method to dict:\n");
                 PyErr_Print();
             }
             PyErr_Clear();
+            // LCOV_EXCL_STOP
         }
     }
 done:
@@ -1838,9 +1899,11 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
             char* types = strdup(PyObjCSelector_Signature(newVal));
 
-            if (types == NULL) {
+            if (types == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(newVal);
                 return -1;
+                // LCOV_EXCL_STOP
             }
 
             IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
@@ -1852,10 +1915,12 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             b = class_addMethod(curClass, PyObjCSelector_GetSelector(newVal), newIMP,
                                 types);
 
-            if (!b) {
+            if (!b) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(types);
                 Py_DECREF(newVal);
                 return -1;
+                // LCOV_EXCL_STOP
             }
         }
 
@@ -1872,9 +1937,11 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             }
 
             Py_DECREF(newVal);
-            if (r == -1) {
+            if (r == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_NoMemory();
                 return -1;
+                // LCOV_EXCL_STOP
             }
         }
         return 0;
@@ -2147,8 +2214,8 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     cls = PyObjCClass_GetClass(self);
@@ -2179,17 +2246,21 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             }
 
             item = PyUnicode_FromString(name);
-            if (item == NULL) {
+            if (item == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
-            if (PyList_Append(result, item) == -1) {
+            if (PyList_Append(result, item) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
                 Py_DECREF(item);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(item);
         }
@@ -2277,10 +2348,13 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     PyObjCClassObject* info;
     Ivar               var;
     PyObject*          hiddenSelectors;
+    PyObject*          hiddenClassSelectors;
     PyTypeObject*      metaclass;
     const char*        className;
 
     if (objc_class == Nil) {
+        /* XXX: Null return without exception set */
+        /* XXX: Can objc_class ever be Nil */
         return NULL;
     }
 
@@ -2295,20 +2369,68 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     }
 
     hiddenSelectors = PySet_New(NULL);
-    if (hiddenSelectors == NULL) {
-        return NULL;
+    if (hiddenSelectors == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
+    }
+
+    hiddenClassSelectors = PySet_New(NULL);
+    if (hiddenClassSelectors == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     metaclass = PyObjCClass_NewMetaClass(objc_class);
-    if (metaclass == NULL) {
+    if (metaclass == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     dict = PyDict_New();
-    PyDict_SetItemString(dict, "__slots__", PyTuple_New(0));
+    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        Py_DECREF(metaclass);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    {
+        PyObject* slots = PyTuple_New(0);
+        if (slots == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            Py_DECREF(metaclass);
+            Py_DECREF(dict);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        if (PyDict_SetItemString(dict, "__slots__", slots) == -1) { // LCOV_BR_EXCL_START
+            // LCOV_EXCL_START
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            Py_DECREF(metaclass);
+            Py_DECREF(dict);
+            Py_DECREF(slots);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        Py_DECREF(slots);
+    }
 
     bases = PyTuple_New(1);
+    if (bases == NULL) { // LCOV_BR_EXCL_START
+        // LCOV_EXCL_START
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        Py_DECREF(metaclass);
+        Py_DECREF(dict);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
 
     if (class_getSuperclass(objc_class) == NULL) {
         PyTuple_SET_ITEM(bases, 0, (PyObject*)&PyObjCObject_Type);
@@ -2316,18 +2438,34 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     } else {
         PyObject* super_class =
             PyObjCClass_New((Class _Nonnull)class_getSuperclass(objc_class));
-        if (super_class == NULL) {
+        if (super_class == NULL) { // LCOV_BR_ECXL_START
+            // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            Py_DECREF(metaclass);
+            Py_DECREF(dict);
             Py_DECREF(bases);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(bases, 0, super_class);
     }
     args      = PyTuple_New(3);
     className = class_getName(objc_class);
-    PyTuple_SetItem(args, 0, PyUnicode_FromString(className));
-    PyTuple_SetItem(args, 1, bases);
-    PyTuple_SetItem(args, 2, dict);
+    PyTuple_SET_ITEM(args, 0, PyUnicode_FromString(className));
+    if (PyTuple_GET_ITEM(args, 0) == NULL) { // LCOV_BR_EXLC_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        Py_DECREF(metaclass);
+        Py_DECREF(dict);
+        Py_DECREF(bases);
+        Py_DECREF(args);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    PyTuple_SET_ITEM(args, 1, bases);
+    PyTuple_SET_ITEM(args, 2, dict);
     bases = NULL;
     dict  = NULL;
 
@@ -2336,20 +2474,22 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     Py_DECREF(metaclass);
     if (result == NULL) {
         Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
         return NULL;
     }
 
-    info                  = (PyObjCClassObject*)result;
-    info->class           = objc_class;
-    info->sel_to_py       = NULL;
-    info->dictoffset      = 0;
-    info->useKVO          = 1;
-    info->delmethod       = NULL;
-    info->hasPythonImpl   = 0;
-    info->isCFWrapper     = 0;
-    info->isFinal         = 0;
-    info->hiddenSelectors = hiddenSelectors;
-    info->lookup_cache    = NULL;
+    info                       = (PyObjCClassObject*)result;
+    info->class                = objc_class;
+    info->sel_to_py            = NULL;
+    info->dictoffset           = 0;
+    info->useKVO               = 1;
+    info->delmethod            = NULL;
+    info->hasPythonImpl        = 0;
+    info->isCFWrapper          = 0;
+    info->isFinal              = 0;
+    info->hiddenSelectors      = hiddenSelectors;
+    info->hiddenClassSelectors = hiddenClassSelectors;
+    info->lookup_cache         = NULL;
 
     objc_class_register(objc_class, result);
 
@@ -2357,12 +2497,7 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
      * Support the buffer protocol in the wrappers for NSData and
      * NSMutableData, the only two classes where this makes sense.
      */
-    if (strcmp(className, "NSMutableData") == 0) {
-        ((PyTypeObject*)result)->tp_as_buffer = &nsmutabledata_as_buffer;
-        PyType_Modified((PyTypeObject*)result);
-        PyType_Ready((PyTypeObject*)result);
-
-    } else if (strcmp(className, "NSData") == 0) {
+    if (strcmp(className, "NSData") == 0) {
         ((PyTypeObject*)result)->tp_as_buffer = &nsdata_as_buffer;
         PyType_Modified((PyTypeObject*)result);
         PyType_Ready((PyTypeObject*)result);
@@ -2374,6 +2509,7 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     }
 
     if (strcmp(className, "_NSPlaceholderData") == 0) {
+        /* XXX */
         /* Workaround for an issue on macOS 10.15: For some
          * reason the call to class_getInstanceVariable crashes
          * when called early in the process, likely due to an
@@ -2390,8 +2526,9 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         info->dictoffset = ivar_getOffset(var);
     }
 
-    if (PyObject_SetAttrString(result, "__module__", PyObjCClass_DefaultModule) < 0) {
-        PyErr_Clear();
+    if (PyObject_SetAttrString(result, "__module__", PyObjCClass_DefaultModule)
+        == -1) {       // LCOV_BR_EXCL_LINE
+        PyErr_Clear(); // LCOV_EXCL_LINE
     }
 
     return result;
@@ -2429,15 +2566,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
     }
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) {
-        return NULL;
-    }
-
-    if (&class_copyPropertyList == NULL) {
-        /* System without the 2.0 runtime and hence without
-         * native properties
-         */
-        return result;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     if (cls) {
@@ -2462,12 +2592,14 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             continue;
 
         item = Py_BuildValue("{sssy}", "name", name, "raw_attr", attr);
-        if (item == NULL) {
-            goto error;
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            goto error;     // LCOV_EXCL_LINE
         }
-        if (PyList_Append(result, item) == -1) {
+        if (PyList_Append(result, item) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(item);
             goto error;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(item);
 
@@ -2488,13 +2620,15 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             PyObjCRT_RemoveFieldNames(buf, attr + 1);
             v = PyObjCBytes_InternFromString(buf);
         }
-        if (v == NULL) {
-            goto error;
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            goto error;  // LCOV_EXCL_LINE
         }
 
-        if (PyDict_SetItemString(item, "typestr", v) == -1) {
+        if (PyDict_SetItemString(item, "typestr", v) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(v);
             goto error;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(v);
         v = NULL;
@@ -2503,12 +2637,14 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         if (*attr == '"') {
             e = strchr(attr + 1, '"');
             v = PyUnicode_FromStringAndSize(attr + 1, e - (attr + 1));
-            if (v == NULL) {
-                goto error;
+            if (v == NULL) { // LCOV_BR_EXCL_LINE
+                goto error;  // LCOV_EXCL_LINE
             }
-            if (PyDict_SetItemString(item, "classname", v) == -1) {
+            if (PyDict_SetItemString(item, "classname", v) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(v);
                 goto error;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(v);
             v    = NULL;
@@ -2523,44 +2659,51 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         while (attr && *attr != '\0') {
             switch (*attr++) {
             case 'R':
-                if (PyDict_SetItemString(item, "readonly", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "readonly", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'C':
-                if (PyDict_SetItemString(item, "copy", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "copy", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case '&':
-                if (PyDict_SetItemString(item, "retain", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "retain", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'N':
-                if (PyDict_SetItemString(item, "nonatomic", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "nonatomic", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'D':
-                if (PyDict_SetItemString(item, "dynamic", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "dynamic", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'W':
-                if (PyDict_SetItemString(item, "weak", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "weak", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'P':
-                if (PyDict_SetItemString(item, "collectable", Py_True) < 0) {
-                    goto error;
+                if (PyDict_SetItemString(item, "collectable", Py_True)
+                    == -1) {    // LCOV_BR_EXCL_LINE
+                    goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
@@ -2575,13 +2718,15 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
                     attr = e;
                 }
 
-                if (v == NULL) {
-                    goto error;
+                if (v == NULL) { // LCOV_BR_EXCL_LINE
+                    goto error;  // LCOV_EXCL_LINE
                 }
 
-                if (PyDict_SetItemString(item, "getter", v) < 0) {
+                if (PyDict_SetItemString(item, "getter", v) == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(v);
                     goto error;
+                    // LCOV_EXCL_STOP
                 }
                 break;
 
@@ -2596,13 +2741,15 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
                     attr = e;
                 }
 
-                if (v == NULL) {
-                    goto error;
+                if (v == NULL) { // LCOV_BR_EXCL_LINE
+                    goto error;  // LCOV_EXCL_LINE
                 }
 
-                if (PyDict_SetItemString(item, "setter", v) < 0) {
+                if (PyDict_SetItemString(item, "setter", v) == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(v);
                     goto error;
+                    // LCOV_EXCL_STOP
                 }
 
                 break;
@@ -2618,11 +2765,13 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
 
     return result;
 error:
+    // LCOV_EXCL_START
     if (props) {
         free(props);
     }
     Py_XDECREF(result);
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 Class _Nullable PyObjCClass_GetClass(PyObject* cls)
@@ -2668,14 +2817,15 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     info = (PyObjCClassObject*)cls;
     if (info->sel_to_py == NULL) {
         info->sel_to_py = PyDict_New();
-        if (info->sel_to_py == NULL) {
-            return NULL;
+        if (info->sel_to_py == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;               // LCOV_EXCL_LINE
         }
     }
 
     if (PyObjCClass_HiddenSelector(cls, selector, class_method)) {
+        (void)PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector),
+                                   Py_None);
         PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
-        PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector), Py_None);
         return NULL;
     }
 
@@ -2704,6 +2854,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
 
     PyObject*  mro = ((PyTypeObject*)cls)->tp_mro;
     Py_ssize_t i, n;
+    /* XXX: Can MRO be NULL? */
 
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
@@ -2729,8 +2880,13 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
                 continue;
 
             if (sel_isEqual(PyObjCSelector_GetSelector(value), selector)) {
-                PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector),
-                                     value);
+                if (PyDict_SetItemString(
+                        info->sel_to_py,
+                        (char*)sel_getName(selector), // LCOV_BR_EXCL_LINE
+                        value)
+                    == -1) {
+                    return NULL; // LCOV_EXCL_LINE
+                }
                 Py_INCREF(value);
                 return value;
             }
@@ -2746,9 +2902,11 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             }
 
             py_name = PyUnicode_FromString(name);
-            if (!py_name) {
+            if (!py_name) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 continue;
+                // LCOV_EXCL_STOP
             }
 
             if (class_method) {
@@ -2773,8 +2931,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         return result;
     }
 
+    (void)PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector), Py_None);
     PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
-    PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector), Py_None);
     return NULL;
 }
 
@@ -2844,8 +3002,8 @@ update_convenience_methods(PyObject* cls)
     }
 
     dict = PyDict_New();
-    if (dict == NULL) {
-        return -1;
+    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;      // LCOV_EXCL_LINE
     }
 
     PyObject* args[3] = {NULL, cls, dict};
@@ -2920,31 +3078,37 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     }
 
     extraDict = PyDict_New();
-    if (extraDict == NULL) {
-        return -1;
+    if (extraDict == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;           // LCOV_EXCL_LINE
     }
 
     metaDict = PyDict_New();
-    if (metaDict == NULL) {
+    if (metaDict == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(extraDict);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     methodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
-    if (methodsToAdd == NULL) {
+    if (methodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyErr_NoMemory();
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     classMethodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
-    if (classMethodsToAdd == NULL) {
+    if (classMethodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyMem_Free(methodsToAdd);
         PyErr_NoMemory();
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     curMethodIndex      = 0;
@@ -3035,8 +3199,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         Py_DECREF(aMethod);
         aMethod = NULL;
 
-        if (r == -1) {
-            goto cleanup_and_return_error;
+        if (r == -1) {                     // LCOV_BR_EXCL_LINE
+            goto cleanup_and_return_error; // LCOV_EXCL_LINE
         }
     }
 
@@ -3057,12 +3221,12 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     classMethodsToAdd = NULL;
 
     r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
-    if (r == -1)
-        goto cleanup_and_return_error;
+    if (r == -1)                       // LCOV_BR_EXCL_LINE
+        goto cleanup_and_return_error; // LCOV_EXCL_LINE
 
     r = PyDict_Merge(Py_TYPE(classObject)->tp_dict, metaDict, 1);
-    if (r == -1)
-        goto cleanup_and_return_error;
+    if (r == -1)                       // LCOV_BR_EXCL_LINE
+        goto cleanup_and_return_error; // LCOV_EXCL_LINE
 
     Py_DECREF(extraDict);
     extraDict = NULL;

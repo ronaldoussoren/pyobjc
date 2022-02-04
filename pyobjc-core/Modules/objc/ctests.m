@@ -14,6 +14,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma clang diagnostic ignored "-Wunused-result"
+
 struct Struct1 {
     int    f1;
     double f2;

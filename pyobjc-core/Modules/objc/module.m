@@ -867,7 +867,14 @@ static PyObject* _Nullable protocolsForClass(PyObject* self __attribute__((__unu
             return NULL;
             // LCOV_EXCL_STOP
         }
-        PyList_Append(protocols, protocol);
+        if (PyList_Append(protocols, protocol) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(protocol);
+            Py_DECREF(protocols);
+            free(protocol_list);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
         Py_DECREF(protocol);
     }
 
