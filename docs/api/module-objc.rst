@@ -1637,12 +1637,19 @@ Descriptors
            return d
 
 
+   .. versionchanged:: 8.3
+
+      The decorated function can now also be a :func:`classmethod`
 
 .. function:: namedSelector(name [, signature])
 
    Use this decorator to explicitly set the Objective-C method name instead
    of deducing it from the Python name. You can optionally set the method
    signature as well.
+
+   .. versionchanged:: 8.3
+
+      The decorated function can now also be a :func:`classmethod`
 
 .. function:: callbackFor(callable[, argIndex=])
 

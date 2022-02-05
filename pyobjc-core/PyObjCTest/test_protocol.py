@@ -173,6 +173,9 @@ class TestFormalOCProtocols(TestCase):
             (b"method2:", b"v@:i"),
         )
 
+        with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
+            OC_TestProtocol.descriptionForInstanceMethod_(42)
+
     def testImplementFormalProtocol(self):
         class MyClassNotImplementingProtocol(NSObject):
             pass
@@ -346,10 +349,9 @@ class TestFormalProtocols(TestCase):
             def anAnotherOne_(self, a):
                 pass
 
+            @classmethod
             def aClassOne_(self, a):
                 pass
-
-            aClassOne_ = classmethod(aClassOne_)
 
         self.assertEqual(ImplementingMyClassProtocol.anAnotherOne_.signature, b"i@:i")
         self.assertEqual(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
@@ -435,14 +437,42 @@ class TestFormalProtocols(TestCase):
             MyClassProtocol.descriptionForClassMethod_(b"nosuchmethod"), None
         )
 
-    def dont_testObjCInterface(self):
-        # TODO: tests that access the Objective-C interface of protocols
-        # (those methods should be forwarded to the underlying object, as
-        #  with objc.pyobjc_unicode).
-        # NOTE: This is not very important, the only methods that are not
-        # explicitly wrapped should be compatibility methods that will
-        # cause a warning when called.
-        self.assertEqual(1, 0)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
+            MyClassProtocol.descriptionForClassMethod_(42)
+
+    def test_method_of_wrong_kind_instance(self):
+        class ClassWithClassMethodBase1(NSObject):
+            @classmethod
+            def protoMethod(self):
+                return 42
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "does not correctly implement protocol MyProtocol: method 'protoMethod' is not an instance method",
+        ):
+
+            class ClassWithClassMethod(
+                ClassWithClassMethodBase1, protocols=[MyProtocol]
+            ):
+                def anotherProto_with_(self, a, b):
+                    pass
+
+    def test_method_of_wrong_kind_class(self):
+        class ClassWithClassMethodBase2(NSObject):
+            @objc.typedSelector(b"@@:i")
+            def aClassOne_(self, a):
+                return a
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "does not correctly implement protocol MyProtocol: method 'aClassOne:' is not a class method",
+        ):
+
+            class ClassWithInstanceMethod(
+                ClassWithClassMethodBase2, protocols=[MyClassProtocol]
+            ):
+                def anAnotherOne_(self, a):
+                    return a
 
 
 class Test3InformalProtocols(TestCase):
@@ -476,6 +506,16 @@ MyClassProtocol3 = objc.formal_protocol(
         objc.selector(None, selector=b"anAnotherOne:", signature=b"i@:i"),
         objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ],
+)
+
+MyProtocol4 = objc.formal_protocol(
+    "MyProtocol4",
+    None,
+    (
+        objc.selector(
+            None, selector=b"proto4Method", signature=b"I@:", isRequired=False
+        ),
+    ),
 )
 
 
@@ -589,6 +629,24 @@ class TestFormalProtocols2(TestCase):
             )
         )
 
+    def test_inherit_with_optional(self):
+
+        # First a class that doesn't implemented the protocol
+        # method. Is OK because the method is optional
+        class ImplementingProto4(NSObject, protocols=[MyProtocol4]):
+            pass
+
+        # Then a class that does implemented the protocol method,
+        # which affects the type signature.
+        class ImplementingProto4A(NSObject, protocols=[MyProtocol4]):
+            def proto4Method(self):
+                return 1
+
+        self.assertTrue(ImplementingProto4.conformsToProtocol_(MyProtocol4))
+        self.assertTrue(ImplementingProto4A.conformsToProtocol_(MyProtocol4))
+
+        self.assertResultHasType(ImplementingProto4A.proto4Method, b"I")
+
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()
 
@@ -701,7 +759,7 @@ class TestFormalProtocols2(TestCase):
         self.assertTrue(v.conformsTo_(v))
 
         with self.assertRaisesRegex(
-            TypeError, "Expecting objc.formal_protocol, got instance of 'int'"
+            TypeError, "argument 1 must be objc.formal_protocol, not int"
         ):
             v.conformsTo_(42)
 

@@ -187,6 +187,9 @@ def typedSelector(signature):
     def _typedSelector(func):
         if func is None:
             raise TypeError("typedSelector() function argument must be a callable")
+        if isinstance(func, classmethod):
+            return selector(func.__func__, signature=signature, isClassMethod=True)
+
         return selector(func, signature=signature)
 
     return _typedSelector
@@ -205,6 +208,13 @@ def namedSelector(name, signature=None):
         def _namedselector(func):
             if func is None:
                 raise TypeError("namedSelector argument must be a callable")
+            if isinstance(func, classmethod):
+                return selector(
+                    func.__func__,
+                    selector=name,
+                    signature=signature,
+                    isClassMethod=True,
+                )
             return selector(func, selector=name, signature=signature)
 
     else:

@@ -1,10 +1,12 @@
 import objc
+import inspect
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_metadata import OC_MetaDataTest
 
 
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
+NSArray = objc.lookUpClass("NSArray")
 
 
 class TestBasicIMP(TestCase):
@@ -126,6 +128,57 @@ class TestBasicIMP(TestCase):
 
         self.assertEqual(imp.signature, o.addObject_.signature)
         self.assertEqual(len(imp.__signature__.parameters), 2)
+
+    def test_imp_no_args(self):
+        o = NSMutableArray.alloc().init()
+        imp = o.methodForSelector_(b"addObject:")
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            imp()
+
+    def test_init_with_imp(self):
+        imp = NSMutableArray.instanceMethodForSelector_(b"init")
+        o = NSMutableArray.alloc()
+        o = imp(o)
+        self.assertIsInstance(o, NSMutableArray)
+
+    def test_initArray_with_imp(self):
+        imp = NSArray.instanceMethodForSelector_(b"initWithArray:")
+        o = NSArray.alloc()
+        p = imp(o, [1, 2])
+        self.assertIsInstance(p, NSArray)
+        self.assertIsNot(o, p)
+
+        # Make sure the pointer to ObjC is cleared:
+        with self.assertRaisesRegex(
+            AttributeError, "cannot access attribute '__c_void_p__' of NIL "
+        ):
+            o.__c_void_p__
+
+    def test_imp_attributes(self):
+        o = NSMutableArray.alloc().init()
+        imp = o.methodForSelector_(b"addObject:")
+        alloc_imp = NSMutableArray.methodForSelector_(b"alloc")
+        cls_imp = NSMutableArray.methodForSelector_(b"array")
+
+        self.assertFalse(imp.isAlloc)
+        self.assertFalse(imp.isClassMethod)
+        self.assertEqual(
+            objc.splitSignature(imp.signature), objc.splitSignature(b"v@:@")
+        )
+        self.assertEqual(imp.selector, b"addObject:")
+        self.assertEqual(
+            imp.__name__, b"addObject:"
+        )  # XXX: Shouldn't this be a string?
+        sig = inspect.signature(imp)
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(str(sig), "(arg0, arg1, /)")
+
+        self.assertFalse(cls_imp.isAlloc)
+        self.assertTrue(cls_imp.isClassMethod)
+
+        self.assertTrue(alloc_imp.isAlloc)
+        self.assertTrue(alloc_imp.isClassMethod)
 
 
 class TestGettingIMPs(TestCase):

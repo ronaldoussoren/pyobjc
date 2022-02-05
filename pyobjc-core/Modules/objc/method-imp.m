@@ -232,6 +232,7 @@ static PyObject* _Nullable imp_signature(PyObject* _self,
     if (self->signature) {
         return PyBytes_FromString(self->signature->signature);
     } else {
+        /* XXX: Verify if this can ever be reached */
         Py_INCREF(Py_None);
         return Py_None;
     }

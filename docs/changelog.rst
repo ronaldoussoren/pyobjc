@@ -24,6 +24,16 @@ of test coverage for the C code in pyobjc-core.
   instead of Python's ``KeyError`` for missing keys. This matches the documented
   behaviour of ``NSDictionary``.
 
+* Backward incompatible change:
+
+  ``-[Protocol descriptionForClassMethod:]`` now only accepts selector names
+  (such as ``b"description"``) as its argument, not instances of
+  :class:`objc.selector`. This matches the behaviour of other methods
+  with an argument of the C type ``SEL``.
+
+* :func"`objc.namedSelector` and :func:`objc.typedSelector` now also work when
+  the decorated function is a :func:`classmethod`.
+
 * Fix build problem on macOS 10.14 or earlier
 
 * The Objective-C proxy for a python :class:`int` is now always ``OC_PythonNumber``,

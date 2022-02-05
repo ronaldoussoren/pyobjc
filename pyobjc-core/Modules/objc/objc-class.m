@@ -776,8 +776,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             }
 
         } else if (PyObjCFormalProtocol_Check(p)) {
-            if (!PyObjCFormalProtocol_CheckClass(p, name, py_super_class, dict,
-                                                 metadict)) {
+            if (PyObjCFormalProtocol_CheckClass(p, name, py_super_class, dict, metadict)
+                == -1) {
                 Py_DECREF(real_bases);
                 Py_DECREF(protocols);
                 Py_DECREF(metadict);

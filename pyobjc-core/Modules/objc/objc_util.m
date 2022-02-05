@@ -1366,7 +1366,6 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
 PyObject* _Nullable PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
 {
     PyObject*  values;
-    PyObject*  seq;
     Py_ssize_t i, len;
 
     values = PyDict_Values(clsdict);
@@ -1374,27 +1373,22 @@ PyObject* _Nullable PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
         return NULL;
     }
 
-    seq = PySequence_Fast(values, "PyDict_Values result not a sequence");
-    if (seq == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(PyList_Check(values), NULL);
 
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyList_GET_SIZE(values);
     for (i = 0; i < len; i++) {
-        PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
+        PyObject* v = PyList_GET_ITEM(values, i);
 
         if (!PyObjCSelector_Check(v))
             continue;
 
         if (PyObjCSelector_GetSelector(v) == selector) {
-            Py_DECREF(seq);
             Py_DECREF(values);
             Py_INCREF(v);
             return v;
         }
     }
 
-    Py_DECREF(seq);
     Py_DECREF(values);
     return NULL;
 }

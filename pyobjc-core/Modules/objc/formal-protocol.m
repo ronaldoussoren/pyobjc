@@ -245,7 +245,7 @@ static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullab
     PyObject*             protocol;
     Protocol*             objc_protocol;
 
-    if (!PyArg_ParseTuple(args, "O", &protocol)) {
+    if (!PyArg_ParseTuple(args, "O!", &PyObjCFormalProtocol_Type, &protocol)) {
         return NULL;
     }
 
@@ -295,7 +295,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
             // LCOV_EXCL_STOP
         }
         Py_DECREF(item);
-    }
+    } // LCOV_BR_EXCL_LINE: always non-empty
 
     free(methods);
     return 0;
@@ -336,12 +336,12 @@ static PyObject* _Nullable classMethods(PyObject* object)
     int                   r;
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_START
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
 
     r = append_method_list(result, self->objc, YES, NO);
-    if (r == -1) { // LCOV_BR_EXCL_START
+    if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -349,7 +349,7 @@ static PyObject* _Nullable classMethods(PyObject* object)
     }
 
     r = append_method_list(result, self->objc, NO, NO);
-    if (r == -1) { // LCOV_BR_EXCL_START
+    if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -390,22 +390,8 @@ static PyObject* _Nullable descriptionForClassMethod_(PyObject* object, PyObject
     SEL                            aSelector = NULL;
     struct objc_method_description descr;
 
-    if (PyObjCSelector_Check(sel)) {
-        aSelector = PyObjCSelector_GetSelector(sel);
-
-    } else if (PyBytes_Check(sel)) {
-        char* s = PyBytes_AsString(sel);
-        if (*s == '\0') {
-            PyErr_SetString(PyExc_ValueError, "empty selector name");
-            return NULL;
-        }
-
-        aSelector = sel_getUid(s);
-    } else {
-        PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
-                     Py_TYPE(sel)->tp_name);
+    if (depythonify_c_value(@encode(SEL), sel, &aSelector) == -1)
         return NULL;
-    }
 
     descr = protocol_getMethodDescription(self->objc, aSelector, YES, NO);
     if (descr.name == NULL) {
@@ -517,54 +503,66 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
 
     if (is_class) {
         meth = PyObjC_FindSELInDict(metadict, descr->name);
+        PyObjC_Assert(
+            meth == NULL
+                || (PyObjCSelector_Check(meth) && PyObjCSelector_IsClassMethod(meth)),
+            -1);
     } else {
         meth = PyObjC_FindSELInDict(clsdict, descr->name);
+        PyObjC_Assert(
+            meth == NULL
+                || (PyObjCSelector_Check(meth) && !PyObjCSelector_IsClassMethod(meth)),
+            -1);
     }
 
-    if (meth == NULL || !PyObjCSelector_Check(meth)) {
+    if (meth == NULL) {
 
         meth = PyObjCClass_FindSelector(super_class, descr->name, is_class);
         if (meth == NULL || !PyObjCSelector_Check(meth)) {
             if (is_required) {
                 PyErr_Format(PyExc_TypeError,
-                             "class %s does not full implement protocol "
+                             "class %s does not fully implement protocol "
                              "%s: no implementation for '%s'",
                              name, protocol_name, sel_getName(descr->name));
-                return 0;
+                return -1;
             } else {
                 /* Method is not required, ignore */
-                return 1;
+                return 0;
+            }
+        }
+
+        /* XXX: it is possible to trigger this for instance method, look into
+         *      adjusting PyObjCClass_FindSelector: it can return a method object
+         *      that does not match our request.
+         */
+        if (is_class) {
+            if (!PyObjCSelector_IsClassMethod(meth)) {
+                PyErr_Format(PyExc_TypeError,
+                             "class %s does not correctly implement "
+                             "protocol %s: method '%s' is not a "
+                             "class method",
+                             name, protocol_name, sel_getName(descr->name));
+                return -1;
+            }
+
+        } else {
+            if (PyObjCSelector_IsClassMethod(meth)) {
+                PyErr_Format(PyExc_TypeError,
+                             "class %s does not correctly implement "
+                             "protocol %s: method '%s' is not an "
+                             "instance method",
+                             name, protocol_name, sel_getName(descr->name));
+                return -1;
             }
         }
     }
 
-    if (is_class) {
-        if (!PyObjCSelector_IsClassMethod(meth)) {
-            PyErr_Format(PyExc_TypeError,
-                         "class %s does not correctly implement "
-                         "protocol %s: method '%s' is not a "
-                         "class method",
-                         name, protocol_name, sel_getName(descr->name));
-            return 0;
-        }
-
-    } else {
-        if (PyObjCSelector_IsClassMethod(meth)) {
-            PyErr_Format(PyExc_TypeError,
-                         "class %s does not correctly implement "
-                         "protocol %s: method '%s' is not an "
-                         "instance method",
-                         name, protocol_name, sel_getName(descr->name));
-            return 0;
-        }
-    }
-
     const char* sel_sig = PyObjCSelector_Signature(meth);
-    if (sel_sig == NULL) {
-        return 0;
+    if (sel_sig == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
     }
     if (PyObjCRT_SignaturesEqual(descr->types, sel_sig)) {
-        return 1;
+        return 0;
     }
 
     PyErr_Format(PyExc_TypeError,
@@ -573,7 +571,7 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
                  "is %s instead of %s",
                  name, protocol_name, sel_getName(descr->name),
                  PyObjCSelector_Signature(meth), descr->types);
-    return 0;
+    return -1;
 }
 
 static int
@@ -589,7 +587,7 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
         for (idx = 0; idx < parentCount; idx++) {
             r = do_check(protocol_name, parents[idx], name, super_class, clsdict,
                          metadict);
-            if (r == 0) {
+            if (r == -1) {
                 free(parents);
                 return r;
             }
@@ -604,10 +602,11 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
     methinfo  = protocol_copyMethodDescriptionList(protocol, YES, YES, &methCount);
     if (methinfo) {
         for (idx = 0; idx < methCount; idx++) {
-            if (!do_verify(protocol_name, methinfo + idx, NO, YES, name, super_class,
-                           clsdict, metadict)) {
+            if (do_verify(protocol_name, methinfo + idx, NO, YES, name, super_class,
+                          clsdict, metadict)
+                == -1) {
                 free(methinfo);
-                return 0;
+                return -1;
             }
         }
         free(methinfo);
@@ -616,10 +615,11 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
     methinfo = protocol_copyMethodDescriptionList(protocol, NO, YES, &methCount);
     if (methinfo) {
         for (idx = 0; idx < methCount; idx++) {
-            if (!do_verify(protocol_name, methinfo + idx, NO, NO, name, super_class,
-                           clsdict, metadict)) {
+            if (do_verify(protocol_name, methinfo + idx, NO, NO, name, super_class,
+                          clsdict, metadict)
+                == -1) {
                 free(methinfo);
-                return 0;
+                return -1;
             }
         }
         free(methinfo);
@@ -628,10 +628,11 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
     methinfo = protocol_copyMethodDescriptionList(protocol, YES, NO, &methCount);
     if (methinfo) {
         for (idx = 0; idx < methCount; idx++) {
-            if (!do_verify(protocol_name, methinfo + idx, YES, YES, name, super_class,
-                           clsdict, metadict)) {
+            if (do_verify(protocol_name, methinfo + idx, YES, YES, name, super_class,
+                          clsdict, metadict)
+                == -1) {
                 free(methinfo);
-                return 0;
+                return -1;
             }
         }
         free(methinfo);
@@ -640,16 +641,17 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
     methinfo = protocol_copyMethodDescriptionList(protocol, NO, NO, &methCount);
     if (methinfo) {
         for (idx = 0; idx < methCount; idx++) {
-            if (!do_verify(protocol_name, methinfo + idx, YES, NO, name, super_class,
-                           clsdict, metadict)) {
+            if (do_verify(protocol_name, methinfo + idx, YES, NO, name, super_class,
+                          clsdict, metadict)
+                == -1) {
                 free(methinfo);
-                return 0;
+                return -1;
             }
         }
         free(methinfo);
     }
 
-    return 1;
+    return 0;
 }
 
 int
@@ -658,27 +660,9 @@ PyObjCFormalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_class
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)obj;
 
-    if (!PyObjCFormalProtocol_Check(obj)) {
-        PyErr_Format(PyExc_TypeError,
-                     "First argument is not an 'objc.formal_protocol' but "
-                     "'%s'",
-                     Py_TYPE(obj)->tp_name);
-        return 0;
-    }
-
-    if (!PyObjCClass_Check(super_class)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Third argument is not an 'objc.objc_class' but "
-                     "'%s'",
-                     Py_TYPE(super_class)->tp_name);
-        return 0;
-    }
-
-    if (!PyDict_Check(clsdict)) {
-        PyErr_Format(PyExc_TypeError, "Fourth argument is not a 'dict' but '%s'",
-                     Py_TYPE(clsdict)->tp_name);
-        return 0;
-    }
+    PyObjC_Assert(PyObjCFormalProtocol_Check(obj), -1);
+    PyObjC_Assert(PyObjCClass_Check(super_class), -1);
+    PyObjC_Assert(PyDict_Check(clsdict), -1);
 
     return do_check(protocol_getName(self->objc), self->objc, name, super_class, clsdict,
                     metadict);
@@ -688,7 +672,7 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 {
     PyObjCFormalProtocol* result;
 
-    PyObjC_Assert(protocol, NULL);
+    PyObjC_Assert(protocol != NULL, NULL);
 
     result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
                                                  &PyObjCFormalProtocol_Type);
@@ -705,12 +689,7 @@ Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
 
-    if (!PyObjCFormalProtocol_Check(self)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting objc.formal_protocol, got instance of '%s'",
-                     Py_TYPE(self)->tp_name);
-        return NULL;
-    }
+    PyObjC_Assert(PyObjCFormalProtocol_Check(self), NULL);
 
     return self->objc;
 }
