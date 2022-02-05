@@ -327,17 +327,18 @@ is_builtin_datetime(PyObject* object)
             return self;
 
         } else {
-            [NSException raise:NSInvalidArgumentException
-                        format:@"decoding Python objects is not supported"];
+            @throw
+                [NSException exceptionWithName:NSInvalidArgumentException
+                                        reason:@"decoding Python objects is not supported"
+                                      userInfo:nil];
             return nil;
         }
 
     default:
         // LCOV_EXCL_START
-        [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python data objects with ptype=%d is not supported",
-                           pytype];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"decoding Python objects is not supported"
+                                     userInfo:nil];
         // LCOV_EXCL_STOP
     }
 }

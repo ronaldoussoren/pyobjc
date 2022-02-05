@@ -234,9 +234,9 @@ NS_ASSUME_NONNULL_BEGIN
 
     } else {
         // LCOV_EXCL_START
-        [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python objects is not supported"];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"decoding Python objects is not supported"
+                                     userInfo:nil];
         // LCOV_EXCL_STOP
     }
 }
@@ -268,8 +268,9 @@ NS_ASSUME_NONNULL_BEGIN
         return result;
 
     } else {
-        [NSException raise:NSInvalidArgumentException format:@"cannot copy python set"];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"cannot copy python set"
+                                     userInfo:nil];
     }
 }
 

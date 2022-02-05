@@ -348,15 +348,17 @@ NS_ASSUME_NONNULL_BEGIN
 
         } else { // LCOV_BR_EXCL_LINE
             // LOCV_EXCL_START
-            [NSException raise:NSInvalidArgumentException
-                        format:@"decoding Python objects is not supported"];
+            @throw
+                [NSException exceptionWithName:NSInvalidArgumentException
+                                        reason:@"decoding Python objects is not supported"
+                                      userInfo:nil];
             return nil;
             // LOCV_EXCL_STOP
         }
     } else {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python unicode objects is not supported"];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"decoding Python objects is not supported"
+                                     userInfo:nil];
     }
 }
 

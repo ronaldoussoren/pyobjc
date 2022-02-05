@@ -95,8 +95,9 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* copy;
 
     if (PyObjC_CopyFunc == NULL || PyObjC_CopyFunc == Py_None) {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"cannot copy Python objects"];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"cannot copy Python objects"
+                                     userInfo:nil];
 
     } else {
         PyObjC_BEGIN_WITH_GIL
@@ -161,8 +162,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
 {
-    [NSException raise:NSInvalidArgumentException
-                format:@"%@ does not recognize -%s", self, sel_getName(aSelector)];
+    @throw [NSException
+        exceptionWithName:NSInvalidArgumentException
+                   reason:[NSString stringWithFormat:@"%@ does not recognize -%s", self,
+                                                     sel_getName(aSelector)]
+                 userInfo:nil];
 }
 
 static inline int
@@ -199,7 +203,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
     if (!aSelector) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        [NSException raise:NSInvalidArgumentException format:@"nil selector"];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"nil selector"
+                                     userInfo:nil];
         // LCOV_EXCL_STOP
     }
 
@@ -906,8 +912,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (void)setValue:value forUndefinedKey:(NSString*)key
 {
-    [NSException raise:NSUndefinedKeyException
-                format:@"setting unknown key: %@ to <%@>", key, value];
+    @throw [NSException
+        exceptionWithName:NSUndefinedKeyException
+                   reason:[NSString stringWithFormat:@"setting unknown key: %@ to <%@>",
+                                                     key, value]
+                 userInfo:nil];
 }
 
 - (void)addObserver:(NSObject*)observer
@@ -976,7 +985,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 - (NSComparisonResult)compare:(id)other
 {
     if (other == nil) {
-        [NSException raise:NSInvalidArgumentException format:@"nil argument"];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"nil argument"
+                                     userInfo:nil];
     } else if (self == other) {
         return NSOrderedSame;
     }
@@ -1087,9 +1098,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         return self;
 
     } else {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python objects is not supported"];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"decoding Python objects is not supported"
+                                     userInfo:nil];
     }
 }
 
@@ -1252,8 +1263,9 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
         PyObjC_END_WITH_GIL
 
     } else {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"encoding Python objects is not supported"];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"encoding Python objects is not supported"
+                                     userInfo:nil];
     }
 }
 

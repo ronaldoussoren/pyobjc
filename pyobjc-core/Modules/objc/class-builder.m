@@ -108,8 +108,8 @@ do_slots(PyObject* super_class, PyObject* clsdict)
     Py_ssize_t len, i;
 
     slot_value = PyDict_GetItemStringWithError(clsdict, "__slots__");
-    if (slot_value == NULL && PyErr_Occurred()) {
-        return -1;
+    if (slot_value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return -1;                                // LCOV_EXCL_LINE
     }
     if (slot_value == NULL) {
         /*
@@ -121,13 +121,17 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         PyErr_Clear();
 
         slot_value = PyTuple_New(0);
-        if (slot_value == NULL) {
-            return 0;
+        if (slot_value == NULL) { // LCOV_BR_EXCL_LINE
+            return 0;             // LCOV_EXCL_LINE
         }
 
-        if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
+        if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                clsdict, "__slots__", slot_value)
+            < 0) {
+            // LCOV_EXCL_START
             Py_DECREF(slot_value);
             return -1;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(slot_value);
 
@@ -137,8 +141,8 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         }
 
         v = PyObjCInstanceVariable_New("__dict__");
-        if (v == NULL) {
-            return -1;
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;   // LCOV_EXCL_LINE
         }
         ((PyObjCInstanceVariable*)v)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
         ((PyObjCInstanceVariable*)v)->isSlot = 1;
@@ -169,6 +173,12 @@ do_slots(PyObject* super_class, PyObject* clsdict)
             }
 
             var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
+            if (var == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(slots);
+                return -1;
+                // LCOV_EXCL_STOP
+            }
 
         } else {
             PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string",
@@ -177,30 +187,33 @@ do_slots(PyObject* super_class, PyObject* clsdict)
             return -1;
         }
 
-        if (var == NULL) {
-            Py_DECREF(slots);
-            return -1;
-        }
         ((PyObjCInstanceVariable*)var)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
         ((PyObjCInstanceVariable*)var)->isSlot = 1;
 
-        if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var) < 0) {
+        if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var)
+            < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(slots);
             Py_DECREF(var);
             return -1;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(var);
     }
     Py_DECREF(slots);
 
     slot_value = PyTuple_New(0);
-    if (slot_value == NULL) {
-        return 0;
+    if (slot_value == NULL) { // LCOV_BR_EXCL_LINE
+        return 0;             // LCOV_EXCL_LINE
     }
 
-    if (PyDict_SetItemString(clsdict, "__slots__", slot_value) < 0) {
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            clsdict, "__slots__", slot_value)
+        < 0) {
+        // LCOV_EXCL_START
         Py_DECREF(slot_value);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     Py_DECREF(slot_value);
@@ -219,9 +232,11 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
     Class intermediate_class = nil;
 
     intermediate_class = objc_allocateClassPair(base_class, name, 0);
-    if (intermediate_class == NULL) {
+    if (intermediate_class == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     struct method_info* cur;
@@ -550,9 +565,11 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     /* Allocate the class as soon as possible, for new selector objects */
     new_class = objc_allocateClassPair(super_class, name, 0);
-    if (new_class == Nil) {
+    if (new_class == Nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot allocateClassPair for %s", name);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     /* Class is only Nil if new_class is nil */
@@ -572,10 +589,10 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
          * checked */
-        if (!class_addProtocol(
+        if (!class_addProtocol( // LCOV_BR_EXCL_LINE
                 new_class,
                 (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
-            goto error_cleanup;
+            goto error_cleanup; // LCOV_EXCL_LINE
         }
     }
 
@@ -585,8 +602,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         value = PyDict_GetItemWithError(class_dict, key);
         if (value == NULL) {
-            if (PyErr_Occurred())
-                goto error_cleanup;
+            if (PyErr_Occurred())   // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             PyErr_SetString(PyObjCExc_InternalError,
                             "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
@@ -625,9 +642,11 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     key_count = PyList_Size(key_list);
-    if (key_count == -1) {
+    if (key_count == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key_list);
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     /* Step 2b: Collect methods and instance variables in the class dict
@@ -640,8 +659,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         value = PyDict_GetItemWithError(class_dict, key);
         if (value == NULL) {
-            if (PyErr_Occurred())
-                goto error_cleanup;
+            if (PyErr_Occurred())   // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             PyErr_SetString(PyObjCExc_InternalError,
                             "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
@@ -693,9 +712,13 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                     goto error_cleanup;
                 }
 
-                if (PyDict_SetItem(class_dict, key, new_value) == -1) {
+                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                        class_dict, key, new_value)
+                    == -1) {
+                    // LCOV_EXCL_START
                     Py_DECREF(new_value);
                     goto error_cleanup;
+                    // LCOV_EXCL_STOP
                 }
 
                 value = new_value;
@@ -705,13 +728,14 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
             if (PyObjCSelector_IsClassMethod(value)) {
                 r = PySet_Add(class_methods, value);
-                if (r == -1) {
-                    goto error_cleanup;
+                if (r == -1) {          // LCOV_BR_EXCL_LINE
+                    goto error_cleanup; // LCOV_EXCL_LINE
                 }
 
                 if (!PyObjCSelector_IsHidden(value)) {
-                    if (PyDict_SetItem(meta_dict, key, value) == -1) {
-                        goto error_cleanup;
+                    if (PyDict_SetItem(meta_dict, key, value)
+                        == -1) {            // LCOV_BR_EXCL_LINE
+                        goto error_cleanup; // LCOV_EXCL_LINE
                     }
                 } else {
                     shouldCopy = NO;
@@ -720,13 +744,13 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 if (shouldCopy) {
                     r = PyDict_SetItem(meta_dict, pyname, value);
                     Py_DECREF(pyname);
-                    if (r == -1) {
-                        goto error_cleanup;
+                    if (r == -1) {          // LCOV_BR_EXCL_LINE
+                        goto error_cleanup; // LCOV_EXCL_LINE
                     }
                 }
 
-                if (PyDict_DelItem(class_dict, key) == -1) {
-                    goto error_cleanup;
+                if (PyDict_DelItem(class_dict, key) == -1) { // LCOV_BR_EXCL_LINE
+                    goto error_cleanup;                      // LCOV_EXCL_LINE
                 }
 
             } else {
@@ -746,8 +770,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 if (shouldCopy) {
                     r = PyDict_SetItem(class_dict, pyname, value);
                     Py_DECREF(pyname);
-                    if (r == -1) {
-                        goto error_cleanup;
+                    if (r == -1) {          // LCOV_BR_EXCL_LINE
+                        goto error_cleanup; // LCOV_EXCL_LINE
                     }
                 }
             }
@@ -791,33 +815,42 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
                     if (PyObjCSelector_IsClassMethod(value)) {
                         if (!PyObjCSelector_IsHidden(value)) {
-                            if (PyDict_SetItem(meta_dict, key, value) == -1) {
-                                goto error_cleanup;
+                            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                                    meta_dict, key, value)
+                                == -1) {
+                                goto error_cleanup; // LCOV_EXCL_LINE
                             }
                         }
-                        if (PyDict_DelItem(class_dict, key) == -1) {
-                            goto error_cleanup;
+                        if (PyDict_DelItem(class_dict, key) == -1) { // LCOV_BR_EXCL_LINE
+                            goto error_cleanup;                      // LCOV_EXCL_LINE
                         }
 
                         r = PySet_Add(class_methods, value);
+                        if (r == -1) {          // LCOV_BR_EXCL_LINE
+                            goto error_cleanup; // LCOV_EXCL_LINE
+                        }
 
                     } else {
                         if (PyObjCSelector_IsHidden(value)) {
-                            if (PyDict_DelItem(class_dict, key) == -1) {
-                                goto error_cleanup;
+                            if (PyDict_DelItem(class_dict, key)
+                                == -1) {            // LCOV_BR_EXCL_LINE
+                                goto error_cleanup; // LCOV_EXCL_LINE
                             }
 
                         } else {
-                            if (PyDict_SetItem(class_dict, key, value) < 0) {
+                            if (PyDict_SetItem(class_dict, key, value)
+                                < 0) { // LCOV_BR_EXCL_LINE
+                                // LCOV_EXCL_START
                                 Py_CLEAR(value);
                                 goto error_cleanup;
+                                // LCOV_EXCL_STOP
                             }
                         }
 
                         r = PySet_Add(instance_methods, value);
-                    }
-                    if (r == -1) {
-                        goto error_cleanup;
+                        if (r == -1) {          // LCOV_BR_EXCL_LINE
+                            goto error_cleanup; // LCOV_EXCL_LINE
+                        }
                     }
                 }
             }
@@ -882,8 +915,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         if (PyBytes_Check(value)) {
             int r = PyDict_SetItem(hiddenSelectors, value, Py_None);
-            if (r == -1) {
-                goto error_cleanup;
+            if (r == -1) {          // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             }
         }
 
@@ -917,8 +950,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 int r = PyDict_SetItem(hiddenSelectors, v,
                                        (PyObject*)PyObjCSelector_GetMetadata(value));
                 Py_DECREF(v);
-                if (r == -1) {
-                    goto error_cleanup;
+                if (r == -1) {          // LCOV_BR_EXCL_LINE
+                    goto error_cleanup; // LCOV_EXCL_LINE
                 }
             }
         }
@@ -928,8 +961,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         if (PyBytes_Check(value)) {
             int r = PyDict_SetItem(hiddenClassSelectors, value, Py_None);
-            if (r == -1) {
-                goto error_cleanup;
+            if (r == -1) {          // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             }
         }
 
@@ -963,8 +996,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 int r = PyDict_SetItem(hiddenClassSelectors, v,
                                        (PyObject*)PyObjCSelector_GetMetadata(value));
                 Py_DECREF(v);
-                if (r == -1) {
-                    goto error_cleanup;
+                if (r == -1) {          // LCOV_BR_EXCL_LINE
+                    goto error_cleanup; // LCOV_EXCL_LINE
                 }
             }
         }
@@ -1010,8 +1043,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 int r = PyDict_SetItemString(class_dict, cur->method_name, sel);
                 Py_DECREF(sel);
 
-                if (r == -1)
-                    goto error_cleanup;
+                if (r == -1)            // LCOV_BR_EXCL_LINE
+                    goto error_cleanup; // LCOV_EXCL_LINE
             }
         }
     }

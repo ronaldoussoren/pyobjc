@@ -46,6 +46,9 @@ Use ``LCOV_EXCL_LINE`` in a comment to exclude a specific line.
 Use ``LCOV_EXCL_START`` and ``EXC_EXCL_STOP`` in comments to exclude a block
 of code.
 
+Use ``LCOV_BR_EXCL_LINE`` in a comment to exclude branch coverage
+for a specific line (the line containing a "if", "for" or "while" keyword.
+
 
 Test coverage for Python code in pyobjc-core
 --------------------------------------------

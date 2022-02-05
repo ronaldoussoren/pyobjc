@@ -611,9 +611,13 @@ NS_ASSUME_NONNULL_BEGIN
     default:
         // LCOV_EXCL_START
         [self release];
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Cannot decode OC_PythonArray with type-id %d", code];
-        return nil;
+        @throw [NSException
+            exceptionWithName:NSInvalidArgumentException
+                       reason:[NSString
+                                  stringWithFormat:
+                                      @"Cannot decode OC_PythonArray with type-id %d",
+                                      code]
+                     userInfo:nil];
         // LCOV_EXCL_STOP
     }
 }

@@ -22,7 +22,9 @@ ivar_dealloc(PyObject* _ivar)
     if (ivar->name) {
         PyMem_Free(ivar->name);
     }
-    PyMem_Free(ivar->type);
+    if (ivar->type) {
+        PyMem_Free(ivar->type);
+    }
     Py_TYPE(ivar)->tp_free((PyObject*)ivar);
 }
 
@@ -443,14 +445,16 @@ PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
     PyObject* result;
 
     result = PyObjCInstanceVariable_Type.tp_alloc(&PyObjCInstanceVariable_Type, 0);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     ((PyObjCInstanceVariable*)result)->type = PyObjCUtil_Strdup("");
-    if (((PyObjCInstanceVariable*)result)->type == NULL) {
+    if (((PyObjCInstanceVariable*)result)->type == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     ((PyObjCInstanceVariable*)result)->isOutlet = 0;
@@ -458,10 +462,11 @@ PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
     ((PyObjCInstanceVariable*)result)->ivar     = 0;
     ((PyObjCInstanceVariable*)result)->name     = PyObjCUtil_Strdup(name);
 
-    if (((PyObjCInstanceVariable*)result)->name == NULL) {
-        PyMem_Free(((PyObjCInstanceVariable*)result)->type);
+    if (((PyObjCInstanceVariable*)result)->name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     return result;
 }

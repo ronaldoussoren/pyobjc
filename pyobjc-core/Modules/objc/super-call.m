@@ -415,9 +415,13 @@ PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)),
                             void* resp __attribute__((__unused__)), void** args,
                             void* userdata __attribute__((__unused__)))
 {
-    [NSException raise:NSInvalidArgumentException
-                format:@"Implementing %s from Python is not supported for %@",
-                       sel_getName(*(SEL*)args[1]), *(id*)args[0]];
+    @throw [NSException
+        exceptionWithName:NSInvalidArgumentException
+                   reason:[NSString
+                              stringWithFormat:
+                                  @"Implementing %s from Python is not supported for %@",
+                                  sel_getName(*(SEL*)args[1]), *(id*)args[0]]
+                 userInfo:nil];
 }
 
 PyObject*

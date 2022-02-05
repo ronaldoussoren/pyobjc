@@ -488,8 +488,10 @@ NS_ASSUME_NONNULL_BEGIN
             return self;
 
         } else {
-            [NSException raise:NSInvalidArgumentException
-                        format:@"decoding Python objects is not supported"];
+            @throw
+                [NSException exceptionWithName:NSInvalidArgumentException
+                                        reason:@"decoding Python objects is not supported"
+                                      userInfo:nil];
             return nil;
         }
 
