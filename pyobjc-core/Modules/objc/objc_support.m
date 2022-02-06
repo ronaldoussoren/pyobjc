@@ -327,8 +327,10 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
            || *type == 'O') {
         type++;
     }
-    while (*type && isdigit(*type))
-        type++;
+    while (*type && isdigit(*type)) { // LCOV_BR_EXCL_LINE
+        /* XXX: There are no digits in after type qualifiers!. */
+        type++; // LCOV_EXCL_LINE
+    }
     return type;
 }
 
@@ -338,9 +340,6 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     PyObjC_Assert(start_type != NULL, NULL);
 
     type = PyObjCRT_SkipTypeQualifiers(type);
-    if (type == NULL) {
-        return NULL;
-    }
 
     switch (*type) {
     case '"':
@@ -509,9 +508,6 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
     const char* _Nullable type = start_type;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
-    if (type == NULL) {
-        return NULL;
-    }
 
     switch (*type) {
     /* The following are one character type codes */
@@ -1050,6 +1046,7 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
     unsigned char* curdatum   = datum;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
+
     switch (*type) {
     case _C_CHARPTR:
         while (*(char**)curdatum != NULL) {
@@ -1117,6 +1114,7 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
         break;
 
     case _C_ULNG:
+    case _C_ULNG_LNG:
         while (*(unsigned long*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
@@ -1124,6 +1122,7 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
         break;
 
     case _C_LNG:
+    case _C_LNG_LNG:
         while (*(long*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
@@ -1177,8 +1176,8 @@ static PyObject* _Nullable pythonify_c_array(const char* type, void* datum)
         return NULL;
 
     ret = PyTuple_New(nitems);
-    if (!ret)
-        return NULL;
+    if (!ret)        // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
 
     curdatum = datum;
     for (itemidx = 0; itemidx < nitems; itemidx++) {
@@ -1275,8 +1274,8 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
 
         haveTuple = 1;
         ret       = PyTuple_New(nitems);
-        if (!ret)
-            return NULL;
+        if (!ret)        // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
 
         item = type;
 
@@ -2781,9 +2780,6 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
     }
 
     end = PyObjCRT_SkipTypeQualifiers(type);
-    if (end == NULL) {
-        return NULL;
-    }
 
     switch (*end) {
     case _C_STRUCT_B:
