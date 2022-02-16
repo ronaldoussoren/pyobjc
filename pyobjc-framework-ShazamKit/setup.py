@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.3b1"
+VERSION = "8.3"
 
 setup(
     name="pyobjc-framework-ShazamKit",

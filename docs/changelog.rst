@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 8.3b1
--------------
+Version 8.3
+-----------
 
 This release contains a lot of small fixes dueo to the continued improvement
 of test coverage for the C code in pyobjc-core.
