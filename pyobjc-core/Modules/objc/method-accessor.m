@@ -120,7 +120,6 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     PyObject*    res;
     Method*      methods;
     unsigned int i, method_count;
-    void*        iterator;
     char         buf[256];
     Class        objc_class;
 
@@ -161,8 +160,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     }
 
     while (objc_class != NULL && cls != NULL) {
-        iterator = NULL;
-        methods  = class_copyMethodList(objc_class, &method_count);
+        methods = class_copyMethodList(objc_class, &method_count);
 
         if (methods == NULL) {
             /* XXX: this is the same as the code after the for loop below,

@@ -104,18 +104,18 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    CVReturn rv;
-
     Py_BEGIN_ALLOW_THREADS
         @try {
-            rv = CVPixelBufferCreateWithBytes(
+            /* XXX: Bug: the return value of CVPixelBufferCreateWithBytes is
+             * not returned to Python!!!
+             */
+            (void)CVPixelBufferCreateWithBytes(
                 allocator, width, height, pixelFormatType,
                 PyObjCMemView_GetBuffer(view)->buf, bytesPerRow,
                 mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
 
         } @catch (NSException* localException) {
-            rv = 0;
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS

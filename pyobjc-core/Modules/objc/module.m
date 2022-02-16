@@ -440,17 +440,16 @@ PyDoc_STRVAR(loadBundle_doc,
 static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__)),
                                       PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
-    static char*      keywords[] = {"module_name",       "module_globals", "bundle_path",
+    static char* keywords[] = {"module_name",       "module_globals", "bundle_path",
                                "bundle_identifier", "scan_classes",   NULL};
-    static Py_ssize_t curClassCount     = -1;
-    NSBundle*         bundle            = nil;
-    id                bundle_identifier = nil;
-    id                bundle_path       = nil;
-    PyObject*         module_name;
-    PyObject*         module_globals;
-    PyObject*         class_list;
-    Py_ssize_t        len, i;
-    PyObject*         scanClasses = NULL;
+    NSBundle*    bundle     = nil;
+    id           bundle_identifier = nil;
+    id           bundle_path       = nil;
+    PyObject*    module_name;
+    PyObject*    module_globals;
+    PyObject*    class_list;
+    Py_ssize_t   len, i;
+    PyObject*    scanClasses = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "UO|O&O&O", keywords, &module_name,
                                      &module_globals, PyObjCObject_Convert, &bundle_path,
@@ -503,7 +502,7 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         return NULL;
     }
 
-    curClassCount = len = PyTuple_GET_SIZE(class_list);
+    len = PyTuple_GET_SIZE(class_list);
     for (i = 0; i < len; i++) {
         PyObject*   item;
         const char* nm;
