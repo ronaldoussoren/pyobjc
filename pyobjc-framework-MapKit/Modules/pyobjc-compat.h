@@ -373,9 +373,9 @@ extern PyObject* _Nullable PyObject_VectorcallMethod(
 
 extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 
-/* XXX: Naming! */
-extern PyObject* _Nullable PyBytes_InternFromString(const char* v);
-extern PyObject* _Nullable PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
+extern PyObject* _Nullable PyObjCBytes_InternFromString(const char* v);
+extern PyObject* _Nullable PyObjCBytes_InternFromStringAndSize(const char* v,
+                                                               Py_ssize_t  l);
 
 /*
  * A micro optimization: when using Python 3.3 or later it
