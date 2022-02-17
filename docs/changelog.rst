@@ -152,6 +152,11 @@ of test coverage for the C code in pyobjc-core.
   a sequence of selectors that contains a value that isn't an instance
   of :class:`objc.selector`.
 
+* #435: Fix build problem with Xcode 13.3
+
+  Xcode 13.3 introduces a new warning in ``-Wall``: ``-Wunused-but-set-variable``,
+  and this found some code quality issues with PyObjC.
+
 Version 8.2
 -----------
 

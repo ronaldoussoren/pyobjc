@@ -9,7 +9,6 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
 {
     const void*       bytes;
     NSUInteger        bytes_len;
-    PyObject*         result;
     struct objc_super super;
     Py_buffer         info;
 
@@ -27,7 +26,6 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
-            result    = NULL;
             bytes     = NULL;
             bytes_len = 0;
         }

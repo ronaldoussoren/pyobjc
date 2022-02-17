@@ -1258,8 +1258,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t  i, n;
     PyObject *  mro, *base, *dict;
-    PyObject*   descr = NULL;
-    PyObject*   res;
+    PyObject*   descr    = NULL;
     const char* sel_name = PyObjC_Unicode_Fast_Bytes(name);
     if (sel_name == NULL) {
         return NULL;
@@ -1273,7 +1272,6 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
@@ -1316,8 +1314,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 {
     Py_ssize_t  i, n;
     PyObject *  mro, *base;
-    PyObject*   descr = NULL;
-    PyObject*   res;
+    PyObject*   descr      = NULL;
     const char* name_bytes = PyUnicode_AsUTF8(name);
     if (name_bytes == NULL)
         return NULL;
@@ -1327,7 +1324,6 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
@@ -1495,8 +1491,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     Py_ssize_t i, n;
     PyObject * mro, *base, *dict;
     PyObject*  descr = NULL;
-    PyObject*  res;
-    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    SEL        sel   = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1505,7 +1500,6 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
@@ -1585,8 +1579,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
 {
     Py_ssize_t  i, n;
     PyObject *  mro, *base;
-    PyObject*   descr = NULL;
-    PyObject*   res;
+    PyObject*   descr      = NULL;
     const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
     if (name_bytes == NULL) {
         return NULL;
@@ -1598,7 +1591,6 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {

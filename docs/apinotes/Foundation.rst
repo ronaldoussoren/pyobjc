@@ -24,8 +24,8 @@ NSAppleEventDescriptor, NSAppleEventManager
 These classes are barely supported, interaction with the lowlevel AppleEvent
 machinery is not tested at all and probably doesn't work.
 
-Use the ScriptingBridge and/or the `appscript library`_ instead of this
-class.
+Use the ScriptingBridge and/or the (deprecated) `appscript library`_ instead
+of this class.
 
 .. _`appscript library`: http://appscript.sourceforge.net/
 

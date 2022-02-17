@@ -472,6 +472,7 @@ a = [NSMutableArray arrayWithObjects:d, nil];
 [p release];
 
 ASSERT(!haveException);
+ASSERT(v != nil);
 END_UNITTEST
 
 BEGIN_UNITTEST(PythonListAsNSArray)

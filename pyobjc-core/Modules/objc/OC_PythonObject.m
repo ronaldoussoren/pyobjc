@@ -237,14 +237,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     PyObject* m;
     Method    method;
-    void*     cookie;
 
     /*
      * We cannot rely on NSProxy, it doesn't implement most of the
      * NSObject interface anyway.
      */
-
-    cookie = NULL;
 
     method = class_getInstanceMethod(object_getClass(self), aSelector);
     if (method != NULL) {

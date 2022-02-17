@@ -4489,11 +4489,10 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 #ifndef __arm64__
     int useStret;
 #endif
-    int         flags;
-    SEL         theSel;
-    int         isUninitialized;
-    const char* rettype;
-    ffi_cif*    cif;
+    int      flags;
+    SEL      theSel;
+    int      isUninitialized;
+    ffi_cif* cif;
 
     if (PyObjCIMP_Check(aMeth)) {
         methinfo = PyObjCIMP_GetSignature(aMeth);
@@ -4531,7 +4530,6 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         }
     }
 
-    rettype    = methinfo->rettype->type;
     resultSize = methinfo->shortcut_result_size;
 
     if (nargs != (size_t)Py_SIZE(methinfo) - 2) { /* XXX: can this underflow? */
@@ -4601,16 +4599,16 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         }
         super.receiver = self_obj;
 #ifndef __arm64__
-        useStret = PyObjCRT_ResultUsesStret(rettype);
+        useStret = PyObjCRT_ResultUsesStret(methinfo->rettype->type);
         if (useStret == -1) {
             goto error_cleanup;
         }
 #endif
 
-        superPtr   = &super;
-        values[0]  = &superPtr;
-        values[1]  = &meth->base.sel_selector;
-        theSel     = meth->base.sel_selector;
+        superPtr  = &super;
+        values[0] = &superPtr;
+        values[1] = &meth->base.sel_selector;
+        // theSel     = meth->base.sel_selector;
         msgResult  = argbuf;
         argbuf_cur = align(resultSize, sizeof(void*));
     }
@@ -4686,11 +4684,9 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 #ifndef __arm64__
     int useStret;
 #endif
-    int         flags;
-    SEL         theSel;
-    int         isUninitialized = NO;
-    const char* rettype;
-    ffi_cif*    cif;
+    int      flags;
+    int      isUninitialized = NO;
+    ffi_cif* cif;
 
     methinfo = meth->base.sel_methinfo;
     flags    = meth->base.sel_flags;
@@ -4721,7 +4717,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
         }
     }
 
-    rettype    = methinfo->rettype->type;
     resultSize = methinfo->shortcut_result_size;
     if (unlikely(PyVectorcall_NARGS(nargsf) != Py_SIZE(methinfo) - 2)) {
         PyErr_Format(PyExc_TypeError,
@@ -4783,7 +4778,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     }
     super.receiver = self_obj;
 #ifndef __arm64__
-    useStret = PyObjCRT_ResultUsesStret(rettype);
+    useStret = PyObjCRT_ResultUsesStret(methinfo->rettype->type);
     if (useStret == -1) {
         goto error_cleanup;
     }
@@ -4792,7 +4787,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     superPtr   = &super;
     values[0]  = &superPtr;
     values[1]  = &meth->base.sel_selector;
-    theSel     = meth->base.sel_selector;
     msgResult  = argbuf;
     argbuf_cur = align(resultSize, sizeof(void*));
 

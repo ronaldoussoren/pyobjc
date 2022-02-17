@@ -72,7 +72,6 @@ static PyObject*
 call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                                      PyObject* const* arguments, size_t nargs)
 {
-    PyObject*         result;
     const void*       dataPlanes[5] = {0};
     int               width, height;
     int               bps, spp;
@@ -161,7 +160,6 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result      = NULL;
             newImageRep = nil;
         }
     Py_END_ALLOW_THREADS

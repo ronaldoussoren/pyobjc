@@ -336,8 +336,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
     PyObject * mro, *base, *dict;
     PyObject*  first_class = NULL;
     PyObject*  descr       = NULL;
-    PyObject*  res;
-    SEL        sel = PyObjCSelector_DefaultSelector(name_bytes);
+    SEL        sel         = PyObjCSelector_DefaultSelector(name_bytes);
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -345,7 +344,6 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
         return NULL;
     }
 
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
@@ -421,7 +419,6 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     Py_ssize_t i, n;
     PyObject * mro, *base;
     PyObject*  descr = NULL;
-    PyObject*  res;
     char       selbuf[2048];
     char*      sel_name;
 
@@ -431,7 +428,6 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         return NULL;
     }
 
-    res = NULL;
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
 
