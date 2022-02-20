@@ -13,6 +13,119 @@
     "typestr": "{_AVBeatRange=dd}"
    }
   },
+  "enum_type": {
+   "AVAudioStereoOrientation": {
+    "type": "q"
+   },
+   "AVAudioSessionSilenceSecondaryAudioHintType": {
+    "type": "Q"
+   },
+   "AVAudioSessionSetActiveOptions": {
+    "type": "Q"
+   },
+   "AVAudioSessionRouteSharingPolicy": {
+    "type": "Q"
+   },
+   "AVAudioSessionRouteChangeReason": {
+    "type": "Q"
+   },
+   "AVAudioSessionRecordPermission": {
+    "type": "Q"
+   },
+   "AVAudioSessionPromptStyle": {
+    "type": "Q"
+   },
+   "AVAudioSessionPortOverride": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionType": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionReason": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionOptions": {
+    "type": "Q"
+   },
+   "AVAudioSessionIOType": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingStatus": {
+    "type": "q"
+   },
+   "AVAudio3DMixingSourceMode": {
+    "type": "q"
+   },
+   "AVAudioConverterPrimeMethod": {
+    "type": "q"
+   },
+   "AVAudioPlayerNodeCompletionCallbackType": {
+    "type": "q"
+   },
+   "AVSpeechSynthesisVoiceQuality": {
+    "type": "q"
+   },
+   "AVAudioEnvironmentOutputType": {
+    "type": "q"
+   },
+   "AVAudioSessionCategoryOptions": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingMode": {
+    "type": "q"
+   },
+   "AVAudio3DMixingRenderingAlgorithm": {
+    "type": "q"
+   },
+   "AVAudioConverterOutputStatus": {
+    "type": "q"
+   },
+   "AVMusicTrackLoopCount": {
+    "type": "q"
+   },
+   "AVAudioPlayerNodeBufferOptions": {
+    "type": "Q"
+   },
+   "AVSpeechSynthesisVoiceGender": {
+    "type": "q"
+   },
+   "AVAudioUnitReverbPreset": {
+    "type": "q"
+   },
+   "AVAudioEnvironmentDistanceAttenuationModel": {
+    "type": "q"
+   },
+   "AVAudioSessionActivationOptions": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingError": {
+    "type": "i"
+   },
+   "AVAudio3DMixingPointSourceInHeadMode": {
+    "type": "q"
+   },
+   "AVAudioRoutingArbitrationCategory": {
+    "type": "q"
+   },
+   "AVSpeechBoundary": {
+    "type": "q"
+   },
+   "AVMusicSequenceLoadOptions": {
+    "type": "Q"
+   },
+   "AVAudioUnitEQFilterType": {
+    "type": "q"
+   },
+   "AVAudioCommonFormat": {
+    "type": "Q"
+   },
+   "AVAudioQuality": {
+    "type": "q"
+   },
+   "AVAudioConverterInputStatus": {
+    "type": "q"
+   }
+  },
   "enum": {
    "AVVariantPreferenceNone": { "value": 0 },
    "AVVariantPreferenceScalabilityToLosslessAudio": { "value": 1 },

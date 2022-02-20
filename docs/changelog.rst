@@ -6,9 +6,35 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.4
 -----------
 
+* .. note::
+
+  The bindings for the Message and ServerNotification frameworks,
+  which were removed in macOS 10.9, will be removed in PyObjC 9.
+
 * Added bindings for ScreenCaptureKit (new in macOS 12.3)
 
 * Updated framework bindings for the macOS 12.3 SDK.
+
+* #418: Added :class:`typing.NewType` definitions to the
+  various framework wrappers for all enum types in Cocoa
+  (such as ``NSComparisonResult``).
+
+  Using this it is now possible to annotate methods returning
+  such types, although it is not yet possible to type check
+  this.
+
+  For example:
+
+  .. sourcecode:: python
+
+     class MyObject(NSObject):
+         def compare_(self, other: NSObject) -> NSComparisonResult:
+             return NSOrderSame
+
+  The actual representation of enum types is provisional
+  and might change in the future.
+
+
 
 Version 8.3b1
 -------------

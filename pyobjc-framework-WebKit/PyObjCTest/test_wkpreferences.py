@@ -37,6 +37,7 @@ class TestWKPreferences(TestCase):
         self.assertResultIsBOOL(WebKit.WKPreferences.isTextInteractionEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTextInteractionEnabled_, 0)
 
+    @min_os_level("12.3")
     def testMethods12_3(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.isSiteSpecificQuirksModeEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setSiteSpecificQuirksModeEnabled_, 0)
