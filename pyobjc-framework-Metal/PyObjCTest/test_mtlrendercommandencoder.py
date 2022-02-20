@@ -203,6 +203,15 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLRenderCommandEncoder(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLCullMode)
+        self.assertIsEnumType(Metal.MTLDepthClipMode)
+        self.assertIsEnumType(Metal.MTLPrimitiveType)
+        self.assertIsEnumType(Metal.MTLRenderStages)
+        self.assertIsEnumType(Metal.MTLTriangleFillMode)
+        self.assertIsEnumType(Metal.MTLVisibilityResultMode)
+        self.assertIsEnumType(Metal.MTLWinding)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLPrimitiveTypePoint, 0)
         self.assertEqual(Metal.MTLPrimitiveTypeLine, 1)

@@ -3,6 +3,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLRenderPass(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLLoadAction)
+        self.assertIsEnumType(Metal.MTLMultisampleDepthResolveFilter)
+        self.assertIsEnumType(Metal.MTLMultisampleStencilResolveFilter)
+        self.assertIsEnumType(Metal.MTLStoreAction)
+        self.assertIsEnumType(Metal.MTLStoreActionOptions)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLCounterDontSample, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(Metal.MTLMaxRenderPassSampleBuffers, 4)

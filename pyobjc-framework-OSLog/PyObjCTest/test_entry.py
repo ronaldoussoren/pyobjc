@@ -15,6 +15,9 @@ class TestEntryHelper(OSLog.NSObject):
 
 
 class TestEntry(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(OSLog.OSLogEntryStoreCategory)
+
     def test_constants(self):
         self.assertEqual(OSLog.OSLogEntryStoreCategoryUndefined, 0)
         self.assertEqual(OSLog.OSLogEntryStoreCategoryMetadata, 1)

@@ -4,6 +4,9 @@ import Virtualization
 
 
 class TestVZMacAuxiliaryStorage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Virtualization.VZMacAuxiliaryStorageInitializationOptions)
+
     def test_constants(self):
         self.assertEqual(
             Virtualization.VZMacAuxiliaryStorageInitializationOptionAllowOverwrite,

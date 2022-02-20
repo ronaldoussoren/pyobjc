@@ -12,6 +12,9 @@ class TestMTLIndirectCommandBufferHelper(Metal.NSObject):
 
 
 class TestMTLIndirectCommandBuffer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLIndirectCommandType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLIndirectCommandTypeDraw, 1 << 0)
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawIndexed, 1 << 1)

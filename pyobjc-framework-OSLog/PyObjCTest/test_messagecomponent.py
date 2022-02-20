@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestMessageComponent(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(OSLog.OSLogMessageComponentArgumentCategory)
+
     def test_constants(self):
         self.assertEqual(OSLog.OSLogMessageComponentArgumentCategoryUndefined, 0)
         self.assertEqual(OSLog.OSLogMessageComponentArgumentCategoryData, 1)

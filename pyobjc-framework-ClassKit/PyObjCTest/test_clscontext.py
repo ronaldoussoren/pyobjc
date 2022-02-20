@@ -4,6 +4,9 @@ import ClassKit
 
 
 class TestCLSContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ClassKit.CLSContextType)
+
     def test_constants(self):
         self.assertEqual(ClassKit.CLSContextTypeNone, 0)
         self.assertEqual(ClassKit.CLSContextTypeApp, 1)

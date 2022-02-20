@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLocale(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSLocaleLanguageDirection)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSCurrentLocaleDidChangeNotification, str)
         self.assertIsInstance(Foundation.NSLocaleIdentifier, str)

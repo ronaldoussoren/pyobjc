@@ -9,6 +9,9 @@ class TestNSAlertHelper(AppKit.NSObject):
 
 
 class TestNSAlert(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAlertStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSWarningAlertStyle, 0)
         self.assertEqual(AppKit.NSInformationalAlertStyle, 1)

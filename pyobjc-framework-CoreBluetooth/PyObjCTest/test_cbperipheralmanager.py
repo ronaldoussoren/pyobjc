@@ -15,6 +15,11 @@ class TestCBPeriphalManagerHelper(CoreBluetooth.NSObject):
 
 
 class TestCBPeriphicalManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerAuthorizationStatus)
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerConnectionLatency)
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerState)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusNotDetermined, 0)

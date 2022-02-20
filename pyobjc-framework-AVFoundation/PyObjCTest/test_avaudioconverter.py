@@ -6,6 +6,11 @@ AVAudioConverterInputBlock = b"@Io^" + objc._C_NSInteger
 
 
 class TestAVAudioConverter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioConverterInputStatus)
+        self.assertIsEnumType(AVFoundation.AVAudioConverterOutputStatus)
+        self.assertIsEnumType(AVFoundation.AVAudioConverterPrimeMethod)
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Pre, 0)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Normal, 1)

@@ -5,6 +5,11 @@ import WebKit
 
 
 class TestWKWebViewConfiguration(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKAudiovisualMediaTypes)
+        self.assertIsEnumType(WebKit.WKSelectionGranularity)
+        self.assertIsEnumType(WebKit.WKUserInterfaceDirectionPolicy)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(

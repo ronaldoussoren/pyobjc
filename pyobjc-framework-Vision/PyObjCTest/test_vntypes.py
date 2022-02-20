@@ -3,6 +3,10 @@ import Vision
 
 
 class TestVNTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Vision.VNElementType)
+        self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
+
     def testConstants(self):
         self.assertEqual(Vision.VNImageCropAndScaleOptionCenterCrop, 0)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)

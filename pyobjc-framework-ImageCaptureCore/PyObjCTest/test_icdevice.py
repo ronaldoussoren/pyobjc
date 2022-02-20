@@ -4,6 +4,11 @@ import objc
 
 
 class TestICDevice(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ImageCaptureCore.ICDeviceLocationType)
+        self.assertIsEnumType(ImageCaptureCore.ICDeviceType)
+        self.assertIsEnumType(ImageCaptureCore.ICDeviceTypeMask)
+
     def testConstants(self):
         self.assertEqual(ImageCaptureCore.ICDeviceTypeCamera, 0x00000001)
         self.assertEqual(ImageCaptureCore.ICDeviceTypeScanner, 0x00000002)

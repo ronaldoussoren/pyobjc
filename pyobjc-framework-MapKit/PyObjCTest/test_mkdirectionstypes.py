@@ -4,6 +4,9 @@ import MapKit
 
 
 class TestMKDirectionsTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MapKit.MKDirectionsTransportType)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(MapKit.MKDirectionsTransportTypeAutomobile, 1 << 0)

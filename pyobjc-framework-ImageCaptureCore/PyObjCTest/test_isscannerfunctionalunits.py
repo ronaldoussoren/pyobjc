@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestICScannerFunctionalUnits(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ImageCaptureCore.ICScannerBitDepth)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerColorDataFormatType)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerDocumentType)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerFeatureType)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerFunctionalUnitState)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerFunctionalUnitType)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerMeasurementUnit)
+        self.assertIsEnumType(ImageCaptureCore.ICScannerPixelDataType)
+
     def testConstants(self):
         self.assertEqual(ImageCaptureCore.ICScannerFunctionalUnitTypeFlatbed, 0)
         self.assertEqual(

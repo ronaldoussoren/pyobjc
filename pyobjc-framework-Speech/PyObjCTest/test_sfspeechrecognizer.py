@@ -9,6 +9,9 @@ class TestSFSpeechRecognizerHelper(Speech.NSObject):
 
 
 class TestSFSpeechRecognizer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Speech.SFSpeechRecognizerAuthorizationStatus)
+
     def test_constants(self):
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusNotDetermined, 0)
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusDenied, 1)

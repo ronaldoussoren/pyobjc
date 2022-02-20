@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOperation(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSOperationQueuePriority)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSOperationQueuePriorityVeryLow, -8)
         self.assertEqual(Foundation.NSOperationQueuePriorityLow, -4)

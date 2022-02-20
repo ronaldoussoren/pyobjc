@@ -3,6 +3,23 @@ import EventKit
 
 
 class TestEKTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(EventKit.EKAlarmProximity)
+        self.assertIsEnumType(EventKit.EKAlarmType)
+        self.assertIsEnumType(EventKit.EKAuthorizationStatus)
+        self.assertIsEnumType(EventKit.EKCalendarEventAvailabilityMask)
+        self.assertIsEnumType(EventKit.EKCalendarType)
+        self.assertIsEnumType(EventKit.EKEntityMask)
+        self.assertIsEnumType(EventKit.EKEntityType)
+        self.assertIsEnumType(EventKit.EKParticipantRole)
+        self.assertIsEnumType(EventKit.EKParticipantScheduleStatus)
+        self.assertIsEnumType(EventKit.EKParticipantStatus)
+        self.assertIsEnumType(EventKit.EKParticipantType)
+        self.assertIsEnumType(EventKit.EKRecurrenceFrequency)
+        self.assertIsEnumType(EventKit.EKReminderPriority)
+        self.assertIsEnumType(EventKit.EKSourceType)
+        self.assertIsEnumType(EventKit.EKWeekday)
+
     @min_os_level("10.8")
     def testConstacts(self):
         self.assertEqual(EventKit.EKAlarmProximityLeave, 2)

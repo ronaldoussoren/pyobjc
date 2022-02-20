@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestMTLArgument(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLArgumentAccess)
+        self.assertIsEnumType(Metal.MTLArgumentType)
+        self.assertIsEnumType(Metal.MTLDataType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLDataTypeNone, 0)
         self.assertEqual(Metal.MTLDataTypeStruct, 1)

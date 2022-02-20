@@ -4,6 +4,9 @@ import PassKit
 
 
 class TestPKPass(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKPassType)
+
     def test_constants(self):
         self.assertEqual(PassKit.PKPassTypeBarcode, 0)
         self.assertEqual(PassKit.PKPassTypeSecureElement, 1)

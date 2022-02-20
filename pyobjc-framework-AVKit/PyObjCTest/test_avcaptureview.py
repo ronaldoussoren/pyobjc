@@ -4,6 +4,9 @@ import objc
 
 
 class TestAVCaptureView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVKit.AVCaptureViewControlsStyle)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(AVKit.AVCaptureView, objc.objc_class)

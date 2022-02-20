@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreBluetooth.CBAttributePermissions)
+        self.assertIsEnumType(CoreBluetooth.CBCharacteristicProperties)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBCharacteristic, objc.objc_class)

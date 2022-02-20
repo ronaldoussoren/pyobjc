@@ -4,6 +4,27 @@ import MLCompute
 
 
 class MLCTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MLCompute.MLCActivationType)
+        self.assertIsEnumType(MLCompute.MLCArithmeticOperation)
+        self.assertIsEnumType(MLCompute.MLCComparisonOperation)
+        self.assertIsEnumType(MLCompute.MLCConvolutionType)
+        self.assertIsEnumType(MLCompute.MLCDataType)
+        self.assertIsEnumType(MLCompute.MLCDeviceType)
+        self.assertIsEnumType(MLCompute.MLCExecutionOptions)
+        self.assertIsEnumType(MLCompute.MLCGradientClippingType)
+        self.assertIsEnumType(MLCompute.MLCGraphCompilationOptions)
+        self.assertIsEnumType(MLCompute.MLCLSTMResultMode)
+        self.assertIsEnumType(MLCompute.MLCLossType)
+        self.assertIsEnumType(MLCompute.MLCPaddingPolicy)
+        self.assertIsEnumType(MLCompute.MLCPaddingType)
+        self.assertIsEnumType(MLCompute.MLCPoolingType)
+        self.assertIsEnumType(MLCompute.MLCRandomInitializerType)
+        self.assertIsEnumType(MLCompute.MLCReductionType)
+        self.assertIsEnumType(MLCompute.MLCRegularizationType)
+        self.assertIsEnumType(MLCompute.MLCSampleMode)
+        self.assertIsEnumType(MLCompute.MLCSoftmaxOperation)
+
     def test_constants(self):
         self.assertEqual(MLCompute.MLCDataTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCDataTypeFloat32, 1)

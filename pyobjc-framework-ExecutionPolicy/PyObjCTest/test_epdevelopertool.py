@@ -4,6 +4,9 @@ import ExecutionPolicy
 
 
 class TestEPDeveloperTool(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ExecutionPolicy.EPDeveloperToolStatus)
+
     def test_constants(self):
         self.assertEqual(ExecutionPolicy.EPDeveloperToolStatusNotDetermined, 0)
         self.assertEqual(ExecutionPolicy.EPDeveloperToolStatusRestricted, 1)

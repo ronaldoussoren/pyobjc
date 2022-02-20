@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSDocument(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSDocumentChangeType)
+        self.assertIsEnumType(AppKit.NSSaveOperationType)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSChangeDone, 0)
         self.assertEqual(AppKit.NSChangeUndone, 1)

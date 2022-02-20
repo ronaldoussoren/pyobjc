@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINSendMessageIntentResponse(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INSendMessageIntentResponseCode)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(Intents.INSendMessageIntentResponseCodeUnspecified, 0)

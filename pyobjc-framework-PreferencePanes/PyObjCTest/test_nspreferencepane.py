@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPreferencePane(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PreferencePanes.NSPreferencePaneUnselectReply)
+
     def testConstants(self):
         self.assertEqual(PreferencePanes.NSUnselectCancel, 0)
         self.assertEqual(PreferencePanes.NSUnselectNow, 1)

@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPathUtilities(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSSearchPathDirectory)
+        self.assertIsEnumType(Foundation.NSSearchPathDomainMask)
+
     def testSearchPaths(self):
         self.assertTrue(
             Foundation.NSSearchPathForDirectoriesInDomains(

@@ -1,4 +1,5 @@
 import AppKit
+import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
@@ -22,6 +23,11 @@ NSItemProviderLoadHandler = b"v@?#@"
 
 
 class TestNSItemProvider(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSItemProviderErrorCode)
+        self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
+        self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityAll, 0)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityGroup, 2)

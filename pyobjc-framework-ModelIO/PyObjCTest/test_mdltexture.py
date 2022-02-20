@@ -3,6 +3,9 @@ import ModelIO
 
 
 class TestMDLTexture(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLTextureChannelEncoding)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt8, 1)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUint8, 1)

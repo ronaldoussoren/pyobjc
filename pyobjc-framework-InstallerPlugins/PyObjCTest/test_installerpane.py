@@ -3,6 +3,9 @@ import InstallerPlugins
 
 
 class TestInstallerPane(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(InstallerPlugins.InstallerSectionDirection)
+
     def testConstants(self):
         self.assertEqual(InstallerPlugins.InstallerDirectionForward, 0)
         self.assertEqual(InstallerPlugins.InstallerDirectionBackward, 1)

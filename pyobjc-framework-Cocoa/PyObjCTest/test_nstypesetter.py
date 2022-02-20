@@ -38,6 +38,9 @@ class TestNSTypesetterHelper(AppKit.NSTypesetter):
 
 
 class TestNSTypesetter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTypesetterControlCharacterAction)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTypesetterZeroAdvancementAction, (1 << 0))
         self.assertEqual(AppKit.NSTypesetterWhitespaceAction, (1 << 1))

@@ -3,6 +3,22 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
 
 
 class TestAVAudioSessionTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioSessionActivationOptions)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionCategoryOptions)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionIOType)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionInterruptionOptions)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionInterruptionReason)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionInterruptionType)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionPortOverride)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionPromptStyle)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionRecordPermission)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionRouteChangeReason)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionRouteSharingPolicy)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionSetActiveOptions)
+        self.assertIsEnumType(AVFoundation.AVAudioSessionSilenceSecondaryAudioHintType)
+        self.assertIsEnumType(AVFoundation.AVAudioStereoOrientation)
+
     @min_os_level("11.0")
     def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioSessionActivationOptionNone, 0)

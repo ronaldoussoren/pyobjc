@@ -9,6 +9,10 @@ class TestNSToolbarHelper(AppKit.NSObject):
 
 
 class TestNSToolbar(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSToolbarDisplayMode)
+        self.assertIsEnumType(AppKit.NSToolbarSizeMode)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSToolbarDisplayModeDefault, 0)
         self.assertEqual(AppKit.NSToolbarDisplayModeIconAndLabel, 1)

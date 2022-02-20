@@ -66,6 +66,13 @@ class TestNSLayoutManagerHelper(AppKit.NSObject):
 
 
 class TestNSLayoutManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSControlCharacterAction)
+        self.assertIsEnumType(AppKit.NSGlyphInscription)
+        self.assertIsEnumType(AppKit.NSGlyphProperty)
+        self.assertIsEnumType(AppKit.NSTextLayoutOrientation)
+        self.assertIsEnumType(AppKit.NSTypesetterBehavior)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSGlyphAttributeSoft, 0)
         self.assertEqual(AppKit.NSGlyphAttributeElastic, 1)

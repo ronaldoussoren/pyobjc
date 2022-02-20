@@ -5,6 +5,10 @@ import SceneKit
 
 
 class TestSCNMaterialProperty(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNMovabilityHint)
+        self.assertIsEnumType(SceneKit.SCNNodeFocusBehavior)
+
     def testConstants(self):
         self.assertIsInstance(SceneKit.SCNModelTransform, str)
         self.assertIsInstance(SceneKit.SCNViewTransform, str)

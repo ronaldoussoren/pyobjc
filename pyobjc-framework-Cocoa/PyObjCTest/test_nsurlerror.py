@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLErrorNetworkUnavailableReason)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSURLErrorDomain, str)
         self.assertIsInstance(Foundation.NSErrorFailingURLStringKey, str)

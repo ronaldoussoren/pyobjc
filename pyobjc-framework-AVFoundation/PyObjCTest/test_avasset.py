@@ -9,6 +9,9 @@ class TestAVAssetHelper(AVFoundation.NSObject):
 
 
 class TestAVAsset(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAssetReferenceRestrictions)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVAsset.providesPreciseDurationAndTiming)

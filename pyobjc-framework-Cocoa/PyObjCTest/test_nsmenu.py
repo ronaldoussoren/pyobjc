@@ -21,6 +21,9 @@ class TestNSMenuHelper(AppKit.NSObject):
 
 
 class TestNSMenu(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSMenuProperties)
+
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
         objc.protocolNamed("NSMenuDelegate")

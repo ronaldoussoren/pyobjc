@@ -4,6 +4,9 @@ import objc
 
 
 class TestAVRoutePickerView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVKit.AVRoutePickerViewButtonState)
+
     def test_constants(self):
         self.assertEqual(AVKit.AVRoutePickerViewButtonStateNormal, 0)
         self.assertEqual(AVKit.AVRoutePickerViewButtonStateNormalHighlighted, 1)

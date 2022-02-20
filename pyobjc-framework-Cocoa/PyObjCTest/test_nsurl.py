@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSURL(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLBookmarkCreationOptions)
+        self.assertIsEnumType(Foundation.NSURLBookmarkResolutionOptions)
+
     def testMethods(self):
         self.assertArgIsBOOL(Foundation.NSURL.initFileURLWithPath_isDirectory_, 1)
         self.assertArgIsBOOL(Foundation.NSURL.fileURLWithPath_isDirectory_, 1)

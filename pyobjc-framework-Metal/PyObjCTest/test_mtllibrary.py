@@ -48,6 +48,13 @@ class TestMTLLibraryHelper(Metal.NSObject):
 
 
 class TestMTLLibrary(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLFunctionType)
+        self.assertIsEnumType(Metal.MTLLanguageVersion)
+        self.assertIsEnumType(Metal.MTLLibraryError)
+        self.assertIsEnumType(Metal.MTLLibraryType)
+        self.assertIsEnumType(Metal.MTLPatchType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLPatchTypeNone, 0)
         self.assertEqual(Metal.MTLPatchTypeTriangle, 1)

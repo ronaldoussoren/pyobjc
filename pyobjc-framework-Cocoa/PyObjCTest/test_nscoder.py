@@ -5,6 +5,9 @@ import objc
 
 
 class TestNSCoderUsage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSDecodingFailurePolicy)
+
     def testUsage(self):
         class CoderClass1(Foundation.NSObject):
             def encodeWithCoder_(self, coder):

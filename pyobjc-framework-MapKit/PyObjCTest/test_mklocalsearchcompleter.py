@@ -5,6 +5,10 @@ import MapKit
 
 
 class TestMKLocalSearchCompleter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MapKit.MKLocalSearchCompleterResultType)
+        self.assertIsEnumType(MapKit.MKSearchCompletionFilterType)
+
     def testConstants(self):
         self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsAndQueries, 0)
         self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsOnly, 1)

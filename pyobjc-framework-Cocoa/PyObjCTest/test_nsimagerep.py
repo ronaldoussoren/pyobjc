@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSImageRep(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSImageLayoutDirection)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSImageRepMatchesDevice, 0)
 

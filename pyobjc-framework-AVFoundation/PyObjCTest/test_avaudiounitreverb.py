@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitReverb(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioUnitReverbPreset)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetSmallRoom, 0)

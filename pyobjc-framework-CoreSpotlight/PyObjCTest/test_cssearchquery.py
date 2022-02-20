@@ -5,6 +5,9 @@ import CoreSpotlight
 
 
 class TestCSSearchQuery(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreSpotlight.CSSearchQueryErrorCode)
+
     def testConstants(self):
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeUnknown, -2000)
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeIndexUnreachable, -2001)

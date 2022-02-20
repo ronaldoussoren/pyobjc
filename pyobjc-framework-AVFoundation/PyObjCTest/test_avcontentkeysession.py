@@ -13,6 +13,9 @@ class TestAVContentKeySessionHelper(AVFoundation.NSObject):
 
 
 class TestAVContentKeySession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVContentKeyRequestStatus)
+
     @min_os_level("10.12.4")
     def testConstants10_12_4(self):
         self.assertIsInstance(

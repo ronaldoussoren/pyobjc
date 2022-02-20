@@ -4,6 +4,9 @@ import SpriteKit
 
 
 class TestSKTransition(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKTransitionDirection)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(SpriteKit.SKTransitionDirectionUp, 0)

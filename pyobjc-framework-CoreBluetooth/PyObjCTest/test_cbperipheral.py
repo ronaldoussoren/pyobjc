@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBPeripheral(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreBluetooth.CBCharacteristicWriteType)
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralState)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralStateDisconnected, 0)

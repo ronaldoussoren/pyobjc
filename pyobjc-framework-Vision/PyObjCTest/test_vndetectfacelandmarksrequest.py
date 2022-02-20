@@ -3,6 +3,9 @@ import Vision
 
 
 class TestVNDetectFaceLandmarksRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Vision.VNRequestFaceLandmarksConstellation)
+
     def test_constants(self):
         self.assertEqual(Vision.VNRequestFaceLandmarksConstellationNotDefined, 0)
         self.assertEqual(Vision.VNRequestFaceLandmarksConstellation65Points, 1)

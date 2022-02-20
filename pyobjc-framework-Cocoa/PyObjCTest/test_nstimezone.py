@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTimeZone(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSTimeZoneNameStyle)
+
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSTimeZone.isDaylightSavingTimeForDate_)
         self.assertResultIsBOOL(Foundation.NSTimeZone.isDaylightSavingTime)

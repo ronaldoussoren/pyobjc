@@ -3,6 +3,9 @@ import ModelIO
 
 
 class TestMDLCamera(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLLightType)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLLightTypeUnknown, 0)
         self.assertEqual(ModelIO.MDLLightTypeAmbient, 1)

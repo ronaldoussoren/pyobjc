@@ -3,6 +3,9 @@ import MediaPlayer
 
 
 class TestMPNowPlayingInfoLanguageOption(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MediaPlayer.MPNowPlayingInfoLanguageOptionType)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertIsInstance(

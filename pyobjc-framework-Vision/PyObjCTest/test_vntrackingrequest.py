@@ -3,6 +3,9 @@ import Vision
 
 
 class TestVNRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Vision.VNRequestTrackingLevel)
+
     def testConstants(self):
         self.assertEqual(Vision.VNRequestTrackingLevelAccurate, 0)
         self.assertEqual(Vision.VNRequestTrackingLevelFast, 1)

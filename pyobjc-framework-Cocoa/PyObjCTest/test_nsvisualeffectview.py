@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSVisualEffectView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSVisualEffectBlendingMode)
+        self.assertIsEnumType(AppKit.NSVisualEffectMaterial)
+        self.assertIsEnumType(AppKit.NSVisualEffectState)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(AppKit.NSVisualEffectMaterialAppearanceBased, 0)

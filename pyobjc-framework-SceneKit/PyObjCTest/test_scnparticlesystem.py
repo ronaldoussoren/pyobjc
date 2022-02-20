@@ -14,6 +14,17 @@ SCNParticleModifierBlock = (
 
 
 class TestSCNParticleSystem(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNParticleBirthDirection)
+        self.assertIsEnumType(SceneKit.SCNParticleBirthLocation)
+        self.assertIsEnumType(SceneKit.SCNParticleBlendMode)
+        self.assertIsEnumType(SceneKit.SCNParticleEvent)
+        self.assertIsEnumType(SceneKit.SCNParticleImageSequenceAnimationMode)
+        self.assertIsEnumType(SceneKit.SCNParticleInputMode)
+        self.assertIsEnumType(SceneKit.SCNParticleModifierStage)
+        self.assertIsEnumType(SceneKit.SCNParticleOrientationMode)
+        self.assertIsEnumType(SceneKit.SCNParticleSortingMode)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(SceneKit.SCNParticlePropertyPosition, str)

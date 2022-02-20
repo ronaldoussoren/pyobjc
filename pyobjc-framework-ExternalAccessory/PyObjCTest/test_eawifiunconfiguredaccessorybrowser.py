@@ -5,6 +5,12 @@ import ExternalAccessory
 
 
 class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ExternalAccessory.EAWiFiUnconfiguredAccessoryBrowserState)
+        self.assertIsEnumType(
+            ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatus
+        )
+
     def testProtocols(self):
         objc.protocolNamed("EAWiFiUnconfiguredAccessoryBrowserDelegate")
 

@@ -19,6 +19,10 @@ class TestUNUserNotificationCenterHelper(UserNotifications.NSObject):
 
 
 class TestUNUserNotificationCenter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(UserNotifications.UNAuthorizationOptions)
+        self.assertIsEnumType(UserNotifications.UNNotificationPresentationOptions)
+
     def test_constants(self):
         self.assertEqual(UserNotifications.UNAuthorizationOptionBadge, 1 << 0)
         self.assertEqual(UserNotifications.UNAuthorizationOptionSound, 1 << 1)

@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPrintPanel(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPrintPanelOptions)
+
     def testProtocols(self):
         objc.protocolNamed("NSPrintPanelAccessorizing")
 

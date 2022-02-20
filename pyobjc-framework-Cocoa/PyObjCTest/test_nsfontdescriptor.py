@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFontDescriptor(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
+
     def testConvenience(self):
         v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
         d = v[AppKit.NSFontNameAttribute]

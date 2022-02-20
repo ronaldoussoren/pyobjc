@@ -4,6 +4,9 @@ import SpriteKit
 
 
 class TestSKTileDefinition(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKTileDefinitionRotation)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(SpriteKit.SKTileDefinitionRotation0, 0)

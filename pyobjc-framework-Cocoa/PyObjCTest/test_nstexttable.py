@@ -3,6 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextTable(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextBlockDimension)
+        self.assertIsEnumType(AppKit.NSTextBlockLayer)
+        self.assertIsEnumType(AppKit.NSTextBlockValueType)
+        self.assertIsEnumType(AppKit.NSTextBlockVerticalAlignment)
+        self.assertIsEnumType(AppKit.NSTextTableLayoutAlgorithm)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTextBlockAbsoluteValueType, 0)
         self.assertEqual(AppKit.NSTextBlockPercentageValueType, 1)

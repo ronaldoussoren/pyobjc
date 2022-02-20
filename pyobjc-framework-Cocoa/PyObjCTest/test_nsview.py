@@ -20,6 +20,12 @@ class ObjCTestNSView_KnowPageRange(AppKit.NSView):
 
 
 class TestNSView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
+        self.assertIsEnumType(AppKit.NSBorderType)
+        self.assertIsEnumType(AppKit.NSViewLayerContentsPlacement)
+        self.assertIsEnumType(AppKit.NSViewLayerContentsRedrawPolicy)
+
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
         self.assertEqual(

@@ -30,6 +30,13 @@ class TestMTLResourceHelper(Metal.NSObject):
 
 
 class TestMTLResource(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLCPUCacheMode)
+        self.assertIsEnumType(Metal.MTLHazardTrackingMode)
+        self.assertIsEnumType(Metal.MTLPurgeableState)
+        self.assertIsEnumType(Metal.MTLResourceOptions)
+        self.assertIsEnumType(Metal.MTLStorageMode)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLPurgeableStateKeepCurrent, 1)
         self.assertEqual(Metal.MTLPurgeableStateNonVolatile, 2)

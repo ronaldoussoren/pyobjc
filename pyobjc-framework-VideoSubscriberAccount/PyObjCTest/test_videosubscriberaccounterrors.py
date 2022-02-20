@@ -3,6 +3,9 @@ import VideoSubscriberAccount
 
 
 class TestVideoSubscriberAccountErrors(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(VideoSubscriberAccount.VSErrorCode)
+
     def testConstants(self):
         self.assertIsInstance(VideoSubscriberAccount.VSErrorDomain, str)
         self.assertIsInstance(VideoSubscriberAccount.VSErrorInfoKeySAMLResponse, str)

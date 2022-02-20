@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPrintOperation(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPrintRenderingQuality)
+        self.assertIsEnumType(AppKit.NSPrintingPageOrder)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSDescendingPageOrder, -1)
         self.assertEqual(AppKit.NSSpecialPageOrder, 0)

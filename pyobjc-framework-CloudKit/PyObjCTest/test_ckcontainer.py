@@ -4,6 +4,11 @@ import objc
 
 
 class TestCKContainer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKAccountStatus)
+        self.assertIsEnumType(CloudKit.CKApplicationPermissionStatus)
+        self.assertIsEnumType(CloudKit.CKApplicationPermissions)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(CloudKit.CKAsset, objc.objc_class)

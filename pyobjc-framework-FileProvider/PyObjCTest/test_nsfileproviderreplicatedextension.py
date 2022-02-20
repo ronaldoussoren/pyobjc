@@ -71,6 +71,14 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderReplicatedExtension(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderCreateItemOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderDeleteItemOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderFetchContentsOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderItemFields)
+        self.assertIsEnumType(FileProvider.NSFileProviderMaterializationFlags)
+        self.assertIsEnumType(FileProvider.NSFileProviderModifyItemOptions)
+
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderCreateItemMayAlreadyExist, 1 << 0)
         self.assertEqual(

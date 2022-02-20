@@ -5,6 +5,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributedString(TestCase):
+    def test_enum_types_appkit(self):
+        self.assertIsEnumType(AppKit.NSSpellingState)
+        self.assertIsEnumType(AppKit.NSTextScalingType)
+        self.assertIsEnumType(AppKit.NSUnderlineStyle)
+        self.assertIsEnumType(AppKit.NSWritingDirectionFormatType)
+
+    def test_enum_types_fnd(self):
+        self.assertIsEnumType(Foundation.NSAttributedStringEnumerationOptions)
+        self.assertIsEnumType(Foundation.NSAttributedStringFormattingOptions)
+        self.assertIsEnumType(Foundation.NSAttributedStringMarkdownInterpretedSyntax)
+        self.assertIsEnumType(Foundation.NSAttributedStringMarkdownParsingFailurePolicy)
+        self.assertIsEnumType(Foundation.NSInlinePresentationIntent)
+        self.assertIsEnumType(Foundation.NSPresentationIntentKind)
+        self.assertIsEnumType(Foundation.NSPresentationIntentTableColumnAlignment)
+
     def testMethodsFoundation(self):
         self.assertArgIsOut(
             AppKit.NSAttributedString.attributesAtIndex_effectiveRange_, 1

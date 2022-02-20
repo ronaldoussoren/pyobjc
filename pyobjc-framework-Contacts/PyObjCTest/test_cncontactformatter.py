@@ -3,6 +3,10 @@ import Contacts
 
 
 class TestCNContactFormatter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Contacts.CNContactDisplayNameOrder)
+        self.assertIsEnumType(Contacts.CNContactFormatterStyle)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(Contacts.CNContactFormatterStyleFullName, 0)

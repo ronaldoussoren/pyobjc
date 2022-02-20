@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFontCollection(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(AppKit.NSFontCollectionVisibilityProcess, 1)

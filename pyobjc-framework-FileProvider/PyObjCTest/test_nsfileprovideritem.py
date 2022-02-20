@@ -54,6 +54,10 @@ class TestNSFileProviderItemHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderItem(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderFileSystemFlags)
+        self.assertIsEnumType(FileProvider.NSFileProviderItemCapabilities)
+
     def test_structs(self):
         v = FileProvider.NSFileProviderTypeAndCreator()
         self.assertIsInstance(v.type, int)

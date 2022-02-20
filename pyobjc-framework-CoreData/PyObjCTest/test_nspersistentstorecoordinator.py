@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPersistentStoreCoordinator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSPersistentStoreUbiquitousTransitionType)
+
     def testConstants(self):
         self.assertIsInstance(CoreData.NSSQLiteStoreType, str)
         self.assertIsInstance(CoreData.NSXMLStoreType, str)

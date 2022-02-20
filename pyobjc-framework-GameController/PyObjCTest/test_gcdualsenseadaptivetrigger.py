@@ -3,6 +3,10 @@ import GameController
 
 
 class TestGCDualSenseAdaptiveTrigger(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameController.GCDualSenseAdaptiveTriggerMode)
+        self.assertIsEnumType(GameController.GCDualSenseAdaptiveTriggerStatus)
+
     def test_constants(self):
         self.assertEqual(
             GameController.GCDualSenseAdaptiveTriggerDiscretePositionCount, 10

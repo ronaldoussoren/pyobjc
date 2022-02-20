@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioRoutingArbiter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioRoutingArbitrationCategory)
+
     def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioRoutingArbitrationCategoryPlayback, 0)
         self.assertEqual(AVFoundation.AVAudioRoutingArbitrationCategoryPlayAndRecord, 1)

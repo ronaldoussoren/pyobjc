@@ -15,6 +15,11 @@ class TestPDFDocumentHelper(Quartz.NSObject):
 
 
 class TestPDFDocument(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFAccessPermissions)
+        self.assertIsEnumType(Quartz.PDFDocumentPermissions)
+        self.assertIsEnumType(Quartz.PDFPrintScalingMode)
+
     def testConstants(self):
         self.assertEqual(Quartz.kPDFPrintPageScaleNone, 0)
         self.assertEqual(Quartz.kPDFPrintPageScaleToFit, 1)

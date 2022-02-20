@@ -4,6 +4,10 @@ import PassKit
 
 
 class TestPKPassLibrary(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKAutomaticPassPresentationSuppressionResult)
+        self.assertIsEnumType(PassKit.PKPassLibraryAddPassesStatus)
+
     def test_constants(self):
         self.assertEqual(PassKit.PKPassLibraryDidAddPasses, 0)
         self.assertEqual(PassKit.PKPassLibraryShouldReviewPasses, 1)

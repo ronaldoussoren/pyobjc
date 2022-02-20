@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSStackView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSStackViewDistribution)
+        self.assertIsEnumType(AppKit.NSStackViewGravity)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationHorizontal, 0)
         self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationVertical, 1)

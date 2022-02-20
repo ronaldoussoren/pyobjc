@@ -48,6 +48,10 @@ class FindHelper(AppKit.NSObject):
 
 
 class TestNSTextFinder(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextFinderAction)
+        self.assertIsEnumType(AppKit.NSTextFinderMatchingType)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(AppKit.NSTextFinderActionShowFindInterface, 1)

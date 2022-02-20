@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetReader(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestDirection)
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestMode)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetReaderStatusUnknown, 0)

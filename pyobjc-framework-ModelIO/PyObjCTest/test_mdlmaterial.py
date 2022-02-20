@@ -3,6 +3,14 @@ import ModelIO
 
 
 class TestMDLCamera(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLMaterialFace)
+        self.assertIsEnumType(ModelIO.MDLMaterialMipMapFilterMode)
+        self.assertIsEnumType(ModelIO.MDLMaterialPropertyType)
+        self.assertIsEnumType(ModelIO.MDLMaterialSemantic)
+        self.assertIsEnumType(ModelIO.MDLMaterialTextureFilterMode)
+        self.assertIsEnumType(ModelIO.MDLMaterialTextureWrapMode)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLMaterialSemanticBaseColor, 0)
         self.assertEqual(ModelIO.MDLMaterialSemanticSubsurface, 1)

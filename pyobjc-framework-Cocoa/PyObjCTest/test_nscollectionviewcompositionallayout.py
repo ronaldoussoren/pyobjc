@@ -44,6 +44,10 @@ class TestNSCollectionViewCompositionalLayoutHelper(AppKit.NSObject):
 
 
 class TestNSCollectionViewCompositionalLayout(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSDirectionalRectEdge)
+        self.assertIsEnumType(AppKit.NSRectAlignment)
+
     def test_constants(self):
         self.assertEqual(AppKit.NSDirectionalRectEdgeNone, 0)
         self.assertEqual(AppKit.NSDirectionalRectEdgeTop, 1 << 0)

@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestASAuthorizationAppleIDProvider(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(
+            AuthenticationServices.ASAuthorizationAppleIDProviderCredentialState
+        )
+
     def test_constants(self):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationAppleIDProviderCredentialRevoked, 0

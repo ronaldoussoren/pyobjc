@@ -3,6 +3,10 @@ import MailKit
 
 
 class TestMEMessage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MailKit.MEMessageEncryptionState)
+        self.assertIsEnumType(MailKit.MEMessageState)
+
     def test_constants(self):
         self.assertEqual(MailKit.MEMessageStateReceived, 0)
         self.assertEqual(MailKit.MEMessageStateDraft, 1)

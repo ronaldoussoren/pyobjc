@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItem(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVPlayerItemStatus)
+        self.assertIsEnumType(AVFoundation.AVVariantPreferences)
+
     def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerItemStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerItemStatusReadyToPlay, 1)

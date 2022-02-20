@@ -4,6 +4,9 @@ import ModelIO
 
 
 class TestMDLTransformStack(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLTransformOpRotationOrder)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXYZ, 1)
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXZY, 2)

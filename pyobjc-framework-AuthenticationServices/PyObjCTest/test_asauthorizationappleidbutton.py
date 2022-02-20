@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestASAuthorizationAppleIDButton(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AuthenticationServices.ASAuthorizationAppleIDButtonStyle)
+        self.assertIsEnumType(AuthenticationServices.ASAuthorizationAppleIDButtonType)
+
     def test_constants(self):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignIn, 0

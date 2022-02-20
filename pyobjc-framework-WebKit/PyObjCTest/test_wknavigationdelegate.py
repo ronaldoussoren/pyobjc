@@ -18,6 +18,10 @@ class TestWKNavigationDelegateHelper(WebKit.NSObject):
 
 
 class TestWKNavigationDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKNavigationActionPolicy)
+        self.assertIsEnumType(WebKit.WKNavigationResponsePolicy)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)

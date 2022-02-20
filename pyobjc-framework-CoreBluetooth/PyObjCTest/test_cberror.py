@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreBluetooth.CBATTError)
+        self.assertIsEnumType(CoreBluetooth.CBError)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertIsInstance(CoreBluetooth.CBErrorDomain, str)

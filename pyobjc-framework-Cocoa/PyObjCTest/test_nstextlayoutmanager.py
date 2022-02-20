@@ -9,6 +9,10 @@ class TestNSTextLayoutManagerHelper(AppKit.NSObject):
 
 
 class TestNSTextLayoutManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextLayoutManagerSegmentOptions)
+        self.assertIsEnumType(AppKit.NSTextLayoutManagerSegmentType)
+
     def test_constants(self):
         self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeStandard, 0)
         self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeSelection, 1)

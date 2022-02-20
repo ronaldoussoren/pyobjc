@@ -17,6 +17,17 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypesHelper(
 
 
 class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBatchNormalizationFlags)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionFlags)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionFlags)
+        self.assertIsEnumType(
+            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOption
+        )
+        self.assertIsEnumType(MetalPerformanceShaders.MPSNNPaddingMethod)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSNNTrainingStyle)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionFlagsNone, 0)
 

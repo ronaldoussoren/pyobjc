@@ -3,6 +3,12 @@ import UserNotifications
 
 
 class TestUNNotificationSettings(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(UserNotifications.UNAlertStyle)
+        self.assertIsEnumType(UserNotifications.UNAuthorizationStatus)
+        self.assertIsEnumType(UserNotifications.UNNotificationSetting)
+        self.assertIsEnumType(UserNotifications.UNShowPreviewsSetting)
+
     def test_constants(self):
         self.assertEqual(UserNotifications.UNAuthorizationStatusNotDetermined, 0)
         self.assertEqual(UserNotifications.UNAuthorizationStatusDenied, 1)

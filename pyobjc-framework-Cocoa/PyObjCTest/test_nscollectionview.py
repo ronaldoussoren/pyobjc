@@ -70,6 +70,11 @@ class TestNSCollectionViewHelper(AppKit.NSObject):
 
 
 class TestNSCollectionView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSCollectionViewDropOperation)
+        self.assertIsEnumType(AppKit.NSCollectionViewItemHighlightState)
+        self.assertIsEnumType(AppKit.NSCollectionViewScrollPosition)
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSCollectionViewItem.isSelected)
         self.assertArgIsBOOL(AppKit.NSCollectionViewItem.setSelected_, 0)

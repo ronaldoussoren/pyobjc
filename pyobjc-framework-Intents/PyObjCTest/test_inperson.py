@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINPerson(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INPersonSuggestionType)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(Intents.INPersonSuggestionTypeNone, 0)

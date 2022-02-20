@@ -3,6 +3,9 @@ import ModelIO
 
 
 class TestMDLVertexDescriptor(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLVertexFormat)
+
     def testConstants(self):
         self.assertIsInstance(ModelIO.MDLVertexAttributeAnisotropy, str)
         self.assertIsInstance(ModelIO.MDLVertexAttributeBinormal, str)

@@ -17,6 +17,9 @@ class NSPortHelper(Foundation.NSPort):
 
 
 class TestNSPort(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSMachPortOptions)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSPortDidBecomeInvalidNotification, str)
         self.assertEqual(Foundation.NSMachPortDeallocateNone, 0)

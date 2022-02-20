@@ -4,6 +4,9 @@ import PassKit
 
 
 class TestPKAddShareablePassConfiguration(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKAddShareablePassConfigurationPrimaryAction)
+
     def test_constants(self):
         self.assertEqual(PassKit.PKAddShareablePassConfigurationPrimaryActionAdd, 0)
         self.assertEqual(PassKit.PKAddShareablePassConfigurationPrimaryActionShare, 1)

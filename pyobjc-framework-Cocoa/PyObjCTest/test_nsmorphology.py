@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMorphology(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSGrammaticalGender)
+        self.assertIsEnumType(Foundation.NSGrammaticalNumber)
+        self.assertIsEnumType(Foundation.NSGrammaticalPartOfSpeech)
+
     def test_constants(self):
         self.assertEqual(Foundation.NSGrammaticalGenderNotSet, 0)
         self.assertEqual(Foundation.NSGrammaticalGenderFeminine, 1)

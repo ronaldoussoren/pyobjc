@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestIMServicePlugInChatRoomSupport(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(IMServicePlugIn.IMGroupListPermissions)
+        self.assertIsEnumType(IMServicePlugIn.IMHandleAuthorizationStatus)
+        self.assertIsEnumType(IMServicePlugIn.IMHandleAvailability)
+        self.assertIsEnumType(IMServicePlugIn.IMSessionAvailability)
+
     @expectedFailure  # Definitions are likely part of the host application
     def testConstantsStr(self):
         self.assertIsInstance(IMServicePlugIn.IMAccountSettingServerHost, str)

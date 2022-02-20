@@ -56,6 +56,22 @@ class TestNSWindowHelper(AppKit.NSObject):
 
 
 class TestNSWindow(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSSelectionDirection)
+        self.assertIsEnumType(AppKit.NSTitlebarSeparatorStyle)
+        self.assertIsEnumType(AppKit.NSWindowAnimationBehavior)
+        self.assertIsEnumType(AppKit.NSWindowBackingLocation)
+        self.assertIsEnumType(AppKit.NSWindowButton)
+        self.assertIsEnumType(AppKit.NSWindowCollectionBehavior)
+        self.assertIsEnumType(AppKit.NSWindowNumberListOptions)
+        self.assertIsEnumType(AppKit.NSWindowOcclusionState)
+        self.assertIsEnumType(AppKit.NSWindowSharingType)
+        self.assertIsEnumType(AppKit.NSWindowStyleMask)
+        self.assertIsEnumType(AppKit.NSWindowTabbingMode)
+        self.assertIsEnumType(AppKit.NSWindowTitleVisibility)
+        self.assertIsEnumType(AppKit.NSWindowToolbarStyle)
+        self.assertIsEnumType(AppKit.NSWindowUserTabbingPreference)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSEventDurationForever, sys.float_info.max)
         self.assertEqual(AppKit.NSAppKitVersionNumberWithCustomSheetPosition, 686.0)

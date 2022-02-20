@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioSettings(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioQuality)
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioQualityMin, 0)
         self.assertEqual(AVFoundation.AVAudioQualityLow, 0x20)

@@ -4,6 +4,11 @@ import objc
 
 
 class TestNSURLRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLRequestAttribution)
+        self.assertIsEnumType(Foundation.NSURLRequestCachePolicy)
+        self.assertIsEnumType(Foundation.NSURLRequestNetworkServiceType)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSURLRequestUseProtocolCachePolicy, 0)
         self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalCacheData, 1)

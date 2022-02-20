@@ -3,6 +3,9 @@ import ModelIO
 
 
 class TestMDLAnimatedValue(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLAnimatedValueInterpolation)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationConstant, 0)
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationLinear, 1)

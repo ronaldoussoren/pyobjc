@@ -4,6 +4,9 @@ import objc
 
 
 class TestGKVoiceChat(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKVoiceChatPlayerState)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKVoiceChatPlayerConnected, 0)
         self.assertEqual(GameKit.GKVoiceChatPlayerDisconnected, 1)

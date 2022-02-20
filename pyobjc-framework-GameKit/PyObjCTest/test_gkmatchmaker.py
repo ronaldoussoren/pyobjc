@@ -4,6 +4,10 @@ import objc
 
 
 class TestGKMatchMaker(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKInviteRecipientResponse)
+        self.assertIsEnumType(GameKit.GKMatchType)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKInviteRecipientResponseAccepted, 0)
         self.assertEqual(GameKit.GKInviteRecipientResponseDeclined, 1)

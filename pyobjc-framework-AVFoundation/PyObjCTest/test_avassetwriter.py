@@ -12,6 +12,9 @@ class TestAVAssetWriterHelper(AVFoundation.NSObject):
 
 
 class TestAVAssetWriter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAssetWriterStatus)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetWriterStatusUnknown, 0)

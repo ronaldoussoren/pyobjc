@@ -18,6 +18,10 @@ class TestNSNetServicesHelper(Foundation.NSObject):
 
 
 class TestNSNetservices(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSNetServiceOptions)
+        self.assertIsEnumType(Foundation.NSNetServicesError)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
         self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)

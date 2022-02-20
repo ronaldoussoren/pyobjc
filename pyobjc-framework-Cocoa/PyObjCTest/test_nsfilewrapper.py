@@ -1,8 +1,13 @@
 import AppKit
+import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileWrapper(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSFileWrapperReadingOptions)
+        self.assertIsEnumType(Foundation.NSFileWrapperWritingOptions)
+
     def testMethods(self):
         self.assertResultIsBOOL(
             AppKit.NSFileWrapper.writeToFile_atomically_updateFilenames_

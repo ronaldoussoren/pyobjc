@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetImageGenerator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAssetImageGeneratorResult)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(

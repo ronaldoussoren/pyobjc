@@ -91,6 +91,11 @@ class TestMTLArgumentHelper(Metal.NSObject):
 
 
 class TestMTLArgument(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLTextureSwizzle)
+        self.assertIsEnumType(Metal.MTLTextureType)
+        self.assertIsEnumType(Metal.MTLTextureUsage)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLTextureType1D, 0)
         self.assertEqual(Metal.MTLTextureType1DArray, 1)

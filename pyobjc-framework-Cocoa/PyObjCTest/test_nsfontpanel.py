@@ -9,6 +9,9 @@ class TestNSFontPanelHelper(AppKit.NSObject):
 
 
 class TestNSFontPanel(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFontPanelModeMask)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSFPPreviewButton, 131)
         self.assertEqual(AppKit.NSFPRevertButton, 130)

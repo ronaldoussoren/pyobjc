@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioFormat(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioCommonFormat)
+
     @min_os_level("10.10")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioOtherFormat, 0)

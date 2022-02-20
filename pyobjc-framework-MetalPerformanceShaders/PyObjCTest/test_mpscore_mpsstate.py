@@ -4,6 +4,9 @@ import MetalPerformanceShaders
 
 
 class TestMPSCore_MPSState(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSStateResourceType)
+
     def test_structs(self):
         v = MetalPerformanceShaders.MPSStateTextureInfo()
         self.assertIsInstance(v.width, int)

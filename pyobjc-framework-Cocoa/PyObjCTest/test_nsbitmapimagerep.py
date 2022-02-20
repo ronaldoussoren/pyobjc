@@ -7,6 +7,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBitmapImageRep(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBitmapFormat)
+        self.assertIsEnumType(AppKit.NSBitmapImageFileType)
+        self.assertIsEnumType(AppKit.NSImageRepLoadStatus)
+        self.assertIsEnumType(AppKit.NSTIFFCompression)
+
     def testInstantiation(self):
         # widthxheight RGB 24bpp image
         width = 256

@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextSelection(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextSelectionAffinity)
+        self.assertIsEnumType(AppKit.NSTextSelectionGranularity)
+
     def test_constants(self):
         self.assertEqual(AppKit.NSTextSelectionGranularityCharacter, 0)
         self.assertEqual(AppKit.NSTextSelectionGranularityWord, 1)

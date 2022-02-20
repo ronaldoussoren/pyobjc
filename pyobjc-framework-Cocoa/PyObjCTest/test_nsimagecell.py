@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSImageCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSImageAlignment)
+        self.assertIsEnumType(AppKit.NSImageFrameStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSImageAlignCenter, 0)
         self.assertEqual(AppKit.NSImageAlignTop, 1)

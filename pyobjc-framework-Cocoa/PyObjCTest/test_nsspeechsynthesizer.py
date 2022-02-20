@@ -18,6 +18,9 @@ class TestNSSpeechSynthesizerHelper(AppKit.NSObject):
 
 
 class TestNSSpeechSynthesizer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSSpeechBoundary)
+
     def testConstants(self):
         self.assertIsInstance(AppKit.NSVoiceName, str)
         self.assertIsInstance(AppKit.NSVoiceIdentifier, str)

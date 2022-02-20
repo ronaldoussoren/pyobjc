@@ -3,6 +3,9 @@ import WebKit
 
 
 class TestWebPreferences(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WebCacheModel)
+
     def testConstants(self):
         self.assertEqual(WebKit.WebCacheModelDocumentViewer, 0)
         self.assertEqual(WebKit.WebCacheModelDocumentBrowser, 1)

@@ -8,6 +8,9 @@ except ImportError:
 
 
 class TestNSGraphicsContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSImageInterpolation)
+
     def testConstants(self):
         self.assertIsInstance(AppKit.NSGraphicsContextDestinationAttributeName, str)
         self.assertIsInstance(

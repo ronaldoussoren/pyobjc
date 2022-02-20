@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestPDFBorder(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFBorderStyle)
+
     def testConstants(self):
         self.assertEqual(Quartz.kPDFBorderStyleSolid, 0)
         self.assertEqual(Quartz.kPDFBorderStyleDashed, 1)

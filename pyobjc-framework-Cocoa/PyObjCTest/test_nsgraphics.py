@@ -4,6 +4,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGraphics(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAnimationEffect)
+        self.assertIsEnumType(AppKit.NSBackingStoreType)
+        self.assertIsEnumType(AppKit.NSColorRenderingIntent)
+        self.assertIsEnumType(AppKit.NSCompositingOperation)
+        self.assertIsEnumType(AppKit.NSDisplayGamut)
+        self.assertIsEnumType(AppKit.NSFocusRingPlacement)
+        self.assertIsEnumType(AppKit.NSFocusRingType)
+        self.assertIsEnumType(AppKit.NSWindowDepth)
+        self.assertIsEnumType(AppKit.NSWindowOrderingMode)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSCompositeClear, 0)
         self.assertEqual(AppKit.NSCompositeCopy, 1)

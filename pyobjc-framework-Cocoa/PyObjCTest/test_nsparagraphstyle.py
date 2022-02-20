@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSParagraphStyle(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSLineBreakMode)
+        self.assertIsEnumType(AppKit.NSLineBreakStrategy)
+        self.assertIsEnumType(AppKit.NSTextTabType)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSLeftTabStopType, 0)
         self.assertEqual(AppKit.NSRightTabStopType, 1)

@@ -3,6 +3,9 @@ import EventKit
 
 
 class TestEKAlarm(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(EventKit.EKErrorCode)
+
     @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(EventKit.EKErrorDomain, str)

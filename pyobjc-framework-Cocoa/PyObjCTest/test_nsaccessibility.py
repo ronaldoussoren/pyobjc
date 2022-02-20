@@ -94,6 +94,14 @@ class TestNSAccessibility(TestCase):
         AppKit.NSAccessibilityFrameInView  # Existence
         AppKit.NSAccessibilityPointInView  # Existence
 
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAccessibilityAnnotationPosition)
+        self.assertIsEnumType(AppKit.NSAccessibilityOrientation)
+        self.assertIsEnumType(AppKit.NSAccessibilityPriorityLevel)
+        self.assertIsEnumType(AppKit.NSAccessibilityRulerMarkerType)
+        self.assertIsEnumType(AppKit.NSAccessibilitySortDirection)
+        self.assertIsEnumType(AppKit.NSAccessibilityUnits)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(

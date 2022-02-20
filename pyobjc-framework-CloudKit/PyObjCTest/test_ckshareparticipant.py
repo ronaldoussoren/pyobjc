@@ -3,6 +3,12 @@ import CloudKit
 
 
 class TestCKShareParticipant(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKShareParticipantAcceptanceStatus)
+        self.assertIsEnumType(CloudKit.CKShareParticipantPermission)
+        self.assertIsEnumType(CloudKit.CKShareParticipantRole)
+        self.assertIsEnumType(CloudKit.CKShareParticipantType)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertEqual(CloudKit.CKShareParticipantAcceptanceStatusUnknown, 0)

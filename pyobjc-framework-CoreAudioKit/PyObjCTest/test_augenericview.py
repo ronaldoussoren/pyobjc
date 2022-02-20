@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAUGenericView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreAudioKit.AUGenericViewDisplayFlags)
+
     def testConstants(self):
         self.assertEqual(CoreAudioKit.AUViewTitleDisplayFlag, 1 << 0)
         self.assertEqual(CoreAudioKit.AUViewPropertiesDisplayFlag, 1 << 1)

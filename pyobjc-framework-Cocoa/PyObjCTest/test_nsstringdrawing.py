@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSStringDrawing(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSStringDrawingOptions)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(AppKit.NSStringDrawingTruncatesLastVisibleLine, (1 << 5))

@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAutomatorErrors(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Automator.AMErrorCode)
+
     def testConstants(self):
         self.assertEqual(Automator.AMAutomatorErrorDomain, "com.apple.Automator")
         self.assertEqual(Automator.AMActionErrorKey, "AMActionErrorKey")

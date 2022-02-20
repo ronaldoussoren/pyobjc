@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioProcessingSettings(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioSpatializationFormats)
+
     def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioSpatializationFormatNone, 0)
         self.assertEqual(AVFoundation.AVAudioSpatializationFormatMonoAndStereo, 0x3)

@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestPDFThumbnailView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFThumbnailLayoutMode)
+
     @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(Quartz.PDFThumbnailView.allowsDragging)

@@ -7,6 +7,14 @@ PHAssetVideoProgressHandler = b"vd@o^Z@"
 
 
 class TestPHImageManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Photos.PHImageRequestOptionsDeliveryMode)
+        self.assertIsEnumType(Photos.PHImageRequestOptionsResizeMode)
+        self.assertIsEnumType(Photos.PHImageRequestOptionsVersion)
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsDeliveryMode)
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsVersion)
+        self.assertIsEnumType(Photos.UIImageOrientation)
+
     @min_os_level("10.13")
     def testConstants(self):
         self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)

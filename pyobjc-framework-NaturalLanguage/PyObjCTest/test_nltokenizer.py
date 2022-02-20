@@ -4,6 +4,10 @@ import NaturalLanguage
 
 
 class TestNLTokenizer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NaturalLanguage.NLTokenUnit)
+        self.assertIsEnumType(NaturalLanguage.NLTokenizerAttributes)
+
     def test_constants(self):
         self.assertEqual(NaturalLanguage.NLTokenUnitWord, 0)
         self.assertEqual(NaturalLanguage.NLTokenUnitSentence, 1)

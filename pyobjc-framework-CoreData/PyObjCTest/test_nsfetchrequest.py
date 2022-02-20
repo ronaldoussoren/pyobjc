@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFetchRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSFetchRequestResultType)
+
     @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(CoreData.NSManagedObjectResultType, 0x00)

@@ -9,6 +9,10 @@ class TestNSStreamHelper(Foundation.NSObject):
 
 
 class TestNSStreamUsage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSStreamEvent)
+        self.assertIsEnumType(Foundation.NSStreamStatus)
+
     def testUsage(self):
         # Test the usage of methods that require extra work
 

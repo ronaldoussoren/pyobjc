@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestQLPreviewView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.QLPreviewViewStyle)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(Quartz.QLPreviewViewStyleNormal, 0)

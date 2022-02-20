@@ -87,6 +87,10 @@ class TestNSBrowserHelper(AppKit.NSObject):
 
 
 class TestNSBrowser(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBrowserColumnResizingType)
+        self.assertIsEnumType(AppKit.NSBrowserDropOperation)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSBrowserNoColumnResizing, 0)
         self.assertEqual(AppKit.NSBrowserAutoColumnResizing, 1)

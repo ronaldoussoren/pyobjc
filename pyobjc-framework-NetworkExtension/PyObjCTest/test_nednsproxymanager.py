@@ -3,6 +3,9 @@ import NetworkExtension
 
 
 class TestNEDNSProxyManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NetworkExtension.NEDNSProxyManagerError)
+
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(

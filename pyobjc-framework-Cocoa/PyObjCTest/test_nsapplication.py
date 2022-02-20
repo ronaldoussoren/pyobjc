@@ -54,6 +54,16 @@ class TestNSApplicationHelper(AppKit.NSObject):
 
 
 class TestNSApplication(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSApplicationDelegateReply)
+        self.assertIsEnumType(AppKit.NSApplicationOcclusionState)
+        self.assertIsEnumType(AppKit.NSApplicationPresentationOptions)
+        self.assertIsEnumType(AppKit.NSApplicationPrintReply)
+        self.assertIsEnumType(AppKit.NSApplicationTerminateReply)
+        self.assertIsEnumType(AppKit.NSRemoteNotificationType)
+        self.assertIsEnumType(AppKit.NSRequestUserAttentionType)
+        self.assertIsEnumType(AppKit.NSWindowListOptions)
+
     def testConstants(self):
         self.assertIsInstance(AppKit.NSAppKitVersionNumber, float)
 

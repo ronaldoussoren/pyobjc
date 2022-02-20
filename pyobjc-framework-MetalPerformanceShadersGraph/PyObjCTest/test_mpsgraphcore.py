@@ -4,6 +4,14 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphCore(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphPaddingMode)
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphPaddingStyle)
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphReductionMode)
+        self.assertIsEnumType(
+            MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayout
+        )
+
     def test_methods(self):
         self.assertResultIsBOOL(
             MetalPerformanceShadersGraph.MPSGraphShapedType.isEqualTo_

@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMediaLibraryBrowserController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSMediaLibrary)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSMediaLibraryAudio, 1 << 0)
         self.assertEqual(AppKit.NSMediaLibraryImage, 1 << 1)

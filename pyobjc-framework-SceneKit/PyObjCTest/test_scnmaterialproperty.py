@@ -5,6 +5,10 @@ import SceneKit
 
 
 class TestSCNMaterialProperty(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNFilterMode)
+        self.assertIsEnumType(SceneKit.SCNWrapMode)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNFilterModeNone, 0)
         self.assertEqual(SceneKit.SCNFilterModeNearest, 1)

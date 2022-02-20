@@ -30,6 +30,9 @@ class TestTKTokenHelper(CryptoTokenKit.NSObject):
 
 
 class TestTKToken(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CryptoTokenKit.TKTokenOperation)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(CryptoTokenKit.TKTokenOperationNone, 0)

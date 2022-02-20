@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSViewController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSViewControllerTransitionOptions)
+
     @min_os_level("10.5")
     def testMethods(self):
         self.assertArgIsSEL(

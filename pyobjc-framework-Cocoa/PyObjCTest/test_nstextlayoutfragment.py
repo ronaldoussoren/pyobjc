@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextLayoutFragment(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextLayoutFragmentEnumerationOptions)
+        self.assertIsEnumType(AppKit.NSTextLayoutFragmentState)
+
     def test_constants(self):
         self.assertEqual(AppKit.NSTextLayoutFragmentEnumerationOptionsNone, 0)
         self.assertEqual(AppKit.NSTextLayoutFragmentEnumerationOptionsReverse, 1 << 0)

@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINCallDestinationType(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INCallDestinationType)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(Intents.INCallDestinationTypeUnknown, 0)

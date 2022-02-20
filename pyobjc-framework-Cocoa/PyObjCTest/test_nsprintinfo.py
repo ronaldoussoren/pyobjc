@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
 
 
 class TestNSPrintInfo(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPaperOrientation)
+        self.assertIsEnumType(AppKit.NSPrintingOrientation)
+        self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSPortraitOrientation, 0)
         self.assertEqual(AppKit.NSLandscapeOrientation, 1)

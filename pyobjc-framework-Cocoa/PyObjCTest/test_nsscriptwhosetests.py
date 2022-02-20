@@ -56,6 +56,9 @@ class TestNSScriptWhoseTestsHelper(Foundation.NSObject):
 
 
 class TestNSScriptWhoseTests(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSTestComparisonOperation)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSEqualToComparison, 0)
         self.assertEqual(Foundation.NSLessThanOrEqualToComparison, 1)

@@ -84,6 +84,12 @@ class TestNSTextViewHelper(AppKit.NSObject):
 
 
 class TestNSTextView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFindPanelAction)
+        self.assertIsEnumType(AppKit.NSFindPanelSubstringMatchType)
+        self.assertIsEnumType(AppKit.NSSelectionAffinity)
+        self.assertIsEnumType(AppKit.NSSelectionGranularity)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSSelectByCharacter, 0)
         self.assertEqual(AppKit.NSSelectByWord, 1)

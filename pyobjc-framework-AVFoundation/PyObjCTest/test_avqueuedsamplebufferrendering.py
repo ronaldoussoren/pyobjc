@@ -15,6 +15,9 @@ class TestAVQueuedSampleBufferRenderingHelper(AVFoundation.NSObject):
 
 
 class TestAVQueuedSampleBufferRendering(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVQueuedSampleBufferRenderingStatus)
+
     def testConstants(self):
         self.assertEqual(
             AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0

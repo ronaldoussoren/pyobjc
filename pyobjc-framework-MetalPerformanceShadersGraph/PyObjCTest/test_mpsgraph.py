@@ -4,6 +4,10 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraph(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimization)
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptions)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptionsNone, 0)
         self.assertEqual(

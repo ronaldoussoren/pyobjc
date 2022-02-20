@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINReservationStatus(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INReservationStatus)
+
     def test_constants(self):
         self.assertEqual(Intents.INReservationStatusUnknown, 0)
         self.assertEqual(Intents.INReservationStatusCanceled, 1)

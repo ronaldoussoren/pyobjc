@@ -9,6 +9,9 @@ class TestGKLocalPlayerHelper(GameKit.GKLocalPlayer):
 
 
 class TestGKLocalPlayer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKFriendsAuthorizationStatus)
+
     @min_os_level("10.10")
     def testMethods(self):
         self.assertResultIsBOOL(GameKit.GKLocalPlayer.isAuthenticated)

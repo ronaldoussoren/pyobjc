@@ -4,6 +4,9 @@ import objc
 
 
 class TestNSMergePolicy(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSMergePolicyType)
+
     def testConstants(self):
         self.assertIsInstance(CoreData.NSErrorMergePolicy, objc.objc_object)
         self.assertIsInstance(

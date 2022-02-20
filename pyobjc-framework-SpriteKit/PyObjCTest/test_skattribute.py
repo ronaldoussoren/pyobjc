@@ -4,6 +4,9 @@ import SpriteKit
 
 
 class TestSKAttribute(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKAttributeType)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(SpriteKit.SKAttributeTypeNone, 0)

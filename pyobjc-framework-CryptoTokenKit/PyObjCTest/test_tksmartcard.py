@@ -5,6 +5,14 @@ import CryptoTokenKit
 
 
 class TestTKSmartCard(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINCharset)
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINCompletion)
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINConfirmation)
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINEncoding)
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINJustification)
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardSlotState)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(CryptoTokenKit.TKSmartCardSlotManager, objc.objc_class)

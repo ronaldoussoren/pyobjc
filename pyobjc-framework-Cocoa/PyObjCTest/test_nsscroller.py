@@ -3,6 +3,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScroller(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSScrollArrowPosition)
+        self.assertIsEnumType(AppKit.NSScrollerArrow)
+        self.assertIsEnumType(AppKit.NSScrollerKnobStyle)
+        self.assertIsEnumType(AppKit.NSScrollerPart)
+        self.assertIsEnumType(AppKit.NSScrollerStyle)
+        self.assertIsEnumType(AppKit.NSUsableScrollerParts)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSScrollerArrowsMaxEnd, 0)
         self.assertEqual(AppKit.NSScrollerArrowsMinEnd, 1)

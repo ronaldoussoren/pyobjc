@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGeometry(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSAlignmentOptions)
+        self.assertIsEnumType(Foundation.NSRectEdge)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSMinXEdge, 0)
         self.assertEqual(AppKit.NSMinYEdge, 1)

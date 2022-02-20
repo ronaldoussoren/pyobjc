@@ -4,6 +4,9 @@ import objc
 
 
 class TestUNNotificationContent(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(UserNotifications.UNNotificationInterruptionLevel)
+
     def test_constants(self):
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelPassive, 0)
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelActive, 1)

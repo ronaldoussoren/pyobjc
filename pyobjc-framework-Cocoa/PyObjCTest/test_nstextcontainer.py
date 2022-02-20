@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextContainer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSLineMovementDirection)
+        self.assertIsEnumType(AppKit.NSLineSweepDirection)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSLineSweepLeft, 0)
         self.assertEqual(AppKit.NSLineSweepRight, 1)

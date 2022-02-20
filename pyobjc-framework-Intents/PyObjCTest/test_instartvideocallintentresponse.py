@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINStartVideoCallIntentResponse(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INStartVideoCallIntentResponseCode)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeUnspecified, 0)

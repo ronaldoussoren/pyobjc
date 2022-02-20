@@ -56,6 +56,10 @@ class TestRegressions(TestCase):
         self.assertIs(v, a)
         self.assertEqual(a[0], 1.0)
 
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSColorSystemEffect)
+        self.assertIsEnumType(AppKit.NSColorType)
+
     def testConstants(self):
         self.assertIsInstance(AppKit.NSSystemColorsDidChangeNotification, str)
 

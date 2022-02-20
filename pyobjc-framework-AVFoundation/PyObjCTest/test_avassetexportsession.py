@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetExportSession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAssetExportSessionStatus)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPreset640x480, str)

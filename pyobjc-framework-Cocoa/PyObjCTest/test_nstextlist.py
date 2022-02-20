@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextList(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextListOptions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTextListPrependEnclosingMarker, 1)
 

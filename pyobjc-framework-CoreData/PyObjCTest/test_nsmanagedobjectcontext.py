@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSManagedObjectContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSManagedObjectContextConcurrencyType)
+
     @min_os_level("10.12.4")
     def testConstants10_12_4(self):
         self.assertIsInstance(

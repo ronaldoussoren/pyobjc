@@ -4,6 +4,12 @@ import PassKit
 
 
 class TestPKConstants(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKPaymentAuthorizationStatus)
+        self.assertIsEnumType(PassKit.PKPaymentButtonStyle)
+        self.assertIsEnumType(PassKit.PKPaymentButtonType)
+        self.assertIsEnumType(PassKit.PKRadioTechnology)
+
     def test_constants(self):
         self.assertIsInstance(PassKit.PKEncryptionSchemeECC_V2, str)
         self.assertIsInstance(PassKit.PKEncryptionSchemeRSA_V2, str)

@@ -41,6 +41,10 @@ class TestWKUIDelegateHelper(WebKit.NSObject):
 
 
 class TestWKUIDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKMediaCaptureType)
+        self.assertIsEnumType(WebKit.WKPermissionDecision)
+
     @min_os_level("10.10")
     def testProtocols10_10(self):
         p = objc.protocolNamed("WKUIDelegate")

@@ -4,6 +4,9 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphRNNOps(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphLossReductionType)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationNone, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationRelu, 1)

@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSColorPanel(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSColorPanelMode)
+        self.assertIsEnumType(AppKit.NSColorPanelOptions)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(AppKit.NSNoModeColorPanel, -1)

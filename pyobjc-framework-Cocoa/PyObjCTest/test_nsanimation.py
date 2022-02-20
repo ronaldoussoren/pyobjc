@@ -15,6 +15,10 @@ class TestNSAnimationHelper(AppKit.NSObject):
 
 
 class TestNSAnimation(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAnimationBlockingMode)
+        self.assertIsEnumType(AppKit.NSAnimationCurve)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSAnimationEaseInOut, 0)
         self.assertEqual(AppKit.NSAnimationEaseIn, 1)

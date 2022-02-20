@@ -5,6 +5,9 @@ import MapKit
 
 
 class TestMKLocalSearchRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MapKit.MKLocalSearchResultType)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(MapKit.MKLocalSearchRequest, objc.objc_class)

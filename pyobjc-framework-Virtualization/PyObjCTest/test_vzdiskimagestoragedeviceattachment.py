@@ -4,6 +4,10 @@ import Virtualization
 
 
 class TestVZDiskImageStorageDeviceAttachment(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Virtualization.VZDiskImageCachingMode)
+        self.assertIsEnumType(Virtualization.VZDiskImageSynchronizationMode)
+
     def test_constants(self):
         self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFull, 1)
         self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFsync, 2)

@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCMDeviceMotion(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreMotion.CMDeviceMotionSensorLocation)
+        self.assertIsEnumType(CoreMotion.CMMagneticFieldCalibrationAccuracy)
+
     def test_constants(self):
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyUncalibrated, -1)
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyLow, 0)

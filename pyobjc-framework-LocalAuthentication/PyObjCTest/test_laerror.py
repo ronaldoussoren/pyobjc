@@ -3,6 +3,9 @@ import LocalAuthentication
 
 
 class TestLAContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(LocalAuthentication.LAError)
+
     @min_os_level("10.10")
     def testConstants(self):
         self.assertEqual(

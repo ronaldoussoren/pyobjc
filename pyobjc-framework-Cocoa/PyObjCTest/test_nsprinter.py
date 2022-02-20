@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPrinter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPrinterTableStatus)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSPrinterTableOK, 0)
         self.assertEqual(AppKit.NSPrinterTableNotFound, 1)

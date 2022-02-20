@@ -3,6 +3,9 @@ import WebKit
 
 
 class TestWKError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKErrorCode)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)

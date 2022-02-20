@@ -12,6 +12,12 @@ class TestNSImageHelper(AppKit.NSObject):
 
 
 class TestNSImage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSImageCacheMode)
+        self.assertIsEnumType(AppKit.NSImageLoadStatus)
+        self.assertIsEnumType(AppKit.NSImageResizingMode)
+        self.assertIsEnumType(AppKit.NSImageSymbolScale)
+
     def test_compositePoint(self):
         # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
         ws = AppKit.NSWorkspace.sharedWorkspace()

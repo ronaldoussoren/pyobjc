@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextFieldCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextFieldBezelStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTextFieldSquareBezel, 0)
         self.assertEqual(AppKit.NSTextFieldRoundedBezel, 1)

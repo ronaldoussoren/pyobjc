@@ -9,6 +9,9 @@ class TestNSPageControllerHelper(AppKit.NSObject):
 
 
 class TestNSPageController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPageControllerTransitionStyle)
+
     @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(AppKit.NSPageControllerTransitionStyleStackHistory, 0)

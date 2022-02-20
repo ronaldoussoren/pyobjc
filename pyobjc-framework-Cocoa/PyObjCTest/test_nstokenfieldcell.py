@@ -23,6 +23,9 @@ class TestNSTokenFieldCellHelper(AppKit.NSObject):
 
 
 class TestNSTokenFieldCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTokenStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSDefaultTokenStyle, 0)
         self.assertEqual(AppKit.NSTokenStyleNone, 1)

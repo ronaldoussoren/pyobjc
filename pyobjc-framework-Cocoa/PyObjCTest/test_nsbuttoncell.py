@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSButtonCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBezelStyle)
+        self.assertIsEnumType(AppKit.NSButtonType)
+        self.assertIsEnumType(AppKit.NSGradientType)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSMomentaryLightButton, 0)
         self.assertEqual(AppKit.NSPushOnPushOffButton, 1)

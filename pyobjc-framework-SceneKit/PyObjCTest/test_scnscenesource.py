@@ -8,6 +8,9 @@ SCNSceneSourceStatusHandler = b"vf" + objc._C_NSInteger + b"@o^Z"
 
 
 class TestSCNSceneSource(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNSceneSourceStatus)
+
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNSceneSourceAssetContributorsKey, str)
         self.assertIsInstance(SceneKit.SCNSceneSourceAssetCreatedDateKey, str)

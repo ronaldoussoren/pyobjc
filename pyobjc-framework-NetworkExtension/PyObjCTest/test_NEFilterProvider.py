@@ -3,6 +3,11 @@ import NetworkExtension
 
 
 class TestNEFilterProvider(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NetworkExtension.NEFilterAction)
+        self.assertIsEnumType(NetworkExtension.NEFilterReportEvent)
+        self.assertIsEnumType(NetworkExtension.NEFilterReportFrequency)
+
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBlock(

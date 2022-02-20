@@ -15,6 +15,10 @@ class TestPHLivePhotoEditingContextHelper(Photos.NSObject):
 
 
 class TestPHLivePhotoEditingContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Photos.PHLivePhotoEditingErrorCode)
+        self.assertIsEnumType(Photos.PHLivePhotoFrameType)
+
     @min_os_level("10.12")
     def testMethods(self):
         PHLivePhotoFrameProcessingBlock = b"@@o^@"

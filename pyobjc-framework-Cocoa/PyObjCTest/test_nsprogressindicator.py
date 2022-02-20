@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSProgressIndicator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSProgressIndicatorStyle)
+        self.assertIsEnumType(AppKit.NSProgressIndicatorThickness)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSProgressIndicatorPreferredThickness, 14)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredSmallThickness, 10)

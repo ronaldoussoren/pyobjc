@@ -4,6 +4,9 @@ import objc
 
 
 class TestWebPolicyDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WebNavigationType)
+
     def testConstants(self):
         self.assertIsInstance(WebKit.WebActionNavigationTypeKey, str)
         self.assertIsInstance(WebKit.WebActionElementKey, str)

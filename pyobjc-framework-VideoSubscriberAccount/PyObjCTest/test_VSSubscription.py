@@ -3,6 +3,9 @@ import VideoSubscriberAccount
 
 
 class TestVSSubscription(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(VideoSubscriberAccount.VSSubscriptionAccessLevel)
+
     def testConstants(self):
         self.assertEqual(VideoSubscriberAccount.VSSubscriptionAccessLevelUnknown, 0)
         self.assertEqual(

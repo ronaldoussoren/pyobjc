@@ -12,6 +12,9 @@ class TestFinderSyncHelper(FinderSync.NSObject):
 
 
 class TestFinderSync(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FinderSync.FIMenuKind)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(FinderSync.FIFinderSyncController, objc.objc_class)

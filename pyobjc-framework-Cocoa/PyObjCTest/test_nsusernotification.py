@@ -9,6 +9,9 @@ class UserNotificationHelper(Foundation.NSObject):
 
 
 class TestNSUserNotification(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSUserNotificationActivationType)
+
     @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(Foundation.NSUserNotificationActivationTypeNone, 0)

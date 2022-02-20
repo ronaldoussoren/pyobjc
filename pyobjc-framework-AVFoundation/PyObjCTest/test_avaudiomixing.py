@@ -57,6 +57,11 @@ class TestAVAudioMixingHelper(AVFoundation.NSObject):
 
 
 class TestAkAudioMixing(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudio3DMixingPointSourceInHeadMode)
+        self.assertIsEnumType(AVFoundation.AVAudio3DMixingRenderingAlgorithm)
+        self.assertIsEnumType(AVFoundation.AVAudio3DMixingSourceMode)
+
     def testMethods(self):
         self.assertArgHasType(
             TestAVAudioMixingHelper.destinationForMixer_bus_, 1, objc._C_NSUInteger

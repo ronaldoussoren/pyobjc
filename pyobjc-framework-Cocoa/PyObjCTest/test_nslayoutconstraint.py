@@ -4,6 +4,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLayoutContraintManual(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSLayoutAttribute)
+        self.assertIsEnumType(AppKit.NSLayoutConstraintOrientation)
+        self.assertIsEnumType(AppKit.NSLayoutFormatOptions)
+        self.assertIsEnumType(AppKit.NSLayoutRelation)
+
     def testNSDictionaryOfVariableBindings(self):
         var1 = "foo"  # noqa: F841
         var2 = "bar"  # noqa: F841

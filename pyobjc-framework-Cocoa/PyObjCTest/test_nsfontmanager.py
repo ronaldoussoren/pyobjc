@@ -8,6 +8,11 @@ class TestNSFontManagerHelper(AppKit.NSObject):
 
 
 class TestNSFontManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFontAction)
+        self.assertIsEnumType(AppKit.NSFontCollectionOptions)
+        self.assertIsEnumType(AppKit.NSFontTraitMask)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSItalicFontMask, 0x00000001)
         self.assertEqual(AppKit.NSBoldFontMask, 0x00000002)

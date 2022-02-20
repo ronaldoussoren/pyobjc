@@ -4,6 +4,11 @@ import MapKit
 
 
 class TestMKCircle(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MapKit.MKErrorCode)
+        self.assertIsEnumType(MapKit.MKFeatureVisibility)
+        self.assertIsEnumType(MapKit.MKMapType)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(MapKit.MKMapTypeStandard, 0)

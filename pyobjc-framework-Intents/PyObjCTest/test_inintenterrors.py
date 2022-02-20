@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINIntentErrors(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INIntentErrorCode)
+
     def testConstants(self):
         self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
         self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)

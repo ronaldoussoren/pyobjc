@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSRegularExpression(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSMatchingFlags)
+        self.assertIsEnumType(Foundation.NSMatchingOptions)
+        self.assertIsEnumType(Foundation.NSRegularExpressionOptions)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(Foundation.NSRegularExpressionCaseInsensitive, 1 << 0)

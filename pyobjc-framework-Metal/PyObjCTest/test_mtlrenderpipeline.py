@@ -36,6 +36,16 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
 
 
 class TestMTLRenderPipeline(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLBlendFactor)
+        self.assertIsEnumType(Metal.MTLBlendOperation)
+        self.assertIsEnumType(Metal.MTLColorWriteMask)
+        self.assertIsEnumType(Metal.MTLPrimitiveTopologyClass)
+        self.assertIsEnumType(Metal.MTLTessellationControlPointIndexType)
+        self.assertIsEnumType(Metal.MTLTessellationFactorFormat)
+        self.assertIsEnumType(Metal.MTLTessellationFactorStepFunction)
+        self.assertIsEnumType(Metal.MTLTessellationPartitionMode)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLBlendFactorZero, 0)
         self.assertEqual(Metal.MTLBlendFactorOne, 1)

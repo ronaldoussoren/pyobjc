@@ -3,6 +3,9 @@ import CryptoTokenKit
 
 
 class TestTKError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CryptoTokenKit.TKErrorCode)
+
     def testConstants(self):
         self.assertIsInstance(CryptoTokenKit.TKErrorDomain, str)
 

@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBackgroundActivityScheduler(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSBackgroundActivityResult)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(Foundation.NSBackgroundActivityResultFinished, 1)

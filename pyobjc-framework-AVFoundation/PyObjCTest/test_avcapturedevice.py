@@ -3,6 +3,29 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureDevice(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAuthorizationStatus)
+        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusRangeRestriction)
+        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusSystem)
+        self.assertIsEnumType(AVFoundation.AVCaptureCenterStageControlMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureColorSpace)
+        self.assertIsEnumType(AVFoundation.AVCaptureDevicePosition)
+        self.assertIsEnumType(AVFoundation.AVCaptureDeviceTransportControlsPlaybackMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureExposureMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureFlashMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureFocusMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureMicrophoneMode)
+        self.assertIsEnumType(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditions
+        )
+        self.assertIsEnumType(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehavior
+        )
+        self.assertIsEnumType(AVFoundation.AVCaptureSystemUserInterface)
+        self.assertIsEnumType(AVFoundation.AVCaptureTorchMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureVideoStabilizationMode)
+        self.assertIsEnumType(AVFoundation.AVCaptureWhiteBalanceMode)
+
     @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)

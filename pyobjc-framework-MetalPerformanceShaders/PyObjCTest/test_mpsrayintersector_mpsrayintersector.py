@@ -4,6 +4,17 @@ import MetalPerformanceShaders
 
 
 class TestMPSRayIntersector_MPSRayIntersector(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(
+            MetalPerformanceShaders.MPSBoundingBoxIntersectionTestType
+        )
+        self.assertIsEnumType(MetalPerformanceShaders.MPSIntersectionDataType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSIntersectionType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRayDataType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRayMaskOperator)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRayMaskOptions)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSTriangleIntersectionTestType)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSIntersectionTypeNearest, 0)
         self.assertEqual(MetalPerformanceShaders.MPSIntersectionTypeAny, 1)

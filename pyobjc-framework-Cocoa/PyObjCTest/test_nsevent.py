@@ -4,6 +4,18 @@ import objc
 
 
 class TestNSEvent(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSEventButtonMask)
+        self.assertIsEnumType(AppKit.NSEventGestureAxis)
+        self.assertIsEnumType(AppKit.NSEventMask)
+        self.assertIsEnumType(AppKit.NSEventModifierFlags)
+        self.assertIsEnumType(AppKit.NSEventPhase)
+        self.assertIsEnumType(AppKit.NSEventSubtype)
+        self.assertIsEnumType(AppKit.NSEventSwipeTrackingOptions)
+        self.assertIsEnumType(AppKit.NSEventType)
+        self.assertIsEnumType(AppKit.NSPointingDeviceType)
+        self.assertIsEnumType(AppKit.NSPressureBehavior)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSLeftMouseDown, 1)
         self.assertEqual(AppKit.NSLeftMouseUp, 2)

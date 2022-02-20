@@ -4,6 +4,10 @@ import objc
 
 
 class TestMTLDepthStencil(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLCompareFunction)
+        self.assertIsEnumType(Metal.MTLStencilOperation)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLCompareFunctionNever, 0)
         self.assertEqual(Metal.MTLCompareFunctionLess, 1)

@@ -4,6 +4,21 @@ import Photos
 
 
 class TestPhotosTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Photos.PHAssetBurstSelectionType)
+        self.assertIsEnumType(Photos.PHAssetCollectionSubtype)
+        self.assertIsEnumType(Photos.PHAssetCollectionType)
+        self.assertIsEnumType(Photos.PHAssetEditOperation)
+        self.assertIsEnumType(Photos.PHAssetMediaSubtype)
+        self.assertIsEnumType(Photos.PHAssetMediaType)
+        self.assertIsEnumType(Photos.PHAssetPlaybackStyle)
+        self.assertIsEnumType(Photos.PHAssetResourceType)
+        self.assertIsEnumType(Photos.PHAssetSourceType)
+        self.assertIsEnumType(Photos.PHCollectionEditOperation)
+        self.assertIsEnumType(Photos.PHCollectionListSubtype)
+        self.assertIsEnumType(Photos.PHCollectionListType)
+        self.assertIsEnumType(Photos.PHImageContentMode)
+
     def test_constants(self):
 
         self.assertEqual(Photos.PHAssetMediaTypeUnknown, 0)

@@ -4,6 +4,12 @@ import PassKit
 
 
 class TestPKPaymentRequest(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKAddressField)
+        self.assertIsEnumType(PassKit.PKMerchantCapability)
+        self.assertIsEnumType(PassKit.PKShippingContactEditingMode)
+        self.assertIsEnumType(PassKit.PKShippingType)
+
     def test_constants(self):
         self.assertEqual(PassKit.PKMerchantCapability3DS, 1 << 0)
         self.assertEqual(PassKit.PKMerchantCapabilityEMV, 1 << 1)

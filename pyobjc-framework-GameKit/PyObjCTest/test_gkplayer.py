@@ -8,6 +8,9 @@ class TestGKPlayerHelper(GameKit.GKPlayer):
 
 
 class TestGKPlayer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKPhotoSize)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKPhotoSizeSmall, 0)
         self.assertEqual(GameKit.GKPhotoSizeNormal, 1)

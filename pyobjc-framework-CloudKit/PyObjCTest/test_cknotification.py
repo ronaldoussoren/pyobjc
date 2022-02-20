@@ -4,6 +4,10 @@ import objc
 
 
 class TestCKNotification(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKNotificationType)
+        self.assertIsEnumType(CloudKit.CKQueryNotificationReason)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertHasAttr(CloudKit, "CKNotification")

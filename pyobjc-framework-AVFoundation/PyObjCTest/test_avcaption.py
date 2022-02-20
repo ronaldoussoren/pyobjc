@@ -3,6 +3,20 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaption(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVCaptionAnimation)
+        self.assertIsEnumType(AVFoundation.AVCaptionDecoration)
+        self.assertIsEnumType(AVFoundation.AVCaptionFontStyle)
+        self.assertIsEnumType(AVFoundation.AVCaptionFontWeight)
+        self.assertIsEnumType(AVFoundation.AVCaptionRegionDisplayAlignment)
+        self.assertIsEnumType(AVFoundation.AVCaptionRegionScroll)
+        self.assertIsEnumType(AVFoundation.AVCaptionRegionWritingMode)
+        self.assertIsEnumType(AVFoundation.AVCaptionRubyAlignment)
+        self.assertIsEnumType(AVFoundation.AVCaptionRubyPosition)
+        self.assertIsEnumType(AVFoundation.AVCaptionTextAlignment)
+        self.assertIsEnumType(AVFoundation.AVCaptionTextCombine)
+        self.assertIsEnumType(AVFoundation.AVCaptionUnitsType)
+
     def test_structs(self):
         v = AVFoundation.AVCaptionDimension()
         self.assertIsInstance(v.value, float)

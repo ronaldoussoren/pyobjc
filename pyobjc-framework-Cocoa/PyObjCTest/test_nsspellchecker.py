@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSpellChecker(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSCorrectionIndicatorType)
+        self.assertIsEnumType(AppKit.NSCorrectionResponse)
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSSpellChecker.sharedSpellCheckerExists)
         self.assertArgIsBOOL(

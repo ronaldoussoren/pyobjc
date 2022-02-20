@@ -104,6 +104,19 @@ class TestNSURLSessionWebSocketDelegateHelper(Foundation.NSObject):
 
 
 class TestNSURLSession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLSessionAuthChallengeDisposition)
+        self.assertIsEnumType(Foundation.NSURLSessionDelayedRequestDisposition)
+        self.assertIsEnumType(Foundation.NSURLSessionMultipathServiceType)
+        self.assertIsEnumType(Foundation.NSURLSessionResponseDisposition)
+        self.assertIsEnumType(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocol
+        )
+        self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsResourceFetchType)
+        self.assertIsEnumType(Foundation.NSURLSessionTaskState)
+        self.assertIsEnumType(Foundation.NSURLSessionWebSocketCloseCode)
+        self.assertIsEnumType(Foundation.NSURLSessionWebSocketMessageType)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeNone, 0)
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeHandover, 1)

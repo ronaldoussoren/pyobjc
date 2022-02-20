@@ -5,6 +5,9 @@ import CryptoTokenKit
 
 
 class TestTkSmartCardATR(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CryptoTokenKit.TKSmartCardProtocol)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(

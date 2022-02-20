@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCMAccelerometer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreMotion.CMAttitudeReferenceFrame)
+
     def test_structs(self):
         v = CoreMotion.CMRotationMatrix()
         self.assertEqual(v.m11, 0.0)
