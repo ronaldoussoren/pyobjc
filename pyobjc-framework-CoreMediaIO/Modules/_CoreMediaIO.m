@@ -5,6 +5,26 @@
 
 #import <CoreMediaIO/CMIOHardwareDevice.h>
 
+#if PyObjC_BUILD_RELEASE >= 1203
+#import <CoreMediaIO/CMIOExtensionDevice.h>
+#import <CoreMediaIO/CMIOExtensionProvider.h>
+#import <CoreMediaIO/CMIOExtensionStream.h>
+#endif
+
+static void __attribute__((__used__)) use_protocols(void)
+{
+#if PyObjC_BUILD_RELEASE >= 1203
+
+    PyObject* p __attribute__((__unused__));
+    p = PyObjC_IdToPython(@protocol(CMIOExtensionDeviceSource));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CMIOExtensionProviderSource));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CMIOExtensionStreamSource));
+    Py_XDECREF(p);
+#endif
+}
+
 static PyObject*
 m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObject* args,
                               PyObject* kwds)

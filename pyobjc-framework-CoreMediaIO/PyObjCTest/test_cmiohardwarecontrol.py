@@ -69,6 +69,9 @@ class TestCMIOHardwareControl(TestCase):
         self.assertEqual(
             CoreMediaIO.kCMIOSelectorControlPropertyItemName, fourcc(b"scin")
         )
+        self.assertEqual(
+            CoreMediaIO.kCMIOSelectorControlPropertyAvailableItemNames, fourcc(b"scan")
+        )
 
         self.assertEqual(CoreMediaIO.kCMIOFeatureControlPropertyOnOff, fourcc(b"fcoo"))
         self.assertEqual(

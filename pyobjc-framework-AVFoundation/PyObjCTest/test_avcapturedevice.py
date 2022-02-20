@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 class TestAVCaptureDevice(TestCase):
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
         self.assertIsInstance(
             AVFoundation.AVCaptureDeviceWasDisconnectedNotification, str
@@ -55,6 +55,10 @@ class TestAVCaptureDevice(TestCase):
 
         self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceVideoEffects, 1)
         self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceMicrophoneModes, 2)
+
+        self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeUser, 0)
+        self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeApp, 1)
+        self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeCooperative, 2)
 
     @min_os_level("10.15")
     def test_constants10_15(self):
@@ -172,4 +176,15 @@ class TestAVCaptureDevice(TestCase):
 
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isPortraitEffectSupported
+        )
+
+    @min_os_level("12.3")
+    def test_methods12_3(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setCenterStageEnabled_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageActive)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageSupported)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.videoMaxZoomFactorForCenterStage
         )

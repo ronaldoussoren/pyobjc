@@ -2,7 +2,75 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "startStreamAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "stopStreamAndReturnError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "setProviderProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "setStreamProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "providerPropertiesForProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "devicePropertiesForProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "connectClient:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "streamPropertiesForProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "setDeviceProperties:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "enum": {
    "kCMIOZoomRelativeControlClassID": { "value": 2054122866 },

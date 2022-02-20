@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.4
+-----------
+
+* Added bindings for ScreenCaptureKit (new in macOS 12.3)
+
+* Updated framework bindings for the macOS 12.3 SDK.
+
 Version 8.3b1
 -------------
 

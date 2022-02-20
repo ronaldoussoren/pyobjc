@@ -14,6 +14,11 @@ class TestWKWebView(TestCase):
         self.assertEqual(WebKit.WKMediaCaptureStateActive, 1)
         self.assertEqual(WebKit.WKMediaCaptureStateMuted, 2)
 
+        self.assertEqual(WebKit.WKFullscreenStateNotInFullscreen, 0)
+        self.assertEqual(WebKit.WKFullscreenStateEnteringFullscreen, 1)
+        self.assertEqual(WebKit.WKFullscreenStateInFullscreen, 2)
+        self.assertEqual(WebKit.WKFullscreenStateExitingFullscreen, 3)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isLoading)

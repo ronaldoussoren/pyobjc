@@ -4,10 +4,15 @@ import GameController
 
 class TestGCDualSenseAdaptiveTrigger(TestCase):
     def test_constants(self):
+        self.assertEqual(
+            GameController.GCDualSenseAdaptiveTriggerDiscretePositionCount, 10
+        )
+
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeOff, 0)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeFeedback, 1)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeWeapon, 2)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeVibration, 3)
+        self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeSlopeFeedback, 4)
 
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerStatusUnknown, -1)
         self.assertEqual(
@@ -25,3 +30,19 @@ class TestGCDualSenseAdaptiveTrigger(TestCase):
         self.assertEqual(
             GameController.GCDualSenseAdaptiveTriggerStatusVibrationIsVibrating, 6
         )
+        self.assertEqual(
+            GameController.GCDualSenseAdaptiveTriggerStatusSlopeFeedbackReady, 7
+        )
+        self.assertEqual(
+            GameController.GCDualSenseAdaptiveTriggerStatusSlopeFeedbackApplyingLoad, 8
+        )
+        self.assertEqual(
+            GameController.GCDualSenseAdaptiveTriggerStatusSlopeFeedbackFinished, 9
+        )
+
+    def test_structs(self):
+        v = GameController.GCDualSenseAdaptiveTriggerPositionalAmplitudes()
+        self.assertIs(v.values, None)
+
+        v = GameController.GCDualSenseAdaptiveTriggerPositionalResistiveStrengths()
+        self.assertIs(v.values, None)

@@ -109,3 +109,14 @@ class TestFramerOptions(TestCase):
         self.assertResultIsRetained(Network.nw_framer_copy_remote_endpoint)
         self.assertResultIsRetained(Network.nw_framer_copy_local_endpoint)
         self.assertResultIsRetained(Network.nw_framer_copy_parameters)
+
+    @min_os_level("12.3")
+    def test_functions12_3(self):
+        self.assertArgIsIn(Network.nw_framer_options_set_object_value, 1)
+        self.assertArgIsNullTerminated(Network.nw_framer_options_set_object_value, 1)
+
+        self.assertResultIsRetained(Network.nw_framer_options_copy_object_value)
+        self.assertArgIsIn(Network.nw_framer_options_copy_object_value, 1)
+        self.assertArgIsNullTerminated(Network.nw_framer_options_copy_object_value, 1)
+
+        self.assertResultIsRetained(Network.nw_framer_copy_options)

@@ -36,3 +36,10 @@ class TestWKPreferences(TestCase):
 
         self.assertResultIsBOOL(WebKit.WKPreferences.isTextInteractionEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTextInteractionEnabled_, 0)
+
+    def testMethods12_3(self):
+        self.assertResultIsBOOL(WebKit.WKPreferences.isSiteSpecificQuirksModeEnabled)
+        self.assertArgIsBOOL(WebKit.WKPreferences.setSiteSpecificQuirksModeEnabled_, 0)
+
+        self.assertResultIsBOOL(WebKit.WKPreferences.isElementFullscreenEnabled)
+        self.assertArgIsBOOL(WebKit.WKPreferences.setElementFullscreenEnabled_, 0)
