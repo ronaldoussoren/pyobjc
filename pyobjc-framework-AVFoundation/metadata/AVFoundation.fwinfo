@@ -241,6 +241,17 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVAudioSession":  {
+    "methods": [
+     {
+      "selector": "setMode:error:",
+      "class_method": false,
+      "arguments": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVCaptionFormatConformer": {
     "methods": [
      {
