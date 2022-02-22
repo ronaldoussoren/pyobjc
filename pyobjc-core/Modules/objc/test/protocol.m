@@ -6,6 +6,11 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol OC_NSObjectBased <NSObject>
+@optional
+- (int)optionalmethod;
+@end
+
 @protocol OC_TestProtocol
 - (int)method1;
 - (void)method2:(int)v;
@@ -56,6 +61,15 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_protocol(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
+        return NULL;
+    }
+
+    p    = @protocol(OC_NSObjectBased);
+    prot = PyObjC_ObjCToPython("@", &p);
+    if (!prot) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "OC_NSObjectBased", prot) < 0) {
         return NULL;
     }
 

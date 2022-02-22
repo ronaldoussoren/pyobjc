@@ -38,6 +38,19 @@ Version 8.4
   various framework bindings for all ``NS_STRING_ENUM``,
   ``NS_TYPED_ENUM`` and ``NS_TYPED_EXTENSIBLE_ENUM`` types in Cocoa.
 
+* #432: Fix compatibility check when a class implements protocol ``NSObject``.
+
+  The following code used to fail the protocol implementation check:
+
+  .. sourcecode:: python
+
+     class AppDelegate( Cocoa.NSObject, protocols=[objc.protocolNamed("NSApplicationDelegate")]):
+         pass
+
+  The reason for this is that the type encodings for (at least) ``-[NSObject respondsToSelector:]``
+  in the Objective-C runtime doesn't match the type encoding in ``@protocol(NSObject)`` (the
+  former returns ``char``, the latter ``bool``).  The compatibility check now handles trivial
+  differences like this.
 
 Version 8.3b1
 -------------
