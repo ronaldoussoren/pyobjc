@@ -52,6 +52,23 @@ Version 8.4
   former returns ``char``, the latter ``bool``).  The compatibility check now handles trivial
   differences like this.
 
+* #428: Class ``NSData`` now implements the API from :class:`bytes`. The methods that
+  return bytes in :class:`bytes` also return bytes in ``NSData``. This may change in a
+  future version.
+
+  Class ``NSMutableData`` now implements the API from :class:`bytearray` as far as this
+  doesn't conflict with the native API. In particular, ``NSMutableData.copy()`` returns
+  an immutable copy (instance of ``NSData``), use ``NSMutableData.mutableCopy()`` to
+  create a mutable copy.
+
+  .. note::
+
+     The implementation is mostly suitable for fairly small amounts of data as
+     the Cocoa value is first copied into a Python value.
+
+* ``NSData([1,2,3])`` and ``NSMutableData([1,2,3])`` now work the same
+  as ``bytes([1,2,3])`` and ``bytearray([1,2,3])``.
+
 Version 8.3b1
 -------------
 
