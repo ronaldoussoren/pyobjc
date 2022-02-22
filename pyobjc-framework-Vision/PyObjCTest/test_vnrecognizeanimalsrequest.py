@@ -3,6 +3,9 @@ import Vision
 
 
 class TestVNRecognizeAnimalsRequest(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Vision.VNAnimalIdentifier, str)
+
     def test_constants(self):
         self.assertEqual(Vision.VNRecognizeAnimalsRequestRevision1, 1)
         self.assertEqual(Vision.VNRecognizeAnimalsRequestRevision2, 2)

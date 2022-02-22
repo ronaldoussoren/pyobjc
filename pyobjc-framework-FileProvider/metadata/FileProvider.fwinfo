@@ -2,6 +2,11 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "NSFileProviderSyncAnchor": { "type": "@", "type_name": "NSData" },
+   "NSFileProviderPage": { "type": "@", "type_name": "NSData" },
+   "NSFileProviderItemDecorationIdentifier": { "type": "@", "type_name": "NSString" }
+  },
   "enum": {
    "NSFileProviderTestingOperationTypeIngestion": { "value": 0 },
    "NSFileProviderTestingOperationTypeLookup": { "value": 1 },

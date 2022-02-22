@@ -5,6 +5,9 @@ import SceneKit
 
 
 class TestSCNLight(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNLightType, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNLightAreaType)
         self.assertIsEnumType(SceneKit.SCNLightProbeType)

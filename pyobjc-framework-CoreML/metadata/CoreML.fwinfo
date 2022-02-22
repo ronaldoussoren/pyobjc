@@ -1,5 +1,9 @@
 {
  "definitions": {
+  "typed_enum": {
+   "MLFeatureValueImageOption": { "type": "@", "type_name": "NSString" },
+   "MLModelMetadataKey": { "type": "@", "type_name": "NSString" }
+  },
   "enum": {
    "MLComputeUnitsCPUOnly": { "value": 0 },
    "MLComputeUnitsCPUAndGPU": { "value": 1 },

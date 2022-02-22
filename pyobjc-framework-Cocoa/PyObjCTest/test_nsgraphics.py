@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGraphics(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSColorSpaceName, str)
+        self.assertIsTypedEnum(AppKit.NSDeviceDescriptionKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSAnimationEffect)
         self.assertIsEnumType(AppKit.NSBackingStoreType)

@@ -18,6 +18,19 @@ class TestNSSpeechSynthesizerHelper(AppKit.NSObject):
 
 
 class TestNSSpeechSynthesizer(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSSpeechCommandDelimiterKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechDictionaryKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechErrorKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechMode, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechPhonemeInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechPropertyKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechStatusKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechSynthesizerInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSSpeechSynthesizerVoiceName, str)
+        self.assertIsTypedEnum(AppKit.NSVoiceAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSVoiceGenderName, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSSpeechBoundary)
 

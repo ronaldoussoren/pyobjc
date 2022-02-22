@@ -48,6 +48,9 @@ class FindHelper(AppKit.NSObject):
 
 
 class TestNSTextFinder(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSPasteboardTypeTextFinderOptionKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSTextFinderAction)
         self.assertIsEnumType(AppKit.NSTextFinderMatchingType)

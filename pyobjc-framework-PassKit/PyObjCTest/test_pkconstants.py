@@ -4,6 +4,10 @@ import PassKit
 
 
 class TestPKConstants(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PassKit.PKContactField, str)
+        self.assertIsTypedEnum(PassKit.PKEncryptionScheme, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(PassKit.PKPaymentAuthorizationStatus)
         self.assertIsEnumType(PassKit.PKPaymentButtonStyle)

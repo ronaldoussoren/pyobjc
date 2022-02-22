@@ -56,6 +56,9 @@ class TestCAMediaTimingHelper(Quartz.NSObject):
 
 
 class TestCAMediaTiming(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CAMediaTimingFillMode, str)
+
     @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(Quartz.kCAFillModeForwards, str)

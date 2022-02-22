@@ -31,6 +31,9 @@ class TestSCNShadableHelper(SceneKit.NSObject):
 
 
 class TestSCNShadable(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNShaderModifierEntryPoint, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNBufferFrequency)
 

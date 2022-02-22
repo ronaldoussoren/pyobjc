@@ -3,6 +3,11 @@ import NaturalLanguage
 
 
 class TestNLTagScheme(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(NaturalLanguage.NLTagScheme, str)
+        self.assertIsTypedEnum(NaturalLanguage.NLTag, str)
+        self.assertIsTypedEnum(NaturalLanguage.NLLanguage, str)
+
     def test_constants(self):
         self.assertIsInstance(NaturalLanguage.NLTagSchemeTokenType, str)
         self.assertIsInstance(NaturalLanguage.NLTagSchemeLexicalClass, str)

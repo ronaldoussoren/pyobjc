@@ -20,6 +20,11 @@ class ObjCTestNSView_KnowPageRange(AppKit.NSView):
 
 
 class TestNSView(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
+        self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
         self.assertIsEnumType(AppKit.NSBorderType)

@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVOutputSettingsAssistant(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVOutputSettingsPreset, str)
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset640x480, str)

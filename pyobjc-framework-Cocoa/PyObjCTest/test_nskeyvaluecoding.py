@@ -16,6 +16,9 @@ class TestNSKeyValueCodingHelper(Foundation.NSObject):
 
 
 class TestNSKeyValueCoding(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSKeyValueOperator, str)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSUndefinedKeyException, str)
         self.assertIsInstance(Foundation.NSAverageKeyValueOperator, str)

@@ -2,6 +2,18 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "PDFAnnotationSubtype": { "type": "@", "type_name": "NSString" },
+   "PDFAnnotationKey": { "type": "@", "type_name": "NSString" },
+   "PDFAppearanceCharacteristicsKey": { "type": "@", "type_name": "NSString" },
+   "PDFBorderKey": { "type": "@", "type_name": "NSString" },
+   "PDFAnnotationWidgetSubtype": { "type": "@", "type_name": "NSString" },
+   "PDFAnnotationLineEndingStyle": { "type": "@", "type_name": "NSString" },
+   "PDFAnnotationTextIconType": { "type": "@", "type_name": "NSString" },
+   "PDFAnnotationHighlightingMode": { "type": "@", "type_name": "NSString" },
+   "PDFDocumentAttribute": { "type": "@", "type_name": "NSString" },
+   "PDFDocumentWriteOption": { "type": "@", "type_name": "NSString" }
+  },
   "aliases": {
    "kPDFImageArea": { "alias": "FLT_MX" }
   },

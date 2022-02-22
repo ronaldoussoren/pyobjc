@@ -2,6 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum":{
+   "CHHapticPatternKey": { "type": "@", "type_name": "NSString" },
+   "CHHapticEventType": { "type": "@", "type_name": "NSString" },
+   "CHHapticEventParameterID": { "type": "@", "type_name": "NSString" },
+   "CHHapticDynamicParameterID": { "type": "@", "type_name": "NSString" }
+  },
   "extern": {
    "CHHapticPatternKeyEventWaveformUseVolumeEnvelope": { "typestr": "@" },
    "CHHapticAudioResourceKeyUseVolumeEnvelope": { "typestr": "@" }

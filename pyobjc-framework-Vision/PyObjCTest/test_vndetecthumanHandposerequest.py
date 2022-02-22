@@ -3,6 +3,10 @@ import Vision
 
 
 class TestVNDetectHumanHandPoseRequest(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Vision.VNHumanHandPoseObservationJointName, str)
+        self.assertIsTypedEnum(Vision.VNHumanHandPoseObservationJointsGroupName, str)
+
     @os_level_between("11.0", "11.5")
     def test_constants11_0(self):
         # self.assertIsInstance(Vision.VNHandLandmarkKeyThumbCMC, str)

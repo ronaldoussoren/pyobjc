@@ -4,6 +4,9 @@ import PassKit
 
 
 class TestPKPassLibrary(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PassKit.PKPassLibraryNotificationKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(PassKit.PKAutomaticPassPresentationSuppressionResult)
         self.assertIsEnumType(PassKit.PKPassLibraryAddPassesStatus)

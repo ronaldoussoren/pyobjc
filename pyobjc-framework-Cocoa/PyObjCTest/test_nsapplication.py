@@ -54,6 +54,11 @@ class TestNSApplicationHelper(AppKit.NSObject):
 
 
 class TestNSApplication(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSAboutPanelOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSAppKitVersion, float)
+        self.assertIsTypedEnum(AppKit.NSModalResponse, int)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSApplicationDelegateReply)
         self.assertIsEnumType(AppKit.NSApplicationOcclusionState)

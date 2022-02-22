@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFontCollection(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSFontCollectionActionTypeKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontCollectionMatchingOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontCollectionName, str)
+        self.assertIsTypedEnum(AppKit.NSFontCollectionUserInfoKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
 

@@ -20,6 +20,9 @@ class TestNSRuleEditorHelper(AppKit.NSObject):
 
 
 class TestNSRuleEditor(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSRuleEditorPredicatePartKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSRuleEditorNestingMode)
         self.assertIsEnumType(AppKit.NSRuleEditorRowType)

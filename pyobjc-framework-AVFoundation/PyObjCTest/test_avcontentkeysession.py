@@ -13,6 +13,11 @@ class TestAVContentKeySessionHelper(AVFoundation.NSObject):
 
 
 class TestAVContentKeySession(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(
+            AVFoundation.AVContentKeySessionServerPlaybackContextOption, str
+        )
+
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVContentKeyRequestStatus)
 

@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLayoutContraintManual(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSLayoutPriority, float)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSLayoutAttribute)
         self.assertIsEnumType(AppKit.NSLayoutConstraintOrientation)

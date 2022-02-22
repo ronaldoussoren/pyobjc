@@ -4,6 +4,38 @@ import objc
 
 
 class TestNSProgress(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSProgressFileOperationKind, str)
+        self.assertIsTypedEnum(AppKit.NSProgressKind, str)
+        self.assertIsTypedEnum(AppKit.NSProgressUserInfoKey, str)
+
+    @min_os_level("10.9")
+    def testConstants(self):
+        self.assertIsInstance(AppKit.NSProgressEstimatedTimeRemainingKey, str)
+        self.assertIsInstance(AppKit.NSProgressThroughputKey, str)
+        self.assertIsInstance(AppKit.NSProgressKindFile, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindDownloading, str)
+        self.assertIsInstance(
+            AppKit.NSProgressFileOperationKindDecompressingAfterDownloading, str
+        )
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindReceiving, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindCopying, str)
+        self.assertIsInstance(AppKit.NSProgressFileURLKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileTotalCountKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileCompletedCountKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileAnimationImageKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileAnimationImageOriginalRectKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileIconKey, str)
+
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindUploading, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindDuplicating, str)
+
     @min_os_level("10.9")
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSProgress.isCancellable)
@@ -43,30 +75,3 @@ class TestNSProgress(TestCase):
     @min_sdk_level("10.11")
     def testProtocolObjects(self):
         objc.protocolNamed("NSProgressReporting")
-
-    @min_os_level("10.9")
-    def testConstants(self):
-        self.assertIsInstance(AppKit.NSProgressEstimatedTimeRemainingKey, str)
-        self.assertIsInstance(AppKit.NSProgressThroughputKey, str)
-        self.assertIsInstance(AppKit.NSProgressKindFile, str)
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindDownloading, str)
-        self.assertIsInstance(
-            AppKit.NSProgressFileOperationKindDecompressingAfterDownloading, str
-        )
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindReceiving, str)
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindCopying, str)
-        self.assertIsInstance(AppKit.NSProgressFileURLKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileTotalCountKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileCompletedCountKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileAnimationImageKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileAnimationImageOriginalRectKey, str)
-        self.assertIsInstance(AppKit.NSProgressFileIconKey, str)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindUploading, str)
-
-    @min_os_level("12.0")
-    def testConstants12_0(self):
-        self.assertIsInstance(AppKit.NSProgressFileOperationKindDuplicating, str)

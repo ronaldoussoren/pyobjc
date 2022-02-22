@@ -283,6 +283,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
 
 
 class TestMTLDevice(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
         self.assertIsEnumType(Metal.MTLCounterSamplingPoint)

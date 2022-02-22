@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINPersonRelationship(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Intents.INPersonRelationship, str)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertIsInstance(Intents.INPersonRelationshipFather, str)

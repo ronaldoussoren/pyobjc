@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestPDFBorder(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.PDFBorderKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(Quartz.PDFBorderStyle)
 

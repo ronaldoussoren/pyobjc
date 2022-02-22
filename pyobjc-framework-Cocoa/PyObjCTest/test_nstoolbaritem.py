@@ -9,6 +9,9 @@ class TestNSToolbarItemHelper(AppKit.NSObject):
 
 
 class TestNSToolbarItem(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSToolbarItemVisibilityPriority, int)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityStandard, 0)
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityLow, -1000)

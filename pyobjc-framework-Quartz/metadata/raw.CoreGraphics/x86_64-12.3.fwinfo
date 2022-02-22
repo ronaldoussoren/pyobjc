@@ -5896,10 +5896,6 @@
      {
       "function": {
        "args": [
-        {
-         "name": null,
-         "typestr": "v"
-        }
        ],
        "retval": {
         "typestr": "v"

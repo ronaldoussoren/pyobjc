@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSObjCRuntime(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSExceptionName, str)
+        self.assertIsTypedEnum(Foundation.NSRunLoopMode, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSComparisonResult)
         self.assertIsEnumType(Foundation.NSEnumerationOptions)

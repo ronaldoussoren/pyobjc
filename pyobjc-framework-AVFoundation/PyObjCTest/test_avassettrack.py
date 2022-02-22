@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetTrack(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVTrackAssociationType, str)
+
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.isEnabled)

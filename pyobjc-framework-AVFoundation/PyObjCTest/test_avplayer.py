@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayer(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVPlayerRateDidChangeReason, str)
+        self.assertIsTypedEnum(AVFoundation.AVPlayerWaitingReason, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVPlayerActionAtItemEnd)
         self.assertIsEnumType(AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicy)

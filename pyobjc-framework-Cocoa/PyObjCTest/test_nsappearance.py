@@ -4,15 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAppearance(TestCase):
-    @min_os_level("10.10")
-    def testMethods10_10(self):
-        self.assertResultIsBOOL(AppKit.NSAppearance.allowsVibrancy)
-
-    @min_os_level("11.0")
-    def testMethods11_0(self):
-        self.assertArgIsBlock(
-            AppKit.NSAppearance.performAsCurrentDrawingAppearance_, 0, b"v"
-        )
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSAppearanceName, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
@@ -37,6 +30,16 @@ class TestNSAppearance(TestCase):
         )
         self.assertIsInstance(
             AppKit.NSAppearanceNameAccessibilityHighContrastVibrantDark, str
+        )
+
+    @min_os_level("10.10")
+    def testMethods10_10(self):
+        self.assertResultIsBOOL(AppKit.NSAppearance.allowsVibrancy)
+
+    @min_os_level("11.0")
+    def testMethods11_0(self):
+        self.assertArgIsBlock(
+            AppKit.NSAppearance.performAsCurrentDrawingAppearance_, 0, b"v"
         )
 
     @min_os_level("10.9")

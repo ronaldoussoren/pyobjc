@@ -4,6 +4,9 @@ import ScreenCaptureKit
 
 
 class TestSCStream(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(ScreenCaptureKit.SCFrameStatus)
         self.assertIsEnumType(ScreenCaptureKit.SCStreamFrameInfo)

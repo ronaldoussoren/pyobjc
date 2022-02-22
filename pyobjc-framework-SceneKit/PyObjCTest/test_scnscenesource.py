@@ -8,6 +8,10 @@ SCNSceneSourceStatusHandler = b"vf" + objc._C_NSInteger + b"@o^Z"
 
 
 class TestSCNSceneSource(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNSceneSourceAnimationImportPolicy, str)
+        self.assertIsTypedEnum(SceneKit.SCNSceneSourceLoadingOption, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNSceneSourceStatus)
 

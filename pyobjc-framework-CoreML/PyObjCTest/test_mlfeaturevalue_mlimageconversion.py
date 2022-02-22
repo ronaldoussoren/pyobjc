@@ -3,6 +3,9 @@ import CoreML
 
 
 class TestMLFeatureValue_MLImageConversion(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(CoreML.MLFeatureValueImageOption, str)
+
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(CoreML.MLFeatureValueImageOptionCropRect, str)

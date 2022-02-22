@@ -7,6 +7,9 @@ SCNSceneExportProgressHandler = b"vf@o^Z"
 
 
 class TestSCNScene(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNSceneAttribute, str)
+
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNSceneStartTimeAttributeKey, str)
         self.assertIsInstance(SceneKit.SCNSceneEndTimeAttributeKey, str)

@@ -56,6 +56,9 @@ class TestNSWindowHelper(AppKit.NSObject):
 
 
 class TestNSWindow(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSWindowLevel, int)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSSelectionDirection)
         self.assertIsEnumType(AppKit.NSTitlebarSeparatorStyle)

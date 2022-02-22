@@ -9,6 +9,13 @@ class TestNSStreamHelper(Foundation.NSObject):
 
 
 class TestNSStreamUsage(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSStreamNetworkServiceTypeValue, str)
+        self.assertIsTypedEnum(Foundation.NSStreamPropertyKey, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyConfiguration, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyVersion, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSocketSecurityLevel, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSStreamEvent)
         self.assertIsEnumType(Foundation.NSStreamStatus)

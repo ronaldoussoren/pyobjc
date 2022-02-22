@@ -106,6 +106,16 @@
    }
   },
   "classes": {},
+  "typed_enum": {
+   "CIContextOption": { "type": "@", "type_name": "NSString" },
+   "CIImageRepresentationOption": { "type": "@", "type_name": "NSString" },
+   "CIFormat": { "type": "q" },
+   "CIImageOption": { "type": "@", "type_name": "NSString" },
+   "CIImageAutoAdjustmentOption": { "type": "@", "type_name": "NSString" },
+   "CIRAWDecoderVersion": { "type": "@", "type_name": "NSString" },
+   "CIRAWFilterOption": { "type": "@", "type_name": "NSString" }
+  },
+
   "enum_type": {
    "CIRenderDestinationAlphaMode": { "type": "Q" }
   },

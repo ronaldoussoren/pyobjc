@@ -44,6 +44,9 @@ class TestSCNViewHelper(SceneKit.NSObject):
 
 
 class TestSCNView(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNViewOption, str)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNAntialiasingModeNone, 0)
         self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling2X, 1)

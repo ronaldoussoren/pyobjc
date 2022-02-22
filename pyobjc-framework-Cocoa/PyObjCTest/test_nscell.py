@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCell(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSControlStateValue, int)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSBackgroundStyle)
         self.assertIsEnumType(AppKit.NSCellAttribute)

@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVMetadataObject(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVMetadataObjectType, str)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasRollAngle)

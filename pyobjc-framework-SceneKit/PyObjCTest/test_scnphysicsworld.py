@@ -5,6 +5,10 @@ import SceneKit
 
 
 class TestSCNPhysicsShape(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNPhysicsTestOption, str)
+        self.assertIsTypedEnum(SceneKit.SCNPhysicsTestSearchMode, str)
+
     @min_os_level("10.10")
     def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNPhysicsTestCollisionBitMaskKey, str)

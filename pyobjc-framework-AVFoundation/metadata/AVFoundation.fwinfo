@@ -13,6 +13,35 @@
     "typestr": "{_AVBeatRange=dd}"
    }
   },
+  "typed_enum": {
+   "AVAssetWriterInputMediaDataLocation": { "type": "@", "type_name": "NSString" },
+   "AVAssetImageGeneratorApertureMode": { "type": "@", "type_name": "NSString" },
+   "AVContentKeySystem": { "type": "@", "type_name": "NSString" },
+   "AVContentKeySessionServerPlaybackContextOption": { "type": "@", "type_name": "NSString" },
+   "AVContentKeyRequestRetryReason": { "type": "@", "type_name": "NSString" },
+   "AVPlayerRateDidChangeReason": { "type": "@", "type_name": "NSString" },
+   "AVPlayerWaitingReason": { "type": "@", "type_name": "NSString" },
+   "AVVideoCodecType": { "type": "@", "type_name": "NSString" },
+   "AVVideoApertureMode": { "type": "@", "type_name": "NSString" },
+   "AVOutputSettingsPreset": { "type": "@", "type_name": "NSString" },
+   "AVLayerVideoGravity": { "type": "@", "type_name": "NSString" },
+   "AVTrackAssociationType": { "type": "@", "type_name": "NSString" },
+   "AVMetadataFormat": { "type": "@", "type_name": "NSString" },
+   "AVPlayerItemLegibleOutputTextStylingResolution": { "type": "@", "type_name": "NSString" },
+   "AVAssetDownloadedAssetEvictionPriority": { "type": "@", "type_name": "NSString" },
+   "AVAudioTimePitchAlgorithm": { "type": "@", "type_name": "NSString" },
+   "AVCaptureSessionPreset": { "type": "@", "type_name": "NSString" },
+   "AVCoordinatedPlaybackSuspensionReason": { "type": "@", "type_name": "NSString" },
+   "AVCaptionConversionWarningType": { "type": "@", "type_name": "NSString" },
+   "AVCaptionConversionAdjustmentType": { "type": "@", "type_name": "NSString" },
+   "AVSemanticSegmentationMatteType": { "type": "@", "type_name": "NSString" },
+   "AVVideoRange": { "type": "@", "type_name": "NSString" },
+   "AVFileTypeProfile": { "type": "@", "type_name": "NSString" },
+   "AVCaptureSystemPressureLevel": { "type": "@", "type_name": "NSString" },
+   "AVMetadataObjectType": { "type": "@", "type_name": "NSString" },
+   "AVCaptureDeviceType": { "type": "@", "type_name": "NSString" },
+   "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" }
+  },
   "enum_type": {
    "AVAudioStereoOrientation": {
     "type": "q"

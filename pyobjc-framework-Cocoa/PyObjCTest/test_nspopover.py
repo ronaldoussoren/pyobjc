@@ -12,6 +12,9 @@ class PopoverHelper(AppKit.NSObject):
 
 
 class TestNSPopover(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSPopoverCloseReasonValue, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSPopoverAppearance)
         self.assertIsEnumType(AppKit.NSPopoverBehavior)

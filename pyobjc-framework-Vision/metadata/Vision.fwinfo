@@ -1,5 +1,17 @@
 {
  "definitions": {
+  "typed_enum": {
+   "VNRecognizedPointKey": { "type": "@", "type_name": "NSString" },
+   "VNRecognizedPointGroupKey": { "type": "@", "type_name": "NSString" },
+   "VNAnimalIdentifier": { "type": "@", "type_name": "NSString" },
+   "VNImageOption": { "type": "@", "type_name": "NSString" },
+   "VNBarcodeSymbology": { "type": "@", "type_name": "NSString" },
+   "VNVideoProcessingOption": { "type": "@", "type_name": "NSString" },
+   "VNHumanHandPoseObservationJointName": { "type": "@", "type_name": "NSString" },
+   "VNHumanHandPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" },
+   "VNHumanBodyPoseObservationJointName": { "type": "@", "type_name": "NSString" },
+   "VNHumanBodyPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" }
+  },
   "externs": {
    "VNAnimalDetectorDog": { "typestr": "@" },
    "VNAnimalDetectorCat": { "typestr": "@" },

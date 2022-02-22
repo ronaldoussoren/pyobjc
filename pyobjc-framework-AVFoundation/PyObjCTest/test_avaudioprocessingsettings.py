@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioProcessingSettings(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVAudioTimePitchAlgorithm, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVAudioSpatializationFormats)
 

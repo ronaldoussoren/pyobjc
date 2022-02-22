@@ -3,6 +3,10 @@ import Quartz
 
 
 class TestCIContext(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CIContextOption, str)
+        self.assertIsTypedEnum(Quartz.CIImageRepresentationOption, str)
+
     def testConstants(self):
         self.assertIsInstance(Quartz.kCIContextOutputColorSpace, str)
         self.assertIsInstance(Quartz.kCIContextWorkingColorSpace, str)

@@ -5,6 +5,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSKeyValueObserving(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSKeyValueChangeKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSKeyValueChange)
         self.assertIsEnumType(Foundation.NSKeyValueObservingOptions)

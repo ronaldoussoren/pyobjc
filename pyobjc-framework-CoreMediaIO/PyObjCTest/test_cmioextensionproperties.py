@@ -3,9 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCMIOExtensionProperties(TestCase):
-    # XXX: "Extensible enum, string contants"
-    # def test_enum_types(self):
-    #    self.assertIsEnumType(CoreMediaIO.CMIOExtensionProperty)
+    def test_enum_types(self):
+        self.assertIsTypedEnum(CoreMediaIO.CMIOExtensionProperty, str)
 
     @min_os_level("12.3")
     def test_constants(self):

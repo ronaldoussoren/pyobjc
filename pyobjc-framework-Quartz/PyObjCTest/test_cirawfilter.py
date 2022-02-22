@@ -3,6 +3,10 @@ import Quartz
 
 
 class TestCIRAWFilter(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CIRAWDecoderVersion, str)
+        self.assertIsTypedEnum(Quartz.CIRAWFilterOption, str)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(Quartz.kCIInputDecoderVersionKey, str)

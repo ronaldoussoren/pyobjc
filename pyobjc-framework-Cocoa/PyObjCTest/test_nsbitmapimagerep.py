@@ -7,6 +7,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBitmapImageRep(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSBitmapImageRepPropertyKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSBitmapFormat)
         self.assertIsEnumType(AppKit.NSBitmapImageFileType)

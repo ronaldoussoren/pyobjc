@@ -2,6 +2,13 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "MTKModelError": { "type": "@", "type_name": "NSString" },
+   "MTKTextureLoaderError": { "type": "@", "type_name": "NSString" },
+   "MTKTextureLoaderOption": { "type": "@", "type_name": "NSString" },
+   "MTKTextureLoaderCubeLayout": { "type": "@", "type_name": "NSString" },
+   "MTKTextureLoaderOrigin": { "type": "@", "type_name": "NSString" }
+  },
   "classes": {
    "MTKMesh": {
     "methods": [

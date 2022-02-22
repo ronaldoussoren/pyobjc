@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestCAMediaTimingFunction(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CAMediaTimingFunctionName, str)
+
     @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionLinear, str)

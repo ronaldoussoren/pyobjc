@@ -5,6 +5,10 @@ import MapKit
 
 
 class TestMKAnnotationView(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(MapKit.MKAnnotationViewZPriority, float)
+        self.assertIsTypedEnum(MapKit.MKFeatureDisplayPriority, float)
+
     def test_enum_types(self):
         self.assertIsEnumType(MapKit.MKAnnotationViewCollisionMode)
         self.assertIsEnumType(MapKit.MKAnnotationViewDragState)

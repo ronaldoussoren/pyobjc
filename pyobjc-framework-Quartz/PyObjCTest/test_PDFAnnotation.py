@@ -3,32 +3,9 @@ import Quartz
 
 
 class TestPDFAnnotation(TestCase):
-    def testMethods(self):
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.shouldDisplay)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setShouldDisplay_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.shouldPrint)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setShouldPrint_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.hasAppearanceStream)
-
-    @min_os_level("10.12")
-    def testMethods10_12(self):
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setValue_forAnnotationKey_)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setRect_forAnnotationKey_)
-
-    @min_os_level("10.13")
-    def testMethods10_13(self):
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.isPasswordField)
-        # self.assertArgIsBOOL(Quartz.PDFAnnotation.setIsPasswordField_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.isMultiline)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setMultiline_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.isHighlighted)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setHighlighted_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.hasComb)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setComb_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.isOpen)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setOpen_, 0)
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.PDFAnnotationKey, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationSubtype, str)
 
     @min_os_level("10.12")
     def testConstants(self):
@@ -126,3 +103,30 @@ class TestPDFAnnotation(TestCase):
         self.assertIsInstance(Quartz.PDFAnnotationKeyWidgetRolloverCaption, str)
         self.assertIsInstance(Quartz.PDFAnnotationKeyWidgetTextLabelUI, str)
         self.assertIsInstance(Quartz.PDFAnnotationKeyWidgetValue, str)
+
+    def testMethods(self):
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.shouldDisplay)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setShouldDisplay_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.shouldPrint)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setShouldPrint_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.hasAppearanceStream)
+
+    @min_os_level("10.12")
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setValue_forAnnotationKey_)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setRect_forAnnotationKey_)
+
+    @min_os_level("10.13")
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isPasswordField)
+        # self.assertArgIsBOOL(Quartz.PDFAnnotation.setIsPasswordField_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isMultiline)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setMultiline_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isHighlighted)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setHighlighted_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.hasComb)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setComb_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isOpen)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setOpen_, 0)

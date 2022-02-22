@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFontDescriptor(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSFontDescriptorAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSFontDescriptorFeatureKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontDescriptorSystemDesign, str)
+        self.assertIsTypedEnum(AppKit.NSFontDescriptorTraitKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontDescriptorVariationKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontTextStyle, str)
+        self.assertIsTypedEnum(AppKit.NSFontTextStyleOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSFontWeight, float)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
 

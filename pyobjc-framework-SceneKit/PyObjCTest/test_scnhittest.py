@@ -4,6 +4,9 @@ import SceneKit
 
 
 class TestSCNHitTest(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNHitTestSearchMode)
 

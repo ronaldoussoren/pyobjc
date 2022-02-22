@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSParagraphStyle(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSTextTabOptionKey, str)
+
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSLineBreakMode)
         self.assertIsEnumType(AppKit.NSLineBreakStrategy)

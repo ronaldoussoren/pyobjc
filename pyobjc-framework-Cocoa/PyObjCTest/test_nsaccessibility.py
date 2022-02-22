@@ -597,3 +597,18 @@ class TestNSAccessibility(TestCase):
     def testFunctions10_9(self):
         self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
         self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)
+
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSAccessibilityActionName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAnnotationAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityFontAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationUserInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityOrientationValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityParameterizedAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRole, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerMarkerTypeValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerUnitValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySortDirectionValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySubrole, str)

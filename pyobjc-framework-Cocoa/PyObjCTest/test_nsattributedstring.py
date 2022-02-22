@@ -5,6 +5,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributedString(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSAttributedStringKey, str)
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentReadingOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentType, str)
+        self.assertIsTypedEnum(AppKit.NSTextEffectStyle, str)
+        self.assertIsTypedEnum(AppKit.NSTextLayoutSectionKey, str)
+
     def test_enum_types_appkit(self):
         self.assertIsEnumType(AppKit.NSSpellingState)
         self.assertIsEnumType(AppKit.NSTextScalingType)

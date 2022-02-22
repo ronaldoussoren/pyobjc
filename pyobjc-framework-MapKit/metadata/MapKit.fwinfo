@@ -2,6 +2,11 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "MKFeatureDisplayPriority": { "type": "f" },
+   "MKAnnotationViewZPriority": { "type": "f" },
+   "MKPointOfInterestCategory": { "type": "@", "type_name": "NSString" }
+  },
   "enum": {
    "MKAnnotationViewZPriorityMax": { "value": 1000.0 },
    "MKAnnotationViewZPriorityDefaultSelected": { "value": 1000.0 },

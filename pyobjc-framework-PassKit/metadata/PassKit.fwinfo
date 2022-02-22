@@ -2,6 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "PKEncryptionScheme": { "type": "@", "type_name": "NSString" },
+   "PKContactField": { "type": "@", "type_name": "NSString" },
+   "PKPassLibraryNotificationKey": { "type": "@", "type_name": "NSString" },
+   "PKPaymentErrorKey": { "type": "@", "type_name": "NSString" }
+  },
   "classes": {
    "PKStoredValuePassProperties": {
     "methods": [

@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestCAValueFunction(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CAValueFunctionName, str)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(Quartz.kCAValueFunctionRotateX, str)

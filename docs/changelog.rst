@@ -16,7 +16,7 @@ Version 8.4
 * Updated framework bindings for the macOS 12.3 SDK.
 
 * #418: Added :class:`typing.NewType` definitions to the
-  various framework wrappers for all enum types in Cocoa
+  various framework bindings for all enum types in Cocoa
   (such as ``NSComparisonResult``).
 
   Using this it is now possible to annotate methods returning
@@ -34,6 +34,9 @@ Version 8.4
   The actual representation of enum types is provisional
   and might change in the future.
 
+* #440: Added :class:`typing.NewType` definitions to the
+  various framework bindings for all ``NS_STRING_ENUM``,
+  ``NS_TYPED_ENUM`` and ``NS_TYPED_EXTENSIBLE_ENUM`` types in Cocoa.
 
 
 Version 8.3b1

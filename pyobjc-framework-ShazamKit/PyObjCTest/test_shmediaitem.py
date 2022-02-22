@@ -3,6 +3,9 @@ import ShazamKit
 
 
 class TestSHMediaItem(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(ShazamKit.SHMediaItemProperty, str)
+
     def test_constants(self):
         self.assertIsInstance(ShazamKit.SHMediaItemShazamID, str)
         self.assertIsInstance(ShazamKit.SHMediaItemTitle, str)

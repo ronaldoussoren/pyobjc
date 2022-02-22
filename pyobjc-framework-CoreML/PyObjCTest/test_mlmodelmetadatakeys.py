@@ -3,6 +3,9 @@ import CoreML
 
 
 class TestMLFeatureDescription(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(CoreML.MLModelMetadataKey, str)
+
     @min_os_level("10.13")
     def testConstants(self):
         self.assertIsInstance(CoreML.MLModelDescriptionKey, str)

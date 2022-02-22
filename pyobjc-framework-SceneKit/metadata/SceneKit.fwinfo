@@ -2,6 +2,21 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "SCNPhysicsTestOption": { "type": "@", "type_name": "NSString" },
+   "SCNPhysicsTestSearchMode": { "type": "@", "type_name": "NSString" },
+   "SCNParticleProperty": { "type": "@", "type_name": "NSString" },
+   "SCNLightType": { "type": "@", "type_name": "NSString" },
+   "SCNShaderModifierEntryPoint": { "type": "@", "type_name": "NSString" },
+   "SCNPhysicsShapeOption": { "type": "@", "type_name": "NSString" },
+   "SCNPhysicsShapeType": { "type": "@", "type_name": "NSString" },
+   "SCNHitTestOption": { "type": "@", "type_name": "NSString" },
+   "SCNLightingModel": { "type": "@", "type_name": "NSString" },
+   "SCNSceneAttribute": { "type": "@", "type_name": "NSString" },
+   "SCNSceneSourceLoadingOption": { "type": "@", "type_name": "NSString" },
+   "SCNSceneSourceAnimationImportPolicy": { "type": "@", "type_name": "NSString" },
+   "SCNViewOption": { "type": "@", "type_name": "NSString" }
+  },
   "aliases": {
    "SCNHitTestOptionBackFaceCulling": {
     "alias": "SCNHitTestBackFaceCullingKey"

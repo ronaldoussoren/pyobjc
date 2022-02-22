@@ -513,6 +513,32 @@ class TestTestSupport(TestCase):
         except self.failureException:
             self.fail("assertIsEnumType unexpectedly failed")
 
+    def test_assert_typed_enum(self):
+        with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not a typing.NewType"
+        ):
+            self.assertIsTypedEnum(int, int)
+
+        with self.assertRaisesRegex(
+            self.failureException, ".* is not a typing.NewType based on 'int'"
+        ):
+            self.assertIsTypedEnum(typing.NewType("SomeType", str), int)
+
+        with self.assertRaisesRegex(
+            self.failureException, ".* is not a typing.NewType based on 'str'"
+        ):
+            self.assertIsTypedEnum(typing.NewType("SomeType", int), str)
+
+        try:
+            self.assertIsTypedEnum(typing.NewType("SomeType", str), str)
+        except self.failureException:
+            self.fail("assertIsEnumType unexpectedly failed")
+
+        try:
+            self.assertIsTypedEnum(typing.NewType("SomeType", float), float)
+        except self.failureException:
+            self.fail("assertIsEnumType unexpectedly failed")
+
     def test_assert_opaque(self):
         with self.assertRaisesRegex(
             self.failureException, "<class 'int'> is not an opaque-pointer"

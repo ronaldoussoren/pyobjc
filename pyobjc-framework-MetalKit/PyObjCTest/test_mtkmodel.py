@@ -5,6 +5,9 @@ import MetalKit
 
 
 class TestMTKModel(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(MetalKit.MTKModelError, str)
+
     @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(MetalKit.MTKModelErrorDomain, str)
