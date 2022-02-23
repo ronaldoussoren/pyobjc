@@ -104,6 +104,13 @@ NS_ASSUME_NONNULL_BEGIN
     void* rval;
 
     PyObjC_BEGIN_WITH_GIL
+        if (PyBytes_CheckExact(value)) {
+            /* Shortcut for bytes objects that avoid creating
+             * an OCReleasedBuffer.
+             */
+            PyObjC_GIL_RETURN(PyBytes_AS_STRING(value));
+        }
+
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
                                                                        writable:NO];
         if (temp == NULL) {           // LCOV_BR_EXCL_LINE
