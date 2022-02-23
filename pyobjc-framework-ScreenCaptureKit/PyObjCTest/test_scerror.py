@@ -9,7 +9,7 @@ class TestSCError(TestCase):
     def test_constants(self):
         self.assertEqual(ScreenCaptureKit.SCStreamErrorUserDeclined, -3801)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStart, -3802)
-        self.assertEqual(ScreenCaptureKit.SCStreamErrorEntitlements, -3803)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorMissingEntitlements, -3803)
         self.assertEqual(
             ScreenCaptureKit.SCStreamErrorFailedApplicationConnectionInvalid, -3804
         )
@@ -25,7 +25,7 @@ class TestSCError(TestCase):
             ScreenCaptureKit.SCStreamErrorAttemptToUpdateFilterState, -3809
         )
         self.assertEqual(ScreenCaptureKit.SCStreamErrorAttemptToConfigState, -3810)
-        self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStartCaptureStack, -3811)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorInternalError, -3811)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorInvalidParameter, -3812)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorNoWindowList, -3813)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorNoDisplayList, -3814)

@@ -13,7 +13,10 @@ Version 8.4
 
 * Added bindings for ScreenCaptureKit (new in macOS 12.3)
 
+
 * Updated framework bindings for the macOS 12.3 SDK.
+
+  Based on Xcode 13.3 beta 3
 
 * #418: Added :class:`typing.NewType` definitions to the
   various framework bindings for all enum types in Cocoa

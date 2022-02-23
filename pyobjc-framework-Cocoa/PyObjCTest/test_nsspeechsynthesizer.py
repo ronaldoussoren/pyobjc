@@ -109,6 +109,10 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSSpeechDictionaryEntrySpelling, str)
         self.assertIsInstance(AppKit.NSSpeechDictionaryEntryPhonemes, str)
 
+    @min_os_level("12.3")
+    def testConstants12_3(self):
+        self.assertIsInstance(AppKit.NSVoiceGenderNeutral, str)
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_toURL_)

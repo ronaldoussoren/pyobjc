@@ -6,6 +6,28 @@
    "SCStreamFrameInfo": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "SCStream": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "addStreamOutput:type:sampleHandlerQueue:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "removeStreamOutput:type:error:"
+     }
+    ]
+   },
    "SCStreamConfiguration": {
     "methods": [
      {
@@ -70,7 +92,19 @@
     ]
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+   "SCStreamOutput": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "stream:didOutputSampleBuffer:ofType:"
+     }
+    ]
+   }
+  },
   "functions": {},
   "informal_protocols": {}
  }

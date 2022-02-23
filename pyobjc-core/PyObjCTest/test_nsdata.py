@@ -839,10 +839,7 @@ class TestBytearrayInterface(TestBytesInterface):
         oc.extend(b" foo")
         py.extend(b" foo")
 
-        # XXX: conversion to bytes is necessary
-        # to avoid an exception in the call to
-        # py.extend. This is a bug!
-        self.assertEqual(bytes(oc), py)
+        self.assertEqual(py, oc)
         self.assertIs(oc, oc_orig)
         self.assertIs(py, py_orig)
 
@@ -886,14 +883,12 @@ class TestBytearrayInterface(TestBytesInterface):
         del oc[0]
         del py[0]
 
-        # XXX: See above
-        self.assertEqual(bytes(oc), py)
+        self.assertEqual(py, oc)
 
         del oc[1:3]
         del py[1:3]
 
-        # XXX: See above
-        self.assertEqual(bytes(oc), py)
+        self.assertEqual(py, oc)
 
         del oc[3::5]
         del py[3::5]
