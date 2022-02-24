@@ -120,6 +120,9 @@ NSObject (TestMethods)
     return [first compare:second];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 + (id)replacementObjectForArchiver:(NSArchiver*)archiver of:(NSObject*)object
 {
     return [object replacementObjectForArchiver:archiver];
@@ -129,6 +132,8 @@ NSObject (TestMethods)
 {
     return [object replacementObjectForKeyedArchiver:archiver];
 }
+
+#pragma clang diagnostic pop
 
 + (id)replacementObjectForCoder:(NSCoder*)archiver of:(NSObject*)object
 {

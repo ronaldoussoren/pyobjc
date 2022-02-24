@@ -93,12 +93,16 @@ class TestSockAddrSupport(TestCase):
             o.sockAddrToValue_(("nosuchhost.python.org", 99))
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            "('str' object cannot be interpreted as an integer)|"
+            r"(an integer is required \(got type str\))",
         ):
             o.sockAddrToValue_(("127.0.0.1", "http"))
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            "('str' object cannot be interpreted as an integer)|"
+            r"(an integer is required \(got type str\))",
         ):
             o.sockAddrToValue_(("::1", "http", 0))
 

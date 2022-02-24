@@ -379,7 +379,9 @@ class TestCase(_unittest.TestCase):
                 self.fail(f"{tp!r} is not a typing.NewType")
 
             if tp.__supertype__ != int:
-                self.fail(f"{tp!r} is not a typing.NewType based on 'int'")
+                self.fail(
+                    f"{tp!r} is not a typing.NewType based on 'int' but {tp.__supertype__.__name__!r}"
+                )
 
             return
 
@@ -400,7 +402,9 @@ class TestCase(_unittest.TestCase):
                 self.fail(f"{tp!r} is not a typing.NewType")
 
             if tp.__supertype__ != base:
-                self.fail(f"{tp!r} is not a typing.NewType based on {base.__name__!r}")
+                self.fail(
+                    f"{tp!r} is not a typing.NewType based on {base.__name__!r} but {tp.__supertype__.__name__!r}"
+                )
 
             return
 

@@ -1,4 +1,5 @@
 import objc
+import sys
 from objc import super
 from PyObjCTools.TestSupport import TestCase, min_python_release
 from PyObjCTest.helpernsdata import OC_MutableDataHelper
@@ -537,13 +538,14 @@ class TestBytesInterface(TestCase):
         methods = [
             "isalnum",
             "isalpha",
-            "isascii",
             "isdigit",
             "islower",
             "isspace",
             "istitle",
             "isupper",
         ]
+        if sys.version_info[:2] >= (3, 7):
+            methods.append("isascii")
 
         for meth in methods:
             for value in values:

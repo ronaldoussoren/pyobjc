@@ -108,10 +108,6 @@ def nsdata_isalpha(self, *args, **kwds):
     return bytes(self.bytes()).isalpha(*args, **kwds)
 
 
-def nsdata_isascii(self, *args, **kwds):
-    return bytes(self.bytes()).isascii(*args, **kwds)
-
-
 def nsdata_isdigit(self, *args, **kwds):
     return bytes(self.bytes()).isdigit(*args, **kwds)
 
@@ -259,7 +255,6 @@ addConvenienceForClass(
         ("index", nsdata_index),
         ("isalnum", nsdata_isalnum),
         ("isalpha", nsdata_isalpha),
-        ("isascii", nsdata_isascii),
         ("isdigit", nsdata_isdigit),
         ("islower", nsdata_islower),
         ("isspace", nsdata_isspace),
@@ -289,6 +284,15 @@ addConvenienceForClass(
         ("zfill", nsdata_zfill),
     ),
 )
+
+
+if sys.version_info[:2] >= (3, 7):
+
+    def nsdata_isascii(self, *args, **kwds):
+        return bytes(self.bytes()).isascii(*args, **kwds)
+
+    addConvenienceForClass("NSData", (("isascii", nsdata_isascii),))
+
 
 if sys.version_info[:2] >= (3, 10):
 
