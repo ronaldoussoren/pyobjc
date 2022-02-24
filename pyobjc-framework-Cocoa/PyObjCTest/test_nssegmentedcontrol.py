@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSegmentedControl(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSSegmentDistribution)
+        self.assertIsEnumType(AppKit.NSSegmentStyle)
+        self.assertIsEnumType(AppKit.NSSegmentSwitchTracking)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSSegmentStyleAutomatic, 0)
         self.assertEqual(AppKit.NSSegmentStyleRounded, 1)

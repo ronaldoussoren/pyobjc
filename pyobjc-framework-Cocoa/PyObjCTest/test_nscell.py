@@ -3,6 +3,20 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCell(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSControlStateValue, int)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBackgroundStyle)
+        self.assertIsEnumType(AppKit.NSCellAttribute)
+        self.assertIsEnumType(AppKit.NSCellHitResult)
+        self.assertIsEnumType(AppKit.NSCellImagePosition)
+        self.assertIsEnumType(AppKit.NSCellStyleMask)
+        self.assertIsEnumType(AppKit.NSCellType)
+        self.assertIsEnumType(AppKit.NSControlSize)
+        self.assertIsEnumType(AppKit.NSControlTint)
+        self.assertIsEnumType(AppKit.NSImageScaling)
+
     def testUnicode(self):
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         cell = AppKit.NSCell.alloc().initTextCell_(u)

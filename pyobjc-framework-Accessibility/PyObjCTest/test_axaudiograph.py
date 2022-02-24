@@ -5,6 +5,10 @@ import objc
 
 
 class TestAXAudiograph(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Accessibility.AXChartDescriptorContentDirection)
+        self.assertIsEnumType(Accessibility.AXNumericDataAxisDescriptorScale)
+
     @min_sdk_level("12.0")
     def test_protocols(self):
         objc.protocolNamed("AXChart")

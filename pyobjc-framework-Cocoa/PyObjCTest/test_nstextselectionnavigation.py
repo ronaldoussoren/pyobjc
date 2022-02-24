@@ -30,6 +30,13 @@ class TestNSTextSelectionNavigationHelper(AppKit.NSObject):
 
 
 class TestNSTextSelectionNavigation(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationDestination)
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationDirection)
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationLayoutOrientation)
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationModifier)
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationWritingDirection)
+
     def test_constants(self):
         self.assertEqual(AppKit.NSTextSelectionNavigationDirectionForward, 0)
         self.assertEqual(AppKit.NSTextSelectionNavigationDirectionBackward, 1)

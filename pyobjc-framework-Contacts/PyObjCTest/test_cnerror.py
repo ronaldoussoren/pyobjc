@@ -3,6 +3,9 @@ import Contacts
 
 
 class TestCNError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Contacts.CNErrorCode)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertIsInstance(Contacts.CNErrorDomain, str)

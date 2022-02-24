@@ -12,6 +12,12 @@ class TestGKTurnBasedMatchHelper(GameKit.NSObject):
 
 
 class TestGKTurnBasedMatch(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKTurnBasedExchangeStatus)
+        self.assertIsEnumType(GameKit.GKTurnBasedMatchOutcome)
+        self.assertIsEnumType(GameKit.GKTurnBasedMatchStatus)
+        self.assertIsEnumType(GameKit.GKTurnBasedParticipantStatus)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKTurnBasedMatchStatusUnknown, 0)
         self.assertEqual(GameKit.GKTurnBasedMatchStatusOpen, 1)

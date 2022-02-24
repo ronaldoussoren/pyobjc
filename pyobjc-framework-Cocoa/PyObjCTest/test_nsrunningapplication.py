@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSRunningApplication(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSApplicationActivationOptions)
+        self.assertIsEnumType(AppKit.NSApplicationActivationPolicy)
+
     @min_os_level("10.6")
     def testConstants(self):
         self.assertEqual(AppKit.NSApplicationActivateAllWindows, 1 << 0)

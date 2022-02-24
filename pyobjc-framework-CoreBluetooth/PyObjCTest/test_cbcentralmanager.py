@@ -9,6 +9,11 @@ class TestCBCentralManagerHelper(CoreBluetooth.NSObject):
 
 
 class TestCBCentralManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreBluetooth.CBCentralManagerFeature)
+        self.assertIsEnumType(CoreBluetooth.CBCentralManagerState)
+        self.assertIsEnumType(CoreBluetooth.CBConnectionEvent)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertHasAttr(CoreBluetooth, "CBCentralManager")

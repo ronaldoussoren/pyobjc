@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINCallRecordTypeOptions(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INCallRecordTypeOptions)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(Intents.INCallRecordTypeOptionOutgoing, 1 << 0)

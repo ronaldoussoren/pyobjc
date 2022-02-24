@@ -8,6 +8,11 @@ class TestNSTabViewHelper(AppKit.NSObject):
 
 
 class TestNSTabView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTabPosition)
+        self.assertIsEnumType(AppKit.NSTabViewBorderType)
+        self.assertIsEnumType(AppKit.NSTabViewType)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTopTabsBezelBorder, 0)
         self.assertEqual(AppKit.NSLeftTabsBezelBorder, 1)

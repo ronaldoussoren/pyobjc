@@ -19,6 +19,9 @@ class TestWKDownloadDelegateHelper(WebKit.NSObject):
 
 
 class TestWKDownloadDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKDownloadRedirectPolicy)
+
     def test_constants(self):
         self.assertEqual(WebKit.WKDownloadRedirectPolicyCancel, 0)
         self.assertEqual(WebKit.WKDownloadRedirectPolicyAllow, 1)

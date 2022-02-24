@@ -33,6 +33,9 @@ class TestMDLMeshBufferHelper(ModelIO.NSObject):
 
 
 class TestMDLMeshBuffer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLMeshBufferType)
+
     def testConstants(self):
         self.assertEqual(ModelIO.MDLMeshBufferTypeVertex, 1)
         self.assertEqual(ModelIO.MDLMeshBufferTypeIndex, 2)

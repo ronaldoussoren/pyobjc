@@ -494,6 +494,103 @@ const char* _Nullable PyObjCFormalProtocol_FindSelectorSignature(PyObject* objec
     return NULL;
 }
 
+static BOOL
+signatures_proto_compatible(const char* type1, const char* type2)
+{
+    /* Ignore type modifiers */
+    type1 = PyObjCRT_SkipTypeQualifiers(type1);
+    type2 = PyObjCRT_SkipTypeQualifiers(type2);
+
+    if (*type1 == _C_ARY_B) {
+        if (type2[0] == _C_PTR) {
+            type1++;
+            while (isdigit(*type1))
+                type1++;
+            return signatures_proto_compatible(type1, type2 + 1);
+
+        } else if (type2[0] == _C_ARY_B) {
+            type1++;
+            while (isdigit(*type1))
+                type1++;
+            type2++;
+            while (isdigit(*type2))
+                type2++;
+            return signatures_proto_compatible(type1, type2);
+        }
+        return NO;
+    }
+
+    if (PyObjCRT_SizeOfType(type1) != PyObjCRT_SizeOfType(type2)) {
+        return NO;
+    }
+
+    switch (*type1) {
+    case _C_CHARPTR:
+        if (*type2 == _C_CHARPTR) {
+            return YES;
+
+        } else if (*type2 == _C_PTR) {
+            return signatures_proto_compatible("c", type2 + 1);
+
+        } else {
+            return NO;
+        }
+
+    case _C_PTR:
+        if (*type2 == _C_CHARPTR) {
+            return signatures_proto_compatible(type1 + 1, "c");
+        }
+
+        if (*type2 != _C_PTR) {
+            return NO;
+        }
+
+        if (type1[1] == _C_VOID || type2[1] == _C_VOID) {
+            return YES;
+        }
+
+        return PyObjC_signatures_compatible(type1 + 1, type2 + 1);
+
+    case _C_CHR:
+    case _C_BOOL:
+    case _C_NSBOOL:
+        switch (*type2) {
+        case _C_CHR:
+        case _C_BOOL:
+        case _C_NSBOOL:
+            return YES;
+        }
+        return NO;
+
+    case _C_LNG:
+    case _C_LNG_LNG:
+        switch (*type2) {
+        case _C_LNG:
+        case _C_LNG_LNG:
+            return YES;
+        }
+        return NO;
+
+    case _C_ULNG:
+    case _C_ULNG_LNG:
+        switch (*type2) {
+        case _C_ULNG:
+        case _C_ULNG_LNG:
+            return YES;
+        }
+        return NO;
+
+    default: {
+        const char* e1 = PyObjCRT_SkipTypeSpec(type1);
+        if (e1 == NULL) {
+            PyErr_Clear();
+            return NO;
+        }
+        return strncmp(type1, type2, e1 - type1) == 0;
+    }
+    }
+}
+
 static int
 do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL is_class,
           BOOL is_required, char* name, PyObject* super_class, PyObject* clsdict,
@@ -562,6 +659,9 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
         return -1;         // LCOV_EXCL_LINE
     }
     if (PyObjCRT_SignaturesEqual(descr->types, sel_sig)) {
+        return 0;
+    }
+    if (signatures_proto_compatible(descr->types, sel_sig)) {
         return 0;
     }
 

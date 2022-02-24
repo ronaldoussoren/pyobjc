@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLAccelerationStructure(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceDescriptorType)
+        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceOptions)
+        self.assertIsEnumType(Metal.MTLAccelerationStructureUsage)
+        self.assertIsEnumType(Metal.MTLMotionBorderMode)
+
     def test_structs(self):
         # Vector types in fields
         self.assertFalse(hasattr(Metal, "MTLAccelerationStructureInstanceDescriptor"))

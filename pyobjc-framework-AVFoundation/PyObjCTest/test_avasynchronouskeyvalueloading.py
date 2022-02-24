@@ -12,6 +12,9 @@ class TestAVAsynchronousKeyValueLoadingHelper(AVFoundation.NSObject):
 
 
 class TestAVAsynchronousKeyValueLoading(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVKeyValueStatus)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVKeyValueStatusUnknown, 0)

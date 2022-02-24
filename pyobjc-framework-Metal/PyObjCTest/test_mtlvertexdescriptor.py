@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestMTLVertexDescriptor(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLVertexFormat)
+        self.assertIsEnumType(Metal.MTLVertexStepFunction)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLVertexFormatInvalid, 0)
         self.assertEqual(Metal.MTLVertexFormatUChar2, 1)

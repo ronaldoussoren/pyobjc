@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBox(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBoxType)
+        self.assertIsEnumType(AppKit.NSTitlePosition)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSNoTitle, 0)
         self.assertEqual(AppKit.NSAboveTop, 1)

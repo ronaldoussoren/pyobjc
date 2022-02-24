@@ -9,6 +9,13 @@ class TestNSSharingServiceHelper(AppKit.NSObject):
 
 
 class TestNSSharingService(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSSharingServiceName, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSCloudKitSharingServiceOptions)
+        self.assertIsEnumType(AppKit.NSSharingContentScope)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, str)

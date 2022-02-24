@@ -4,6 +4,10 @@ import SpriteKit
 
 
 class TestSKTileSet(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKTileAdjacencyMask)
+        self.assertIsEnumType(SpriteKit.SKTileSetType)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(SpriteKit.SKTileSetTypeGrid, 0)

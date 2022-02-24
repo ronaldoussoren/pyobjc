@@ -4,6 +4,9 @@ import objc
 
 
 class TestGKMatchmakerViewController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKMatchmakingMode)
+
     def test_constants(self):
         self.assertEqual(GameKit.GKMatchmakingModeDefault, 0)
         self.assertEqual(GameKit.GKMatchmakingModeNearbyOnly, 1)

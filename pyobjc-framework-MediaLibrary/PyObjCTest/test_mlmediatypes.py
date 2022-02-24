@@ -3,6 +3,10 @@ import MediaLibrary
 
 
 class TestMLMediaTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MediaLibrary.MLMediaSourceType)
+        self.assertIsEnumType(MediaLibrary.MLMediaType)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(MediaLibrary.MLMediaSourceTypeAudio, 1)

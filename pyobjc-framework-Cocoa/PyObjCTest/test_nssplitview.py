@@ -44,6 +44,9 @@ class TestNSSplitViewHelper(AppKit.NSObject):
 
 
 class TestNSSplitView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSSplitViewDividerStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSSplitViewDividerStyleThick, 1)
         self.assertEqual(AppKit.NSSplitViewDividerStyleThin, 2)

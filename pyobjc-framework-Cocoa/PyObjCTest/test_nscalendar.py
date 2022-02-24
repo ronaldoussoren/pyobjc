@@ -4,6 +4,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCalendar(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSCalendarIdentifier, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSCalendarOptions)
+        self.assertIsEnumType(Foundation.NSCalendarUnit)
+
     def testConstants(self):
         self.assertEqual(
             Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra

@@ -3,6 +3,10 @@ import EventKit
 
 
 class TestEKEvent(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(EventKit.EKEventAvailability)
+        self.assertIsEnumType(EventKit.EKEventStatus)
+
     @min_os_level("10.8")
     def testBasic(self):
         self.assertTrue(hasattr(EventKit, "EKEvent"))

@@ -9,6 +9,11 @@ class TestNSDatePickerHelper(AppKit.NSObject):
 
 
 class TestNSDatePickerCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSDatePickerElementFlags)
+        self.assertIsEnumType(AppKit.NSDatePickerMode)
+        self.assertIsEnumType(AppKit.NSDatePickerStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTextFieldAndStepperDatePickerStyle, 0)
         self.assertEqual(AppKit.NSClockAndCalendarDatePickerStyle, 1)

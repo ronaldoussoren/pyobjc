@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestEntryLog(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(OSLog.OSLogEntryLogLevel)
+
     def test_constants(self):
         self.assertEqual(OSLog.OSLogEntryLogLevelUndefined, 0)
         self.assertEqual(OSLog.OSLogEntryLogLevelDebug, 1)

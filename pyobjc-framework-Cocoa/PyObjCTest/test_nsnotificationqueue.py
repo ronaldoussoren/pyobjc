@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSNotificationQueue(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSNotificationCoalescing)
+        self.assertIsEnumType(Foundation.NSPostingStyle)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSPostWhenIdle, 1)
         self.assertEqual(Foundation.NSPostASAP, 2)

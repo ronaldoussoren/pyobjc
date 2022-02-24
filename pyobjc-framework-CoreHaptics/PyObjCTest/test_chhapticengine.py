@@ -9,6 +9,10 @@ CHHapticEngineResetHandler = b"v"
 
 
 class TestCHHapticEngine(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreHaptics.CHHapticEngineFinishedAction)
+        self.assertIsEnumType(CoreHaptics.CHHapticEngineStoppedReason)
+
     def test_constants(self):
         self.assertEqual(CoreHaptics.CHHapticTimeImmediate, 0.0)
 

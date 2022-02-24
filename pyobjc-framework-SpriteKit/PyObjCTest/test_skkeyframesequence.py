@@ -1,10 +1,13 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SpriteKit
 
 
 class TestSKKeyframeSequence(TestCase):
-    @min_os_level("10.9")
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKInterpolationMode)
+        self.assertIsEnumType(SpriteKit.SKRepeatMode)
+
     def testConstants(self):
         self.assertEqual(SpriteKit.SKInterpolationModeLinear, 1)
         self.assertEqual(SpriteKit.SKInterpolationModeSpline, 2)

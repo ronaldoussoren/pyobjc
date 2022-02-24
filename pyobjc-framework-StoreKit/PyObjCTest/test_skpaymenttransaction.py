@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSKPaymentTransaction(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(StoreKit.SKPaymentTransactionState)
+
     def test_constants(self):
         self.assertEqual(StoreKit.SKPaymentTransactionStatePurchasing, 0)
         self.assertEqual(StoreKit.SKPaymentTransactionStatePurchased, 1)

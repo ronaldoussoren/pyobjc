@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKPublicConstants(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKPeerConnectionState)
+        self.assertIsEnumType(GameKit.GKSendDataMode)
+        self.assertIsEnumType(GameKit.GKSessionMode)
+        self.assertIsEnumType(GameKit.GKVoiceChatServiceError)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKSendDataReliable, 0)
         self.assertEqual(GameKit.GKSendDataUnreliable, 1)

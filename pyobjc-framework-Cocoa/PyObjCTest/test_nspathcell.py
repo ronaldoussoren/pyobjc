@@ -4,6 +4,9 @@ import objc
 
 
 class TestNSPathCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPathStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSPathStyleStandard, 0)
         self.assertEqual(AppKit.NSPathStyleNavigationBar, 1)

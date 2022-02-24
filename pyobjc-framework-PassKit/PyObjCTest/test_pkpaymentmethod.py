@@ -4,6 +4,9 @@ import PassKit
 
 
 class TestPKPaymentMethod(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKPaymentMethodType)
+
     def test_constants(self):
         self.assertEqual(PassKit.PKPaymentMethodTypeUnknown, 0)
         self.assertEqual(PassKit.PKPaymentMethodTypeDebit, 1)

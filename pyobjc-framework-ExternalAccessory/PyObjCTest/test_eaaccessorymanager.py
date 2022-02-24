@@ -4,6 +4,9 @@ import ExternalAccessory
 
 
 class TestEAAccessoryManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ExternalAccessory.EABluetoothAccessoryPickerErrorCode)
+
     def testConstants(self):
         self.assertEqual(
             ExternalAccessory.EABluetoothAccessoryPickerAlreadyConnected, 0

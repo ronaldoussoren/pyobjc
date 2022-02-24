@@ -60,7 +60,8 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1014
     // Defined in the AVFAudio subframework, but header is never included in the
     // toplevel framework...
-    // p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVSpeechSynthesizerDelegate));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1015
     // p = PyObjC_IdToPython(@protocol(AVAssetDownloadDelegate)); Py_XDECREF(p);

@@ -26,6 +26,9 @@ class TestNSGestureRecognizerHelper(AppKit.NSObject):
 
 
 class TestNSGestureRecognizer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSGestureRecognizerState)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSGestureRecognizerStatePossible, 0)
         self.assertEqual(AppKit.NSGestureRecognizerStateBegan, 1)

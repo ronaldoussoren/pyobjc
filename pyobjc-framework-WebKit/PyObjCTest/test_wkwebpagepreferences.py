@@ -3,6 +3,9 @@ import WebKit
 
 
 class TestWebPagePreferences(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKContentMode)
+
     def test_constants(self):
         self.assertEqual(WebKit.WKContentModeRecommended, 0)
         self.assertEqual(WebKit.WKContentModeMobile, 1)

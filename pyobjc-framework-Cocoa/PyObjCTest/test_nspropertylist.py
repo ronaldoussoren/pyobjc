@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPropertyList(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSPropertyListFormat)
+        self.assertIsEnumType(Foundation.NSPropertyListMutabilityOptions)
+
     def testMethods(self):
         self.assertResultIsBOOL(
             Foundation.NSPropertyListSerialization.propertyList_isValidForFormat_

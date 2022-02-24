@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSAccessibilityCustomRotor(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorSearchDirection)
+        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionPrevious, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionNext, 1)

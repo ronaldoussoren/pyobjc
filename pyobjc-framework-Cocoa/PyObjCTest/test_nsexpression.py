@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSExpression(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSExpressionType)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSConstantValueExpressionType, 0)
         self.assertEqual(Foundation.NSEvaluatedObjectExpressionType, 1)

@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPopUpButtonCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPopUpArrowPosition)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSPopUpNoArrow, 0)
         self.assertEqual(AppKit.NSPopUpArrowAtCenter, 1)

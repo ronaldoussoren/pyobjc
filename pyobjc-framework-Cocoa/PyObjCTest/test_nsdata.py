@@ -12,6 +12,14 @@ otherBytes.frombytes(b"12345678901234567890" * 5)
 
 
 class TestNSData(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSDataBase64DecodingOptions)
+        self.assertIsEnumType(Foundation.NSDataBase64EncodingOptions)
+        self.assertIsEnumType(Foundation.NSDataCompressionAlgorithm)
+        self.assertIsEnumType(Foundation.NSDataReadingOptions)
+        self.assertIsEnumType(Foundation.NSDataSearchOptions)
+        self.assertIsEnumType(Foundation.NSDataWritingOptions)
+
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSData.isEqualToData_)
         self.assertResultIsBOOL(Foundation.NSData.writeToFile_atomically_)

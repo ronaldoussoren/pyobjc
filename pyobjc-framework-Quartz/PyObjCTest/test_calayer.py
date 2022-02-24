@@ -9,6 +9,12 @@ class TestCALayerHelper(Quartz.NSObject):
 
 
 class TestCALayer(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
+        self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
+
     @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(Quartz.kCALayerNotSizable, 0)

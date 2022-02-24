@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "SNClassifierIdentifier": { "type": "@", "type_name": "NSString" }
+  },
   "classes": {
    "SNAudioFileAnalyzer": {
     "methods": [

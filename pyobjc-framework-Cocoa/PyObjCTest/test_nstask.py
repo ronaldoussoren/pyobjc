@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTask(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSTaskTerminationReason)
+
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSTask.suspend)
         self.assertResultIsBOOL(Foundation.NSTask.resume)

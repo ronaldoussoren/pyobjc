@@ -3,6 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDistributedNotificationCenter(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSDistributedNotificationCenterType, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSDistributedNotificationOptions)
+        self.assertIsEnumType(Foundation.NSNotificationSuspensionBehavior)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSLocalNotificationCenterType, str)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDrop, 1)

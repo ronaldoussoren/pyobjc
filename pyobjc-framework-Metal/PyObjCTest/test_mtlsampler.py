@@ -4,6 +4,12 @@ import objc
 
 
 class TestMTLSampler(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLSamplerAddressMode)
+        self.assertIsEnumType(Metal.MTLSamplerBorderColor)
+        self.assertIsEnumType(Metal.MTLSamplerMinMagFilter)
+        self.assertIsEnumType(Metal.MTLSamplerMipFilter)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLSamplerMinMagFilterNearest, 0)
         self.assertEqual(Metal.MTLSamplerMinMagFilterLinear, 1)

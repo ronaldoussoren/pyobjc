@@ -4,6 +4,10 @@ import objc
 
 
 class TestCKSubscription(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKQuerySubscriptionOptions)
+        self.assertIsEnumType(CloudKit.CKSubscriptionType)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertHasAttr(CloudKit, "CKSubscription")

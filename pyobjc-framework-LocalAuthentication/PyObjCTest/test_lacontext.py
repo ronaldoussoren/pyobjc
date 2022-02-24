@@ -7,6 +7,12 @@ import Foundation
 
 
 class TestLAContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(LocalAuthentication.LAAccessControlOperation)
+        self.assertIsEnumType(LocalAuthentication.LABiometryType)
+        self.assertIsEnumType(LocalAuthentication.LACredentialType)
+        self.assertIsEnumType(LocalAuthentication.LAPolicy)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertIsInstance(LocalAuthentication.LAContext, objc.objc_class)

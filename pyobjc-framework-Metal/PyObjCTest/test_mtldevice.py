@@ -283,6 +283,19 @@ class TestMTLDeviceHelper(Metal.NSObject):
 
 
 class TestMTLDevice(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
+        self.assertIsEnumType(Metal.MTLCounterSamplingPoint)
+        self.assertIsEnumType(Metal.MTLDeviceLocation)
+        self.assertIsEnumType(Metal.MTLFeatureSet)
+        self.assertIsEnumType(Metal.MTLGPUFamily)
+        self.assertIsEnumType(Metal.MTLPipelineOption)
+        self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
+        self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v1, 0)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily2_v1, 1)

@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFormatter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSFormattingContext)
+        self.assertIsEnumType(Foundation.NSFormattingUnitStyle)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(Foundation.NSFormattingContextUnknown, 0)

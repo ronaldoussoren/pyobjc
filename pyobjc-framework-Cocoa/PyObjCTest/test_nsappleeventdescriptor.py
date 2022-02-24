@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAED(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSAppleEventSendOptions)
+
     def testCreateWithBytes(self):
         self.assertArgSizeInArg(
             Foundation.NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_,

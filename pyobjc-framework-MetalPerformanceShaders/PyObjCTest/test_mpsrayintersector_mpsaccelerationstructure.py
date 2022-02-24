@@ -6,6 +6,10 @@ MPSAccelerationStructureCompletionHandler = b"v@"
 
 
 class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureStatus)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureUsage)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageNone, 0)
         self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageRefit, 1)

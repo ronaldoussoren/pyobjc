@@ -9,6 +9,10 @@ class TestNSFileProviderManagerHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderDomainRemovalMode)
+        self.assertIsEnumType(FileProvider.NSFileProviderManagerDisconnectionOptions)
+
     def test_constants(self):
         self.assertEqual(
             FileProvider.NSFileProviderManagerDisconnectionOptionsTemporary, 1 << 0

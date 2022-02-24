@@ -16,6 +16,14 @@ class TestUNNotificationContentExtensionHelper(UserNotificationsUI.NSObject):
 
 
 class TestUNNotificationContentExtension(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(
+            UserNotificationsUI.UNNotificationContentExtensionMediaPlayPauseButtonType
+        )
+        self.assertIsEnumType(
+            UserNotificationsUI.UNNotificationContentExtensionResponseOption
+        )
+
     def test_constants(self):
         self.assertEqual(
             UserNotificationsUI.UNNotificationContentExtensionMediaPlayPauseButtonTypeNone,

@@ -3,6 +3,14 @@ import Vision
 
 
 class TestVNTypes(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Vision.VNBarcodeSymbology, str)
+        self.assertIsTypedEnum(Vision.VNVideoProcessingOption, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Vision.VNElementType)
+        self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
+
     def testConstants(self):
         self.assertEqual(Vision.VNImageCropAndScaleOptionCenterCrop, 0)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)

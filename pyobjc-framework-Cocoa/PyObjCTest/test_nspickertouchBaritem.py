@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPickerTouchBarItem(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPickerTouchBarItemControlRepresentation)
+        self.assertIsEnumType(AppKit.NSPickerTouchBarItemSelectionMode)
+
     def test_contants(self):
         self.assertEqual(AppKit.NSPickerTouchBarItemSelectionModeSelectOne, 0)
         self.assertEqual(AppKit.NSPickerTouchBarItemSelectionModeSelectAny, 1)

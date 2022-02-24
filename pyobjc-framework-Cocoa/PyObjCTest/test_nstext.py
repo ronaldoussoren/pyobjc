@@ -12,6 +12,11 @@ class TestNSTextHelper(AppKit.NSObject):
 
 
 class TestNSText(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextAlignment)
+        self.assertIsEnumType(AppKit.NSTextMovement)
+        self.assertIsEnumType(AppKit.NSWritingDirection)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSEnterCharacter, chr(0x0003))
         self.assertEqual(AppKit.NSBackspaceCharacter, chr(0x0008))

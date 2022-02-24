@@ -20,6 +20,11 @@ class TestNSKeyValueBindingHelper(AppKit.NSObject):
 
 
 class TestNSKeyValueBinding(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSBindingInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSBindingName, str)
+        self.assertIsTypedEnum(AppKit.NSBindingOption, str)
+
     def testConstants(self):
         self.assertIsInstance(AppKit.NSMultipleValuesMarker, AppKit.NSObject)
         self.assertIsInstance(AppKit.NSNoSelectionMarker, AppKit.NSObject)

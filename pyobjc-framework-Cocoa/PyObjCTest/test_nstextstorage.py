@@ -20,6 +20,9 @@ class TestNSTextStorageHelper(AppKit.NSObject):
 
 
 class TestNSTextStorage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTextStorageEditActions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTextStorageEditedAttributes, 1 << 0)
         self.assertEqual(AppKit.NSTextStorageEditedCharacters, 1 << 1)

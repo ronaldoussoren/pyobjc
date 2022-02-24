@@ -18,6 +18,10 @@ class TestNSFileProviderTestingHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderTesting(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderTestingOperationSide)
+        self.assertIsEnumType(FileProvider.NSFileProviderTestingOperationType)
+
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideDisk, 0)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideFileProvider, 1)

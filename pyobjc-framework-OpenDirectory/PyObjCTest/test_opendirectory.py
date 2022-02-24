@@ -14,7 +14,8 @@ class TestOpenDirectory(TestCase):
         import CFOpenDirectory
 
         for nm in dir(CFOpenDirectory):
-            cfod = getattr(CFOpenDirectory, nm)
-            od = getattr(OpenDirectory, nm)
+            with self.subTest(nm):
+                cfod = getattr(CFOpenDirectory, nm)
+                od = getattr(OpenDirectory, nm)
 
-            assert cfod is od
+                self.assertIs(cfod, od)

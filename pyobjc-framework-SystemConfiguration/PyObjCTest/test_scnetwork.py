@@ -29,7 +29,7 @@ class TestSCNetwork(TestCase):
         self.assertRaises(
             socket.gaierror,
             SystemConfiguration.SCNetworkCheckReachabilityByAddress,
-            ("no-such-host.objective-python.org", 80),
+            ("no-such-host.python.org", 80),
             objc._size_sockaddr_ip4,
             None,
         )

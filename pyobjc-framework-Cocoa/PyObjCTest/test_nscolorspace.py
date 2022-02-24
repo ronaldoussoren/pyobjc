@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSColorSpace(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSColorSpaceModel)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSUnknownColorSpaceModel, -1)
         self.assertEqual(AppKit.NSGrayColorSpaceModel, 0)

@@ -9,6 +9,9 @@ ACAccountStoreCredentialRenewalHandler = b"v" + objc._C_NSInteger + b"@"
 
 
 class TestACAccountStore(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Accounts.ACAccountCredentialRenewResult)
+
     @min_os_level("10.8")
     def testConstants(self):
         self.assertHasAttr(Accounts, "ACAccountStoreDidChangeNotification")

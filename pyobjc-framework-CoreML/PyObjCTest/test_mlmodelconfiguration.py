@@ -3,6 +3,9 @@ import CoreML
 
 
 class TestMLModelConfiguration(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreML.MLComputeUnits)
+
     def test_constants(self):
         self.assertEqual(CoreML.MLComputeUnitsCPUOnly, 0)
         self.assertEqual(CoreML.MLComputeUnitsCPUAndGPU, 1)

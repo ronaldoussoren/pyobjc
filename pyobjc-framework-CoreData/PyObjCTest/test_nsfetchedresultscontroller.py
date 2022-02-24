@@ -14,6 +14,9 @@ class TestNSFetchedResultsControllerHelper(CoreData.NSObject):
 
 
 class TestNSFetchedResultsController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSFetchedResultsChangeType)
+
     @min_os_level("10.12")
     def testMethods(self):
         self.assertResultIsBOOL(CoreData.NSFetchedResultsController.performFetch_)

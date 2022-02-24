@@ -5,6 +5,9 @@ import MapKit
 
 
 class TestMKPinAnnotationView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MapKit.MKPinAnnotationColor)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(MapKit.MKPinAnnotationColorRed, 0)

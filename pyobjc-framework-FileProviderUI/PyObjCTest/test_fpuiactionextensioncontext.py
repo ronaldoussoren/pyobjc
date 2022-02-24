@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestFPUIActionExtensionContext(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProviderUI.FPUIExtensionErrorCode)
+
     def test_constants(self):
         self.assertEqual(FileProviderUI.FPUIExtensionErrorCodeUserCancelled, 0)
         self.assertEqual(FileProviderUI.FPUIExtensionErrorCodeFailed, 1)

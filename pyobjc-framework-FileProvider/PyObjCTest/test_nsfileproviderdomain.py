@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileProviderDomain(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderDomainTestingModes)
+
     @min_os_level("11.0")
     def test_constants11_0(self):
         self.assertIsInstance(FileProvider.NSFileProviderDomainDidChange, str)

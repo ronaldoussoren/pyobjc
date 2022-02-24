@@ -4,6 +4,10 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCNNTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNLossType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNReductionType)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeMeanAbsoluteError, 0)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeMeanSquaredError, 1)

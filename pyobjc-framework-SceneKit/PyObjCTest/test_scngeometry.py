@@ -4,6 +4,10 @@ import SceneKit
 
 
 class TestSCNGeometry(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNGeometryPrimitiveType)
+        self.assertIsEnumType(SceneKit.SCNTessellationSmoothingMode)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangles, 0)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangleStrip, 1)

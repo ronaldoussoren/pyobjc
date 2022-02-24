@@ -27,6 +27,12 @@ class TestPDFViewHelper(Quartz.NSObject):
 
 
 class TestPDFView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFAreaOfInterest)
+        self.assertIsEnumType(Quartz.PDFDisplayDirection)
+        self.assertIsEnumType(Quartz.PDFDisplayMode)
+        self.assertIsEnumType(Quartz.PDFInterpolationQuality)
+
     def testConstants(self):
         self.assertEqual(Quartz.kPDFDisplaySinglePage, 0)
         self.assertEqual(Quartz.kPDFDisplaySinglePageContinuous, 1)

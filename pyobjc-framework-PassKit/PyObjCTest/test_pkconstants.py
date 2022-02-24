@@ -4,6 +4,16 @@ import PassKit
 
 
 class TestPKConstants(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PassKit.PKContactField, str)
+        self.assertIsTypedEnum(PassKit.PKEncryptionScheme, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKPaymentAuthorizationStatus)
+        self.assertIsEnumType(PassKit.PKPaymentButtonStyle)
+        self.assertIsEnumType(PassKit.PKPaymentButtonType)
+        self.assertIsEnumType(PassKit.PKRadioTechnology)
+
     def test_constants(self):
         self.assertIsInstance(PassKit.PKEncryptionSchemeECC_V2, str)
         self.assertIsInstance(PassKit.PKEncryptionSchemeRSA_V2, str)
@@ -83,3 +93,12 @@ class TestPKConstants(TestCase):
     def test_constants12_0(self):
         self.assertIsInstance(PassKit.PKPaymentNetworkWaon, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkNanaco, str)
+
+    @min_os_level("12.2")
+    def test_constants12_1(self):
+        # SDK Says available in 10.1, but not available there
+        self.assertIsInstance(PassKit.PKPaymentNetworkDankort, str)
+
+    @min_os_level("12.4")
+    def test_constants12_4(self):
+        self.assertIsInstance(PassKit.PKPaymentNetworkAppleStoredValue, str)

@@ -4,6 +4,18 @@ import objc
 
 
 class TestNSURL(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSURLFileProtectionType, str)
+        self.assertIsTypedEnum(Foundation.NSURLFileResourceType, str)
+        self.assertIsTypedEnum(Foundation.NSURLResourceKey, str)
+        self.assertIsTypedEnum(Foundation.NSURLUbiquitousItemDownloadingStatus, str)
+        self.assertIsTypedEnum(Foundation.NSURLUbiquitousSharedItemPermissions, str)
+        self.assertIsTypedEnum(Foundation.NSURLUbiquitousSharedItemRole, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLBookmarkCreationOptions)
+        self.assertIsEnumType(Foundation.NSURLBookmarkResolutionOptions)
+
     def testMethods(self):
         self.assertArgIsBOOL(Foundation.NSURL.initFileURLWithPath_isDirectory_, 1)
         self.assertArgIsBOOL(Foundation.NSURL.fileURLWithPath_isDirectory_, 1)

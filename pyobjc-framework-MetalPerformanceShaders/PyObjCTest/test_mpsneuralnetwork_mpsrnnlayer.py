@@ -4,6 +4,11 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRNNBidirectionalCombineMode)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRNNMatrixId)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRNNSequenceDirection)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionForward, 0)
         self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionBackward, 1)

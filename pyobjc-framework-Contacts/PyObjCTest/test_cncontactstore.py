@@ -3,6 +3,10 @@ import Contacts
 
 
 class TestCNContactStore(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Contacts.CNAuthorizationStatus)
+        self.assertIsEnumType(Contacts.CNEntityType)
+
     def test_methods(self):
         self.assertArgIsOut(
             Contacts.CNContactStore.unifiedContactsMatchingPredicate_keysToFetch_error_,

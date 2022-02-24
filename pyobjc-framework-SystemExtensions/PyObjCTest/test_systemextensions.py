@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestSystemExtensions(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SystemExtensions.OSSystemExtensionReplacementAction)
+        self.assertIsEnumType(SystemExtensions.OSSystemExtensionRequestResult)
+
     @min_os_level("12.0")
     def test_constants12_0(self):
         self.assertIsInstance(SystemExtensions.OSRelatedKernelExtensionKey, str)

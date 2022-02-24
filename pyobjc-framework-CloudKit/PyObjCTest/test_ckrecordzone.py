@@ -4,6 +4,9 @@ import objc
 
 
 class TestCKRecordZone(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKRecordZoneCapabilities)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertHasAttr(CloudKit, "CKRecordZone")

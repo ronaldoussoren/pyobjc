@@ -15,3 +15,9 @@ class TestASAuthorizationProviderExtensionAuthorizationRequest(TestCase):
         self.assertResultIsBOOL(
             AuthenticationServices.ASAuthorizationProviderExtensionAuthorizationRequest.isCallerManaged
         )
+
+    @min_os_level("12.3")
+    def test_methods12_3(self):
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionAuthorizationRequest.isUserInterfaceEnabled
+        )

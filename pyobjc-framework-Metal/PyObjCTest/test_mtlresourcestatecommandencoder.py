@@ -19,6 +19,9 @@ class TestMTLResourceStateCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLResourceStateCommandEncoder(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLSparseTextureMappingMode)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLSparseTextureMappingModeMap, 0)
         self.assertEqual(Metal.MTLSparseTextureMappingModeUnmap, 1)

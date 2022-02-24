@@ -9,6 +9,9 @@ class TestAVCaptureOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureOutput(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVCaptureOutputDataDroppedReason)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(

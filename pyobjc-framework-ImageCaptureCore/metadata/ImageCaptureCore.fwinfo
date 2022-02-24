@@ -2,6 +2,20 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "ICUploadOption": { "type": "@", "type_name": "NSString" },
+   "ICDeleteResult": { "type": "@", "type_name": "NSString" },
+   "ICDeleteError": { "type": "@", "type_name": "NSString" },
+   "ICCameraItemMetadataOption": { "type": "@", "type_name": "NSString" },
+   "ICCameraItemThumbnailOption": { "type": "@", "type_name": "NSString" },
+   "ICDownloadOption": { "type": "@", "type_name": "NSString" },
+   "ICAuthorizationStatus": { "type": "@", "type_name": "NSString" },
+   "ICDeviceTransport": { "type": "@", "type_name": "NSString" },
+   "ICDeviceStatus": { "type": "@", "type_name": "NSString" },
+   "ICDeviceCapability": { "type": "@", "type_name": "NSString" },
+   "ICSessionOptions": { "type": "@", "type_name": "NSString" },
+   "ICDeviceLocationOptions": { "type": "@", "type_name": "NSString" }
+  },
   "enum": {
    "ICReturnConnectionNotAuthorizedToOpenDevice": { "value": -21343 },
    "ICReturnCodeObjectOffset": { "value": -21450 },

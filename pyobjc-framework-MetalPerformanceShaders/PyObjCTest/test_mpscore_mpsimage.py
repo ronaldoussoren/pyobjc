@@ -9,6 +9,10 @@ class TestMPSCore_MPSImageHelper(MetalPerformanceShaders.NSObject):
 
 
 class TestMPSCore_MPSImage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSDataLayout)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSPurgeableState)
+
     @min_os_level("10.13.4")
     def test_function10_13_4(self):
         MetalPerformanceShaders.MPSImageBatchIncrementReadCount

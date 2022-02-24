@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCollectionViewLayout(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSCollectionElementCategory)
+        self.assertIsEnumType(AppKit.NSCollectionUpdateAction)
+
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertEqual(AppKit.NSCollectionElementCategoryItem, 0)

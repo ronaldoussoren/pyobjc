@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestGKLeaderboard(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKLeaderboardPlayerScope)
+        self.assertIsEnumType(GameKit.GKLeaderboardTimeScope)
+        self.assertIsEnumType(GameKit.GKLeaderboardType)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKLeaderboardTimeScopeToday, 0)
         self.assertEqual(GameKit.GKLeaderboardTimeScopeWeek, 1)

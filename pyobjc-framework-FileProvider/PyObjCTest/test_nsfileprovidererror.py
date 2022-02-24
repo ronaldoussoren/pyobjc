@@ -28,3 +28,6 @@ class TestNSFileProviderError(TestCase):
         self.assertEqual(FileProvider.NSFileProviderErrorNonEvictableChildren, -2006)
         self.assertEqual(FileProvider.NSFileProviderErrorUnsyncedEdits, -2007)
         self.assertEqual(FileProvider.NSFileProviderErrorNonEvictable, -2008)
+        self.assertEqual(
+            FileProvider.NSFileProviderErrorVersionNoLongerAvailable, -2009
+        )

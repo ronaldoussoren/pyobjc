@@ -2,6 +2,8 @@ import FileProvider
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
+NSData = objc.lookUpClass("NSData")
+
 
 class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
     def finishEnumeratingChangesUpToSyncAnchor_moreComing_(self, a, b):
@@ -18,6 +20,10 @@ class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderEnumeration(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(FileProvider.NSFileProviderSyncAnchor, NSData)
+        self.assertIsTypedEnum(FileProvider.NSFileProviderPage, NSData)
+
     @min_os_level("11.0")
     def test_constants11_0(self):
         self.assertIsInstance(

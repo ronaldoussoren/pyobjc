@@ -3,6 +3,9 @@ import Contacts
 
 
 class TestCNContainer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Contacts.CNContainerType)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(Contacts.CNContainerTypeUnassigned, 0)

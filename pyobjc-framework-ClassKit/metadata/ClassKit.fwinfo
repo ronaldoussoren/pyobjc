@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "CLSContextTopic": { "type":"@", "type_name": "NSString" }
+  },
   "externs": {
    "CLSErrorSuccessfulObjectsKey": { "type": "@" }
   },

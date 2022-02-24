@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TesNSScrollView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSScrollElasticity)
+        self.assertIsEnumType(AppKit.NSScrollViewFindBarPosition)
+
     def testMethods(self):
         self.assertArgIsBOOL(
             AppKit.NSScrollView.frameSizeForContentSize_hasHorizontalScroller_hasVerticalScroller_borderType_,  # noqa: B950

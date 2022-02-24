@@ -15,6 +15,9 @@ SCNFieldForceEvaluator = (
 
 
 class TestSCNPhysicsField(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNPhysicsFieldScope)
+
     def test_constants(self):
         self.assertEqual(SceneKit.SCNPhysicsFieldScopeInsideExtent, 0)
         self.assertEqual(SceneKit.SCNPhysicsFieldScopeOutsideExtent, 1)

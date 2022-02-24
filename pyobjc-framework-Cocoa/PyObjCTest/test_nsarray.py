@@ -15,6 +15,9 @@ if sys.version_info[0] == 3:
 
 
 class TestNSArrayInteraction(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSBinarySearchingOptions)
+
     def testRepeatedAllocInit(self):
         for _ in range(1, 1000):
             _ = Foundation.NSArray.alloc().init()

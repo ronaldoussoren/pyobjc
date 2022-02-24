@@ -11,6 +11,10 @@ import SceneKit
 
 
 class TestSceneKitTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNActionTimingMode)
+        self.assertIsEnumType(SceneKit.SCNColorMask)
+
     def testStructs(self):
         v = SceneKit.SCNVector3()
         self.assertIsInstance(v.x, float)

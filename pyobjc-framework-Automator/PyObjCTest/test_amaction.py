@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAMAction(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Automator.AMLogLevel)
+
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsPrintf(Automator.AMAction.logMessageWithLevel_format_, 1)

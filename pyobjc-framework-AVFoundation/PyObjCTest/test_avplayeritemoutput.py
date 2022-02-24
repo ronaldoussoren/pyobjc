@@ -11,6 +11,22 @@ class TestAVPlayerOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVPlayerOutput(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(
+            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolution, str
+        )
+
+    @min_os_level("10.9")
+    def testConstants10_9(self):
+        self.assertIsInstance(
+            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly,  # noqa: B950
+            str,
+        )
+
     @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(
@@ -43,14 +59,3 @@ class TestAVPlayerOutput(TestCase):
         objc.protocolNamed("AVPlayerItemLegibleOutputPushDelegate")
         objc.protocolNamed("AVPlayerItemMetadataOutputPushDelegate")
         objc.protocolNamed("AVPlayerItemOutputPushDelegate")
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
-            str,  # noqa: B950
-        )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly,  # noqa: B950
-            str,
-        )

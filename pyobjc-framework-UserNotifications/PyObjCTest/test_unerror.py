@@ -3,6 +3,9 @@ import UserNotifications
 
 
 class TestUNError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(UserNotifications.UNErrorCode)
+
     def test_constants(self):
         self.assertEqual(UserNotifications.UNErrorCodeNotificationsNotAllowed, 1)
         self.assertEqual(UserNotifications.UNErrorCodeAttachmentInvalidURL, 100)

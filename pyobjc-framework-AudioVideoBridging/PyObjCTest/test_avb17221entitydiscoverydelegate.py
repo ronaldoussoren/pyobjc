@@ -12,6 +12,9 @@ class TestAVB17221EntityDiscoveryDelegateHelper(AudioVideoBridging.NSObject):
 
 
 class TestAVB17221EntityDiscoveryDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AudioVideoBridging.AVB17221EntityPropertyChanged)
+
     def test_constants(self):
         self.assertEqual(
             AudioVideoBridging.AVB17221EntityPropertyChangedTimeToLive, 0x00000001

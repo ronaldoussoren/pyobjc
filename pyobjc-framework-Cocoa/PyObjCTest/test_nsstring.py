@@ -6,6 +6,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestNSString(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSStringCompareOptions)
+        self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
+        self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
+
     def testClassTree(self):
         self.assertTrue(issubclass(objc.pyobjc_unicode, str))
 

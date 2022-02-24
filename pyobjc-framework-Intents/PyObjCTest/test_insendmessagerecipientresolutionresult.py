@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINSendMessageRecipientResolutionResult(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INSendMessageRecipientUnsupportedReason)
+
     def testConstants(self):
         self.assertEqual(Intents.INSendMessageRecipientUnsupportedReasonNoAccount, 1)
         self.assertEqual(Intents.INSendMessageRecipientUnsupportedReasonOffline, 2)

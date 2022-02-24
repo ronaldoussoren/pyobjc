@@ -777,3 +777,18 @@ class TestFormalProtocols2(TestCase):
             TypeError, r"function takes exactly 1 argument \(0 given\)"
         ):
             v.conformsTo_()
+
+    def test_protocol_subclassing_nsobject(self):
+        class OC_EmptyClass(
+            NSObject, protocols=[objc.protocolNamed("OC_NSObjectBased")]
+        ):
+            pass
+
+
+"""
+
+                             @protocol OC_NSObjectBased : NSObject
+  @optional
+  - (int)optionalmethod;
+  @end
+"""

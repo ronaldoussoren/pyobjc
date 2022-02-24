@@ -2,6 +2,11 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "MTLDeviceNotificationName": { "type": "@", "type_name": "NSString" },
+   "MTLCommonCounter": { "type": "@", "type_name": "NSString" },
+   "MTLCommonCounterSet": { "type": "@", "type_name": "NSString" }
+  },
   "expressions": {
    "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
    "MTLResourceCPUCacheModeMask": { "value": "0xf << MTLResourceCPUCacheModeShift" },

@@ -21,6 +21,9 @@ class TestMTLBinaryArchiveHelper(Metal.NSObject):
 
 
 class TestMTLBinaryArchive(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLBinaryArchiveError)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLBinaryArchiveErrorNone, 0)
         self.assertEqual(Metal.MTLBinaryArchiveErrorInvalidFile, 1)

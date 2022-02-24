@@ -4,6 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSDateFormatter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSDateFormatterBehavior)
+        self.assertIsEnumType(Foundation.NSDateFormatterStyle)
+
     def testOutput(self):
         formatter = Foundation.NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")

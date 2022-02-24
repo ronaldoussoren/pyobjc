@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINMessage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INMessageType)
+
     def testConstants(self):
         self.assertEqual(Intents.INMessageTypeUnspecified, 0)
         self.assertEqual(Intents.INMessageTypeText, 1)

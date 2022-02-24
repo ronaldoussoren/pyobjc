@@ -9,6 +9,9 @@ class TestMTLAccelerationStructureHelper(Metal.NSObject):
 
 
 class TestMTLAccelerationStructure(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLDynamicLibraryError)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLDynamicLibraryErrorNone, 0)
         self.assertEqual(Metal.MTLDynamicLibraryErrorInvalidFile, 1)

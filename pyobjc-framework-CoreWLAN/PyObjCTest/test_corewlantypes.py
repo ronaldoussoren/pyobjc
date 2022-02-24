@@ -4,6 +4,18 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreWLANTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreWLAN.CWChannelBand)
+        self.assertIsEnumType(CoreWLAN.CWChannelWidth)
+        self.assertIsEnumType(CoreWLAN.CWCipherKeyFlags)
+        self.assertIsEnumType(CoreWLAN.CWErr)
+        self.assertIsEnumType(CoreWLAN.CWEventType)
+        self.assertIsEnumType(CoreWLAN.CWIBSSModeSecurity)
+        self.assertIsEnumType(CoreWLAN.CWInterfaceMode)
+        self.assertIsEnumType(CoreWLAN.CWKeychainDomain)
+        self.assertIsEnumType(CoreWLAN.CWPHYMode)
+        self.assertIsEnumType(CoreWLAN.CWSecurity)
+
     def testConstants(self):
         self.assertEqual(CoreWLAN.kCWNoErr, 0)
         self.assertEqual(CoreWLAN.kCWEAPOLErr, 1)

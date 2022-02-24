@@ -3,6 +3,9 @@ import EventKit
 
 
 class TestEKEventStore(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(EventKit.EKSpan)
+
     @min_os_level("10.8")
     def testBasic(self):
         self.assertTrue(hasattr(EventKit, "EKEventStore"))

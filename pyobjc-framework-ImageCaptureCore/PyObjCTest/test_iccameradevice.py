@@ -17,6 +17,11 @@ class TestICCameraDeviceHelper(ImageCaptureCore.NSObject):
 
 
 class TestICCameraDevice(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeleteError, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeleteResult, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICUploadOption, str)
+
     def testConstants(self):
         self.assertIsInstance(ImageCaptureCore.ICCameraDeviceCanTakePicture, str)
         self.assertIsInstance(

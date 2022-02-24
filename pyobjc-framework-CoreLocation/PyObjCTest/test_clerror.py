@@ -11,6 +11,9 @@ from PyObjCTools.TestSupport import (
 
 
 class TestCLError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreLocation.CLError)
+
     @min_os_level("10.6")
     def testConstants(self):
         self.assertIsInstance(CoreLocation.kCLErrorDomain, str)

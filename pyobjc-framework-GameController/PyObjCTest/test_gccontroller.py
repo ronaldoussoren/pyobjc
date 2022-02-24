@@ -9,6 +9,9 @@ import GameController
 
 
 class TestGCController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameController.GCControllerPlayerIndex)
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(GameController.GCController, objc.objc_class)

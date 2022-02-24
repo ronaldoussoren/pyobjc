@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioEnvironmentNode(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioEnvironmentDistanceAttenuationModel)
+        self.assertIsEnumType(AVFoundation.AVAudioEnvironmentOutputType)
+
     def testConstants(self):
         self.assertEqual(
             AVFoundation.AVAudioEnvironmentDistanceAttenuationModelExponential, 1

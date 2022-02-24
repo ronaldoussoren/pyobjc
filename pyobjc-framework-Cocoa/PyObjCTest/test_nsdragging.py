@@ -113,6 +113,14 @@ class TestNSDraggingHelper(AppKit.NSObject):
 
 
 class TestNSDragging(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSDragOperation)
+        self.assertIsEnumType(AppKit.NSDraggingContext)
+        self.assertIsEnumType(AppKit.NSDraggingFormation)
+        self.assertIsEnumType(AppKit.NSDraggingItemEnumerationOptions)
+        self.assertIsEnumType(AppKit.NSSpringLoadingHighlight)
+        self.assertIsEnumType(AppKit.NSSpringLoadingOptions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSDragOperationNone, 0)
         self.assertEqual(AppKit.NSDragOperationCopy, 1)

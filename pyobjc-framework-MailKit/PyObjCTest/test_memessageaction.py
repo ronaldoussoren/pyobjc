@@ -3,6 +3,9 @@ import MailKit
 
 
 class TestMEMessageAction(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MailKit.MEMessageActionFlag)
+
     def test_constants(self):
         self.assertEqual(MailKit.MEMessageActionMessageColorNone, 0)
         self.assertEqual(MailKit.MEMessageActionMessageColorGreen, 1)

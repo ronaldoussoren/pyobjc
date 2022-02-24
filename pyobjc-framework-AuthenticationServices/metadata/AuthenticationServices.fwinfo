@@ -2,6 +2,18 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "ASAuthorizationOpenIDOperation": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationProviderAuthorizationOperation": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationScope": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationPublicKeyCredentialUserVerificationPreference": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationPublicKeyCredentialAttestationKind": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationPublicKeyCredentialResidentKeyPreference": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationCustomMethod": { "type": "@","type_name": "NSString" },
+   "ASAuthorizationSecurityKeyPublicKeyCredentialDescriptorTransport": { "type": "@","type_name": "NSString" },
+   "ASCOSEAlgorithmIdentifier": { "type": "q"},
+   "ASCOSEEllipticCurveIdentifier": { "type": "q"}
+  },
   "enum": {
    "ASAuthorizationAppleIDButtonTypeSignUp": { "value": 2 },
    "ASCOSEAlgorithmIdentifierES256": { "value": -7 },

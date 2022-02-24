@@ -13,6 +13,148 @@
     "typestr": "{_AVBeatRange=dd}"
    }
   },
+  "typed_enum": {
+   "AVAssetWriterInputMediaDataLocation": { "type": "@", "type_name": "NSString" },
+   "AVAssetImageGeneratorApertureMode": { "type": "@", "type_name": "NSString" },
+   "AVContentKeySystem": { "type": "@", "type_name": "NSString" },
+   "AVContentKeySessionServerPlaybackContextOption": { "type": "@", "type_name": "NSString" },
+   "AVContentKeyRequestRetryReason": { "type": "@", "type_name": "NSString" },
+   "AVPlayerRateDidChangeReason": { "type": "@", "type_name": "NSString" },
+   "AVPlayerWaitingReason": { "type": "@", "type_name": "NSString" },
+   "AVVideoCodecType": { "type": "@", "type_name": "NSString" },
+   "AVVideoApertureMode": { "type": "@", "type_name": "NSString" },
+   "AVOutputSettingsPreset": { "type": "@", "type_name": "NSString" },
+   "AVLayerVideoGravity": { "type": "@", "type_name": "NSString" },
+   "AVTrackAssociationType": { "type": "@", "type_name": "NSString" },
+   "AVMetadataFormat": { "type": "@", "type_name": "NSString" },
+   "AVPlayerItemLegibleOutputTextStylingResolution": { "type": "@", "type_name": "NSString" },
+   "AVAssetDownloadedAssetEvictionPriority": { "type": "@", "type_name": "NSString" },
+   "AVAudioTimePitchAlgorithm": { "type": "@", "type_name": "NSString" },
+   "AVCaptureSessionPreset": { "type": "@", "type_name": "NSString" },
+   "AVCoordinatedPlaybackSuspensionReason": { "type": "@", "type_name": "NSString" },
+   "AVCaptionConversionWarningType": { "type": "@", "type_name": "NSString" },
+   "AVCaptionConversionAdjustmentType": { "type": "@", "type_name": "NSString" },
+   "AVSemanticSegmentationMatteType": { "type": "@", "type_name": "NSString" },
+   "AVVideoRange": { "type": "@", "type_name": "NSString" },
+   "AVFileTypeProfile": { "type": "@", "type_name": "NSString" },
+   "AVCaptureSystemPressureLevel": { "type": "@", "type_name": "NSString" },
+   "AVMetadataObjectType": { "type": "@", "type_name": "NSString" },
+   "AVCaptureDeviceType": { "type": "@", "type_name": "NSString" },
+   "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" }
+  },
+  "enum_type": {
+   "AVAudioStereoOrientation": {
+    "type": "q"
+   },
+   "AVAudioSessionSilenceSecondaryAudioHintType": {
+    "type": "Q"
+   },
+   "AVAudioSessionSetActiveOptions": {
+    "type": "Q"
+   },
+   "AVAudioSessionRouteSharingPolicy": {
+    "type": "Q"
+   },
+   "AVAudioSessionRouteChangeReason": {
+    "type": "Q"
+   },
+   "AVAudioSessionRecordPermission": {
+    "type": "Q"
+   },
+   "AVAudioSessionPromptStyle": {
+    "type": "Q"
+   },
+   "AVAudioSessionPortOverride": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionType": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionReason": {
+    "type": "Q"
+   },
+   "AVAudioSessionInterruptionOptions": {
+    "type": "Q"
+   },
+   "AVAudioSessionIOType": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingStatus": {
+    "type": "q"
+   },
+   "AVAudio3DMixingSourceMode": {
+    "type": "q"
+   },
+   "AVAudioConverterPrimeMethod": {
+    "type": "q"
+   },
+   "AVAudioPlayerNodeCompletionCallbackType": {
+    "type": "q"
+   },
+   "AVSpeechSynthesisVoiceQuality": {
+    "type": "q"
+   },
+   "AVAudioEnvironmentOutputType": {
+    "type": "q"
+   },
+   "AVAudioSessionCategoryOptions": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingMode": {
+    "type": "q"
+   },
+   "AVAudio3DMixingRenderingAlgorithm": {
+    "type": "q"
+   },
+   "AVAudioConverterOutputStatus": {
+    "type": "q"
+   },
+   "AVMusicTrackLoopCount": {
+    "type": "q"
+   },
+   "AVAudioPlayerNodeBufferOptions": {
+    "type": "Q"
+   },
+   "AVSpeechSynthesisVoiceGender": {
+    "type": "q"
+   },
+   "AVAudioUnitReverbPreset": {
+    "type": "q"
+   },
+   "AVAudioEnvironmentDistanceAttenuationModel": {
+    "type": "q"
+   },
+   "AVAudioSessionActivationOptions": {
+    "type": "Q"
+   },
+   "AVAudioEngineManualRenderingError": {
+    "type": "i"
+   },
+   "AVAudio3DMixingPointSourceInHeadMode": {
+    "type": "q"
+   },
+   "AVAudioRoutingArbitrationCategory": {
+    "type": "q"
+   },
+   "AVSpeechBoundary": {
+    "type": "q"
+   },
+   "AVMusicSequenceLoadOptions": {
+    "type": "Q"
+   },
+   "AVAudioUnitEQFilterType": {
+    "type": "q"
+   },
+   "AVAudioCommonFormat": {
+    "type": "Q"
+   },
+   "AVAudioQuality": {
+    "type": "q"
+   },
+   "AVAudioConverterInputStatus": {
+    "type": "q"
+   }
+  },
   "enum": {
    "AVVariantPreferenceNone": { "value": 0 },
    "AVVariantPreferenceScalabilityToLosslessAudio": { "value": 1 },
@@ -128,6 +270,17 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVAudioSession":  {
+    "methods": [
+     {
+      "selector": "setMode:error:",
+      "class_method": false,
+      "arguments": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVCaptionFormatConformer": {
     "methods": [
      {

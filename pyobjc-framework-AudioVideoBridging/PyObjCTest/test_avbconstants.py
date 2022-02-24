@@ -3,6 +3,19 @@ import AudioVideoBridging
 
 
 class TestAVBConstants(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPFlags)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPMessageType)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPStatusCode)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPControllerCapabilities)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPEntityCapabilities)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPListenerCapabilities)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPTalkerCapabilities)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPAddressAccessTLVMode)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPMessageType)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPStatusCode)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AEMCommandType)
+
     def test_constants(self):
         self.assertIsInstance(AudioVideoBridging.AVBErrorDomain, str)
 

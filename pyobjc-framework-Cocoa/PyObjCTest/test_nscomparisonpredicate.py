@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSComparisonPredicate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSComparisonPredicateModifier)
+        self.assertIsEnumType(Foundation.NSComparisonPredicateOptions)
+        self.assertIsEnumType(Foundation.NSPredicateOperatorType)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSCaseInsensitivePredicateOption, 1)
         self.assertEqual(Foundation.NSDiacriticInsensitivePredicateOption, 2)

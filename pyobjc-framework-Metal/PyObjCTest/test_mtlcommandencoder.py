@@ -4,6 +4,10 @@ import objc
 
 
 class TestMTLCommandEncoder(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLBarrierScope)
+        self.assertIsEnumType(Metal.MTLResourceUsage)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLResourceUsageRead, 1 << 0)
         self.assertEqual(Metal.MTLResourceUsageWrite, 1 << 1)

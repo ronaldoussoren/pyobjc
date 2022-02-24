@@ -122,6 +122,11 @@ class TestSCNSceneRendererHelper(SceneKit.NSObject):
 
 
 class TestSCNSceneRenderer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNAntialiasingMode)
+        self.assertIsEnumType(SceneKit.SCNDebugOptions)
+        self.assertIsEnumType(SceneKit.SCNRenderingAPI)
+
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNHitTestFirstFoundOnlyKey, str)
         self.assertIsInstance(SceneKit.SCNHitTestSortResultsKey, str)

@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestPDFActionNamed(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFActionNamedName)
+
     def testConstants(self):
         self.assertEqual(Quartz.kPDFActionNamedNone, 0)
         self.assertEqual(Quartz.kPDFActionNamedNextPage, 1)

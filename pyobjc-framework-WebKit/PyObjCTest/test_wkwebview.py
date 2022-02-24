@@ -4,6 +4,11 @@ import objc
 
 
 class TestWKWebView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WKFullscreenState)
+        self.assertIsEnumType(WebKit.WKMediaCaptureState)
+        self.assertIsEnumType(WebKit.WKMediaPlaybackState)
+
     def testConstants(self):
         self.assertEqual(WebKit.WKMediaPlaybackStateNone, 0)
         self.assertEqual(WebKit.WKMediaPlaybackStatePlaying, 1)
@@ -13,6 +18,11 @@ class TestWKWebView(TestCase):
         self.assertEqual(WebKit.WKMediaCaptureStateNone, 0)
         self.assertEqual(WebKit.WKMediaCaptureStateActive, 1)
         self.assertEqual(WebKit.WKMediaCaptureStateMuted, 2)
+
+        self.assertEqual(WebKit.WKFullscreenStateNotInFullscreen, 0)
+        self.assertEqual(WebKit.WKFullscreenStateEnteringFullscreen, 1)
+        self.assertEqual(WebKit.WKFullscreenStateInFullscreen, 2)
+        self.assertEqual(WebKit.WKFullscreenStateExitingFullscreen, 3)
 
     @min_os_level("10.10")
     def testMethods10_10(self):

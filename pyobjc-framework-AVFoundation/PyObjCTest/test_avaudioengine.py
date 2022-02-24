@@ -9,6 +9,11 @@ AUMIDIOutputEventBlock = b"iqC" + objc._C_NSInteger + b"n^v"
 
 
 class TestAVAudioEngine(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingError)
+        self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingMode)
+        self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingStatus)
+
     @min_os_level("10.10")
     def testMethods(self):
         self.assertArgIsOut(AVFoundation.AVAudioEngine.startAndReturnError_, 0)

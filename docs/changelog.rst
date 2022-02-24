@@ -3,6 +3,72 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.4
+-----------
+
+* .. note::
+
+  The bindings for the Message and ServerNotification frameworks,
+  which were removed in macOS 10.9, will be removed in PyObjC 9.
+
+* Added bindings for ScreenCaptureKit (new in macOS 12.3)
+
+* Updated framework bindings for the macOS 12.3 SDK.
+
+* #418: Added :class:`typing.NewType` definitions to the
+  various framework bindings for all enum types in Cocoa
+  (such as ``NSComparisonResult``).
+
+  Using this it is now possible to annotate methods returning
+  such types, although it is not yet possible to type check
+  this.
+
+  For example:
+
+  .. sourcecode:: python
+
+     class MyObject(NSObject):
+         def compare_(self, other: NSObject) -> NSComparisonResult:
+             return NSOrderSame
+
+  The actual representation of enum types is provisional
+  and might change in the future.
+
+* #440: Added :class:`typing.NewType` definitions to the
+  various framework bindings for all ``NS_STRING_ENUM``,
+  ``NS_TYPED_ENUM`` and ``NS_TYPED_EXTENSIBLE_ENUM`` types in Cocoa.
+
+* #432: Fix compatibility check when a class implements protocol ``NSObject``.
+
+  The following code used to fail the protocol implementation check:
+
+  .. sourcecode:: python
+
+     class AppDelegate( Cocoa.NSObject, protocols=[objc.protocolNamed("NSApplicationDelegate")]):
+         pass
+
+  The reason for this is that the type encodings for (at least) ``-[NSObject respondsToSelector:]``
+  in the Objective-C runtime doesn't match the type encoding in ``@protocol(NSObject)`` (the
+  former returns ``char``, the latter ``bool``).  The compatibility check now handles trivial
+  differences like this.
+
+* #428: Class ``NSData`` now implements the API from :class:`bytes`. The methods that
+  return bytes in :class:`bytes` also return bytes in ``NSData``. This may change in a
+  future version.
+
+  Class ``NSMutableData`` now implements the API from :class:`bytearray` as far as this
+  doesn't conflict with the native API. In particular, ``NSMutableData.copy()`` returns
+  an immutable copy (instance of ``NSData``), use ``NSMutableData.mutableCopy()`` to
+  create a mutable copy.
+
+  .. note::
+
+     The implementation is mostly suitable for fairly small amounts of data as
+     the Cocoa value is first copied into a Python value.
+
+* ``NSData([1,2,3])`` and ``NSMutableData([1,2,3])`` now work the same
+  as ``bytes([1,2,3])`` and ``bytearray([1,2,3])``.
+
 Version 8.3
 -----------
 

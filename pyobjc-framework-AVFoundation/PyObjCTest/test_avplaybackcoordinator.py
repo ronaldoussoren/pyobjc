@@ -18,6 +18,12 @@ class TestAVPlaybackCoordinatorHelper(AVFoundation.NSObject):
 
 
 class TestAVPlaybackCoordinator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(
+            AVFoundation.AVDelegatingPlaybackCoordinatorRateChangeOptions
+        )
+        self.assertIsEnumType(AVFoundation.AVDelegatingPlaybackCoordinatorSeekOptions)
+
     def test_constants(self):
         self.assertEqual(
             AVFoundation.AVDelegatingPlaybackCoordinatorRateChangeOptionPlayImmediately,

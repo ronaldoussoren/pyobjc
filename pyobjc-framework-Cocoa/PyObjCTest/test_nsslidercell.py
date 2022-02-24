@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSliderCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSSliderType)
+        self.assertIsEnumType(AppKit.NSTickMarkPosition)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTickMarkBelow, 0)
         self.assertEqual(AppKit.NSTickMarkAbove, 1)

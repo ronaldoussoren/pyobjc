@@ -4,6 +4,16 @@ import objc
 
 
 class TestNSObjCRuntime(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSExceptionName, str)
+        self.assertIsTypedEnum(Foundation.NSRunLoopMode, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSComparisonResult)
+        self.assertIsEnumType(Foundation.NSEnumerationOptions)
+        self.assertIsEnumType(Foundation.NSQualityOfService)
+        self.assertIsEnumType(Foundation.NSSortOptions)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSQualityOfServiceUserInteractive, 0x21)
         self.assertEqual(Foundation.NSQualityOfServiceUserInitiated, 0x19)

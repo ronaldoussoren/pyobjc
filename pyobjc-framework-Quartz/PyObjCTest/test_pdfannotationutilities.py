@@ -3,6 +3,19 @@ import Quartz
 
 
 class TestPDFAnnotationUtilities(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.PDFAnnotationHighlightingMode, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationLineEndingStyle, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationTextIconType, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationWidgetSubtype, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.PDFLineStyle)
+        self.assertIsEnumType(Quartz.PDFMarkupType)
+        self.assertIsEnumType(Quartz.PDFTextAnnotationIconType)
+        self.assertIsEnumType(Quartz.PDFWidgetCellState)
+        self.assertIsEnumType(Quartz.PDFWidgetControlType)
+
     def test_constants(self):
         self.assertEqual(Quartz.kPDFLineStyleNone, 0)
         self.assertEqual(Quartz.kPDFLineStyleSquare, 1)

@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLLocationManager(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreLocation.CLAccuracyAuthorization)
+        self.assertIsEnumType(CoreLocation.CLActivityType)
+        self.assertIsEnumType(CoreLocation.CLAuthorizationStatus)
+        self.assertIsEnumType(CoreLocation.CLDeviceOrientation)
+
     @min_os_level("10.6")
     def testMethods(self):
         self.assertResultIsBOOL(

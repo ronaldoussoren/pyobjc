@@ -6,6 +6,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBezierPath(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSBezierPathElement)
+        self.assertIsEnumType(AppKit.NSLineCapStyle)
+        self.assertIsEnumType(AppKit.NSLineJoinStyle)
+        self.assertIsEnumType(AppKit.NSWindingRule)
+
     def assertPointEquals(self, point1, point2):
         self.assertAlmostEqual(point1[0], point2[0])
         self.assertAlmostEqual(point1[1], point2[1])

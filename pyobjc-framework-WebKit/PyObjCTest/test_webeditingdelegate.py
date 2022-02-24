@@ -35,6 +35,9 @@ class TestWebEditingDelegateHelper(WebKit.NSObject):
 
 
 class TestWebEditingDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WebViewInsertAction)
+
     @min_sdk_level("10.11")
     def testProtocols(self):
         objc.protocolNamed("WebEditingDelegate")

@@ -42,6 +42,9 @@ class TestMTLHeapHelper(Metal.NSObject):
 
 
 class TestMTLHeap(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLHeapType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLHeapTypeAutomatic, 0)
         self.assertEqual(Metal.MTLHeapTypePlacement, 1)

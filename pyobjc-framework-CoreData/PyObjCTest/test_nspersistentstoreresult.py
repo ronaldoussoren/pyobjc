@@ -3,6 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPersistentStoreResult(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSBatchDeleteRequestResultType)
+        self.assertIsEnumType(CoreData.NSBatchInsertRequestResultType)
+        self.assertIsEnumType(CoreData.NSBatchUpdateRequestResultType)
+        self.assertIsEnumType(CoreData.NSPersistentCloudKitContainerEventResultType)
+        self.assertIsEnumType(CoreData.NSPersistentHistoryResultType)
+
     def testConstants(self):
         self.assertEqual(CoreData.NSStatusOnlyResultType, 0)
         self.assertEqual(CoreData.NSUpdatedObjectIDsResultType, 1)

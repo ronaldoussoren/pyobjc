@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINShareFocusStatusIntentResponse(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Intents.INShareFocusStatusIntentResponseCode)
+
     def test_constants(self):
         self.assertEqual(Intents.INShareFocusStatusIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INShareFocusStatusIntentResponseCodeReady, 1)

@@ -60,6 +60,19 @@ class TestNSFileManagerHelper(Foundation.NSObject):
 
 
 class TestNSFileManager(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Foundation.NSFileAttributeKey, str)
+        self.assertIsTypedEnum(Foundation.NSFileAttributeType, str)
+        self.assertIsTypedEnum(Foundation.NSFileProtectionType, str)
+        self.assertIsTypedEnum(Foundation.NSFileProviderServiceName, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSDirectoryEnumerationOptions)
+        self.assertIsEnumType(Foundation.NSFileManagerItemReplacementOptions)
+        self.assertIsEnumType(Foundation.NSFileManagerUnmountOptions)
+        self.assertIsEnumType(Foundation.NSURLRelationship)
+        self.assertIsEnumType(Foundation.NSVolumeEnumerationOptions)
+
     def testConstants(self):
         self.assertEqual(
             Foundation.NSFoundationVersionWithFileManagerResourceForkSupport, 412

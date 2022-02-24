@@ -4,6 +4,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPrintPanel(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSPrintPanelAccessorySummaryKey, str)
+        self.assertIsTypedEnum(AppKit.NSPrintPanelJobStyleHint, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPrintPanelOptions)
+
     def testProtocols(self):
         objc.protocolNamed("NSPrintPanelAccessorizing")
 

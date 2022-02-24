@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKError(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKErrorCode)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKErrorUnknown, 1)
         self.assertEqual(GameKit.GKErrorCancelled, 2)

@@ -152,6 +152,7 @@ FRAMEWORK_WRAPPERS = [
     ("GameplayKit", "10.11", None),
     ("SceneKit", "10.7", None),
     ("SoundAnalysis", "10.15", None),
+    ("ScreenCaptureKit", "12.3", None),
     ("SystemExtensions", "10.15", None),
     ("UniformTypeIdentifiers", "11.0", None),
     ("UserNotifications", "10.14", None),
@@ -182,6 +183,7 @@ MACOS_TO_DARWIN = {
     "10.15": "19.0",
     "11.0": "20.0",
     "12.0": "21.0",
+    "12.3": "21.3",
 }
 
 

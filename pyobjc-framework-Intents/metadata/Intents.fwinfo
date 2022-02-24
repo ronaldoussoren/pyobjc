@@ -2,6 +2,10 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "INPersonRelationship": { "type": "@", "type_name": "NSString" },
+   "INPersonHandleLabel": { "type": "@", "type_name": "NSString" }
+  },
   "classes": {
    "null": {
     "methods": [

@@ -268,3 +268,14 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTSampleAttachmentKey_RequireLTRAcknowledgementToken,
             str,
         )
+
+    @min_os_level("12.3")
+    def test_constants12_3(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_HEVC_Main42210_AutoLevel,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_OutputBitDepth,
+            str,
+        )

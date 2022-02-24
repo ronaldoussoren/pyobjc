@@ -4,6 +4,9 @@ import objc
 
 
 class TestCXProvider(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CallKit.CXCallEndedReason)
+
     def test_constants(self):
         self.assertEqual(CallKit.CXCallEndedReasonFailed, 1)
         self.assertEqual(CallKit.CXCallEndedReasonRemoteEnded, 2)

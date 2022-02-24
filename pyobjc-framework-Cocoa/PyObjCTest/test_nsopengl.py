@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
 
 
 class TestNSOpenGL(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSOpenGLContextParameter)
+        self.assertIsEnumType(AppKit.NSOpenGLGlobalOption)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSOpenGLGOFormatCacheSize, 501)
         self.assertEqual(AppKit.NSOpenGLGOClearFormatCache, 502)

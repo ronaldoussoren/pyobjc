@@ -1,5 +1,8 @@
 {
  "definitions": {
+  "enum_type": {
+   "SFSafariServicesVersion": { "type": "q" }
+  },
   "enum": {
    "SFErrorNoExtensionFound": { "value": 1 },
    "SFErrorNoAttachmentFound": { "value": 2 },

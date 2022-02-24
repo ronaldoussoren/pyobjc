@@ -4,6 +4,10 @@ import objc
 
 
 class TestNSXMLParser(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSXMLParserError)
+        self.assertIsEnumType(Foundation.NSXMLParserExternalEntityResolvingPolicy)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSXMLParserInternalError, 1)
         self.assertEqual(Foundation.NSXMLParserOutOfMemoryError, 2)

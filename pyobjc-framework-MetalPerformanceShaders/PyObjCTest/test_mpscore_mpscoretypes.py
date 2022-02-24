@@ -4,6 +4,13 @@ import MetalPerformanceShaders
 
 
 class TestMPSCore_MPSCoreTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSAliasingStrategy)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSDataType)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSImageEdgeMode)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSImageFeatureChannelFormat)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSKernelOptions)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSKernelOptionsNone, 0)
         self.assertEqual(

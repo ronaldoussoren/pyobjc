@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureSessionPreset(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVCaptureSessionPreset, str)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, str)

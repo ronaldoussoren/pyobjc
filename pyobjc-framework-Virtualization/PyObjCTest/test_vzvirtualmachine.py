@@ -4,6 +4,9 @@ import Virtualization
 
 
 class TestVZVirtualMachine(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Virtualization.VZVirtualMachineState)
+
     def test_constants(self):
         self.assertEqual(Virtualization.VZVirtualMachineStateStopped, 0)
         self.assertEqual(Virtualization.VZVirtualMachineStateRunning, 1)

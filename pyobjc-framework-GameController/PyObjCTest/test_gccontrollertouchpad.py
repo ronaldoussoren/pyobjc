@@ -4,6 +4,9 @@ import GameController
 
 
 class TestGCControllerTouchpad(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameController.GCTouchState)
+
     def test_constants(self):
         self.assertEqual(GameController.GCTouchStateUp, 0)
         self.assertEqual(GameController.GCTouchStateDown, 1)

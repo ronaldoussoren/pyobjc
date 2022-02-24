@@ -3,6 +3,9 @@ import Quartz
 
 
 class TestCIRenderDestination(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Quartz.CIRenderDestinationAlphaMode)
+
     @min_os_level("10.13")
     def testMethods(self):
         self.assertArgIsBlock(

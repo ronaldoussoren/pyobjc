@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSByteCountFormatter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSByteCountFormatterCountStyle)
+        self.assertIsEnumType(Foundation.NSByteCountFormatterUnits)
+
     @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(Foundation.NSByteCountFormatterUseDefault, 0)

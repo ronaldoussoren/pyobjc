@@ -2,6 +2,29 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "CAScrollLayerScrollMode": { "type": "@", "type_name": "NSString" },
+   "CALayerContentsGravity": { "type": "@", "type_name": "NSString" },
+   "CALayerContentsFormat": { "type": "@", "type_name": "NSString" },
+   "CALayerContentsFilter": { "type": "@", "type_name": "NSString" },
+   "CALayerCornerCurve": { "type": "@", "type_name": "NSString" },
+   "CAMediaTimingFunctionName": { "type": "@", "type_name": "NSString" },
+   "CATextLayerTruncationMode": { "type": "@", "type_name": "NSString" },
+   "CATextLayerAlignmentMode": { "type": "@", "type_name": "NSString" },
+   "CAEmitterLayerEmitterShape": { "type": "@", "type_name": "NSString" },
+   "CAEmitterLayerEmitterMode": { "type": "@", "type_name": "NSString" },
+   "CAEmitterLayerRenderMode": { "type": "@", "type_name": "NSString" },
+   "CAMediaTimingFillMode": { "type": "@", "type_name": "NSString" },
+   "CAShapeLayerFillRule": { "type": "@", "type_name": "NSString" },
+   "CAShapeLayerLineJoin": { "type": "@", "type_name": "NSString" },
+   "CAShapeLayerLineCap": { "type": "@", "type_name": "NSString" },
+   "CAValueFunctionName": { "type": "@", "type_name": "NSString" },
+   "CAGradientLayerType": { "type": "@", "type_name": "NSString" },
+   "CAAnimationCalculationMode": { "type": "@", "type_name": "NSString" },
+   "CAAnimationRotationMode": { "type": "@", "type_name": "NSString" },
+   "CATransitionType": { "type": "@", "type_name": "NSString" },
+   "CATransitionSubtype": { "type": "@", "type_name": "NSString" }
+  },
   "enum": {
    "CIDataMatrixCodeECCVersion000": { "value":   0 },
    "CIDataMatrixCodeECCVersion050": { "value":  50 },

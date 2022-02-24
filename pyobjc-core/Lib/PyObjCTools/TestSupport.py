@@ -389,6 +389,27 @@ class TestCase(_unittest.TestCase):
         if tp.__supertype__ != int:
             self.fail(f"{tp!r} is not a typing.NewType based on 'int'")
 
+    def assertIsTypedEnum(self, tp, base):
+        tmp = _typing.NewType("tmp", int)
+        if isinstance(tmp, type(lambda: 1)):
+            # typing.NewType is not a type in Python 3.7 or earlier
+            if not isinstance(tp, type(lambda: 1)):
+                self.fail(f"{tp!r} is not a typing.NewType")
+
+            if "NewType" not in str(tp) or "new_type" not in str(tp):
+                self.fail(f"{tp!r} is not a typing.NewType")
+
+            if tp.__supertype__ != base:
+                self.fail(f"{tp!r} is not a typing.NewType based on {base.__name__!r}")
+
+            return
+
+        if not isinstance(tp, _typing.NewType):
+            self.fail(f"{tp!r} is not a typing.NewType")
+
+        if tp.__supertype__ != base:
+            self.fail(f"{tp!r} is not a typing.NewType based on {base.__name__!r}")
+
     def assertIsOpaquePointer(self, tp, message=None):
         if not hasattr(tp, "__pointer__"):
             self.fail(message or f"{tp!r} is not an opaque-pointer")

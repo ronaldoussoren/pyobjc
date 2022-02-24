@@ -3,6 +3,9 @@ import GameKit
 
 
 class TestGKAccessPoint(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKAccessPointLocation)
+
     def test_constants(self):
         self.assertEqual(GameKit.GKAccessPointLocationTopLeading, 0)
         self.assertEqual(GameKit.GKAccessPointLocationTopTrailing, 1)

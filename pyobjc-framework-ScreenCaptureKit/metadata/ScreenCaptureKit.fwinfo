@@ -1,0 +1,77 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "typed_enum": {
+   "SCStreamFrameInfo": { "type": "@", "type_name": "NSString" }
+  },
+  "classes": {
+   "SCStreamConfiguration": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "backgroundColor"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setBackgroundColor:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "colorMatrix"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setColorMatrix:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "colorSpaceName"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setColorSpaceName:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "backgroundColor"
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "colorMatrix"
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "colorSpaceName"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

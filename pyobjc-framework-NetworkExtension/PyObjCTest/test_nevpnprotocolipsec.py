@@ -3,6 +3,9 @@ import NetworkExtension
 
 
 class TestNEVPNProtocolIPSec(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEAuthenticationMethod)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(NetworkExtension.NEVPNIKEAuthenticationMethodNone, 0)

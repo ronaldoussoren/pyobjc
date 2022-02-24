@@ -5,6 +5,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCNContact(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Contacts.CNContactSortOrder)
+        self.assertIsEnumType(Contacts.CNContactType)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(Contacts.CNContactPhoneticOrganizationNameKey, str)

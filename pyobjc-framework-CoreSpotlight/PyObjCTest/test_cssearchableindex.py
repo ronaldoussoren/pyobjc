@@ -25,6 +25,9 @@ class TestCSSearchableIndexHelper(CoreSpotlight.NSObject):
 
 
 class TestCSSearchableIndex(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreSpotlight.CSIndexErrorCode)
+
     def testConstants(self):
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeUnknownError, -1)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexUnavailableError, -1000)

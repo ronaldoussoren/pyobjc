@@ -3,6 +3,9 @@ import PhotosUI
 
 
 class TestPhotosUITypes(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PhotosUI.PHProjectCategory, str)
+
     @min_os_level("10.13")
     def testConstants(self):
         self.assertIsInstance(PhotosUI.PHProjectTypeUndefined, str)

@@ -3,6 +3,11 @@ import MediaPlayer
 
 
 class TestMPRemoteControlTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MediaPlayer.MPChangeLanguageOptionSetting)
+        self.assertIsEnumType(MediaPlayer.MPRepeatType)
+        self.assertIsEnumType(MediaPlayer.MPShuffleType)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertEqual(MediaPlayer.MPShuffleTypeOff, 0)

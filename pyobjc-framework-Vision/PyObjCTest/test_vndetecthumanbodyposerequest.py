@@ -3,9 +3,12 @@ import Vision
 
 
 class TestVNDetectHumanBodyPoseRequest(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Vision.VNHumanBodyPoseObservationJointName, str)
+        self.assertIsTypedEnum(Vision.VNHumanBodyPoseObservationJointsGroupName, str)
+
     @min_os_level("11.0")
     def testConstants11_0(self):
-
         self.assertIsInstance(Vision.VNBodyLandmarkKeyNose, str)
         self.assertIsInstance(Vision.VNBodyLandmarkKeyLeftEye, str)
         self.assertIsInstance(Vision.VNBodyLandmarkKeyRightEye, str)

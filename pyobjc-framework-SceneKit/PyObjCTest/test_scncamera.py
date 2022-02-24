@@ -4,6 +4,9 @@ import SceneKit
 
 
 class TestSCNCamera(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNCameraProjectionDirection)
+
     def testMethods(self):
         self.assertResultIsBOOL(SceneKit.SCNCamera.usesOrthographicProjection)
         self.assertArgIsBOOL(SceneKit.SCNCamera.setUsesOrthographicProjection_, 0)

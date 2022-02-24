@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestNSPointerFunctions(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSPointerFunctionsOptions)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSPointerFunctionsStrongMemory, (0 << 0))
         self.assertEqual(Foundation.NSPointerFunctionsZeroingWeakMemory, (1 << 0))

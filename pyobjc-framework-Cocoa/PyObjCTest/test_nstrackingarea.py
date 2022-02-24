@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTrackingArea(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTrackingAreaOptions)
+
     @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(AppKit.NSTrackingMouseEnteredAndExited, 0x01)

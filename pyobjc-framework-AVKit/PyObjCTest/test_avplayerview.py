@@ -19,6 +19,10 @@ class TestAVPlayerViewHelper(AVKit.NSObject):
 
 
 class TestAVPlayerView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVKit.AVPlayerViewControlsStyle)
+        self.assertIsEnumType(AVKit.AVPlayerViewTrimResult)
+
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
         objc.protocolNamed("AVPlayerViewDelegate")

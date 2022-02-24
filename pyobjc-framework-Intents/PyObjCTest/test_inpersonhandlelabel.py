@@ -3,6 +3,9 @@ import Intents
 
 
 class TestINPersonHandleLabel(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Intents.INPersonHandleLabel, str)
+
     @min_os_level("10.12")
     def testConstants(self):
         self.assertIsInstance(Intents.INPersonHandleLabelHome, str)

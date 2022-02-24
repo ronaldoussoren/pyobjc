@@ -12,6 +12,9 @@ class XPCHelper(Foundation.NSObject):
 
 
 class TestNSXPCConnection(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSXPCConnectionOptions)
+
     @min_os_level("10.8")
     def testProtocolObjects(self):
         objc.protocolNamed("NSXPCProxyCreating")

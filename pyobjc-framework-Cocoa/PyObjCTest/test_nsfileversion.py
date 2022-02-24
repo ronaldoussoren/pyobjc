@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileVersion(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSFileVersionAddingOptions)
+        self.assertIsEnumType(Foundation.NSFileVersionReplacingOptions)
+
     @min_os_level("10.7")
     def testContants10_7(self):
         self.assertEqual(Foundation.NSFileVersionAddingByMoving, 1 << 0)

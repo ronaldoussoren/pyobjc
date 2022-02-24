@@ -15,6 +15,9 @@ class TestMTLFunctionLogHelper(Metal.NSObject):
 
 
 class TestMTLFunctionLog(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLFunctionLogType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLFunctionLogTypeValidation, 0)
 

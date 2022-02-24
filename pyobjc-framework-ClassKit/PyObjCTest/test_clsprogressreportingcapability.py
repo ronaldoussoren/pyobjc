@@ -4,6 +4,9 @@ import ClassKit
 
 
 class TestCLSProgressReportingCapability(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ClassKit.CLSProgressReportingCapabilityKind)
+
     def test_constants(self):
         self.assertEqual(ClassKit.CLSProgressReportingCapabilityKindDuration, 0)
         self.assertEqual(ClassKit.CLSProgressReportingCapabilityKindPercent, 1)

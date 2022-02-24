@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestGKGameSession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKConnectionState)
+        self.assertIsEnumType(GameKit.GKTransportType)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKConnectionStateNotConnected, 0)
         self.assertEqual(GameKit.GKConnectionStateConnected, 1)

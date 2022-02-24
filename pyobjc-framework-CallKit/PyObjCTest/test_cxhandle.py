@@ -3,6 +3,9 @@ import CallKit
 
 
 class TestCXHandle(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CallKit.CXHandleType)
+
     def test_constants(self):
         self.assertEqual(CallKit.CXHandleTypeGeneric, 1)
         self.assertEqual(CallKit.CXHandleTypePhoneNumber, 2)

@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLHandle(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLHandleStatus)
+
     def testConstants(self):
         self.assertIsInstance(Foundation.NSHTTPPropertyStatusCodeKey, str)
         self.assertIsInstance(Foundation.NSHTTPPropertyStatusReasonKey, str)

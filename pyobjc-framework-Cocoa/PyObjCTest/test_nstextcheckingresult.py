@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextCheckingResult(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSTextCheckingType)
+
     @min_os_level("10.6")
     def testConstants(self):
         self.assertEqual(Foundation.NSTextCheckingTypeOrthography, 1 << 0)

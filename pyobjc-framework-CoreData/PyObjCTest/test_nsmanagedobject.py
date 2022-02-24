@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSManagedObject(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreData.NSSnapshotEventType)
+
     def testMethods(self):
         descr = CoreData.NSEntityDescription.alloc().init()
         descr.setName_("Name")

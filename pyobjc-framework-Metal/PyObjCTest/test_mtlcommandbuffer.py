@@ -44,6 +44,13 @@ class TestMTLCommandBufferHelper(Metal.NSObject):
 
 
 class TestMTLCommandBuffer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLCommandBufferError)
+        self.assertIsEnumType(Metal.MTLCommandBufferErrorOption)
+        self.assertIsEnumType(Metal.MTLCommandBufferStatus)
+        self.assertIsEnumType(Metal.MTLCommandEncoderErrorState)
+        self.assertIsEnumType(Metal.MTLDispatchType)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLCommandBufferStatusNotEnqueued, 0)
         self.assertEqual(Metal.MTLCommandBufferStatusEnqueued, 1)

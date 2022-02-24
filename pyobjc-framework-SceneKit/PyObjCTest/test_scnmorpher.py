@@ -5,6 +5,9 @@ import SceneKit
 
 
 class TestSCNMorpher(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNMorpherCalculationMode)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNMorpherCalculationModeNormalized, 0)
         self.assertEqual(SceneKit.SCNMorpherCalculationModeAdditive, 1)

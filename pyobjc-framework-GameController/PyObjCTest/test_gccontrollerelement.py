@@ -4,6 +4,9 @@ import GameController
 
 
 class TestGCControllerElement(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameController.GCSystemGestureState)
+
     def test_constants(self):
         self.assertEqual(GameController.GCSystemGestureStateEnabled, 0)
         self.assertEqual(GameController.GCSystemGestureStateAlwaysReceive, 1)

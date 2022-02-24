@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileCoordinator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSFileCoordinatorReadingOptions)
+        self.assertIsEnumType(Foundation.NSFileCoordinatorWritingOptions)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(

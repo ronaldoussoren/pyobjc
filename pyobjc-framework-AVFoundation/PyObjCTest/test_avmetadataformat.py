@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataFormat(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AVFoundation.AVMetadataFormat, str)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceCommon, str)

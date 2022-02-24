@@ -9,19 +9,11 @@ class TestCAAnimationHelper(Quartz.NSObject):
 
 
 class TestCAAnimation(TestCase):
-    @min_os_level("10.5")
-    def testMethods(self):
-        self.assertResultIsBOOL(Quartz.CAAnimation.shouldArchiveValueForKey_)
-        self.assertResultIsBOOL(Quartz.CAAnimation.isRemovedOnCompletion)
-        self.assertArgIsBOOL(Quartz.CAAnimation.setRemovedOnCompletion_, 0)
-
-        self.assertArgIsBOOL(TestCAAnimationHelper.animationDidStop_finished_, 1)
-
-        self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isAdditive)
-        self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setAdditive_, 0)
-
-        self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isCumulative)
-        self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setCumulative_, 0)
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Quartz.CAAnimationCalculationMode, str)
+        self.assertIsTypedEnum(Quartz.CAAnimationRotationMode, str)
+        self.assertIsTypedEnum(Quartz.CATransitionSubtype, str)
+        self.assertIsTypedEnum(Quartz.CATransitionType, str)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
@@ -49,3 +41,17 @@ class TestCAAnimation(TestCase):
     @min_sdk_level("10.12")
     def testProtocols(self):
         objc.protocolNamed("CAAnimationDelegate")
+
+    @min_os_level("10.5")
+    def testMethods(self):
+        self.assertResultIsBOOL(Quartz.CAAnimation.shouldArchiveValueForKey_)
+        self.assertResultIsBOOL(Quartz.CAAnimation.isRemovedOnCompletion)
+        self.assertArgIsBOOL(Quartz.CAAnimation.setRemovedOnCompletion_, 0)
+
+        self.assertArgIsBOOL(TestCAAnimationHelper.animationDidStop_finished_, 1)
+
+        self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isAdditive)
+        self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setAdditive_, 0)
+
+        self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isCumulative)
+        self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setCumulative_, 0)

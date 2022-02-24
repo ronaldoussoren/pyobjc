@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSGradient(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSGradientDrawingOptions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSGradientDrawsBeforeStartingLocation, (1 << 0))
         self.assertEqual(AppKit.NSGradientDrawsAfterEndingLocation, (1 << 1))

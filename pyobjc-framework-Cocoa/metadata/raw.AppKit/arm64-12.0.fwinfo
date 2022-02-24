@@ -159688,7 +159688,7 @@
       "class_method": false,
       "required": false,
       "retval": {
-       "typestr": "Z",
+       "typestr": "@",
        "typestr_special": false
       },
       "selector": "textLayoutManager:textLayoutFragmentForLocation:inTextElement:",

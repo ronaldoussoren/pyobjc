@@ -18,6 +18,11 @@ class TestAVSpeechSynthesisHelper(AVFoundation.NSObject):
 
 
 class TestAVSpeechSynthesis(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVSpeechBoundary)
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceGender)
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceQuality)
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVSpeechBoundaryImmediate, 0)
         self.assertEqual(AVFoundation.AVSpeechBoundaryWord, 1)

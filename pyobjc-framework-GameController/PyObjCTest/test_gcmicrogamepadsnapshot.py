@@ -9,6 +9,9 @@ import GameController
 
 
 class TestGCMicroGamepadSnapshot(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameController.GCMicroGamepadSnapshotDataVersion)
+
     @expectedFailureIf(os_release() == "10.11")
     @min_os_level("10.11")
     def testClasses(self):

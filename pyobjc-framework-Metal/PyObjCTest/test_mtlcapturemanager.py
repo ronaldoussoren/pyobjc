@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLArgument(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Metal.MTLCaptureDestination)
+        self.assertIsEnumType(Metal.MTLCaptureError)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLCaptureErrorNotSupported, 1)
         self.assertEqual(Metal.MTLCaptureErrorAlreadyCapturing, 2)

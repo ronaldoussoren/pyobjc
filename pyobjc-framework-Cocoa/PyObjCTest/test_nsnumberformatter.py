@@ -4,6 +4,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSNumberFormatter(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSNumberFormatterBehavior)
+        self.assertIsEnumType(Foundation.NSNumberFormatterPadPosition)
+        self.assertIsEnumType(Foundation.NSNumberFormatterRoundingMode)
+        self.assertIsEnumType(Foundation.NSNumberFormatterStyle)
+
     def testConstants(self):
         self.assertEqual(
             Foundation.NSNumberFormatterNoStyle,

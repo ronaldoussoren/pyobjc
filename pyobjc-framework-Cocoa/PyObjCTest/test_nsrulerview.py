@@ -42,6 +42,12 @@ class TestNSRulerViewHelper(AppKit.NSView):
 
 
 class TestNSRulerView(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSRulerViewUnitName, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSRulerOrientation)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSHorizontalRuler, 0)
         self.assertEqual(AppKit.NSVerticalRuler, 1)

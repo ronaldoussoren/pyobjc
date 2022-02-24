@@ -5,6 +5,9 @@ import SpriteKit
 
 
 class TestSKScene(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SpriteKit.SKSceneScaleMode)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertEqual(SpriteKit.SKSceneScaleModeFill, 0)

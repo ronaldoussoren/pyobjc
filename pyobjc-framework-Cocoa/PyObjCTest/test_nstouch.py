@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSTouch(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTouchPhase)
+        self.assertIsEnumType(AppKit.NSTouchType)
+        self.assertIsEnumType(AppKit.NSTouchTypeMask)
+
     @min_os_level("10.6")
     def testConstants(self):
         self.assertEqual(AppKit.NSTouchPhaseBegan, 1 << 0)

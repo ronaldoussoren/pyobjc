@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLNode(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSXMLNodeKind)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSXMLInvalidKind, 0)
         self.assertEqual(Foundation.NSXMLDocumentKind, 1)

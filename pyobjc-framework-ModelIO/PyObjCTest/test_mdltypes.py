@@ -9,6 +9,12 @@ class TestMDLTypesHelper(ModelIO.NSObject):
 
 
 class TestMDLTypes(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(ModelIO.MDLDataPrecision)
+        self.assertIsEnumType(ModelIO.MDLGeometryType)
+        self.assertIsEnumType(ModelIO.MDLIndexBitDepth)
+        self.assertIsEnumType(ModelIO.MDLProbePlacement)
+
     def testConstants(self):
         self.assertIsInstance(ModelIO.kUTTypeAlembic, str)
         self.assertIsInstance(ModelIO.kUTType3dObject, str)

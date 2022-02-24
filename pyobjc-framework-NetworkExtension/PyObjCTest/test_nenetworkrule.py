@@ -3,6 +3,10 @@ import NetworkExtension
 
 
 class TestNENetworkRule(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NetworkExtension.NENetworkRuleProtocol)
+        self.assertIsEnumType(NetworkExtension.NETrafficDirection)
+
     def test_constants(self):
         self.assertEqual(NetworkExtension.NENetworkRuleProtocolAny, 0)
         self.assertEqual(NetworkExtension.NENetworkRuleProtocolTCP, 1)

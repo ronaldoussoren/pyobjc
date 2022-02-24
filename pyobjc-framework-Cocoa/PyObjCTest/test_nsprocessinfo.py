@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSProcessInfo(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSActivityOptions)
+        self.assertIsEnumType(Foundation.NSProcessInfoThermalState)
+
     def testConvenience(self):
         # This doesn't actually test anything...
         with Foundation.NSDisabledSuddenTermination():

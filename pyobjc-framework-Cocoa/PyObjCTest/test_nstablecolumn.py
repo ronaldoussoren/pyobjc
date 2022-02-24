@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTableColumn(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTableColumnResizingOptions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTableColumnNoResizing, 0)
         self.assertEqual(AppKit.NSTableColumnAutoresizingMask, (1 << 0))

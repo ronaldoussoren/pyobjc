@@ -4,6 +4,10 @@ import NaturalLanguage
 
 
 class TestNLTagger(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NaturalLanguage.NLTaggerAssetsResult)
+        self.assertIsEnumType(NaturalLanguage.NLTaggerOptions)
+
     def test_constants(self):
         self.assertEqual(NaturalLanguage.NLTaggerOmitWords, 1 << 0)
         self.assertEqual(NaturalLanguage.NLTaggerOmitPunctuation, 1 << 1)

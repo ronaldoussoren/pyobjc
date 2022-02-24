@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFont(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSFontRenderingMode)
+        self.assertIsEnumType(AppKit.NSMultibyteGlyphPacking)
+
     def matrixEquals(self, value1, value2):
         self.assertEqual(len(value1), len(value2))
         for v1, v2 in zip(value1, value2):

@@ -4,6 +4,9 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphResizeOps(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphResizeMode)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphResizeNearest, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphResizeBilinear, 1)

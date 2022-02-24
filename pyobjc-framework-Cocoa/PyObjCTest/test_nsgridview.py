@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGridView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSGridCellPlacement)
+        self.assertIsEnumType(AppKit.NSGridRowAlignment)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSGridCellPlacementInherited, 0)
         self.assertEqual(AppKit.NSGridCellPlacementNone, 1)

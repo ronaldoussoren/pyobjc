@@ -32,6 +32,11 @@ class TestMPSNeuralNetwork_MPSCNNConvolutionHelper(MetalPerformanceShaders.NSObj
 
 
 class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionGradientOption)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayout)
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNWeightsQuantizationType)
+
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayoutOHWI, 0)
 

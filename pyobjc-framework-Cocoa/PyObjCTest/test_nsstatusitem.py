@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSStatusItem(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSStatusItemBehavior)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSStatusItemBehaviorRemovalAllowed, 1 << 1)
         self.assertEqual(AppKit.NSStatusItemBehaviorTerminationOnRemoval, 1 << 2)

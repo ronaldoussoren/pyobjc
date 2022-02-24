@@ -3,6 +3,9 @@ import Vision
 
 
 class TestVNRequestHandler(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(Vision.VNImageOption, str)
+
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(Vision.VNImageOptionProperties, str)

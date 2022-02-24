@@ -4,6 +4,12 @@ import PassKit
 
 
 class TestPKError(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PassKit.PKPaymentErrorKey, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(PassKit.PKAddPaymentPassError)
+
     def test_constants(self):
         self.assertIsInstance(PassKit.PKPassKitErrorDomain, str)
         self.assertIsInstance(PassKit.PKPaymentErrorContactFieldUserInfoKey, str)

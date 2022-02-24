@@ -3,6 +3,9 @@ import NaturalLanguage
 
 
 class TestNLModel(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NaturalLanguage.NLModelType)
+
     def test_constants(self):
         self.assertEqual(NaturalLanguage.NLModelTypeClassifier, 0)
         self.assertEqual(NaturalLanguage.NLModelTypeSequence, 1)

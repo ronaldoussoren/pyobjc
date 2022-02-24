@@ -21,6 +21,7 @@ class TestAuthorization(TestCase):
         self.assertPickleRoundTrips(w)
 
     def test_constants(self):
+        self.assertEqual(Security.kAuthorizationExternalFormLength, 32)
         self.assertEqual(Security.kAuthorizationEmptyEnvironment, None)
 
         self.assertEqual(Security.errAuthorizationSuccess, 0)

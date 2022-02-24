@@ -28,3 +28,4 @@ class TestCMIOHardware(TestCase):
         self.assertEqual(CoreMediaIO.kCMIOPlugInClassID, fourcc(b"aplg"))
 
         self.assertEqual(CoreMediaIO.kCMIOPlugInPropertyBundleID, fourcc(b"piid"))
+        self.assertEqual(CoreMediaIO.kCMIOPlugInPropertyIsExtension, fourcc(b"piie"))

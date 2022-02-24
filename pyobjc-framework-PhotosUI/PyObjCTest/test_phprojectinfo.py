@@ -3,6 +3,11 @@ import PhotosUI
 
 
 class TestPHProjectInfo(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(PhotosUI.PHProjectCreationSource)
+        self.assertIsEnumType(PhotosUI.PHProjectSectionType)
+        self.assertIsEnumType(PhotosUI.PHProjectTextElementType)
+
     def testConstants(self):
         self.assertEqual(PhotosUI.PHProjectCreationSourceUndefined, 0)
         self.assertEqual(PhotosUI.PHProjectCreationSourceUserSelection, 1)

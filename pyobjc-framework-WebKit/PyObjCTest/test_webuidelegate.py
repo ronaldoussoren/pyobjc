@@ -82,6 +82,10 @@ class TestWebUIDelegateHelper(WebKit.NSObject):
 
 
 class TestWebUIDelegate(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(WebKit.WebDragDestinationAction)
+        self.assertIsEnumType(WebKit.WebDragSourceAction)
+
     def testConstants(self):
         self.assertEqual(WebKit.WebMenuItemTagOpenLinkInNewWindow, 1)
         self.assertEqual(WebKit.WebMenuItemTagDownloadLinkToDisk, 2)

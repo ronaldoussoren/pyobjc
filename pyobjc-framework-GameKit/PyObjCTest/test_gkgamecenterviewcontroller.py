@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKGameCenterViewController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKGameCenterViewControllerState)
+
     def testProtocols(self):
         objc.protocolNamed("GKGameCenterControllerDelegate")
 

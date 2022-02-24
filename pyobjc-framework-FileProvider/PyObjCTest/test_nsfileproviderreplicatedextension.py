@@ -1,4 +1,5 @@
 import FileProvider
+import Foundation
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
@@ -63,8 +64,21 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
     def supportedServiceSourcesForItemIdentifier_completionHandler_(self, a, b):
         return 1
 
+    def fetchPartialContentsForItemWithIdentifier_version_request_minimalRange_aligningTo_options_completionHandler_(  # noqa: B950
+        self, a, b, c, d, e, f, g
+    ):
+        return 1
+
 
 class TestNSFileProviderReplicatedExtension(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(FileProvider.NSFileProviderCreateItemOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderDeleteItemOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderFetchContentsOptions)
+        self.assertIsEnumType(FileProvider.NSFileProviderItemFields)
+        self.assertIsEnumType(FileProvider.NSFileProviderMaterializationFlags)
+        self.assertIsEnumType(FileProvider.NSFileProviderModifyItemOptions)
+
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderCreateItemMayAlreadyExist, 1 << 0)
         self.assertEqual(
@@ -87,6 +101,13 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         self.assertEqual(FileProvider.NSFileProviderItemExtendedAttributes, 1 << 9)
         self.assertEqual(FileProvider.NSFileProviderItemTypeAndCreator, 1 << 10)
 
+        self.assertEqual(
+            FileProvider.NSFileProviderMaterializationFlagsKnownSparseRanges, 1 << 0
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderFetchContentsOptionsStrictVersioning, 1 << 0
+        )
+
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
         objc.protocolNamed("NSFileProviderEnumerating")
@@ -103,6 +124,10 @@ class TestNSFileProviderReplicatedExtension(TestCase):
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
         objc.protocolNamed("NSFileProviderUserInteractionSuppressing")
+
+    @min_sdk_level("12.3")
+    def test_protocols12_3(self):
+        objc.protocolNamed("NSFileProviderPartialContentFetching")
 
     def test_methods(self):
         self.assertArgIsBOOL(
@@ -188,4 +213,25 @@ class TestNSFileProviderReplicatedExtension(TestCase):
             TestNSFileProviderReplicatedExtensionHelper.fetchContentsForItemWithIdentifier_version_usingExistingContentsAtURL_request_completionHandler_,  # noqa: B950
             4,
             b"v@@@",
+        )
+
+        self.assertArgHasType(
+            TestNSFileProviderReplicatedExtensionHelper.fetchPartialContentsForItemWithIdentifier_version_request_minimalRange_aligningTo_options_completionHandler_,  # noqa: B950
+            3,
+            Foundation.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSFileProviderReplicatedExtensionHelper.fetchPartialContentsForItemWithIdentifier_version_request_minimalRange_aligningTo_options_completionHandler_,  # noqa: B950
+            4,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSFileProviderReplicatedExtensionHelper.fetchPartialContentsForItemWithIdentifier_version_request_minimalRange_aligningTo_options_completionHandler_,  # noqa: B950
+            5,
+            objc._C_NSUInteger,
+        )
+        self.assertArgIsBlock(
+            TestNSFileProviderReplicatedExtensionHelper.fetchPartialContentsForItemWithIdentifier_version_request_minimalRange_aligningTo_options_completionHandler_,  # noqa: B950
+            6,
+            b"v@@" + Foundation.NSRange.__typestr__ + b"Q@",
         )

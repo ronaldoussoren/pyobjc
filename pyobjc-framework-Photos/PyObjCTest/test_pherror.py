@@ -24,4 +24,6 @@ class TestPHError(TestCase):
         self.assertEqual(Photos.PHPhotosErrorAccessRestricted, 3310)
         self.assertEqual(Photos.PHPhotosErrorAccessUserDenied, 3311)
 
+        self.assertEqual(Photos.PHPhotosErrorLibraryInFileProviderSyncRoot, 5423)
+
         self.assertEqual(Photos.PHPhotosErrorInvalid, -1)

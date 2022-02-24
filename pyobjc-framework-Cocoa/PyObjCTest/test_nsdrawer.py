@@ -15,6 +15,9 @@ class TestNSDrawerHelper(AppKit.NSObject):
 
 
 class TestNSDrawer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSDrawerState)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSDrawerClosedState, 0)
         self.assertEqual(AppKit.NSDrawerOpeningState, 1)

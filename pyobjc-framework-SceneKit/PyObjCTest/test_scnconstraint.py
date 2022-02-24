@@ -17,6 +17,9 @@ _C_SCNVector4 = (
 
 
 class TestSCNConstraint(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNBillboardAxis)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNBillboardAxisX, 0x1 << 0)
         self.assertEqual(SceneKit.SCNBillboardAxisY, 0x1 << 1)

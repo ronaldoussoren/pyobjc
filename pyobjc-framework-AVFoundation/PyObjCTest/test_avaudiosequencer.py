@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioSequencer(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVMusicSequenceLoadOptions)
+        self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
         self.assertEqual(

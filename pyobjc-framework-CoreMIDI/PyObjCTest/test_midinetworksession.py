@@ -3,6 +3,9 @@ import CoreMIDI
 
 
 class TestMIDINetworkSession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreMIDI.MIDINetworkConnectionPolicy)
+
     def test_constants(self):
         self.assertEqual(CoreMIDI.MIDINetworkConnectionPolicy_NoOne, 0)
         self.assertEqual(CoreMIDI.MIDINetworkConnectionPolicy_HostsInContactList, 1)

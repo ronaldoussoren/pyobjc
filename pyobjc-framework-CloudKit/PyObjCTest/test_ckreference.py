@@ -4,6 +4,9 @@ import objc
 
 
 class TestCKReference(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CloudKit.CKReferenceAction)
+
     @min_os_level("10.10")
     def testClasses(self):
         self.assertHasAttr(CloudKit, "CKReference")

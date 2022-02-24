@@ -4,6 +4,9 @@ import MapKit
 
 
 class TestMKPointOfInterestCategory(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(MapKit.MKPointOfInterestCategory, str)
+
     @min_os_level("10.15")
     def test_constants(self):
         self.assertIsInstance(MapKit.MKPointOfInterestCategoryAirport, str)

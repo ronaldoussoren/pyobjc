@@ -6,205 +6,308 @@
    "MPSGraph": {
     "methods": [
      {
-      "selector": "resizeTensor:sizeTensor:mode:centerResult:alignCorners:layout:name:",
-      "class_method": false,
       "args": {
-       "3": { "type_override": "Z" },
-       "4": { "type_override": "Z" }
-      }
+       "3": {
+        "type_override": "Z"
+       },
+       "4": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "resizeTensor:sizeTensor:mode:centerResult:alignCorners:layout:name:"
      },
      {
-      "selector": "depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:",
-      "class_method": false,
       "args": {
-       "5": { "type_override": "Z" }
-      }
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:"
      },
      {
-      "selector": "spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:",
-      "class_method": false,
       "args": {
-       "5": { "type_override": "Z" }
-      }
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:"
      },
      {
-      "selector": "depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:",
-      "class_method": false,
       "args": {
-       "5": { "type_override": "Z" }
-      }
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:"
      },
      {
-      "selector": "controlDependencyWithOperations:dependentBlock:name:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" }
+          "0": {
+           "type": "^v"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "controlDependencyWithOperations:dependentBlock:name:"
      },
      {
-      "selector": "ifWithPredicateTensor:thenBlock:elseBlock:name:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" }
+          "0": {
+           "type": "^v"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        },
        "2": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" }
+          "0": {
+           "type": "^v"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "ifWithPredicateTensor:thenBlock:elseBlock:name:"
      },
      {
-      "selector": "whileWithInitialInputs:before:after:name:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" },
-          "2": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        },
        "2": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "whileWithInitialInputs:before:after:name:"
      },
      {
-      "selector": "forLoopWithLowerBound:upperBound:step:initialBodyArguments:body:name:",
-      "class_method": false,
       "args": {
        "4": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" },
-          "2": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "forLoopWithLowerBound:upperBound:step:initialBodyArguments:body:name:"
      },
      {
-      "selector": "forLoopWithNumberOfIterations:initialBodyArguments:body:name:",
-      "class_method": false,
       "args": {
        "2": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" },
-          "2": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "@" }
+         "retval": {
+          "type": "@"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "forLoopWithNumberOfIterations:initialBodyArguments:body:name:"
      }
     ]
    },
    "MPSGraphExecutableExecutionDescriptor": {
     "methods": [
      {
-      "selector": "completionHandler",
       "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
-         "0": { "type": "^v" },
-         "1": { "type": "@" },
-         "2": { "type": "@" }
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         },
+         "2": {
+          "type": "@"
+         }
         },
-        "retval": { "type": "v" }
+        "retval": {
+         "type": "v"
+        }
        }
-      }
+      },
+      "selector": "completionHandler"
      },
      {
-      "selector": "setCompletionHandler:",
-      "class_method": false,
       "args": {
        "0": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" },
-          "2": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "v" }
+         "retval": {
+          "type": "v"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setCompletionHandler:"
      },
      {
-      "selector": "scheduledHandler",
       "class_method": false,
       "retval": {
        "callable": {
         "arguments": {
-         "0": { "type": "^v" },
-         "1": { "type": "@" },
-         "2": { "type": "@" }
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         },
+         "2": {
+          "type": "@"
+         }
         },
-        "retval": { "type": "v" }
+        "retval": {
+         "type": "v"
+        }
        }
-      }
+      },
+      "selector": "scheduledHandler"
      },
      {
-      "selector": "setScheduledHandler:",
-      "class_method": false,
       "args": {
        "0": {
         "callable": {
          "arguments": {
-          "0": { "type": "^v" },
-          "1": { "type": "@" },
-          "2": { "type": "@" }
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
          },
-         "retval": { "type": "v" }
+         "retval": {
+          "type": "v"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setScheduledHandler:"
      }
     ]
    }
   },
+  "enum": {
+   "MPSGraphRNNActivationNone": { "value": 0 },
+   "MPSGraphRNNActivationRelu": { "value": 1 },
+   "MPSGraphRNNActivationTanh": { "value": 2 },
+   "MPSGraphRNNActivationSigmoid": { "value": 3 },
+   "MPSGraphRNNActivationHardSigmoid": { "value": 4 },
+   "MPSGraphScatterModeAdd": {
+    "value": 0
+   },
+   "MPSGraphScatterModeDiv": {
+    "value": 3
+   },
+   "MPSGraphScatterModeMax": {
+    "value": 5
+   },
+   "MPSGraphScatterModeMin": {
+    "value": 4
+   },
+   "MPSGraphScatterModeMul": {
+    "value": 2
+   },
+   "MPSGraphScatterModeSet": {
+    "value": 6
+   },
+   "MPSGraphScatterModeSub": {
+    "value": 1
+   }
+  },
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {},
-  "enum": {
-   "MPSGraphScatterModeAdd": { "value":  0 },
-   "MPSGraphScatterModeSub": { "value":  1 },
-   "MPSGraphScatterModeMul": { "value":  2 },
-   "MPSGraphScatterModeDiv": { "value":  3 },
-   "MPSGraphScatterModeMin": { "value":  4 },
-   "MPSGraphScatterModeMax": { "value":  5 },
-   "MPSGraphScatterModeSet": { "value":  6 }
-  }
+  "informal_protocols": {}
  }
 }

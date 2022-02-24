@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptionConversionValidator(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVCaptionConversionValidatorStatus)
+
     def test_constants(self):
         self.assertEqual(AVFoundation.AVCaptionConversionValidatorStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVCaptionConversionValidatorStatusValidating, 1)

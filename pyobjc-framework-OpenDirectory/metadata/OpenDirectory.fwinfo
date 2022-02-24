@@ -587,6 +587,9 @@
    "ODSessionGetTypeID": { "ignore": true },
    "ODNodeGetTypeID": { "ignore": true }
   },
+  "enum_type": {
+   "ODFrameworkErrors": { "ignore": true }
+  },
   "enum": {
    "kODErrorCredentialsAccountDisabled": { "ignore": true },
    "kODErrorCredentialsAccountExpired": { "ignore": true },

@@ -101,6 +101,17 @@ class TestNSTableViewHelper(AppKit.NSObject):
 
 
 class TestNSTableView(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSTableRowActionEdge)
+        self.assertIsEnumType(AppKit.NSTableViewAnimationOptions)
+        self.assertIsEnumType(AppKit.NSTableViewColumnAutoresizingStyle)
+        self.assertIsEnumType(AppKit.NSTableViewDraggingDestinationFeedbackStyle)
+        self.assertIsEnumType(AppKit.NSTableViewDropOperation)
+        self.assertIsEnumType(AppKit.NSTableViewGridLineStyle)
+        self.assertIsEnumType(AppKit.NSTableViewRowSizeStyle)
+        self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
+        self.assertIsEnumType(AppKit.NSTableViewStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSTableViewDropOn, 0)
         self.assertEqual(AppKit.NSTableViewDropAbove, 1)

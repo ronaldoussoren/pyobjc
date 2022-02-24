@@ -5,6 +5,9 @@ GKChallengeComposeCompletionBlock = b"v@Z@"
 
 
 class TestGKChallenge(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(GameKit.GKChallengeState)
+
     def testConstants(self):
         self.assertEqual(GameKit.GKChallengeStateInvalid, 0)
         self.assertEqual(GameKit.GKChallengeStatePending, 1)

@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureSession(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVCaptureSessionInterruptionReason)
+        self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
+        self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(

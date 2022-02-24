@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPDFPanel(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSPDFPanelOptions)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSPDFPanelShowsPaperSize, 1 << 2)
         self.assertEqual(AppKit.NSPDFPanelShowsOrientation, 1 << 3)

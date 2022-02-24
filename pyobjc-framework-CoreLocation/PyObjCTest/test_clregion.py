@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLRegion(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreLocation.CLProximity)
+
     def testConstants(self):
         self.assertEqual(CoreLocation.CLRegionStateUnknown, 0)
         self.assertEqual(CoreLocation.CLRegionStateInside, 1)

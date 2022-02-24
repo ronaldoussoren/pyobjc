@@ -3,6 +3,9 @@ import NaturalLanguage
 
 
 class TestNLEmbedding(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NaturalLanguage.NLDistanceType)
+
     def test_constants(self):
         self.assertEqual(NaturalLanguage.NLDistanceTypeCosine, 0)
 

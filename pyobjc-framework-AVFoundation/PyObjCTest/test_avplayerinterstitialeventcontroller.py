@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerInterstitialEventController(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventRestrictions)
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventRestrictionNone, 0)
         self.assertEqual(

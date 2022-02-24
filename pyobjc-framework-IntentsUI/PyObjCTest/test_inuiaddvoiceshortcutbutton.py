@@ -4,6 +4,9 @@ import objc
 
 
 class TestINUIAddVoiceShortcutButton(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(IntentsUI.INUIAddVoiceShortcutButtonStyle)
+
     def test_constants(self):
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleWhite, 0)
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleWhiteOutline, 1)

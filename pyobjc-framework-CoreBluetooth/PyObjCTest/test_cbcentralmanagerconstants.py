@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBCentral(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(CoreBluetooth.CBConnectionEventMatchingOption, str)
+
     @min_os_level("10.9")
     def testConstants(self):
         self.assertIsInstance(

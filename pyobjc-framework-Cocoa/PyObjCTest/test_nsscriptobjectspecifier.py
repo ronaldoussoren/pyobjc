@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScriptObjectSpecifiers(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSInsertionPosition)
+        self.assertIsEnumType(Foundation.NSRelativePosition)
+        self.assertIsEnumType(Foundation.NSWhoseSubelementIdentifier)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSNoSpecifierError, 0)
         self.assertEqual(Foundation.NSNoTopLevelContainersSpecifierError, 1)

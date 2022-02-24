@@ -3,7 +3,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 import SceneKit
 
 
-class TestSCNAction(TestCase):
+class TestSCNHitTest(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNHitTestSearchMode)
+
     def testConstants(self):
         self.assertEqual(SceneKit.SCNHitTestSearchModeClosest, 0)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAll, 1)

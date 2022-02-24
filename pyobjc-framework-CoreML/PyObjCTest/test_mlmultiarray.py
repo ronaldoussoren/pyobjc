@@ -3,6 +3,9 @@ import CoreML
 
 
 class TestMLMultiArray(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(CoreML.MLMultiArrayDataType)
+
     def testConstants(self):
         self.assertEqual(CoreML.MLMultiArrayDataTypeDouble, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat64, 0x10000 | 64)

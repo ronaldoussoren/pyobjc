@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLevelIndicatorCell(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSLevelIndicatorStyle)
+
     def testConstants(self):
         self.assertEqual(AppKit.NSRelevancyLevelIndicatorStyle, 0)
         self.assertEqual(AppKit.NSContinuousCapacityLevelIndicatorStyle, 1)

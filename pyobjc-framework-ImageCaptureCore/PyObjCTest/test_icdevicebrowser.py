@@ -12,6 +12,9 @@ class TestICDeviceBrowserHelper(ImageCaptureCore.NSObject):
 
 
 class TestICDeviceBrowser(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(ImageCaptureCore.ICAuthorizationStatus, str)
+
     def testProtocolObjects(self):
         objc.protocolNamed("ICDeviceBrowserDelegate")
 

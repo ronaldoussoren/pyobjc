@@ -7,6 +7,12 @@ MTKTextureLoaderArrayCallback = b"v@@"
 
 
 class TestMTKTextureLoading(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(MetalKit.MTKTextureLoaderCubeLayout, str)
+        self.assertIsTypedEnum(MetalKit.MTKTextureLoaderError, str)
+        self.assertIsTypedEnum(MetalKit.MTKTextureLoaderOption, str)
+        self.assertIsTypedEnum(MetalKit.MTKTextureLoaderOrigin, str)
+
     @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(MetalKit.MTKTextureLoaderErrorDomain, str)

@@ -4,6 +4,15 @@ import SceneKit
 
 
 class TestSCNMaterial(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(SceneKit.SCNLightingModel, str)
+
+    def test_enum_types(self):
+        self.assertIsEnumType(SceneKit.SCNBlendMode)
+        self.assertIsEnumType(SceneKit.SCNCullMode)
+        self.assertIsEnumType(SceneKit.SCNFillMode)
+        self.assertIsEnumType(SceneKit.SCNTransparencyMode)
+
     def testConstants(self):
         self.assertIsInstance(SceneKit.SCNLightingModelPhong, str)
         self.assertIsInstance(SceneKit.SCNLightingModelBlinn, str)

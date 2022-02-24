@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSHTTPCookieStorage(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSHTTPCookieAcceptPolicy)
+
     def testConstants(self):
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyAlways, 0)
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyNever, 1)

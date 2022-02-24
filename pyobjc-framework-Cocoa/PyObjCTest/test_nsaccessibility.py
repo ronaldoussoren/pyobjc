@@ -94,6 +94,14 @@ class TestNSAccessibility(TestCase):
         AppKit.NSAccessibilityFrameInView  # Existence
         AppKit.NSAccessibilityPointInView  # Existence
 
+    def test_enum_types(self):
+        self.assertIsEnumType(AppKit.NSAccessibilityAnnotationPosition)
+        self.assertIsEnumType(AppKit.NSAccessibilityOrientation)
+        self.assertIsEnumType(AppKit.NSAccessibilityPriorityLevel)
+        self.assertIsEnumType(AppKit.NSAccessibilityRulerMarkerType)
+        self.assertIsEnumType(AppKit.NSAccessibilitySortDirection)
+        self.assertIsEnumType(AppKit.NSAccessibilityUnits)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(
@@ -589,3 +597,18 @@ class TestNSAccessibility(TestCase):
     def testFunctions10_9(self):
         self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
         self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)
+
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSAccessibilityActionName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAnnotationAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityFontAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationUserInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityOrientationValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityParameterizedAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRole, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerMarkerTypeValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerUnitValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySortDirectionValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySubrole, str)

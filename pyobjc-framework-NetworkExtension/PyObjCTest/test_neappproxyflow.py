@@ -3,6 +3,9 @@ import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(NetworkExtension.NEAppProxyFlowError)
+
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorNotConnected, 1)

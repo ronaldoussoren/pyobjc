@@ -3,6 +3,9 @@ import UserNotifications
 
 
 class TestUNNotificationAction(TestCase):
+    def test_enum_types(self):
+        self.assertIsEnumType(UserNotifications.UNNotificationActionOptions)
+
     def test_constants(self):
         self.assertEqual(UserNotifications.UNNotificationActionOptionNone, 0)
         self.assertEqual(
