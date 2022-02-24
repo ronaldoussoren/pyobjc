@@ -14,7 +14,6 @@ class TestSCStream(TestCase):
 
     def test_enum_types(self):
         self.assertIsEnumType(ScreenCaptureKit.SCFrameStatus)
-        self.assertIsEnumType(ScreenCaptureKit.SCStreamFrameInfo)
         self.assertIsEnumType(ScreenCaptureKit.SCStreamOutputType)
 
     def test_constants(self):
@@ -78,7 +77,7 @@ class TestSCStream(TestCase):
         self.assertArgHasType(
             TestSCStreamHelper.stream_didOutputSampleBuffer_ofType_,
             1,
-            b"^{__CMSampleBuffer}",
+            b"^{opaqueCMSampleBuffer=}",
         )
         self.assertArgHasType(
             TestSCStreamHelper.stream_didOutputSampleBuffer_ofType_,

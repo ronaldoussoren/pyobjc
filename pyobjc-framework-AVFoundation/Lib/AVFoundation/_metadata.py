@@ -2350,6 +2350,21 @@ try:
         {"retval": {"type": b"{_CMTime=qiIq}"}},
     )
     r(
+        b"AVCaptureDeviceFormat",
+        b"isCenterStageSupported",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"AVCaptureDevice",
+        b"isCenterStageActive",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"AVCaptureDevice",
+        b"isCenterStageEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
         b"AVCaptureDevice",
         b"automaticallyAdjustsVideoHDREnabled",
         {"retval": {"type": b"Z"}},
@@ -2504,6 +2519,11 @@ try:
         b"AVCaptureDevice",
         b"setActiveVideoMinFrameDuration:",
         {"arguments": {2: {"type": b"{_CMTime=qiIq}"}}},
+    )
+    r(
+        b"AVCaptureDevice",
+        b"setCenterStageEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
     )
     r(
         b"AVCaptureDevice",

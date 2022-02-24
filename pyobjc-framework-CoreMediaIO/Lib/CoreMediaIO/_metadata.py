@@ -323,8 +323,16 @@ aliases = {
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b"CMIOExtensionDevice", b"addStream:error:", {"retval": {"type": b"Z"}})
-    r(b"CMIOExtensionDevice", b"removeStream:error:", {"retval": {"type": b"Z"}})
+    r(
+        b"CMIOExtensionDevice",
+        b"addStream:error:",
+        {"retval": {"type": b"Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"CMIOExtensionDevice",
+        b"removeStream:error:",
+        {"retval": {"type": b"Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
     r(
         b"CMIOExtensionPropertyAttributes",
         b"initWithMinValue:maxValue:validValues:readOnly:",
@@ -336,8 +344,16 @@ try:
         b"propertyAttributesWithMinValue:maxValue:validValues:readOnly:",
         {"arguments": {5: {"type": b"Z"}}},
     )
-    r(b"CMIOExtensionProvider", b"addDevice:error:", {"retval": {"type": b"Z"}})
-    r(b"CMIOExtensionProvider", b"removeDevice:error:", {"retval": {"type": b"Z"}})
+    r(
+        b"CMIOExtensionProvider",
+        b"addDevice:error:",
+        {"retval": {"type": b"Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"CMIOExtensionProvider",
+        b"removeDevice:error:",
+        {"retval": {"type": b"Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
     r(
         b"CMIOExtensionStream",
         b"consumeSampleBufferFromClient:completionHandler:",

@@ -14,6 +14,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _CoreData_CloudKit                                                                   | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| _GroupActivities_AppKit                                                              | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _SpriteKit_SwiftUI                                                                   | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _StoreKit_SwiftUI                                                                    | -                                                    | Swift only API                          |
@@ -467,6 +469,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SceneKit </apinotes/SceneKit>`                                                 | `pyobjc-framework-SceneKit`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`ScreenCaptureKit </apinotes/ScreenCaptureKit>`                                 | `pyobjc-framework-ScreenCaptureKit`_                 |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ScreenSaver </apinotes/ScreenSaver>`                                           | `pyobjc-framework-ScreenSaver`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ScreenTime </apinotes/ScreenTime>`                                             | `pyobjc-framework-ScreenTime`_                       |                                         |
@@ -689,6 +693,7 @@ prioritizing work.
 .. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
 .. _`pyobjc-framework-SafariServices`: https://pypi.org/project/pyobjc-framework-SafariServices/
 .. _`pyobjc-framework-SceneKit`: https://pypi.org/project/pyobjc-framework-SceneKit/
+.. _`pyobjc-framework-ScreenCaptureKit`: https://pypi.org/project/pyobjc-framework-ScreenCaptureKit/
 .. _`pyobjc-framework-ScreenSaver`: https://pypi.org/project/pyobjc-framework-ScreenSaver/
 .. _`pyobjc-framework-ScreenTime`: https://pypi.org/project/pyobjc-framework-ScreenTime/
 .. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/project/pyobjc-framework-ScriptingBridge/

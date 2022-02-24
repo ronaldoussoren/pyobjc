@@ -1632,6 +1632,23 @@
    "AVCaptureDevice": {
     "methods": [
      {
+      "selector": "isCenterStageActive",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isCenterStageEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setCenterStageEnabled:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "isPortraitEffectEnabled",
       "class_method": false,
       "retval": { "type_override": "Z" }
@@ -1674,6 +1691,11 @@
    },
    "AVCaptureDeviceFormat": {
     "methods": [
+     {
+      "selector": "isCenterStageSupported",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "class_method": false,
       "retval": {},

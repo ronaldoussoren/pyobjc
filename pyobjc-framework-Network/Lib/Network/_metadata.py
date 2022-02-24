@@ -338,7 +338,14 @@ functions = {
     "nw_connection_group_set_queue": (b"v@@",),
     "nw_ip_options_set_disable_fragmentation": (b"v@B",),
     "nw_error_get_error_domain": (b"I@",),
-    "nw_framer_options_copy_object_value": (b"@@^c",),
+    "nw_framer_options_copy_object_value": (
+        b"@@^c",
+        "",
+        {
+            "retval": {"already_retained": True},
+            "arguments": {1: {"c_array_delimited_by_null": True, "type": "n^t"}},
+        },
+    ),
     "nw_framer_mark_ready": (b"v@",),
     "nw_ws_request_enumerate_additional_headers": (
         b"B@@?",
@@ -756,7 +763,11 @@ functions = {
         {"retval": {"c_array_delimited_by_null": True}},
     ),
     "nw_parameters_get_local_only": (b"B@",),
-    "nw_framer_options_set_object_value": (b"v@^c@",),
+    "nw_framer_options_set_object_value": (
+        b"v@^c@",
+        "",
+        {"arguments": {1: {"type_modifier": "n", "c_array_delimited_by_null": True}}},
+    ),
     "nw_listener_start": (b"v@",),
     "nw_resolution_report_copy_preferred_endpoint": (
         b"@@",
@@ -1010,7 +1021,7 @@ functions = {
         },
     ),
     "nw_parameters_get_include_peer_to_peer": (b"B@",),
-    "nw_framer_copy_options": (b"@@",),
+    "nw_framer_copy_options": (b"@@", "", {"retval": {"already_retained": True}}),
     "nw_data_transfer_report_get_state": (b"I@",),
     "nw_ws_metadata_get_opcode": (b"i@",),
     "nw_framer_schedule_wakeup": (b"v@Q",),

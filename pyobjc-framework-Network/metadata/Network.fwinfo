@@ -18,6 +18,22 @@
   },
   "formal_protocols": {},
   "functions": {
+   "nw_framer_options_copy_object_value": {
+    "retval": { "already_retained": true }
+    "arguments": {
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true  }
+    }
+   },
+   "nw_framer_options_set_object_value": {
+    "arguments": {
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true  }
+    }
+   },
+   "nw_framer_copy_options": {
+    "retval": {
+     "already_retained": true,
+    }
+   },
    "nw_group_descriptor_create_multiplex": {
     "retval": {
      "already_retained": true,

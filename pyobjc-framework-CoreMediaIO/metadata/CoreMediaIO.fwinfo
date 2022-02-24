@@ -6,6 +6,42 @@
    "CMIOExtensionProperty": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "CMIOExtensionProvider": {
+    "methods": [
+     {
+      "selector": "addDevice:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "removeDevice:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+   "CMIOExtensionDevice": {
+    "methods": [
+     {
+      "selector": "addStream:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "removeStream:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
    "NSObject": {
     "methods": [
      {

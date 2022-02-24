@@ -84,5 +84,5 @@ class TestCMIOExtensionStream(TestCase):
         self.assertArgIsBlock(
             CoreMediaIO.CMIOExtensionStream.consumeSampleBufferFromClient_completionHandler_,
             1,
-            b"v^{__CMSampleBufferRef}QQZ@",
+            b"v^{opaqueCMSampleBuffer=}QIZ@",
         )

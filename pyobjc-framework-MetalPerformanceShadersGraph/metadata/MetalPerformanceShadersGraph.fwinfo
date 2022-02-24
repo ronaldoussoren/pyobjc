@@ -3,6 +3,122 @@
 {
  "definitions": {
   "classes": {
+   "MPSGraphLSTMDescriptor": {
+    "methods": [
+     {
+      "selector": "forgetGateLast",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setForgetGateLast:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "training",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setTraining:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "produceCell",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setProduceCell:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "bidirectional",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setBidirectional:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "reverse",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setReverse:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MPSGraphSingleGateRNNDescriptor": {
+    "methods": [
+     {
+      "selector": "reverse",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setReverse:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "training",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setTraining:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "bidirectional",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setBidirectional:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "reverse",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setReverse:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "MPSGraph": {
     "methods": [
      {

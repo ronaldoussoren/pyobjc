@@ -7,15 +7,29 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
-VERSION = "8.3b1"
+VERSION = "8.3"
 
 setup(
     name="pyobjc-framework-ScreenCaptureKit",
     description="Wrappers for the framework ScreenCaptureKit on macOS",
     min_os_level="12.3",
     packages=["ScreenCaptureKit"],
+    ext_modules=[
+        Extension(
+            "ScreenCaptureKit._ScreenCaptureKit",
+            ["Modules/_ScreenCaptureKit.m"],
+            extra_link_args=["-framework", "ScreenCaptureKit"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_ScreenCaptureKit")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

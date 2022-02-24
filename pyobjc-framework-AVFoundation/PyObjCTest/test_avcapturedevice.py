@@ -207,7 +207,6 @@ class TestAVCaptureDevice(TestCase):
         self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setCenterStageEnabled_, 0)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageActive)
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageSupported)
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDevice.videoMaxZoomFactorForCenterStage
+            AVFoundation.AVCaptureDeviceFormat.isCenterStageSupported
         )

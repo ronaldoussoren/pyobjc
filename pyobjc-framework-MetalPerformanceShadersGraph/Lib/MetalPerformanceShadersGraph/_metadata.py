@@ -433,6 +433,96 @@ try:
         {"arguments": {7: {"type": b"Z"}}},
     )
     r(
+        b"MPSGraphLSTMDescriptor",
+        b"reverse",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"setReverse:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"produceCell",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"setProduceCell:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"bidirectional",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"setBidirectional:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"forgetGateLast",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"setForgetGateLast:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"training",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphLSTMDescriptor",
+        b"setTraining:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"reverse",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"setReverse:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"bidirectional",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"setBidirectional:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"training",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"setTraining:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"reverse",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSGraphSingleGateRNNDescriptor",
+        b"setReverse:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
         b"null",
         b"whileWithInitialInputs:before:after:name:",
         {

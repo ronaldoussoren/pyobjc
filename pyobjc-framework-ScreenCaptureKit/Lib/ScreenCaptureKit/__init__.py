@@ -9,7 +9,7 @@ import sys
 
 import CoreMedia
 import objc
-from . import _metadata
+from . import _metadata, _ScreenCaptureKit
 
 sys.modules["ScreenCaptureKit"] = mod = objc.ObjCLazyModule(
     "ScreenCaptureKit",
@@ -23,7 +23,10 @@ sys.modules["ScreenCaptureKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (CoreMedia,),
+    (
+        _ScreenCaptureKit,
+        CoreMedia,
+    ),
 )
 
 del sys.modules["ScreenCaptureKit._metadata"]
