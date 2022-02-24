@@ -72,6 +72,15 @@ Version 8.4
 * ``NSData([1,2,3])`` and ``NSMutableData([1,2,3])`` now work the same
   as ``bytes([1,2,3])`` and ``bytearray([1,2,3])``.
 
+* #334: Workaround for catetory on NSMutableArray that introduces a conflicting pop method
+
+  Some class in Cocoa can at times introduce an (undocumented) selector ``-pop``
+  on subclasses of ``NSArray``, which conflicts with a convenience method that
+  emulates :meth:`list.pop`. The version introduces a workaround for this by
+  adding the convenience method to all (statically known) subclasses of NSArray.
+
+  This is far from perfect, but fixes the problem for now.
+
 Version 8.3
 -----------
 

@@ -157,7 +157,6 @@ class MutableArrayTest(list_tests.CommonTest):
         lst.insert(99, "a")
         self.assertEqual(lst, [1, "a"])
 
-    @expectedFailure
     def test_pop(self):
         list_tests.CommonTest.test_pop(self)
 
