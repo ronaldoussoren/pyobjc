@@ -11,7 +11,7 @@ and (Objective-)C frameworks
 """
 from pyobjc_setup import setup
 
-VERSION = "8.3b1"
+VERSION = "8.3"
 
 setup(
     name="pyobjc-framework-Automator",

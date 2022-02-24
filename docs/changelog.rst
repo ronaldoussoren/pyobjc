@@ -72,8 +72,8 @@ Version 8.4
 * ``NSData([1,2,3])`` and ``NSMutableData([1,2,3])`` now work the same
   as ``bytes([1,2,3])`` and ``bytearray([1,2,3])``.
 
-Version 8.3b1
--------------
+Version 8.3
+-----------
 
 This release contains a lot of small fixes dueo to the continued improvement
 of test coverage for the C code in pyobjc-core.
