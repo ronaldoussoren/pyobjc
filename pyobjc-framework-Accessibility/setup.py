@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 import os
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.3"
+VERSION = "8.4b1"
 
 setup(
     name="pyobjc-framework-Accessibility",

@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION = "8.3"
+VERSION = "8.4b1"
 
 setup(
     name="pyobjc-framework-ScreenCaptureKit",

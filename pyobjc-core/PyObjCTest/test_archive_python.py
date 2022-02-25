@@ -884,6 +884,10 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
         pass
 
     @skipUnless(0, "python unittest not relevant for archiving")
+    def test_buffers_numpy(self):
+        pass
+
+    @skipUnless(0, "python unittest not relevant for archiving")
     def test_buffers_error(self):
         pass
 
