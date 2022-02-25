@@ -294,7 +294,7 @@ if sys.version_info[:2] >= (3, 7):
     addConvenienceForClass("NSData", (("isascii", nsdata_isascii),))
 
 
-if sys.version_info[:2] >= (3, 10):
+if sys.version_info[:2] >= (3, 9):
 
     def nsdata_removeprefix(self, *args, **kwds):
         return bytes(self.bytes()).removeprefix(*args, **kwds)

@@ -565,7 +565,7 @@ class TestBytesInterface(TestCase):
 
             self.assertEqual(oc.title(), py.title())
 
-    @min_python_release("3.10")
+    @min_python_release("3.9")
     def test_removefx(self):
         value = b"hello world"
         needles = [b"he", b"rld"]
