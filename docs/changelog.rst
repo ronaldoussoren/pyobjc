@@ -81,7 +81,7 @@ Version 8.4
 
   This is far from perfect, but fixes the problem for now.
 
-* Fix incompatibility with Python 3.11 (alpha 5)
+* Fix memory manager API misuse
 
   PyObjC's :class:`str` subclass used the python allocator API incorrectly,
   causing an assertion failure when running tests with "``python3 -Xdev``",
