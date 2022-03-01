@@ -81,6 +81,12 @@ Version 8.4
 
   This is far from perfect, but fixes the problem for now.
 
+* Fix incompatibility with Python 3.11 (alpha 5)
+
+  PyObjC's :class:`str` subclass used the python allocator API incorrectly,
+  causing an assertion failure when running tests with "``python3 -Xdev``",
+  as well as a hard crash due to using the API without holding the GIL.
+
 Version 8.3
 -----------
 

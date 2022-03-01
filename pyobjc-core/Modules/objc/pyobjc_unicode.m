@@ -207,7 +207,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
     length = [value length];
 
-    characters = PyObject_MALLOC(sizeof(unichar) * (length + 1));
+    characters = PyObject_Malloc(sizeof(unichar) * (length + 1));
     if (characters == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
@@ -215,6 +215,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         // LCOV_EXCL_STOP
     }
 
+    bool have_exception = false;
     Py_BEGIN_ALLOW_THREADS
         @try {
             range = NSMakeRange(0, length);
@@ -223,13 +224,15 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             characters[length] = 0;
 
         } @catch (NSObject* localException) {
-            PyMem_Free(characters);
-            characters = NULL;
+            have_exception = true;
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
 
-    if (characters == NULL) {
+    if (have_exception) {
+        PyObject_Free(characters);
+        characters = NULL;
+
         return NULL;
     }
 
@@ -397,7 +400,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     }
 
     if (characters != NULL) {
-        PyObject_DEL(characters);
+        PyObject_Free(characters);
         characters = NULL;
     }
 
@@ -414,7 +417,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 error:
     // LCOV_EXCL_START
     Py_DECREF((PyObject*)result);
-    PyMem_Free(characters);
+    PyObject_Free(characters);
     characters = NULL;
     PyErr_NoMemory();
     return NULL;
