@@ -336,8 +336,8 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
 
 const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
 {
-    const char* _Nullable type = start_type;
     PyObjC_Assert(start_type != NULL, NULL);
+    const char* type = start_type;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
 
@@ -505,7 +505,7 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
 {
     PyObjC_Assert(start_type != NULL, NULL);
 
-    const char* _Nullable type = start_type;
+    const char* type = start_type;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
 
