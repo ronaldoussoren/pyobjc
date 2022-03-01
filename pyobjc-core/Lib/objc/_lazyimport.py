@@ -12,9 +12,10 @@ import sys
 import warnings
 
 import objc
+import types
 from objc import getClassList, loadBundle, lookUpClass, nosuchclass_error
 
-ModuleType = type(sys)
+ModuleType = types.ModuleType
 
 _name_re = re.compile("^[A-Za-z_][A-Za-z_0-9]*$")
 
@@ -93,6 +94,10 @@ class ObjCLazyModule(ModuleType):
         "_ObjCLazyModule__aliases",
         "_ObjCLazyModule__informal_protocols",
     )
+    if sys.version_info[:2] == (3, 11):
+        # XXX: Workaround for bug in Python 3.11a5
+        #      See https://bugs.python.org/issue46891
+        del __slots__
 
     def __init__(
         self,

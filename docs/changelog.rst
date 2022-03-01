@@ -87,6 +87,14 @@ Version 8.4
   causing an assertion failure when running tests with "``python3 -Xdev``",
   as well as a hard crash due to using the API without holding the GIL.
 
+* #445: Workaround for Python 3.11 support
+
+  Workaround for `BPO-46891 <https://bugs.python.org/issue46891 >`_, which causes
+  a hard crash in the PyObjC testsuite. With this workaround the tests for
+  pyobjc-core pass with python 3.11a5, but this does result into adding some
+  implementation internals to the ``__dict__`` of framework wrappers when using
+  Python 3.11
+
 Version 8.3
 -----------
 
