@@ -61,20 +61,20 @@ class SomeBytes(bytes):
 
 
 class TestDataReading(TestCase):
-    testClass = bytes
+    bytes_class = bytes
 
     def test_get_bytes(self):
-        data = self.testClass(b"hello world")
+        data = self.bytes_class(b"hello world")
 
         v = OC_DataInt.getBytes_length_(data, 8)
         self.assertEqual(v, b"hello wo")
 
     def test_length(self):
-        data = self.testClass(b"hello world")
+        data = self.bytes_class(b"hello world")
         self.assertEqual(OC_DataInt.lengthOf_(data), len(data))
 
     def test_coderClass(self):
-        data = self.testClass(b"hello")
+        data = self.bytes_class(b"hello")
         cls = OC_DataInt.coderClassFor_(data)
         if type(data) == bytes:
             self.assertIs(cls, NSData)
@@ -84,15 +84,15 @@ class TestDataReading(TestCase):
             self.assertIs(cls, OC_PythonData)
 
     def test_keyedArchiverClass(self):
-        data = self.testClass(b"hello")
+        data = self.bytes_class(b"hello")
         cls = OC_DataInt.keyedArchiverClassFor_(data)
-        if self.testClass in (bytes, bytearray):
+        if self.bytes_class in (bytes, bytearray):
             self.assertIs(cls, OC_BuiltinPythonData)
         else:
             self.assertIs(cls, OC_PythonData)
 
     def test_roundtrip_through_keyedarchive(self):
-        data = self.testClass(b"hello to you too")
+        data = self.bytes_class(b"hello to you too")
 
         (
             blob,
@@ -104,11 +104,11 @@ class TestDataReading(TestCase):
         self.assertIsInstance(blob, NSData)
 
         copy = NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
-        self.assertIsInstance(copy, self.testClass)
+        self.assertIsInstance(copy, self.bytes_class)
         self.assertEqual(copy, data)
 
     def test_roundtrip_through_archive(self):
-        data = self.testClass(b"hello to you too")
+        data = self.bytes_class(b"hello to you too")
 
         blob = NSArchiver.archivedDataWithRootObject_(data)
         self.assertIsInstance(blob, NSData)
@@ -116,21 +116,21 @@ class TestDataReading(TestCase):
         copy = NSUnarchiver.unarchiveObjectWithData_(blob)
         self.assertEqual(copy, data)
 
-        if self.testClass in (bytes, bytearray):
+        if self.bytes_class in (bytes, bytearray):
             # For interoperability with Objective-C code
             # bytes and bytearray are encoded as
             # NS(Mutable)Data in non-keyed archvies
             self.assertIsInstance(copy, NSMutableData)
         else:
-            self.assertIsInstance(copy, self.testClass)
+            self.assertIsInstance(copy, self.bytes_class)
 
 
 class TestReadingNonBytes(TestDataReading):
-    testClass = SomeBytes
+    bytes_class = SomeBytes
 
     def test_non_equal_defaults(self):
-        v1 = self.testClass(b"hello")
-        v2 = self.testClass(b"hello")
+        v1 = self.bytes_class(b"hello")
+        v2 = self.bytes_class(b"hello")
 
         self.assertIsInstance(v1.x, int)
         self.assertIsInstance(v2.x, int)
@@ -141,10 +141,10 @@ class TestReadingNonBytes(TestDataReading):
 
 
 class TestDataWriting(TestDataReading):
-    testClass = bytearray
+    bytes_class = bytearray
 
     def test_set_bytes(self):
-        data = self.testClass(b"hello world")
+        data = self.bytes_class(b"hello world")
 
         OC_DataInt.setBytes_new_length_(data, b"12345678", 8)
         self.assertEqual(data, b"12345678rld")

@@ -661,10 +661,10 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
 
 
 class DictSetTest(TestCase):
-    testclass = NSDictionary
+    dictclass = NSDictionary
 
     def testDictKeys(self):
-        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
+        d = self.dictclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
 
         keys = d.keys()
 
@@ -681,11 +681,11 @@ class DictSetTest(TestCase):
         self.assertNotIn("Z", keys)
         self.assertEqual(d.keys(), d.keys())
 
-        e = self.testclass.dictionaryWithDictionary_({1: 11, "a": "def"})
+        e = self.dictclass.dictionaryWithDictionary_({1: 11, "a": "def"})
         self.assertEqual(d.keys(), e.keys())
 
     def testDictItems(self):
-        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
+        d = self.dictclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
         items = d.items()
 
         self.assertEqual(len(items), 2)
@@ -709,18 +709,18 @@ class DictSetTest(TestCase):
 
 
 class DictSetTest(DictSetTest):
-    testclass = NSMutableDictionary
+    dictclass = NSMutableDictionary
 
     def testDictKeysMutable(self):
-        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
-        e = self.testclass.dictionaryWithDictionary_({1: 11, "a": "def"})
+        d = self.dictclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
+        e = self.dictclass.dictionaryWithDictionary_({1: 11, "a": "def"})
         self.assertEqual(d.keys(), e.keys())
 
         del e["a"]
         self.assertNotEqual(d.keys(), e.keys())
 
     def testDictItemsMutable(self):
-        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
+        d = self.dictclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
 
         e = d.copy()
         self.assertEqual(d.items(), e.items())
@@ -728,13 +728,13 @@ class DictSetTest(DictSetTest):
         self.assertNotEqual(d.items(), e.items())
 
     def testDictMixedKeysItems(self):
-        d = self.testclass.dictionaryWithDictionary_({(1, 1): 11, (2, 2): 22})
-        e = self.testclass.dictionaryWithDictionary_({1: 1, 2: 2})
+        d = self.dictclass.dictionaryWithDictionary_({(1, 1): 11, (2, 2): 22})
+        e = self.dictclass.dictionaryWithDictionary_({1: 1, 2: 2})
         self.assertEqual(d.keys(), e.items())
         self.assertNotEqual(d.items(), e.keys())
 
     def testDictValues(self):
-        d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
+        d = self.dictclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
         values = d.values()
         self.assertEqual(set(values), {10, "ABC"})
         self.assertEqual(len(values), 2)
