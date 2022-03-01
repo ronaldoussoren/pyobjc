@@ -29,6 +29,9 @@ class TestSignals(TestCase):
 
     def tearDown(self):
         for sig, handler in self._orig_handlers.items():
+            if handler is None:
+                # Can be caused by faulthandler
+                continue
             signal.signal(sig, handler)
 
     def _handle_signal(self, signum, frame):
