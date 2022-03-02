@@ -14,7 +14,7 @@ import sys as _sys
 import unittest as _unittest
 import subprocess as _subprocess
 import pickle as _pickle
-from distutils.sysconfig import get_config_var as _get_config_var
+from sysconfig import get_config_var as _get_config_var
 
 import objc
 
