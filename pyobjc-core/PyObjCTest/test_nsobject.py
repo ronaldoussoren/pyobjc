@@ -161,7 +161,9 @@ class TestNSObjectSupport(TestCase):
         with self.assertRaisesRegex(SomeException, "alloc"):
             Py_AllocRaises.alloc()
 
-    def test_python_retain_release(self):
+    def no_test_python_retain_release(self):
+        # XXX: Needs some work to support --with-pydebug
+        #     See #446
         obj = Py_RefCountRaises.alloc().init()
 
         obj.retain()
