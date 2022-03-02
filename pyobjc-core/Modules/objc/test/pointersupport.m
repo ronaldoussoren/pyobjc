@@ -16,12 +16,17 @@ static CFStringRef aString = CFSTR("a static string");
 @implementation OC_PointerSupport
 + (Py_ssize_t)getObjectLen:(PyObject*)value
 {
-    return PyObject_Length(value);
+    PyGILState_STATE state  = PyGILState_Ensure();
+    Py_ssize_t       result = PyObject_Length(value);
+    PyGILState_Release(state);
+    return result;
 }
 
 + (PyObject*)getNone
 {
+    PyGILState_STATE state = PyGILState_Ensure();
     Py_INCREF(Py_None);
+    PyGILState_Release(state);
     return Py_None;
 }
 
