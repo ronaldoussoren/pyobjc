@@ -6,7 +6,7 @@ and is therefore in the core instead of the Foundation
 framework wrappers.
 """
 from objc._convenience import addConvenienceForClass
-from objc._objc import registerMetaDataForSelector, lookUpClass
+from objc._objc import registerMetaDataForSelector
 import sys
 import operator
 
@@ -333,18 +333,11 @@ def nsmutabledata__delitem__(self, item):
         if item < 0:
             item += len(self)
             if item < 0:
-                item = 0
+                raise IndexError(f"{type(self).__name__} index out of range")
         self.replaceBytesInRange_withBytes_length_((item, 1), b"", 0)
 
 
-_nsdata = None
-
-
 def nsmutabledata__iadd__(self, iterable_of_ints):
-    global _nsdata
-    if _nsdata is None:
-        _nsdata = lookUpClass("NSData")
-
     view = memoryview(iterable_of_ints)
     self.appendData_(view)
 
@@ -352,10 +345,6 @@ def nsmutabledata__iadd__(self, iterable_of_ints):
 
 
 def nsmutabledata_extend(self, iterable_of_ints):
-    global _nsdata
-    if _nsdata is None:
-        _nsdata = lookUpClass("NSData")
-
     try:
         view = memoryview(iterable_of_ints)
     except TypeError:
@@ -392,7 +381,7 @@ def nsmutabledata_pop(self, index=-1):
     if index < 0:
         index += len(self)
         if index < 0:
-            index = 0
+            raise IndexError(f"{type(self).__name__} index out of range")
 
     result = self[index]
     self.replaceBytesInRange_withBytes_length_((index, 1), b"", 0)

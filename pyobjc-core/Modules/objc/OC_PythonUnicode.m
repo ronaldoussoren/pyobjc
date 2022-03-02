@@ -386,26 +386,26 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-- (NSObject* _Nullable)replacementObjectForArchiver:(NSArchiver*)archiver
-    __attribute__((__unused__))
+- (NSObject* _Nullable)replacementObjectForArchiver:
+    (NSArchiver*)__attribute__((__unused__))archiver
 {
     return self;
 }
 
-- (NSObject* _Nullable)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
-    __attribute__((__unused__))
+- (NSObject* _Nullable)replacementObjectForKeyedArchiver:
+    (NSKeyedArchiver*)__attribute__((__unused__))archiver
 {
     return self;
 }
 
-- (NSObject* _Nullable)replacementObjectForCoder:(NSCoder*)archiver
-    __attribute__((__unused__))
+- (NSObject* _Nullable)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__))
+                                                 archiver
 {
     return self;
 }
 
-- (NSObject* _Nullable)replacementObjectForPortCoder:(NSPortCoder*)archiver
-    __attribute__((__unused__))
+- (NSObject* _Nullable)replacementObjectForPortCoder:
+    (NSPortCoder*)__attribute__((__unused__))archiver
 {
     return self;
 }

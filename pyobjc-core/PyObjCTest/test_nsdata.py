@@ -907,6 +907,22 @@ class TestBytearrayInterface(TestBytesInterface):
 
         self.assertEqual(oc, py)
 
+        value = b"parser" * 4
+
+        oc = self.oc_cls.dataWithData_(value)
+        py = self.py_cls(value)
+
+        del oc[-2]
+        del py[-2]
+
+        self.assertEqual(oc, py)
+
+        with self.assertRaisesRegex(IndexError, "index out of range"):
+            del oc[-len(value)]
+
+        with self.assertRaisesRegex(IndexError, "index out of range"):
+            del py[-len(value)]
+
     def test_insert(self):
         value = b"abcdefg"
 
@@ -964,3 +980,9 @@ class TestBytearrayInterface(TestBytesInterface):
 
         self.assertEqual(o, p)
         self.assertEqual(bytes(oc), py)
+
+        with self.assertRaisesRegex(IndexError, "index out of range"):
+            oc.pop(-2 * len(value))
+
+        with self.assertRaisesRegex(IndexError, "index out of range"):
+            py.pop(-22 * len(value))

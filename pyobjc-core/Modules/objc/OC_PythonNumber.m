@@ -561,7 +561,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self copyWithZone:NULL];
 }
 
-- (id)copyWithZone:(NSZone* _Nullable)zone __attribute__((__unused__))
+- (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__))zone
 {
     /* XXX: This is ok if value is a python builtin
      *      but not for arbitrary python objects.

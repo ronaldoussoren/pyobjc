@@ -666,7 +666,7 @@ NSObject (TestMethods)
     return self;
 }
 
-- (instancetype)copyWithZone:(NSZone*)zone
+- (instancetype)copyWithZone:(NSZone*)__attribute__((__unused__))zone
 {
     return [self retain];
 }

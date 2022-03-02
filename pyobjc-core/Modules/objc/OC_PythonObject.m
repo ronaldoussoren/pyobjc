@@ -1101,7 +1101,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     }
 }
 
-- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)coder __attribute__((__unused__))
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__))coder
 {
     return self;
 }
@@ -1109,26 +1109,25 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-- (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
-    __attribute__((__unused__))
+- (NSObject*)replacementObjectForArchiver:(NSArchiver*)__attribute__((__unused__))archiver
 {
     return (NSObject*)self;
 }
 
-- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
-    __attribute__((__unused__))
+- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)__attribute__((__unused__))
+                                           archiver
 {
     return (NSObject*)self;
 }
 #pragma clang diagnostic pop
 
-- (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
-    __attribute__((__unused__))
+- (NSObject*)replacementObjectForKeyedArchiver:
+    (NSKeyedArchiver*)__attribute__((__unused__))archiver
 {
     return (NSObject*)self;
 }
 
-- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver __attribute__((__unused__))
+- (NSObject*)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__))archiver
 {
     return (NSObject*)self;
 }

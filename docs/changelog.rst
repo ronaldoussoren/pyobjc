@@ -95,6 +95,8 @@ Version 8.4
   implementation internals to the ``__dict__`` of framework wrappers when using
   Python 3.11
 
+* Fix build error on macOS 10.9
+
 Version 8.3
 -----------
 
