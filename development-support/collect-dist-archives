@@ -29,6 +29,20 @@ def files_matching(pattern, dirname):
 _detected_versions = None
 
 
+def is_usable_release(ver):
+    path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+
+    if not os.path.exists(path):
+        return False
+
+    output = subprocess.check_output([f"{path}/bin/python3", "--version"]).decode()
+    if "a" in output.strip():
+        # Alpha release
+        return False
+
+    return True
+
+
 def detect_pyversions():
     global _detected_versions
     if _detected_versions is not None:
@@ -36,10 +50,7 @@ def detect_pyversions():
 
     result = []
     for ver in PY_VERSIONS:
-        if os.path.exists(
-            os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-        ):
-
+        if is_usable_release(ver):
             result.append(ver)
 
     _detected_versions = result
