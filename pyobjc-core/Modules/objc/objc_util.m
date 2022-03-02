@@ -762,6 +762,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 /* Ensure that the expected semantics still work
                  * when the passed in buffer is read-only
                  */
+                PyErr_Clear();
                 PyObject* byte_array;
 
                 if (PyObject_GetBuffer(pythonList, view, PyBUF_CONTIG_RO) == -1) {

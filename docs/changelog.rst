@@ -101,6 +101,9 @@ Version 8.4
   subclass.  With this fix the string consistency checks in debug builds of
   CPython pass.
 
+* Fix exception handling when passing a bytes object to a C function
+  with a byte buffer "inout" argument.
+
 Version 8.3
 -----------
 
