@@ -71,9 +71,20 @@ class TestBasicDescriptors(TestCase):
         def mySelector_arg_(self, a, b):
             return 4
 
+        @objc.typedSelector(b"q@:i")
+        @classmethod
+        def mySelector_(self, a):
+            return 4
+
         self.assertIsInstance(mySelector_arg_, objc.selector)
         self.assertEqual(mySelector_arg_.signature, b"I@:qq")
         self.assertEqual(mySelector_arg_.selector, b"mySelector:arg:")
+        self.assertFalse(mySelector_arg_.isClassMethod)
+
+        self.assertIsInstance(mySelector_, objc.selector)
+        self.assertEqual(mySelector_.signature, b"q@:i")
+        self.assertEqual(mySelector_.selector, b"mySelector:")
+        self.assertTrue(mySelector_.isClassMethod)
 
         with self.assertRaisesRegex(
             TypeError, r"typedSelector\(\) function argument must be a callable"
@@ -87,9 +98,39 @@ class TestBasicDescriptors(TestCase):
         def mymethod(self, a, b):
             pass
 
+        @objc.namedSelector(b"foo:bar:")
+        @classmethod
+        def mymethod2(self, a, b):
+            pass
+
+        @objc.namedSelector(b"foo:bar:", signature=b"I@:qq")
+        def mymethod3(self, a, b):
+            pass
+
+        @objc.namedSelector(b"foo:bar:", signature=b"I@:qq")
+        @classmethod
+        def mymethod4(self, a, b):
+            pass
+
         self.assertIsInstance(mymethod, objc.selector)
         self.assertEqual(mymethod.signature, b"v@:@@")
         self.assertEqual(mymethod.selector, b"foo:bar:")
+        self.assertFalse(mymethod.isClassMethod)
+
+        self.assertIsInstance(mymethod2, objc.selector)
+        self.assertEqual(mymethod2.signature, b"v@:@@")
+        self.assertEqual(mymethod2.selector, b"foo:bar:")
+        self.assertTrue(mymethod2.isClassMethod)
+
+        self.assertIsInstance(mymethod3, objc.selector)
+        self.assertEqual(mymethod3.signature, b"I@:qq")
+        self.assertEqual(mymethod3.selector, b"foo:bar:")
+        self.assertFalse(mymethod3.isClassMethod)
+
+        self.assertIsInstance(mymethod4, objc.selector)
+        self.assertEqual(mymethod4.signature, b"I@:qq")
+        self.assertEqual(mymethod4.selector, b"foo:bar:")
+        self.assertTrue(mymethod4.isClassMethod)
 
         with self.assertRaisesRegex(
             TypeError, "namedSelector argument must be a callable"

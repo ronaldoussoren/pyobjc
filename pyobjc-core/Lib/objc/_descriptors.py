@@ -222,6 +222,12 @@ def namedSelector(name, signature=None):
         def _namedselector(func):
             if func is None:
                 raise TypeError("namedSelector argument must be a callable")
+            if isinstance(func, classmethod):
+                return selector(
+                    func.__func__,
+                    selector=name,
+                    isClassMethod=True,
+                )
             return selector(func, selector=name)
 
     return _namedselector

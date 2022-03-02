@@ -11,7 +11,6 @@ import os as _os
 import re as _re
 import struct as _struct
 import sys as _sys
-import typing as _typing
 import unittest as _unittest
 import subprocess as _subprocess
 import pickle as _pickle
@@ -369,46 +368,18 @@ class TestCase(_unittest.TestCase):
         #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
     def assertIsEnumType(self, tp):
-        tmp = _typing.NewType("tmp", int)
-        if isinstance(tmp, type(lambda: 1)):
-            # typing.NewType is not a type in Python 3.7 or earlier
-            if not isinstance(tp, type(lambda: 1)):
-                self.fail(f"{tp!r} is not a typing.NewType")
-
-            if "NewType" not in str(tp) or "new_type" not in str(tp):
-                self.fail(f"{tp!r} is not a typing.NewType")
-
-            if tp.__supertype__ != int:
-                self.fail(
-                    f"{tp!r} is not a typing.NewType based on 'int' but {tp.__supertype__.__name__!r}"
-                )
-
-            return
-
-        if not isinstance(tp, _typing.NewType):
+        if not hasattr(tp, "__supertype__"):
+            # Ducktyping for compatibility with Python 3.7
+            # or earlier.
             self.fail(f"{tp!r} is not a typing.NewType")
 
         if tp.__supertype__ != int:
             self.fail(f"{tp!r} is not a typing.NewType based on 'int'")
 
     def assertIsTypedEnum(self, tp, base):
-        tmp = _typing.NewType("tmp", int)
-        if isinstance(tmp, type(lambda: 1)):
-            # typing.NewType is not a type in Python 3.7 or earlier
-            if not isinstance(tp, type(lambda: 1)):
-                self.fail(f"{tp!r} is not a typing.NewType")
-
-            if "NewType" not in str(tp) or "new_type" not in str(tp):
-                self.fail(f"{tp!r} is not a typing.NewType")
-
-            if tp.__supertype__ != base:
-                self.fail(
-                    f"{tp!r} is not a typing.NewType based on {base.__name__!r} but {tp.__supertype__.__name__!r}"
-                )
-
-            return
-
-        if not isinstance(tp, _typing.NewType):
+        if not hasattr(tp, "__supertype__"):
+            # Ducktyping for compatibility with Python 3.7
+            # or earlier.
             self.fail(f"{tp!r} is not a typing.NewType")
 
         if tp.__supertype__ != base:
@@ -1000,7 +971,7 @@ class TestCase(_unittest.TestCase):
                 message or "arg %d of %s is not an 'in' argument" % (argno, method)
             )
 
-    def assertStartswith(self, value, test, message=None):  # pragma: no cover
+    def assertStartswith(self, value, test, message=None):
         if not value.startswith(test):
             self.fail(message or f"{value!r} does not start with {test!r}")
 

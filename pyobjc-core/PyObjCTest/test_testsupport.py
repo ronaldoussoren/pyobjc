@@ -460,6 +460,17 @@ class TestTestSupport(TestCase):
         ):
             self.assertIsInstance(42, str)
 
+    def test_assertStartswith(self):
+        with self.assertRaisesRegex(
+            self.failureException, "'foo' does not start with 'bar'"
+        ):
+            self.assertStartswith("foo", "bar")
+
+        try:
+            self.assertStartswith("foobar", "foo")
+        except self.failureException:
+            self.fail("Unexpected assertion failure")
+
     def test_assertManualBinding(self):
         with self.assertRaisesRegex(self.failureException, ".*has automatic bindings"):
             self.assertManualBinding(objc.lookUpClass("NSObject").alloc)
