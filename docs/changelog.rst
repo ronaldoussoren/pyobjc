@@ -97,6 +97,10 @@ Version 8.4
 
 * Fix build error on macOS 10.9
 
+* Fix :class:`str` implementation invariant in the :class:`objc.pyobjc_unicode`
+  subclass.  With this fix the string consistency checks in debug builds of
+  CPython pass.
+
 Version 8.3
 -----------
 

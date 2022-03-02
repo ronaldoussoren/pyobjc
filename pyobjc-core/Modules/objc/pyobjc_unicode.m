@@ -397,6 +397,12 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         }
         *ucs4_cur     = 0;
         ascii->length = length - nr_surrogates;
+
+#if SIZEOF_WCHAR_T != 4
+#error "Code assumes sizeof(wchar_t) == 4
+#endif
+        ascii->wstr          = (wchar_t*)result->base.data.ucs4;
+        compact->wstr_length = ascii->length;
     }
 
     if (characters != NULL) {
