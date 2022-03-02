@@ -154,7 +154,13 @@ class a_classic_class_with_state:
 
     def __setstate__(self, state):
         for k, v in state.items():
-            setattr(self, k, v)
+            # XXX: BPO 46903: In a --with-pydebug build the
+            #      attribute name must have the exact type 'str'.
+            #
+            #      This workaround makes is possible to run
+            #      the test suite.
+            assert isinstance(k, objc.pyobjc_unicode)
+            setattr(self, str(k), v)
 
 
 class a_newstyle_class:
