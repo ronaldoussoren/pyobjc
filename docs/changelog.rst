@@ -13,10 +13,17 @@ Version 8.4
 
 * Added bindings for ScreenCaptureKit (new in macOS 12.3)
 
-
 * Updated framework bindings for the macOS 12.3 SDK.
 
   Based on Xcode 13.3 beta 3
+
+
+* Reverted a change in 8.3: It is once again not possible to
+  use the "is" operator to check if two proxies for an NSString
+  refer to the same Cocoa object.
+
+  The change in 8.3 changed long standng behaviour for mutable
+  strings and may have caused unintended problems.
 
 * #418: Added :class:`typing.NewType` definitions to the
   various framework bindings for all enum types in Cocoa

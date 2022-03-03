@@ -205,14 +205,18 @@ NSString (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
-    PyObject* rval = PyObjC_FindPythonProxy(self);
-    if (rval == NULL) {
-        rval = (PyObject*)PyObjCUnicode_New(self);
-        if (rval != NULL) {
-            PyObjC_RegisterPythonProxy(self, rval);
-        }
-    }
-    return rval;
+    /* This creates a new proxy every time a string
+     * value is proxied to Python. That ensures that
+     * changes to mutable strings get reflected in
+     * the python value sooner.
+     *
+     * This means that the 'is' operator won't work
+     * for string proxies.
+     *
+     * Current behaviour has been here for a long time
+     * and changing this likely breaks code.
+     */
+    return (PyObject*)PyObjCUnicode_New(self);
 }
 
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
