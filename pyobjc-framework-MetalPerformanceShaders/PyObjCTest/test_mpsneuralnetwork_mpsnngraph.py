@@ -17,25 +17,6 @@ class TestMPSNeuralNetwork_MPSNNGraph(TestCase):
             2,
         )
 
-        self.assertArgHasType(
-            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
-            2,
-            b"o^" + objc._C_NSBOOL,
-        )
-        self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
-            2,
-        )
-        self.assertArgHasType(
-            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
-            2,
-            b"o^" + objc._C_NSBOOL,
-        )
-        self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
-            2,
-        )
-
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSNNGraph.outputStateIsTemporary
         )
@@ -49,4 +30,26 @@ class TestMPSNeuralNetwork_MPSNNGraph(TestCase):
             MetalPerformanceShaders.MPSNNGraph.executeAsyncWithSourceImages_completionHandler_,
             1,
             MPSNNGraphCompletionHandler,
+        )
+
+    @min_os_level("10.15")
+    def test_methods10_15(self):
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsVariableSize(
+            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
+            2,
+        )
+
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsVariableSize(
+            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
+            2,
         )

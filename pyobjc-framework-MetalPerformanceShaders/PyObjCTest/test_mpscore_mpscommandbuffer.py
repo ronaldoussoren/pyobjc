@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 import MetalPerformanceShaders
 
@@ -9,6 +9,7 @@ class TestMPSCore_MPSCommandBufferHelper(MetalPerformanceShaders.NSObject):
 
 
 class TestMPSCore_MPSCommandBuffer(TestCase):
+    @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("MPSHeapProvider")
 

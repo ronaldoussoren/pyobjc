@@ -4,8 +4,8 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCNNUpsampling(TestCase):
-    @min_os_level("10.13")
-    def test_methods10_13(self):
+    @min_os_level("10.14")
+    def test_methods10_14(self):
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSCNNUpsampling.alignCorners)
 
         self.assertArgIsBOOL(

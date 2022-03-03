@@ -15,7 +15,7 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 static PyObjC_function_map function_map[] = {
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
     {"MPSFindIntegerDivisionParams",
      (PyObjC_Function_Pointer)&MPSFindIntegerDivisionParams},
     {"MPSGetCustomKernelMaxBatchSize",

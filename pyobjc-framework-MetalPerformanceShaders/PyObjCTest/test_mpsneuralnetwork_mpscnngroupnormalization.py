@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 import MetalPerformanceShaders
 
@@ -32,6 +32,7 @@ class TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper(
 
 
 class TestMPSNeuralNetwork_MPSCNNGroupNormalization(TestCase):
+    @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("MPSCNNGroupNormalizationDataSource")
 

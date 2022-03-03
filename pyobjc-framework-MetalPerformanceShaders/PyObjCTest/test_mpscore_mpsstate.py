@@ -34,4 +34,7 @@ class TestMPSCore_MPSState(TestCase):
     def test_functions(self):
         MetalPerformanceShaders.MPSStateBatchIncrementReadCount
         MetalPerformanceShaders.MPSStateBatchSynchronize
+
+    @min_os_level("10.14")
+    def test_functions10_14(self):
         MetalPerformanceShaders.MPSStateBatchResourceSize

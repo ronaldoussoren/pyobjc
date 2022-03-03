@@ -167,20 +167,6 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
             3,
         )
 
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNConvolutionTranspose.exportWeightsAndBiasesWithCommandBuffer_resultStateCanBeTemporary_,
-            1,
-        )
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeToCommandBuffer_sourceImage_convolutionGradientState_destinationState_destinationStateIsTemporary_,  # noqa: B950
-            4,
-        )
-
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeBatchToCommandBuffer_sourceImages_convolutionGradientStates_destinationStates_destinationStateIsTemporary_,  # noqa: B950
-            4,
-        )
-
         self.assertArgIsIn(
             MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             2,
@@ -251,4 +237,20 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
     def test_methods10_13_4(self):
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSCNNConvolutionGradient.serializeWeightsAndBiases
+        )
+
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertArgIsBOOL(
+            MetalPerformanceShaders.MPSCNNConvolutionTranspose.exportWeightsAndBiasesWithCommandBuffer_resultStateCanBeTemporary_,
+            1,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeToCommandBuffer_sourceImage_convolutionGradientState_destinationState_destinationStateIsTemporary_,  # noqa: B950
+            4,
+        )
+
+        self.assertArgIsBOOL(
+            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeBatchToCommandBuffer_sourceImages_convolutionGradientStates_destinationStates_destinationStateIsTemporary_,  # noqa: B950
+            4,
         )

@@ -24,6 +24,8 @@ class TestMPSImage_MPSImageHistogram(TestCase):
             MetalPerformanceShaders.MPSImageHistogram.initWithDevice_histogramInfo_, 1
         )
 
+    @min_os_level("10.14")
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSImageNormalizedHistogram.zeroHistogram
         )

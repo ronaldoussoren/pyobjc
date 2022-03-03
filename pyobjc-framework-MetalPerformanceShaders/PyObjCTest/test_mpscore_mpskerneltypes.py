@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 import MetalPerformanceShaders
 
@@ -120,6 +120,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertIsInstance(v.broadcastTextureCount, int)
         self.assertPickleRoundTrips(v)
 
+    @min_sdk_level("10.13.4")
     def test_inline_functions(self):
         MetalPerformanceShaders.MPSFindIntegerDivisionParams
         MetalPerformanceShaders.MPSGetCustomKernelMaxBatchSize

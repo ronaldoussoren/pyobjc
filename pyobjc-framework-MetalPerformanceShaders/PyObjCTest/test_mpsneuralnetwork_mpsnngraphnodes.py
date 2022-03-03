@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 import MetalPerformanceShaders
 
@@ -17,6 +17,9 @@ class TestMPSNNGraphNodes(TestCase):
     def test_protocols(self):
         objc.protocolNamed("MPSHandle")
         objc.protocolNamed("MPSNNTrainableNode")
+
+    @min_sdk_level("10.15")
+    def test_protols10_15(self):
         objc.protocolNamed("MPSNNGramMatrixCallback")
         objc.protocolNamed("MPSNNLossCallback")
 
@@ -38,12 +41,6 @@ class TestMPSNNGraphNodes(TestCase):
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSNNStateNode.exportFromGraph)
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSNNStateNode.setExportFromGraph_, 0
-        )
-
-        self.assertArgIsBlock(
-            MetalPerformanceShaders.MPSNNFilterNode.trainingGraphWithSourceGradient_nodeHandler_,
-            1,
-            MPSGradientNodeBlock,
         )
 
         self.assertArgHasType(
@@ -226,6 +223,13 @@ class TestMPSNNGraphNodes(TestCase):
             MetalPerformanceShaders.MPSNNArithmeticGradientNode.isSecondarySourceFilter
         )
 
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertArgIsBlock(
+            MetalPerformanceShaders.MPSNNFilterNode.trainingGraphWithSourceGradient_nodeHandler_,
+            1,
+            MPSGradientNodeBlock,
+        )
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNUpsamplingBilinearNode.nodeWithSource_integerScaleFactorX_integerScaleFactorY_alignCorners_,  # noqa: B950
             3,
@@ -237,9 +241,6 @@ class TestMPSNNGraphNodes(TestCase):
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSCNNUpsamplingBilinearNode.alignCorners
         )
-
-    @min_os_level("10.14")
-    def test_methods10_14(self):
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSNNImageNode.stopGradient)
         self.assertArgIsBOOL(MetalPerformanceShaders.MPSNNImageNode.setStopGradient_, 0)
 
