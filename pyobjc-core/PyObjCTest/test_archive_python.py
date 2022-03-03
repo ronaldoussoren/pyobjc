@@ -32,6 +32,7 @@ from PyObjCTools.TestSupport import (
     os_level_key,
     os_release,
     pyobjc_options,
+    cast_ulonglong,
 )
 
 import copyreg
@@ -159,7 +160,7 @@ class a_classic_class_with_state:
             #
             #      This workaround makes is possible to run
             #      the test suite.
-            assert isinstance(k, objc.pyobjc_unicode)
+            assert isinstance(k, (str, objc.pyobjc_unicode))
             setattr(self, str(k), v)
 
 
@@ -1209,7 +1210,13 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
                 with self.subTest(x=x):
                     buf = self.dumps(x)
                     v = self.loads(buf)
-                    self.assertEqual(v, x)
+                    if (val == 2**63 + 1) and os_level_key(
+                        os_release()
+                    ) < os_level_key("10.14"):
+                        # Bug in NSNumber...
+                        self.assertEqual(cast_ulonglong(v), cast_ulonglong(x))
+                    else:
+                        self.assertEqual(v, x)
 
     # Overriden tests for extension codes, the test code checks
     # the actual byte stream.

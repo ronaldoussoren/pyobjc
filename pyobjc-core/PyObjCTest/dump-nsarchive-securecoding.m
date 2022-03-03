@@ -7,6 +7,15 @@
 #import <Foundation/Foundation.h>
 #include <stdio.h>
 
+#if PyObjC_BUILD_RELEASE < 1014
+@interface
+NSKeyedUnarchiver (PyObjCCompat)
++ (id)unarchivedObjectOfClasses:(NSSet*)classes
+                       fromData:(NSData*)data
+                          error:(NSError**)error;
+@end
+#endif
+
 int
 main(int argc, char** argv)
 {

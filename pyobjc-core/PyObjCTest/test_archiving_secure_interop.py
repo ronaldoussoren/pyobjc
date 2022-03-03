@@ -14,7 +14,7 @@ import tempfile
 import datetime
 
 import objc
-from PyObjCTools.TestSupport import TestCase, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, cast_ulonglong
 
 from plistlib import loads
 
@@ -182,7 +182,14 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                         self.fail(f"Cannot create archive: {error}")
 
                     out = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
-                    self.assertEqual(out[0], testval)
+                    if testval > 2**63 and os_level_key(os_release()) < os_level_key(
+                        "10.14"
+                    ):
+                        # Bug in NSNumber
+                        self.assertEqual(cast_ulonglong(out[0]), testval)
+
+                    else:
+                        self.assertEqual(out[0], testval)
 
                     with tempfile.NamedTemporaryFile() as fp:
                         fp.write(data.bytes())
@@ -191,7 +198,13 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                         converted = subprocess.check_output([self.progpath, fp.name])
 
                     converted = loads(converted)
-                    self.assertEqual(converted, [testval])
+                    if testval > 2**63 and os_level_key(os_release()) < os_level_key(
+                        "10.14"
+                    ):
+                        # Bug in NSNumber
+                        self.assertEqual(cast_ulonglong(converted[0]), testval)
+                    else:
+                        self.assertEqual(converted[0], testval)
 
             with self.subTest("overflow"):
                 testval = 2**64

@@ -13,7 +13,7 @@ import tempfile
 from plistlib import loads
 
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, cast_ulonglong
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -112,14 +112,19 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
-        # for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62, 2**63+10):
-        for testval in (2**63 + 10,):
+        for testval in (-42, 0, 42, -(2**62), 2**62, 2**63 + 10):
             with self.subTest(testval):
                 v = NSArray.arrayWithObject_(testval)
                 data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
                 out = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
-                self.assertEqual(out[0], testval)
+                if testval > 2**63 and os_level_key(os_release()) < os_level_key(
+                    "10.14"
+                ):
+                    # Bug in NSNumber
+                    self.assertEqual(cast_ulonglong(out[0]), testval)
+                else:
+                    self.assertEqual(out[0], testval)
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -130,7 +135,12 @@ class TestNSKeyedArchivingInterop(TestCase):
                     )
 
                 converted = loads(converted)
-                self.assertEqual(converted, [testval])
+                if testval > 2**63 and os_level_key(os_release()) < os_level_key(
+                    "10.14"
+                ):
+                    self.assertEqual(cast_ulonglong(converted[0]), testval)
+                else:
+                    self.assertEqual(converted[0], testval)
 
         with self.subTest("overflow"):
             testval = 2**64
