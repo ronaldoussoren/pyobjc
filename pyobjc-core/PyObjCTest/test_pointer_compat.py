@@ -156,7 +156,7 @@ class TestMiscTypes(TestCase):
         self.assertEqual(
             objc.pyobjc_id(v1.__pyobjc_object__), objc.pyobjc_id(v2.__pyobjc_object__)
         )
-        self.assertIs(v1, v2)
+        self.assertEqual(v1, v2)
 
     def test_context(self):
         v1 = OC_PointerSupport.getContext()

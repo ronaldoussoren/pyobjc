@@ -3,6 +3,14 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.5
+-----------
+
+* For struct bindings in frameworks the "in" operator no longer
+  swallows exceptions raised by the ``__eq__`` method.
+
+* Improved handing of invalid type encodings for struct types.
+
 Version 8.4
 -----------
 

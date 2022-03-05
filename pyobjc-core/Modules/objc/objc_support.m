@@ -423,7 +423,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
                 if (type != NULL) {
                     type++;
                 } else {
-                    PyErr_Format(PyObjCExc_InternalError,
+                    PyErr_Format(PyExc_ValueError,
                                  "Invalid struct definition in type signature: %s",
                                  start_type);
                     return NULL;
@@ -432,7 +432,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
             type = PyObjCRT_SkipTypeSpec(type);
         }
         if (type && *type != _C_STRUCT_E) {
-            PyErr_Format(PyObjCExc_InternalError,
+            PyErr_Format(PyExc_ValueError,
                          "Invalid struct definition in type signature: %s", start_type);
             return NULL;
         }
@@ -656,8 +656,8 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
         break;
 
     default:
-        PyErr_Format(PyObjCExc_InternalError,
-                     "PyObjCRT_SkipTypeSpec: Unhandled type '0x%x'", *type);
+        PyErr_Format(PyExc_ValueError, "invalid signature: unknown type coding 0x%x",
+                     (int)*type);
         return NULL;
     }
 
@@ -2779,7 +2779,7 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
     const char* end;
     if (*type == '"') {
         type++;
-        while (*type++ != '"') {
+        while (*type && *type++ != '"') {
         }
     }
 
@@ -2810,13 +2810,18 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
         type = end;
 
         /* RemoveFieldNames until reaching end of struct */
-        while (*type != _C_STRUCT_E) {
+        while (*type && *type != _C_STRUCT_E) {
             end = PyObjCRT_RemoveFieldNames(buf, type);
             if (end == NULL)
                 return NULL;
             buf += strlen(buf);
             type = end;
         }
+        if (*type != _C_STRUCT_E) {
+            PyErr_SetString(PyExc_ValueError, "Bad type string");
+            return NULL;
+        }
+
         buf[0] = _C_STRUCT_E;
         buf[1] = '\0';
         return type + 1;
