@@ -15,8 +15,15 @@ class SomeException(Exception):
 
 
 class Py_AllocRaises(NSObject):
+    @classmethod
     def alloc(cls):
         raise SomeException("alloc")
+
+
+class Py_AllocPasses(NSObject):
+    @classmethod
+    def alloc(cls):
+        return super().alloc()
 
 
 class Py_RefCountRaises(NSObject):
@@ -51,6 +58,12 @@ class Py_RefCountRaises(NSObject):
         return r
 
 
+class Py_DeallocReturns(NSObject):
+    def dealloc(self):
+        super().dealloc()
+        return 42
+
+
 class TestNSObjectSupport(TestCase):
     def test_invalid_alloc(self):
         with self.assertRaisesRegex(TypeError, ".*expected no arguments, got 1"):
@@ -75,6 +88,23 @@ class TestNSObjectSupport(TestCase):
         o = NSObject.alloc().init()
         with self.assertRaisesRegex(TypeError, ".*expected no arguments, got 1"):
             o.dealloc(42)
+
+    def test_dealloc_returns_value(self):
+        o = Py_DeallocReturns.alloc().init()
+        orig = os.dup(2)
+
+        with tempfile.TemporaryFile() as stream:
+            os.dup2(stream.fileno(), 2)
+            try:
+                del o
+
+            finally:
+                os.dup2(orig, 2)
+
+            stream.seek(0)
+            capture = stream.read().decode()
+
+        self.assertIn("dealloc should return None, returned instance of int", capture)
 
     def test_invalid_retain(self):
         o = NSObject.alloc().init()
@@ -160,6 +190,12 @@ class TestNSObjectSupport(TestCase):
     def test_python_alloc_raises(self):
         with self.assertRaisesRegex(SomeException, "alloc"):
             Py_AllocRaises.alloc()
+
+    def test_python_alloc(self):
+        v = Py_AllocPasses.alloc().init()
+        self.assertIsInstance(v, Py_AllocPasses)
+
+    # XXX: Test where alloc returns something that cannot be convered to ObjC
 
     def no_test_python_retain_release(self):
         # XXX: Needs some work to support --with-pydebug

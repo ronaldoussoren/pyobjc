@@ -35,25 +35,17 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             unbound_instance_method = 1;
         }
 
-    } else if (PyObjCObject_Check(self)) {
+    } else {
+        PyObjC_Assert(PyObjCObject_Check(self), NULL);
+
+        /* Objective-C class methods cannot be accessed though the
+         * instance, class_method will never be true
+         */
+        PyObjC_Assert(!class_method, NULL);
+
         class_object = (PyObject*)Py_TYPE(self);
 
         objc_object = PyObjCObject_GetObject(self);
-        if (objc_object == NULL) {
-            PyErr_SetString(PyExc_AttributeError, "nil has no methods");
-            return NULL;
-        }
-
-        if (class_method) {
-            objc_object = (id)object_getClass(objc_object);
-        }
-
-    } else {
-        PyErr_Format(PyExc_TypeError,
-                     "Need Objective-C class or instance, got "
-                     "a %s",
-                     Py_TYPE(self)->tp_name);
-        return NULL;
     }
 
     if (objc_object == nil) {
@@ -61,16 +53,21 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         return NULL;
     }
 
-    if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) {
+    if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) { // LCOV_BR_EXCL_LINE
+        /* Impossible to hit in regular testing */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_AttributeError, "Cannot access '%s' on deallocated object",
                      name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (class_method && strcmp(class_getName((Class)objc_object), "NSProxy") == 0) {
-        if (sel == @selector(methodSignatureForSelector:)) {
+        if (sel == @selector(methodSignatureForSelector:)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_Format(PyExc_AttributeError, "Cannot access NSProxy.%s", name);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -82,8 +79,11 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                 methsig = [objc_object methodSignatureForSelector:sel];
             }
 
-        } @catch (NSObject* localException) {
-            methsig = nil;
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            /* This completely ignores exceptions in getting the signature,
+             * but that's fine, Cocoa should never raise here.
+             */
+            methsig = nil; // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -107,8 +107,12 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         flattened = PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
     }
 
-    if (flattened == NULL) {
-        return NULL;
+    if (flattened == NULL) { // LCOV_BR_EXCL_LINE
+        /* PyObjC_NSMethodSignatureToTypeString can only fail when
+         * the NSMethodSignature is invalid, or if the encoded
+         * signature would not fit buffer.
+         */
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
@@ -123,23 +127,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     char         buf[256];
     Class        objc_class;
 
-    if (PyObjCObject_Check(self)) {
-        id obj = PyObjCObject_GetObject(self);
-
-        if (obj == NULL) {
-            return PyDict_New();
-        }
-
-        if (class_method) {
-            cls        = object_getClass(obj);
-            objc_class = object_getClass(cls);
-
-        } else {
-            cls        = object_getClass(obj);
-            objc_class = cls;
-        }
-
-    } else if (PyObjCClass_Check(self)) {
+    if (PyObjCClass_Check(self)) {
         cls        = PyObjCClass_GetClass(self);
         objc_class = cls;
 
@@ -148,27 +136,31 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
         }
 
     } else {
-        /* XXX: Don't particularly like PyErr_BadInternalCall */
-        /* XXX: Verify if this can be triggered, if not: use PyObjC_InternalError() */
-        PyErr_BadInternalCall();
-        return NULL;
+        PyObjC_Assert(PyObjCObject_Check(self), NULL);
+        PyObjC_Assert(!class_method, NULL);
+
+        id obj = PyObjCObject_GetObject(self);
+
+        if (obj == NULL) {
+            return PyDict_New();
+        }
+
+        cls        = object_getClass(obj);
+        objc_class = cls;
     }
 
     res = PyDict_New();
-    if (res == NULL) {
-        return NULL;
+    if (res == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
-    while (objc_class != NULL && cls != NULL) {
+    for (; objc_class != NULL && cls != NULL;
+         objc_class = class_getSuperclass((Class)objc_class),
+         cls        = class_getSuperclass((Class)cls)) {
         methods = class_copyMethodList(objc_class, &method_count);
 
-        if (methods == NULL) {
-            /* XXX: this is the same as the code after the for loop below,
-             *      restructure the code.
-             */
-            objc_class = class_getSuperclass((Class)objc_class);
-            cls        = class_getSuperclass((Class)cls);
-            continue;
+        if (methods == NULL) { // LCOV_BR_EXCL_LINE
+            continue;          // LCOV_EXCL_LINE
         }
 
         for (i = 0; i < method_count; i++) {
@@ -176,14 +168,15 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             char*     name;
 
             name = PyObjC_SELToPythonName(method_getName(methods[i]), buf, sizeof(buf));
-            if (name == NULL) {
+            if (name == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(res);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             v = PyObject_GetAttrString(self, name);
-
             if (v == NULL) {
                 PyErr_Clear();
 
@@ -202,38 +195,41 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 
             if (v == NULL) {
                 const char* type_encoding = method_getTypeEncoding(methods[i]);
-                if (type_encoding == NULL) {
+                if (type_encoding == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     free(methods);
                     Py_DECREF(res);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 v = PyObjCSelector_NewNative(cls, method_getName(methods[i]),
                                              type_encoding, class_method);
 
-                if (v == NULL) {
+                if (v == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     free(methods);
                     Py_DECREF(res);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
             }
 
-            if (PyDict_SetItemString(res, name, v) == -1) {
+            if (PyDict_SetItemString(res, name, v) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(v);
                 Py_DECREF(res);
                 free(methods);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             Py_DECREF(v);
         }
 
         free(methods);
-
-        objc_class = class_getSuperclass((Class)objc_class);
-        cls        = class_getSuperclass((Class)cls);
     }
 
     return res;
@@ -249,9 +245,7 @@ static void
 obj_dealloc(PyObject* _self)
 {
     ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-
-    /* XXX: Can 'base' every be NULL? */
-    Py_XDECREF(self->base);
+    Py_CLEAR(self->base);
 
     /* XXX:  Why not just call PyObject_Del? */
     if (Py_TYPE(self)->tp_free) {
@@ -303,12 +297,8 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
     }
 
     if (self->class_method) {
-        if (PyObjCClass_Check(self->base)) {
-            result = PyObject_GetAttr(self->base, name);
-        } else {
-            /* Getting a class method of an instance? */
-            result = PyObject_GetAttr((PyObject*)(Py_TYPE(self->base)), name);
-        }
+        PyObjC_Assert(PyObjCClass_Check(self->base), NULL);
+        result = PyObject_GetAttr(self->base, name);
 
     } else {
         if (PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base)) {
@@ -393,11 +383,7 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
         return result;
     }
 
-    if (self->class_method && PyObjCObject_Check(self->base)) {
-        /* Class method */
-        ((PyObjCSelector*)result)->sel_self = (PyObject*)(Py_TYPE(self->base));
-        Py_INCREF(Py_TYPE(self->base));
-    } else if (!self->class_method && PyObjCClass_Check(self->base)) {
+    if (!self->class_method && PyObjCClass_Check(self->base)) {
         /* Unbound instance method */
         ((PyObjCSelector*)result)->sel_self = NULL;
     } else {
@@ -445,6 +431,9 @@ static PyMethodDef obj_methods[] = {{
                                         .ml_name = NULL /* SENTINEL */
                                     }};
 
+/* XXX: This class should support GC, an instance may be stored as an attribute
+ *      on a class or instance and hence be part of a reference cycle.
+ */
 PyTypeObject PyObjCMethodAccessor_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.method_acces",
     .tp_basicsize                                  = sizeof(ObjCMethodAccessor),
@@ -459,12 +448,14 @@ PyTypeObject PyObjCMethodAccessor_Type = {
 PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
     ObjCMethodAccessor* result;
-
-    /* XXX: This shou;ld check that 'base' is valid */
+    PyObjC_Assert(PyObjCObject_Check(base) || PyObjCClass_Check(base), NULL);
+    if (class_method) {
+        PyObjC_Assert(PyObjCClass_Check(base), NULL);
+    }
 
     result = PyObject_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     result->base = base;
     Py_XINCREF(base);

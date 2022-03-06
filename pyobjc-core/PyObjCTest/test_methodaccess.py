@@ -1,9 +1,22 @@
 import objc
+from .test_ivar import nilObject
 from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 # _NSZombie = objc.lookUpClass('_NSZombie')
 NSProxy = objc.lookUpClass("NSProxy")
+
+
+class OCTestWithAttributes(NSObject):
+    class_attr = 1
+
+    def init(self):
+        self = super().init()
+        if self is None:
+            return None
+
+        self.attr = 42
+        return self
 
 
 class MethodAccessTest(TestCase):
@@ -19,6 +32,15 @@ class MethodAccessTest(TestCase):
             AttributeError, "<nil> doesn't have attribute func_code"
         ):
             objc.objc_object.pyobjc_instanceMethods.func_code,
+
+        self.assertEqual(objc.objc_object.pyobjc_classMethods.__dict__, {})
+        self.assertEqual(objc.objc_object.pyobjc_instanceMethods.__dict__, {})
+
+        with self.assertRaisesRegex(
+            AttributeError,
+            "cannot access attribute 'pyobjc_instanceMethods' of NIL 'NilHelper' object",
+        ):
+            nilObject.pyobjc_instanceMethods.__dict__
 
     def testNSProxyStuff(self):
         # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but
@@ -65,6 +87,41 @@ class MethodAccessTest(TestCase):
         # self.assertHasAttr(o.pyobjc_classMethods, "alloc")
 
         self.assertHasAttr(NSObject.pyobjc_classMethods, "alloc")
+        self.assertHasAttr(NSObject.pyobjc_instanceMethods, "init")
+
+        self.assertNotHasAttr(NSObject.pyobjc_classMethods, "foothebar")
+        self.assertNotHasAttr(NSObject.pyobjc_instanceMethods, "foothebar")
+
+        o = OCTestWithAttributes.alloc().init()
+        self.assertHasAttr(o, "attr")
+        self.assertHasAttr(o, "class_attr")
+        self.assertNotHasAttr(OCTestWithAttributes.pyobjc_classMethods, "attr")
+        self.assertNotHasAttr(OCTestWithAttributes.pyobjc_instanceMethods, "attr")
+        self.assertNotHasAttr(o.pyobjc_instanceMethods, "attr")
+        self.assertNotHasAttr(OCTestWithAttributes.pyobjc_classMethods, "class_attr")
+        self.assertNotHasAttr(OCTestWithAttributes.pyobjc_instanceMethods, "class_attr")
+        self.assertNotHasAttr(o.pyobjc_instanceMethods, "class_attr")
+
+        with self.assertRaisesRegex(AttributeError, "No such attribute: __members__"):
+            o.pyobjc_instanceMethods.__members__
+
+        with self.assertRaisesRegex(AttributeError, "No such attribute: __methods__"):
+            o.pyobjc_instanceMethods.__methods__
+
+    def test_repr(self):
+        o = NSObject.alloc().init()
+        self.assertRegex(
+            repr(o.pyobjc_instanceMethods),
+            "<instance method-accessor for <NSObject: 0x[a-f0-9]+>>",
+        )
+        self.assertRegex(
+            repr(NSObject.pyobjc_instanceMethods),
+            "<instance method-accessor for <objective-c class NSObject at 0x[0-9a-f]+>>",
+        )
+        self.assertRegex(
+            repr(NSObject.pyobjc_classMethods),
+            "<class method-accessor for <objective-c class NSObject at 0x[0-9a-f]+>>",
+        )
 
 
 class ClassAndInstanceMethods(TestCase):
