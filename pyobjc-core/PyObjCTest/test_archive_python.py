@@ -160,8 +160,9 @@ class a_classic_class_with_state:
             #
             #      This workaround makes is possible to run
             #      the test suite.
-            assert isinstance(k, (str, objc.pyobjc_unicode))
-            setattr(self, str(k), v)
+            # assert isinstance(k, (str, objc.pyobjc_unicode))
+            # setattr(self, str(k), v)
+            setattr(self, k, v)
 
 
 class a_newstyle_class:

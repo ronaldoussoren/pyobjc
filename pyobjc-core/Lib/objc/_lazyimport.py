@@ -94,10 +94,6 @@ class ObjCLazyModule(ModuleType):
         "_ObjCLazyModule__aliases",
         "_ObjCLazyModule__informal_protocols",
     )
-    if sys.version_info[:2] == (3, 11):
-        # XXX: Workaround for bug in Python 3.11a5
-        #      See https://bugs.python.org/issue46891
-        del __slots__
 
     def __init__(
         self,
