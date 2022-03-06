@@ -297,7 +297,7 @@ error_cleanup:
  * the objc runtime. Remove these from the type string (inline).
  *
  */
-static void
+static int
 tc2tc(char* buf)
 {
     /* Skip pointer declarations and anotations */
@@ -343,16 +343,14 @@ exit:
                 /* embedded field name */
                 buf = strchr(buf + 1, '"');
                 if (buf == NULL) {
-                    return;
+                    return -1;
                 }
                 buf++;
             }
             tc2tc(buf);
             char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
             if (new_buf == NULL) {
-                /* Should not happen! */
-                PyObjCErr_InternalError();
-                return;
+                return -1;
             }
             buf = new_buf;
         }
@@ -366,16 +364,14 @@ exit:
                 /* embedded field name */
                 buf = strchr(buf + 1, '"');
                 if (buf == NULL) {
-                    return;
+                    return -1;
                 }
                 buf++;
             }
             tc2tc(buf);
             char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
             if (new_buf == NULL) {
-                /* Should not happen! */
-                PyObjCErr_InternalError();
-                return;
+                return -1;
             }
             buf = new_buf;
         }
@@ -387,6 +383,7 @@ exit:
         tc2tc(buf);
         break;
     }
+    return 0;
 }
 
 /* XXX: This function and tc2tc should be in objc_support.m  */
@@ -396,7 +393,10 @@ PyObjC_RemoveInternalTypeCodes(char* buf)
     char* _Nullable cur = buf;
 
     while (*cur) {
-        tc2tc(cur);
+        if (tc2tc(cur) == -1) {
+            PyErr_SetString(PyObjCExc_Error, "invalid type encoding");
+            return -1;
+        }
         cur = (char*)PyObjCRT_SkipTypeSpec(cur);
         if (cur == NULL) {
             return -1;
