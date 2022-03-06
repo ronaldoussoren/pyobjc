@@ -949,8 +949,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
         default:
             /* Should never happen */
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_TypeError, "Invalid comparison");
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -1010,8 +1012,8 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
         self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
         PyObjC_Assert(self_cur != NULL, NULL);
         other_cur = PySequence_GetItem(other, i);
-        if (other_cur == NULL)
-            return NULL;
+        if (other_cur == NULL) // LCOV_BR_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
 
         k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
         if (k < 0) {
@@ -1061,8 +1063,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
         break;
     default:
         /* Should never happen */
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "Invalid comparison");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (cmp) {
@@ -1122,8 +1126,9 @@ static PyObject* _Nullable struct_repr(PyObject* self)
     }
 
     i = Py_ReprEnter(self);
-    if (i < 0) {
-        return NULL;
+    if (i < 0) { // LCOV_BR_EXCL_LINE
+        /* Can only happen when hitting the recursion limit */
+        return NULL; // LCOV_EXCL_LINE
 
     } else if (i != 0) {
         /* Self-recursive struct */
@@ -1137,15 +1142,23 @@ static PyObject* _Nullable struct_repr(PyObject* self)
         PyObject* v;
 
         PyUnicode_Append(&cur, PyUnicode_FromFormat(" %.100s=", member->name));
-        if (cur == NULL)
-            goto done;
+        if (cur == NULL) // LCOV_BR_EXCL_LINE
+            goto done;   // LCOV_EXCL_LINE
 
         v = GET_STRUCT_FIELD(self, member);
         PyObjC_Assert(v != NULL, NULL);
 
-        PyUnicode_Append(&cur, PyObject_Repr(v));
-        if (cur == NULL)
+        PyObject* repr = PyObject_Repr(v);
+        if (repr == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(cur);
             goto done;
+            // LCOV_EXCL_STOP
+        }
+        PyUnicode_Append(&cur, repr);
+        Py_DECREF(repr);
+        if (cur == NULL) // LCOV_BR_EXCL_LINE
+            goto done;   // LCOV_EXCL_LINE
         member++;
     }
 
@@ -1397,10 +1410,10 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     if (objc_encoding) {
         PyObject* typestr = PyDict_GetItemStringWithError(type->tp_dict, "__typestr__");
         if (typestr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            // LCOV_ECXL_START
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
-            // LCOV_ECXL_STOP
+            // LCOV_EXCL_STOP
         }
         if (typestr != NULL) {
             if (!PyBytes_Check(typestr)) {
@@ -1458,6 +1471,9 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         fieldstart = ++sigcur;
         numFields  = 0;
 
+        /* First pass: Count the number of fields, and in passing
+         *             check the validity of the encoding.
+         */
         while (*sigcur != _C_STRUCT_E) {
             numFields++;
             if (*sigcur == '\0') {
@@ -1490,6 +1506,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             }
         }
 
+        /* Second pass: actually create the array of field names */
         fieldnames = PyMem_Malloc((numFields + 1) * sizeof(char*));
         numFields  = 0;
 
@@ -1500,12 +1517,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
 
                 sigcur++;
                 end = strchr(sigcur, '"');
-
-                if (end == NULL) {
-                    PyErr_SetString(PyExc_ValueError,
-                                    "invalid signature: embedded field name without end");
-                    return NULL;
-                }
+                PyObjC_Assert(end != NULL, NULL);
 
                 fieldnames[numFields] = PyMem_Malloc(end - sigcur + 1);
                 memcpy((char*)fieldnames[numFields], sigcur, end - sigcur);
@@ -1514,9 +1526,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             }
             numFields++;
             sigcur = PyObjCRT_NextField(sigcur);
-            if (sigcur == NULL) {
-                return NULL;
-            }
+            PyObjC_Assert(sigcur != NULL, NULL);
         }
         fieldnames[numFields] = NULL;
         freeNames             = 1;
@@ -1549,13 +1559,21 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
     structType =
         PyObjC_MakeStructType(name, doc, tpinit, numFields, fieldnames, signature, pack);
     if (structType == NULL) {
-        if (freeNames) {
+        if (freeNames) { // LCOV_BR_EXCL_LINE
+            /* This should never happen unless the system
+             * runs out of memory.  The other failure reasons
+             * are related to an invalid signature, and that
+             * has already been checked when building "fieldnames"
+             */
+
+            // LCOV_EXCL_START
             int i;
             PyMem_Free((char*)signature);
             for (i = 0; i < numFields; i++) {
                 PyMem_Free((char*)fieldnames[i]);
             }
             PyMem_Free(fieldnames);
+            // LCOV_EXCL_STOP
         }
         return NULL;
     }
@@ -1656,11 +1674,13 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
      * compatible encoding (some number of fields, compatible types)
      */
 
-    if (structRegistry == NULL) {
+    if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         structRegistry = PyDict_New();
         if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
             return -1;                // LCOV_EXCL_LINE
         }
+        // LCOV_EXCL_STOP
     }
 
     r = PyDict_SetItemString(structRegistry, buf, structType);

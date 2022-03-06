@@ -9,6 +9,7 @@ an NSPoint, but using our own types)
 """
 import sys
 import warnings
+import gc
 
 import objc
 import pickle
@@ -241,6 +242,10 @@ class TestStructs(TestCase):
         self.assertEqual(sys.getsizeof(tp0()) + 1 * PTR_SIZE, sys.getsizeof(tp1()))
         self.assertEqual(sys.getsizeof(tp0()) + 2 * PTR_SIZE, sys.getsizeof(tp2()))
 
+        v = tp0()
+        w = objc.repythonify(v, tp0.__typestr__)
+        self.assertEqual(v, w)
+
     def testStructNotWritable(self):
         tp0 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
 
@@ -307,6 +312,11 @@ class TestStructs(TestCase):
                 list(v)
 
             self.assertFalse(v == (1, 2))
+            self.assertFalse(v == (1, 2, 3))
+            self.assertFalse(v == (1,))
+            self.assertTrue(v != (1, 2))
+            self.assertTrue(v != (1, 2, 3))
+            self.assertTrue(v != (1,))
 
             self.assertTrue(tp0(1, 2) == tp0(1, 2))
             self.assertFalse(tp0(1, 2) == tp0(1, 3))
@@ -546,6 +556,26 @@ class TestStructs(TestCase):
             ):
                 v[0:3] = (1,)
 
+            v = tp0(1, 2, 3)
+            self.assertFalse(v == (1, 2, 4))
+            self.assertFalse(v == (1, 2, 3, 4))
+            self.assertFalse(v == (1, 2))
+            self.assertTrue(v == (1, 2, 3))
+            self.assertTrue(v != (1, 2, 4))
+            self.assertTrue(v != (1, 2, 3, 4))
+            self.assertTrue(v != (1,))
+            self.assertFalse(v != (1, 2, 3))
+
+            self.assertTrue(v < (1, 2, 3, 4))
+            self.assertFalse(v < (1, 2))
+            self.assertTrue(v <= (1, 2, 3, 4))
+            self.assertFalse(v <= (1, 2))
+
+            self.assertFalse(v > (1, 2, 3, 4))
+            self.assertTrue(v > (1, 2))
+            self.assertFalse(v >= (1, 2, 3, 4))
+            self.assertTrue(v >= (1, 2))
+
     def test_struct_as_attributes(self):
         tp0 = objc.createStructType(
             "FooStruct4", b'{FooStruct4="first"i"second"i"third"i}', None
@@ -774,22 +804,58 @@ class TestStructs(TestCase):
             CannotCompare() in v  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) == (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) != (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) < (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) <= (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) > (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            GlobalType(CannotCompare(), 2) >= (1, 2)  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v == GlobalType(CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v == GlobalType(1, CannotCompare())  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v != GlobalType(CannotCompare())  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v != GlobalType(1, CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v < GlobalType(CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v < GlobalType(1, CannotCompare())  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v <= GlobalType(CannotCompare())  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v <= GlobalType(1, CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v > GlobalType(CannotCompare())  # noqa: B015
 
         with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v > GlobalType(1, CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
             v >= GlobalType(CannotCompare())  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "cannot compare me"):
+            v >= GlobalType(1, CannotCompare())  # noqa: B015
 
     def test_copy_error(self):
         class CopyError:
@@ -830,6 +896,45 @@ class TestStructs(TestCase):
         ):
             objc.createStructType("InvStruct", b'{_FooStruct="a"f"b"!"c"q}', None)
 
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a complete struct encoding"
+        ):
+            objc.createStructType("InvStruct", b'{_FooStruct="a"f', None)
+
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a complete struct encoding"
+        ):
+            objc.createStructType("InvStruct", b"{_FooStruct}", None)
+
+    def test_repr(self):
+        v = GlobalType("a", 4)
+        self.assertEqual(repr(v), "<PyObjCTest.test_structs.GlobalType a='a' b=4>")
+
+        v.b = v
+        self.assertEqual(
+            repr(v),
+            "<PyObjCTest.test_structs.GlobalType a='a' b=<PyObjCTest.test_structs.GlobalType ...>>",
+        )
+
+        EmptyStruct = objc.createStructType("EmptyStruct", b"{EmptyStruct=}", None)
+        self.assertEqual(repr(EmptyStruct()), "<EmptyStruct>")
+
+    def test_packed(self):
+        tp = objc.createStructType(
+            "PackedStruct", b"{_PackedStruct=si}", ["a", "b"], pack=1
+        )
+        self.assertEqual(tp.__struct_pack__, 1)
+
+        v = tp(1, 2)
+        w = objc.repythonify(v, tp.__typestr__)
+        self.assertEqual(v, w)
+
+    def test_invalid_packed(self):
+        with self.assertRaisesRegex(objc.error, "invalid type encoding"):
+            objc.createStructType(
+                "InvalidPackedStruct", b"{_InvalidPackedStruct=hi}", ["a", "b"], pack=1
+            )
+
 
 class TestStructAlias(TestCase):
     def test_create_struct_alias(self):
@@ -868,3 +973,22 @@ class TestStructAlias(TestCase):
 
         v = objc.repythonify((1, 2, 3), b"{_OtherShaped=fff}")
         self.assertEqual(v, GlobalType(1, 2))
+
+    def test_gc(self):
+        flag = False
+
+        class Dummy:
+            def __del__(self):
+                nonlocal flag
+                flag = True
+
+        v = GlobalType()
+        v.a = v
+        v.b = Dummy()
+
+        self.assertFalse(flag)
+        del v
+
+        self.assertFalse(flag)
+        gc.collect()
+        self.assertTrue(flag)

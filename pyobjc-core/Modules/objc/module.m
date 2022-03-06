@@ -183,7 +183,7 @@ static PyObject* _Nullable repythonify(PyObject* self __attribute__((__unused__)
     }
 
     size = PyObjCRT_SizeOfType(type);
-    if (size < 1) {
+    if (size == -1) {
         return NULL;
     }
 

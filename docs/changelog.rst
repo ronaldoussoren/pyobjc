@@ -11,6 +11,12 @@ Version 8.5
 
 * Improved handing of invalid type encodings for struct types.
 
+* Fix crash while handling a struct wrapper with an invalid
+  type encoding.
+
+* Fix handling of empty structs (such as ``struct foo { };`` in
+  :func:`objc.repythonify`.
+
 Version 8.4
 -----------
 
