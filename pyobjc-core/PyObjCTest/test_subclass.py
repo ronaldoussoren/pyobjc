@@ -467,3 +467,50 @@ class TestOverridingSpecials(TestCase):
         o.setValue_forKey_(42, "key")
 
         self.assertEqual(values, {"key": 42})
+
+    def test_invalid_slots(self):
+        with self.assertRaisesRegex(TypeError, "__slots__ must be a sequence"):
+
+            class ClassWithIntegerSlots(NSObject):
+                __slots__ = 42
+
+        with self.assertRaisesRegex(
+            TypeError, "__slots__ entry 42 is not a string, but int"
+        ):
+
+            class ClassWithIntegerInSlots(NSObject):
+                __slots__ = (
+                    "a",
+                    42,
+                )
+
+        with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
+
+            class ClassWithInvalidNamedSlot(NSObject):
+                __slots__ = "\uDC00"
+
+    def test_dict_as_slots(self):
+        # When __slots__ is a dict pydoc can use the
+        # values to document slots.
+
+        class ClassWithDictSlots(NSObject):
+            __slots__ = {"a": "some a", "b": "some b"}
+
+        self.assertIsInstance(ClassWithDictSlots.__slots__, dict)
+        self.assertEqual(ClassWithDictSlots.__slots__, {"a": "some a", "b": "some b"})
+
+    def test_override_name(self):
+        objc.lookUpClass("NSAttributedString")
+
+        with self.assertRaisesRegex(
+            objc.error, "NSAttributedString is overriding existing Objective-C class"
+        ):
+
+            class NSAttributedString(NSObject):
+                pass
+
+    def test_name_with_invalid_characters(self):
+        with self.assertRaisesRegex(
+            objc.error, "'MyClass!' not a valid Objective-C class name"
+        ):
+            type("MyClass!", (NSObject,), {})

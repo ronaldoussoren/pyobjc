@@ -41,6 +41,14 @@ resulting in a number of minor bug fixes.
 * Better error messages when a class implementing a protocol
   inherits a method of the wrong kind ("class" vs. "instance").
 
+* The value of ``__slots__`` in a class definition is now
+  kept in the created class (previous versions always set
+  the attribute to an empty tuple).
+
+  This is primarily useful when ``__slots__`` is a :class:`dict`
+  that is used to document attributes.
+
+
 Version 8.4
 -----------
 

@@ -358,8 +358,9 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItemString(struct_types, (char*)argtype, v)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            struct_types, (char*)argtype, v)
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(v);
         return NULL;

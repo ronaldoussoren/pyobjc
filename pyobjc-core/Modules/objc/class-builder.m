@@ -64,6 +64,19 @@ struct method_info {
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
 /*
+ * XXX: Move this to module setup
+ */
+static void
+setup_gMethods_selectors(void)
+{
+    for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
+        if (cur->selector == NULL) {
+            cur->selector = sel_registerName(cur->sel_name);
+        }
+    }
+}
+
+/*
  * Last step of the construction a python subclass of an objective-C class.
  *
  * Set reference to the python half in the objective-C half of the class.
@@ -146,9 +159,11 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         }
         ((PyObjCInstanceVariable*)v)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
         ((PyObjCInstanceVariable*)v)->isSlot = 1;
-        if (PyDict_SetItemString(clsdict, "__dict__", v) < 0) {
+        if (PyDict_SetItemString(clsdict, "__dict__", v) < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(v);
             return -1;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(v);
 
@@ -181,8 +196,8 @@ do_slots(PyObject* super_class, PyObject* clsdict)
             }
 
         } else {
-            PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string",
-                         slot_value);
+            PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string, but %s",
+                         slot_value, Py_TYPE(slot_value)->tp_name);
             Py_DECREF(slots);
             return -1;
         }
@@ -190,8 +205,9 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         ((PyObjCInstanceVariable*)var)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
         ((PyObjCInstanceVariable*)var)->isSlot = 1;
 
-        if (PyDict_SetItem(clsdict, slot_value, (PyObject*)var)
-            < 0) { // LCOV_BR_EXCL_LINE
+        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                clsdict, slot_value, (PyObject*)var)
+            < 0) {
             // LCOV_EXCL_START
             Py_DECREF(slots);
             Py_DECREF(var);
@@ -239,11 +255,8 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
         // LCOV_EXCL_STOP
     }
 
-    struct method_info* cur;
-    for (cur = gMethods; cur->method_name != NULL; cur++) {
-        if (unlikely(cur->selector == NULL)) {
-            cur->selector = sel_registerName(cur->sel_name);
-        }
+    setup_gMethods_selectors();
+    for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
         if (cur->override_only) {
             if (![base_class instancesRespondToSelector:cur->selector]) {
                 continue;
@@ -251,12 +264,12 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
         }
         PyObjCMethodSignature* methinfo =
             PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
-        if (methinfo == NULL)
-            goto error_cleanup;
+        if (methinfo == NULL)   // LCOV_BR_EXCL_LINE
+            goto error_cleanup; // LCOV_EXCL_LINE
         IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, intermediate_class);
         Py_CLEAR(methinfo);
-        if (closure == NULL)
-            goto error_cleanup;
+        if (closure == NULL)    // LCOV_BR_EXCL_LINE
+            goto error_cleanup; // LCOV_EXCL_LINE
 
         class_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
@@ -266,11 +279,13 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
     return (Class)intermediate_class;
 
 error_cleanup:
+    // LCOV_EXCL_START
     if (intermediate_class) {
         objc_disposeClassPair(intermediate_class);
     }
 
     return Nil;
+    // LCOV_EXCL_STOP
 }
 
 /*
@@ -446,19 +461,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     PyObject*  class_methods      = NULL;
 
     PyObjC_Assert(super_class != Nil, Nil);
-
-    if (!PyList_Check(protocols)) {
-        PyErr_Format(PyObjCExc_InternalError,
-                     "protocol list not a python 'list' but '%s'",
-                     Py_TYPE(protocols)->tp_name);
-        return Nil;
-    }
-
-    if (!PyDict_Check(class_dict)) {
-        PyErr_Format(PyObjCExc_InternalError, "class dict not a python 'dict', but '%s'",
-                     Py_TYPE(class_dict)->tp_name);
-        return Nil;
-    }
+    PyObjC_Assert(PyList_Check(protocols), Nil);
+    PyObjC_Assert(PyDict_Check(class_dict), Nil);
 
     if (objc_lookUpClass(name) != NULL) {
         PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
@@ -467,32 +471,34 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     if (strspn(name, IDENT_CHARS) != strlen(name)) {
-        PyErr_Format(PyObjCExc_Error, "'%s' not a valid name", name);
+        PyErr_Format(PyObjCExc_Error, "'%s' not a valid Objective-C class name", name);
         return Nil;
     }
 
-    if (PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True) == -1) {
-        return Nil;
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            class_dict, "__objc_python_subclass__", Py_True)
+        == -1) {
+        return Nil; // LCOV_EXCL_LINE
     }
 
     py_superclass = PyObjCClass_New(super_class);
-    if (py_superclass == NULL) {
-        return Nil;
+    if (py_superclass == NULL) { // LCOV_BR_EXCL_LINE
+        return Nil;              // LCOV_EXCL_LINE
     }
 
     instance_variables = PySet_New(NULL);
-    if (instance_variables == NULL) {
-        goto error_cleanup;
+    if (instance_variables == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;           // LCOV_EXCL_LINE
     }
 
     instance_methods = PySet_New(NULL);
-    if (instance_methods == NULL) {
-        goto error_cleanup;
+    if (instance_methods == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;         // LCOV_EXCL_LINE
     }
 
     class_methods = PySet_New(NULL);
-    if (class_methods == NULL) {
-        goto error_cleanup;
+    if (class_methods == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;      // LCOV_EXCL_LINE
     }
 
     /* We must override copyWithZone: for python classes because the
@@ -733,8 +739,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 }
 
                 if (!PyObjCSelector_IsHidden(value)) {
-                    if (PyDict_SetItem(meta_dict, key, value)
-                        == -1) {            // LCOV_BR_EXCL_LINE
+                    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                            meta_dict, key, value)
+                        == -1) {
                         goto error_cleanup; // LCOV_EXCL_LINE
                     }
                 } else {
@@ -832,14 +839,16 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
                     } else {
                         if (PyObjCSelector_IsHidden(value)) {
-                            if (PyDict_DelItem(class_dict, key)
-                                == -1) {            // LCOV_BR_EXCL_LINE
+                            if (PyDict_DelItem( // LCOV_BR_EXCL_LINE
+                                    class_dict, key)
+                                == -1) {
                                 goto error_cleanup; // LCOV_EXCL_LINE
                             }
 
                         } else {
-                            if (PyDict_SetItem(class_dict, key, value)
-                                < 0) { // LCOV_BR_EXCL_LINE
+                            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                                    class_dict, key, value)
+                                < 0) {
                                 // LCOV_EXCL_START
                                 Py_CLEAR(value);
                                 goto error_cleanup;
@@ -1013,11 +1022,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             /* XXX: This loop is also in the function that builds the
              *      intermediate class, refactor this.
              */
-            struct method_info* cur;
-            for (cur = gMethods; cur->method_name != NULL; cur++) {
-                if (unlikely(cur->selector == NULL)) {
-                    cur->selector = sel_registerName(cur->sel_name);
-                }
+            setup_gMethods_selectors();
+            for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
                 if (cur->override_only) {
                     if (![super_class instancesRespondToSelector:cur->selector]) {
                         continue;

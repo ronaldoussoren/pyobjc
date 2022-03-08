@@ -383,8 +383,8 @@ void
 PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
 {
     NSException* exc = PyObjCErr_AsExc();
-    if (exc == nil)
-        PyObjCErr_InternalError(); // LCOV_BR_EXCL_LINE
+    if (exc == nil)                // LCOV_BR_EXCL_LINE
+        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
     if (state) {
         PyGILState_Release(*state);

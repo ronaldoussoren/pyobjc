@@ -868,8 +868,9 @@ static initproc _Nullable make_init(const char* _typestr)
         }
     }
 
-    if (alloc_prepped_closure(&cl, init_cif, &codeloc, struct_init, (char*)typestr_copy)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
+            &cl, init_cif, &codeloc, struct_init, (char*)typestr_copy)
+        == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         PyMem_Free((void*)typestr_copy);
@@ -1282,8 +1283,9 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     Py_SET_REFCNT(result, 1);
     result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
-    if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, "_fields", fields)
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
         PyMem_Free(members);
@@ -1293,8 +1295,9 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     }
 
 #if PY_VERSION_HEX >= 0x030a0000
-    if (PyDict_SetItemString(result->base.tp_dict, "__match_args__", fields)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, "__match_args__", fields)
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
         PyMem_Free(members);

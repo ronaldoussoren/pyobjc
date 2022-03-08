@@ -162,8 +162,9 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItemString(dict, "__slots__", PyTuple_New(0))
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            dict, "__slots__", PyTuple_New(0))
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(dict);
         Py_DECREF(cf);

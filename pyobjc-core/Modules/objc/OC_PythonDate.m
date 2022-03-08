@@ -177,8 +177,9 @@ is_builtin_datetime(PyObject* object)
             PyObjC_BEGIN_WITH_GIL
                 PyObject* tzinfo = PyObject_GetAttrString(value, "tzinfo");
                 if (tzinfo != NULL && tzinfo != Py_None) {
-                    if (depythonify_python_object(tzinfo, &c_info)
-                        == -1) { // LCOV_BR_EXCL_LINE
+                    if (depythonify_python_object( // LCOV_BR_EXCL_LINE
+                            tzinfo, &c_info)
+                        == -1) {
                         // LCOV_EXCL_START
                         Py_DECREF(tzinfo);
                         PyObjC_GIL_FORWARD_EXC();

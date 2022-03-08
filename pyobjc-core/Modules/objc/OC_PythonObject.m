@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
         @try {
             [super release];
 
-        } @catch (NSObject* exc) { // LCOV_BR_EXCL_LINE
+        } @catch (NSObject* exc) { // LCOV_EXCL_LINE
             /* This catch statement is here mostly
              * for code consistency, [NSProxy release]
              * should never raise.

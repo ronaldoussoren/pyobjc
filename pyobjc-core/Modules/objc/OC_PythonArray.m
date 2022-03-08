@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         @try {
             [super release];
-        } @catch (NSException* exc) { // LCOV_BR_EXCL_LINE
+        } @catch (NSException* exc) { // LCOV_EXCL_LINE
             // LCOV_EXCL_START
             PyObjC_LEAVE_GIL;
             @throw;

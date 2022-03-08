@@ -316,8 +316,9 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 
     ((PyObjCClassObject*)result)->class = objc_meta_class;
 
-    if (objc_class_register(objc_meta_class, (PyObject*)result)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (objc_class_register( // LCOV_BR_EXCL_LINE
+            objc_meta_class, (PyObject*)result)
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -597,8 +598,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < seqlen; i++) {
             if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
                 || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                if (PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i))
-                    == -1) { // LCOV_BR_EXCL_LINE
+                if (PyList_Append( // LCOV_BR_EXCL_LINE
+                        protocols, PySequence_Fast_GET_ITEM(seq, i))
+                    == -1) {
                     // LCOV_EXCL_START
                     Py_DECREF(seq);
                     Py_DECREF(protocols);
@@ -647,8 +649,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < seqlen; i++) {
             if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
                 || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                if (PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i))
-                    == -1) { // LCOV_BR_EXCL_LINE
+                if (PyList_Append( // LCOV_BR_EXCL_LINE
+                        protocols, PySequence_Fast_GET_ITEM(seq, i))
+                    == -1) {
                     // LCOV_EXCL_START
                     Py_DECREF(seq);
                     Py_DECREF(protocols);
@@ -805,8 +808,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItemString(dict, "__pyobjc_protocols__", v)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            dict, "__pyobjc_protocols__", v)
+        == -1) {
         // LCOV_EXCL_START
         Py_DECREF(v);
         Py_DECREF(real_bases);
@@ -1396,8 +1400,9 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr)
-                    == -1) { // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                        ((PyTypeObject*)base)->tp_dict, name, descr)
+                    == -1) {
                     // LCOV_EXCL_START
                     Py_DECREF(descr);
                     return NULL;
@@ -2535,8 +2540,9 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         info->dictoffset = ivar_getOffset(var);
     }
 
-    if (PyObject_SetAttrString(result, "__module__", PyObjCClass_DefaultModule)
-        == -1) {       // LCOV_BR_EXCL_LINE
+    if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
+            result, "__module__", PyObjCClass_DefaultModule)
+        == -1) {
         PyErr_Clear(); // LCOV_EXCL_LINE
     }
 
@@ -2668,50 +2674,57 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         while (attr && *attr != '\0') {
             switch (*attr++) {
             case 'R':
-                if (PyDict_SetItemString(item, "readonly", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "readonly", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'C':
-                if (PyDict_SetItemString(item, "copy", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "copy", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case '&':
-                if (PyDict_SetItemString(item, "retain", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "retain", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'N':
-                if (PyDict_SetItemString(item, "nonatomic", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "nonatomic", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'D':
-                if (PyDict_SetItemString(item, "dynamic", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "dynamic", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'W':
-                if (PyDict_SetItemString(item, "weak", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "weak", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
 
             case 'P':
-                if (PyDict_SetItemString(item, "collectable", Py_True)
-                    == -1) {    // LCOV_BR_EXCL_LINE
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        item, "collectable", Py_True)
+                    == -1) {
                     goto error; // LCOV_EXCL_LINE
                 }
                 break;
@@ -2898,10 +2911,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
                 continue;
 
             if (sel_isEqual(PyObjCSelector_GetSelector(value), selector)) {
-                if (PyDict_SetItemString(
-                        info->sel_to_py,
-                        (char*)sel_getName(selector), // LCOV_BR_EXCL_LINE
-                        value)
+                if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                        info->sel_to_py, (char*)sel_getName(selector), value)
                     == -1) {
                     return NULL; // LCOV_EXCL_LINE
                 }
