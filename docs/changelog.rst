@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.5
 -----------
 
+This release continues the work on test coverage in pyobjc-core,
+resulting in a number of minor bug fixes.
+
 * For struct bindings in frameworks the "in" operator no longer
   swallows exceptions raised by the ``__eq__`` method.
 
@@ -16,6 +19,27 @@ Version 8.5
 
 * Fix handling of empty structs (such as ``struct foo { };`` in
   :func:`objc.repythonify`.
+
+* The type for ``NSObject.pyobjc_instanceMethod`` and
+  ``NSObject.pyobjc_classMethods`` now supports the GC protocol
+  to avoid garbage collection issues when the value for these
+  properties is stored as an attribute (which introduces a
+  reference cycle)
+
+* PyObjC should work with Python 3.11 alpha release, starting
+  at alpha 6. Earlier alpha's are not supported due to reverting
+  a workaround for a bug that was fixed in alpha 6.
+
+* ``NSObject.alloc = 42`` now fails. It was already impossible
+  to replace a selector by something else through instances
+  (``NSObject.new().description = 42`` raises).
+
+* Added :data:`objc.ObjCPointer.typestr` with the same
+  value as :data:`objc.ObjCPonter.type`. The latter is now
+  deprecated and will be removed in PyObjC 9.
+
+* Better error messages when a class implementing a protocol
+  inherits a method of the wrong kind ("class" vs. "instance").
 
 Version 8.4
 -----------

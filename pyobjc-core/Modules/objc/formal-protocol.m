@@ -135,8 +135,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         for (i = 0; i < len; i++) {
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
             Protocol* p = PyObjCFormalProtocol_GetProtocol(v);
-            if (p == nil) { // LCOV_BR_EXCL_LINE
-                /* XXX: Should never happen because we've already checked that 'v'
+            if (unlikely(p == nil)) { // LCOV_BR_EXCL_LINE
+                /* Should never happen because we've already checked that 'v'
                  *  is a formal protocol object.
                  */
                 goto error; // LCOV_EXCL_LINE
@@ -151,8 +151,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         SEL         theSel       = PyObjCSelector_GetSelector(sel);
         const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
 
-        if (theSignature == NULL) { // LCOV_BR_EXCL_LINE
-            /* XXX: Should never happen, field cannot be NULL */
+        if (unlikely(theSignature == NULL)) { // LCOV_BR_EXCL_LINE
+            /* Should never happen, field cannot be NULL */
             goto error; // LCOV_EXCL_LINE
         }
 
@@ -613,10 +613,41 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
     }
 
     if (meth == NULL) {
-
         meth = PyObjCClass_FindSelector(super_class, descr->name, is_class);
         if (meth == NULL || !PyObjCSelector_Check(meth)) {
             if (is_required) {
+                if (is_class) {
+                    meth = PyObjC_FindSELInDict(clsdict, descr->name);
+                    if (meth != NULL) {
+                        Py_DECREF(meth);
+                        PyErr_Format(PyExc_TypeError,
+                                     "class %s does not correctly implement protocol "
+                                     "%s: method '%s' is not a class method",
+                                     name, protocol_name, sel_getName(descr->name));
+                        return -1;
+                    }
+                } else {
+                    meth = PyObjC_FindSELInDict(metadict, descr->name);
+                    if (meth != NULL) {
+                        Py_DECREF(meth);
+                        PyErr_Format(PyExc_TypeError,
+                                     "class %s does not correctly implement protocol "
+                                     "%s: method '%s' is not an instance method",
+                                     name, protocol_name, sel_getName(descr->name));
+                        return -1;
+                    }
+                }
+                meth = PyObjCClass_FindSelector(super_class, descr->name, !is_class);
+                if (meth != NULL) {
+                    Py_DECREF(meth);
+                    PyErr_Format(PyExc_TypeError,
+                                 "class %s does not correctly implement protocol "
+                                 "%s: method '%s' is not a %s method",
+                                 name, protocol_name, sel_getName(descr->name),
+                                 is_class ? "class" : "instance");
+                    return -1;
+                }
+
                 PyErr_Format(PyExc_TypeError,
                              "class %s does not fully implement protocol "
                              "%s: no implementation for '%s'",

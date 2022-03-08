@@ -463,9 +463,13 @@ class TestFormalProtocols(TestCase):
             def aClassOne_(self, a):
                 return a
 
+        self.assertIsInstance(ClassWithClassMethodBase2.aClassOne_, objc.selector)
+        self.assertFalse(ClassWithClassMethodBase2.aClassOne_.isClassMethod)
+        self.assertEqual(ClassWithClassMethodBase2.aClassOne_.selector, b"aClassOne:")
+
         with self.assertRaisesRegex(
             TypeError,
-            "does not correctly implement protocol MyProtocol: method 'aClassOne:' is not a class method",
+            "does not correctly implement protocol MyClassProtocol: method 'aClassOne:' is not a class method",
         ):
 
             class ClassWithInstanceMethod(
@@ -473,6 +477,22 @@ class TestFormalProtocols(TestCase):
             ):
                 def anAnotherOne_(self, a):
                     return a
+
+    def test_inherit_implementation_all(self):
+        class ClassWithClassMethodBase3(NSObject):
+            @objc.typedSelector(b"@@:i")
+            @classmethod
+            def aClassOne_(self, a):
+                return a
+
+            @objc.typedSelector(b"i@:i")
+            def anAnotherOne_(self, a):
+                return a
+
+        class ClassWithInstanceMethod3(
+            ClassWithClassMethodBase3, protocols=[MyClassProtocol]
+        ):
+            pass
 
 
 class Test3InformalProtocols(TestCase):

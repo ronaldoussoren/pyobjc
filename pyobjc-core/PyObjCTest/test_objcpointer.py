@@ -28,6 +28,7 @@ class TestObjCPointer(TestCase):
                 self.assertIsInstance(v, objc.ObjCPointer)
 
                 self.assertEqual(v.pointerAsInteger, 42)
+                self.assertEqual(v.typestr, b"^{UnwrappedStruct=ii}")
                 self.assertEqual(v.type, b"^{UnwrappedStruct=ii}")
 
                 r = OC_TestStructPointer.unwrappedToInt_(v)

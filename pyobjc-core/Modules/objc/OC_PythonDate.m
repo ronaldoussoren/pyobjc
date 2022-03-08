@@ -1,8 +1,4 @@
 #include "pyobjc.h"
-/* XXX: Introduce OC_BuiltinPythonDate to support
- *      secure coding for builtin classes.
- */
-
 NS_ASSUME_NONNULL_BEGIN
 
 static bool

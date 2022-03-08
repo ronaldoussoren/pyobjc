@@ -22,6 +22,17 @@ class TestProxySupport(TestCase):
         v = objc.objc_object(cobject=p)
         self.assertIs(v, arr)
 
+        with self.assertRaisesRegex(
+            TypeError, "'cobject2' is an invalid keyword argument for this function"
+        ):
+            objc.objc_object(cobject2=p)
+
+    def test_no__new__(self):
+        with self.assertRaisesRegex(
+            TypeError, "Use class methods to instantiate new Objective-C objects"
+        ):
+            objc.objc_object()
+
     @skipUnless(ctypes is not None, "requires ctypes")
     def test_voidp_roundtrip(self):
         arr = objc.lookUpClass("NSArray").array()
@@ -32,6 +43,29 @@ class TestProxySupport(TestCase):
 
         v = objc.objc_object(c_void_p=p)
         self.assertIs(v, arr)
+
+        class B:
+            pass
+
+        v = objc.objc_object(c_void_p=p.value)
+        self.assertIs(v, arr)
+
+        q = arr.__cobject__()
+
+        with self.assertRaisesRegex(
+            TypeError, "Pass either cobject or c_void_p, but not both"
+        ):
+            objc.objc_object(c_void_p=p, cobject=q)
+
+        with self.assertRaisesRegex(
+            AttributeError, "'str' object has no attribute 'value'"
+        ):
+            objc.objc_object(c_void_p="pointer!")
+
+        b = B()
+        b.value = "pointer"
+        with self.assertRaisesRegex(ValueError, "c_void_p.value is not an integer"):
+            objc.objc_object(c_void_p=b)
 
     @skipUnless(ctypes is not None, "requires ctypes")
     def test_voidp_using_ctypes(self):

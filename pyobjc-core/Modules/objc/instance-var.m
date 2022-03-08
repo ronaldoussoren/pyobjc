@@ -314,6 +314,7 @@ static PyObject* _Nullable ivar_add_attribute(PyObject* self, PyObject* _Nullabl
     }
 
     /* XXX: This is suboptimal, convert this type to a heap type instead */
+    /* XXX: This uses a private CPython API function */
     if (_PyObject_GenericSetAttrWithDict(self, name, value, NULL) == -1) {
         return NULL;
     }

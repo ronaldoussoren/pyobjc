@@ -20,12 +20,21 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCClass_Check(self), NULL);
+    /* XXX: No they don't, class methods can be accessed through
+     *      instances for Python subclasses...
+     */
+    // PyObjC_Assert(PyObjCClass_Check(self), NULL);
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP  = PyObjCIMP_GetIMP(method);
-        aClass = PyObjCClass_GetClass(self);
-        aSel   = PyObjCIMP_GetSelector(method);
+        anIMP = PyObjCIMP_GetIMP(method);
+
+        if (PyObjCClass_Check(self)) {
+            aClass = PyObjCClass_GetClass(self);
+        } else {
+            aClass = object_getClass(PyObjCObject_GetObject(self));
+        }
+
+        aSel = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -39,8 +48,12 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
 
     } else {
         spr.super_class = object_getClass(PyObjCSelector_GetClass(method));
-        spr.receiver    = (id)PyObjCClass_GetClass(self);
-        aSel            = PyObjCSelector_GetSelector(method);
+        if (PyObjCClass_Check(self)) {
+            spr.receiver = PyObjCClass_GetClass(self);
+        } else {
+            spr.receiver = object_getClass(PyObjCObject_GetObject(self));
+        }
+        aSel = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {

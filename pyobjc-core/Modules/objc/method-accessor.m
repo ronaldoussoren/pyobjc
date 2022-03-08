@@ -84,7 +84,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
              * but that's fine, Cocoa should never raise here.
              */
             methsig = nil; // LCOV_EXCL_LINE
-        }
+        }                  // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
     if (methsig == NULL) {
@@ -245,15 +245,42 @@ static void
 obj_dealloc(PyObject* _self)
 {
     ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-    Py_CLEAR(self->base);
 
-    /* XXX:  Why not just call PyObject_Del? */
-    if (Py_TYPE(self)->tp_free) {
-        Py_TYPE(self)->tp_free((PyObject*)self);
+    PyObject_GC_UnTrack(_self);
 
-    } else {
-        PyObject_Del(self);
-    }
+    /* Don't use CLEAR because the invariant
+     * is that 'base' is not NULL.
+     *
+     * Setting the field to NULL anyway
+     * is safe because we deallocate right
+     * afterwards.
+     */
+    Py_DECREF(self->base);
+    self->base = (PyObject* _Nonnull)NULL;
+
+    PyObject_GC_Del(_self);
+}
+
+static int
+obj_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
+{
+    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
+    Py_VISIT(self->base);
+    return 0;
+}
+
+static int
+obj_clear(PyObject* _self)
+{
+    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
+
+    /* Maintain the invariant that 'base' is not NULL */
+    PyObject* tmp = self->base;
+    self->base    = Py_None;
+    Py_INCREF(Py_None);
+    Py_CLEAR(tmp);
+
+    return 0;
 }
 
 static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
@@ -431,18 +458,17 @@ static PyMethodDef obj_methods[] = {{
                                         .ml_name = NULL /* SENTINEL */
                                     }};
 
-/* XXX: This class should support GC, an instance may be stored as an attribute
- *      on a class or instance and hence be part of a reference cycle.
- */
 PyTypeObject PyObjCMethodAccessor_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.method_acces",
     .tp_basicsize                                  = sizeof(ObjCMethodAccessor),
     .tp_itemsize                                   = 0,
     .tp_dealloc                                    = obj_dealloc,
+    .tp_clear                                      = obj_clear,
+    .tp_traverse                                   = obj_traverse,
     .tp_repr                                       = obj_repr,
     .tp_getattro                                   = obj_getattro,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_methods                                    = obj_methods,
+    .tp_flags   = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+    .tp_methods = obj_methods,
 };
 
 PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
@@ -453,13 +479,15 @@ PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
         PyObjC_Assert(PyObjCClass_Check(base), NULL);
     }
 
-    result = PyObject_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
+    result = PyObject_GC_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
     result->base = base;
     Py_XINCREF(base);
     result->class_method = class_method;
+
+    PyObject_GC_Track((PyObject*)result);
 
     return (PyObject*)result;
 }

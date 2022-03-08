@@ -20,7 +20,7 @@ typedef struct {
     PyObject_HEAD
 
     void*     ptr;
-    PyObject* type;
+    PyObject* typestr;
 } PyObjCPointer;
 
 void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
@@ -35,30 +35,35 @@ static void
 PyObjCPointer_dealloc(PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
-    Py_XDECREF(self->type);
+    Py_XDECREF(self->typestr);
     PyObject_Free((PyObject*)self);
 }
 
-static PyMemberDef PyObjCPointer_members[] = {{
-                                                  /* XXX: "type" should be "typestr", but
-                                                   *      changing this is a backward
-                                                   *      incompatible change in a
-                                                   * deprecated type
-                                                   */
-                                                  .name   = "type",
-                                                  .type   = T_OBJECT,
-                                                  .offset = offsetof(PyObjCPointer, type),
-                                                  .flags  = READONLY,
-                                              },
-                                              {
-                                                  .name   = "pointerAsInteger",
-                                                  .type   = T_LONG,
-                                                  .offset = offsetof(PyObjCPointer, ptr),
-                                                  .flags  = READONLY,
-                                              },
-                                              {
-                                                  .name = NULL /* SENTINEL */
-                                              }};
+static PyMemberDef PyObjCPointer_members[] = {
+    {
+        .name   = "typestr",
+        .type   = T_OBJECT,
+        .offset = offsetof(PyObjCPointer, typestr),
+        .flags  = READONLY,
+    },
+    {
+        /* This is a deprecated alias, will be
+         * removed in PyObjC 9.
+         */
+        .name   = "type",
+        .type   = T_OBJECT,
+        .offset = offsetof(PyObjCPointer, typestr),
+        .flags  = READONLY,
+    },
+    {
+        .name   = "pointerAsInteger",
+        .type   = T_LONG,
+        .offset = offsetof(PyObjCPointer, ptr),
+        .flags  = READONLY,
+    },
+    {
+        .name = NULL /* SENTINEL */
+    }};
 
 PyTypeObject PyObjCPointer_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "PyObjCPointer",
@@ -103,12 +108,12 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
         return NULL;    // LCOV_EXCL_LINE
     }
 
-    self->type = PyBytes_FromStringAndSize((char*)t, typeend - t);
-    self->ptr  = p;
+    self->typestr = PyBytes_FromStringAndSize((char*)t, typeend - t);
+    self->ptr     = p;
 
-    if (self->type == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(self);      // LCOV_EXCL_LINE
-        return NULL;          // LCOV_EXCL_LINE
+    if (self->typestr == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(self);         // LCOV_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
 
     return (PyObject*)self;

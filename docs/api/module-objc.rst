@@ -1892,10 +1892,17 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 
 .. class:: ObjCPointer
 
-   .. data:: type
+   .. data:: typestr
 
       A bytes string with the Objective-C type encoding for
       the pointed to value.
+
+      .. versionadded: 8.5
+
+   .. data:: type
+
+      Alias for *typestr*. This alias will be removed in
+      PyObjC 9.
 
    .. data:: pointerAsInteger
 

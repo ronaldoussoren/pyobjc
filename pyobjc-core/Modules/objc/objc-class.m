@@ -1939,6 +1939,23 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
         return 0;
     }
 
+    /* Check if there is a current attribute with the same name that
+     * is an unbound selector.
+     */
+    PyObject* old_value = class_getattro(self, name);
+    if (old_value == NULL) {
+        PyErr_Clear();
+        return PyType_Type.tp_setattro(self, name, value);
+
+    } else if (PyObjCSelector_Check(old_value)) {
+        Py_DECREF(old_value);
+        PyErr_Format(PyExc_AttributeError,
+                     "Cannot replace selector %R in '%s' by non-selector", name,
+                     Py_TYPE(self)->tp_name);
+
+        return -1;
+    }
+
     res = PyType_Type.tp_setattro(self, name, value);
     return res;
 }
@@ -2827,12 +2844,21 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     if (result != NULL) {
         if (result == Py_None) {
             /* negative cache entry */
+            /* XXX: This is buggy: first looking for a class method where
+             *      there's only an instance method will fail and add a negative
+             *      entry to the cache, later looking for a class method will
+             *      then fail.
+             *
+             *      Therefore ignore negative cache entries for now...
+             */
+#if 0
             PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
             return NULL;
+#endif
+        } else {
+            Py_INCREF(result);
+            return result;
         }
-
-        Py_INCREF(result);
-        return result;
     }
 
     /* Not in the cache. Walk the MRO to check
