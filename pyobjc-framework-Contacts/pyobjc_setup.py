@@ -30,7 +30,16 @@ from setuptools.command import build_ext, build_py, develop, egg_info, install_l
 
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.command import build, install
+
+try:
+    from setuptools.command import install
+except ImportError:
+    from distutils.command import install
+
+try:
+    from setuptools.command import build
+except ImportError:
+    from distutils.command import build
 
 
 class oc_build_py(build_py.build_py):

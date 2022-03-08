@@ -57,6 +57,11 @@ resulting in a number of minor bug fixes.
 * Fixed a crash in :func:`objc.loadSpecialVar` due to a
   missing pointer dereference.
 
+* ``pip install pyobjc-framework-...`` for a framework
+  that is not present on the current machine will now
+  give a better error message when the "wheel" package
+  is not installed.
+
 
 Version 8.4
 -----------
