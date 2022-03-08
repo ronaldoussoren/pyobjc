@@ -97,9 +97,15 @@ const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
     PyObjC_Assert(PyUnicode_Check(object), NULL);
 
     if (!PyUnicode_IS_ASCII(object)) {
-        PyErr_SetString(PyExc_UnicodeDecodeError, "Not an ASCII string");
+        /* The code below raises the correct error in a roundabout
+         * way. That's because UnicodeEncodeError expects more
+         * than one argument.
+         */
+        PyObject* r = PyUnicode_AsASCIIString(object);
+        PyObjC_Assert(r == NULL, NULL);
         return NULL;
     }
+
     return (const char*)(PyUnicode_DATA(object));
 }
 

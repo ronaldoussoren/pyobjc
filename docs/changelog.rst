@@ -48,6 +48,8 @@ resulting in a number of minor bug fixes.
   This is primarily useful when ``__slots__`` is a :class:`dict`
   that is used to document attributes.
 
+* Raise the correct exception when the name of a method is
+  not an ASCII string.
 
 Version 8.4
 -----------

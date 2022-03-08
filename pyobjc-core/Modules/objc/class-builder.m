@@ -559,6 +559,11 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         first_python_gen = 1;
     }
 
+    /* The code uses PyDict_Keys instead of PyDict_Next because
+     * we change the class_dict on the second iteration. The first
+     * iteration could use PyDict_Next, but is kept like this to
+     * keep the code style consistent.
+     */
     key_list = PyDict_Keys(class_dict);
     if (key_list == NULL) {
         goto error_cleanup;
@@ -664,12 +669,17 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         key = PyList_GET_ITEM(key_list, i);
 
         value = PyDict_GetItemWithError(class_dict, key);
-        if (value == NULL) {
+        if (value == NULL) { // LCOV_BR_EXCL_LINE
+            /* I'm pretty sure that keys can't disappear from
+             * the class_dict at this point.
+             */
+            // LCOV_EXCL_START
             if (PyErr_Occurred())   // LCOV_BR_EXCL_LINE
                 goto error_cleanup; // LCOV_EXCL_LINE
             PyErr_SetString(PyObjCExc_InternalError,
                             "PyObjCClass_BuildClass: Cannot fetch item in keylist");
             goto error_cleanup;
+            // LCOV_EXCL_STOP
         }
 
         if (PyObjCInstanceVariable_Check(value)) {
@@ -693,14 +703,14 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             char        buf[1024];
             const char* py_meth_name = PyObjC_SELToPythonName(
                 PyObjCSelector_GetSelector(value), buf, sizeof(buf));
-            if (py_meth_name == NULL) {
-                goto error_cleanup;
+            if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
+                /* Can only happen when the selector name is huge */
+                goto error_cleanup; // LCOV_EXCL_LINE
             }
 
             PyObject* pyname = PyUnicode_FromString(py_meth_name);
-
-            if (pyname == NULL) {
-                goto error_cleanup;
+            if (pyname == NULL) {   // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             }
 
             int shouldCopy = PyObject_RichCompareBool(pyname, key, Py_EQ);
@@ -714,8 +724,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             if (PyObjCSelector_GetClass(value) != NULL) {
                 PyObject* new_value;
                 new_value = PyObjCSelector_Copy(value);
-                if (new_value == NULL) {
-                    goto error_cleanup;
+                if (new_value == NULL) { // LCOV_BR_EXCL_LINE
+                    goto error_cleanup;  // LCOV_EXCL_LINE
                 }
 
                 if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
@@ -762,23 +772,23 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
             } else {
                 r = PySet_Add(instance_methods, value);
-                if (r == -1) {
-                    goto error_cleanup;
+                if (r == -1) {          // LCOV_BR_EXCL_LINE
+                    goto error_cleanup; // LCOV_EXCL_LINE
                 }
 
                 if (PyObjCSelector_IsHidden(value)) {
                     r = PyDict_DelItem(class_dict, key);
-                    if (r == -1) {
-                        goto error_cleanup;
-                    }
-                    shouldCopy = NO;
-                }
-
-                if (shouldCopy) {
-                    r = PyDict_SetItem(class_dict, pyname, value);
-                    Py_DECREF(pyname);
                     if (r == -1) {          // LCOV_BR_EXCL_LINE
                         goto error_cleanup; // LCOV_EXCL_LINE
+                    }
+                    shouldCopy = NO;
+                } else {
+                    if (shouldCopy) {
+                        r = PyDict_SetItem(class_dict, pyname, value);
+                        Py_DECREF(pyname);
+                        if (r == -1) {          // LCOV_BR_EXCL_LINE
+                            goto error_cleanup; // LCOV_EXCL_LINE
+                        }
                     }
                 }
             }
@@ -786,11 +796,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         } else if (PyMethod_Check(value) || PyFunction_Check(value)
                    || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
 
-            PyObject*   pyname;
             const char* ocname;
-            pyname = key;
-            if (pyname == NULL)
-                continue;
+            PyObject*   pyname = key;
 
             if (PyUnicode_Check(pyname)) {
                 ocname = PyObjC_Unicode_Fast_Bytes(pyname);

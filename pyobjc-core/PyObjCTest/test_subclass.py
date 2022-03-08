@@ -514,3 +514,88 @@ class TestOverridingSpecials(TestCase):
             objc.error, "'MyClass!' not a valid Objective-C class name"
         ):
             type("MyClass!", (NSObject,), {})
+
+    def test_mutate_dict_during_setup(self):
+        class Helper:
+            def __pyobjc_class_setup__(
+                self, key, class_dict, instance_methods, class_methods
+            ):
+                for k in ("attr1", "attr2"):
+                    try:
+                        del class_dict[k]
+                    except KeyError:
+                        pass
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCClass_BuildClass: Cannot fetch item in keylist"
+        ):
+
+            class ClassWhereSetupChangesDict(NSObject):
+                attr1 = Helper()
+                attr2 = Helper()
+
+    def test_class_dict_contains_int(self):
+        class NoCompare:
+            def __eq__(self, other):
+                raise RuntimeError("Cannot compare")
+
+            def __hash__(self):
+                return 42
+
+        @objc.typedSelector(b"i@:")
+        def someSelector(self):
+            return 42
+
+        with self.assertRaisesRegex(RuntimeError, "Cannot compare"):
+            type("ClassWithIntInDict", (NSObject,), {NoCompare(): someSelector})
+
+        cls = type("ClassWithIntInDict", (NSObject,), {42: someSelector})
+        self.assertIsInstance(cls.someSelector, objc.selector)
+        self.assertIsInstance(cls.__dict__[42], objc.selector)
+
+    def test_reuse_selector(self):
+        class ClassWithOriginalSelector(NSObject):
+            def mySelector(self):
+                return "hello there"
+
+        class ClassWithCopiedSelector(NSObject):
+            mySelector = ClassWithOriginalSelector.mySelector
+
+        value = ClassWithOriginalSelector.alloc().init()
+        self.assertEqual(value.mySelector(), "hello there")
+
+        value = ClassWithCopiedSelector.alloc().init()
+        self.assertEqual(value.mySelector(), "hello there")
+
+        self.assertEqual(
+            ClassWithOriginalSelector.mySelector.__objclass__, ClassWithOriginalSelector
+        )
+        self.assertEqual(
+            ClassWithCopiedSelector.mySelector.__objclass__, ClassWithCopiedSelector
+        )
+
+    def test_method_with_nonascii_name(self):
+        with self.assertRaisesRegex(
+            UnicodeEncodeError,
+            r"'ascii' codec can't encode character '\\xf6' in position 6: ordinal not in range\(128\)",
+        ):
+
+            class ClassWithNonASCIIMethod(NSObject):
+                def myMethöd(self):
+                    pass
+
+    def test_method_with_integer_name(self):
+        def myMethod(self):
+            return "gone"
+
+        with self.assertRaisesRegex(
+            TypeError, "method name is of type int, not a string"
+        ):
+            type("ClassWithNumberMethod", (NSObject,), {42: myMethod})
+
+    def test_special_methods(self):
+        class ClassWithEq(NSObject):
+            def __eq__(self, other):
+                return True
+
+        self.assertNotIsInstance(ClassWithEq.__eq__, objc.selector)
