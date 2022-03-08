@@ -37,9 +37,10 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
     CFBundleRef cfBundle;
     void*       value;
 
-    if (!PyArg_ParseTupleAndKeywords(
-            args, kwds, "O&OiO&|i", keywords, PyObjCObject_Convert, &bundle,
-            &module_globals, &typeid, PyObjCObject_Convert, &name, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O!iO&|i", keywords,
+                                     PyObjCObject_Convert, &bundle, &PyDict_Type,
+                                     &module_globals, &typeid, PyObjCObject_Convert,
+                                     &name, &skip_undefined)) {
         return NULL;
     }
 
@@ -74,7 +75,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         }
 
     } else {
-        PyObject* py_val = PyObjCCF_NewSpecialFromTypeID(typeid, value);
+        PyObject* py_val = PyObjCCF_NewSpecialFromTypeID(typeid, *(id*)value);
         if (py_val == NULL) {
             return NULL;
         }
@@ -104,9 +105,9 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
     PyObject*    seq;
     Py_ssize_t   i, len;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
-                                     &bundle, &module_globals, &variableInfo,
-                                     &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O!O|i", keywords,
+                                     PyObjCObject_Convert, &bundle, &PyDict_Type,
+                                     &module_globals, &variableInfo, &skip_undefined)) {
         return NULL;
     }
 
@@ -183,10 +184,14 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 return NULL;
             }
 
-            if (PyDict_SetItemString(module_globals, [name UTF8String], py_val) == -1) {
+            if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+                    module_globals, [name UTF8String], py_val)
+                == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(py_val);
         }
@@ -210,13 +215,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
     PyObject*    seq;
     Py_ssize_t   i, len;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
-                                     &bundle, &module_globals, &functionInfo,
-                                     &skip_undefined)) {
-        return NULL;
-    }
-    if (!PyDict_Check(module_globals)) {
-        PyErr_SetString(PyExc_TypeError, "'module_globals' (arg 2) must be a dict");
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O!O|i", keywords,
+                                     PyObjCObject_Convert, &bundle, &PyDict_Type,
+                                     &module_globals, &functionInfo, &skip_undefined)) {
         return NULL;
     }
 
@@ -268,7 +269,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
 
         doc = NULL;
         if (cfBundle != NULL) {
-            if (!PyArg_ParseTuple(item, "O&y|UO;functionInfo", PyObjCObject_Convert,
+            if (!PyArg_ParseTuple(item, "O&y|UO:functionInfo", PyObjCObject_Convert,
                                   &name, &signature, &doc, &meta)) {
                 Py_DECREF(seq);
                 return NULL;
@@ -314,11 +315,15 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 return NULL;
             }
 
-            if (PyDict_SetItem(module_globals, py_name, py_val) == -1) {
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    module_globals, py_name, py_val)
+                == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
                 Py_DECREF(py_val);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(py_name);
             Py_DECREF(py_val);

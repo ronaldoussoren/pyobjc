@@ -51,6 +51,13 @@ resulting in a number of minor bug fixes.
 * Raise the correct exception when the name of a method is
   not an ASCII string.
 
+* :func:`objc.loadSpecialVar` now better enforces that the
+  *module_globals* argument is a Python dictionary.
+
+* Fixed a crash in :func:`objc.loadSpecialVar` due to a
+  missing pointer dereference.
+
+
 Version 8.4
 -----------
 

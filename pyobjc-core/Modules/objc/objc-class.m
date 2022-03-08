@@ -689,6 +689,16 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         // LCOV_EXCL_STOP
     }
 
+    /* Save the value of __slots__ to make it possible to restore
+     * the original value after creating the Python class.
+     *
+     * PyObjCClass_BuildClass will reset __slots__ in the dict
+     * to ensure that the Python proxy class will have no instance
+     * variables.
+     */
+    PyObject* orig_slots = PyDict_GetItemString(dict, "__slots__");
+    Py_XINCREF(orig_slots);
+
     if (isCFProxyClass) {
         objc_class = nil;
 
@@ -699,6 +709,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict,
                                             hiddenSelectors, hiddenClassSelectors);
         if (objc_class == Nil) {
+            Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
             Py_DECREF(metadict);
             Py_DECREF(real_bases);
@@ -714,6 +725,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         if (py_super_class == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             (void)PyObjCClass_UnbuildClass(objc_class);
+            Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(metadict);
@@ -725,6 +737,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         } else {
             if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
                 (void)PyObjCClass_UnbuildClass(objc_class);
+                Py_XDECREF(orig_slots);
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(metadict);
@@ -744,6 +757,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         if (objc_class != nil) {
             (void)PyObjCClass_UnbuildClass(objc_class);
         }
+        Py_XDECREF(orig_slots);
         Py_DECREF(metadict);
         Py_DECREF(protocols);
         Py_DECREF(real_bases);
@@ -769,6 +783,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         if (PyObjCInformalProtocol_Check(p)) {
             if (PyObjCInformalProtocol_CheckClass(p, name, py_super_class, dict) == -1) {
+                Py_XDECREF(orig_slots);
                 Py_DECREF(real_bases);
                 Py_DECREF(protocols);
                 Py_DECREF(metadict);
@@ -781,6 +796,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         } else if (PyObjCFormalProtocol_Check(p)) {
             if (PyObjCFormalProtocol_CheckClass(p, name, py_super_class, dict, metadict)
                 == -1) {
+                Py_XDECREF(orig_slots);
                 Py_DECREF(real_bases);
                 Py_DECREF(protocols);
                 Py_DECREF(metadict);
@@ -798,6 +814,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     v = PyList_AsTuple(protocols);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_XDECREF(orig_slots);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
         Py_DECREF(metadict);
@@ -812,6 +829,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             dict, "__pyobjc_protocols__", v)
         == -1) {
         // LCOV_EXCL_START
+        Py_XDECREF(orig_slots);
         Py_DECREF(v);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
@@ -841,6 +859,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         if (isCFProxyClass) {
             PyErr_SetString(PyObjCExc_Error,
                             "cannot define __del__ on subclasses of NSCFType");
+            Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(metadict);
@@ -854,6 +873,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 if (objc_class != nil) {
                     (void)PyObjCClass_UnbuildClass(objc_class);
                 }
+                Py_XDECREF(orig_slots);
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(metadict);
@@ -875,6 +895,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         if (objc_class != nil) {
             (void)PyObjCClass_UnbuildClass(objc_class);
         }
+        Py_XDECREF(orig_slots);
         Py_DECREF(protocols);
         Py_DECREF(real_bases);
         Py_DECREF(metadict);
@@ -891,6 +912,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                                           0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (m == NULL) {
             (void)PyObjCClass_UnbuildClass(objc_class);
+            Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -907,6 +929,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(m);
         if (r == -1) {
             (void)PyObjCClass_UnbuildClass(objc_class);
+            Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -922,6 +945,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         metatype = PyObjCClass_NewMetaClass(objc_class);
         if (metatype == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
+            Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -934,6 +958,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         if (PyDict_Update(metatype->tp_dict, metadict) == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
+            Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -955,6 +980,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     args = Py_BuildValue("(sOO)", name, real_bases, dict);
     if (args == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_XDECREF(orig_slots);
         Py_DECREF(metatype);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
@@ -972,6 +998,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     res = PyType_Type.tp_new(metatype, args, NULL);
     Py_DECREF(metatype);
     if (res == NULL) {
+        Py_XDECREF(orig_slots);
         Py_DECREF(args);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
@@ -988,6 +1015,27 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     Py_DECREF(protocols);
     protocols = NULL;
+
+    if (orig_slots != NULL) {
+        /* Restore the initial value of __slots__ */
+        if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
+                res, "__slots__", orig_slots)
+            == -1) {
+            // LCOV_EXCL_START
+            Py_XDECREF(orig_slots);
+            Py_DECREF(args);
+            Py_DECREF(real_bases);
+            Py_DECREF(protocols);
+            Py_DECREF(old_dict);
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            (void)PyObjCClass_UnbuildClass(objc_class);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        Py_DECREF(orig_slots);
+        orig_slots = NULL;
+    }
 
     if (objc_class != nil) {
         /* Register the proxy as soon as possible, we can get

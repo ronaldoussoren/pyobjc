@@ -365,8 +365,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     if (tp == NULL) {
         if (!PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return (PyObject*)PyObjCObject_New(
-                (id)datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE,
-                NO);
+                datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE, NO);
         }
         return NULL; // LCOV_EXCL_LINE
     }
@@ -376,7 +375,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
         return NULL;    // LCOV_EXCL_LINE
     }
 
-    ((PyObjCObject*)rval)->objc_object = (id)datum;
+    ((PyObjCObject*)rval)->objc_object = datum;
     ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
                                    | PyObjCObject_kSHOULD_NOT_RELEASE
                                    | PyObjCObject_kMAGIC_COOKIE;
