@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.4"
+VERSION = "8.5b1"
 
 setup(
     name="pyobjc-framework-ReplayKit",
