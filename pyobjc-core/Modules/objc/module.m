@@ -2088,6 +2088,10 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         // LCOV_EXCL_STOP
     }
 
+    if (PyObjC_InitSuperCallRegistry() == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;                            // LCOV_EXCL_LINE
+    }
+
     NSAutoreleasePool* initReleasePool = [[NSAutoreleasePool alloc] init];
     [OC_NSBundleHack installBundleHack];
 

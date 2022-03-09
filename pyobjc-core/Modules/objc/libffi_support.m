@@ -221,7 +221,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
      */
     type->type     = FFI_TYPE_STRUCT;
     type->elements = PyMem_Malloc((1 + field_count) * sizeof(ffi_type*));
-    if (type->elements == NULL) { // LCOV_BR_EXCL
+    if (type->elements == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(type);
         PyErr_NoMemory();
@@ -452,8 +452,9 @@ extract_count(const char* type, void* pvalue)
     type = PyObjCRT_SkipTypeQualifiers(type);
     switch (*type) {
     case _C_ID: {
-        /* XXX: Not sure why this (only) works for contains with
-         * a count, supporting NSNumber could be useful as well.
+        /* Extract the length of a container, that's the
+         * only kind of API where using 'extract_count'
+         * is used with Apple's frameworks.
          */
         NSArray* value = *(id*)pvalue;
         if (!value) {
@@ -619,18 +620,13 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
         format = PyBytes_AsString(encoded);
 
     } else if (PyUnicode_Check(py_format)) {
-        format = PyObjC_Unicode_Fast_Bytes(py_format);
+        format = PyUnicode_AsUTF8(py_format);
         if (format != NULL) {
             encoded = py_format;
             Py_INCREF(encoded);
 
         } else {
-            PyErr_Clear();
-            encoded = PyUnicode_AsEncodedString(py_format, "utf-8", NULL);
-            if (encoded == NULL) {
-                return -1;
-            }
-            format = PyBytes_AsString(encoded);
+            return -1;
         }
 
     } else {
@@ -638,14 +634,10 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
         return -1;
     }
 
-    if (format == NULL) {
-        /* XXX: Is this check necessary? */
-        if (!PyErr_Occurred()) {
-            PyErr_SetString(PyExc_ValueError, "NULL format string");
-        }
-        Py_DECREF(encoded);
-        return -1;
-    }
+    /* The first two cases above set 'format',
+     * the third case bails out with an error.
+     */
+    PyObjC_Assert(format != NULL, -1);
 
     format = strchr(format, '%');
     while (format && *format != '\0') {

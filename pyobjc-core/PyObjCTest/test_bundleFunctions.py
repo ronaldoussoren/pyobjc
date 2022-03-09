@@ -3,6 +3,7 @@ import os
 import objc
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_object_proxy import NoObjectiveC
+from PyObjCTest.metadatafunction import function_list
 
 
 from . import fnd as Foundation
@@ -116,5 +117,71 @@ class TestBundleFunctions(TestCase):
         ):
             objc.loadBundleFunctions(self.bundle, {}, [()])
 
+        with self.assertRaisesRegex(
+            TypeError, r"functionInfo\(\) takes at least 2 arguments \(0 given\)"
+        ):
+            objc.loadBundleFunctions(None, {}, [()])
+
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             objc.loadBundleFunctions(self.bundle, {}, [(NoObjectiveC(), b"@")])
+
+
+class TestFunctionList(TestCase):
+    def test_parsing_arguments(self):
+        with self.assertRaisesRegex(
+            TypeError, r"function missing required argument 'function_list' \(pos 1\)"
+        ):
+            objc.loadFunctionList()
+
+        with self.assertRaisesRegex(TypeError, "argument 1 must be PyCapsule, not str"):
+            objc.loadFunctionList("foo", {}, [])
+
+        with self.assertRaisesRegex(TypeError, "argument 2 must be dict, not int"):
+            objc.loadFunctionList(function_list, 42, [])
+
+        with self.assertRaisesRegex(TypeError, "functionInfo not a sequence"):
+            objc.loadFunctionList(function_list, {}, 42)
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            objc.loadFunctionList(function_list, {}, [], "hello")
+
+        with self.assertRaisesRegex(TypeError, "item 0 has type int not tuple"):
+            objc.loadFunctionList(function_list, {}, [42])
+
+        with self.assertRaisesRegex(
+            TypeError, r"functionInfo tuple\(\) takes at least 2 arguments \(0 given\)"
+        ):
+            objc.loadFunctionList(function_list, {}, [()])
+
+        with self.assertRaisesRegex(
+            TypeError, r"functionInfo tuple\(\) takes at least 2 arguments \(0 given\)"
+        ):
+            objc.loadFunctionList(function_list, {}, [()])
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'str'"
+        ):
+            objc.loadFunctionList(function_list, {}, [("foo", "@")])
+
+    def test_invalid_function_signature(self):
+        d = {}
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_SkipTypeSpec: Unhandled type '0x21' !"
+        ):
+            objc.loadFunctionList(function_list, d, [("makeArrayWithFormat_", b"!")])
+        self.assertEqual(d, {})
+
+    def test_missing_function(self):
+        d = {}
+
+        with self.assertRaisesRegex(
+            objc.error, "cannot find function 'nosuchfunction'"
+        ):
+            objc.loadFunctionList(function_list, d, [("nosuchfunction", b"v")], False)
+        self.assertEqual(d, {})
+
+        objc.loadFunctionList(function_list, d, [("nosuchfunction", b"v")], True)
+        self.assertEqual(d, {})

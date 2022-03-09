@@ -282,7 +282,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
 
             value = CFBundleGetFunctionPointerForName(cfBundle, (CFStringRef)name);
         } else {
-            if (!PyArg_ParseTuple(item, "sy|UO;functionInfo", &c_name, &signature, &doc,
+            if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
                                   &meta)) {
                 Py_DECREF(seq);
                 return NULL;
@@ -365,8 +365,9 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
     Py_ssize_t           i, len;
     struct functionlist* function_list;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO|i", keywords, &pyFunctionsList,
-                                     &module_globals, &functionInfo, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!O|i", keywords, &PyCapsule_Type,
+                                     &pyFunctionsList, &PyDict_Type, &module_globals,
+                                     &functionInfo, &skip_undefined)) {
         return NULL;
     }
 
@@ -422,10 +423,14 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
                 return NULL;
             }
 
-            if (PyDict_SetItem(module_globals, name, py_val) == -1) {
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    module_globals, name, py_val)
+                == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(py_val);
         }

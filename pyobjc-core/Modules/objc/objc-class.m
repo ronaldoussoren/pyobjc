@@ -1516,6 +1516,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
 #endif
 
         /* Create (unbound) selector */
+        /* XXX: Add check for method_getTypeEncoding */
         PyObject* result =
             PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 1);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -1603,6 +1604,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
 
                 /* Create (unbound) selector */
                 PyObject* result =
+                    /* XXX: Add check for mehod_getTypeEncoding */
                     PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 0);
                 if (result == NULL) { // LCOV_BR_EXCL_LINE
                     return NULL;      // LCOV_EXCL_LINE

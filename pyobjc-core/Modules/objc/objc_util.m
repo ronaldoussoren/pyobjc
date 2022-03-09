@@ -1143,9 +1143,6 @@ PyObjC_IsPythonKeyword(const char* word)
     return 0;
 }
 
-/*
- * XXX: This function may or may not raise an exception on error.
- */
 int
 PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
 {
@@ -1168,6 +1165,7 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
         end++;
 
         if ((size_t)(end - cur) > buflen) {
+            PyErr_SetString(PyObjCExc_Error, "signature too long");
             return -1;
         }
 

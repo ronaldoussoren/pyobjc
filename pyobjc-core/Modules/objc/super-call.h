@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern BOOL PyObjC_UpdatingMetaData;
 
+extern int PyObjC_InitSuperCallRegistry(void);
+
 /*!
  * @function PyObjC_RegisterMethodMapping
  * @abstract Register a mapping for a specific method
@@ -30,6 +32,7 @@ extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
                                         PyObjC_CallFunc       call_to_objc,
                                         PyObjCFFI_ClosureFunc call_to_python);
 
+#if 0
 /*!
  * @function PyObjC_RegisterSignatureMapping
  * @abstract Register a mapping for methods with a specific signature
@@ -40,6 +43,7 @@ extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
  */
 extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_super,
                                            PyObjCFFI_ClosureFunc call_to_python);
+#endif
 
 /*!
  * @function PyObjC_FindCallFunc
@@ -51,7 +55,7 @@ extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call
  *     This finds the function that can be used to call the Objective-C
  *     implementation of the specified method.
  */
-extern PyObjC_CallFunc PyObjC_FindCallFunc(Class aClass, SEL sel);
+extern PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class aClass, SEL sel);
 
 /*!
  * @function PyObjC_MakeIMP

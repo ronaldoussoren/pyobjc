@@ -30,7 +30,7 @@ typedef PyObject* _Nullable (*PyObjC_CallFunc)(PyObject* meth, PyObject* self,
 typedef struct {
     PyObject_HEAD
     const char* sel_python_signature;
-    const char* _Nullable sel_native_signature;
+    const char* _Nullable sel_native_signature; /* XXX: Make _Nonnull */
     SEL sel_selector;
     PyObject* _Nullable sel_self;
     Class sel_class;

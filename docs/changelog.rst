@@ -62,6 +62,14 @@ resulting in a number of minor bug fixes.
   give a better error message when the "wheel" package
   is not installed.
 
+* Setting an integer option in :data:`objc.options` to
+  a value of an incompatible type (such as a string) will
+  now raise an exception as intended, instead of breaking
+  the interpreter.
+
+* Trying to delete an attribute from :data:`objc.options`
+  now raises :type:`AttributeError` instead of :type:`TypeError`.
+
 
 Version 8.4
 -----------

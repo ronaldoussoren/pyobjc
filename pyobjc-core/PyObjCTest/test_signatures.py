@@ -67,5 +67,11 @@ class PyOCTestTypeStr(TestCase):
             s.signature = b"v@:ii"
             self.assertEqual(s.native_signature, x)
             self.assertEqual(s.signature, b"v@:ii")
+
+            with self.assertRaisesRegex(TypeError, "signature must be byte string"):
+                s.signature = None
+
+            with self.assertRaisesRegex(TypeError, "Cannot delete 'signature'"):
+                del s.signature
         finally:
             s.signature = x

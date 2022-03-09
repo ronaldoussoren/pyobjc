@@ -227,3 +227,19 @@ class TestHiddenSelector(TestCase):
             OCTestSubHidden.bodyclass()
         v = OCTestSubHidden.performSelector_(b"bodyclass")
         self.assertEqual(v, "BODYCLASS2")
+
+    def test_hidden_attribute(self):
+        @objc.selector
+        def method(self):
+            return 42
+
+        method.isHidden = True
+        self.assertIs(method.isHidden, True)
+        method.isHidden = False
+        self.assertIs(method.isHidden, False)
+
+        with self.assertRaisesRegex(TypeError, "Cannot delete 'isHidden'"):
+            del method.isHidden
+
+        method.isHidden = "foo"
+        self.assertIs(method.isHidden, True)

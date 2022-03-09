@@ -599,3 +599,154 @@ class TestOverridingSpecials(TestCase):
                 return True
 
         self.assertNotIsInstance(ClassWithEq.__eq__, objc.selector)
+
+
+class TestSelectorAttributes(TestCase):
+    # XXX: These should be moved to a different file and
+    #      test all attributes...
+
+    def test_selector_self(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        self.assertIs(mySelector.self, None)
+
+        obj = NSObject.alloc().init()
+        v = mySelector.__get__(obj, NSObject)
+        self.assertIs(v.self, obj)
+
+    def test_selector_class(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        self.assertIs(mySelector.definingClass, None)
+
+        obj = NSObject.alloc().init()
+        v = mySelector.__get__(obj, NSObject)
+        self.assertIs(v.definingClass, None)
+
+        # XXX: See also test_methodlookiup.py
+
+    def test_seleoctor_required(self):
+        @objc.selector
+        def mySelector(self):
+            pass
+
+        self.assertIs(mySelector.isRequired, True)
+
+        def mySelector(self):
+            pass
+
+        mySelector = objc.selector(mySelector, isRequired=0)
+        self.assertIs(mySelector.isRequired, False)
+
+    def test_selector_metadata(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        self.assertIsInstance(mySelector.__metadata__(), dict)
+        self.assertIs(mySelector.__metadata__()["classmethod"], False)
+
+        # XXX: Tests for the detailed contents
+
+    def test_selector_native_signature(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        self.assertEqual(mySelector.native_signature, b"@@:")
+
+    # XXX: selector.signature is tested in test_signature.py
+    # XXX: selector.isHidden is tested in test_hidden_selector.py
+
+    def test_selector_selector(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        @objc.selector
+        def mySelector_arg_(self):
+            return 1
+
+        self.assertEqual(mySelector.selector, b"mySelector")
+        self.assertEqual(mySelector_arg_.selector, b"mySelector:arg:")
+
+    def test_selector_name(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        @objc.selector
+        def mySelector_arg_(self):
+            return 1
+
+        self.assertEqual(mySelector.__name__, "mySelector")
+        self.assertEqual(mySelector_arg_.__name__, "mySelector_arg_")
+
+    def test_native_repr(self):
+        obj = NSObject.alloc().init()
+        obj.description()
+
+        s = NSObject.__dict__["description"]
+        self.assertEqual(repr(s), "<unbound native-selector description in NSObject>")
+
+        self.assertRegex(
+            repr(obj.description),
+            r"^<native-selector description of <NSObject: 0x[0-9a-f]+>>$",
+        )
+
+    def test_native_compare(self):
+        # XXX: Same tests but with python selectors
+        # XXX: Also comparision between native and python selector
+        obj = NSObject.alloc().init()
+
+        meth1 = obj.description
+        meth2 = obj.respondsToSelector_
+
+        self.assertTrue(meth1 == meth1)
+        self.assertFalse(meth1 != meth1)
+
+        self.assertTrue(meth1 != meth2)
+        self.assertFalse(meth1 == meth2)
+
+        self.assertTrue(meth1 != dir)
+        self.assertFalse(meth1 == dir)
+
+        # XXX: Ordering between selector instances
+        #      is not very usefull, but the code
+        #      has been here for ages.
+        #
+        #      Consider deprecating
+        self.assertFalse(meth1 < meth1)
+        self.assertTrue(meth1 < meth2)
+        self.assertTrue(meth1 <= meth1)
+        self.assertFalse(meth1 > meth1)
+        self.assertTrue(meth2 > meth1)
+        self.assertTrue(meth1 >= meth1)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of 'objc.native_selector' and 'int'",
+        ):
+            meth1 < 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'objc.native_selector' and 'int'",
+        ):
+            meth1 <= 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of 'objc.native_selector' and 'int'",
+        ):
+            meth1 > 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'objc.native_selector' and 'int'",
+        ):
+            meth1 >= 42  # noqa: B015

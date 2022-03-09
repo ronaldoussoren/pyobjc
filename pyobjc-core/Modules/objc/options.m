@@ -36,11 +36,12 @@ struct options {
                           void* c __attribute__((__unused__)))                           \
     {                                                                                    \
         if (newVal == NULL) {                                                            \
-            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'");    \
+            PyErr_SetString(PyExc_AttributeError,                                        \
+                            "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
                                                                                          \
-        if (PyArg_Parse(newVal, "n", &VAR) < 0) {                                        \
+        if (!PyArg_Parse(newVal, "n", &VAR)) {                                           \
             return -1;                                                                   \
         }                                                                                \
         return 0;                                                                        \
@@ -59,11 +60,12 @@ struct options {
                           void* c __attribute__((__unused__)))                           \
     {                                                                                    \
         if (newVal == NULL) {                                                            \
-            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'");    \
+            PyErr_SetString(PyExc_AttributeError,                                        \
+                            "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
                                                                                          \
-        if (PyArg_Parse(newVal, "i", &VAR) < 0) {                                        \
+        if (!PyArg_Parse(newVal, "i", &VAR)) {                                           \
             return -1;                                                                   \
         }                                                                                \
         return 0;                                                                        \
@@ -82,7 +84,8 @@ struct options {
                           void* c __attribute__((__unused__)))                           \
     {                                                                                    \
         if (newVal == NULL) {                                                            \
-            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'");    \
+            PyErr_SetString(PyExc_AttributeError,                                        \
+                            "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
         VAR = PyObject_IsTrue(newVal) ? YES : NO;                                        \
@@ -109,7 +112,8 @@ struct options {
                           void* c __attribute__((__unused__)))                           \
     {                                                                                    \
         if (newVal == NULL) {                                                            \
-            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'");    \
+            PyErr_SetString(PyExc_AttributeError,                                        \
+                            "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
         SET_FIELD_INCREF(VAR, newVal);                                                   \
