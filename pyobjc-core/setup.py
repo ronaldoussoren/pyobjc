@@ -207,12 +207,16 @@ class oc_build_py(build_py.build_py):
 
 class oc_test(test.test):
     description = "run test suite"
-    user_options = [("verbosity=", None, "print what tests are run")]
+    user_options = test.test.user_options + [
+        ("verbosity=", None, "print what tests are run")
+    ]
 
     def initialize_options(self):
+        test.test.initialize_options(self)
         self.verbosity = "1"
 
     def finalize_options(self):
+        test.test.finalize_options(self)
         if isinstance(self.verbosity, str):
             self.verbosity = int(self.verbosity)
 
@@ -296,7 +300,12 @@ class oc_test(test.test):
         try:
             suite = makeTestSuite()
 
-            runner = unittest.TextTestRunner(verbosity=self.verbosity)
+            print(self.verbose)
+            print(self.verbosity)
+            if self.verbose and self.verbosity < 3:
+                runner = unittest.TextTestRunner(verbosity=3)
+            else:
+                runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
 
             # Print out summary. This is a structured format that
@@ -504,7 +513,7 @@ def _fixup_compiler(use_ccache):
 
 
 class oc_build_ext(build_ext.build_ext):
-    user_options = [
+    user_options = build_ext.build_ext.user_options + [
         (
             "deployment-target=",
             None,
