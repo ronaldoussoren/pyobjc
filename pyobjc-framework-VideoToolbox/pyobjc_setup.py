@@ -86,7 +86,9 @@ class oc_egg_info(egg_info.egg_info):
 
 class oc_test(test.test):
     description = "run test suite"
-    user_options = [("verbosity=", None, "print what tests are run")]
+    user_options = test.test.user_options + [
+        ("verbosity=", None, "print what tests are run")
+    ]
 
     def initialize_options(self):
         test.test.initialize_options(self)
@@ -166,7 +168,10 @@ class oc_test(test.test):
             time_before = time.time()
             suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
-            runner = unittest.TextTestRunner(verbosity=self.verbosity)
+            if self.verbose and self.verbosity < 3:
+                runner = unittest.TextTestRunner(verbosity=3)
+            else:
+                runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
 
             time_after = time.time()
