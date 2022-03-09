@@ -11,7 +11,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "8.4"
+VERSION = "8.4.1"
 
 setup(
     name="pyobjc-framework-AppleScriptObjC",
