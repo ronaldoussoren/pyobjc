@@ -12,7 +12,7 @@ import tarfile
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "8.4"
+VERSION = "8.4.1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -183,7 +183,7 @@ MACOS_TO_DARWIN = {
     "10.15": "19.0",
     "11.0": "20.0",
     "12.0": "21.0",
-    "12.3": "21.3",
+    "12.3": "21.4",
 }
 
 

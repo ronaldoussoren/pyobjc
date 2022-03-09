@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.4.1
+-------------
+
+* #455: ``pip install pyobjc`` on a macOS 12.2 machine tried
+  to install ``pyobjc-framework-ScreenCaptureKit``, which is
+  only can be installed on macOS 12.3 or later.
+
 Version 8.4
 -----------
 
