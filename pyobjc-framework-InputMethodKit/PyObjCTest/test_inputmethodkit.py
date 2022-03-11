@@ -28,3 +28,8 @@ class TestInputMethodKit(TestCase):
     def testProtocols2(self):
         objc.protocolNamed("IMKMouseHandling")
         objc.protocolNamed("IMKStateSetting")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(InputMethodKit)

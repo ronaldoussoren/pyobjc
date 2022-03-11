@@ -9,3 +9,8 @@ class TestCalendarStore(TestCase):
         self.assertIsInstance(CalendarStore.CalAlarm, objc.objc_class)
         self.assertHasAttr(CalendarStore, "CalNthWeekDay")
         self.assertIsInstance(CalendarStore.CalNthWeekDay, objc.objc_class)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(CalendarStore)

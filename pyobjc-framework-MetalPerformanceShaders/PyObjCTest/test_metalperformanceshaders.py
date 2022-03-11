@@ -22,3 +22,8 @@ class TestMetalPerformanceShaders(TestCase):
         MetalPerformanceShaders.MPSSetHeapCacheDuration
         MetalPerformanceShaders.MPSHintTemporaryMemoryHighWaterMark
         MetalPerformanceShaders.MPSGetPreferredDevice
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(MetalPerformanceShaders)

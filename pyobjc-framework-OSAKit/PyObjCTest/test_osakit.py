@@ -75,3 +75,8 @@ class TestOSAScript(TestCase):
         self.assertArgIsOut(
             OSAKit.OSAScript.compiledDataForType_usingStorageOptions_error_, 2
         )
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(OSAKit)

@@ -26,3 +26,8 @@ class TestCoreData(TestCase):
 
         self.assertHasAttr(CoreData, "NSDetailedErrorsKey")
         self.assertIsInstance(CoreData.NSDetailedErrorsKey, str)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(CoreData)

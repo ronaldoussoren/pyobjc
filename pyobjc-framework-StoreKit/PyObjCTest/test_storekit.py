@@ -14,3 +14,8 @@ class TestProtocols(TestCase):
         self.assertIsInstance(
             objc.protocolNamed("SKRequestDelegate"), objc.formal_protocol
         )
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(StoreKit)

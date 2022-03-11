@@ -233,3 +233,8 @@ class TestLatentSemanticMapping(TestCase):
         LatentSemanticMapping.LSMMapWriteToStream
         # v = LatentSemanticMapping.LSMMapWriteToStream(map1, text, fp, 0)
         # sel.assertIsInstance(v, int)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(LatentSemanticMapping)

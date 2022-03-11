@@ -43,3 +43,8 @@ class TestWebKit(TestCase):
         objc.protocolNamed("WebOpenPanelResultListener")
         objc.protocolNamed("WebPlugInViewFactory")
         objc.protocolNamed("WebPolicyDecisionListener")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(WebKit)

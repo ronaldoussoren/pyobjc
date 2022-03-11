@@ -36,3 +36,8 @@ class TestSearchKit(TestCase):
         self.assertHasAttr(SearchKit, "SKDocumentCreate")
         self.assertHasAttr(SearchKit, "SKIndexOpenWithURL")
         self.assertHasAttr(SearchKit, "SKLoadDefaultExtractorPlugIns")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(SearchKit)

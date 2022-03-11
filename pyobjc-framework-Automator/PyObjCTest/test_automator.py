@@ -13,3 +13,8 @@ class TestAutomator(TestCase):
 
     def testInformalProtocols(self):
         self.assertNotHasAttr(Automator, "protocols")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(Automator)

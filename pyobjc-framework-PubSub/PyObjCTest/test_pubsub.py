@@ -15,3 +15,8 @@ class TestPubSub(TestCase):
         self.assertFalse(hasattr(PubSub, "protocols"))
         # self.assertTrue( hasattr(PubSub.protocols, 'PSClientDelegate') )
         # self.assertTrue( isinstance(PubSub.protocols.PSClientDelegate, objc.informal_protocol) )
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(PubSub)

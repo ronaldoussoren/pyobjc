@@ -87,3 +87,8 @@ class TestNetFS(TestCase):
     @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(NetFS)

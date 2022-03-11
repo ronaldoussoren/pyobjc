@@ -189,3 +189,8 @@ class TestFSEvents(TestCase):
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(FSEvents.FSEventStreamSetExclusionPaths)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(FSEvents)

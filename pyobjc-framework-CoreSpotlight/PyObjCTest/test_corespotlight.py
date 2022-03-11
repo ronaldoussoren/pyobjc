@@ -7,3 +7,8 @@ class TestCoreSpotlight(TestCase):
     def testConstants(self):
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionNumber, float)
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionString, bytes)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(CoreSpotlight)

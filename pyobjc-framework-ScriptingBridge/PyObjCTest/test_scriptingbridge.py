@@ -20,3 +20,8 @@ class TestSBApplication(TestCase):
             0,
             b"r^{AEDesc=I^^{OpaqueAEDataStorageType}}",
         )
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(ScriptingBridge)

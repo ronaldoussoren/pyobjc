@@ -1,9 +1,11 @@
 from PyObjCTools.TestSupport import TestCase
 
 
+import CoreServices
+
+
 class TestCoreServices(TestCase):
     def testBasicImport(self):
-        import CoreServices
 
         # DictionaryServices
         self.assertHasAttr(CoreServices, "DCSCopyTextDefinition")
@@ -16,3 +18,8 @@ class TestCoreServices(TestCase):
 
         # SharedFileList
         self.assertHasAttr(CoreServices, "LSSharedFileListItemGetTypeID")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(CoreServices)

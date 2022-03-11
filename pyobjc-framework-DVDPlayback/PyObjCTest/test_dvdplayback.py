@@ -615,3 +615,8 @@ class TestDVDPlayback(TestCase):
 
         DVDPlayback.DVDSleep
         DVDPlayback.DVDWakeUp
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(DVDPlayback)

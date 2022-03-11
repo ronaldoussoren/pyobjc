@@ -58,3 +58,8 @@ class TestFinderSync(TestCase):
     @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(FinderSync)

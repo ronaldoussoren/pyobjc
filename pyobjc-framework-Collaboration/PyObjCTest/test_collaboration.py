@@ -14,3 +14,8 @@ class TestCollaboration(TestCase):
         self.assertIsInstance(Collaboration.CBGroupIdentity, objc.objc_class)
         self.assertHasAttr(Collaboration, "CBIdentityPicker")
         self.assertIsInstance(Collaboration.CBIdentityPicker, objc.objc_class)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(Collaboration)

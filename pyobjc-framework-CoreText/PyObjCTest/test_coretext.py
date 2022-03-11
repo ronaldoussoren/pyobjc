@@ -23,3 +23,8 @@ class TestCoreText(TestCase):
     def testFunctions(self):
         v = CoreText.CTGetCoreTextVersion()
         self.assertIsInstance(v, int)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(CoreText)

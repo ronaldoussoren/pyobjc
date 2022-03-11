@@ -75,3 +75,8 @@ class TestSystemExtensions(TestCase):
         self.assertResultIsBOOL(
             SystemExtensions.OSSystemExtensionProperties.isUninstalling
         )
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(SystemExtensions)

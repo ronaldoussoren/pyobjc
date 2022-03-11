@@ -72,3 +72,8 @@ class TestServiceManagement(TestCase):
             ServiceManagement.SMJobBless, 2, b"^{AuthorizationOpaqueRef=}"
         )
         self.assertArgHasType(ServiceManagement.SMJobBless, 3, b"o^^{__CFError}")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(ServiceManagement)

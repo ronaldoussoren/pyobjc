@@ -5662,7 +5662,7 @@
    "CGPDFArrayGetObject": {
     "args": {
      "0": {},
-     "2": { "type_modifier": "o", "type_override": "^{CGPDFObject=}" }
+     "2": { "type_modifier": "o", "type_override": "^^{CGPDFObject=}" }
     }
    },
    "CGPDFArrayGetStream": {

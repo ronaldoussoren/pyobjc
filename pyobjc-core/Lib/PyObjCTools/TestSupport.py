@@ -1022,6 +1022,113 @@ class TestCase(_unittest.TestCase):
         self.assertEqual(clone, value)
         self.assertIsInstance(clone, type(value))
 
+    def _validateCallableMetadata(self, value):
+        with self.subTest(repr(value)):
+            callable_meta = value.__metadata__()
+            argcount = len(callable_meta["arguments"])
+
+            for idx, meta in [("retval", callable_meta["retval"])] + list(
+                enumerate(callable_meta["arguments"])
+            ):
+                v = meta.get("c_array_size_in_arg", None)
+                if isinstance(v, int):
+                    if not (0 <= v < argcount):
+                        self.fail(
+                            f"{value}: {idx}: c_array_size_in_arg out of range {v}"
+                        )
+                elif isinstance(v, tuple):
+                    b, e = v
+                    if not (0 <= b < argcount):
+                        self.fail(
+                            f"{value}: {idx}: c_array_size_in_arg out of range {b}"
+                        )
+                    if not (0 <= e < argcount):
+                        self.fail(
+                            f"{value}: {idx}: c_array_size_in_arg out of range {e}"
+                        )
+
+                tp = meta["type"]
+                print(value, tp)
+                if any(
+                    tp.startswith(pfx)
+                    for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT)
+                ):
+                    rest = tp[1:]
+                    if not rest.startswith(objc._C_PTR) and not rest.startswith(
+                        objc._C_CHARPTR
+                    ):
+                        self.fail(
+                            f"{value}: {idx}: byref specifier on non-pointer: {tp}"
+                        )
+
+                    rest = rest[1:]
+
+                    if rest.startswith(objc._C_STRUCT_B):
+                        name, fields = objc.splitStructSignature(rest)
+                        print(value, tp, rest, name, fields)
+                        if not fields:
+                            self.fail(
+                                f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp}"
+                            )
+
+    def assertCallableMetadataIsSane(
+        self, module, *, exclude_cocoa=True, exclude_attrs=()
+    ):
+        # Do some sanity checking on module metadata for
+        # callables.
+        #
+        # This test is *very* expensive, made slightly
+        # better by excluding CoreFoundation/Foundation/AppKit
+        # by default
+        if exclude_cocoa:
+            import Cocoa
+
+            exclude_names = set(dir(Cocoa))
+
+            # Don't exclude 'NSObject' because a number
+            # of frameworks define categories on this class.
+            exclude_names -= {"NSObject"}
+        else:
+            exclude_names = set()
+
+        for nm in dir(module):
+            if nm in exclude_names:
+                continue
+            if nm in exclude_attrs:
+                continue
+
+            value = getattr(module, nm)
+            if isinstance(value, objc.objc_class):
+                if value.__name__ == "Object":
+                    # Root class, does not conform to the NSObject
+                    # protocol and useless to test.
+                    continue
+                for attr_name in dir(value.pyobjc_instanceMethods):
+                    if (nm, attr_name) in exclude_attrs:
+                        continue
+                    if attr_name.startswith("_"):
+                        # Skip private names
+                        continue
+                    attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
+                    if isinstance(attr, objc.selector):
+                        self._validateCallableMetadata(attr)
+
+                for attr_name in dir(value.pyobjc_classMethods):
+                    if (nm, attr_name) in exclude_attrs:
+                        continue
+                    if attr_name.startswith("_"):
+                        # Skip private names
+                        continue
+                    attr = getattr(value.pyobjc_classMethods, attr_name, None)
+                    if isinstance(attr, objc.selector):
+                        self._validateCallableMetadata(attr)
+
+            elif isinstance(value, objc.function):
+                self._validateCallableMetadata(value)
+
+            else:
+                continue
+
     def __init__(self, methodName="runTest"):
         super().__init__(methodName)
 

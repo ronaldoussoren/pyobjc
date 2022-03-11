@@ -25,3 +25,8 @@ class TestDictionaryServices(TestCase):
 
         v = DictionaryServices.DCSDictionaryGetTypeID()
         self.assertIsInstance(v, int)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(DictionaryServices)

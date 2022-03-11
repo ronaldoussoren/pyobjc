@@ -19,3 +19,8 @@ class TestSyncServices(TestCase):
         # Document for 10.5, but not actually present there
         objc.protocolNamed("ISyncSessionDriverDataSource")
         objc.protocolNamed("NSPersistentStoreCoordinatorSyncing")
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(SyncServices)

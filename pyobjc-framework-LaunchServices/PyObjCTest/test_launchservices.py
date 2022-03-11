@@ -67,3 +67,8 @@ class TestLaunchServices(TestCase):
         fn = LaunchServices.LSGetExtensionInfo
         self.assertEqual(fn(10, "hello.text", None), (0, 6))
         self.assertEqual(fn(10, "hello.text", None), (0, 6))
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(LaunchServices)

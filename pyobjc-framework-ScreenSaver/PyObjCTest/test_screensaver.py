@@ -45,3 +45,8 @@ class TestScreenSaver(TestCase):
         fn = ScreenSaver.SSRandomPointForSizeWithinRect
         r = fn(ScreenSaver.NSMakeSize(10, 10), ScreenSaver.NSMakeRect(20, 20, 100, 100))
         self.assertIsInstance(r, ScreenSaver.NSPoint)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(ScreenSaver)

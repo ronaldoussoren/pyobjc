@@ -19,3 +19,8 @@ class TestOpenDirectory(TestCase):
                 od = getattr(OpenDirectory, nm)
 
                 self.assertIs(cfod, od)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(OpenDirectory)

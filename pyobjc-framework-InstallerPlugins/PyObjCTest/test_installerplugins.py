@@ -13,3 +13,8 @@ class TestInstallerPlugins(TestCase):
 
         self.assertHasAttr(InstallerPlugins, "InstallerPane")
         self.assertIsInstance(InstallerPlugins.InstallerPane, objc.objc_class)
+
+
+class TestCallableMetadata(TestCase):
+    def test_callable_metadata_is_sane(self):
+        self.assertCallableMetadataIsSane(InstallerPlugins)
