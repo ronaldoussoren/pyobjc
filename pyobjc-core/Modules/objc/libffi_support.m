@@ -2022,6 +2022,9 @@ error:
 /*
  * Return an IMP that is suitable for forwarding a method with the specified
  * signature from Objective-C to Python.
+ *
+ * Return -1 on incorrect 'callable', return -2 when the type of callable
+ * cannot be processed.
  */
 
 static Py_ssize_t
@@ -2093,7 +2096,7 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
     } else {
         PyErr_Format(PyExc_TypeError, "Sorry, cannot create IMP for instances of type %s",
                      Py_TYPE(callable)->tp_name);
-        return -1;
+        return -2;
     }
 }
 
@@ -2120,7 +2123,7 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
 
         stubUserdata->argCount =
             _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
-        if (stubUserdata->argCount == -1) {
+        if (stubUserdata->argCount <= -1) {
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
@@ -2200,8 +2203,8 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
     Py_ssize_t nargs;
 
     nargs = _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
-    if (nargs == -1) {
-        return -1;
+    if (nargs <= -1) {
+        return nargs;
     }
 
     if (haveKwOnly) {
@@ -2270,6 +2273,12 @@ IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
+        } else if (stubUserdata->argCount == -2) {
+            /* Cannot determine attributes, assume this is some
+             * other callable with the correct signature.
+             */
+            PyErr_Clear();
+            stubUserdata->argCount = Py_SIZE(methinfo) - 1;
         }
 
         stubUserdata->callable = callable;
@@ -2373,7 +2382,7 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
         stubUserdata->argCount =
             _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
 
-        if (stubUserdata->argCount == -1) {
+        if (stubUserdata->argCount <= -1) {
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;

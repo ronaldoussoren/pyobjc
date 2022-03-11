@@ -424,10 +424,12 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     retval =
         PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, nargs /*+1*/);
 
-    if (retval == NULL) {
+    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(signature_copy);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < nargs; i++) {
@@ -555,7 +557,7 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
     /* XXX: snprintf is overkill here */
     r = snprintf(buf, buflen, "%s", [sig methodReturnType]);
     if (r > buflen) {
-        PyErr_SetString(PyObjCExc_InternalError, "NSMethodsignature too large");
+        PyErr_Format(PyObjCExc_InternalError, "NSMethodsignature too large (%ld)", r);
         return NULL;
     }
 
@@ -574,7 +576,7 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
         /* XXX: snprintf is overkill here */
         r = snprintf(buf, buflen, "%s", [sig getArgumentTypeAtIndex:i]);
         if (r > buflen) {
-            PyErr_SetString(PyObjCExc_InternalError, "NSMethodsignature too large");
+            PyErr_Format(PyObjCExc_InternalError, "NSMethodsignature too large (%ld)", r);
             return NULL;
         }
 
@@ -1257,6 +1259,9 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     }
 
     result = PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, max_idx);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     Py_SET_SIZE(result, max_idx);
     result->suggestion            = NULL;
     result->variadic              = NO;

@@ -167,8 +167,8 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
     DecimalObject* self;
 
     self = PyObject_New(DecimalObject, &Decimal_Type);
-    if (self == NULL) {
-        return PyErr_NoMemory();
+    if (self == NULL) {          // LCOV_BR_EXCL_LINE
+        return PyErr_NoMemory(); // LCOV_EXCL_LINE
     }
 
     memset(&self->value, 0, sizeof(self->value));
@@ -628,12 +628,12 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;
 
         left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
-        if (left == NULL)
-            goto error;
+        if (left == NULL) // LCOV_BR_EXCL_LINE
+            goto error;   // LCOV_EXCL_LINE
 
-        args = Py_BuildValue("(O)", *l);
-        if (args == NULL)
-            goto error;
+        args = Py_BuildValue("(O)", *l); /* XXX: really? */
+        if (args == NULL)                // LCOV_BR_EXCL_LINE
+            goto error;                  // LCOV_EXCL_LINE
 
         res = decimal_init(left, args, NULL);
         if (res == -1)
@@ -649,12 +649,12 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;
 
         right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
-        if (right == NULL)
-            goto error;
+        if (right == NULL) // LCOV_BR_EXCL_LINE
+            goto error;    // LCOV_EXCL_LINE
 
-        args = Py_BuildValue("(O)", *r);
-        if (args == NULL)
-            goto error;
+        args = Py_BuildValue("(O)", *r); /* XXX: really? */
+        if (args == NULL)                // LCOV_BR_EXCL_LINE
+            goto error;                  // LCOV_EXCL_LINE
 
         res = decimal_init(right, args, NULL);
         if (res == -1)
@@ -737,8 +737,8 @@ Decimal_New(NSDecimal* aDecimal)
     DecimalObject* result;
 
     result = PyObject_New(DecimalObject, &Decimal_Type);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     result->objc_value = nil;
     result->value      = *aDecimal;

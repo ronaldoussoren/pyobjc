@@ -70,6 +70,57 @@ resulting in a number of minor bug fixes.
 * Trying to delete an attribute from :data:`objc.options`
   now raises :type:`AttributeError` instead of :type:`TypeError`.
 
+* :class:`objc.selector` now copies the default signature
+  from its argument when that argument is another :class:`objc.selector`.
+
+  Until now this would raise an exception.
+
+* Added some missing error checking in calls to :c:func:`PyObject_New`
+  and :c:func:`PyObject_GC_New`.
+
+* It is now possible to create an :class:`objc.selector` from
+  a callable that is not a function or bound method. This may
+  require specifying the method signature in the call
+  to :class:`objc.selector`.
+
+* For pyobjc-core the ``build_ext`` command in ``setup.py``
+  now includes the command-line option from the standaard
+  command, which means ``python setup.py build_ext -j 4``
+  can now be used for parallel builds.
+
+  On my M1 laptop using ``python setup.py build_ext -j 8``
+  halves the time needed to build the extension.
+
+* The ``test`` command ``setup.py`` now supports
+  the ``-v`` option to print test cases while they are run,
+  in previoius versions this required using the ``--verbosity``
+  option.
+
+* Improve error handling when dealing with "isHidden" selectors.
+
+* Added ``pyobjc_hiddenSelectors(classmethods)`` to :class:`objc.objc_class`
+
+  This method returns a copy of the dictionary with "hidden" selectors,
+  that is Objective-C selectors that are hidden from view.
+
+  The method is primarily a debugging aid for development of
+  PyObjC itself.
+
+* #456: ``ApplicationServices.AXIsProcessTrustedWithOptions`` and
+  ``Quartrz.CGPDFArrayGetObject`` had incorrect metadata.
+
+  The testsuites for the various framework bindings now have a test
+  that does some basic checks on function and selector metadata. This
+  test found the problem with ``CGPDFArrayGetObject``.
+
+* Added :data:`objc._C_ATOMIC` and :data:`objc._C_COMPLEX`, both
+  extracted from the clang sources after finding some type encodings
+  that PyObjC could not decode.
+
+  :data:`objc._C_ATOMIC` is ignored by PyObjC (for now), and
+  :data:`objc._C_COMPLEX` is not yet supported.
+
+
 
 Version 8.4
 -----------

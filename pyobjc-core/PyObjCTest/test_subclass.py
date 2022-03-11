@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")
+NSData = objc.lookUpClass("NSData")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
 
@@ -113,6 +114,16 @@ class TestSelectors(TestCase):
         self.assertStartswith(
             repr(SelectorRepr.foo), "<unbound selector foo of SelectorRepr at"
         )
+
+        self.assertRegex(
+            repr(SelectorRepr.new().foo), "<selector foo of <SelectorRepr:.*>"
+        )
+
+        @objc.selector
+        def someSel_arg_(self, a, b):
+            pass
+
+        self.assertStartswith(repr(someSel_arg_), "<unbound selector someSel:arg: at")
 
 
 class TestCopying(TestCase):
@@ -605,6 +616,20 @@ class TestSelectorAttributes(TestCase):
     # XXX: These should be moved to a different file and
     #      test all attributes...
 
+    def test_selector_hash(self):
+        @objc.selector
+        def mySelector(self):
+            return 1
+
+        self.assertIsInstance(hash(mySelector), int)
+
+        class ClassForTestingHash(NSObject):
+            def aSelector(self):
+                pass
+
+        self.assertIsInstance(hash(ClassForTestingHash.aSelector), int)
+        self.assertIsInstance(hash(ClassForTestingHash.alloc().init().aSelector), int)
+
     def test_selector_self(self):
         @objc.selector
         def mySelector(self):
@@ -698,19 +723,119 @@ class TestSelectorAttributes(TestCase):
             r"^<native-selector description of <NSObject: 0x[0-9a-f]+>>$",
         )
 
-    def test_native_compare(self):
-        # XXX: Same tests but with python selectors
-        # XXX: Also comparision between native and python selector
-        obj = NSObject.alloc().init()
+    def test_python_compare(self):
+        class ClassForTestingCompare1(NSObject):
+            def meth1(self):
+                pass
 
-        meth1 = obj.description
-        meth2 = obj.respondsToSelector_
+            def meth2(self):
+                pass
+
+        class ClassForTestingCompare2(NSObject):
+            def meth1(self):
+                pass
+
+        obj = ClassForTestingCompare1.alloc().init()
+        obj2 = ClassForTestingCompare2.alloc().init()
+
+        meth1 = obj.meth1
+        meth2 = obj.meth2
+        meth3 = obj2.meth1
 
         self.assertTrue(meth1 == meth1)
         self.assertFalse(meth1 != meth1)
 
         self.assertTrue(meth1 != meth2)
         self.assertFalse(meth1 == meth2)
+
+        self.assertTrue(meth1 != meth3)
+        self.assertFalse(meth1 == meth3)
+
+        self.assertTrue(meth1 != dir)
+
+        self.assertTrue(meth1 != dir)
+        self.assertFalse(meth1 == dir)
+
+        # XXX: Ordering between selector instances
+        #      is not very usefull, but the code
+        #      has been here for ages.
+        #
+        #      Consider deprecating
+        self.assertFalse(meth1 < meth1)
+        self.assertTrue(meth1 < meth2)
+        self.assertTrue(meth1 <= meth1)
+        self.assertFalse(meth1 > meth1)
+        self.assertTrue(meth2 > meth1)
+        self.assertTrue(meth1 >= meth1)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of 'objc.python_selector' and 'int'",
+        ):
+            meth1 < 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<' not supported between instances of 'int' and 'objc.python_selector'",
+        ):
+            42 < meth1  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'objc.python_selector' and 'int'",
+        ):
+            meth1 <= 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'int' and 'objc.python_selector'",
+        ):
+            42 <= meth1  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of 'objc.python_selector' and 'int'",
+        ):
+            meth1 > 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>' not supported between instances of 'int' and 'objc.python_selector'",
+        ):
+            42 > meth1  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'objc.python_selector' and 'int'",
+        ):
+            meth1 >= 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'int' and 'objc.python_selector'",
+        ):
+            42 >= meth1  # noqa: B015
+
+    def test_native_compare(self):
+        # XXX: Same tests but with python selectors
+        # XXX: Also comparision between native and python selector
+        obj = NSObject.alloc().init()
+        obj2 = NSObject.alloc().init()
+
+        meth1 = obj.description
+        meth2 = obj.respondsToSelector_
+        meth3 = obj2.description
+
+        self.assertTrue(meth1 == meth1)
+        self.assertFalse(meth1 != meth1)
+
+        self.assertTrue(meth1 != meth2)
+        self.assertFalse(meth1 == meth2)
+
+        self.assertTrue(meth1 != meth3)
+        self.assertFalse(meth1 == meth3)
+
+        self.assertTrue(meth1 != dir)
 
         self.assertTrue(meth1 != dir)
         self.assertFalse(meth1 == dir)
@@ -735,9 +860,21 @@ class TestSelectorAttributes(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
+            "'<' not supported between instances of 'int' and 'objc.native_selector'",
+        ):
+            42 < meth1  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
             "'<=' not supported between instances of 'objc.native_selector' and 'int'",
         ):
             meth1 <= 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'<=' not supported between instances of 'int' and 'objc.native_selector'",
+        ):
+            42 <= meth1  # noqa: B015
 
         with self.assertRaisesRegex(
             TypeError,
@@ -747,6 +884,119 @@ class TestSelectorAttributes(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
+            "'>' not supported between instances of 'int' and 'objc.native_selector'",
+        ):
+            42 > meth1  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
             "'>=' not supported between instances of 'objc.native_selector' and 'int'",
         ):
             meth1 >= 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "'>=' not supported between instances of 'int' and 'objc.native_selector'",
+        ):
+            42 >= meth1  # noqa: B015
+
+
+class TestSelectorEdgeCases(TestCase):
+    # XXX: These should be moved to a different file
+    #
+    # Note: all these tests have two variant: one for the "simple" caller
+    #       and one for the regular caller.
+
+    def test_no_keywords(self):
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSArray.alloc().init().copyWithZone_(zone=None)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSData.dataWithBytes_length_(data=b"hello", length=3)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSArray.alloc(cls=NSArray)
+
+    def test_call_on_wrong_self(self):
+        obj = NSObject.alloc().init()
+
+        # Resolve methods:
+        NSArray.new().description()
+        NSData.alloc().initWithBytes_length_(b"hello", 3)
+
+        meth1 = NSArray.__dict__["description"]
+        self.assertIs(meth1.self, None)
+
+        meth2 = NSData.__dict__["initWithBytes_length_"]
+        self.assertIs(meth2.self, None)
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of NSArray as self, got one of NSObject"
+        ):
+            meth1(obj)
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of NSData as self, got one of NSObject"
+        ):
+            meth2(obj)
+
+    def test_didEnd(self):
+        # Some magic in selector.__new__ to automaticly set the correct signature
+        # for methods like this.
+        @objc.selector
+        def somethingDidEnd_returnCode_contextInfo_(self, a, b, c):
+            pass
+
+        self.assertEqual(somethingDidEnd_returnCode_contextInfo_.signature, b"v@:@i^v")
+
+    def test_selector_from_selector(self):
+        @objc.selector
+        def someSelector(self):
+            pass
+
+        value = objc.selector(someSelector)
+        self.assertIs(value.callable, someSelector.callable)
+
+    def test_selector_from_bound_method(self):
+        class Helper:
+            def method(self, ocSelf):
+                return f"helper {ocSelf}"
+
+        class ClassWithBoundMethodForSelector(NSObject):
+            method = objc.selector(Helper().method, selector=b"method")
+
+        self.assertEqual(ClassWithBoundMethodForSelector.method.signature, b"@@:")
+
+        obj = ClassWithBoundMethodForSelector.new()
+        self.assertRegex(
+            obj.method(), "helper <ClassWithBoundMethodForSelector: 0x[0-9a-f]+>"
+        )
+
+    def test_selector_from_callable_object(self):
+        class Helper:
+            def __call__(self, ocSelf):
+                return f"helper {ocSelf}"
+
+        class ClassWithCallableForSelector(NSObject):
+            method = objc.selector(Helper(), selector=b"method")
+
+        self.assertEqual(ClassWithCallableForSelector.method.signature, b"@@:")
+
+        obj = ClassWithCallableForSelector.new()
+        self.assertRegex(
+            obj.method(), "helper <ClassWithCallableForSelector: 0x[0-9a-f]+>"
+        )
+
+    def test_selector_from_c_func(self):
+        with self.assertRaisesRegex(
+            TypeError, "Cannot calculate default method signature"
+        ):
+
+            class ClassWithDirAsSelectorFail(NSObject):
+                method = objc.selector(dir, selector=b"method")
+
+        class ClassWithDirAsSelector(NSObject):
+            method = objc.selector(dir, selector=b"method", signature=b"@@:")
+
+        obj = ClassWithDirAsSelector.alloc().init()
+        self.assertEqual(obj.method(), dir(obj))

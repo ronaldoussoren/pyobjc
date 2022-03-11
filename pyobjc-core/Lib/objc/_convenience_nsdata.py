@@ -21,6 +21,15 @@ registerMetaDataForSelector(
 )
 registerMetaDataForSelector(
     b"NSData",
+    b"initWithBytes:length:",
+    {
+        "arguments": {
+            2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3}
+        }
+    },
+)
+registerMetaDataForSelector(
+    b"NSData",
     b"replaceBytesInRange:withBytes:length:",
     {
         "arguments": {

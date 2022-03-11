@@ -454,7 +454,7 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
             SEL sel_b = PyObjCSelector_GET_SELECTOR(b);
 
             int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
-            switch (op) {
+            switch (op) { // LCOV_BR_EXCL_LINE
             case Py_LT:
                 return PyBool_FromLong(r < 0);
             case Py_LE:
@@ -463,7 +463,7 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
                 return PyBool_FromLong(r > 0);
             case Py_GE:
                 return PyBool_FromLong(r >= 0);
-            }
+            } // LCOV_EXCL_LINE
         }
 
         Py_INCREF(Py_NotImplemented);
@@ -501,10 +501,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         }
 
         pyself = args[0];
-        if (pyself == NULL) {
-            PyErr_SetString(PyExc_TypeError, "Got NULL for self");
-            return NULL;
-        }
+        PyObjC_Assert(pyself != NULL, NULL);
 
         args   = args + 1;
         nargsf = PyVectorcall_NARGS(nargsf) - 1;
@@ -763,6 +760,9 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         }
     }
     result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     result->base.sel_selector = meth->base.sel_selector;
     const char* tmp           = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
@@ -897,8 +897,11 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
     char               buf[2048];
 
     if (PyObjCObject_Check(self)) {
-        if (PyObjCObject_IsMagic(self)
-            || PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
+        PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
+        if (hidden == NULL && PyErr_Occurred()) {
+            return NULL;
+        }
+        if (PyObjCObject_IsMagic(self) || hidden) {
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
         }
@@ -906,6 +909,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
     } else {
         if (PyObjCClass_HiddenSelector(self, sel, YES)) {
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
+            return NULL;
+        } else if (PyErr_Occurred()) {
             return NULL;
         }
     }
@@ -1054,6 +1059,11 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_class    = class;
     result->base.sel_flags    = 0;
     result->base.sel_methinfo = NULL;
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.sel_vectorcall = objcsel_vectorcall;
+#endif
+    result->sel_call_func = NULL;
+    result->sel_cif       = NULL;
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
@@ -1062,11 +1072,10 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
         result->base.sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
     }
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
-#if PY_VERSION_HEX >= 0x03090000
-    result->base.sel_vectorcall = objcsel_vectorcall;
-#endif
-    result->sel_call_func = NULL;
-    result->sel_cif       = NULL;
+    if (result->base.sel_methinfo == NULL) {
+        Py_DECREF(result);
+        return NULL;
+    }
     return (PyObject*)result;
 }
 
@@ -1085,11 +1094,18 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
                    int class_method, Class _Nullable cls)
 {
     PyObjCPythonSelector* result;
-    if (signature == NULL) {
+    if (signature == NULL && PyObjCPythonSelector_Check(callable)) {
+        signature = PyObjCUtil_Strdup(
+            ((PyObjCPythonSelector*)callable)->base.sel_python_signature);
+
+    } else if (signature == NULL) {
         const char* selname = sel_getName(selector);
         size_t      len     = strlen(selname);
         if (len > 30
             && strcmp(selname + len - 30, "DidEnd:returnCode:contextInfo:") == 0) {
+            /* XXX: This is a bit too magic...
+             *      Consider moving this logic to a python helper.
+             */
             signature = PyObjCUtil_Strdup(gSheetMethodSignature);
         } else {
             signature = pysel_default_signature(selector, callable);
@@ -1097,12 +1113,12 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     } else {
         signature = PyObjCUtil_Strdup(signature);
     }
-    if (signature == NULL)
-        return NULL;
+    if (signature == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     result->base.sel_selector         = selector;
     result->base.sel_python_signature = signature;
@@ -1129,6 +1145,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result->base.sel_methinfo = NULL; /* We might not know the class right now */
 
     if (PyObjCPythonSelector_Check(callable)) {
+        /* XXX: Should this be supported at all? */
         callable = ((PyObjCPythonSelector*)callable)->callable;
     }
 
@@ -1427,20 +1444,29 @@ pysel_default_signature(SEL selector, PyObject* callable)
     Py_buffer     buf;
     const char*   selname = sel_getName(selector);
 
+    if (selname == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_SetString(PyExc_ValueError, "Cannot extract string from selector");
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
     if (PyFunction_Check(callable)) {
         func_code = (PyCodeObject*)PyFunction_GetCode(callable);
 
     } else if (PyMethod_Check(callable)) {
         func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(callable));
 
-    } else {
-        PyErr_SetString(PyExc_TypeError, "Cannot calculate default method signature");
-        return NULL;
-    }
-
-    if (selname == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Cannot extract string from selector");
-        return NULL;
+    } else { // LCOV_BR_EXCL_LINE
+        PyObject* call = PyObject_GetAttrString(callable, "__call__");
+        if (call != NULL && PyMethod_Check(call)) {
+            func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(call));
+            Py_DECREF(call);
+        } else {
+            Py_XDECREF(call);
+            PyErr_SetString(PyExc_TypeError, "Cannot calculate default method signature");
+            return NULL;
+        }
     }
 
     arg_count = 0;
@@ -1453,9 +1479,11 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     /* arguments + return-type + selector */
     result = PyMem_Malloc(arg_count + 4);
-    if (result == 0) {
+    if (result == 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /* We want: v@:@... (final sequence of arg_count-1 @-chars) */
@@ -1464,11 +1492,13 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result[2]             = _C_SEL;
     result[arg_count + 3] = '\0';
 
-    if (PyObject_GetBuffer(func_code->co_code, &buf, PyBUF_CONTIG_RO) == -1) {
+    if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+            func_code->co_code, &buf, PyBUF_CONTIG_RO)
+        == -1) {
         /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
          */
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     /*
@@ -1750,6 +1780,9 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     }
 
     result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     result->base.sel_methinfo = NULL;
     result->base.sel_selector = meth->base.sel_selector;
     result->base.sel_class    = meth->base.sel_class;
@@ -2012,6 +2045,9 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
             return NULL;
         }
         result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
+        }
         result->base.sel_selector = ((PyObjCPythonSelector*)callable)->base.sel_selector;
         result->numoutput         = ((PyObjCPythonSelector*)callable)->numoutput;
         result->argcount          = ((PyObjCPythonSelector*)callable)->argcount;
@@ -2038,6 +2074,9 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
                                        PyObjCSelector_GetSelector(callable),
                                        PyObjCSelector_IsClassMethod(callable))) {
             ((PyObjCSelector*)result)->sel_flags |= PyObjCSelector_kHIDDEN;
+        } else if (PyErr_Occurred()) {
+            Py_DECREF(result);
+            return NULL;
         }
         return (PyObject*)result;
     }
@@ -2161,6 +2200,9 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
             PyObject* met =
                 PyObjCClass_HiddenSelector(template_class, selector, is_class_method);
             if (met == NULL) {
+                if (PyErr_Occurred()) {
+                    return NULL;
+                }
                 typestr = method_getTypeEncoding(meth);
             } else {
                 typestr = ((PyObjCMethodSignature*)met)->signature;
@@ -2203,6 +2245,9 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
     if (PyObjCClass_HiddenSelector(template_class, selector,
                                    PyObjCSelector_IsClassMethod(value))) {
         ((PyObjCSelector*)value)->sel_flags |= PyObjCSelector_kHIDDEN;
+    } else if (PyErr_Occurred()) {
+        Py_DECREF(value);
+        return value;
     }
 
     return value;

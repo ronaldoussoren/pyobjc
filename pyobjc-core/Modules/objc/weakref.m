@@ -103,8 +103,8 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
     }
 
     result = (PyObjC_WeakRef*)PyObject_New(PyObjC_WeakRef, &PyObjCWeakRef_Type);
-    if (unlikely(result == NULL)) {
-        return NULL; /* LCOV_EXCL_LINE */
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     result->object = nil;

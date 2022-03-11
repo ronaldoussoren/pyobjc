@@ -1,3 +1,5 @@
+# XXX: Add variants for tests using the regular caller, these
+#      all use the "simple" caller.
 import contextlib
 import warnings
 
@@ -101,3 +103,16 @@ class TestDeprecationWarnings(TestCase):
             self.assertDeprecationWarning(func4)  # noqa: F821
             self.assertDeprecationWarning(func6)  # noqa: F821
             self.assertNoDeprecationWarning(func8)  # noqa: F821
+
+    def test_deprecation_error(self):
+        o = OCTestDeprecations.alloc().init()
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+
+            with deprecation_warnings(1006):
+                with self.assertRaisesRegex(
+                    objc.ApiDeprecationWarning,
+                    r"-\[OCTestDeprecations method2\] is a deprecated API \(macOS 10\.4\)",
+                ):
+                    o.method2()

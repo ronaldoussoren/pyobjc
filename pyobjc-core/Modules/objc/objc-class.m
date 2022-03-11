@@ -68,11 +68,12 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
                     PyErr_Clear(); // LCOV_EXCL_LINE
 
                 } else {
-                    /* XXX: Should change to PyDict_GetItemWithError */
-                    PyObject* r = PyDict_GetItem(hidden, v);
+                    PyObject* r = PyDict_GetItemWithError(hidden, v);
                     Py_DECREF(v);
                     if (r == NULL) {
-                        PyErr_Clear();
+                        if (PyErr_Occurred()) {
+                            return NULL;
+                        }
 
                     } else {
                         return r;
@@ -1264,7 +1265,15 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
             }
 
             /* Check if the selector should be hidden */
-            if (PyObjCClass_HiddenSelector(self_class, meth_name, YES)) {
+            PyObject* hidden = PyObjCClass_HiddenSelector(self_class, meth_name, YES);
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                /* Assertion error */
+                // LCOV_EXCL_START
+                Py_DECREF(result);
+                return NULL;
+                // LCOV_EXCL_STOP
+
+            } else if (hidden) {
                 continue;
             }
 
@@ -1418,7 +1427,11 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 continue;
             }
 
-            if (PyObjCClass_HiddenSelector(class_for_base, meth_name, YES)) {
+            PyObject* hidden = PyObjCClass_HiddenSelector(class_for_base, meth_name, YES);
+            if (hidden == NULL && PyErr_Occurred()) {
+                return NULL;
+
+            } else if (hidden) {
                 continue;
             }
 
@@ -1494,7 +1507,8 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         return NULL;
     }
 
-    if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)) {
+    if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)
+        || PyErr_Occurred()) {
         return NULL;
     }
 
@@ -1834,7 +1848,10 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     if (name_bytes == NULL) {
         return NULL;
     }
-    if (PyObjCClass_HiddenSelector(self, sel_getUid(name_bytes), YES)) {
+    PyObject* hidden = PyObjCClass_HiddenSelector(self, sel_getUid(name_bytes), YES);
+    if (hidden == NULL && PyErr_Occurred()) {
+        return NULL;
+    } else if (hidden) {
         PyErr_SetObject(PyExc_AttributeError, name);
         return NULL;
     }
@@ -1971,8 +1988,14 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             }
         }
 
-        if (PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
-                                       PyObjCSelector_IsClassMethod(newVal))) {
+        PyObject* hidden =
+            PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
+                                       PyObjCSelector_IsClassMethod(newVal));
+        if (hidden == NULL && PyErr_Occurred()) {
+            Py_DECREF(newVal);
+            return -1;
+
+        } else if (hidden) {
             Py_DECREF(newVal);
 
         } else {
@@ -2296,8 +2319,12 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             PyObject* item;
 
             /* Check if the selector should be hidden */
-            if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),
-                                           method_getName(methods[i]), NO)) {
+            PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),
+                                                          method_getName(methods[i]), NO);
+            if (hidden == NULL && PyErr_Occurred()) {
+                Py_DECREF(result);
+                return NULL;
+            } else if (hidden) {
                 continue;
             }
 
@@ -2335,6 +2362,24 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     return result;
 }
 
+static PyObject* _Nullable class_get_hidden(PyObject* _self, PyObject* classMethod)
+{
+    PyObjCClassObject* self = ((PyObjCClassObject*)_self);
+    PyObject*          hidden;
+
+    if (PyObject_IsTrue(classMethod)) {
+        hidden = self->hiddenClassSelectors;
+        PyObjC_Assert(hidden != NULL, NULL);
+
+    } else {
+        hidden = self->hiddenSelectors;
+        PyObjC_Assert(hidden != NULL, NULL);
+    }
+
+    PyObjC_Assert(PyDict_Check(hidden), NULL);
+    return PyDict_Copy(hidden);
+}
+
 static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
                                            .ml_meth  = (PyCFunction)metaclass_dir,
                                            .ml_flags = METH_NOARGS,
@@ -2349,14 +2394,20 @@ static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
                                               .ml_name = NULL /* SENTINEL */
                                           }};
 
-static PyMethodDef class_methods[] = {{.ml_name  = "__dir__",
-                                       .ml_meth  = (PyCFunction)meth_dir,
-                                       .ml_flags = METH_NOARGS,
-                                       .ml_doc   = "dir() hook, don't call directly"},
+static PyMethodDef class_methods[] = {
+    {.ml_name  = "__dir__",
+     .ml_meth  = (PyCFunction)meth_dir,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "dir() hook, don't call directly"},
+    {.ml_name  = "pyobjc_hiddenSelectors",
+     .ml_meth  = class_get_hidden,
+     .ml_flags = METH_O,
+     .ml_doc   = "pyobjc_hiddenSelectors(classMethod)" CLINIC_SEP
+               "Return copy of hidden selectors"},
 
-                                      {
-                                          .ml_name = NULL /* SENTINEL */
-                                      }};
+    {
+        .ml_name = NULL /* SENTINEL */
+    }};
 
 /*
  * This is the class for type(NSObject), and is a subclass of type()
@@ -2432,12 +2483,12 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         return result;
     }
 
-    hiddenSelectors = PySet_New(NULL);
+    hiddenSelectors = PyDict_New();
     if (hiddenSelectors == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;               // LCOV_EXCL_LINE
     }
 
-    hiddenClassSelectors = PySet_New(NULL);
+    hiddenClassSelectors = PyDict_New();
     if (hiddenClassSelectors == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;                    // LCOV_EXCL_LINE
     }
@@ -2894,7 +2945,11 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         }
     }
 
-    if (PyObjCClass_HiddenSelector(cls, selector, class_method)) {
+    PyObject* hidden = PyObjCClass_HiddenSelector(cls, selector, class_method);
+
+    if (hidden == NULL && PyErr_Occurred()) {
+        return NULL;
+    } else if (hidden) {
         (void)PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector),
                                    Py_None);
         PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
@@ -2953,8 +3008,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             dict = ((PyTypeObject*)c)->tp_dict;
         }
 
-        PyObject*  value;
-        Py_ssize_t pos = 0;
+        PyObject*  value = NULL;
+        Py_ssize_t pos   = 0;
 
         while (PyDict_Next(dict, &pos, NULL, &value)) {
             if (!PyObjCSelector_Check(value))
@@ -3265,7 +3320,9 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         r = 0;
         if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name,
                                         PyObjCSelector_IsClassMethod(aMethod))) {
-            if (PyObjCSelector_IsClassMethod(aMethod)) {
+            if (PyErr_Occurred()) {
+                r = -1;
+            } else if (PyObjCSelector_IsClassMethod(aMethod)) {
                 r = PyDict_SetItem(metaDict, name, aMethod);
 
             } else {

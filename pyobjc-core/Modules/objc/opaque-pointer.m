@@ -191,9 +191,11 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
         PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
     result = PyObject_GC_New(OpaquePointerObject, opaque_type);
-    if (result == NULL) {           // LCOV_BR_EXCL_LINE
-        *(PyObject**)retval = NULL; // LCOV_EXCL_LINE
-        return;                     // LCOV_EXCL_LINE
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        *(PyObject**)retval = NULL;
+        return;
+        // LCOV_EXCL_STOP
     }
 
     result->pointer_value = pointer_value;

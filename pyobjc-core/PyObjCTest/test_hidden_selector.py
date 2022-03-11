@@ -145,6 +145,8 @@ class TestHiddenSelector(TestCase):
         v = o.performSelector_(b"addedmethod")
         self.assertEqual(v, "NEW")
 
+        self.assertIn(b"addedmethod", OCTestHidden.pyobjc_hiddenSelectors(False))
+
         v = o.pyobjc_instanceMethods.addedmethod()
         self.assertEqual(v, "NEW")
 
@@ -155,6 +157,7 @@ class TestHiddenSelector(TestCase):
         v = OCTestHidden.performSelector_(b"addedclass")
         self.assertEqual(v, "NEWCLASS")
 
+        self.assertIn(b"addedclass", OCTestHidden.pyobjc_hiddenSelectors(True))
         v = OCTestHidden.pyobjc_classMethods.addedclass()
         self.assertEqual(v, "NEWCLASS")
 

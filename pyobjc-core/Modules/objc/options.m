@@ -92,6 +92,10 @@ struct options {
         return 0;                                                                        \
     }
 
+/* XXX: Either set the default from PyObjC_SetupOptions, or
+ *      make sure that setting the value of 'None' sets the global
+ *      variable to NULL (and check users!)
+ */
 #define OBJECT_PROP(NAME, VAR, DFLT)                                                     \
     PyObject* VAR = DFLT;                                                                \
                                                                                          \

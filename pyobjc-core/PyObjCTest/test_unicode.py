@@ -58,6 +58,12 @@ class TestUnicodeProxy(TestCase):
         # UCS2 in Objective-C land:
         self.assertEqual(o.length(), 2)
 
+        o = NSString.stringWithString_("\N{GRINNING FACE}!")
+        self.assertEqual(o, "\N{GRINNING FACE}!")
+
+        # UCS2 in Objective-C land:
+        self.assertEqual(o.length(), 3)
+
     def test_single_surrogate(self):
         o = OC_StringInt.getLowSurrogate()
         self.assertEqual(len(o), 1)

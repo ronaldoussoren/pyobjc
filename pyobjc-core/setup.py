@@ -91,8 +91,8 @@ CFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto",
+    # "-O3",
+    # "-flto=thin",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -111,8 +111,8 @@ OBJC_LDFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto",
+    # "-O3",
+    # "-flto=thin",
 ]
 
 

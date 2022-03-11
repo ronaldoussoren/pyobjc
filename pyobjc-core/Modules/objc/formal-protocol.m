@@ -597,7 +597,6 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
           PyObject* metadict)
 {
     PyObject* meth;
-
     if (is_class) {
         meth = PyObjC_FindSELInDict(metadict, descr->name);
         PyObjC_Assert(
@@ -615,6 +614,7 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
     if (meth == NULL) {
         meth = PyObjCClass_FindSelector(super_class, descr->name, is_class);
         if (meth == NULL || !PyObjCSelector_Check(meth)) {
+            PyErr_Clear();
             if (is_required) {
                 if (is_class) {
                     meth = PyObjC_FindSELInDict(clsdict, descr->name);

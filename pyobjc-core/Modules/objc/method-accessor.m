@@ -14,7 +14,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     SEL                sel = PyObjCSelector_DefaultSelector(name);
     id                 objc_object;
     NSMethodSignature* methsig;
-    char               buf[1024];
+    char               buf[2048];
     int                unbound_instance_method = 0;
     char*              flattened               = NULL;
     PyObject*          class_object;
@@ -98,6 +98,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
 
     /* XXX: This needs documentation */
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
+    if (meta == NULL && PyErr_Occurred()) {
+        return NULL;
+    }
 
     if (meta && meta != Py_None) {
         flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
@@ -209,10 +212,18 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                                              type_encoding, class_method);
 
                 if (v == NULL) { // LCOV_BR_EXCL_LINE
+                    /* This can fail for methods with an unknown encoding.
+                     *
+                     * Ignoring the error is more useful than raising.
+                     */
                     // LCOV_EXCL_START
+                    PyErr_Clear();
+                    continue;
+#if 0
                     free(methods);
                     Py_DECREF(res);
                     return NULL;
+#endif
                     // LCOV_EXCL_STOP
                 }
             }
@@ -380,6 +391,11 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
             Py_DECREF(result);
             result = NULL;
         }
+    } else {
+        /* PyObject_GetAttr failed, ignore the exception
+         * because we'll search in a different way below.
+         */
+        PyErr_Clear();
     }
 
     if (result) {
@@ -414,7 +430,7 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
         /* Unbound instance method */
         ((PyObjCSelector*)result)->sel_self = NULL;
     } else {
-        /* Bound instance method */
+        /* Bound instance or class method */
         ((PyObjCSelector*)result)->sel_self = self->base;
         Py_INCREF(self->base);
     }

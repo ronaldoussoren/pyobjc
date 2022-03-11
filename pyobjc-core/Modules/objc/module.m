@@ -1945,6 +1945,8 @@ struct objc_typestr_values {
                            {"_C_STRUCT_B", _C_STRUCT_B},
                            {"_C_STRUCT_E", _C_STRUCT_E},
                            {"_C_CONST", _C_CONST},
+                           {"_C_COMPLEX", _C_COMPLEX},
+                           {"_C_ATOMIC", _C_ATOMIC},
                            {"_C_IN", _C_IN},
                            {"_C_INOUT", _C_INOUT},
                            {"_C_OUT", _C_OUT},

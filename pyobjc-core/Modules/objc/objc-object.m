@@ -399,6 +399,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
              * Skip hidden methods.
              */
             if (!PyObjCClass_HiddenSelector(base, sel, NO)) {
+                if (PyErr_Occurred()) {
+                    return NULL;
+                }
+
                 descr = PyObjCClass_TryResolveSelector(base, name, sel);
                 if (descr) {
                     return descr;
@@ -451,8 +455,12 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
          */
         methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (j = 0; j < method_count; j++) {
-            Method m = methods[j];
-            if (PyObjCClass_HiddenSelector(base, method_getName(m), NO)) {
+            Method    m      = methods[j];
+            PyObject* hidden = PyObjCClass_HiddenSelector(base, method_getName(m), NO);
+
+            if (hidden == NULL && PyErr_Occurred()) {
+                return NULL;
+            } else if (hidden) {
                 continue;
             }
 
@@ -1016,7 +1024,13 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             if (sel == NULL)
                 continue;
 
-            if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
+            PyObject* hidden =
+                PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
+            if (hidden == NULL && PyErr_Occurred()) {
+                free(methods);
+                Py_DECREF(result);
+                return NULL;
+            } else if (hidden) {
                 continue;
             }
 

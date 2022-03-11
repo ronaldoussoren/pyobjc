@@ -1326,6 +1326,20 @@ More complex types can be represented using longer type strings:
 * The C construct 'const' is mapped to :const:`_C_CONST`, that is a
   *const char\** is represented as :const:`_C_CONST` + :const:`_C_CHARPTR`.
 
+Additional prefixes
+...................
+
+* :const:`_C_ATOMIC` can prefix any basic C type and denotes that the value
+  should be accessed using atomic instructions.
+
+  This value is currently ignored by PyObjC.
+
+* :const:`_C_COMPLEX` can prefix any basic C type and denotes a C complex
+  type.
+
+  This value is currently not supported by PyObjC (and is not used
+  in frameworks).
+
 Additional annotations for method and function arguments
 ........................................................
 

@@ -48,9 +48,7 @@ class_dealloc(PyObject* obj)
         PyObject_ClearWeakRefs(obj);
     }
 
-    if (uobj->nsstr) {
-        [uobj->nsstr release];
-    }
+    [uobj->nsstr release];
 
     PyUnicode_Type.tp_dealloc(obj);
 }
@@ -236,7 +234,16 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         return NULL;
     }
 
-    result           = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+    result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyObject_Free(characters);
+        characters = NULL;
+
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
     result->nsstr    = nil;
@@ -308,11 +315,17 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
-            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
+            if ( // LCOV_BR_EXCL_LINE
+                Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
                 && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
+                /* AFAIK  this cannot happen, surrogtes are outside of the range
+                 * of 1BYTE_KIND, likewise for the decoded character.
+                 */
+                // LCOV_EXCL_START
                 *latin1_cur++ = (Py_UCS1)ch;
                 i++;
+                // LCOV_EXCL_STOP
 
             } else {
                 *latin1_cur++ = (Py_UCS1)characters[i];
@@ -340,6 +353,10 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             characters             = NULL;
 
         } else {
+            /* See above, this cannot happen because decoded surrogate
+             * pairs are out of range.
+             */
+            // LCOV_EXCL_START
             Py_UCS2* ucs2_cur;
 
             result->base.data.ucs2 =
@@ -361,6 +378,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             }
             ascii->length = length - nr_surrogates;
             *ucs2_cur     = 0;
+            // LCOV_EXCL_STOP
         }
 
     } else { /* 4BYTE_KIND */
@@ -387,7 +405,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
                      */
                     *ucs4_cur++ = (Py_UCS4)characters[i];
                     // LCOV_EXCL_STOP
-                } else {
+                } else { // LCOV_BR_EXCL_LINE
                     *ucs4_cur++ = (Py_UCS4)ch;
                     i++;
                 }

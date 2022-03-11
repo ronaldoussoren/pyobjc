@@ -27,6 +27,9 @@ PyObject* _Nullable PyObjCInitNULL(void)
     PyObject* result;
 
     result = PyObjC_NULL = PyObject_New(PyObject, &PyObjC_NULL_Type);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     Py_XINCREF(PyObjC_NULL);
 
     return result;

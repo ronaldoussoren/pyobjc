@@ -90,8 +90,12 @@ class TestBasicDescriptors(TestCase):
             TypeError, r"typedSelector\(\) function argument must be a callable"
         ):
             objc.typedSelector(b"v@:i")(None)
+
         with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
             objc.typedSelector(b"v@:i")(42)
+
+        with self.assertRaisesRegex(ValueError, "invalid signature"):
+            objc.typedSelector(b"v@:!")(lambda self, a: 42)
 
     def testNamedSelector(self):
         @objc.namedSelector(b"foo:bar:")
