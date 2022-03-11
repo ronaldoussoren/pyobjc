@@ -1048,7 +1048,6 @@ class TestCase(_unittest.TestCase):
                         )
 
                 tp = meta["type"]
-                print(value, tp)
                 if any(
                     tp.startswith(pfx)
                     for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT)
@@ -1065,7 +1064,6 @@ class TestCase(_unittest.TestCase):
 
                     if rest.startswith(objc._C_STRUCT_B):
                         name, fields = objc.splitStructSignature(rest)
-                        print(value, tp, rest, name, fields)
                         if not fields:
                             self.fail(
                                 f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp}"
