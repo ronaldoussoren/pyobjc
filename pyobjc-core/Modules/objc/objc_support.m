@@ -328,7 +328,7 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
 {
     while (*type == _C_CONST || *type == _C_IN || *type == _C_INOUT || *type == _C_OUT
            || *type == _C_BYCOPY || *type == _C_BYREF || *type == _C_ONEWAY
-           || *type == 'O') {
+           || *type == 'O' || *type == _C_ATOMIC) {
         type++;
     }
     while (*type && isdigit(*type)) { // LCOV_BR_EXCL_LINE

@@ -29,6 +29,12 @@ struct PyObjC_method {
 #define _C_BYCOPY 'O'
 #define _C_BYREF 'R'
 
+/* From the clang sources...
+ *  Both are a prefix for a basic type
+ */
+#define _C_ATOMIC 'A'
+#define _C_COMPLEX 'j' /* XXX: Requires more work to support */
+
 /* These don't actually exist in the Objective-C runtime, but are used
  * by the bridge to simplify code.
  */
