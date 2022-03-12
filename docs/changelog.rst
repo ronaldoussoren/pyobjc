@@ -10,6 +10,8 @@ Version 8.4.1
   to install ``pyobjc-framework-ScreenCaptureKit``, which is
   only can be installed on macOS 12.3 or later.
 
+* #456: Fix bad metadata for ``HIServices.AXIsProcessTrustedWithOptions``
+
 * Wheels were build with Xcode 13.3 RC
 
   There are no changes in framework bindings relative to

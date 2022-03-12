@@ -23,7 +23,7 @@
    },
    "AXIsProcessTrustedWithOptions": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {}
     }
    },
    "AXMakeProcessTrusted": {
