@@ -70,6 +70,20 @@ resulting in a number of minor bug fixes.
 * Trying to delete an attribute from :data:`objc.options`
   now raises :type:`AttributeError` instead of :type:`TypeError`.
 
+Version 8.4.1
+-------------
+
+* #455: ``pip install pyobjc`` on a macOS 12.2 machine tried
+  to install ``pyobjc-framework-ScreenCaptureKit``, which is
+  only can be installed on macOS 12.3 or later.
+
+* #456: Fix bad metadata for ``HIServices.AXIsProcessTrustedWithOptions``
+
+* Wheels were build with Xcode 13.3 RC
+
+  There are no changes in framework bindings relative to
+  PyObjC 8.4 because there are no relevant API changes in
+  Xcode 13.3 RC.
 
 Version 8.4
 -----------
