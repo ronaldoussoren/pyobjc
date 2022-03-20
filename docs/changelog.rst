@@ -9,6 +9,13 @@ Version 8.5
 This release continues the work on test coverage in pyobjc-core,
 resulting in a number of minor bug fixes.
 
+* Added two options to the ``build_ext`` command in the ``setup.py``
+  of pyobjc-core:
+
+  - ``--no-lto``: Disable link time optimization
+
+  - ``--no-warnings-as-errors``: Disable ``-Werror``
+
 * For struct bindings in frameworks the "in" operator no longer
   swallows exceptions raised by the ``__eq__`` method.
 

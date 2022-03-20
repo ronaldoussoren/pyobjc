@@ -91,8 +91,8 @@ CFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -111,8 +111,8 @@ OBJC_LDFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
 ]
 
 
@@ -524,15 +524,31 @@ class oc_build_ext(build_ext.build_ext):
             None,
             "Path to the SDK to use (can also be set using ${SDKROOT})",
         ),
+        ("no-lto", None, "Disable LTO"),
+        ("no-warnings-as-errors", None, "Don't treat compiler errors as warnings"),
     ]
 
     def initialize_options(self):
         build_ext.build_ext.initialize_options(self)
         self.deployment_target = None
         self.sdk_root = None
+        self.no_lto = False
+        self.no_warnings_as_errors = False
 
     def finalize_options(self):
         build_ext.build_ext.finalize_options(self)
+        if self.no_lto:
+            for var in CFLAGS, EXT_CFLAGS, OBJC_LDFLAGS:
+                to_remove = []
+                for idx, val in enumerate(var):
+                    if val == "-O3" or val.startswith("-flto"):
+                        to_remove.append(idx)
+                for idx in to_remove[::-1]:
+                    del var[idx]
+
+        if self.no_warnings_as_errors:
+            CFLAGS.remove("-Werror")
+            EXT_CFLAGS.remove("-Werror")
 
         self.sdk_root = os.environ.get("SDKROOT", None)
         if self.sdk_root is None:
