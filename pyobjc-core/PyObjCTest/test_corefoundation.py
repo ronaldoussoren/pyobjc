@@ -23,6 +23,19 @@ CFDateRef = objc.registerCFSignature(
     "NSDate",
 )
 
+objc.registerMetaDataForSelector(
+    b"OC_TestCoreFoundation",
+    b"formatUUID2:",
+    {
+        "arguments": {
+            2
+            + 0: {
+                "type_modifier": objc._C_OUT,
+            }
+        }
+    },
+)
+
 
 class TestCoreFoundation(TestCase):
     def testTollFree(self):
@@ -83,6 +96,16 @@ class TestCoreFoundation(TestCase):
         self.assertIn("<CFUUID", repr(obj))
         self.assertIsInstance(str(obj), str)
         self.assertIn("<CFUUID", str(obj))
+
+    def test_invalid_metata_for_cf_argument(self):
+        obj = OC_TestCoreFoundation.createUUID()
+
+        self.assertIsInstance(obj, CFUUIDRef)
+
+        formatted = OC_TestCoreFoundation.formatUUID2_(obj)
+        self.assertIsInstance(formatted, tuple)
+        self.assertIsInstance(formatted[0], str)
+        self.assertIsInstance(formatted[1], type(None))
 
     def test_default_bridged(self):
         value = OC_TestCoreFoundation.runloop()

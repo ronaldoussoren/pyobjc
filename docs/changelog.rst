@@ -127,6 +127,14 @@ resulting in a number of minor bug fixes.
   :data:`objc._C_ATOMIC` is ignored by PyObjC (for now), and
   :data:`objc._C_COMPLEX` is not yet supported.
 
+* #456: Fix internal error for ``_C_OUT`` argument markup on
+  arguments that are CoreFoundation types.
+
+  This can only happen with invalid metadata definitions in framework
+  bindings, and earlier versions this resulted in an internal
+  assertion error. With this change the "output" argument is always
+  ``None`` in the result.
+
 Version 8.4.1
 -------------
 

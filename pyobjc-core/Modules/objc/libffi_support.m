@@ -2516,7 +2516,8 @@ PyObjCFFI_CountArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
             break;
 
         case _C_IN:
-        case _C_CONST:
+        case _C_CONST: /* XXX: Why _C_CONST, should that not be ignored instead of having
+                          semantics here? */
             if (argtype[1] == _C_PTR && argtype[2] == _C_VOID
                 && methinfo->argtype[i]->ptrType == PyObjC_kPointerPlain) {
                 itemSize  = PyObjCRT_SizeOfType(argtype);
@@ -2558,7 +2559,18 @@ PyObjCFFI_CountArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
             break;
 
         case _C_OUT:
-            if (argtype[1] == _C_PTR) {
+            if (unlikely(argtype[1] == _C_PTR
+                         && PyObjCPointerWrapper_HaveWrapper(argtype + 1))) {
+                /* This matches code in PyObjCFFI_ParseArguments */
+                (*byref_out_count)++;
+                itemAlign = PyObjCRT_AlignOfType(argtype + 1);
+                itemSize  = PyObjCRT_SizeOfType(argtype + 1);
+
+                if (itemSize == -1) {
+                    return -1;
+                }
+
+            } else if (argtype[1] == _C_PTR) {
                 (*byref_out_count)++;
                 itemSize  = PyObjCRT_SizeOfType(argtype + 2);
                 itemAlign = PyObjCRT_AlignOfType(argtype + 2);
@@ -3957,6 +3969,18 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                     } else {
                         result = v;
                     }
+                } else {
+                    /* This can only happen with bad metadata,
+                     * for example when a CoreFoundation type argument
+                     * has been marked as an _C_OUT argument.
+                     *
+                     * Set the tuple item to None to at least get
+                     * a valid tuple at the end (otherwise we'll end
+                     * up with a tuple where once of the entries
+                     * is a C NULL pointer)
+                     */
+                    PyTuple_SET_ITEM(result, py_arg++, Py_None);
+                    Py_INCREF(Py_None);
                 }
                 break;
             }

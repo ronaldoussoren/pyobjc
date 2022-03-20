@@ -11,7 +11,9 @@
 + (char*)signatureForCFUUIDRef;
 + (CFTypeID)typeidForCFUUIDRef;
 + (CFUUIDRef)createUUID;
++ (CFUUIDRef)createUUID;
 + (NSString*)formatUUID:(CFUUIDRef)uuid;
++ (NSString*)formatUUID2:(CFUUIDRef)uuid;
 + (NSObject*)anotherUUID;
 + (NSObject*)runloop;
 
@@ -64,6 +66,14 @@
 }
 
 + (NSString*)formatUUID:(CFUUIDRef)uuid
+{
+    NSString* result;
+
+    result = (NSString*)CFUUIDCreateString(NULL, uuid);
+    return [result autorelease];
+}
+
++ (NSString*)formatUUID2:(CFUUIDRef)uuid
 {
     NSString* result;
 
