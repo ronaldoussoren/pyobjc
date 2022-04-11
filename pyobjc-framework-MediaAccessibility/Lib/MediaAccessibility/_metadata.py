@@ -156,7 +156,7 @@ functions = {
     "MACaptionAppearanceAddSelectedLanguage": (
         b"Bq^{__CFString=}",
         "",
-        {"arguments": {1: {"null_accepted": True, "type_modifier": "o"}}},
+        {"arguments": {1: {"null_accepted": True}}},
     ),
     "MACaptionAppearanceDidDisplayCaptions": (b"v^{__CFArray=}",),
     "MACaptionAppearanceGetWindowOpacity": (

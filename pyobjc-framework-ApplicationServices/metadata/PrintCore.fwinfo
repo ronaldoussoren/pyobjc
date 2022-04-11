@@ -993,7 +993,7 @@
     "args": {
      "0": {},
      "1": {},
-     "2": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "3": {}
     }
    },

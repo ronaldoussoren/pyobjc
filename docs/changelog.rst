@@ -135,6 +135,60 @@ resulting in a number of minor bug fixes.
   assertion error. With this change the "output" argument is always
   ``None`` in the result.
 
+* #463: Fix metadata for a number of functions with a C string argument
+
+  The metadata for the following functions was changed to have
+  the correct type encoding for string argument, to fix issues with
+  using non-ASCII (byte) strings.
+
+  - ApplicationServices.PMWorkflowSubmitPDFWithOptions
+  - CoreServices.LocaleRefGetPartString
+  - Foundation.NSGetSizeAndAlignment
+  - Quartz.CGContextSelectFont
+  - Quartz.CGDataProviderCreateWithFilename
+  - Quartz.CGPDFContentStreamGetResource
+  - Quartz.CGPDFDictionaryGetArray
+  - Quartz.CGPDFDictionaryGetBoolean
+  - Network.nw_advertise_descriptor_create_bonjour_service
+  - Network.nw_browse_descriptor_create_bonjour_service
+  - Network.nw_browse_descriptor_get_bonjour_service_domain
+  - Network.nw_browse_descriptor_get_bonjour_service_type
+  - Network.nw_content_context_create
+  - Network.nw_content_context_get_identifier
+  - Network.nw_endpoint_copy_address_string
+  - Network.nw_endpoint_copy_port_string
+  - Network.nw_endpoint_create_bonjour_service
+  - Network.nw_endpoint_create_host
+  - Network.nw_endpoint_get_bonjour_service_domain
+  - Network.nw_endpoint_get_bonjour_service_name
+  - Network.nw_endpoint_get_bonjour_service_type
+  - Network.nw_endpoint_get_hostname
+  - Network.nw_framer_message_access_value
+  - Network.nw_framer_message_set_object_value
+  - Network.nw_framer_message_set_value
+  - Network.nw_framer_options_set_object_value
+  - Network.nw_privacy_context_create
+  - Network.nw_quic_get_application_error_reason
+  - Network.nw_quic_set_application_error
+  - Network.nw_txt_record_access_key
+
+  While fixing this issue I found problems with the metadata for these functions:
+
+  - CoreMedia.CMBufferQueueInstallTriggerHandler
+  - CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold
+  - CoreMIDI.MIDIExternalDeviceCreate
+  - CoreServices.TECGetTextEncodingFromInternetNameOrMIB
+  - MediaAccessibility.MACaptionAppearanceAddSelectedLanguage
+
+  There's also a new test that checks for this problem in all
+  exposed functions.
+
+* Fix incorrect reset of the "inline_list" attribute of the lazy importer,
+  this could result in an incorrect TypeError when trying to access
+  an non-existing attribute after looking at ``__all__``.
+
+* Fix uniqueness of symbols exposed in the OpenDirectory bindings.
+
 Version 8.4.1
 -------------
 

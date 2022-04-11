@@ -301,7 +301,7 @@ class ObjCLazyModule(ModuleType):
                 if nm not in self.__dict__:
                     self.__dict__[nm] = dct[nm]
 
-            self.__inlinelist = {}
+            self.__inlinelist = None
 
         if self.__expressions:
             for nm in list(self.__expressions):

@@ -1030,6 +1030,13 @@ class TestCase(_unittest.TestCase):
             for idx, meta in [("retval", callable_meta["retval"])] + list(
                 enumerate(callable_meta["arguments"])
             ):
+                if meta["type"].endswith(objc._C_PTR + objc._C_CHR) and meta.get(
+                    "c_array_delimited_by_null", False
+                ):
+                    self.fail(
+                        f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead"
+                    )
+
                 v = meta.get("c_array_size_in_arg", None)
                 if isinstance(v, int):
                     if not (0 <= v < argcount):

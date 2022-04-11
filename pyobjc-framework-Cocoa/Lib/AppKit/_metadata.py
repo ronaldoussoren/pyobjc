@@ -977,9 +977,9 @@ try:
         {
             "arguments": {
                 2: {"type": sel32or64(b"{_NSRange=II}", b"{_NSRange=QQ}")},
-                3: {"type_modifier": b"o", "c_array_length_in_arg": 2},
-                4: {"type_modifier": b"o", "c_array_length_in_arg": 2},
-                5: {"type_modifier": b"o", "c_array_length_in_arg": 2},
+                3: {"type_modifier": b"o", "c_array_length_in_arg": 2, "type": "^I"},
+                4: {"type_modifier": b"o", "c_array_length_in_arg": 2, "type": "^Q"},
+                5: {"type_modifier": b"o", "c_array_length_in_arg": 2, "type": "^Q"},
                 6: {"type": "^Z", "type_modifier": b"o", "c_array_length_in_arg": 2},
             }
         },

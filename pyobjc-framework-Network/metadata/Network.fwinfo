@@ -26,7 +26,7 @@
    },
    "nw_framer_options_set_object_value": {
     "arguments": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true  }
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"   }
     }
    },
    "nw_framer_copy_options": {
@@ -47,13 +47,13 @@
     "args": {
      "2": {
       "type_modifier": "n",
-      "c_array_delimited_by_null": true
+      "c_array_delimited_by_null": true, "type_override": "^t"
      }
     }
    },
    "nw_quic_get_application_error_reason": {
     "retval": {
-     "c_array_delimited_by_null": true
+     "c_array_delimited_by_null": true, "type_override": "^t"
     }
    },
    "nw_quic_copy_sec_protocol_metadata": {
@@ -104,9 +104,9 @@
    "nw_advertise_descriptor_create_bonjour_service": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "2": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "nw_advertise_descriptor_set_txt_record": {
@@ -122,15 +122,15 @@
    "nw_browse_descriptor_create_bonjour_service": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "nw_browse_descriptor_get_bonjour_service_domain": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_browse_descriptor_get_bonjour_service_type": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_browse_result_copy_endpoint": {
     "retval": {
@@ -575,7 +575,7 @@
      "already_retained": true
     },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "nw_content_context_foreach_protocol_metadata": {
@@ -601,7 +601,7 @@
     }
    },
    "nw_content_context_get_identifier": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_data_transfer_report_collect": {
     "args": {
@@ -628,10 +628,10 @@
     }
    },
    "nw_endpoint_copy_address_string": {
-    "retval": { "c_array_delimited_by_null": true}
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_endpoint_copy_port_string": {
-    "retval": { "c_array_delimited_by_null": true}
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_endpoint_create_address": {
     "retval": { "already_retained": true},
@@ -642,16 +642,16 @@
    "nw_endpoint_create_bonjour_service": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true},
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true},
-     "2": { "type_modifier": "n", "c_array_delimited_by_null": true}
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "nw_endpoint_create_host": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }
     }
    },
    "nw_endpoint_create_url": {
@@ -664,16 +664,16 @@
     "retval": { "c_array_delimited_by_null": true }
    },
    "nw_endpoint_get_bonjour_service_domain": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t"  }
    },
    "nw_endpoint_get_bonjour_service_name": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t"  }
    },
    "nw_endpoint_get_bonjour_service_type": {
-    "retval": { "c_array_delimited_by_null": true}
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_endpoint_get_hostname": {
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t"  }
    },
    "nw_endpoint_get_url": {
     "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
@@ -896,7 +896,7 @@
    },
    "nw_framer_message_access_value": {
     "args": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  },
      "2": {
       "callable": {
        "arguments": {
@@ -929,12 +929,12 @@
    },
    "nw_framer_message_set_object_value": {
     "args": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }
     }
    },
    "nw_framer_message_set_value": {
     "args": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  },
      "2": {},
      "3": {
       "callable": {
@@ -1468,7 +1468,7 @@
    "nw_privacy_context_create": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }
     }
    },
    "nw_protocol_copy_tcp_definition": {
@@ -1608,7 +1608,7 @@
    },
    "nw_txt_record_access_key": {
     "args": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": {
       "callable": {
        "arguments": {

@@ -303,7 +303,6 @@ functions = {
         "",
         {
             "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
         },
     ),
     "MIDISetSerialPortOwner": (b"i^{__CFString=}^{__CFString=}",),

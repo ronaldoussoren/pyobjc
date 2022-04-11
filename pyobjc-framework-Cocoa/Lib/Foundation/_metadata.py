@@ -677,7 +677,7 @@ functions = {
     "NSMakeRect": (b"{CGRect={CGPoint=dd}{CGSize=dd}}dddd",),
     "NSMakeCollectable": (b"@@",),
     "NSGetSizeAndAlignment": (
-        b"^c^c^Q^Q",
+        b"^t^t^Q^Q",
         "",
         {
             "retval": {"c_array_delimited_by_null": True},

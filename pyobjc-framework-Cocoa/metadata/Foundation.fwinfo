@@ -15658,11 +15658,11 @@
    },
    "NSGetSizeAndAlignment": {
     "args": {
-     "0": { "c_array_delimited_by_null": true, "type_modifier": "n"},
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" },
      "1": { "type_modifier": "o"},
      "2": { "type_modifier": "o"}
     },
-    "retval": { "c_array_delimited_by_null": true }
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "NSGetUncaughtExceptionHandler": {
     "retval": {
