@@ -212,7 +212,7 @@
    "DVDGetScanRate": {
     "args": {
      "0": { "type_modifier": "o" },
-     "1": { "type_modifier": "o" }
+     "1": { "type_modifier": "o", "type_override": "^z" }
     }
    },
    "DVDGetState": {

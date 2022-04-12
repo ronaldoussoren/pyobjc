@@ -1022,7 +1022,9 @@ class TestCase(_unittest.TestCase):
         self.assertEqual(clone, value)
         self.assertIsInstance(clone, type(value))
 
-    def _validateCallableMetadata(self, value):
+    def _validateCallableMetadata(
+        self, value, class_name=None, skip_simple_charptr_check=False
+    ):
         with self.subTest(repr(value)):
             callable_meta = value.__metadata__()
             argcount = len(callable_meta["arguments"])
@@ -1030,28 +1032,29 @@ class TestCase(_unittest.TestCase):
             for idx, meta in [("retval", callable_meta["retval"])] + list(
                 enumerate(callable_meta["arguments"])
             ):
-                if meta["type"].endswith(objc._C_PTR + objc._C_CHR) and meta.get(
-                    "c_array_delimited_by_null", False
-                ):
-                    self.fail(
-                        f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead"
-                    )
+                if meta["type"].endswith(objc._C_PTR + objc._C_CHR):
+                    if meta.get("c_array_delimited_by_null", False):
+                        self.fail(
+                            f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead {class_name or ''}"
+                        )
+                    if not skip_simple_charptr_check:
+                        self.fail(f"{value}: {idx}: 'char*' {class_name or ''}")
 
                 v = meta.get("c_array_size_in_arg", None)
                 if isinstance(v, int):
                     if not (0 <= v < argcount):
                         self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {v}"
+                            f"{value}: {idx}: c_array_size_in_arg out of range {v} {class_name or ''}"
                         )
                 elif isinstance(v, tuple):
                     b, e = v
                     if not (0 <= b < argcount):
                         self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {b}"
+                            f"{value}: {idx}: c_array_size_in_arg out of range {b} {class_name or ''}"
                         )
                     if not (0 <= e < argcount):
                         self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {e}"
+                            f"{value}: {idx}: c_array_size_in_arg out of range {e} {class_name or ''}"
                         )
 
                 tp = meta["type"]
@@ -1064,7 +1067,7 @@ class TestCase(_unittest.TestCase):
                         objc._C_CHARPTR
                     ):
                         self.fail(
-                            f"{value}: {idx}: byref specifier on non-pointer: {tp}"
+                            f"{value}: {idx}: byref specifier on non-pointer: {tp} {class_name or ''}"
                         )
 
                     rest = rest[1:]
@@ -1073,7 +1076,7 @@ class TestCase(_unittest.TestCase):
                         name, fields = objc.splitStructSignature(rest)
                         if not fields:
                             self.fail(
-                                f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp}"
+                                f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp} {class_name or ''}"
                             )
 
     def assertCallableMetadataIsSane(
@@ -1085,6 +1088,10 @@ class TestCase(_unittest.TestCase):
         # This test is *very* expensive, made slightly
         # better by excluding CoreFoundation/Foundation/AppKit
         # by default
+        #
+        # XXX: exclude_cocoa may exclude too much depending on
+        #      import order.
+
         if exclude_cocoa:
             import Cocoa
 
@@ -1095,6 +1102,14 @@ class TestCase(_unittest.TestCase):
             exclude_names -= {"NSObject"}
         else:
             exclude_names = set()
+
+        exclude_attrs = set(exclude_attrs)
+        exclude_attrs.add(("NSColor", "scn_C3DColorIgnoringColorSpace_success_"))
+        exclude_attrs.add(
+            ("PDFKitPlatformColor", "scn_C3DColorIgnoringColorSpace_success_")
+        )
+        exclude_attrs.add(("SCNColor", "scn_C3DColorIgnoringColorSpace_success_"))
+        exclude_attrs.add(("SKColor", "scn_C3DColorIgnoringColorSpace_success_"))
 
         for nm in dir(module):
             if nm in exclude_names:
@@ -1116,7 +1131,9 @@ class TestCase(_unittest.TestCase):
                         continue
                     attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
                     if isinstance(attr, objc.selector):
-                        self._validateCallableMetadata(attr)
+                        self._validateCallableMetadata(
+                            attr, nm, skip_simple_charptr_check=exclude_cocoa
+                        )
 
                 for attr_name in dir(value.pyobjc_classMethods):
                     if (nm, attr_name) in exclude_attrs:
@@ -1126,7 +1143,7 @@ class TestCase(_unittest.TestCase):
                         continue
                     attr = getattr(value.pyobjc_classMethods, attr_name, None)
                     if isinstance(attr, objc.selector):
-                        self._validateCallableMetadata(attr)
+                        self._validateCallableMetadata(attr, nm)
 
             elif isinstance(value, objc.function):
                 self._validateCallableMetadata(value)

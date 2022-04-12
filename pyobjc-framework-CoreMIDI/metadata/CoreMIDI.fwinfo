@@ -331,7 +331,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "MIDIGetDriverDeviceList": {

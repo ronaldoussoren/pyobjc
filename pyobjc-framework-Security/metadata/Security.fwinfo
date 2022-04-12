@@ -1948,6 +1948,8 @@
   "classes": {
   },
   "functions": {
+   "SecKeychainFindGenericPassword": { "ignore": true },
+   "SecKeychainFindInternetPassword": { "ignore": true },
    "SecCertificateGetAlgorithmID": { "ignore": true },
    "SecCertificateSetPreference": { "ignore": true },
    "SecCertificateCopyPreference": { "ignore": true },

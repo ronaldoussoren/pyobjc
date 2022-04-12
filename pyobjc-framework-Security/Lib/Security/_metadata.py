@@ -1417,7 +1417,6 @@ functions = {
         },
     ),
     "sec_protocol_options_set_tls_pre_shared_key_identity_hint": (b"v@@",),
-    "SecKeychainFindGenericPassword": (b"i@I^cI^c^I^^v^^{__SecKeychainItem=}",),
     "CMSEncoderGetTypeID": (b"Q",),
     "SecTrustCopyCertificateChain": (
         b"^{__CFArray=}^{__SecTrust=}",
@@ -1691,9 +1690,6 @@ functions = {
             "retval": {"already_cfretained": True},
             "arguments": {2: {"already_cfretained": True}},
         },
-    ),
-    "SecKeychainFindInternetPassword": (
-        b"i@I^cI^cI^cI^cSII^I^^v^^{__SecKeychainItem=}",
     ),
     "SSLWrite": (b"i@n^vLo^L", "", {"arguments": {1: {"c_array_length_in_arg": 2}}}),
     "sec_protocol_metadata_peers_are_equal": (b"B@@",),

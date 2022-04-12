@@ -21,4 +21,12 @@ class TestAddressBook(TestCase):
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(AddressBook)
+        self.assertCallableMetadataIsSane(
+            AddressBook,
+            exclude_attrs={
+                (
+                    "ABAddressBookRef",
+                    "nts_managedObjectContextWithStoreDescription_databasePath_loadFailure_",
+                ),
+            },
+        )

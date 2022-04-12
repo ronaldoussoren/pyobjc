@@ -238,7 +238,7 @@ functions = {
     ),
     "DVDDisplaySubPicture": (b"iZ",),
     "DVDGetScanRate": (
-        b"i^s^c",
+        b"i^s^z",
         "",
         {"arguments": {0: {"type_modifier": "o"}, 1: {"type_modifier": "o"}}},
     ),

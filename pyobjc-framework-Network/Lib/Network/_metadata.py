@@ -442,7 +442,11 @@ functions = {
     "nw_ethernet_channel_cancel": (b"v@",),
     "nw_path_monitor_start": (b"v@",),
     "nw_parameters_clear_prohibited_interface_types": (b"v@",),
-    "nw_connection_copy_description": (b"^c@",),
+    "nw_connection_copy_description": (
+        b"^t@",
+        "",
+        {"free_result": True, "retval": {"c_array_delimited_by_null": True}},
+    ),
     "nw_parameters_create_quic": (b"@@?", "", {"retval": {"already_retained": True}}),
     "nw_listener_set_queue": (b"v@@",),
     "nw_tcp_create_options": (b"@", "", {"retval": {"already_retained": True}}),
@@ -552,17 +556,18 @@ functions = {
         },
     ),
     "nw_framer_create_definition": (
-        b"@^cI@?",
+        b"@^tI@?",
         "",
         {
             "retval": {"already_retained": True},
             "arguments": {
+                0: {"c_array_delimited_by_null": True, "type_modifier": "n"},
                 2: {
                     "callable": {
                         "retval": {"type": b"i"},
                         "arguments": {0: {"type": "^v"}, 1: {"type": "@"}},
                     }
-                }
+                },
             },
         },
     ),
@@ -605,7 +610,16 @@ functions = {
     "nw_parameters_get_attribution": (b"C@",),
     "nw_ip_options_set_disable_multicast_loopback": (b"v@B",),
     "nw_interface_get_type": (b"I@",),
-    "nw_endpoint_create_url": (b"@^c", "", {"retval": {"already_retained": True}}),
+    "nw_endpoint_create_url": (
+        b"@^t",
+        "",
+        {
+            "retval": {"already_retained": True},
+            "arguments": {
+                "0": {"c_array_delimited_by_null": True, "type_modifier": "n"}
+            },
+        },
+    ),
     "nw_endpoint_copy_port_string": (
         b"^t@",
         "",
@@ -788,7 +802,11 @@ functions = {
     "nw_framer_mark_failed_with_error": (b"v@i",),
     "nw_tcp_options_set_keepalive_idle_time": (b"v@I",),
     "nw_error_get_error_code": (b"i@",),
-    "nw_quic_add_tls_application_protocol": (b"v@^c",),
+    "nw_quic_add_tls_application_protocol": (
+        b"v@^t",
+        "",
+        {"arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
+    ),
     "nw_ip_metadata_set_service_class": (b"v@I",),
     "nw_parameters_iterate_prohibited_interfaces": (
         b"v@@?",
@@ -956,7 +974,11 @@ functions = {
     "nw_quic_get_initial_max_stream_data_unidirectional": (b"Q@",),
     "nw_quic_get_initial_max_streams_unidirectional": (b"Q@",),
     "nw_ip_metadata_get_receive_time": (b"Q@",),
-    "nw_ws_options_add_subprotocol": (b"v@^c",),
+    "nw_ws_options_add_subprotocol": (
+        b"v@^t",
+        "",
+        {"arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
+    ),
     "nw_txt_record_create_with_bytes": (
         b"@n^vQ",
         "",
@@ -1465,9 +1487,12 @@ functions = {
         },
     ),
     "nw_framer_message_copy_object_value": (
-        b"@@^c",
+        b"@@^t",
         "",
-        {"retval": {"already_retained": True}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}},
+        },
     ),
     "nw_data_transfer_report_get_received_transport_duplicate_byte_count": (b"Q@I",),
     "nw_txt_record_access_key": (
@@ -1558,7 +1583,16 @@ functions = {
         {"arguments": {1: {"c_array_delimited_by_null": True}}},
     ),
     "nw_resolution_report_get_milliseconds": (b"Q@",),
-    "nw_ws_options_add_additional_header": (b"v@^c^c",),
+    "nw_ws_options_add_additional_header": (
+        b"v@^t^t",
+        "",
+        {
+            "arguments": {
+                1: {"c_array_delimited_by_null": True, "type_modifier": "n"},
+                2: {"c_array_delimited_by_null": True, "type_modifier": "n"},
+            }
+        },
+    ),
     "nw_path_get_unsatisfied_reason": (b"I@",),
     "nw_browse_result_copy_endpoint": (
         b"@@",
@@ -1697,9 +1731,14 @@ functions = {
     ),
     "nw_path_monitor_create": (b"@", "", {"retval": {"already_retained": True}}),
     "nw_listener_create_with_port": (
-        b"@^c@",
+        b"@^t@",
         "",
-        {"retval": {"already_retained": True}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {
+                "0": {"c_array_delimited_by_null": True, "type_modifier": "n"}
+            },
+        },
     ),
     "nw_protocol_copy_ws_definition": (
         b"@",

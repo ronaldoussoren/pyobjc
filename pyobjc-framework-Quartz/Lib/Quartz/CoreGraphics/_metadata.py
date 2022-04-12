@@ -687,7 +687,7 @@ functions = {
         },
     ),
     "CGPDFArrayGetName": (
-        b"B^{CGPDFArray=}Q^^c",
+        b"B^{CGPDFArray=}Q^^t",
         "",
         {"arguments": {2: {"type_modifier": "o"}}},
     ),
@@ -1478,7 +1478,11 @@ functions = {
     "CGEventSourceCounterForEventType": (b"IiI",),
     "CGDisplayCaptureWithOptions": (b"iII",),
     "CGDisplayIsStereo": (selAorI(b"iI", b"II"),),
-    "CGPDFTagTypeGetName": (b"^ci",),
+    "CGPDFTagTypeGetName": (
+        b"^ti",
+        "",
+        {"retval": {"c_array_delimited_by_null": True}},
+    ),
     "CGBitmapContextGetBytesPerRow": (b"Q^{CGContext=}",),
     "CGContextBeginTransparencyLayer": (b"v^{CGContext=}^{__CFDictionary=}",),
     "CGEventPostToPSN": (
@@ -1683,7 +1687,7 @@ functions = {
     "CGBitmapContextGetColorSpace": (b"^{CGColorSpace=}^{CGContext=}",),
     "CGRequestPostEventAccess": (b"B",),
     "CGContextShowTextAtPoint": (
-        b"v^{CGContext=}dd^cQ",
+        b"v^{CGContext=}dd^tQ",
         "",
         {"arguments": {3: {"c_array_length_in_arg": 4, "type_modifier": "n"}}},
     ),
@@ -2020,7 +2024,7 @@ functions = {
     ),
     "CGPDFOperatorTableRetain": (b"^{CGPDFOperatorTable=}^{CGPDFOperatorTable=}",),
     "CGPDFScannerPopName": (
-        b"B^{CGPDFScanner=}^^c",
+        b"B^{CGPDFScanner=}^^t",
         "",
         {"arguments": {1: {"type_modifier": "o"}}},
     ),
@@ -2104,7 +2108,7 @@ functions = {
     "CGContextSetFontSize": (b"v^{CGContext=}d",),
     "CGEventGetIntegerValueField": (b"q^{__CGEvent=}I",),
     "CGContextShowText": (
-        b"v^{CGContext=}^cQ",
+        b"v^{CGContext=}^tQ",
         "",
         {"arguments": {1: {"c_array_length_in_arg": 2, "type_modifier": "n"}}},
     ),
@@ -2557,7 +2561,11 @@ functions = {
         "",
         {"arguments": {1: {"type_modifier": "o"}}},
     ),
-    "CGPDFDocumentUnlockWithPassword": (b"B^{CGPDFDocument=}^c",),
+    "CGPDFDocumentUnlockWithPassword": (
+        b"B^{CGPDFDocument=}^t",
+        "",
+        {"arguments": {1: {"type_modifier": "n", "c_array_delimited_by_null": True}}},
+    ),
     "CGConvertColorDataWithFormat": (
         b"BQQ^v{_CGColorDataFormat=I@IQQi^d}^v{_CGColorDataFormat=I@IQQi^d}^{__CFDictionary=}",
         "",
@@ -2570,7 +2578,7 @@ functions = {
     ),
     "CGContextSetFillColorWithColor": (b"v^{CGContext=}^{CGColor=}",),
     "CGPDFDictionaryGetName": (
-        b"B^{CGPDFDictionary=}^t^^c",
+        b"B^{CGPDFDictionary=}^t^^t",
         "",
         {
             "arguments": {

@@ -331,7 +331,7 @@ functions = {
         b"i^{__CFString=}^{__CFString=}^{__CFArray=}",
     ),
     "CMBufferQueueGetTypeID": (b"Q",),
-    "CMBlockBufferGetDataPointer": (b"i^{OpaqueCMBlockBuffer=}Q^Q^Q^^c",),
+    "CMBlockBufferGetDataPointer": (b"i^{OpaqueCMBlockBuffer=}Q^Q^Q^^v",),
     "CMSampleBufferGetImageBuffer": (b"^{__CVBuffer=}^{opaqueCMSampleBuffer=}",),
     "CMBufferQueueCallForEachBuffer": (
         b"i^{opaqueCMBufferQueue=}^?^v",
@@ -538,7 +538,7 @@ functions = {
     ),
     "CMClockGetTypeID": (b"Q",),
     "CMTextFormatDescriptionGetJustification": (
-        b"i^{opaqueCMFormatDescription=}^c^c",
+        b"i^{opaqueCMFormatDescription=}^z^z",
         "",
         {"arguments": {1: {"type_modifier": "o"}, 2: {"type_modifier": "o"}}},
     ),
@@ -1248,7 +1248,7 @@ functions = {
         },
     ),
     "CMBlockBufferAccessDataBytes": (
-        b"i^{OpaqueCMBlockBuffer=}QQ^v^^c",
+        b"i^{OpaqueCMBlockBuffer=}QQ^v^^v",
         "",
         {"suggestion": "Use CMBlockBufferCopyDataBytes"},
     ),

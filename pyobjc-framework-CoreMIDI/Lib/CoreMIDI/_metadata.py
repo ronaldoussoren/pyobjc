@@ -302,6 +302,9 @@ functions = {
         b"i^{__CFString=}^{__CFString=}^{__CFString=}^I",
         "",
         {
+            "arguments": {
+                3: {"type_modifier": "o"},
+            },
             "retval": {"already_cfretained": True},
         },
     ),

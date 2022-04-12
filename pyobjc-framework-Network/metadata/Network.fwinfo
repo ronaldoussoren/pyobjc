@@ -283,7 +283,8 @@
     }
    },
    "nw_connection_copy_description": {
-    "retval": {}
+    "free_result": true,
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_connection_copy_endpoint": {
     "retval": {
@@ -657,7 +658,7 @@
    "nw_endpoint_create_url": {
     "retval": { "already_retained": true },
     "args": {
-     "0": {}
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
     }
    },
    "nw_endpoint_get_address": {
@@ -866,7 +867,7 @@
      "already_retained": true
     },
     "args": {
-     "0": {},
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }},
      "2": {
       "callable": {
        "arguments": {
@@ -919,7 +920,7 @@
      "already_retained": true
     },
     "args": {
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
     }
    },
    "nw_framer_message_create": {
@@ -1161,10 +1162,15 @@
      "already_retained": true
     }
    },
+   "nw_quic_add_tls_application_protocol": {
+    "args": {
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
+    }
+   },
    "nw_listener_create_with_port": {
     "retval": { "already_retained": true },
     "args": {
-     "0": {}
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
     }
    },
    "nw_listener_set_advertised_endpoint_changed_handler": {
@@ -1745,13 +1751,13 @@
    },
    "nw_ws_options_add_additional_header": {
     "args": {
-     "1": {},
-     "2": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" },
+     "2": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_ws_options_add_subprotocol": {
     "args": {
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_ws_options_set_client_request_handler": {

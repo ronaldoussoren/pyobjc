@@ -11,6 +11,18 @@ class TestApplicationServices(TestCase):
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(ApplicationServices)
-        self.assertCallableMetadataIsSane(HIServices)
+        self.assertCallableMetadataIsSane(
+            ApplicationServices,
+            exclude_attrs={
+                "GetIconFamilyData",
+                "SetIconFamilyData",
+            },
+        )
+        self.assertCallableMetadataIsSane(
+            HIServices,
+            exclude_attrs={
+                "GetIconFamilyData",
+                "SetIconFamilyData",
+            },
+        )
         self.assertCallableMetadataIsSane(PrintCore)

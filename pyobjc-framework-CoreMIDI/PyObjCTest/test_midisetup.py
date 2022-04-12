@@ -32,7 +32,7 @@ class TestMIDISetup(TestCase):
         self.assertArgIsOut(CoreMIDI.MIDIGetSerialPortDrivers, 0)
         self.assertArgIsCFRetained(CoreMIDI.MIDIGetSerialPortDrivers, 0)
 
-        self.assertArgIsOut(CoreMIDI.MIDIExternalDeviceCreate, 2)
+        self.assertArgIsOut(CoreMIDI.MIDIExternalDeviceCreate, 3)
 
     @min_os_level("11.0")
     def test_methods11_0(self):

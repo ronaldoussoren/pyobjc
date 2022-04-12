@@ -2447,7 +2447,7 @@
     }
    },
    "CGPDFTagTypeGetName": {
-    "retval": {}
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "CGPSConverterAbort": {
     "args": {
@@ -4222,13 +4222,13 @@
    "CGContextShowText": {
     "args": {
      "0": {},
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "CGContextShowTextAtPoint": {
     "args": {
      "0": {},
-     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "CGContextStrokeEllipseInRect": {
@@ -5645,7 +5645,7 @@
    "CGPDFArrayGetName": {
     "args": {
      "0": {},
-     "2": { "type_modifier": "o" }
+     "2": { "type_modifier": "o", "type_override": "^^t" }
     }
    },
    "CGPDFArrayGetNull": {
@@ -5843,7 +5843,7 @@
     "args": {
      "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
-     "2": { "type_modifier": "o" }
+     "2": { "type_modifier": "o", "type_override": "^^t" }
     }
    },
    "CGPDFDictionaryGetNumber": {
@@ -5990,7 +5990,7 @@
    "CGPDFDocumentUnlockWithPassword": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "CGPDFObjectGetType": {
@@ -6137,7 +6137,7 @@
    "CGPDFScannerPopName": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "o" }
+     "1": { "type_modifier": "o", "type_override": "^^t" }
     }
    },
    "CGPDFScannerPopNumber": {

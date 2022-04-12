@@ -347,7 +347,7 @@
     "args": {
      "0": {},
      "3": {},
-     "4": {}
+     "4": { "type_override": "^^v" }
     }
    },
    "CMBlockBufferAppendBufferReference": {
@@ -421,7 +421,7 @@
      "0": {},
      "2": {},
      "3": {},
-     "4": {}
+     "4": { "type_override": "^^v" }
     }
    },
    "CMBlockBufferIsEmpty": {
@@ -1476,8 +1476,8 @@
    "CMTextFormatDescriptionGetJustification": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "o" },
-     "2": { "type_modifier": "o" }
+     "1": { "type_modifier": "o", "type_override": "^z" },
+     "2": { "type_modifier": "o", "type_override": "^z" }
     }
    },
    "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": {

@@ -144,40 +144,58 @@ resulting in a number of minor bug fixes.
   - ApplicationServices.PMWorkflowSubmitPDFWithOptions
   - CoreServices.LocaleRefGetPartString
   - Foundation.NSGetSizeAndAlignment
-  - Quartz.CGContextSelectFont
-  - Quartz.CGDataProviderCreateWithFilename
-  - Quartz.CGPDFContentStreamGetResource
-  - Quartz.CGPDFDictionaryGetArray
-  - Quartz.CGPDFDictionaryGetBoolean
   - Network.nw_advertise_descriptor_create_bonjour_service
   - Network.nw_browse_descriptor_create_bonjour_service
   - Network.nw_browse_descriptor_get_bonjour_service_domain
   - Network.nw_browse_descriptor_get_bonjour_service_type
+  - Network.nw_connection_copy_description
   - Network.nw_content_context_create
   - Network.nw_content_context_get_identifier
   - Network.nw_endpoint_copy_address_string
   - Network.nw_endpoint_copy_port_string
   - Network.nw_endpoint_create_bonjour_service
   - Network.nw_endpoint_create_host
+  - Network.nw_endpoint_create_url
   - Network.nw_endpoint_get_bonjour_service_domain
   - Network.nw_endpoint_get_bonjour_service_name
   - Network.nw_endpoint_get_bonjour_service_type
   - Network.nw_endpoint_get_hostname
+  - Network.nw_framer_create_definition
   - Network.nw_framer_message_access_value
+  - Network.nw_framer_message_copy_object_value
   - Network.nw_framer_message_set_object_value
   - Network.nw_framer_message_set_value
   - Network.nw_framer_options_set_object_value
+  - Network.nw_listener_create_with_port
   - Network.nw_privacy_context_create
   - Network.nw_quic_get_application_error_reason
   - Network.nw_quic_set_application_error
   - Network.nw_txt_record_access_key
+  - Network.nw_ws_options_add_additional_header
+  - Network.nw_ws_options_add_subprotocol
+  - Quartz.CGContextSelectFont
+  - Quartz.CGContextShowText
+  - Quartz.CGContextShowTextAtPoint
+  - Quartz.CGDataProviderCreateWithFilename
+  - Quartz.CGPDFArrayGetName
+  - Quartz.CGPDFContentStreamGetResource
+  - Quartz.CGPDFDictionaryGetArray
+  - Quartz.CGPDFDictionaryGetBoolean
+  - Quartz.CGPDFDictionaryGetName
+  - Quartz.CGPDFDocumentUnlockWithPassword
+  - Quartz.CGPDFScannerPopName
+  - Quartz.CGPDFTagTypeGetName
 
   While fixing this issue I found problems with the metadata for these functions:
 
+  - CoreMIDI.MIDIExternalDeviceCreate
+  - CoreMedia.CMBlockBufferAccessDataBytes
+  - CoreMedia.CMBlockBufferGetDataPointer
   - CoreMedia.CMBufferQueueInstallTriggerHandler
   - CoreMedia.CMBufferQueueInstallTriggerHandlerWithIntegerThreshold
-  - CoreMIDI.MIDIExternalDeviceCreate
+  - CoreMedia.CMTextFormatDescriptionGetJustification
   - CoreServices.TECGetTextEncodingFromInternetNameOrMIB
+  - DVDPlayback.DVDGetScanRate
   - MediaAccessibility.MACaptionAppearanceAddSelectedLanguage
 
   There's also a new test that checks for this problem in all
@@ -188,6 +206,9 @@ resulting in a number of minor bug fixes.
   an non-existing attribute after looking at ``__all__``.
 
 * Fix uniqueness of symbols exposed in the OpenDirectory bindings.
+
+* Unhide manual bindings for Security.SecKeychainFindGenericPassword and
+  Security.SecKeychainFindInternetPassword.
 
 Version 8.4.1
 -------------
