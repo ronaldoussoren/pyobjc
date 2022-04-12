@@ -135,6 +135,8 @@ resulting in a number of minor bug fixes.
   assertion error. With this change the "output" argument is always
   ``None`` in the result.
 
+* Added bindings for the CHIP framework, new in macOS 12.0.
+
 Version 8.4.1
 -------------
 
