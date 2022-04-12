@@ -941,7 +941,7 @@ functions = {
         },
     ),
     "CMBufferQueueInstallTriggerHandler": (
-        b"i@I{_CMTime=qiIq}^{opaqueCMBufferQueueTriggerToken=}@?",
+        b"i@I{_CMTime=qiIq}^^{opaqueCMBufferQueueTriggerToken=}@?",
         "",
         {
             "arguments": {
@@ -992,7 +992,7 @@ functions = {
         },
     ),
     "CMBufferQueueInstallTriggerHandlerWithIntegerThreshold": (
-        b"i@Iq^{opaqueCMBufferQueueTriggerToken=}@?",
+        b"i@Iq^^{opaqueCMBufferQueueTriggerToken=}@?",
         "",
         {
             "arguments": {

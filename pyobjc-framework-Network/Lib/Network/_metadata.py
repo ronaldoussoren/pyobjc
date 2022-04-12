@@ -182,7 +182,7 @@ functions = {
     "nw_quic_get_initial_max_data": (b"Q@",),
     "nw_content_context_set_expiration_milliseconds": (b"v@Q",),
     "nw_framer_message_set_object_value": (
-        b"v@^c@",
+        b"v@^t@",
         "",
         {"arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
     ),
@@ -192,7 +192,7 @@ functions = {
     "nw_ip_metadata_get_service_class": (b"I@",),
     "nw_parameters_create": (b"@", "", {"retval": {"already_retained": True}}),
     "nw_framer_message_set_value": (
-        b"v@^c^v@?",
+        b"v@^t^v@?",
         "",
         {
             "arguments": {
@@ -315,7 +315,7 @@ functions = {
     ),
     "nw_ip_options_set_local_address_preference": (b"v@I",),
     "nw_endpoint_copy_address_string": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -471,7 +471,7 @@ functions = {
     "nw_path_has_ipv4": (b"B@",),
     "nw_connection_cancel_current_endpoint": (b"v@",),
     "nw_framer_message_access_value": (
-        b"B@^c@?",
+        b"B@^t@?",
         "",
         {
             "arguments": {
@@ -497,7 +497,7 @@ functions = {
     "nw_quic_get_stream_id": (b"Q@",),
     "nw_listener_get_new_connection_limit": (b"I@",),
     "nw_browse_descriptor_get_bonjour_service_type": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -544,7 +544,7 @@ functions = {
     ),
     "nw_parameters_get_service_class": (b"I@",),
     "nw_privacy_context_create": (
-        b"@^c",
+        b"@^t",
         "",
         {
             "retval": {"already_retained": True},
@@ -573,7 +573,7 @@ functions = {
         {"retval": {"already_retained": True}},
     ),
     "nw_endpoint_get_hostname": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -607,7 +607,7 @@ functions = {
     "nw_interface_get_type": (b"I@",),
     "nw_endpoint_create_url": (b"@^c", "", {"retval": {"already_retained": True}}),
     "nw_endpoint_copy_port_string": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -693,7 +693,7 @@ functions = {
         {"arguments": {1: {"c_array_length_in_arg": 2}}},
     ),
     "nw_endpoint_create_bonjour_service": (
-        b"@^c^c^c",
+        b"@^t^t^t",
         "",
         {
             "retval": {"already_retained": True},
@@ -764,7 +764,7 @@ functions = {
     ),
     "nw_parameters_get_local_only": (b"B@",),
     "nw_framer_options_set_object_value": (
-        b"v@^c@",
+        b"v@^t@",
         "",
         {"arguments": {1: {"type_modifier": "n", "c_array_delimited_by_null": True}}},
     ),
@@ -881,7 +881,7 @@ functions = {
     "nw_quic_set_idle_timeout": (b"v@I",),
     "nw_browser_start": (b"v@",),
     "nw_browse_descriptor_create_bonjour_service": (
-        b"@^c^c",
+        b"@^t^t",
         "",
         {
             "retval": {"already_retained": True},
@@ -1027,7 +1027,7 @@ functions = {
     "nw_framer_schedule_wakeup": (b"v@Q",),
     "nw_data_transfer_report_get_received_transport_byte_count": (b"Q@I",),
     "nw_endpoint_get_bonjour_service_domain": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1068,7 +1068,7 @@ functions = {
     ),
     "nw_path_monitor_prohibit_interface_type": (b"v@I",),
     "nw_endpoint_get_bonjour_service_type": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1088,7 +1088,7 @@ functions = {
     "nw_data_transfer_report_get_duration_milliseconds": (b"Q@",),
     "nw_protocol_metadata_is_tcp": (b"B@",),
     "nw_endpoint_get_bonjour_service_name": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1132,7 +1132,7 @@ functions = {
         {"retval": {"already_retained": True}},
     ),
     "nw_browse_descriptor_get_bonjour_service_domain": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1145,7 +1145,7 @@ functions = {
     "nw_quic_set_initial_max_stream_data_bidirectional_local": (b"v@Q",),
     "nw_browser_copy_parameters": (b"@@", "", {"retval": {"already_retained": True}}),
     "nw_quic_set_application_error": (
-        b"v@Q^c",
+        b"v@Q^t",
         "",
         {"arguments": {2: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
     ),
@@ -1211,7 +1211,7 @@ functions = {
         },
     ),
     "nw_quic_get_application_error_reason": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1300,7 +1300,7 @@ functions = {
     ),
     "nw_protocol_metadata_is_udp": (b"B@",),
     "nw_content_context_get_identifier": (
-        b"^c@",
+        b"^t@",
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
@@ -1318,7 +1318,7 @@ functions = {
     "nw_connection_restart": (b"v@",),
     "nw_ip_metadata_set_ecn_flag": (b"v@I",),
     "nw_advertise_descriptor_create_bonjour_service": (
-        b"@^c^c^c",
+        b"@^t^t^t",
         "",
         {
             "retval": {"already_retained": True},
@@ -1393,7 +1393,7 @@ functions = {
         },
     ),
     "nw_content_context_create": (
-        b"@^c",
+        b"@^t",
         "",
         {
             "retval": {"already_retained": True},
@@ -1471,7 +1471,7 @@ functions = {
     ),
     "nw_data_transfer_report_get_received_transport_duplicate_byte_count": (b"Q@I",),
     "nw_txt_record_access_key": (
-        b"B@^c@?",
+        b"B@^t@?",
         "",
         {
             "arguments": {
@@ -1567,7 +1567,7 @@ functions = {
     ),
     "nw_parameters_get_prohibit_constrained": (b"B@",),
     "nw_endpoint_create_host": (
-        b"@^c^c",
+        b"@^t^t",
         "",
         {
             "retval": {"already_retained": True},

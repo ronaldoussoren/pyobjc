@@ -140,7 +140,11 @@ functions = {
     "TECGetTextEncodingFromInternetNameOrMIB": (
         b"i^II^{__CFString=}i",
         "",
-        {"arguments": {0: {"type_modifier": "o"}, 2: {"type_modifier": "n"}}},
+        {
+            "arguments": {
+                0: {"type_modifier": "o"},
+            }
+        },
     ),
     "GetTextEncodingFromScriptInfo": (
         b"isss^I",
@@ -164,7 +168,7 @@ functions = {
         {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "LocaleRefGetPartString": (
-        b"i^{OpaqueLocaleRef=}IQ^c",
+        b"i^{OpaqueLocaleRef=}IQ^t",
         "",
         {"arguments": {3: {"c_array_delimited_by_null": True, "type_modifier": "o"}}},
     ),

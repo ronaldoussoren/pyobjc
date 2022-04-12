@@ -10,7 +10,7 @@
    },
    "MACaptionAppearanceAddSelectedLanguage": {
     "args": {
-     "1": { "type_modifier": "o", "null_accepted": true }
+     "1": { "null_accepted": true }
     }
    },
    "MACaptionAppearanceCopyBackgroundColor": {

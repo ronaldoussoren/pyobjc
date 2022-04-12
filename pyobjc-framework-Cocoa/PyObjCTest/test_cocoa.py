@@ -13,5 +13,7 @@ class TestCallableMetadata(TestCase):
                     "NSFileSubarbitrationClaim",
                     "forwardReacquisitionForWritingClaim_withID_toPresenterForID_usingReplySender_",
                 ),
+                "UINSServiceViewController",
+                "IOBluetoothDeviceInquiry",
             },
         )

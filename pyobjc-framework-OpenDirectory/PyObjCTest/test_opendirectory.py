@@ -18,7 +18,7 @@ class TestOpenDirectory(TestCase):
                 cfod = getattr(CFOpenDirectory, nm)
                 od = getattr(OpenDirectory, nm)
 
-                self.assertIs(cfod, od)
+                self.assertIs(cfod, od, f"{nm!r}, {type(cfod)}, {type(od)}")
 
 
 class TestCallableMetadata(TestCase):

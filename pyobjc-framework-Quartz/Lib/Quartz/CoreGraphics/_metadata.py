@@ -327,7 +327,7 @@ functions = {
     "CGContextAddEllipseInRect": (b"v^{CGContext=}{CGRect={CGPoint=dd}{CGSize=dd}}",),
     "CGContextEndTransparencyLayer": (b"v^{CGContext=}",),
     "CGContextSelectFont": (
-        b"v^{CGContext=}^cdi",
+        b"v^{CGContext=}^tdi",
         "",
         {"arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
     ),
@@ -398,7 +398,7 @@ functions = {
     ),
     "CGEventSetType": (b"v^{__CGEvent=}I",),
     "CGDataProviderCreateWithFilename": (
-        b"^{CGDataProvider=}^c",
+        b"^{CGDataProvider=}^t",
         "",
         {
             "retval": {"already_cfretained": True},
@@ -461,7 +461,7 @@ functions = {
         },
     ),
     "CGPDFContentStreamGetResource": (
-        b"^{CGPDFObject=}^{CGPDFContentStream=}^c^c",
+        b"^{CGPDFObject=}^{CGPDFContentStream=}^t^t",
         "",
         {
             "arguments": {
@@ -619,7 +619,7 @@ functions = {
     "CGDisplayStreamGetTypeID": (b"Q",),
     "CGBitmapContextGetBitsPerPixel": (b"Q^{CGContext=}",),
     "CGPDFDictionaryGetArray": (
-        b"B^{CGPDFDictionary=}^c^^{CGPDFArray=}",
+        b"B^{CGPDFDictionary=}^t^^{CGPDFArray=}",
         "",
         {
             "arguments": {
@@ -2470,7 +2470,7 @@ functions = {
     ),
     "CGContextSetShouldSmoothFonts": (b"v^{CGContext=}B",),
     "CGPDFDictionaryGetBoolean": (
-        b"B^{CGPDFDictionary=}^c^C",
+        b"B^{CGPDFDictionary=}^t^C",
         "",
         {
             "arguments": {

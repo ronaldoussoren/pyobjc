@@ -7601,7 +7601,7 @@
    "LocaleRefGetPartString": {
     "args": {
      "0": {},
-     "3": { "type_modifier": "o", "c_array_delimited_by_null": true }
+     "3": { "type_modifier": "o", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "LocaleStringToLangAndRegionCodes": {
@@ -8071,7 +8071,7 @@
    "TECGetTextEncodingFromInternetNameOrMIB": {
     "args": {
      "0": { "type_modifier": "o" },
-     "2": { "type_modifier": "n" }
+     "2": { }
     }
    },
    "TECGetWebTextEncodings": {

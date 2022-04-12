@@ -627,7 +627,7 @@ functions = {
         {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "PMWorkflowSubmitPDFWithOptions": (
-        b"i^{__CFURL=}^{__CFString=}^c^{__CFURL=}",
+        b"i^{__CFURL=}^{__CFString=}^t^{__CFURL=}",
         "",
         {"arguments": {2: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
     ),

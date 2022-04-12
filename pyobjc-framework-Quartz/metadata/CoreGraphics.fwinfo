@@ -3972,7 +3972,7 @@
    "CGContextSelectFont": {
     "args": {
      "0": {},
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n"  }
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t"  }
     }
    },
    "CGContextSetAllowsAntialiasing": {
@@ -4406,7 +4406,7 @@
    },
    "CGDataProviderCreateWithFilename": {
     "args": {
-     "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     },
     "retval": {
      "already_cfretained": true
@@ -5698,8 +5698,8 @@
    "CGPDFContentStreamGetResource": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "2": { "type_modifier": "n", "c_array_delimited_by_null": true }
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     },
     "retval": { "type_override": "^{CGPDFObject=}" }
    },
@@ -5809,14 +5809,14 @@
    "CGPDFDictionaryGetArray": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetBoolean": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
