@@ -25,7 +25,7 @@ if os.uname()[2] < "13.":
 else:
 
     def _first_python(cls):
-        for cls in cls.mro():
+        for cls in cls.mro():  # noqa: B020
             if "__objc_python_subclass__" in cls.__dict__:
                 return cls
         return None

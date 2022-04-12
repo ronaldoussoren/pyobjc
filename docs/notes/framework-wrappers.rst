@@ -98,7 +98,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CFNetwork </apinotes/CFNetwork>`                                               | `pyobjc-framework-CFNetwork`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| CHIP                                                                                 |                                                      | Not wrapped yet                         |
+| :doc:`CHIP </apinotes/CHIP>`                                                         | `pyobjc-framework-CHIP`_                             |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ClassKit </apinotes/ClassKit>`                                                 | `pyobjc-framework-ClassKit`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -310,8 +310,6 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`iTunesLibrary </apinotes/iTunesLibrary>`                                       | `pyobjc-framework-iTunesLibrary`_                    |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| JavaFrameEmbedding                                                                   | -                                                    | Will not be wrapped.                    |
-+--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`JavaScriptCore </apinotes/JavaScriptCore>`                                     | `pyobjc-framework-WebKit`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | JavaFrameEmbedding                                                                   | -                                                    | Will not be wrapped.                    |
@@ -404,7 +402,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`OSLog </apinotes/OSLog>`                                                       | `pyobjc-framework-OSLog`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| ParavirtualizedGraphics                                                              | -                                                    | Will not be wrapped.                    |
+| ParavirtualizedGraphics                                                              | -                                                    | Not wrapped yet.                        |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | PassKit                                                                              | -                                                    | No public API on macOS.                 |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -600,6 +598,7 @@ prioritizing work.
 .. _`pyobjc-framework-Automator`: https://pypi.org/project/pyobjc-framework-Automator/
 .. _`pyobjc-framework-BusinessChat`: https://pypi.org/project/pyobjc-framework-BusinessChat/
 .. _`pyobjc-framework-CFNetwork`: https://pypi.org/project/pyobjc-framework-CFNetwork/
+.. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CalendarStore`: https://pypi.org/project/pyobjc-framework-CalendarStore/
 .. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
