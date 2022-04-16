@@ -55,7 +55,7 @@ Manual installation
 Manual installation is slightly involved, but still pretty easy.
 
 * First download the source code packages from the cheeseshop, you
-  need at least `pyobjc-core <https://pypi.org/project/pyobjc>`_ and
+  need at least `pyobjc-core <https://pypi.org/project/pyobjc-core>`_ and
   `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_.
   You do not need `pyobjc <https://pypi.org/project/pyobjc>`_, that's a helper package that is only
   used to pull in the other packages when installing using `pip`_.
@@ -72,7 +72,7 @@ Manual installation is slightly involved, but still pretty easy.
   Due to package dependencies you need to install the packages in a
   particular order:
 
-  - `pyobjc-core`_
+  - `pyobjc-core <https://pypi.org/project/pyobjc-core>`_
 
   - `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_
 
