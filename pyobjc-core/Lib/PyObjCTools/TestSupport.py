@@ -1132,7 +1132,7 @@ class TestCase(_unittest.TestCase):
                     attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
                     if isinstance(attr, objc.selector):
                         self._validateCallableMetadata(
-                            attr, nm, skip_simple_charptr_check=exclude_cocoa
+                            attr, nm, skip_simple_charptr_check=not exclude_cocoa
                         )
 
                 for attr_name in dir(value.pyobjc_classMethods):
@@ -1143,7 +1143,9 @@ class TestCase(_unittest.TestCase):
                         continue
                     attr = getattr(value.pyobjc_classMethods, attr_name, None)
                     if isinstance(attr, objc.selector):
-                        self._validateCallableMetadata(attr, nm)
+                        self._validateCallableMetadata(
+                            attr, nm, skip_simple_charptr_check=not exclude_cocoa
+                        )
 
             elif isinstance(value, objc.function):
                 self._validateCallableMetadata(value)

@@ -14,7 +14,7 @@ making it very hard to actually use the framework.
 """
 from pyobjc_setup import setup
 
-VERSION = "8.5b1"
+VERSION = "8.5"
 
 setup(
     name="pyobjc-framework-LatentSemanticMapping",
