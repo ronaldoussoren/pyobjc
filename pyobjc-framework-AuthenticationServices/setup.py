@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "8.5"
+VERSION = "8.6b1"
 
 setup(
     name="pyobjc-framework-AuthenticationServices",
