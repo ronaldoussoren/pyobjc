@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.6
+-----------
+
+* #468: Fix setup.py for framework bindings to ensure that
+ ``python setup.py build_ext`` works for bindings that don't
+ contain a C extension.
+
 Version 8.5
 -----------
 

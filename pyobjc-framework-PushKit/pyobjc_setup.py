@@ -418,7 +418,7 @@ class pyobjc_build_ext(build_ext.build_ext):
         # Ensure that the PyObjC header files are available
         # in 2.3 and later the headers are in the egg,
         # before that we ship a copy.
-        if not os.path.isfile("Modules/pyobjc-api.h"):
+        if os.path.exists("Modules") and not os.path.isfile("Modules/pyobjc-api.h"):
             (dist,) = pkg_resources.require("pyobjc-core")
 
             include_root = os.path.join(self.build_temp, "pyobjc-include")
