@@ -21,6 +21,8 @@ from _common_definitions import (
     variants,
 )
 
+WHEEL_BUILD_FAILURE_IS_ERROR = True
+
 
 def files_matching(pattern, dirname):
     return fnmatch.filter(os.listdir(dirname), pattern)
@@ -84,8 +86,12 @@ def main():
             cwd=os.path.join(TOP_DIR, nm),
         )
         if status != 0:
-            print(f"WARNING: Building wheel for {nm} failed")
-            failed.append((nm, "sdist", ""))
+            if WHEEL_BUILD_FAILURE_IS_ERROR:
+                raise RuntimeError(f"Building wheel for {nm} failed")
+
+            else:
+                print(f"WARNING: Building wheel for {nm} failed")
+                failed.append((nm, "sdist", ""))
 
         for ver in detect_pyversions():
             for variant in variants(ver):
@@ -100,7 +106,9 @@ def main():
                     [
                         f"python{ver}",
                         "setup.py",
-                        "build_ext", "-j", str(os.cpu_count()),
+                        "build_ext",
+                        "-j",
+                        str(os.cpu_count()),
                         "bdist_wheel",
                         f"--dist-dir={DIST_DIR}",
                     ],
@@ -108,12 +116,16 @@ def main():
                 )
 
                 if status != 0:
-                    print(
-                        "WARNING: Building wheel for {} failed (python {})".format(
-                            nm, variant
+                    if WHEEL_BUILD_FAILURE_IS_ERROR:
+                        raise RuntimeError(
+                            f"WARNING: Building wheel for {nm} failed (python {variant})"
                         )
-                    )
-                    failed.append((nm, "wheel", variant))
+
+                    else:
+                        print(
+                            f"WARNING: Building wheel for {nm} failed (python {variant})"
+                        )
+                        failed.append((nm, "wheel", variant))
 
     print()
     print("Collected files")
@@ -122,10 +134,15 @@ def main():
     for nm in names:
         if nm == "pyobjc":
             continue
+        have_wheel = False
         pattern = nm.replace("-", "?") + "-*"
         print(f"{nm}:")
         for fn in sorted(files_matching(pattern, DIST_DIR)):
+            if fn.endswith(".whl"):
+                have_wheel = True
             print(f"  {fn}")
+        if not have_wheel:
+            print(f"ERROR: no wheels for {nm}")
         print()
 
     if failed:
