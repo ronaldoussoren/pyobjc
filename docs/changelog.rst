@@ -10,6 +10,17 @@ Version 8.6
  ``python setup.py build_ext`` works for bindings that don't
  contain a C extension.
 
+* Fix incompatibilities with Python 3.11 (beta 1)
+
+  - Switch to ``PyCode_GetCode`` instead of accessing
+    the ``co_code`` field on Python 3.11.
+  - Add definition for ``PassKit.PKPaymentNetworkAppleStoredValue``
+    (actually using this won't work as the constant is not
+    present on macOS 12.4 even though the SDK seems to suggest
+    otherwise)
+
+* Add definition for ``objc.MAC_OS_X_VERSION_12_4``
+
 Version 8.5
 -----------
 

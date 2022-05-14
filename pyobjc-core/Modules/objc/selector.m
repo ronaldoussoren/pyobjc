@@ -1492,6 +1492,25 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result[2]             = _C_SEL;
     result[arg_count + 3] = '\0';
 
+#if PY_VERSION_HEX >= 0x030b0000
+    PyObject* co = PyCode_GetCode(func_code);
+    if (co == NULL) {
+        return NULL;
+    }
+    if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+            co, &buf, PyBUF_CONTIG_RO)
+        == -1) {
+        /* This should not happened: A function where co_code does not implement
+         * the buffer protocol.
+         */
+        Py_DECREF(co);
+        return NULL; // LCOV_EXCL_LINE
+    }
+
+    /* The buffer owns a strong reference */
+    Py_DECREF(co);
+
+#else
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             func_code->co_code, &buf, PyBUF_CONTIG_RO)
         == -1) {
@@ -1500,6 +1519,7 @@ pysel_default_signature(SEL selector, PyObject* callable)
          */
         return NULL; // LCOV_EXCL_LINE
     }
+#endif
 
     /*
        Scan bytecode to find return statements. If any non-bare return
