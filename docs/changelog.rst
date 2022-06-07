@@ -16,6 +16,10 @@ Version 9.0a1
   - Speech
   - VideoSubscriberAccount
 
+* Added bindings for the following frameworks
+  (all new in macOS 13):
+
+  - SharedWithYou
 
 
 Version 8.6

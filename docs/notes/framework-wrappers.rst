@@ -500,6 +500,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`                               | `pyobjc-framework-ServiceManagement`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`SharedWithYou </apinotes/SharedWithYou>`                                       | `pyobjc-framework-SharedWithYou`_                    |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | SharedWithYouCore                                                                    |                                                      | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ShazamKit </apinotes/ShazamKit>`                                               | `pyobjc-framework-ShazamKit`_                        |                                         |
@@ -735,3 +737,4 @@ prioritizing work.
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-AudioVideoBridging`: https://pypi.org/project/pyobjc-framework-AudioVideoBridging/
 .. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/
+.. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/
