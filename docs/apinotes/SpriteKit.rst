@@ -12,6 +12,8 @@ These bindings are accessed through the ``SpriteKit`` package (that is, ``import
 API Notes
 ---------
 
+* ``SK_VERSION``: This constant is not exposed as it changes with the SDK used.
+
 * ``vector_float3``: Values of this type are represented as tuples of 3 floats in Python.
 
 * ``+[SKFieldNode customFieldWithEvaluationBlock:]``

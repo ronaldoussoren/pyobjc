@@ -133,6 +133,9 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDeviceTransportTypeThunderbolt, fourcc(b"thun")
         )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeContinuityCapture, fourcc(b"ccap")
+        )
 
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyConfigurationApplication, fourcc(b"capp")

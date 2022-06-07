@@ -36,6 +36,10 @@ class TestIOSurfaceObjC(TestCase):
     def testConstants10_14(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyAllocSize, str)
 
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(IOSurface.IOSurfacePropertyKeyName, str)
+
     @min_os_level("10.12")
     def testMethods(self):
         self.assertArgIsOut(IOSurface.IOSurface.lockWithOptions_seed_, 1)

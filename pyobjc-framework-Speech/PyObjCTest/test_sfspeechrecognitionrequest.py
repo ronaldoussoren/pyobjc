@@ -17,3 +17,8 @@ class TestSFSpeechRecognitionRequest(TestCase):
         self.assertArgIsBOOL(
             Speech.SFSpeechRecognitionRequest.setRequiresOnDeviceRecognition_, 0
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(Speech.SFSpeechRecognitionRequest.addsPunctuation)
+        self.assertArgIsBOOL(Speech.SFSpeechRecognitionRequest.setAddsPunctuation_, 0)

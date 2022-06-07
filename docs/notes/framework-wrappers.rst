@@ -184,6 +184,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | CoreTelephony                                                                        | -                                                    | Framework has no public API on macOS    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| CoreTransferable                                                                     | -                                                    | Framework has no public API on macOS    |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CoreText </apinotes/CoreText>`                                                 | `pyobjc-framework-CoreText`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CoreVideo </apinotes/CoreVideo>`                                               | `pyobjc-framework-Quartz`_                           | use "import Quartz".                    |
@@ -233,6 +235,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`ExceptionHandling </apinotes/ExceptionHandling>`                               | `pyobjc-framework-ExceptionHandling`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | ExposureNotification                                                                 | -                                                    | No public API on macOS                  |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| ExtensionFoundation                                                                  | -                                                    | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ExecutionPolicy </apinotes/ExecutionPolicy>`                                   | `pyobjc-framework-ExecutionPolicy`_                  |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -496,6 +500,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`                               | `pyobjc-framework-ServiceManagement`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| SharedWithYouCore                                                                    |                                                      | No public API on macOS                  |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ShazamKit </apinotes/ShazamKit>`                                               | `pyobjc-framework-ShazamKit`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Social </apinotes/Social>`                                                     | `pyobjc-framework-Social`_                           |                                         |
@@ -684,7 +690,6 @@ prioritizing work.
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
 .. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/
 .. _`pyobjc-framework-OpenDirectory`: https://pypi.org/project/pyobjc-framework-OpenDirectory/
-.. _`pyobjc-framework-PHASE`: https://pypi.org/project/pyobjc-framework-PHASE/
 .. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
 .. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/
 .. _`pyobjc-framework-PhotosUI`: https://pypi.org/project/pyobjc-framework-PhotosUI/

@@ -111,6 +111,10 @@ class TestIOSurfaceAPI(TestCase):
         self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentNames, str)
         self.assertIsInstance(IOSurface.kIOSurfaceSubsampling, str)
 
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(IOSurface.kIOSurfaceName, str)
+
     @min_os_level("10.6")
     def testFunctions(self):
         self.assertIsInstance(IOSurface.IOSurfaceGetTypeID(), int)

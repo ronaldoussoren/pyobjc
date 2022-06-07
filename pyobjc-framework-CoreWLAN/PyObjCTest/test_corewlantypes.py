@@ -76,6 +76,8 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWSecurityWPA3Personal, 11)
         self.assertEqual(CoreWLAN.kCWSecurityWPA3Enterprise, 12)
         self.assertEqual(CoreWLAN.kCWSecurityWPA3Transition, 13)
+        self.assertEqual(CoreWLAN.kCWSecurityOWE, 14)
+        self.assertEqual(CoreWLAN.kCWSecurityOWETransition, 15)
         self.assertEqual(CoreWLAN.kCWSecurityUnknown, Foundation.NSIntegerMax)
         self.assertEqual(CoreWLAN.kCWIBSSModeSecurityNone, 0)
         self.assertEqual(CoreWLAN.kCWIBSSModeSecurityWEP40, 1)

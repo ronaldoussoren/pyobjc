@@ -8,6 +8,15 @@ Version 9.0a1
 
 * Support for macOS 13 (Xcode 14 beta 1)
 
+* Updated framework bindings for macOS 13
+
+  - CoreAudio
+  - CoreWLAN
+  - IOSurface
+  - Speech
+  - VideoSubscriberAccount
+
+
 
 Version 8.6
 -----------
