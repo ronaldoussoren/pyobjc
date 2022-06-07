@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "8.6b1"
+VERSION = "9.0a1"
 
 setup(
     name="pyobjc-framework-Virtualization",

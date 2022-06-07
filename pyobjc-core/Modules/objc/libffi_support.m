@@ -3584,6 +3584,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
             }
 
             if (isOut) {
+                /* XXX: ' _C_OUT _C_PTR ... ???? */
                 objc_result = pythonify_c_return_value(resttype, *(void**)pRetval);
                 if (objc_result == NULL) {
                     return NULL;

@@ -10,6 +10,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | *Framework name*                                                                     | *Python package*                                     | *Notes*                                 |
 +======================================================================================+======================================================+=========================================+
+| _AuthenticationServices_SwiftUI                                                      | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _AVKit_SwiftUI                                                                       | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _CoreData_CloudKit                                                                   | -                                                    | Swift only API                          |
@@ -46,6 +48,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | AGL                                                                                  | -                                                    | Will not be wrapped, OpenGL is          |
 |                                                                                      |                                                      | deprecated in macOS 10.14               |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| AppIntents                                                                           | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AppKit </apinotes/AppKit>`                                                     | `pyobjc-framework-Cocoa`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -545,6 +549,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Vision </apinotes/Vision>`                                                     | `pyobjc-framework-Vision`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| VisionKit                                                                            | -                                                    | Only available in Catalist.       .     |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | vmnet                                                                                | -                                                    | Will not be wrapped, too low level.     |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`WebKit </apinotes/WebKit>`                                                     | `pyobjc-framework-WebKit`_                           |                                         |
@@ -717,6 +723,7 @@ prioritizing work.
 .. _`pyobjc-framework-VideoToolbox`: https://pypi.org/project/pyobjc-framework-VideoToolbox/
 .. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
 .. _`pyobjc-framework-Vision`: https://pypi.org/project/pyobjc-framework-Vision/
+.. _`pyobjc-framework-VisionKit`: https://pypi.org/project/pyobjc-framework-VisionKit/
 .. _`pyobjc-framework-WebKit`: https://pypi.org/project/pyobjc-framework-WebKit/
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
