@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import ShazamKit
 
 
@@ -19,6 +19,10 @@ class TestSHMediaItem(TestCase):
         self.assertIsInstance(ShazamKit.SHMediaItemExplicitContent, str)
         self.assertIsInstance(ShazamKit.SHMediaItemGenres, str)
         self.assertIsInstance(ShazamKit.SHMediaItemISRC, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(ShazamKit.SHMediaItemTimeRanges, str)
 
     def test_classes(self):
         ShazamKit.SHMediaItem

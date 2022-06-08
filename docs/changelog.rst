@@ -11,12 +11,14 @@ Version 9.0a1
 * Updated framework bindings for macOS 13
 
   - CoreAudio
+  - CoreAudioTypes
   - CoreHaptics
   - CoreVideo
   - CoreWLAN
   - ImageIO
   - IOSurface
   - LocalAuthentication
+  - ShazamKit
   - Speech
   - VideoSubscriberAccount
 

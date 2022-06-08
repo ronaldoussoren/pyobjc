@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "classes": {},
@@ -10,6 +8,27 @@
    }
   },
   "enum": {
+   "kAudioChannelLabel_LeftSideSurround": { "value": 55 },
+   "kAudioChannelLabel_RightSideSurround": { "value": 56 },
+   "kAudioChannelLabel_LeftBottom": { "value": 57 },
+   "kAudioChannelLabel_RightBottom": { "value": 58 },
+   "kAudioChannelLabel_CenterBottom": { "value": 59 },
+   "kAudioChannelLabel_LeftTopSurround": { "value": 60 },
+   "kAudioChannelLabel_RightTopSurround": { "value": 61 },
+   "kAudioChannelLabel_LFE3": { "value": 62 },
+   "kAudioChannelLabel_LeftBackSurround": { "value": 63 },
+   "kAudioChannelLabel_RightBackSurround": { "value": 64 },
+   "kAudioChannelLabel_LeftEdgeOfScreen": { "value": 65 },
+   "kAudioChannelLabel_RightEdgeOfScreen": { "value": 66 },
+   "kAudioChannelLabel_Object": { "value": 262144 },
+   "kAudioChannelLayoutTag_CICP_13": { "value": 13369368 },
+   "kAudioChannelLayoutTag_CICP_14": { "value": 13434888 },
+   "kAudioChannelLayoutTag_CICP_15": { "value": 13500428 },
+   "kAudioChannelLayoutTag_CICP_16": { "value": 13565962 },
+   "kAudioChannelLayoutTag_CICP_17": { "value": 13631500 },
+   "kAudioChannelLayoutTag_CICP_18": { "value": 13697038 },
+   "kAudioChannelLayoutTag_CICP_19": { "value": 13762572 },
+   "kAudioChannelLayoutTag_CICP_20": { "value": 13828110 },
    "kAudioChannelLayoutTag_Logic_4_0_C": { "value": 12910596 },
    "kAudioChannelLayoutTag_Logic_6_0_B": { "value": 12976134 },
    "kAudioChannelLayoutTag_Logic_6_1_B": { "value": 13041671 },
@@ -56,6 +75,17 @@
    "kAudioFormatMPEGD_USAC": { "value": 1970495843 }
   },
   "aliases": {
+   "kAudioChannelLayoutTag_CICP_1": { "alias": "kAudioChannelLayoutTag_MPEG_1_0" },
+   "kAudioChannelLayoutTag_CICP_2": { "alias": "kAudioChannelLayoutTag_MPEG_2_0" },
+   "kAudioChannelLayoutTag_CICP_3": { "alias": "kAudioChannelLayoutTag_MPEG_3_0_A" },
+   "kAudioChannelLayoutTag_CICP_4": { "alias": "kAudioChannelLayoutTag_MPEG_4_0_A" },
+   "kAudioChannelLayoutTag_CICP_5": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_A" },
+   "kAudioChannelLayoutTag_CICP_6": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_A" },
+   "kAudioChannelLayoutTag_CICP_7": { "alias": "kAudioChannelLayoutTag_MPEG_7_1_B" },
+   "kAudioChannelLayoutTag_CICP_9": { "alias": "kAudioChannelLayoutTag_ITU_2_1" },
+   "kAudioChannelLayoutTag_CICP_10": { "alias": "kAudioChannelLayoutTag_ITU_2_2" },
+   "kAudioChannelLayoutTag_CICP_11": { "alias": "kAudioChannelLayoutTag_MPEG_6_1_A" },
+   "kAudioChannelLayoutTag_CICP_12": { "alias": "kAudioChannelLayoutTag_MPEG_7_1_C" },
    "kAudioChannelLayoutTag_Logic_Mono": { "alias": "kAudioChannelLayoutTag_Mono" },
    "kAudioChannelLayoutTag_Logic_Stereo": { "alias": "kAudioChannelLayoutTag_Stereo" },
    "kAudioChannelLayoutTag_Logic_Quadraphonic": { "alias": "kAudioChannelLayoutTag_Quadraphonic" },

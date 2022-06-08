@@ -246,7 +246,18 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLabel_LeftTopRear, 52)
         self.assertEqual(CoreAudio.kAudioChannelLabel_CenterTopRear, 53)
         self.assertEqual(CoreAudio.kAudioChannelLabel_RightTopRear, 54)
-
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LeftSideSurround, 55)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_RightSideSurround, 56)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LeftBottom, 57)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_RightBottom, 58)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_CenterBottom, 59)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LeftTopSurround, 60)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_RightTopSurround, 61)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LFE3, 62)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LeftBackSurround, 63)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_RightBackSurround, 64)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_LeftEdgeOfScreen, 65)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_RightEdgeOfScreen, 66)
         self.assertEqual(CoreAudio.kAudioChannelLabel_Ambisonic_W, 200)
         self.assertEqual(CoreAudio.kAudioChannelLabel_Ambisonic_X, 201)
         self.assertEqual(CoreAudio.kAudioChannelLabel_Ambisonic_Y, 202)
@@ -311,6 +322,7 @@ class TestCoreAudioBaseTypes(TestCase):
             CoreAudio.kAudioChannelLabel_HOA_ACN_0,
         )
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_N3D, 3 << 16)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_Object, 4 << 16)
 
         self.assertEqual(CoreAudio.kAudioChannelLabel_BeginReserved, 0xF0000000)
         self.assertEqual(CoreAudio.kAudioChannelLabel_EndReserved, 0xFFFFFFFE)
@@ -800,6 +812,59 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(
             CoreAudio.kAudioChannelLayoutTag_DiscreteInOrder, (147 << 16) | 0
         )
+
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_1,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_1_0,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_2,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_2_0,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_3,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_3_0_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_4,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_4_0_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_5,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_6,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_7,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_B,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_9,
+            CoreAudio.kAudioChannelLayoutTag_ITU_2_1,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_10,
+            CoreAudio.kAudioChannelLayoutTag_ITU_2_2,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_11,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_6_1_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_CICP_12,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_C,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_13, (204 << 16) | 24)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_14, (205 << 16) | 8)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_15, (206 << 16) | 12)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_16, (207 << 16) | 10)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_17, (208 << 16) | 12)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_18, (209 << 16) | 14)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_19, (210 << 16) | 12)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_CICP_20, (211 << 16) | 14)
 
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_BeginReserved, 0xF0000000)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_EndReserved, 0xFFFEFFFF)
