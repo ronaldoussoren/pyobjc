@@ -860,3 +860,20 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsRightImage, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsAlternateImage, str)
         self.assertIsInstance(Quartz.kCGImagePropertyPNGPixelsAspectRatio, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertTrue(not hasattr(Quartz, "kCGImagePropertyHorizontalFOV"))
+
+        self.assertIsInstance(Quartz.kCGImagePropertyHEIFDictionary, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageBaseline, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageDisparityAdjustment, str)
+        self.assertIsInstance(Quartz.kIIOMetadata_CameraExtrinsicsKey, str)
+        self.assertIsInstance(Quartz.kIIOCameraExtrinsics_CoordinateSystemID, str)
+        self.assertIsInstance(Quartz.kIIOCameraExtrinsics_Position, str)
+        self.assertIsInstance(Quartz.kIIOCameraExtrinsics_Rotation, str)
+        self.assertIsInstance(Quartz.kIIOMetadata_CameraModelKey, str)
+        self.assertIsInstance(Quartz.kIIOCameraModel_ModelType, str)
+        self.assertIsInstance(Quartz.kIIOCameraModelType_SimplifiedPinhole, str)
+        self.assertIsInstance(Quartz.kIIOCameraModelType_GenericPinhole, str)
+        self.assertIsInstance(Quartz.kIIOCameraModel_Intrinsics, str)

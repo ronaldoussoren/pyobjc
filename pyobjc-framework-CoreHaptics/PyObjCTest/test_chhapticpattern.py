@@ -30,6 +30,12 @@ class TestCHHapticParameter(TestCase):
             CoreHaptics.CHHapticPatternKeyEventWaveformUseVolumeEnvelope, str
         )
 
+    @min_sdk_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            CoreHaptics.CHHapticPatternKeyEventWaveformLoopEnabled, str
+        )
+
     @min_sdk_level("10.15")
     def test_methods10_15(self):
         self.assertArgIsOut(
@@ -42,3 +48,7 @@ class TestCHHapticParameter(TestCase):
         self.assertArgIsOut(
             CoreHaptics.CHHapticPattern.exportDictionaryAndReturnError_, 0
         )
+
+    @min_sdk_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsOut(CoreHaptics.CHHapticPattern.initWithContentsOfURL_error_, 1)

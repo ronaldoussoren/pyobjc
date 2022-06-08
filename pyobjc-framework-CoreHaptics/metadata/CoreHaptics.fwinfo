@@ -291,6 +291,13 @@
     "methods": [
      {
       "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:error:"
+     },
+     {
+      "args": {
        "2": { "type_modifier": "o" }
       },
       "class_method": false,

@@ -77,3 +77,7 @@ class TestCVPixelFormatDescription(TestCase):
     @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(Quartz.kCVPixelFormatContainsGrayscale, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(Quartz.kCVPixelFormatContainsSenselArray, str)

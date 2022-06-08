@@ -38,6 +38,10 @@ class TestCHHapticEngine(TestCase):
             CoreHaptics.CHHapticAudioResourceKeyUseVolumeEnvelope, str
         )
 
+    @min_sdk_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(CoreHaptics.CHHapticAudioResourceKeyLoopEnabled, str)
+
     @min_sdk_level("10.15")
     def test_methods10_15(self):
         self.assertResultIsBlock(
@@ -114,3 +118,8 @@ class TestCHHapticEngine(TestCase):
             CoreHaptics.CHHapticEngine.playPatternFromData_error_, 1
         )
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.playPatternFromData_error_, 1)
+
+    @min_sdk_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.playsAudioOnly)
+        self.assertArgIsBOOL(CoreHaptics.CHHapticEngine.setPlaysAudioOnly_, 0)
