@@ -109,6 +109,10 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_709_PQ, str)
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_2020_sRGBGamma, str)
 
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(Quartz.kCGColorSpaceITUR_709_HLG, str)
+
     def testFunctions(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateDeviceGray)
         self.assertIsInstance(
@@ -263,3 +267,7 @@ class TestCGColorSpace(TestCase):
 
         Quartz.CGColorSpaceIsPQBased
         Quartz.CGColorSpaceIsHLGBased
+
+    @min_os_level("13.0")
+    def testFunctions13_0(self):
+        self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateCopyWithStandardRange)

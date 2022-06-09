@@ -222,6 +222,21 @@ class TestCGPath(TestCase):
             path, transform, Quartz.CGRectMake(100, 200, 300, 400), 2, 3
         )
 
+    @min_os_level("13.0")
+    def testFunctions13_0(self):
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByNormalizing)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByUnioningPath)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByIntersectingPath)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyBySubtractingPath)
+        self.assertResultIsCFRetained(
+            Quartz.CGPathCreateCopyBySymmetricDifferenceOfPath
+        )
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyOfLineBySubtractingPath)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyOfLineByIntersectingPath)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateSeparateComponents)
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByFlattening)
+        Quartz.CGPathIntersectsPathUsingEvenOdd
+
     def testConstants(self):
         self.assertEqual(Quartz.kCGLineJoinMiter, 0)
         self.assertEqual(Quartz.kCGLineJoinRound, 1)

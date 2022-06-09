@@ -38,6 +38,12 @@ class TestCMFormatDescriptionBridge(TestCase):
         self.assertIsInstance(CoreMedia.kCMSoundDescriptionFlavor_ISOFamily, str)
         self.assertIsInstance(CoreMedia.kCMSoundDescriptionFlavor_3GPFamily, str)
 
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMImageDescriptionFlavor_ISOFamilyWithAppleExtensions, str
+        )
+
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertArgIsIn(

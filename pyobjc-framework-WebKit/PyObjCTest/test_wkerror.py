@@ -24,3 +24,6 @@ class TestWKError(TestCase):
         self.assertEqual(WebKit.WKErrorJavaScriptInvalidFrameTarget, 12)
         self.assertEqual(WebKit.WKErrorNavigationAppBoundDomain, 13)
         self.assertEqual(WebKit.WKErrorJavaScriptAppBoundDomain, 14)
+        self.assertEqual(WebKit.WKErrorDuplicateCredential, 15)
+        self.assertEqual(WebKit.WKErrorMalformedCredential, 16)
+        self.assertEqual(WebKit.WKErrorCredentialNotFound, 17)

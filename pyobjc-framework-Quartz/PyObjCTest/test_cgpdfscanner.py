@@ -1,4 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, os_release, expectedFailureIf
+from PyObjCTools.TestSupport import (
+    TestCase,
+    os_release,
+    expectedFailureIf,
+    min_os_level,
+)
 import Quartz
 
 import objc
@@ -45,3 +50,7 @@ class TestCGPDFScanner(TestCase):
 
         self.assertResultHasType(Quartz.CGPDFScannerPopStream, objc._C_BOOL)
         self.assertArgIsOut(Quartz.CGPDFScannerPopStream, 1)
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        Quartz.CGPDFScannerStop

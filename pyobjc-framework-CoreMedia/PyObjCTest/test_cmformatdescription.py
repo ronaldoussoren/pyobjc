@@ -33,6 +33,7 @@ class TestCMFormatDescription(TestCase):
 
         self.assertEqual(CoreMedia.kCMVideoCodecType_DisparityHEVC, fourcc(b"dish"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_DepthHEVC, fourcc(b"deph"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AV1, fourcc(b"av01"))
 
         self.assertEqual(
             CoreMedia.kCMAudioFormatDescriptionMask_StreamBasicDescription, 1 << 0

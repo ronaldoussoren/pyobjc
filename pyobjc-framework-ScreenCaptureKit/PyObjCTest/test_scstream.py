@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import ScreenCaptureKit
 
 
@@ -25,6 +25,7 @@ class TestSCStream(TestCase):
         self.assertEqual(ScreenCaptureKit.SCFrameStatusStopped, 5)
 
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeScreen, 0)
+        self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeAudio, 1)
 
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoStatus, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoDisplayTime, str)
@@ -68,6 +69,20 @@ class TestSCStream(TestCase):
             ScreenCaptureKit.SCStream.removeStreamOutput_type_error_
         )
         self.assertArgIsOut(ScreenCaptureKit.SCStream.removeStreamOutput_type_error_, 2)
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.capturesAudio)
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setCapturesAudio_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.excludesCurrentProcessAudio
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setExcludesCurrentProcessAudio_, 0
+        )
 
     def test_protocols(self):
         objc.protocolNamed("SCStreamDelegate")

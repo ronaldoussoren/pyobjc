@@ -39,6 +39,8 @@ class TestWKPreferences(TestCase):
 
     @min_os_level("12.3")
     def testMethods12_3(self):
+        # XXX: According to the macOS 13 SDK these are new in 13.0:
+
         self.assertResultIsBOOL(WebKit.WKPreferences.isSiteSpecificQuirksModeEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setSiteSpecificQuirksModeEnabled_, 0)
 

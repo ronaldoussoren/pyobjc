@@ -46,5 +46,6 @@ class TestEKAlarm(TestCase):
         self.assertEqual(EventKit.EKErrorSourceMismatch, 33)
         self.assertEqual(EventKit.EKErrorNotificationCollectionMismatch, 34)
         self.assertEqual(EventKit.EKErrorNotificationSavedWithoutCollection, 35)
+        self.assertEqual(EventKit.EKErrorReminderAlarmContainsEmailOrUrl, 36)
 
         self.assertEqual(EventKit.EKErrorLast, 31)

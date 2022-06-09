@@ -71,3 +71,8 @@ class TestMPNowPlayingInfoCenter(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
         )
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAdTimeRanges, str)
+        self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyCreditsStartTime, str)

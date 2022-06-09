@@ -10,17 +10,30 @@ Version 9.0a1
 
 * Updated framework bindings for macOS 13
 
+  - AudioVideoBridging
   - CoreAudio
   - CoreAudioTypes
+  - CoreGraphics
   - CoreHaptics
+  - CoreMedia
   - CoreVideo
   - CoreWLAN
+  - EventKit
   - ImageIO
   - IOSurface
   - LocalAuthentication
+  - MediaPlayer
+  - NetworkExtension
+  - PDFKit
+  - ScreenCaptureKit
   - ShazamKit
   - Speech
+  - UniformTypeIdentifiers
   - VideoSubscriberAccount
+  - WebKit
+
+  FIXME: Move CGPoint/CGSize/CGVector/CGRect/CGRectEdge/CGAffineTransform to CoreFoundation bindings
+         (NS* in Foundation are aliases, also needs updates in CoreGraphics)
 
 * Added bindings for the following frameworks
   (all new in macOS 13):

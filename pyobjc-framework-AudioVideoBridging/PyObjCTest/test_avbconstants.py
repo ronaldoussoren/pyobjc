@@ -15,6 +15,7 @@ class TestAVBConstants(TestCase):
         self.assertIsEnumType(AudioVideoBridging.AVB17221AECPMessageType)
         self.assertIsEnumType(AudioVideoBridging.AVB17221AECPStatusCode)
         self.assertIsEnumType(AudioVideoBridging.AVB17221AEMCommandType)
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPIPFlag)
 
     def test_constants(self):
         self.assertIsInstance(AudioVideoBridging.AVBErrorDomain, str)
@@ -605,3 +606,5 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AECPAddressAccessTLVModeExecute, 0x02
         )
+
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPIPFlagNone, 0x0000)

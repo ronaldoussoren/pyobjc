@@ -8,6 +8,13 @@
     "methods": [
      {
       "args": {
+       "0": { "type_modifier": "n", "c_array_of_fixed_size": 16 }
+      },
+      "class_method": false,
+      "selector": "initWithIPv6Address:"
+     },
+     {
+      "args": {
        "1": {
         "type_modifier": "o"
        }

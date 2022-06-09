@@ -68,3 +68,7 @@ class TestCMTextMarkup(TestCase):
         self.assertIsInstance(CoreMedia.kCMTextMarkupCharacterEdgeStyle_Depressed, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupCharacterEdgeStyle_Uniform, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupCharacterEdgeStyle_DropShadow, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_FontFamilyNameList, str)
