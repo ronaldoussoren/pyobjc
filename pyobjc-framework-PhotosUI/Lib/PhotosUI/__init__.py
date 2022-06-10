@@ -27,5 +27,17 @@ sys.modules["PhotosUI"] = mod = objc.ObjCLazyModule(
     (_PhotosUI, Foundation),
 )
 
+for cls_name in (
+    "PHPickerFilter",
+    "PHPickerConfiguration",
+    "PHPickerResult",
+    "PHPickerViewController",
+):
+    try:
+        cls = objc.lookUpClass(cls_name)
+        cls.__objc_final__ = True
+    except objc.error:
+        pass
+
 
 del sys.modules["PhotosUI._metadata"]

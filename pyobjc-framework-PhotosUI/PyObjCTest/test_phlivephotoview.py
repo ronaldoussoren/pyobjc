@@ -18,15 +18,18 @@ class TestPHLivePhotoView(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewPlaybackStyle)
+        self.assertIsEnumType(PhotosUI.PHLivePhotoBadgeOptions)
 
-    @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleUndefined, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleFull, 1)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleHint, 2)
 
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFit, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFill, 1)
+
+        self.assertEqual(PhotosUI.PHLivePhotoBadgeOptionsOverContent, 1 << 0)
+        self.assertEqual(PhotosUI.PHLivePhotoBadgeOptionsLiveOff, 1 << 1)
 
     @min_os_level("10.12")
     def testMethods(self):

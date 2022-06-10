@@ -11,6 +11,7 @@ Version 9.0a1
 * Updated framework bindings for macOS 13
 
   - AudioVideoBridging
+  - AuthenticationServices
   - CoreAudio
   - CoreAudioTypes
   - CoreGraphics
@@ -25,6 +26,7 @@ Version 9.0a1
   - MediaPlayer
   - NetworkExtension
   - PDFKit
+  - PhotosUI
   - ScreenCaptureKit
   - ShazamKit
   - Speech
