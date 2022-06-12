@@ -7,6 +7,7 @@ import CoreSpotlight
 class TestCSSearchQuery(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreSpotlight.CSSearchQueryErrorCode)
+        self.assertIsEnumType(CoreSpotlight.CSSearchQuerySourceOptions)
 
     def testConstants(self):
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeUnknown, -2000)
@@ -15,6 +16,9 @@ class TestCSSearchQuery(TestCase):
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeCancelled, -2003)
 
         self.assertIsInstance(CoreSpotlight.CSSearchQueryErrorDomain, str)
+
+        self.assertEqual(CoreSpotlight.CSSearchQuerySourceOptionDefault, 0)
+        self.assertEqual(CoreSpotlight.CSSearchQuerySourceOptionAllowMail, 1 << 0)
 
     def testMethods(self):
         self.assertResultIsBOOL(CoreSpotlight.CSSearchQuery.isCancelled)

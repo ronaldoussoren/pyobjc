@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 import CoreSpotlight
@@ -92,4 +92,12 @@ class TestCSSearchableIndex(TestCase):
         self.assertArgIsOut(
             TestCSSearchableIndexHelper.fileURLForSearchableIndex_itemIdentifier_typeIdentifier_inPlace_error_,
             4,
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            CoreSpotlight.CSSearchableIndex.provideDataForBundle_identifier_type_completionHandler_,
+            3,
+            b"v@@",
         )

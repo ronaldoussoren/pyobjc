@@ -18,3 +18,5 @@ class TestSMErrors(TestCase):
         self.assertEqual(ServiceManagement.kSMErrorJobPlistNotFound, 8)
         self.assertEqual(ServiceManagement.kSMErrorJobMustBeEnabled, 9)
         self.assertEqual(ServiceManagement.kSMErrorInvalidPlist, 10)
+        self.assertEqual(ServiceManagement.kSMErrorLaunchDeniedByUser, 11)
+        self.assertEqual(ServiceManagement.kSMErrorAlreadyRegistered, 12)

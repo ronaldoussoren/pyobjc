@@ -37,6 +37,7 @@ Version 9.0a1
   - Photos
   - PhotosUI
   - ScreenCaptureKit
+  - ServiceManagement
   - ShazamKit
   - Speech
   - UniformTypeIdentifiers
