@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import PassKit
 
@@ -98,8 +98,3 @@ class TestPKConstants(TestCase):
     def test_constants12_1(self):
         # SDK Says available in 10.1, but not available there
         self.assertIsInstance(PassKit.PKPaymentNetworkDankort, str)
-
-    @expectedFailure
-    @min_os_level("12.4")
-    def test_constants12_4(self):
-        self.assertIsInstance(PassKit.PKPaymentNetworkAppleStoredValue, str)

@@ -17,6 +17,7 @@ Version 9.0a1
   - AudioVideoBridging
   - AuthenticationServices
   - CloudKit
+  - ColorSync
   - CoreAudio
   - CoreAudioTypes
   - CoreGraphics
@@ -31,6 +32,7 @@ Version 9.0a1
   - MapKit
   - MediaPlayer
   - NetworkExtension
+  - PassKit
   - PDFKit
   - Photos
   - PhotosUI

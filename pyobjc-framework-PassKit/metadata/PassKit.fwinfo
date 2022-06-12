@@ -2,9 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "extern": {
-   "PKPaymentNetworkAppleStoredValue": { "type": "@" }
-  },
   "typed_enum": {
    "PKEncryptionScheme": { "type": "@", "type_name": "NSString" },
    "PKContactField": { "type": "@", "type_name": "NSString" },

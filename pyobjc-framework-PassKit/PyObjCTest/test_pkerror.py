@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import PassKit
 
@@ -9,6 +9,7 @@ class TestPKError(TestCase):
 
     def test_enum_types(self):
         self.assertIsEnumType(PassKit.PKAddPaymentPassError)
+        self.assertIsEnumType(PassKit.PKShareSecureElementPassErrorCode)
 
     def test_constants(self):
         self.assertIsInstance(PassKit.PKPassKitErrorDomain, str)
@@ -39,3 +40,11 @@ class TestPKError(TestCase):
         self.assertEqual(PassKit.PKAddSecureElementPassInvalidConfigurationError, 3)
         self.assertEqual(PassKit.PKAddSecureElementPassDeviceNotSupportedError, 4)
         self.assertEqual(PassKit.PKAddSecureElementPassDeviceNotReadyError, 5)
+        self.assertEqual(PassKit.PKAddSecureElementPassOSVersionNotSupportedError, 6)
+
+        self.assertEqual(PassKit.PKShareSecureElementPassUnknownError, 0)
+        self.assertEqual(PassKit.PKShareSecureElementPassSetupError, 1)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(PassKit.PKShareSecureElementPassErrorDomain, str)
