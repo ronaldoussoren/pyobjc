@@ -43,3 +43,10 @@ class TestPHPhotoLibrary(TestCase):
             1,
             b"v" + objc._C_NSInteger,
         )
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsOut(
+            Photos.PHPhotoLibrary.fetchPersistentChangesSinceToken_error_,
+            1,
+        )

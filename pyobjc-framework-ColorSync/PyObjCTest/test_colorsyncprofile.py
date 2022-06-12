@@ -121,6 +121,7 @@ class TestColorSyncProfile(TestCase):
 
     @min_os_level("10.13")
     def testConstants(self):
+        self.assertEqual(ColorSync.icVersion4Number, 0x04000000)
         self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, str)
         self.assertIsInstance(ColorSync.kColorSyncGenericGrayGamma22Profile, str)
         self.assertIsInstance(ColorSync.kColorSyncGenericRGBProfile, str)
@@ -196,6 +197,10 @@ class TestColorSyncProfile(TestCase):
         self.assertIsInstance(ColorSync.kColorSyncProfileCacheSeed, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(ColorSync.kColorSyncProfileIsValid, str)
 
     def testStructs(self):
         v = ColorSync.ColorSyncMD5()

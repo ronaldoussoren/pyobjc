@@ -17,3 +17,7 @@ class TestPHAsset(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(Photos.PHAsset.representsBurst)
         self.assertResultIsBOOL(Photos.PHAsset.canPerformEditOperation_)
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(Photos.PHAsset.hasAdjustments)

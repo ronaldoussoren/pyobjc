@@ -18,6 +18,7 @@ class TestPhotosTypes(TestCase):
         self.assertIsEnumType(Photos.PHCollectionListSubtype)
         self.assertIsEnumType(Photos.PHCollectionListType)
         self.assertIsEnumType(Photos.PHImageContentMode)
+        self.assertIsEnumType(Photos.PHObjectType)
 
     def test_constants(self):
 
@@ -37,6 +38,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoStreamed, (1 << 16))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoHighFrameRate, (1 << 17))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoTimelapse, (1 << 18))
+        self.assertEqual(Photos.PHAssetMediaSubtypeVideoCinematic, (1 << 21))
 
         self.assertEqual(Photos.PHImageContentModeAspectFit, 0)
         self.assertEqual(Photos.PHImageContentModeAspectFill, 1)
@@ -89,6 +91,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumRAW, 217)
+        self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumCinematic, 218)
         self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
         self.assertEqual(Photos.PHAssetEditOperationDelete, 1)
@@ -123,3 +126,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetPlaybackStyleLivePhoto, 3)
         self.assertEqual(Photos.PHAssetPlaybackStyleVideo, 4)
         self.assertEqual(Photos.PHAssetPlaybackStyleVideoLooping, 5)
+
+        self.assertEqual(Photos.PHObjectTypeAsset, 1)
+        self.assertEqual(Photos.PHObjectTypeAssetCollection, 2)
+        self.assertEqual(Photos.PHObjectTypeCollectionList, 3)

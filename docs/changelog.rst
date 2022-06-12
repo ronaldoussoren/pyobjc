@@ -10,8 +10,13 @@ Version 9.0a1
 
 * Updated framework bindings for macOS 13
 
+  The list below lists the frameworks that have
+  API changes that affect the framework bindings.
+
+  - ApplicationServices
   - AudioVideoBridging
   - AuthenticationServices
+  - CloudKit
   - CoreAudio
   - CoreAudioTypes
   - CoreGraphics
@@ -23,15 +28,18 @@ Version 9.0a1
   - ImageIO
   - IOSurface
   - LocalAuthentication
+  - MapKit
   - MediaPlayer
   - NetworkExtension
   - PDFKit
+  - Photos
   - PhotosUI
   - ScreenCaptureKit
   - ShazamKit
   - Speech
   - UniformTypeIdentifiers
   - VideoSubscriberAccount
+  - Virtualization
   - WebKit
 
   FIXME: Move CGPoint/CGSize/CGVector/CGRect/CGRectEdge/CGAffineTransform to CoreFoundation bindings

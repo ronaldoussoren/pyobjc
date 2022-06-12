@@ -13,4 +13,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(VZVirtualMachineDelegate));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1300
+    p = PyObjC_IdToPython(@protocol(VZVirtioConsoleDeviceDelegate));
+    Py_XDECREF(p);
+#endif
 }

@@ -11,6 +11,7 @@ class TestPHError(TestCase):
         self.assertEqual(Photos.PHPhotosErrorRelinquishingLibraryBundleToWriter, 3142)
         self.assertEqual(Photos.PHPhotosErrorSwitchingSystemPhotoLibrary, 3143)
         self.assertEqual(Photos.PHPhotosErrorNetworkAccessRequired, 3164)
+        self.assertEqual(Photos.PHPhotosErrorNetworkError, 3169)
         self.assertEqual(Photos.PHPhotosErrorIdentifierNotFound, 3201)
         self.assertEqual(Photos.PHPhotosErrorMultipleIdentifiersFound, 3202)
 
@@ -25,5 +26,8 @@ class TestPHError(TestCase):
         self.assertEqual(Photos.PHPhotosErrorAccessUserDenied, 3311)
 
         self.assertEqual(Photos.PHPhotosErrorLibraryInFileProviderSyncRoot, 5423)
+
+        self.assertEqual(Photos.PHPhotosErrorPersistentChangeTokenExpired, 3105)
+        self.assertEqual(Photos.PHPhotosErrorPersistentChangeDetailsUnavailable, 3210)
 
         self.assertEqual(Photos.PHPhotosErrorInvalid, -1)

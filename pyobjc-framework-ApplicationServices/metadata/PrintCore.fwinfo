@@ -77,7 +77,7 @@
      {
       "selector": "initWithBundle:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": { "type_override": "@" }
      },
      {
       "selector": "shouldHide",
