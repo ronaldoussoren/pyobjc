@@ -13,9 +13,11 @@ Version 9.0a1
   The list below lists the frameworks that have
   API changes that affect the framework bindings.
 
+  - AppKit
   - ApplicationServices
   - AudioVideoBridging
   - AuthenticationServices
+  - AVKit
   - CloudKit
   - ColorSync
   - CoreAudio
@@ -23,6 +25,7 @@ Version 9.0a1
   - CoreGraphics
   - CoreHaptics
   - CoreMedia
+  - CoreSpotlight
   - CoreVideo
   - CoreWLAN
   - EventKit
@@ -40,8 +43,10 @@ Version 9.0a1
   - ServiceManagement
   - ShazamKit
   - Speech
+  - StoreKit
   - UniformTypeIdentifiers
   - VideoSubscriberAccount
+  - VideoToolbox
   - Virtualization
   - WebKit
 

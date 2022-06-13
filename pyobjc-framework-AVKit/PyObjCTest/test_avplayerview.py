@@ -79,6 +79,14 @@ class TestAVPlayerView(TestCase):
             b"vZ",
         )
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsVideoFrameAnalysis)
+        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsVideoFrameAnalysis_, 0)
+
+        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsMagnification)
+        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsMagnification_, 0)
+
     @min_os_level("10.9")
     def test_constants(self):
         self.assertEqual(AVKit.AVPlayerViewControlsStyleNone, 0)

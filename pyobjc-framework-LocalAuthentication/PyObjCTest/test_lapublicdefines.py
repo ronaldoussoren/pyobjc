@@ -21,6 +21,10 @@ class TestLAPublicDefines(TestCase):
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
             4,
         )
+        self.assertEqual(
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWristDetection,
+            5,
+        )
 
         self.assertEqual(LocalAuthentication.kLACredentialTypePasscode, -1)
         self.assertEqual(LocalAuthentication.kLACredentialTypePassphrase, -2)

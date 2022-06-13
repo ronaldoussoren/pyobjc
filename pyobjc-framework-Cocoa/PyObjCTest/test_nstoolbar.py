@@ -7,10 +7,14 @@ class TestNSToolbarHelper(AppKit.NSObject):
     def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, a, b, c):
         return 1
 
+    def toolbar_itemIdentifier_canBeInsertedAtIndex_(self, a, b, c):
+        return
+
 
 class TestNSToolbar(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
+        self.assertIsTypedEnum(AppKit.NSToolbarUserInfoKey, str)
 
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSToolbarDisplayMode)
@@ -28,6 +32,10 @@ class TestNSToolbar(TestCase):
 
         self.assertIsInstance(AppKit.NSToolbarWillAddItemNotification, str)
         self.assertIsInstance(AppKit.NSToolbarDidRemoveItemNotification, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(AppKit.NSToolbarItemKey, str)
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.isVisible)
@@ -53,4 +61,13 @@ class TestNSToolbar(TestCase):
         self.assertArgIsBOOL(
             TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_,
             2,
+        )
+
+        self.assertResultIsBOOL(
+            TestNSToolbarHelper.toolbar_itemIdentifier_canBeInsertedAtIndex_
+        )
+        self.assertArgHasType(
+            TestNSToolbarHelper.toolbar_itemIdentifier_canBeInsertedAtIndex_,
+            2,
+            objc._C_NSInteger,
         )

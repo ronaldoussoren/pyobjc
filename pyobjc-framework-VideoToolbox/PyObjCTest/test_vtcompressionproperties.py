@@ -279,3 +279,18 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_OutputBitDepth,
             str,
         )
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ConstantBitRate,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ReferenceBufferCount,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MinAllowedFrameQP,
+            str,
+        )

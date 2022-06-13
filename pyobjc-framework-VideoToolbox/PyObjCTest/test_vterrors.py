@@ -19,6 +19,7 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTVideoEncoderMalfunctionErr, -12912)
         self.assertEqual(VideoToolbox.kVTVideoDecoderNotAvailableNowErr, -12913)
         self.assertEqual(VideoToolbox.kVTImageRotationNotSupportedErr, -12914)
+        self.assertEqual(VideoToolbox.kVTPixelRotationNotSupportedErr, -12914)
         self.assertEqual(VideoToolbox.kVTVideoEncoderNotAvailableNowErr, -12915)
         self.assertEqual(VideoToolbox.kVTFormatDescriptionChangeNotSupportedErr, -12916)
         self.assertEqual(VideoToolbox.kVTInsufficientSourceColorDataErr, -12917)
@@ -40,6 +41,7 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTVideoEncoderNeedsRosettaErr, -17693)
         self.assertEqual(VideoToolbox.kVTVideoDecoderReferenceMissingErr, -17694)
         self.assertEqual(VideoToolbox.kVTVideoDecoderCallbackMessagingErr, -17695)
+        self.assertEqual(VideoToolbox.kVTVideoDecoderUnknownErr, -17696)
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )

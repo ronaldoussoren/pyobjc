@@ -32,3 +32,11 @@ class TestSKStoreProductViewController(TestCase):
             1,
             b"vZ@",
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            StoreKit.SKStoreProductViewController.loadProductWithParameters_impression_completionBlock_,
+            2,
+            b"vZ@",
+        ),
