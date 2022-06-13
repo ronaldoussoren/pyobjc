@@ -678,13 +678,13 @@
        },
        "2": {
         "c_array_length_in_arg": 0,
-        "type_modifier": "o"
-        "type_override": "^Q",
+        "type_modifier": "o",
+        "type_override": "^Q"
        },
        "3": {
         "c_array_length_in_arg": 0,
-        "type_modifier": "o"
-        "type_override": "^Q",
+        "type_modifier": "o",
+        "type_override": "^Q"
        },
        "4": {
         "c_array_length_in_arg": 0,
