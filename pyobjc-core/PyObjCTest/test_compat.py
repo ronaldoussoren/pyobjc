@@ -71,24 +71,3 @@ class TestCompatFunctions(TestCase):
 
         finally:
             objc.options.use_kvo = orig
-
-    def test_set_class_extender(self):
-        def extender(*args, **kwds):
-            pass
-
-        orig = objc.options._class_extender
-        try:
-            with warnings.catch_warnings(record=True) as w:
-                warnings.simplefilter("always")
-                objc._setClassExtender(orig)
-            self.assertEqual(len(w), 1)
-            self.assertEqual(w[0].category, DeprecationWarning)
-
-            with warnings.catch_warnings(record=True):
-                warnings.simplefilter("ignore")
-
-                objc._setClassExtender(extender)
-                self.assertIs(objc.options._class_extender, extender)
-
-        finally:
-            objc.options._class_extender = orig

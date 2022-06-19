@@ -34,6 +34,8 @@ Version 9.0a1
   - LocalAuthentication
   - MapKit
   - MediaPlayer
+  - Metal
+  - MetalPerformanceShadersGraph
   - NetworkExtension
   - PassKit
   - PDFKit
@@ -58,6 +60,9 @@ Version 9.0a1
 
   - SharedWithYou
 
+* #415: Remove ``objc._setClassExtender``
+
+  This was an internal function that's no longer used by PyObjC itself.
 
 Version 8.6
 -----------
