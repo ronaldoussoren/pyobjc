@@ -321,6 +321,10 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(Foundation.NSPresentationIntentTableColumnAlignmentCenter, 1)
         self.assertEqual(Foundation.NSPresentationIntentTableColumnAlignmentRight, 2)
 
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(Foundation.NSMarkdownSourcePositionAttributeName, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(
@@ -384,4 +388,14 @@ class TestNSAttributedString(TestCase):
 
         self.assertResultIsBOOL(
             Foundation.NSPresentationIntent.isEquivalentToPresentationIntent_
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            Foundation.NSAttributedStringMarkdownParsingOptions.appliesSourcePositionAttributes
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSAttributedStringMarkdownParsingOptions.setAppliesSourcePositionAttributes_,
+            0,
         )

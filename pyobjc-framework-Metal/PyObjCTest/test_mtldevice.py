@@ -281,6 +281,39 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newLibraryWithDescriptor_completionHandler_(self, a, b):
         pass
 
+    def newRenderPipelineStateWithMeshDescriptor_options_reflection_error_(
+        self, a, b, c, d
+    ):
+        return 1
+
+    def newRenderPipelineStateWithMeshDescriptor_options_completionHandler_(
+        self, a, b, c
+    ):
+        return 1
+
+    def newIOHandleWithURL_error_(self, a, b):
+        return 1
+
+    def newIOCommandQueueWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newIOHandleWithURL_compressionMethod_error_(self, a, b):
+        return 1
+
+    def sparseTileSizeInBytesForSparsePageSize_(self, a):
+        return 1
+
+    def sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_(
+        self, a, b, c, d
+    ):
+        return 1
+
+    def heapAccelerationStructureSizeAndAlignWithSize_(self, a):
+        return 1
+
+    def heapAccelerationStructureSizeAndAlignWithDescriptor_(self, a):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_typed_enum(self):
@@ -295,6 +328,8 @@ class TestMTLDevice(TestCase):
         self.assertIsEnumType(Metal.MTLPipelineOption)
         self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
         self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
+        self.assertIsEnumType(Metal.MTLIOCompressionMethod)
+        self.assertIsEnumType(Metal.MTLSparsePageSize)
 
     def test_constants(self):
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v1, 0)
@@ -347,6 +382,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple5, 1005)
         self.assertEqual(Metal.MTLGPUFamilyApple6, 1006)
         self.assertEqual(Metal.MTLGPUFamilyApple7, 1007)
+        self.assertEqual(Metal.MTLGPUFamilyApple8, 1008)
 
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
@@ -357,6 +393,8 @@ class TestMTLDevice(TestCase):
 
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst1, 4001)
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst2, 4002)
+
+        self.assertEqual(Metal.MTLGPUFamilyMetal3, 5001)
 
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)
@@ -383,6 +421,16 @@ class TestMTLDevice(TestCase):
 
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeOutward, 0)
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeInward, 1)
+
+        self.assertEqual(Metal.MTLIOCompressionMethodZlib, 0)
+        self.assertEqual(Metal.MTLIOCompressionMethodLZFSE, 1)
+        self.assertEqual(Metal.MTLIOCompressionMethodLZ4, 2)
+        self.assertEqual(Metal.MTLIOCompressionMethodLZMA, 3)
+        self.assertEqual(Metal.MTLIOCompressionMethodLZBitmap, 4)
+
+        self.assertEqual(Metal.MTLSparsePageSize16, 16)
+        self.assertEqual(Metal.MTLSparsePageSize64, 64)
+        self.assertEqual(Metal.MTLSparsePageSize256, 256)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -879,3 +927,76 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPrimitiveMotionBlur)
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_,
+            3,
+            b"o^@",
+        )
+
+        self.assertArgIsBlock(
+            TestMTLDeviceHelper.newRenderPipelineStateWithMeshDescriptor_options_completionHandler_,
+            2,
+            MTLNewRenderPipelineStateWithReflectionCompletionHandler,
+        )
+
+        self.assertArgHasType(TestMTLDeviceHelper.newIOHandleWithURL_error_, 1, b"o^@")
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newIOCommandQueueWithDescriptor_error_, 1, b"o^@"
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newIOHandleWithURL_compressionMethod_error_, 2, b"o^@"
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.sparseTileSizeInBytesForSparsePageSize_,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeInBytesForSparsePageSize_,
+            0,
+            objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
+            Metal.MTLSize,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
+            0,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
+            3,
+            objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithSize_,
+            Metal.MTLSizeAndAlign,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithSize_,
+            0,
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithDescriptor_,
+            Metal.MTLSizeAndAlign,
+        )

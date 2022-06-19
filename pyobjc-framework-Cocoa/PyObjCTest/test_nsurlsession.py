@@ -425,6 +425,13 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionTaskTransactionMetrics.isMultipath
         )
 
+        self.assertResultIsBOOL(
+            Foundation.NSURLSessionConfiguration.allowsConstrainedNetworkAccess
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLSessionConfiguration.setAllowsConstrainedNetworkAccess_, 0
+        )
+
     @min_os_level("11.0")
     def testMethods11_0(self):
         self.assertResultIsBOOL(
@@ -432,6 +439,15 @@ class TestNSURLSession(TestCase):
         )
         self.assertArgIsBOOL(
             Foundation.NSURLSessionConfiguration.setSessionSendsLaunchEvents_, 0
+        )
+
+    @min_os_level("13.0")
+    def testMethods1_0(self):
+        self.assertResultIsBOOL(
+            Foundation.NSURLSessionConfiguration.requiresDNSSECValidation
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLSessionConfiguration.setRequiresDNSSECValidation_, 0
         )
 
     @min_sdk_level("10.12")

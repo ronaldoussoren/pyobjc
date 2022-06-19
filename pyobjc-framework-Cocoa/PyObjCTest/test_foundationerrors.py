@@ -65,6 +65,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSXPCConnectionInterrupted, 4097)
         self.assertEqual(Foundation.NSXPCConnectionInvalid, 4099)
         self.assertEqual(Foundation.NSXPCConnectionReplyInvalid, 4101)
+        self.assertEqual(Foundation.NSXPCConnectionCodeSigningRequirementFailure, 4102)
         self.assertEqual(Foundation.NSXPCConnectionErrorMinimum, 4096)
         self.assertEqual(Foundation.NSXPCConnectionErrorMaximum, 4224)
 

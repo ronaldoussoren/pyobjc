@@ -34,8 +34,20 @@ class TestMTLAccelerationStructureCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
+    def refitAccelerationStructure_descriptor_destination_scratchBuffer_scratchBufferOffset_options_(
+        self, a, b, c, d, e, f
+    ):
+        pass
+
 
 class TestMTLAccelerationStructureCommandEncoder(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLAccelerationStructureRefitOptions)
+        self.assertEqual(Metal.MTLAccelerationStructureRefitOptionVertexData, 1 << 0)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureRefitOptionPerPrimitiveData, 1 << 1
+        )
+
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
         objc.protocolNamed("MTLAccelerationStructureCommandEncoder")
@@ -110,5 +122,16 @@ class TestMTLAccelerationStructureCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLAccelerationStructureCommandEncoderHelper.writeCompactedAccelerationStructureSize_toBuffer_offset_sizeDataType_,
             3,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLAccelerationStructureCommandEncoderHelper.refitAccelerationStructure_descriptor_destination_scratchBuffer_scratchBufferOffset_options_,
+            4,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLAccelerationStructureCommandEncoderHelper.refitAccelerationStructure_descriptor_destination_scratchBuffer_scratchBufferOffset_options_,
+            5,
             objc._C_NSUInteger,
         )

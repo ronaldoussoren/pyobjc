@@ -46,6 +46,9 @@ class TestMPSGraphCore(TestCase):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicitOffset, 3
         )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingStyleONNX_SAME_LOWER, 4
+        )
 
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeConstant, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeReflect, 1)

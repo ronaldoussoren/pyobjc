@@ -27,3 +27,4 @@ class TestVNError(TestCase):
         self.assertEqual(Vision.VNErrorDataUnavailable, 17)
         self.assertEqual(Vision.VNErrorTimeStampNotFound, 18)
         self.assertEqual(Vision.VNErrorUnsupportedRequest, 19)
+        self.assertEqual(Vision.VNErrorTimeout, 20)

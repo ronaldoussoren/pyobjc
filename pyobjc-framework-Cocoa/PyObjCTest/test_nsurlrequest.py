@@ -72,6 +72,11 @@ class TestNSURLRequest(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLRequest.assumesHTTP3Capable)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAssumesHTTP3Capable_, 0)
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(Foundation.NSURLRequest.requiresDNSSECValidation)
+        self.assertArgIsBOOL(Foundation.NSURLRequest.setRequiresDNSSECValidation_, 0)
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("NSURLSessionWebSocketDelegate")

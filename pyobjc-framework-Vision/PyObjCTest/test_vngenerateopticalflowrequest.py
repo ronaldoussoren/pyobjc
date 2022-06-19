@@ -16,6 +16,12 @@ class TestVNGenerateOpticalFlowRequest(TestCase):
             Vision.VNGenerateOpticalFlowRequestComputationAccuracyVeryHigh, 3
         )
 
-    @min_os_level("11.0")
-    def testConstants11_0(self):
         self.assertEqual(Vision.VNGenerateOpticalFlowRequestRevision1, 1)
+        self.assertEqual(Vision.VNGenerateOpticalFlowRequestRevision2, 2)
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(Vision.VNGenerateOpticalFlowRequest.keepNetworkOutput)
+        self.assertArgIsBOOL(
+            Vision.VNGenerateOpticalFlowRequest.setKeepNetworkOutput_, 0
+        )

@@ -61,4 +61,26 @@ static void __attribute__((__used__)) use_protocols(void)
     // p = PyObjC_IdToPython(@protocol(MTLIndirectComputeCommand));
     // Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1300
+    p = PyObjC_IdToPython(@protocol(MTLBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLBufferBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLThreadgroupBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLTextureBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLObjectPayloadBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLIOCommandBuffer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLIOCommandQueue));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLIOScratchBuffer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLIOScratchBufferAllocator));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLIOFileHandle));
+    Py_XDECREF(p);
+#endif
 }

@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import CoreML
+import objc
 
 
 class TestMLMultiArray(TestCase):
@@ -32,4 +33,17 @@ class TestMLMultiArray(TestCase):
         self.assertArgIsOut(
             CoreML.MLMultiArray.initWithDataPointer_shape_dataType_strides_deallocator_error_,
             5,
+        )
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsBlock(
+            CoreML.MLMultiArray.getBytesWithHandler_,
+            0,
+            b"vn^v" + objc._C_NSUInteger,  # XXX
+        )
+        self.assertArgIsBlock(
+            CoreML.MLMultiArray.getMutableBytesWithHandler_,
+            0,
+            b"vN^v" + objc._C_NSUInteger + b"@",  # XXX
         )

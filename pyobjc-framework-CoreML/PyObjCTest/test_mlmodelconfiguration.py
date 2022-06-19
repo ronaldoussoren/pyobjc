@@ -10,6 +10,7 @@ class TestMLModelConfiguration(TestCase):
         self.assertEqual(CoreML.MLComputeUnitsCPUOnly, 0)
         self.assertEqual(CoreML.MLComputeUnitsCPUAndGPU, 1)
         self.assertEqual(CoreML.MLComputeUnitsAll, 2)
+        self.assertEqual(CoreML.MLComputeUnitsCPUAndNeuralEngine, 3)
 
     @min_os_level("10.15")
     def test_methods10_15(self):

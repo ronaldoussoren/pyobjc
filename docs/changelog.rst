@@ -25,10 +25,12 @@ Version 9.0a1
   - CoreGraphics
   - CoreHaptics
   - CoreMedia
+  - CoreML
   - CoreSpotlight
   - CoreVideo
   - CoreWLAN
   - EventKit
+  - Foundation
   - ImageIO
   - IOSurface
   - LocalAuthentication
@@ -50,6 +52,7 @@ Version 9.0a1
   - VideoSubscriberAccount
   - VideoToolbox
   - Virtualization
+  - Vision
   - WebKit
 
   FIXME: Move CGPoint/CGSize/CGVector/CGRect/CGRectEdge/CGAffineTransform to CoreFoundation bindings

@@ -39,6 +39,12 @@ class TestMTLComputePipeline(TestCase):
             0,
         )
 
+        self.assertResultIsBOOL(
+            Metal.MTLComputePipelineDescriptor.alloc()
+            .init()
+            .supportIndirectCommandBuffers
+        )
+
     def test_methods(self):
         self.assertResultHasType(
             TestMTLComputePipelineHelper.maxTotalThreadsPerThreadgroup,

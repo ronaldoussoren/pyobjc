@@ -26,6 +26,9 @@ class TestMTLTypes(TestCase):
         self.assertEqual(v.y, 0.0)
         self.assertPickleRoundTrips(v)
 
+        v = Metal.MTLResourceID()
+        self.assertEqual(v._impl, 0)
+
     def test_functions(self):
         v = Metal.MTLOriginMake(1, 2, 3)
         self.assertIsInstance(v, Metal.MTLOrigin)

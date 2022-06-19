@@ -54,6 +54,7 @@ class TestMTLLibrary(TestCase):
         self.assertIsEnumType(Metal.MTLLibraryError)
         self.assertIsEnumType(Metal.MTLLibraryType)
         self.assertIsEnumType(Metal.MTLPatchType)
+        self.assertIsEnumType(Metal.MTLLibraryOptimizationLevel)
 
     def test_constants(self):
         self.assertEqual(Metal.MTLPatchTypeNone, 0)
@@ -65,6 +66,8 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLFunctionTypeKernel, 3)
         self.assertEqual(Metal.MTLFunctionTypeVisible, 5)
         self.assertEqual(Metal.MTLFunctionTypeIntersection, 6)
+        self.assertEqual(Metal.MTLFunctionTypeMesh, 7)
+        self.assertEqual(Metal.MTLFunctionTypeObject, 8)
 
         self.assertEqual(Metal.MTLLanguageVersion1_0, (1 << 16))
         self.assertEqual(Metal.MTLLanguageVersion1_1, (1 << 16) + 1)
@@ -74,6 +77,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion2_2, (2 << 16) + 2)
         self.assertEqual(Metal.MTLLanguageVersion2_3, (2 << 16) + 3)
         self.assertEqual(Metal.MTLLanguageVersion2_4, (2 << 16) + 4)
+        self.assertEqual(Metal.MTLLanguageVersion3_0, (3 << 16) + 0)
 
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
@@ -81,6 +85,9 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLibraryErrorCompileWarning, 4)
         self.assertEqual(Metal.MTLLibraryErrorFunctionNotFound, 5)
         self.assertEqual(Metal.MTLLibraryErrorFileNotFound, 6)
+
+        self.assertEqual(Metal.MTLLibraryOptimizationLevelDefault, 0)
+        self.assertEqual(Metal.MTLLibraryOptimizationLevelSize, 1)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -157,3 +164,12 @@ class TestMTLLibrary(TestCase):
         )
 
         self.assertResultIsBOOL(Metal.MTLFunctionConstant.alloc().init().required)
+
+    @min_os_level("11.0")
+    def test_methods11_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLVertexAttribute.alloc().init().preserveInvariance
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLVertexAttribute.alloc().init().setPreserveInvariance_, 0
+        )

@@ -1,5 +1,58 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+import objc
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    expectedFailure,
+    min_sdk_level,
+)
+
+
+class TestMTLArgumentHelper(Metal.NSObject):
+    def type(self):  # noqa:  A003
+        return 1
+
+    def access(self):
+        return 1
+
+    def isUsed(self):
+        return 1
+
+    def isArgument(self):
+        return 1
+
+    def bufferAlignment(self):
+        return 1
+
+    def bufferDataSize(self):
+        return 1
+
+    def bufferDataType(self):
+        return 1
+
+    def threadgroupMemoryAlignment(self):
+        return 1
+
+    def threadgroupMemoryDataSize(self):
+        return 1
+
+    def textureType(self):
+        return 1
+
+    def textureDataType(self):
+        return 1
+
+    def isDepthTexture(self):
+        return 1
+
+    def arrayLength(self):
+        return 1
+
+    def objectPayloadAlignment(self):
+        return 1
+
+    def objectPayloadDataSize(self):
+        return 1
 
 
 class TestMTLArgument(TestCase):
@@ -7,6 +60,7 @@ class TestMTLArgument(TestCase):
         self.assertIsEnumType(Metal.MTLArgumentAccess)
         self.assertIsEnumType(Metal.MTLArgumentType)
         self.assertIsEnumType(Metal.MTLDataType)
+        self.assertIsEnumType(Metal.MTLBindingType)
 
     def test_constants(self):
         self.assertEqual(Metal.MTLDataTypeNone, 0)
@@ -112,10 +166,31 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
         self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
         self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
+        self.assertEqual(Metal.MTLArgumentTypeObjectPayload, 34)
 
         self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
         self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
         self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
+
+        self.assertEqual(Metal.MTLBindingTypeBuffer, 0)
+        self.assertEqual(Metal.MTLBindingTypeThreadgroupMemory, 1)
+        self.assertEqual(Metal.MTLBindingTypeTexture, 2)
+        self.assertEqual(Metal.MTLBindingTypeSampler, 3)
+        self.assertEqual(Metal.MTLBindingTypeImageblockData, 16)
+        self.assertEqual(Metal.MTLBindingTypeImageblock, 17)
+        self.assertEqual(Metal.MTLBindingTypeVisibleFunctionTable, 24)
+        self.assertEqual(Metal.MTLBindingTypePrimitiveAccelerationStructure, 25)
+        self.assertEqual(Metal.MTLBindingTypeInstanceAccelerationStructure, 26)
+        self.assertEqual(Metal.MTLBindingTypeIntersectionFunctionTable, 27)
+        self.assertEqual(Metal.MTLBindingTypeObjectPayload, 34)
+
+    @min_sdk_level("13.0")
+    def test_protocols(self):
+        objc.protocolNamed("MTLBinding")
+        objc.protocolNamed("MTLBufferBinding")
+        objc.protocolNamed("MTLThreadgroupBinding")
+        objc.protocolNamed("MTLTextureBinding")
+        objc.protocolNamed("MTLObjectPayloadBinding")
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -133,4 +208,43 @@ class TestMTLArgument(TestCase):
         )
         self.assertResultIsBOOL(
             Metal.MTLTextureReferenceType.alloc().init().isDepthTexture
+        )
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.access, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestMTLArgumentHelper.isUsed)
+        self.assertResultIsBOOL(TestMTLArgumentHelper.isArgument)
+
+        self.assertResultHasType(
+            TestMTLArgumentHelper.bufferAlignment, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.bufferDataSize, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.bufferDataType, objc._C_NSUInteger
+        )
+
+        self.assertResultHasType(
+            TestMTLArgumentHelper.threadgroupMemoryAlignment, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.threadgroupMemoryDataSize, objc._C_NSUInteger
+        )
+
+        self.assertResultHasType(TestMTLArgumentHelper.textureType, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestMTLArgumentHelper.textureDataType, objc._C_NSUInteger
+        )
+        self.assertResultIsBOOL(TestMTLArgumentHelper.isDepthTexture)
+        self.assertResultHasType(TestMTLArgumentHelper.arrayLength, objc._C_NSUInteger)
+
+        self.assertResultHasType(
+            TestMTLArgumentHelper.objectPayloadAlignment, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.objectPayloadDataSize, objc._C_NSUInteger
         )

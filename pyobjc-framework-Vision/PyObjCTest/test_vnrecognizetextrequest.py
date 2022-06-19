@@ -12,6 +12,7 @@ class TestVNRecognizeTextRequest(TestCase):
 
         self.assertEqual(Vision.VNRecognizeTextRequestRevision1, 1)
         self.assertEqual(Vision.VNRecognizeTextRequestRevision2, 2)
+        self.assertEqual(Vision.VNRecognizeTextRequestRevision3, 3)
 
     @min_os_level("10.15")
     def test_methods(self):
@@ -30,4 +31,13 @@ class TestVNRecognizeTextRequest(TestCase):
         self.assertArgIsOut(
             Vision.VNRecognizeTextRequest.supportedRecognitionLanguagesAndReturnError_,  # noqa: B950
             0,
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            Vision.VNRecognizeTextRequest.automaticallyDetectsLanguage
+        )
+        self.assertArgIsBOOL(
+            Vision.VNRecognizeTextRequest.setAutomaticallyDetectsLanguage_, 0
         )

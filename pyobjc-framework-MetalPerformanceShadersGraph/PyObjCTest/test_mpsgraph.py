@@ -8,6 +8,7 @@ class TestMPSGraph(TestCase):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimization)
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptions)
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimizationProfile)
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphExecutionStage)
 
     def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptionsNone, 0)
@@ -30,6 +31,10 @@ class TestMPSGraph(TestCase):
             MetalPerformanceShadersGraph.MPSGraphOptimizationProfilePowerEfficiency, 1
         )
 
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphExecutionStageCompleted, 0
+        )
+
     @min_os_level("11.0")
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -38,4 +43,23 @@ class TestMPSGraph(TestCase):
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraphExecutionDescriptor.setWaitUntilCompleted_,
             0,
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphCompilationDescriptor.waitForCompilationCompletion
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphCompilationDescriptor.setWaitForCompilationCompletion_,
+            0,
+        )
+        self.assertResultIsBlock(
+            MetalPerformanceShadersGraph.MPSGraphCompilationDescriptor.compilationCompletionHandler,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            MetalPerformanceShadersGraph.MPSGraphCompilationDescriptor.setCompilationCompletionHandler_,
+            0,
+            b"v@@",
         )

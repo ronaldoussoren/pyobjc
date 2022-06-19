@@ -10,11 +10,20 @@ class TestVNTypes(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Vision.VNElementType)
         self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
+        self.assertIsEnumType(Vision.VNPointsClassification)
 
     def testConstants(self):
         self.assertEqual(Vision.VNImageCropAndScaleOptionCenterCrop, 0)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFill, 2)
+        self.assertEqual(
+            Vision.VNImageCropAndScaleOptionScaleFitRotate90CCW,
+            0x100 + Vision.VNImageCropAndScaleOptionScaleFit,
+        )
+        self.assertEqual(
+            Vision.VNImageCropAndScaleOptionScaleFillRotate90CCW,
+            0x100 + Vision.VNImageCropAndScaleOptionScaleFill,
+        )
 
         self.assertEqual(Vision.VNElementTypeUnknown, 0)
         self.assertEqual(Vision.VNElementTypeFloat, 1)
@@ -23,6 +32,10 @@ class TestVNTypes(TestCase):
         self.assertEqual(Vision.VNChiralityUnknown, 0)
         self.assertEqual(Vision.VNChiralityLeft, -1)
         self.assertEqual(Vision.VNChiralityRight, 1)
+
+        self.assertEqual(Vision.VNPointsClassificationDisconnected, 0)
+        self.assertEqual(Vision.VNPointsClassificationOpenPath, 1)
+        self.assertEqual(Vision.VNPointsClassificationClosedPath, 2)
 
     @min_os_level("10.13")
     def testConstants10_13(self):

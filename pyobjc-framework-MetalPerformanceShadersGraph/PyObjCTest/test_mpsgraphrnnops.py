@@ -74,3 +74,54 @@ class TestMPSGraphRNNOps(TestCase):
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraphLSTMDescriptor.setForgetGateLast_, 0
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.reverse
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setReverse_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.bidirectional
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setBidirectional_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.training
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setTraining_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.resetAfter
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setResetAfter_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.resetGateFirst
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setResetGateFirst_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.flipZ
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setFlipZ, 0
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.resetGateFirst
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setResetGateFirst_, 0
+        )

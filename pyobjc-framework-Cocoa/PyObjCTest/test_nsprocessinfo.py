@@ -37,6 +37,8 @@ class TestNSProcessInfo(TestCase):
         self.assertEqual(Foundation.NSActivityIdleSystemSleepDisabled, 1 << 20)
         self.assertEqual(Foundation.NSActivitySuddenTerminationDisabled, 1 << 14)
         self.assertEqual(Foundation.NSActivityAutomaticTerminationDisabled, 1 << 15)
+        self.assertEqual(Foundation.NSActivityAnimationTrackingEnabled, 1 << 45)
+        self.assertEqual(Foundation.NSActivityTrackingEnabled, 1 << 46)
         self.assertEqual(
             Foundation.NSActivityUserInitiated,
             0x00FFFFFF | Foundation.NSActivityIdleSystemSleepDisabled,
@@ -48,6 +50,10 @@ class TestNSProcessInfo(TestCase):
         )
         self.assertEqual(Foundation.NSActivityBackground, 0x000000FF)
         self.assertEqual(Foundation.NSActivityLatencyCritical, 0xFF00000000)
+        self.assertEqual(
+            Foundation.NSActivityUserInteractive,
+            Foundation.NSActivityUserInitiated | Foundation.NSActivityLatencyCritical,
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):

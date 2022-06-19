@@ -29,6 +29,7 @@ class TestMTLBinaryArchive(TestCase):
         self.assertEqual(Metal.MTLBinaryArchiveErrorInvalidFile, 1)
         self.assertEqual(Metal.MTLBinaryArchiveErrorUnexpectedElement, 2)
         self.assertEqual(Metal.MTLBinaryArchiveErrorCompilationFailure, 3)
+        self.assertEqual(Metal.MTLBinaryArchiveErrorInternalError, 4)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):

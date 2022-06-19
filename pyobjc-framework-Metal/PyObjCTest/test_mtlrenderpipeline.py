@@ -2,7 +2,7 @@ import Metal
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
-class TestMTLArgument(TestCase):
+class TestMTLRenderPipeline(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Metal.MTLArgumentAccess)
         self.assertIsEnumType(Metal.MTLArgumentType)
@@ -133,4 +133,52 @@ class TestMTLArgument(TestCase):
         )
         self.assertResultIsBOOL(
             Metal.MTLTextureReferenceType.alloc().init().isDepthTexture
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .objectThreadgroupSizeIsMultipleOfThreadExecutionWidth
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .setObjectThreadgroupSizeIsMultipleOfThreadExecutionWidth_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .meshThreadgroupSizeIsMultipleOfThreadExecutionWidth
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .setMeshThreadgroupSizeIsMultipleOfThreadExecutionWidth_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .isAlphaToCoverageEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .setAlphaToCoverageEnabled_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc().init().isRasterizationEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .setRasterizationEnabled_,
+            0,
         )

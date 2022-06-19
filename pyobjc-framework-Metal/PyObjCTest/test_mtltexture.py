@@ -55,6 +55,15 @@ class TestMTLArgumentHelper(Metal.NSObject):
     def allowGPUOptimizedContents(self):
         return 0
 
+    def compressionType(self):
+        return 0
+
+    def gpuHandle(self):
+        return 0
+
+    def gpuResourceID(self):
+        return 0
+
     def getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_(
         self, a, b, c, d, e, f
     ):
@@ -95,6 +104,7 @@ class TestMTLArgument(TestCase):
         self.assertIsEnumType(Metal.MTLTextureSwizzle)
         self.assertIsEnumType(Metal.MTLTextureType)
         self.assertIsEnumType(Metal.MTLTextureUsage)
+        self.assertIsEnumType(Metal.MTLTextureCompressionType)
 
     def test_constants(self):
         self.assertEqual(Metal.MTLTextureType1D, 0)
@@ -120,6 +130,9 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLTextureUsageShaderWrite, 0x0002)
         self.assertEqual(Metal.MTLTextureUsageRenderTarget, 0x0004)
         self.assertEqual(Metal.MTLTextureUsagePixelFormatView, 0x0010)
+
+        self.assertEqual(Metal.MTLTextureCompressionTypeLossless, 0)
+        self.assertEqual(Metal.MTLTextureCompressionTypeLossy, 1)
 
     def test_structs(self):
         v = Metal.MTLTextureSwizzleChannels()
@@ -182,6 +195,13 @@ class TestMTLArgument(TestCase):
         )
         self.assertResultHasType(
             TestMTLArgumentHelper.allowGPUOptimizedContents, objc._C_NSBOOL
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.compressionType, objc._C_NSUInteger
+        )
+        self.assertResultHasType(TestMTLArgumentHelper.gpuHandle, objc._C_ULNG_LNG)
+        self.assertResultHasType(
+            TestMTLArgumentHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
         )
 
         self.assertArgHasType(
