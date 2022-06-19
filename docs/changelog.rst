@@ -69,6 +69,12 @@ Version 9.0a1
   This method is never actually used by the system and is not
   part of the ``NSNumber`` interface (but possibly was in the past)
 
+* 438: Removed bindings for the ``Message`` and ``ServerNotification``
+  frameworks.
+
+  Both frameworks were removed in macOS 10.9 and hence cannot be
+  used on a platform that's still supported by PyObjC.
+
 Version 8.6
 -----------
 
