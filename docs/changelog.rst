@@ -64,6 +64,11 @@ Version 9.0a1
 
   This was an internal function that's no longer used by PyObjC itself.
 
+* #429: Remove ``-[OC_PythonNumber getValue:forType:]``
+
+  This method is never actually used by the system and is not
+  part of the ``NSNumber`` interface (but possibly was in the past)
+
 Version 8.6
 -----------
 

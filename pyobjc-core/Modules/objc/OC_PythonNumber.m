@@ -121,20 +121,6 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_END_WITH_GIL
 }
 
-- (void)getValue:(void*)buffer forType:(const char*)type
-{
-    /* XXX: This method is not part of the NSNumber API,
-     * remove in PyObjC 9
-     */
-    int r;
-    PyObjC_BEGIN_WITH_GIL
-        r = depythonify_c_value(type, value, buffer);
-        if (r == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-}
-
 - (BOOL)boolValue
 {
     return (BOOL)PyObject_IsTrue(value);
