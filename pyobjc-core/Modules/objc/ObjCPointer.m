@@ -47,15 +47,6 @@ static PyMemberDef PyObjCPointer_members[] = {
         .flags  = READONLY,
     },
     {
-        /* This is a deprecated alias, will be
-         * removed in PyObjC 9.
-         */
-        .name   = "type",
-        .type   = T_OBJECT,
-        .offset = offsetof(PyObjCPointer, typestr),
-        .flags  = READONLY,
-    },
-    {
         .name   = "pointerAsInteger",
         .type   = T_LONG,
         .offset = offsetof(PyObjCPointer, ptr),

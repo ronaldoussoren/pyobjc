@@ -75,6 +75,12 @@ Version 9.0a1
   Both frameworks were removed in macOS 10.9 and hence cannot be
   used on a platform that's still supported by PyObjC.
 
+* #451: Removed the ``type`` attribute for ``ObjCPointer``
+
+  The ``typestr`` attribute contains the same value and has
+  more consistent naming with the rest of PyObjC.
+
+
 Version 8.6
 -----------
 

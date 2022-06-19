@@ -1913,11 +1913,6 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 
       .. versionadded: 8.5
 
-   .. data:: type
-
-      Alias for *typestr*. This alias will be removed in
-      PyObjC 9.
-
    .. data:: pointerAsInteger
 
       An integer value with the raw pointer value.
