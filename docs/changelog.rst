@@ -17,6 +17,7 @@ Version 9.0a1
   - ApplicationServices
   - AudioVideoBridging
   - AuthenticationServices
+  - AVFoundation
   - AVKit
   - CloudKit
   - ColorSync

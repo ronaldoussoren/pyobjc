@@ -21,3 +21,15 @@ class TestAVAssetReader(TestCase):
         self.assertArgIsOut(AVFoundation.AVAssetReader.initWithAsset_error_, 1)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.canAddOutput_)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.startReading)
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetReader.isMultitaskingCameraAccessSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetReader.isMultitaskingCameraAccessEnabled
+        )
+        self.asserArgIsBOOL(
+            AVFoundation.AVAssetReader.setMultitaskingCameraAccessEnabled_, 0
+        )

@@ -50,3 +50,11 @@ class TestAVAssetImageGenerator(TestCase):
             1,
             AVAssetImageGeneratorCompletionHandler,
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetImageGenerator.generateCGImageAsynchronouslyForTime_completionHandler_,  # noqa: B950
+            1,
+            b"v{__CGImage=}" + AVFoundation.CMTime.__typestr__ + b"@",
+        )

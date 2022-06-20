@@ -132,5 +132,47 @@ class TestAVVideoComposition(TestCase):
             b"vi@",
         )
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVVideoComposition.videoCompositionWithPropertiesOfAsset_completionHandler_,  # noqa: B950
+            1,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHanlder_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHanlder_,
+            2,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVVideoComposition.videoCompositionWithPropertiesOfAsset_prototypeInstruction_completionHandler_,
+            2,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableVideoComposition.videoCompositionWithAsset_applyingCIFiltetsWithHanlder_completionHandler_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableVideoComposition.videoCompositionWithAsset_applyingCIFiltetsWithHanlder_completionHandler_,
+            2,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableVideoComposition.determineValidityForAsset_timeRange_validateDelegate_completionHandler_,
+            3,
+            b"vZ@",
+        )
+
     def testProtocols(self):
         objc.protocolNamed("AVVideoCompositionValidationHandling")

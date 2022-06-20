@@ -33,3 +33,7 @@ class TestAVCompositionTrack(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBOOL(AVFoundation.AVMutableCompositionTrack.setEnabled_, 0)
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVCompositionTrack.hasMediaCharacteristic_)

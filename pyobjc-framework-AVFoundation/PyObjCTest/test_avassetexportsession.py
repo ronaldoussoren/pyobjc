@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestAVAssetExportSession(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVAssetExportSessionStatus)
+        self.assertIsEnumType(AVFoundation.AVAssetTrackGroupOutputHandling)
 
     @min_os_level("10.7")
     def testConstants(self):
@@ -38,6 +39,15 @@ class TestAVAssetExportSession(TestCase):
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusCompleted, 3)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusFailed, 4)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusCancelled, 5)
+
+        self.assertEqual(AVFoundation.AVAssetTrackGroupOutputHandlingNone, 0)
+        self.assertEqual(
+            AVFoundation.AVAssetTrackGroupOutputHandlingPreserveAlternateTracks, 1 << 0
+        )
+        self.assertEqual(
+            AVFoundation.AVAssetTrackGroupOutputHandlingDefaultPolicy,
+            AVFoundation.AVAssetTrackGroupOutputHandlingNone,
+        )
 
     @min_os_level("10.8")
     def testConstants10_8(self):

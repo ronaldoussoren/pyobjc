@@ -45,3 +45,26 @@ class TestAVComposition(TestCase):
             1,
             b"v@@",
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableComposition.insertTimeRange_ofAsset_atTime_completionHandler_,
+            0,
+            b"v@",
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVComposition.providesPreciseDurationAndTiming
+        )
+        self.assertResultIsBOOL(AVFoundation.AVComposition.hasProtectedContent)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.canContainFragments)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.containsFragments)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.isPlayable)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.isExportable)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.isReadable)
+        self.assertResultIsBOOL(AVFoundation.AVComposition.isComposable)
+        self.assertResultIsBOOL(
+            AVFoundation.AVComposition.isCompatibleWithSavedPhotosAlbum
+        )
+        self.assertResultIsBOOL(AVFoundation.AVComposition.isCompatibleWithAirPlayVideo)

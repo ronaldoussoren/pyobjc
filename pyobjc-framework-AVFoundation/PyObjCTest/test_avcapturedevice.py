@@ -28,6 +28,9 @@ class TestAVCaptureDevice(TestCase):
 
     @min_os_level("10.7")
     def test_constants(self):
+        self.assertEqual(AVFoundation.AVCaptureColorSpace_sRGB, 0)
+        self.assertEqual(AVFoundation.AVCaptureColorSpace_P3_D65, 1)
+
         self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
         self.assertIsInstance(
             AVFoundation.AVCaptureDeviceWasDisconnectedNotification, str
@@ -83,6 +86,10 @@ class TestAVCaptureDevice(TestCase):
         self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeApp, 1)
         self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeCooperative, 2)
 
+        self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemNone, 0)
+        self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemContrastDetection, 1)
+        self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemPhaseDetection, 2)
+
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
@@ -91,7 +98,6 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, str
         )
 
-        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
     @min_os_level("12.0")
@@ -126,6 +132,10 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionExposureModeChanged,
             1 << 2,
         )
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeDeskViewCamera, str)
 
     @min_os_level("10.7")
     def testMethods(self):
@@ -209,4 +219,16 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageActive)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isCenterStageSupported
+        )
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isContinuityCamera)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightEnabled)
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.setStudioLightEnabled_, 0
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightActive)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isStudioLightSupported
         )

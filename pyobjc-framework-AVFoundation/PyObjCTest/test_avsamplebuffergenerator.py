@@ -11,6 +11,23 @@ class TestAVSampleBufferGenerator(TestCase):
             b"vZ@",
         )
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsOut(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_error_, 1
+        )
+
+        self.assertArgIsOut(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_addingToBatch_error_,
+            2,
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVSampleBufferGeneratorBatch.makeDataReadyWithCompletionHandler_,
+            0,
+            b"v@",
+        )
+
     def testConstants(self):
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
         self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)

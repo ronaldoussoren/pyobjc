@@ -92,3 +92,13 @@ class TestAVAssetResourceLoader(TestCase):
             AVFoundation.AVAssetResourceLoadingRequest.persistentContentKeyFromKeyVendorResponse_options_error_,  # noqa: B950
             2,
         )
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetResourceLoadingRequest.isEntireLengthAvailableOnDemand
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetResourceLoadingRequest.setEntireLengthAvailableOnDemand_,
+            0,
+        )

@@ -49,6 +49,12 @@ class TestAVMovieTrack(TestCase):
             AVFoundation.AVMutableMovieTrack.insertMediaTimeRange_intoTimeRange_
         )
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVMutableMovieTrack.hasMediaCharacteristic_
+        )
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(

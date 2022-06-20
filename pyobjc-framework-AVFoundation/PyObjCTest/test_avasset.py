@@ -145,6 +145,11 @@ class TestAVAsset(TestCase):
     def testConstants12_0(self):
         self.assertIsInstance(AVFoundation.AVURLAssetURLRequestAttributionKey, str)
 
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetHTTPUserAgentKey, str)
+        self.assertIsInstance(AVFoundation.AVURLAssetPrimarySessionIdentifierKey, str)
+
     @min_sdk_level("10.11")
     def testProtocols(self):
         objc.protocolNamed("AVFragmentMinding")

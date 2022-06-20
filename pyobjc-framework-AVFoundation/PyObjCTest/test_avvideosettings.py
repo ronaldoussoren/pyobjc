@@ -115,3 +115,7 @@ class TestAVVideoSettings(TestCase):
     @min_os_level("11.1")
     def testConstants11_1(self):
         self.assertIsInstance(AVFoundation.AVVideoAppleProRAWBitDepthKey, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_Linear, str)

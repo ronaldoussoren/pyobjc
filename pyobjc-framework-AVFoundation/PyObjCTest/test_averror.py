@@ -110,6 +110,11 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorRosettaNotInstalled, -11877)
         self.assertEqual(AVFoundation.AVErrorOperationCancelled, -11878)
         self.assertEqual(AVFoundation.AVErrorContentKeyRequestCancelled, -11879)
+        self.assertEqual(AVFoundation.AVErrorInvalidSampleCursor, -11880)
+        self.assertEqual(AVFoundation.AVErrorFailedToLoadSampleData, -11881)
+        self.assertEqual(
+            AVFoundation.AVErrorAirPlayReceiverTemporarilyUnavailable, -11882
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):

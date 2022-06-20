@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestAVPlayerInterstitialEventController(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventRestrictions)
+        self.assertIsTypedEnum(AVFoundation.AVPlayerInterstitialEventCue, str)
 
     def testConstants(self):
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventRestrictionNone, 0)
@@ -28,6 +29,12 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerWaitingDuringInterstitialEventReason, str
         )
 
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventNoCue, str)
+        self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventJoinCue, str)
+        self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventLeaveCue, str)
+
     @min_os_level("11.3")
     def test_methods11_3(self):
         self.assertResultIsBOOL(
@@ -36,3 +43,21 @@ class TestAVPlayerInterstitialEventController(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setAutomaticallyHandlesInterstitialEvents_, 0
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerItem.alignsStartWithPrimarySegmentBoundary
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerItem.alignsResumptionWithPrimarySegmentBoundary
+        )
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.willPlayOnce)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerInterstitialEvent.alignsStartWithPrimarySegmentBoundary
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerInterstitialEvent.alignsResumptionWithPrimarySegmentBoundary
+        )
+        self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.willPlayOnce)
