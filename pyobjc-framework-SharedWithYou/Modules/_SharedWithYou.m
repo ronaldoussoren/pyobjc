@@ -38,8 +38,6 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__SharedWithYou(void)
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;
-    if (init_avaudiobuffer() == -1)
-        return NULL;
 
     return m;
 }

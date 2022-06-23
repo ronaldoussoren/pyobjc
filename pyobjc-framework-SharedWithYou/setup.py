@@ -20,7 +20,7 @@ setup(
     packages=["SharedWithYou"],
     ext_modules=[
         Extension(
-            "AVFoundation._SharedWithYou",
+            "SharedWithYou._SharedWithYou",
             ["Modules/_SharedWithYou.m"],
             extra_link_args=["-framework", "SharedWithYou"],
             py_limited_api=True,

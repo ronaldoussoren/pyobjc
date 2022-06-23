@@ -20,7 +20,7 @@ setup(
     packages=["ExtensionKit"],
     ext_modules=[
         Extension(
-            "AVFoundation._ExtensionKit",
+            "ExtensionKit._ExtensionKit",
             ["Modules/_ExtensionKit.m"],
             extra_link_args=["-framework", "ExtensionKit"],
             py_limited_api=True,

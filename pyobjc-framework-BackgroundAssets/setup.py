@@ -20,7 +20,7 @@ setup(
     packages=["BackgroundAssets"],
     ext_modules=[
         Extension(
-            "AVFoundation._BackgroundAssets",
+            "BackgroundAssets._BackgroundAssets",
             ["Modules/_BackgroundAssets.m"],
             extra_link_args=["-framework", "BackgroundAssets"],
             py_limited_api=True,
