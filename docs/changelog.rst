@@ -17,6 +17,7 @@ Version 9.0a1
   - ApplicationServices
   - AudioVideoBridging
   - AuthenticationServices
+  - AVFAudio
   - AVFoundation
   - AVKit
   - CloudKit
@@ -31,7 +32,9 @@ Version 9.0a1
   - CoreVideo
   - CoreWLAN
   - EventKit
+  - FileProvider
   - Foundation
+  - GameController
   - ImageIO
   - IOSurface
   - LocalAuthentication
@@ -39,6 +42,7 @@ Version 9.0a1
   - MediaPlayer
   - Metal
   - MetalPerformanceShadersGraph
+  - Network
   - NetworkExtension
   - PassKit
   - PDFKit
@@ -62,6 +66,10 @@ Version 9.0a1
 * Added bindings for the following frameworks
   (all new in macOS 13):
 
+  - BackgroundAssets
+  - ExtensionKit
+  - HealthKit
+  - MetalFX
   - SharedWithYou
 
 * #415: Remove ``objc._setClassExtender``

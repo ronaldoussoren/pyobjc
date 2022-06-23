@@ -37,3 +37,13 @@ class TestGCInputNames(TestCase):
     @min_os_level("12.0")
     def test_constants12_0(self):
         self.assertIsInstance(GameController.GCInputButtonShare, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(GameController.GCInputSteeringWheel, str)
+        self.assertIsInstance(GameController.GCInputShifter, str)
+        self.assertIsInstance(GameController.GCInputPedalAccelerator, str)
+        self.assertIsInstance(GameController.GCInputPedalBrake, str)
+        self.assertIsInstance(GameController.GCInputPedalClutch, str)
+        self.assertIsInstance(GameController.GCInputLeftPaddle, str)
+        self.assertIsInstance(GameController.GCInputRightPaddle, str)

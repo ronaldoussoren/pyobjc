@@ -52,3 +52,10 @@ class TestInterface(TestCase):
         self.assertResultIsRetained(Network.nw_endpoint_create_url)
 
         self.assertResultIsNullTerminated(Network.nw_endpoint_get_url)
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        self.assertResultIsRetained(Network.nw_endpoint_copy_txt_record)
+
+        self.assertResultSizeInArg(Network.nw_endpoint_get_signature, 1)
+        self.assertArgIsOut(Network.nw_endpoint_get_signature, 1)

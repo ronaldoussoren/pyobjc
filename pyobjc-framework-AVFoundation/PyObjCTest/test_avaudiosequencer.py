@@ -1,11 +1,16 @@
 import AVFoundation
+import sys
 from PyObjCTools.TestSupport import TestCase, min_os_level
+
+AVAudioSequencerUserCallback = b"v@@d"
+AVMusicEventEnumerationBlock = b"v@N^dN^Z"
 
 
 class TestAVAudioSequencer(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVMusicSequenceLoadOptions)
         self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
+        self.assertIsTypedEnum(AVFoundation.AVAudioSequencerInfoDictionaryKey, str)
 
     def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
@@ -14,6 +19,64 @@ class TestAVAudioSequencer(TestCase):
         )  # noqa: B950
 
         self.assertEqual(AVFoundation.AVMusicTrackLoopCountForever, -1)
+
+        self.assertEqual(AVFoundation.AVMusicTimeStampEndOfTrack, sys.float_info.max)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyAlbum, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyApproximateDurationInSeconds,
+            str,
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyArtist, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyChannelLayout, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyComments, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyComposer, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyCopyright, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyEncodingApplication, str
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyGenre, str)
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyISRC, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyKeySignature, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyLyricist, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyNominalBitRate, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyRecordedDate, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeySourceBitDepth, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeySourceEncoder, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeySubTitle, str
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyTempo, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyTimeSignature, str
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyTitle, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSequencerInfoDictionaryKeyTrackNumber, str
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyYear, str)
 
     def testStructs(self):
         v = AVFoundation.AVBeatRange()
@@ -84,3 +147,21 @@ class TestAVAudioSequencer(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isSoloed)
         self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 0)
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.removeTrack_)
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioSequencer.setUserCallback_,
+            0,
+            AVAudioSequencerUserCallback,
+        )
+
+        self.assertResultIsBOOL(AVFoundation.AVMusicTrack.usesAutomatedParameters)
+        self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setUsesAutomatedParameters_, 0)
+
+        self.assertArgIsBlock(
+            AVFoundation.AVMusicTrack.enumerateEventsInRange_usingBlock_,
+            1,
+            AVMusicEventEnumerationBlock,
+        )

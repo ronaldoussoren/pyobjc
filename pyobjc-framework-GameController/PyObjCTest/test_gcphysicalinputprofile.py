@@ -8,3 +8,12 @@ class TestGCPhysicalInputProfile(TestCase):
         self.assertResultIsBOOL(
             GameController.GCPhysicalInputProfile.hasRemappedElements
         )
+
+    @min_os_level("13§.0")
+    def testMethods13_0(self):
+        self.assertResultIsBlock(
+            GameController.GCPhysicalInputProfile.valueDidChangeHandler, b"v@@"
+        )
+        self.assertArgIsBlock(
+            GameController.GCPhysicalInputProfile.setValueDidChangeHandler_, 0, b"v@@"
+        )

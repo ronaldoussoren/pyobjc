@@ -134,3 +134,9 @@ class TestParameters(TestCase):
         self.assertResultIsRetained(Network.nw_parameters_create_quic)
         Network.nw_parameters_set_attribution
         Network.nw_parameters_get_attribution
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        self.assertResultIsRetained(Network.nw_parameters_create_application_service)
+        Network.nw_parameters_set_requires_dnssec_validation
+        Network.nw_parameters_requires_dnssec_validation

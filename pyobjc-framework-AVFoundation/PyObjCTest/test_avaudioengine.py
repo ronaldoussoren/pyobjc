@@ -7,6 +7,11 @@ AVAudioEngineManualRenderingBlock = (
 )
 AUMIDIOutputEventBlock = b"iqC" + objc._C_NSInteger + b"n^v"
 
+# XXX: This won't work automaticly
+AUMIDIEventListBlock = (
+    b"iQ" + objc._C_CHAR_AS_INT + b"^{MIDIEventList=iI{MIDIEventPacket=III[64]}[1]}"
+)
+
 
 class TestAVAudioEngine(TestCase):
     def test_enum_types(self):
@@ -61,6 +66,19 @@ class TestAVAudioEngine(TestCase):
             AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_block_,
             3,
             AUMIDIOutputEventBlock,
+        )
+
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioEngine.connectMIDI_to_format_eventListBlock_,
+            3,
+            AUMIDIEventListBlock,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_eventListBlock_,
+            3,
+            AUMIDIEventListBlock,
         )
 
     def testConstants(self):

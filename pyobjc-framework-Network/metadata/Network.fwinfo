@@ -19,7 +19,7 @@
   "formal_protocols": {},
   "functions": {
    "nw_framer_options_copy_object_value": {
-    "retval": { "already_retained": true }
+    "retval": { "already_retained": true },
     "arguments": {
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true  }
     }
@@ -31,7 +31,7 @@
    },
    "nw_framer_copy_options": {
     "retval": {
-     "already_retained": true,
+     "already_retained": true
     }
    },
    "nw_group_descriptor_create_multiplex": {
@@ -658,7 +658,7 @@
    "nw_endpoint_create_url": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_endpoint_get_address": {
@@ -867,7 +867,7 @@
      "already_retained": true
     },
     "args": {
-     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }},
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" },
      "2": {
       "callable": {
        "arguments": {
@@ -920,7 +920,7 @@
      "already_retained": true
     },
     "args": {
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_framer_message_create": {
@@ -1164,13 +1164,13 @@
    },
    "nw_quic_add_tls_application_protocol": {
     "args": {
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_listener_create_with_port": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }}
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "nw_listener_set_advertised_endpoint_changed_handler": {

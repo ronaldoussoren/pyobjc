@@ -90,6 +90,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AVKit </apinotes/AVKit>`                                                       | `pyobjc-framework-AVKit`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`BackgroundAssets </apinotes/BackgroundAssets>`                                 | `pyobjc-framework-BackgroundAssets`_                 |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | BackgroundTasks                                                                      |                                                      | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`BusinessChat </apinotes/BusinessChat>`                                         | `pyobjc-framework-BusinessChat`_                     |                                         |
@@ -236,9 +238,11 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | ExposureNotification                                                                 | -                                                    | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| ExtensionFoundation                                                                  | -                                                    | No public API on macOS                  |
+| ExtensionFoundation                                                                  | -                                                    | Empty API on macOS                      |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ExecutionPolicy </apinotes/ExecutionPolicy>`                                   | `pyobjc-framework-ExecutionPolicy`_                  |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`ExtensionKit </apinotes/ExtensionKit>`                                   | `pyobjc-framework-ExtensionKit`_                  |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ExternalAccessory </apinotes/ExternalAccessory>`                               | `pyobjc-framework-ExternalAccessory`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -274,6 +278,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | GSS                                                                                  | -                                                    | Will not be wrapped.                    |
 |                                                                                      |                                                      | Use `gssapi`_ instead.                  |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`HealthKit </apinotes/HealthKit>`                                               | `pyobjc-framework-HealthKit`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | HIDDriverKit                                                                         | -                                                    | Will not be wrapped, too low level.     |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -364,13 +370,15 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Metal </apinotes/Metal>`                                                       | `pyobjc-framework-Metal`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`MetalFX </apinotes/MetalFX>`                                                   | `pyobjc-framework-MetalFX`_                            |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MetalKit </apinotes/MetalKit>`                                                 | `pyobjc-framework-MetalKit`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MetalPerformanceShaders </apinotes/MetalPerformanceShaders>`                   | `pyobjc-framework-MetalPerformanceShaders`           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MetalPerformanceShadersGraph </apinotes/MetalPerformanceShadersGraph>`         | `pyobjc-framework-MetalPerformanceShadersGraph`      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| MetricKit                                                                            | -                                                    | No public API on macOS.                 |
+| :doc:`MetricKit </apinotes/MetricKit>`                                               | `pyobjc-framework-MetricKit`                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MLCompute </apinotes/MLCompute>`                                               | `pyobjc-framework-MLCompute`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -413,7 +421,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | ParavirtualizedGraphics                                                              | -                                                    | Not wrapped yet.                        |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| PassKit                                                                              | -                                                    | No public API on macOS.                 |
+| :doc:`PassKit </apinotes/PassKit>`                                                   | `pyobjc-framework-PassKit`_                          |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | PCIDriverKit                                                                         | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -610,12 +618,13 @@ prioritizing work.
 .. _`pyobjc-framework-AppleScriptKit`: https://pypi.org/project/pyobjc-framework-AppleScriptKit/
 .. _`pyobjc-framework-AppleScriptObjC`: https://pypi.org/project/pyobjc-framework-AppleScriptObjC/
 .. _`pyobjc-framework-ApplicationServices`: https://pypi.org/project/pyobjc-framework-ApplicationServices/
+.. _`pyobjc-framework-AudioVideoBridging`: https://pypi.org/project/pyobjc-framework-AudioVideoBridging/
 .. _`pyobjc-framework-AuthenticationServices`: https://pypi.org/project/pyobjc-framework-AuthenticationServices/
 .. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
 .. _`pyobjc-framework-Automator`: https://pypi.org/project/pyobjc-framework-Automator/
+.. _`pyobjc-framework-BackgroundAssets`: https://pypi.org/project/pyobjc-framework-BackgroundAssets/
 .. _`pyobjc-framework-BusinessChat`: https://pypi.org/project/pyobjc-framework-BusinessChat/
 .. _`pyobjc-framework-CFNetwork`: https://pypi.org/project/pyobjc-framework-CFNetwork/
-.. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CalendarStore`: https://pypi.org/project/pyobjc-framework-CalendarStore/
 .. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
@@ -643,6 +652,7 @@ prioritizing work.
 .. _`pyobjc-framework-CoreWLAN`: https://pypi.org/project/pyobjc-framework-CoreWLAN/
 .. _`pyobjc-framework-CryptoTokenKit`: https://pypi.org/project/pyobjc-framework-CryptoTokenKit/
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
+.. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/
 .. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
@@ -650,6 +660,7 @@ prioritizing work.
 .. _`pyobjc-framework-EventKit`: https://pypi.org/project/pyobjc-framework-EventKit/
 .. _`pyobjc-framework-ExceptionHandling`: https://pypi.org/project/pyobjc-framework-ExceptionHandling/
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
+.. _`pyobjc-framework-ExtensionKit`: https://pypi.org/project/pyobjc-framework-ExtensionKit/
 .. _`pyobjc-framework-ExternalAccessory`: https://pypi.org/project/pyobjc-framework-ExternalAccessory/
 .. _`pyobjc-framework-FSEvents`: https://pypi.org/project/pyobjc-framework-FSEvents/
 .. _`pyobjc-framework-FileProviderUI`: https://pypi.org/project/pyobjc-framework-FileProviderUI/
@@ -659,6 +670,7 @@ prioritizing work.
 .. _`pyobjc-framework-GameController`: https://pypi.org/project/pyobjc-framework-GameController/
 .. _`pyobjc-framework-GameKit`: https://pypi.org/project/pyobjc-framework-GameKit/
 .. _`pyobjc-framework-GameplayKit`: https://pypi.org/project/pyobjc-framework-GameplayKit/
+.. _`pyobjc-framework-HealthKit`: https://pypi.org/project/pyobjc-framework-HealthKit/
 .. _`pyobjc-framework-IMServicePlugIn`: https://pypi.org/project/pyobjc-framework-IMServicePlugIn/
 .. _`pyobjc-framework-IOSurface`: https://pypi.org/project/pyobjc-framework-IOSurface/
 .. _`pyobjc-framework-ImageCaptureCore`: https://pypi.org/project/pyobjc-framework-ImageCaptureCore/
@@ -682,9 +694,11 @@ prioritizing work.
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-Message`: https://pypi.org/project/pyobjc-framework-Message/
 .. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
+.. _`pyobjc-framework-MetalFX`: https://pypi.org/project/pyobjc-framework-MetalFX/
 .. _`pyobjc-framework-MetalPerformanceShadersGraph`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShadersGraph/
 .. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
 .. _`pyobjc-framework-Metal`: https://pypi.org/project/pyobjc-framework-Metal/
+.. _`pyobjc-framework-MetricKit`: https://pypi.org/project/pyobjc-framework-MetricKit/
 .. _`pyobjc-framework-ModelIO`: https://pypi.org/project/pyobjc-framework-ModelIO/
 .. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/project/pyobjc-framework-MultipeerConnectivity/
 .. _`pyobjc-framework-NaturalLanguage`: https://pypi.org/project/pyobjc-framework-NaturalLanguage/
@@ -717,6 +731,7 @@ prioritizing work.
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
 .. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
+.. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/
 .. _`pyobjc-framework-ShazamKit`: https://pypi.org/project/pyobjc-framework-ShazamKit/
 .. _`pyobjc-framework-Social`: https://pypi.org/project/pyobjc-framework-Social/
 .. _`pyobjc-framework-SoundAnalysis`: https://pypi.org/project/pyobjc-framework-SoundAnalysis/
@@ -732,12 +747,9 @@ prioritizing work.
 .. _`pyobjc-framework-VideoSubscriberAccount`: https://pypi.org/project/pyobjc-framework-VideoSubscriberAccount/
 .. _`pyobjc-framework-VideoToolbox`: https://pypi.org/project/pyobjc-framework-VideoToolbox/
 .. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
-.. _`pyobjc-framework-Vision`: https://pypi.org/project/pyobjc-framework-Vision/
 .. _`pyobjc-framework-VisionKit`: https://pypi.org/project/pyobjc-framework-VisionKit/
+.. _`pyobjc-framework-Vision`: https://pypi.org/project/pyobjc-framework-Vision/
 .. _`pyobjc-framework-WebKit`: https://pypi.org/project/pyobjc-framework-WebKit/
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
-.. _`pyobjc-framework-AudioVideoBridging`: https://pypi.org/project/pyobjc-framework-AudioVideoBridging/
-.. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/
-.. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/

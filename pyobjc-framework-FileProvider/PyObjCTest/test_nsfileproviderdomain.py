@@ -22,3 +22,10 @@ class TestNSFileProviderDomain(TestCase):
         self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.isDisconnected)
         self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.userEnabled)
         self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.isHidden)
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.supportsSyncingTrash)
+        self.assertArgIsBOOL(
+            FileProvider.NSFileProviderDomain.setSupportsSyncingTrash_, 0
+        )

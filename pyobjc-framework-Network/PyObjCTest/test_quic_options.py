@@ -50,3 +50,11 @@ class TestQUICOptions(TestCase):
         Network.nw_quic_get_keepalive_interval
         Network.nw_quic_set_keepalive_interval
         Network.nw_quic_get_remote_idle_timeout
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        Network.nw_quic_get_stream_is_datagram
+        Network.nw_quic_set_stream_is_datagram
+        Network.nw_quic_get_max_datagram_frame_size
+        Network.nw_quic_set_max_datagram_frame_size
+        Network.nw_quic_get_stream_usable_datagram_frame_size

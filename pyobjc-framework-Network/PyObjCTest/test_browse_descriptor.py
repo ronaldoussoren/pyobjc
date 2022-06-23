@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import Network
+import objc
 
 
 class TestBrowseDescriptor(TestCase):
@@ -25,3 +26,26 @@ class TestBrowseDescriptor(TestCase):
         )
         Network.nw_browse_descriptor_set_include_txt_record
         Network.nw_browse_descriptor_get_include_txt_record
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+
+        self.assertResultIsRetained(
+            Network.nw_browse_descriptor_create_application_service
+        )
+        self.assertArgIsHasType(
+            Network.nw_browse_descriptor_create_application_service,
+            0,
+            b"n^" + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertArgIsNullTerminated(
+            Network.nw_browse_descriptor_create_application_service, 0
+        )
+
+        self.assertResultIsHasType(
+            Network.nw_browse_descriptor_get_application_service_name,
+            b"n^" + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertResultIsNullTerminated(
+            Network.nw_browse_descriptor_get_application_service_name
+        )

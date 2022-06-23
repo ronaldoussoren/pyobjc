@@ -1,0 +1,164 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "HKAudiogramSensitivityPoint": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "sensitivityPointWithFrequency:leftEarSensitivity:rightEarSensitivity:error:"
+     }
+    ]
+   },
+   "HKCDADocumentSample": {
+    "methods": [
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": true,
+      "selector": "CDADocumentSampleWithData:startDate:endDate:metadata:validationError:"
+     }
+    ]
+   },
+   "HKFHIRVersion": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "versionFromVersionString:error:"
+     }
+    ]
+   },
+   "HKHealthStore": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "dateOfBirthWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "dateOfBirthComponentsWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "biologicalSexWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "bloodTypeWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "fitzpatrickSkinTypeWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "wheelchairUseWithError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "activityMoveModeWithError:"
+     }
+    ]
+   },
+   "HKQuantitySeriesSampleBuilder": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "insertQuantity:dateInterval:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "insertQuantity:date:error:"
+     }
+    ]
+   },
+   "HKWorkoutSession": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithConfiguration:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithHealthStore:configuration:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "HKAppleWalkingSteadinessClassificationForQuantity": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

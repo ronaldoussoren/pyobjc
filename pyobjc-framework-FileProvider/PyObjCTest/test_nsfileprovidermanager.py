@@ -130,6 +130,14 @@ class TestNSFileProviderManager(TestCase):
             b"v@@",
         )
 
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            FileProvider.NSFileProviderManager.requestDownloadForItemWithIdentifier_requestedRange_completionHandler_,  # noqa:  B950
+            2,
+            b"v@",
+        )
+
     @min_sdk_level("11.3")
     def test_protocols(self):
         objc.protocolNamed("NSFileProviderPendingSetEnumerator")

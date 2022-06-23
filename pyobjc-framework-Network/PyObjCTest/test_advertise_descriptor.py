@@ -48,3 +48,26 @@ class TestAdvertiseDescriptor(TestCase):
         self.assertResultIsRetained(
             Network.nw_advertise_descriptor_copy_txt_record_object
         )
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        self.assertResultIsRetained(
+            Network.nw_advertise_descriptor_create_application_service
+        )
+
+        self.assertArgIsHasType(
+            Network.nw_advertise_descriptor_create_application_service,
+            0,
+            b"n^" + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertArgIsNullTerminated(
+            Network.nw_advertise_descriptor_create_application_service, 0
+        )
+
+        self.assertResultsHasType(
+            Network.nw_advertise_descriptor_get_application_service_name,
+            b"n^" + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertResultIsNullTerminated(
+            Network.nw_advertise_descriptor_get_application_service_name
+        )

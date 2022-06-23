@@ -7,8 +7,38 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-#if PyObjC_BUILD_RELEASE >= 1016
+#if PyObjC_BUILD_RELEASE >= 1100
     p = PyObjC_IdToPython(@protocol(GCDevice));
+    Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1300
+    p = PyObjC_IdToPython(@protocol(GCAxisElement));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCAxisInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCButtonElement));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCDevicePhysicalInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCDevicePhysicalInputState));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCDevicePhysicalInputStateDiff));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCDirectionPadElement));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCLinearInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCPhysicalInputElement));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCPressedStateInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCRelativeInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCSwitchElement));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCSwitchPositionInput));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCTouchedStateInput));
     Py_XDECREF(p);
 #endif
 }
