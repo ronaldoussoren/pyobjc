@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import NaturalLanguage
 
 
@@ -61,3 +61,7 @@ class TestNLLanguage(TestCase):
         self.assertIsInstance(NaturalLanguage.NLLanguageUkrainian, str)
         self.assertIsInstance(NaturalLanguage.NLLanguageUrdu, str)
         self.assertIsInstance(NaturalLanguage.NLLanguageVietnamese, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(NaturalLanguage.NLLanguageKazakh, str)

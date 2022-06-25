@@ -5,10 +5,6 @@ import MapKit
 
 class TestMKStandardMapConfiguration(TestCase):
     def test_constants(self):
-        self.assertIsEnumType(MapKit.MKStandardMapConfigurationMapMode)
-        self.assertEqual(MapKit.MKStandardMapConfigurationMapModeDefault, 0)
-        self.assertEqual(MapKit.MKStandardMapConfigurationMapModeMuted, 1)
-
         self.assertIsEnumType(MapKit.MKStandardMapEmphasisStyle)
         self.assertEqual(MapKit.MKStandardMapEmphasisStyleDefault, 0)
         self.assertEqual(MapKit.MKStandardMapEmphasisStyleMuted, 1)

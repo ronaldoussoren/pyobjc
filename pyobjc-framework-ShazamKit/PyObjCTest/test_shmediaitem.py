@@ -23,6 +23,7 @@ class TestSHMediaItem(TestCase):
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(ShazamKit.SHMediaItemTimeRanges, str)
+        self.assertIsInstance(ShazamKit.SHMediaItemFrequencySkewRanges, str)
 
     def test_classes(self):
         ShazamKit.SHMediaItem

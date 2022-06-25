@@ -28,6 +28,7 @@ Version 9.0a1
   - CoreHaptics
   - CoreMedia
   - CoreML
+  - CoreServices
   - CoreSpotlight
   - CoreVideo
   - CoreWLAN
@@ -42,6 +43,7 @@ Version 9.0a1
   - MediaPlayer
   - Metal
   - MetalPerformanceShadersGraph
+  - NaturalLanguage
   - Network
   - NetworkExtension
   - PassKit
@@ -66,11 +68,14 @@ Version 9.0a1
 * Added bindings for the following frameworks
   (all new in macOS 13):
 
+  - AVRouting
   - BackgroundAssets
+  - DeviceDiscoveryExtension
   - ExtensionKit
   - HealthKit
   - MetalFX
   - SharedWithYou
+  - SharedWithYouCore
 
 * #415: Remove ``objc._setClassExtender``
 

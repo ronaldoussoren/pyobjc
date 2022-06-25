@@ -32,6 +32,7 @@ class TestNetFS(TestCase):
         self.assertEqual(NetFS.kNetFSUserNameKey, "UserName")
         self.assertEqual(NetFS.kNetFSPasswordKey, "Password")
         self.assertEqual(NetFS.kNetFSPathKey, "Path")
+        self.assertEqual(NetFS.kNetFSURLOptionsKey, "URLOptions")
         self.assertEqual(NetFS.kNetFSNoUserPreferencesKey, "NoUserPreferences")
         self.assertEqual(NetFS.kNetFSForceNewSessionKey, "ForceNewSession")
         self.assertEqual(NetFS.kNetFSUseAuthenticationInfoKey, "UseAuthenticationInfo")

@@ -21,6 +21,8 @@ class TestLSInfo(TestCase):
 
     def testConstants(self):
         self.assertEqual(CoreServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(CoreServices.kLSNo32BitEnvironmentErr, -10386)
+        self.assertEqual(CoreServices.kLSMalformedLocErr, -10400)
         self.assertEqual(CoreServices.kLSAppInTrashErr, -10660)
         self.assertEqual(CoreServices.kLSExecutableIncorrectFormat, -10661)
         self.assertEqual(CoreServices.kLSAttributeNotFoundErr, -10662)
