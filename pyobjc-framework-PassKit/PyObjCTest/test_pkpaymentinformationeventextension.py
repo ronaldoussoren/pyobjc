@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 
 import PassKit
-import objc
 
 
 class TestPKPaymentInformationEventExtensionHelper(PassKit.NSObject):
@@ -17,7 +16,7 @@ class TestPKPaymentInformationEventExtensionHelper(PassKit.NSObject):
 
 class TestPKPaymentInformationEventExtension(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("PKPaymentInformationRequestHandling")
+        self.assertProtocolExists("PKPaymentInformationRequestHandling")
 
     def test_methods(self):
         self.assertArgIsBlock(

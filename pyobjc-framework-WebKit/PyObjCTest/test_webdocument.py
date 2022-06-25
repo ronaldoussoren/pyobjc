@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import WebKit  # noqa: F401
-import objc
 
 
 class TestWebDocumentHelper(WebKit.NSObject):
@@ -19,18 +18,10 @@ class TestWebDocumentHelper(WebKit.NSObject):
 
 class TestWebDocument(TestCase):
     def testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("WebDocumentView"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("WebDocumentSearching"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("WebDocumentText"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("WebDocumentRepresentation"), objc.formal_protocol
-        )
+        self.assertProtocolExists("WebDocumentView")
+        self.assertProtocolExists("WebDocumentSearching")
+        self.assertProtocolExists("WebDocumentText")
+        self.assertProtocolExists("WebDocumentRepresentation")
 
     def testMethods(self):
         self.assertArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)

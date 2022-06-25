@@ -1,12 +1,11 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 import GameplayKit
 
 
 class TestGKPath(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("GKAgentDelegate")
+        self.assertProtocolExists("GKAgentDelegate")
 
     def testMethods(self):
         self.assertResultIsBOOL(GameplayKit.GKPath.isCyclical)

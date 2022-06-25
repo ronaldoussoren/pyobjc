@@ -49,4 +49,4 @@ class TestNSStackView(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSStackViewDelegate")
+        self.assertProtocolExists("NSStackViewDelegate")

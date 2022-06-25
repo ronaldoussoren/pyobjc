@@ -25,7 +25,7 @@ class TestMTLDrawableHelper(Metal.NSObject):
 class TestMTLDrawable(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLDrawable")
+        self.assertProtocolExists("MTLDrawable")
 
     def test_methods(self):
         self.assertArgHasType(TestMTLDrawableHelper.presentAtTime_, 0, objc._C_DBL)

@@ -1,5 +1,4 @@
 import Foundation
-import objc
 from PyObjCTools.TestSupport import TestCase
 
 
@@ -33,4 +32,4 @@ class TestNSURLHandle(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLHandle.writeData_)
 
     def testProtocols(self):
-        objc.protocolNamed("NSURLHandleClient")
+        self.assertProtocolExists("NSURLHandleClient")

@@ -127,4 +127,4 @@ class TestGKMatchmaker(TestCase):
 
     @min_os_level("10.8")
     def testProtocols(self):
-        objc.protocolNamed("GKInviteEventListener")
+        self.assertProtocolExists("GKInviteEventListener")

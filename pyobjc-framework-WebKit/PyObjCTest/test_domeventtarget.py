@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import WebKit  # noqa: F401
-import objc
 
 
 class TestDOMEventTargetHelper(WebKit.NSObject):
@@ -33,5 +32,4 @@ class TestDOMEventTarget(TestCase):
         self.assertResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
 
     def testProtocols(self):
-        p = objc.protocolNamed("DOMEventTarget")
-        self.assertIsInstance(p, objc.formal_protocol)
+        self.assertProtocolExists("DOMEventTarget")

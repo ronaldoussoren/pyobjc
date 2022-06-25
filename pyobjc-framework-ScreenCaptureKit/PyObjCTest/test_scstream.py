@@ -85,8 +85,8 @@ class TestSCStream(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("SCStreamDelegate")
-        objc.protocolNamed("SCStreamOutput")
+        self.assertProtocolExists("SCStreamDelegate")
+        self.assertProtocolExists("SCStreamOutput")
 
     def test_proto_methods(self):
         self.assertArgHasType(

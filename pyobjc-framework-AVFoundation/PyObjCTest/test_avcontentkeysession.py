@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 from PyObjCTools.TestSupport import expectedFailure
 
@@ -143,5 +142,5 @@ class TestAVContentKeySession(TestCase):
 
     @min_sdk_level("10.12.4")
     def testProtocols(self):
-        objc.protocolNamed("AVContentKeySessionDelegate")
-        objc.protocolNamed("AVContentKeyRecipient")
+        self.assertProtocolExists("AVContentKeySessionDelegate")
+        self.assertProtocolExists("AVContentKeyRecipient")

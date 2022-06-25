@@ -31,6 +31,38 @@
    "CSIndexErrorDomain": { "typestr": "@" }
   },
   "classes": {
+   "CSUserQuery": {
+    "methods": [
+     {
+      "selector": "foundSuggestionsHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setFoundSuggestionsHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	  "arguments": {
+	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "@" }
+	  },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {

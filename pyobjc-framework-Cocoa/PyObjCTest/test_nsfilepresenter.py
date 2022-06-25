@@ -1,6 +1,5 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class Presenter(Foundation.NSObject):
@@ -23,8 +22,9 @@ class Presenter(Foundation.NSObject):
 class TestNSFilePresenter(TestCase):
     @min_os_level("10.7")
     def testProtocols(self):
-        objc.protocolNamed("NSFilePresenter")
+        self.assertProtocolExists("NSFilePresenter")
 
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             Presenter.relinquishPresentedItemToReader_, 0, b"v@?"
         )  # FIXME: Cannot test exact signature at this time

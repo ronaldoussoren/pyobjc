@@ -55,4 +55,4 @@ class TestRPScreenRecorder(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("RPScreenRecorderDelegate")
+        self.assertProtocolExists("RPScreenRecorderDelegate")

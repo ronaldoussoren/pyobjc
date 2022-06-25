@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Vision
 
@@ -39,4 +38,4 @@ class TestVNRequest(TestCase):
 
     @min_sdk_level("10.15")
     def testProtocols(self):
-        objc.protocolNamed("VNRequestProgressProviding")
+        self.assertProtocolExists("VNRequestProgressProviding")

@@ -1,4 +1,3 @@
-import objc
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
@@ -17,4 +16,4 @@ class TestNSUserInterfaceCompression(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("NSUserInterfaceCompression")
+        self.assertProtocolExists("NSUserInterfaceCompression")

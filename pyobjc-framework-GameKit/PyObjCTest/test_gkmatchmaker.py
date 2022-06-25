@@ -123,4 +123,4 @@ class TestGKMatchMaker(TestCase):
         self.assertArgIsBOOL(GameKit.GKMatchRequest.setRestrictToAutomatch_, 0)
 
     def testProtocols(self):
-        objc.protocolNamed("GKInviteEventListener")
+        self.assertProtocolExists("GKInviteEventListener")

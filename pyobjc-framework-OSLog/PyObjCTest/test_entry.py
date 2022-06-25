@@ -36,5 +36,5 @@ class TestEntry(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("OSLogEntryFromProcess")
-        objc.protocolNamed("OSLogEntryWithPayload")
+        self.assertProtocolExists("OSLogEntryFromProcess")
+        self.assertProtocolExists("OSLogEntryWithPayload")

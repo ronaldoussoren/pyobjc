@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import ShazamKit
-import objc
 
 
 class TestSHSession(TestCase):
@@ -8,4 +7,4 @@ class TestSHSession(TestCase):
         ShazamKit.SHSession
 
     def test_protocols(self):
-        objc.protocolNamed("SHSessionDelegate")
+        self.assertProtocolExists("SHSessionDelegate")

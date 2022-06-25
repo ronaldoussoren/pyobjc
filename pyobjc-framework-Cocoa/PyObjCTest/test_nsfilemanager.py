@@ -599,4 +599,4 @@ class TestNSFileManager(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols10_10(self):
-        objc.protocolNamed("NSFileManagerDelegate")
+        self.assertProtocolExists("NSFileManagerDelegate")

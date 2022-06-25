@@ -16,7 +16,7 @@ class TestSWAttributionView(TestCase):
         self.assertEqual(SharedWithYou.SWAttributionViewHorizontalAlignmentTrailing, 3)
 
         self.assertIsEnumType(SharedWithYou.SWAttributionViewBackgroundStyle)
-        self.assertEqual(SharedWithYou.SWAttributionViewBackgroundStyleDefaul, 0)
+        self.assertEqual(SharedWithYou.SWAttributionViewBackgroundStyleDefault, 0)
         self.assertEqual(SharedWithYou.SWAttributionViewBackgroundStyleColor, 1)
         self.assertEqual(SharedWithYou.SWAttributionViewBackgroundStyleMaterial, 2)
 

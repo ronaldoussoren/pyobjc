@@ -26,8 +26,9 @@ class TestAVAssetResourceLoader(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        objc.protocolNamed("AVAssetResourceLoaderDelegate")
+        self.assertProtocolExists("AVAssetResourceLoaderDelegate")
 
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForLoadingOfRequestedResource_,  # noqa: B950
             objc._C_NSBOOL,

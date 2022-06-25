@@ -12,4 +12,4 @@ class TestGKChallengesViewController(TestCase):
 
     @min_os_level("10.8")
     def testProtocols10_8(self):
-        objc.protocolNamed("GKChallengesViewControllerDelegate")
+        self.assertProtocolExists("GKChallengesViewControllerDelegate")

@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 import SafariServices
 
@@ -20,7 +19,7 @@ class TestSFSafariExtensionHandlingHelper(SafariServices.NSObject):
 class TestSFSafariExtensionHandling(TestCase):
     @min_os_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("SFSafariExtensionHandling")
+        self.assertProtocolExists("SFSafariExtensionHandling")
 
     @min_os_level("10.12")
     def testMethods(self):

@@ -45,7 +45,7 @@ class TestSKView(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("SKViewDelegate")
+        self.assertProtocolExists("SKViewDelegate")
 
         self.assertResultIsBOOL(TestSKViewHelper.view_shouldRenderAtTime_)
         self.assertArgHasType(TestSKViewHelper.view_shouldRenderAtTime_, 1, objc._C_DBL)

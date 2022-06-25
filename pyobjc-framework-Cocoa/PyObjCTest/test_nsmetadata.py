@@ -85,4 +85,4 @@ class TestNSMetaData(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSMetadataQueryDelegate")
+        self.assertProtocolExists("NSMetadataQueryDelegate")

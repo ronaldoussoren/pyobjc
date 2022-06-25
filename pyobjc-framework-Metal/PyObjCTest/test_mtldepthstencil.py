@@ -1,6 +1,5 @@
 import Metal
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestMTLDepthStencil(TestCase):
@@ -38,4 +37,4 @@ class TestMTLDepthStencil(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLDepthStencilState")
+        self.assertProtocolExists("MTLDepthStencilState")

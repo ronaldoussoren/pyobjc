@@ -1,5 +1,4 @@
 import SyncServices
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -23,4 +22,4 @@ class TestISyncConflictPropertyType(TestCase):
 
     @min_os_level("10.7")
     def testProtocolObjects(self):
-        objc.protocolNamed("ISyncConflictPropertyType")
+        self.assertProtocolExists("ISyncConflictPropertyType")

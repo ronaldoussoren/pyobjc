@@ -102,9 +102,9 @@ class TestNSURLConnection(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSURLConnectionDelegate")
+        self.assertProtocolExists("NSURLConnectionDelegate")
 
     @min_sdk_level("10.10")
     def testProtocolObjects10_10(self):
-        objc.protocolNamed("NSURLConnectionDataDelegate")
-        objc.protocolNamed("NSURLConnectionDownloadDelegate")
+        self.assertProtocolExists("NSURLConnectionDataDelegate")
+        self.assertProtocolExists("NSURLConnectionDownloadDelegate")

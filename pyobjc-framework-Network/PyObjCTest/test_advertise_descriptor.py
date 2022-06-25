@@ -55,7 +55,7 @@ class TestAdvertiseDescriptor(TestCase):
             Network.nw_advertise_descriptor_create_application_service
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             Network.nw_advertise_descriptor_create_application_service,
             0,
             b"n^" + objc._C_CHAR_AS_TEXT,
@@ -64,9 +64,9 @@ class TestAdvertiseDescriptor(TestCase):
             Network.nw_advertise_descriptor_create_application_service, 0
         )
 
-        self.assertResultsHasType(
+        self.assertResultHasType(
             Network.nw_advertise_descriptor_get_application_service_name,
-            b"n^" + objc._C_CHAR_AS_TEXT,
+            objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertResultIsNullTerminated(
             Network.nw_advertise_descriptor_get_application_service_name

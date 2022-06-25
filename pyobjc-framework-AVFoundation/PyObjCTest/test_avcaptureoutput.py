@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -39,8 +38,8 @@ class TestAVCaptureOutput(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("AVCaptureVideoDataOutputSampleBufferDelegate")
-        objc.protocolNamed("AVCaptureAudioDataOutputSampleBufferDelegate")
-        objc.protocolNamed("AVCaptureFileOutputRecordingDelegate")
-        objc.protocolNamed("AVCaptureFileOutputDelegate")
-        objc.protocolNamed("AVCaptureMetadataOutputObjectsDelegate")
+        self.assertProtocolExists("AVCaptureVideoDataOutputSampleBufferDelegate")
+        self.assertProtocolExists("AVCaptureAudioDataOutputSampleBufferDelegate")
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
+        self.assertProtocolExists("AVCaptureFileOutputDelegate")
+        self.assertProtocolExists("AVCaptureMetadataOutputObjectsDelegate")

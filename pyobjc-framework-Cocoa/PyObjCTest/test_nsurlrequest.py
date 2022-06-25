@@ -1,6 +1,5 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSURLRequest(TestCase):
@@ -79,4 +78,4 @@ class TestNSURLRequest(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("NSURLSessionWebSocketDelegate")
+        self.assertProtocolExists("NSURLSessionWebSocketDelegate")

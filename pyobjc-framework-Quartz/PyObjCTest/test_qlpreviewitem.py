@@ -7,5 +7,5 @@ import Quartz  # noqa: F401
 class TestQLPreviewItem(TestCase):
     @min_os_level("10.6")
     def testClasses(self):
-        v = objc.protocolNamed("QLPreviewItem")
+        v = self.assertProtocolExists("QLPreviewItem")
         self.assertIsInstance(v, objc.formal_protocol)

@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import MailKit  # noqa: F401
-import objc
 
 
 class TestMEMessageSecurityHandlerHelper(MailKit.NSObject):
@@ -14,7 +13,7 @@ class TestMEMessageSecurityHandler(TestCase):
         self.assertEqual(MailKit.MEMessageSecurityDecodingError, 1)
 
     def test_protocols(self):
-        objc.protocolNamed("MEMessageSecurityHandler")
+        self.assertProtocolExists("MEMessageSecurityHandler")
 
     def test_methods(self):
         self.assertArgIsBlock(

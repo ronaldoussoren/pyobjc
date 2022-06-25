@@ -1,5 +1,4 @@
 import AppKit
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -27,7 +26,7 @@ class TestNSSound(TestCase):
 
     @min_os_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSSoundDelegate")
+        self.assertProtocolExists("NSSoundDelegate")
 
     def testProtocols(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)

@@ -22,8 +22,9 @@ class TestGKChallengeEventHandler(TestCase):
 
     @min_os_level("10.8")
     def testProtocols10_8(self):
-        objc.protocolNamed("GKChallengeEventHandlerDelegate")
+        self.assertProtocolExists("GKChallengeEventHandlerDelegate")
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             GKChallengeEventHandlerDelegateHelper.shouldShowBannerForLocallyReceivedChallenge_
         )

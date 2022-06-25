@@ -62,4 +62,4 @@ class TestNSAlert(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSAlertDelegate")
+        self.assertProtocolExists("NSAlertDelegate")

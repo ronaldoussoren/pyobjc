@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSTouchBar(TestCase):
@@ -27,5 +26,5 @@ class TestNSTouchBar(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSTouchBarDelegate")
-        objc.protocolNamed("NSTouchBarProvider")
+        self.assertProtocolExists("NSTouchBarDelegate")
+        self.assertProtocolExists("NSTouchBarProvider")

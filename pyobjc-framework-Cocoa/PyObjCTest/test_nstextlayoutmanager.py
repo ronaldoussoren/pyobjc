@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSTextLayoutManagerHelper(AppKit.NSObject):
@@ -37,7 +36,7 @@ class TestNSTextLayoutManager(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        objc.protocolNamed("NSTextLayoutManagerDelegate")
+        self.assertProtocolExists("NSTextLayoutManagerDelegate")
 
     def test_methods(self):
         self.assertResultIsBOOL(

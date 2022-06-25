@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -175,4 +174,4 @@ class TestAVVideoComposition(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("AVVideoCompositionValidationHandling")
+        self.assertProtocolExists("AVVideoCompositionValidationHandling")

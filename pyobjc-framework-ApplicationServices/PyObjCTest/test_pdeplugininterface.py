@@ -1,5 +1,4 @@
 import PrintCore
-import objc
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
@@ -32,12 +31,12 @@ class TestPDEPluginInterfaceHelper(PrintCore.NSObject):
 class TestPDEPluginInterface(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("PDEPlugIn")
-        objc.protocolNamed("PDEPanel")
-        objc.protocolNamed("PDEPlugInCallbackProtocol")
+        self.assertProtocolExists("PDEPlugIn")
+        self.assertProtocolExists("PDEPanel")
+        self.assertProtocolExists("PDEPlugInCallbackProtocol")
 
     def testMethods(self):
-        self.assertResultHasType(TestPDEPluginInterfaceHelper.initWithBundle_, b"@")
+        self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.initWithBundle_)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldHide)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_)
         self.assertArgIsOut(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_, 0)

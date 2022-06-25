@@ -13,10 +13,9 @@ class TestCWWifiClientHelper(CoreWLAN.NSObject):
 class TestCWWiFiClient(TestCase):
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        self.assertIsInstance(
-            objc.protocolNamed("CWEventDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("CWEventDelegate")
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCWWifiClientHelper.linkQualityDidChangeForWiFiInterfaceWithName_rssi_transmitRate_,  # noqa: B950
             1,

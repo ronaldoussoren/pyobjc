@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 import ModelIO
 
 
@@ -17,6 +16,6 @@ class TestMDLTransformStack(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("MDLTransformOp")
+        self.assertProtocolExists("MDLTransformOp")
 
         # XXX: Protocol contains matrix types, needs more work

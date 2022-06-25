@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSDockTile(TestCase):
@@ -13,4 +12,4 @@ class TestNSDockTile(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocol(self):
-        objc.protocolNamed("NSDockTilePlugIn")
+        self.assertProtocolExists("NSDockTilePlugIn")

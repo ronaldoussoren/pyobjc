@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import WebKit
-import objc
 
 
 class TestWebEditingDelegateHelper(WebKit.NSObject):
@@ -40,7 +39,7 @@ class TestWebEditingDelegate(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("WebEditingDelegate")
+        self.assertProtocolExists("WebEditingDelegate")
 
     def testConstants(self):
         self.assertEqual(WebKit.WebViewInsertActionTyped, 0)

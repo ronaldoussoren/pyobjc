@@ -18,7 +18,6 @@ class TestPHLivePhotoView(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewPlaybackStyle)
-        self.assertIsEnumType(PhotosUI.PHLivePhotoBadgeOptions)
 
     def test_constants(self):
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleUndefined, 0)
@@ -27,9 +26,6 @@ class TestPHLivePhotoView(TestCase):
 
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFit, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFill, 1)
-
-        self.assertEqual(PhotosUI.PHLivePhotoBadgeOptionsOverContent, 1 << 0)
-        self.assertEqual(PhotosUI.PHLivePhotoBadgeOptionsLiveOff, 1 << 1)
 
     @min_os_level("10.12")
     def testMethods(self):
@@ -62,6 +58,4 @@ class TestPHLivePhotoView(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("PHLivePhotoViewDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("PHLivePhotoViewDelegate")

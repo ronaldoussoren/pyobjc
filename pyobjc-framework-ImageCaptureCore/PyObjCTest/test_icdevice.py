@@ -1,6 +1,5 @@
 import ImageCaptureCore
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
-import objc
 
 
 class TestICDevice(TestCase):
@@ -64,7 +63,7 @@ class TestICDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICEnumerationChronologicalOrder, str)
 
     def testProtocolObjects(self):
-        objc.protocolNamed("ICDeviceDelegate")
+        self.assertProtocolExists("ICDeviceDelegate")
 
     def testMethods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isRemote)

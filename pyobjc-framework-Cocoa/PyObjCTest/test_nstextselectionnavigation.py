@@ -65,7 +65,7 @@ class TestNSTextSelectionNavigation(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        objc.protocolNamed("NSTextSelectionDataSource")
+        self.assertProtocolExists("NSTextSelectionDataSource")
 
     def test_methods(self):
         self.assertArgHasType(

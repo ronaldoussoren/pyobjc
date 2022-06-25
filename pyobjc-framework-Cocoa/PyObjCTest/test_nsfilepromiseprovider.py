@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSFilePromiseProviderHelper(AppKit.NSObject):
@@ -11,7 +10,7 @@ class TestNSFilePromiseProviderHelper(AppKit.NSObject):
 class TestNSFilePromiseProvider(TestCase):
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("NSFilePromiseProviderDelegate")
+        self.assertProtocolExists("NSFilePromiseProviderDelegate")
 
     def testMethods(self):
         self.assertArgIsBlock(

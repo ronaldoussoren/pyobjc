@@ -225,7 +225,7 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setObjectBuffers_offsets_withRange_(self, a, b, c):
         pass
 
-    def setObjectSamplerState_atIndex(self, a, b):
+    def setObjectSamplerState_atIndex_(self, a, b):
         pass
 
     def setObjectSamplerStates_withRange_(self, a, b):
@@ -382,7 +382,7 @@ class TestMTLRenderCommandEncoder(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLRenderCommandEncoder")
+        self.assertProtocolExists("MTLRenderCommandEncoder")
 
     def test_methods(self):
         self.assertArgHasType(
@@ -1610,7 +1610,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLRenderCommandEncoder")
+        self.assertProtocolExists("MTLRenderCommandEncoder")
 
     def test_methods(self):
         self.assertArgHasType(

@@ -267,7 +267,7 @@ class TestNSTextView(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSTextViewDelegate")
+        self.assertProtocolExists("NSTextViewDelegate")
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_atIndex_)
@@ -495,4 +495,4 @@ class TestNSTextView(TestCase):
 
     @min_os_level("10.14")
     def testProtocols10_14(self):
-        objc.protocolNamed("NSUserActivityRestoring")
+        self.assertProtocolExists("NSUserActivityRestoring")

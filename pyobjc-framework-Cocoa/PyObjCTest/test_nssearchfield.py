@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSSearchField(TestCase):
@@ -21,4 +20,4 @@ class TestNSSearchField(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("NSSearchFieldDelegate")
+        self.assertProtocolExists("NSSearchFieldDelegate")

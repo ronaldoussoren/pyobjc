@@ -1,6 +1,5 @@
 import OpenDirectory
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestODQuery(TestCase):
@@ -18,6 +17,4 @@ class TestODQuery(TestCase):
         self.assertArgIsOut(OpenDirectory.ODQuery.resultsAllowingPartial_error_, 1)
 
     def testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("ODQueryDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("ODQueryDelegate")

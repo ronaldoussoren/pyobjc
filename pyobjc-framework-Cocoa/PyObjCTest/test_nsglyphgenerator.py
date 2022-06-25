@@ -20,7 +20,7 @@ class TestNSGlyphGenerator(TestCase):
         self.assertEqual(AppKit.NSWantsBidiLevels, (1 << 2))
 
     def testProtocols(self):
-        objc.protocolNamed("NSGlyphStorage")
+        self.assertProtocolExists("NSGlyphStorage")
         self.assertArgHasType(
             TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_,
             0,

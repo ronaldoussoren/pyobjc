@@ -67,7 +67,7 @@ class TestDRFile(TestCase):
         self.assertResultIsBOOL(TestDRFileHelper.prepareFileForVerification_)
 
     def testProtocols(self):
-        objc.protocolNamed("DRFileDataProduction")
+        self.assertProtocolExists("DRFileDataProduction")
 
     def testConstants(self):
         self.assertIsInstance(DiscRecording.DRLinkTypeHardLink, str)

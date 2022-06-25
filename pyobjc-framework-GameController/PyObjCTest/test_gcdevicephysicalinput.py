@@ -29,7 +29,7 @@ class TestGCDevicePhysicalInputHelper(GameController.NSObject):
 class TestGCDevicePhysicalInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("GCDevicePhysicalInput")
+        self.assertProtocolExists("GCDevicePhysicalInput")
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(

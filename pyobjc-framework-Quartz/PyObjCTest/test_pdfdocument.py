@@ -104,4 +104,4 @@ class TestPDFDocument(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("PDFDocumentDelegate")
+        self.assertProtocolExists("PDFDocumentDelegate")

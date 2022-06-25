@@ -39,6 +39,9 @@
   },
   "enum": {
    "VNDetectBarcodesRequestRevision2": { "value": 2 },
+   "VNGenerateOpticalFlowRequestRevision2": { "value": 2 },
+   "VNDetectBarcodesRequestRevision3": { "value": 3 },
+   "VNRecognizeTextRequestRevision3": { "value": 3 },
    "VNDetectFaceRectanglesRequestRevision3": { "value": 3 },
    "VNGeneratePersonSegmentationRequestRevision1": { "value": 1 },
    "VNDetectHumanRectanglesRequestRevision2": { "value": 2 },

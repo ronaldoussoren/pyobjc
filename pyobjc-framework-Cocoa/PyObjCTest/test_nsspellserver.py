@@ -93,4 +93,4 @@ class TestNSSpellServer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSSpellServerDelegate")
+        self.assertProtocolExists("NSSpellServerDelegate")

@@ -116,7 +116,7 @@ class TestAVB17221EntityDiscoveryDelegate(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("AVB17221EntityDiscoveryDelegate")
+        self.assertProtocolExists("AVB17221EntityDiscoveryDelegate")
 
     def test_methods(self):
         self.assertArgHasType(

@@ -16,4 +16,4 @@ class TestSCNTechnique(TestCase):
 
     @min_os_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("SCNTechniqueSupport")
+        self.assertProtocolExists("SCNTechniqueSupport")

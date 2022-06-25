@@ -191,11 +191,11 @@ class TestSCNSceneRenderer(TestCase):
         self.assertIsInstance(SceneKit.SCNHitTestOptionCategoryBitMask, str)
 
     def testProtocolObjects(self):
-        objc.protocolNamed("SCNSceneRenderer")
+        self.assertProtocolExists("SCNSceneRenderer")
 
     @min_sdk_level("10.10")
     def testProtocolObjects10_10(self):
-        objc.protocolNamed("SCNSceneRendererDelegate")
+        self.assertProtocolExists("SCNSceneRendererDelegate")
 
     def testMethods(self):
         self.assertArgIsBlock(

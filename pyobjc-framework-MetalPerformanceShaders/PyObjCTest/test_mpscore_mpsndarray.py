@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 import MetalPerformanceShaders
 
 
@@ -64,4 +63,4 @@ class TestMPSCore_MPSNDArray(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("MPSNDArrayAllocator")
+        self.assertProtocolExists("MPSNDArrayAllocator")

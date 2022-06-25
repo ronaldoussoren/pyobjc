@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import IntentsUI
-import objc
 
 
 class TestINUIAddVoiceShortcutButton(TestCase):
@@ -16,4 +15,4 @@ class TestINUIAddVoiceShortcutButton(TestCase):
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleAutomaticOutline, 5)
 
     def test_protocols(self):
-        objc.protocolNamed("INUIAddVoiceShortcutButtonDelegate")
+        self.assertProtocolExists("INUIAddVoiceShortcutButtonDelegate")

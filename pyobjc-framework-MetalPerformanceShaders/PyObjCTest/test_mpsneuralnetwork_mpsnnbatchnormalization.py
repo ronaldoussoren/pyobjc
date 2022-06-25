@@ -48,7 +48,7 @@ class TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper(
 
 class TestMPSNeuralNetwork_MPSNNBatchNormalization(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("MPSCNNBatchNormalizationDataSource")
+        self.assertProtocolExists("MPSCNNBatchNormalizationDataSource")
 
     def test_methods(self):
         self.assertResultHasType(

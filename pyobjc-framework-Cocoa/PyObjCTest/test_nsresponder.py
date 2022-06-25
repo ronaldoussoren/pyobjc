@@ -41,4 +41,4 @@ class TestNSResponder(TestCase):
 
     @min_sdk_level("10.14")
     def testProtocols(self):
-        objc.protocolNamed("NSStandardKeyBindingResponding")
+        self.assertProtocolExists("NSStandardKeyBindingResponding")

@@ -1,6 +1,5 @@
 import ImageCaptureCore
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestICScannerDevice(TestCase):
@@ -13,4 +12,4 @@ class TestICScannerDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerTransferModeMemoryBased, 1)
 
     def testProtocolObjects(self):
-        objc.protocolNamed("ICScannerDeviceDelegate")
+        self.assertProtocolExists("ICScannerDeviceDelegate")

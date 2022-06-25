@@ -2,7 +2,57 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "functions": {
+  },
   "classes": {
+   "MPSGraphCompilationDescriptor": {
+     "methods": [
+      {
+       "class_method": false,
+       "selector": "compilationCompletionHandler",
+       "retval": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      {
+       "class_method": false,
+       "selector": "setCompilationCompletionHandler:",
+       "args": { "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }}
+      }
+     ]
+   },
    "MPSGraphLSTMDescriptor": {
     "methods": [
      {
@@ -13,7 +63,7 @@
      {
       "selector": "setForgetGateLast:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -25,7 +75,7 @@
      {
       "selector": "setTraining:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -37,7 +87,7 @@
      {
       "selector": "setProduceCell:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -49,7 +99,7 @@
      {
       "selector": "setBidirectional:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -61,7 +111,7 @@
      {
       "selector": "setReverse:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      }
@@ -77,7 +127,7 @@
      {
       "selector": "setReverse:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -89,7 +139,7 @@
      {
       "selector": "setTraining:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -101,7 +151,7 @@
      {
       "selector": "setBidirectional:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      },
@@ -113,7 +163,7 @@
      {
       "selector": "setReverse:",
       "class_method": false,
-      "arguments": {
+      "args": {
        "0": { "type_override": "Z" }
       }
      }
@@ -423,7 +473,6 @@
    }
   },
   "formal_protocols": {},
-  "functions": {},
   "informal_protocols": {}
  }
 }

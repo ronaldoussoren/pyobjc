@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameCenter
@@ -14,4 +13,4 @@ class TestGKGameCenterViewController(TestCase):
 
     @min_os_level("10.9")
     def testProtocols10_9(self):
-        objc.protocolNamed("GKGameCenterControllerDelegate")
+        self.assertProtocolExists("GKGameCenterControllerDelegate")

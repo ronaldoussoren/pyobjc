@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import Quartz
-import objc
 
 
 class TestCIPluginInterfaceHelper(Quartz.NSObject):
@@ -13,5 +12,4 @@ class TestCIPlugInInterface(TestCase):
         self.assertResultIsBOOL(TestCIPluginInterfaceHelper.load_)
 
     def no_testProtocol(self):
-        p = objc.protocolNamed("CIPlugInRegistration")
-        self.assertIsInstancE(p, objc.formal_protocol)
+        self.assertProtocolExists("CIPlugInRegistration")

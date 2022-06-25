@@ -20,14 +20,7 @@ class TestMDLPrimitive(TestCase):
         self.assertEqual(ModelIO.MDLPrimitiveTypeCylinder, 4)
         self.assertEqual(ModelIO.MDLPrimitiveTypeNone, 5)
 
-    # @min_sdk_level('10.13')
-    # def testProtocols(self):
-    #    objc.protocolNamed('MDLPrimitiveComponent')
-
-    def testMethods(self):
-        self.assertResultHasType(
-            TestMDLPrimitiveHelper.primitiveType, objc._C_NSUInteger
-        )
-        self.assertArgHasType(
-            TestMDLPrimitiveHelper.setPrimitiveType_, 0, objc._C_NSUInteger
-        )
+    def test_protocol_methods(self):
+        # XXX
+        self.assertResultHasType(TestMDLPrimitiveHelper.primitiveType, objc._C_ID)
+        self.assertArgHasType(TestMDLPrimitiveHelper.setPrimitiveType_, 0, objc._C_ID)

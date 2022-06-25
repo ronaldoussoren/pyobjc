@@ -9,7 +9,7 @@ import sys
 
 import Cocoa
 import objc
-from PrintCore import _metadata
+from PrintCore import _metadata, _PrintCore
 
 sys.modules["PrintCore"] = mod = objc.ObjCLazyModule(
     "PrintCore",
@@ -23,7 +23,10 @@ sys.modules["PrintCore"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Cocoa,),
+    (
+        _PrintCore,
+        Cocoa,
+    ),
 )
 
 

@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
-import objc
 
 
 class TestIKCameraDeviceView(TestCase):
@@ -46,5 +45,4 @@ class TestIKCameraDeviceView(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        # XXX: Require minimal deployment target of 10.6
-        objc.protocolNamed("IKCameraDeviceViewDelegate")
+        self.assertProtocolExists("IKCameraDeviceViewDelegate")

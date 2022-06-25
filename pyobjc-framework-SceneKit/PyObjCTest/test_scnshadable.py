@@ -51,15 +51,15 @@ class TestSCNShadable(TestCase):
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointFragment, str)
 
     def testProtocols(self):
-        objc.protocolNamed("SCNShadable")
+        self.assertProtocolExists("SCNShadable")
 
     @min_sdk_level("10.10")
     def testProtocols10_10(self):
-        objc.protocolNamed("SCNProgramDelegate")
+        self.assertProtocolExists("SCNProgramDelegate")
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        objc.protocolNamed("SCNBufferStream")
+        self.assertProtocolExists("SCNBufferStream")
 
     def testMethods(self):
         self.assertArgHasType(TestSCNShadableHelper.writeBytes_length_, 0, b"n^v")

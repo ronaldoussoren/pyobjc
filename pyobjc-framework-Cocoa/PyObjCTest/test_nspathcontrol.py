@@ -34,7 +34,7 @@ class TestNSPathControl(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSPathControlDelegate")
+        self.assertProtocolExists("NSPathControlDelegate")
 
     @min_os_level("10.5")
     def testProtocols(self):

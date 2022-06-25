@@ -19,11 +19,11 @@ class TestPHPhotoLibrary(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("PHPhotoLibraryChangeObserver")
+        self.assertProtocolExists("PHPhotoLibraryChangeObserver")
 
     @min_sdk_level("10.15")
     def testProtocols10_15(self):
-        objc.protocolNamed("PHPhotoLibraryAvailabilityObserver")
+        self.assertProtocolExists("PHPhotoLibraryAvailabilityObserver")
 
     @min_os_level("10.13")
     def testMethods10_13(self):

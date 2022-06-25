@@ -7,14 +7,14 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "scheduleDownload:error:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "startForegroundDownload:error:"

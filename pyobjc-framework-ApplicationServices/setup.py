@@ -30,6 +30,17 @@ setup(
                 if fn.startswith("_HIServices")
             ],
         ),
+        Extension(
+            "PrintCore._PrintCore",
+            ["Modules/_PrintCore.m"],
+            extra_link_args=["-framework", "ApplicationServices"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_PrintCore")
+            ],
+        ),
     ],
     version=VERSION,
     install_requires=[

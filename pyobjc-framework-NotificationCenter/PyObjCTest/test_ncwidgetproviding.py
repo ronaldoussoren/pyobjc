@@ -26,8 +26,9 @@ class TestNCWidgetProviding(TestCase):
 
     @min_os_level("10.10")
     def testClasses10_10(self):
-        objc.protocolNamed("NCWidgetProviding")
+        self.assertProtocolExists("NCWidgetProviding")
 
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestNCWidgetProvidingHelper.widgetPerformUpdateWithCompletionHandler_,
             0,

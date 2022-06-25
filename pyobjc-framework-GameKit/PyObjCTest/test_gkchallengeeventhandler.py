@@ -1,5 +1,4 @@
 import GameKit
-import objc
 from PyObjCTools.TestSupport import TestCase
 
 
@@ -16,7 +15,7 @@ class TestGKChallengeEventHandlerHelper(GameKit.NSObject):
 
 class TestGKChallengeEventHandler(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("GKChallengeEventHandlerDelegate")
+        self.assertProtocolExists("GKChallengeEventHandlerDelegate")
 
     def testProtocolMethods(self):
         self.assertResultIsBOOL(

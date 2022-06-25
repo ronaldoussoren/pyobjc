@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 import Accessibility
-import objc
 
 
 class TestAXBrailleMapHelper(Accessibility.NSObject):
@@ -21,7 +20,7 @@ class TestAXBrailleMapHelper(Accessibility.NSObject):
 class TestAXBrailleMap(TestCase):
     @min_sdk_level("12.1")
     def test_protocols(self):
-        objc.protocolNamed("AXBrailleMapRenderer")
+        self.assertProtocolExists("AXBrailleMapRenderer")
 
     def test_methods(self):
         self.assertResultHasType(

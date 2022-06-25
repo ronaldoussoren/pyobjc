@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
-import objc
 
 
 class TestCAAnimationHelper(Quartz.NSObject):
@@ -40,7 +39,7 @@ class TestCAAnimation(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("CAAnimationDelegate")
+        self.assertProtocolExists("CAAnimationDelegate")
 
     @min_os_level("10.5")
     def testMethods(self):

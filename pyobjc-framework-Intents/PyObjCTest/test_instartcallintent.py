@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
-import objc
 
 
 class TestINStartCallIntentHelper(Intents.NSObject):
@@ -26,7 +25,7 @@ class TestINStartCallIntentHelper(Intents.NSObject):
 class TestINStartCallIntent(TestCase):
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        objc.protocolNamed("INStartCallIntentHandling")
+        self.assertProtocolExists("INStartCallIntentHandling")
 
     def test_methods(self):
         self.assertArgIsBlock(

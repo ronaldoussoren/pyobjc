@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSToolbarItemHelper(AppKit.NSObject):
@@ -62,8 +61,8 @@ class TestNSToolbarItem(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObject(self):
-        objc.protocolNamed("NSCloudSharingValidation")
+        self.assertProtocolExists("NSCloudSharingValidation")
 
     @min_sdk_level("10.14")
     def testProtocolObject10_14(self):
-        objc.protocolNamed("NSToolbarItemValidation")
+        self.assertProtocolExists("NSToolbarItemValidation")

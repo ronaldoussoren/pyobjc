@@ -1,5 +1,3 @@
-import objc
-
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import CryptoTokenKit
 
@@ -51,9 +49,9 @@ class TestTKToken(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("TKTokenSessionDelegate")
-        objc.protocolNamed("TKTokenDelegate")
-        objc.protocolNamed("TKTokenDriverDelegate")
+        self.assertProtocolExists("TKTokenSessionDelegate")
+        self.assertProtocolExists("TKTokenDelegate")
+        self.assertProtocolExists("TKTokenDriverDelegate")
 
     @min_sdk_level("10.12")
     def testProtocolMethods(self):

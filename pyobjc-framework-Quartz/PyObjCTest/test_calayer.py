@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
-import objc
 
 
 class TestCALayerHelper(Quartz.NSObject):
@@ -121,9 +120,9 @@ class TestCALayer(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("CAAction")
+        self.assertProtocolExists("CAAction")
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
-        objc.protocolNamed("CALayerDelegate")
-        objc.protocolNamed("CALayoutManager")
+        self.assertProtocolExists("CALayerDelegate")
+        self.assertProtocolExists("CALayoutManager")

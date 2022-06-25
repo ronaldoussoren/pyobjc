@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 import Intents
 
 
@@ -31,4 +30,4 @@ class TestINStartVideoCallIntent(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("INStartVideoCallIntentHandling")
+        self.assertProtocolExists("INStartVideoCallIntentHandling")

@@ -16,5 +16,5 @@ class TestIKFilterUI(TestCase):
     @min_os_level("10.5")
     def no_testProtocol(self):
         self.assertIsInstance(
-            objc.protocolNamed("IKFilterCustomUIProvider"), objc.formal_protocol
+            self.assertProtocolExists("IKFilterCustomUIProvider"), objc.formal_protocol
         )

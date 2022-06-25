@@ -124,6 +124,6 @@ class TestAkAudioMixing(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("AVAudioMixing")
-        objc.protocolNamed("AVAudioStereoMixing")
-        objc.protocolNamed("AVAudio3DMixing")
+        self.assertProtocolExists("AVAudioMixing")
+        self.assertProtocolExists("AVAudioStereoMixing")
+        self.assertProtocolExists("AVAudio3DMixing")

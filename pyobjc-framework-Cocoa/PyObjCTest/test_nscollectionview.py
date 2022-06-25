@@ -227,13 +227,13 @@ class TestNSCollectionView(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("NSCollectionViewDelegate")
+        self.assertProtocolExists("NSCollectionViewDelegate")
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        objc.protocolNamed("NSCollectionViewElement")
+        self.assertProtocolExists("NSCollectionViewElement")
 
-        objc.protocolNamed("NSCollectionViewDataSource")
+        self.assertProtocolExists("NSCollectionViewDataSource")
         self.assertResultHasType(
             TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_,
             objc._C_NSInteger,
@@ -249,7 +249,7 @@ class TestNSCollectionView(TestCase):
             objc._C_NSInteger,
         )
 
-        objc.protocolNamed("NSCollectionViewDelegate")
+        self.assertProtocolExists("NSCollectionViewDelegate")
         self.assertResultIsBOOL(
             TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexPaths_withEvent_
         )
@@ -299,8 +299,8 @@ class TestNSCollectionView(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocol10_12(self):
-        objc.protocolNamed("NSCollectionViewSectionHeaderView")
+        self.assertProtocolExists("NSCollectionViewSectionHeaderView")
 
     @min_sdk_level("10.13")
     def testProtocol10_13(self):
-        objc.protocolNamed("NSCollectionViewPrefetching")
+        self.assertProtocolExists("NSCollectionViewPrefetching")

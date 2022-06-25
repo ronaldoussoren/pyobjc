@@ -1,5 +1,4 @@
 import Automator
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
@@ -12,4 +11,4 @@ class TestAMWorkflowController(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("AMWorkflowControllerDelegate")
+        self.assertProtocolExists("AMWorkflowControllerDelegate")

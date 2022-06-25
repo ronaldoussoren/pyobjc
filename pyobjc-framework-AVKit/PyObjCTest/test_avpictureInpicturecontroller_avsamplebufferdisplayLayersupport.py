@@ -29,7 +29,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
     @min_sdk_level("12.0")
     def testProtocols12_0(self):
         self.assertIsInstance(
-            objc.protocolNamed("AVPictureInPictureSampleBufferPlaybackDelegate"),
+            self.assertProtocolExists("AVPictureInPictureSampleBufferPlaybackDelegate"),
             objc.formal_protocol,
         )
 

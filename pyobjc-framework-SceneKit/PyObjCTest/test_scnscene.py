@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import SceneKit
@@ -63,4 +62,4 @@ class TestSCNScene(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("SCNSceneExportDelegate")
+        self.assertProtocolExists("SCNSceneExportDelegate")

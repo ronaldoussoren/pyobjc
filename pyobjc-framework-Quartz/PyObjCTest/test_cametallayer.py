@@ -1,12 +1,11 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestCAMetalLayer(TestCase):
     @min_os_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("CAMetalDrawable")
+        self.assertProtocolExists("CAMetalDrawable")
 
     @min_os_level("10.11")
     def testMethods(self):

@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSGestureRecognizerHelper(AppKit.NSObject):
@@ -89,7 +88,7 @@ class TestNSGestureRecognizer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("NSGestureRecognizerDelegate")
+        self.assertProtocolExists("NSGestureRecognizerDelegate")
         self.assertResultIsBOOL(
             TestNSGestureRecognizerHelper.gestureRecognizerShouldBegin_
         )

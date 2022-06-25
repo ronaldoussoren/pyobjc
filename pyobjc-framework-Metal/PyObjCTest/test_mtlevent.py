@@ -16,8 +16,8 @@ class TestMTLEventHelper(Metal.NSObject):
 class TestMTLEvent(TestCase):
     @min_os_level("10.14")
     def test_protocols(self):
-        objc.protocolNamed("MTLEvent")
-        objc.protocolNamed("MTLSharedEvent")
+        self.assertProtocolExists("MTLEvent")
+        self.assertProtocolExists("MTLSharedEvent")
 
     def test_methods(self):
         self.assertArgHasType(

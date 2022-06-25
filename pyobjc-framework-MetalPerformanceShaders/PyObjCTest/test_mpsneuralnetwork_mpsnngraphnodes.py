@@ -15,13 +15,13 @@ class TestMPSNNGraphNodesHelper(MetalPerformanceShaders.NSObject):
 
 class TestMPSNNGraphNodes(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("MPSHandle")
-        objc.protocolNamed("MPSNNTrainableNode")
+        self.assertProtocolExists("MPSHandle")
+        self.assertProtocolExists("MPSNNTrainableNode")
 
     @min_sdk_level("10.15")
     def test_protols10_15(self):
-        objc.protocolNamed("MPSNNGramMatrixCallback")
-        objc.protocolNamed("MPSNNLossCallback")
+        self.assertProtocolExists("MPSNNGramMatrixCallback")
+        self.assertProtocolExists("MPSNNLossCallback")
 
     def test_methods(self):
         self.assertResultHasType(

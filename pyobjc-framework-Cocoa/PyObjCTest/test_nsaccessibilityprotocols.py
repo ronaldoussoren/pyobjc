@@ -299,74 +299,30 @@ class TestNSAccessibilityProtocolsHelper(AppKit.NSObject):
 class TestNSAccessibilityProtocols(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityGroup"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityElement"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityButton"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilitySwitch"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityRadioButton"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityCheckBox"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityStaticText"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityNavigableStaticText"),
-            objc.formal_protocol,
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityProgressIndicator"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityStepper"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilitySlider"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityImage"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityContainsTransientUI"),
-            objc.formal_protocol,
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityTable"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityOutline"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityList"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityRow"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityLayoutArea"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityLayoutItem"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibility"), objc.formal_protocol
-        )
+        self.assertProtocolExists("NSAccessibilityGroup")
+        self.assertProtocolExists("NSAccessibilityElement")
+        self.assertProtocolExists("NSAccessibilityButton")
+        self.assertProtocolExists("NSAccessibilitySwitch")
+        self.assertProtocolExists("NSAccessibilityRadioButton")
+        self.assertProtocolExists("NSAccessibilityCheckBox")
+        self.assertProtocolExists("NSAccessibilityStaticText")
+        self.assertProtocolExists("NSAccessibilityNavigableStaticText")
+        self.assertProtocolExists("NSAccessibilityProgressIndicator")
+        self.assertProtocolExists("NSAccessibilityStepper")
+        self.assertProtocolExists("NSAccessibilitySlider")
+        self.assertProtocolExists("NSAccessibilityImage")
+        self.assertProtocolExists("NSAccessibilityContainsTransientUI")
+        self.assertProtocolExists("NSAccessibilityTable")
+        self.assertProtocolExists("NSAccessibilityOutline")
+        self.assertProtocolExists("NSAccessibilityList")
+        self.assertProtocolExists("NSAccessibilityRow")
+        self.assertProtocolExists("NSAccessibilityLayoutArea")
+        self.assertProtocolExists("NSAccessibilityLayoutItem")
+        self.assertProtocolExists("NSAccessibility")
 
     @min_sdk_level("10.13")
     def testProtocolObjects10_13(self):
-        self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityElementLoading"), objc.formal_protocol
-        )
+        self.assertProtocolExists("NSAccessibilityElementLoading")
 
     def testProtocols(self):
         self.assertResultIsBOOL(

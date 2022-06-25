@@ -1,6 +1,5 @@
 import Metal
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestMTLCommandEncoder(TestCase):
@@ -19,4 +18,4 @@ class TestMTLCommandEncoder(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLCommandEncoder")
+        self.assertProtocolExists("MTLCommandEncoder")

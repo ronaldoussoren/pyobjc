@@ -1,6 +1,5 @@
 import OpenDirectory
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestOpenDirectory(TestCase):
@@ -8,7 +7,7 @@ class TestOpenDirectory(TestCase):
         self.assertIsInstance(OpenDirectory.ODFrameworkErrorDomain, str)
 
     def testProtocols(self):
-        objc.protocolNamed("ODQueryDelegate")
+        self.assertProtocolExists("ODQueryDelegate")
 
     def testIntegration(self):
         import CFOpenDirectory

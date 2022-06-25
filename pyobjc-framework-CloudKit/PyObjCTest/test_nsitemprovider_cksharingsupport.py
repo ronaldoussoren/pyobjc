@@ -13,11 +13,3 @@ class TestNSItemProvider_CKSharingSupport(TestCase):
             2,
             CKSharePreparationHandler,
         )
-
-    def test_constants(self):
-        self.assertIsEnumType(CloudKit.CKSharingOptions)
-        self.assertEqual(CloudKit.CKSharingOptionsStandard, 0)
-        self.assertEqual(CloudKit.CKSharingOptionsAllowPublic, 1 << 0)
-        self.assertEqual(CloudKit.CKSharingOptionsAllowPrivate, 1 << 1)
-        self.assertEqual(CloudKit.CKSharingOptionsAllowReadOnly, 1 << 4)
-        self.assertEqual(CloudKit.CKSharingOptionsAllowReadWrite, 1 << 5)

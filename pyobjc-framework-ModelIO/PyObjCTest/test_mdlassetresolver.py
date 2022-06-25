@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 import ModelIO
 
 
@@ -11,7 +10,7 @@ class TestMDLAssetResolverHelper(ModelIO.NSObject):
 class TestMDLAssetResolver(TestCase):
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("MDLAssetResolver")
+        self.assertProtocolExists("MDLAssetResolver")
 
     def testMethods(self):
         self.assertResultIsBOOL(

@@ -1,6 +1,5 @@
 import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class TestGKMatchmakerViewController(TestCase):
@@ -39,4 +38,4 @@ class TestGKMatchmakerViewController(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("GKMatchmakerViewControllerDelegate")
+        self.assertProtocolExists("GKMatchmakerViewControllerDelegate")

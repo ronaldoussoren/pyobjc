@@ -1,4 +1,3 @@
-import objc
 from Foundation import NSObject
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
@@ -20,7 +19,7 @@ class TestQLPreviewingControllerHelper(NSObject):
 class TestQLPreviewingController(TestCase):
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("QLPreviewingController")
+        self.assertProtocolExists("QLPreviewingController")
 
     def testMethods(self):
         self.assertArgIsBlock(

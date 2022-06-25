@@ -71,4 +71,4 @@ class TestGKMatch(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("GKMatchDelegate")
+        self.assertProtocolExists("GKMatchDelegate")

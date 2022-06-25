@@ -71,4 +71,4 @@ class TestNSTextField(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("NSTextFieldDelegate")
+        self.assertProtocolExists("NSTextFieldDelegate")

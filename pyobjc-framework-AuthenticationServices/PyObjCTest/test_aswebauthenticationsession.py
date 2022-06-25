@@ -1,5 +1,4 @@
 import AuthenticationServices
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 ASWebAuthenticationSessionCompletionHandler = b"v@@"
@@ -21,7 +20,7 @@ class TestASWebAuthenticationSession(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("ASWebAuthenticationPresentationContextProviding")
+        self.assertProtocolExists("ASWebAuthenticationPresentationContextProviding")
 
     @min_os_level("10.15")
     def test_methods10_15(self):

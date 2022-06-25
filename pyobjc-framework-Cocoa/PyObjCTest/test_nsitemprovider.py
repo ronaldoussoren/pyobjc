@@ -163,5 +163,5 @@ class TestNSItemProvider(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols10_13(self):
-        objc.protocolNamed("NSItemProviderWriting")
-        objc.protocolNamed("NSItemProviderReading")
+        self.assertProtocolExists("NSItemProviderWriting")
+        self.assertProtocolExists("NSItemProviderReading")

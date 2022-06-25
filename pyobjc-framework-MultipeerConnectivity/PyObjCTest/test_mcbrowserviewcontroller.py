@@ -19,10 +19,9 @@ class TestMCBrowserViewController(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("MCBrowserViewControllerDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("MCBrowserViewControllerDelegate")
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestMCBrowserViewControllerHelper.browserViewController_shouldPresentNearbyPeer_withDiscoveryInfo_
         )

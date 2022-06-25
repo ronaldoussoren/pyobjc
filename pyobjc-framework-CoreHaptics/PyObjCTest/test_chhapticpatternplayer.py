@@ -66,8 +66,8 @@ class TestCHHapticPatternPlayerHelper(CoreHaptics.NSObject):
 class TestCHHapticPatternPlayer(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("CHHapticPatternPlayer")
-        objc.protocolNamed("CHHapticAdvancedPatternPlayer")
+        self.assertProtocolExists("CHHapticPatternPlayer")
+        self.assertProtocolExists("CHHapticAdvancedPatternPlayer")
 
     def test_methods(self):
         # CHHapticPatternPlayer

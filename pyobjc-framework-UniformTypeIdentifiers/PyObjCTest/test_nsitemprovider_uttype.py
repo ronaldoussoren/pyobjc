@@ -18,17 +18,7 @@ class TestNSItemProvider_UTType(TestCase):
         self.assertArgIsBlock(
             UniformTypeIdentifiers.NSItemProvider.registerDataRepresentationForContentType_visibility_loadHandler_,
             2,
-            b"@@@",
-        )
-
-        self.assertArgIsBOOL(
-            UniformTypeIdentifiers.NSItemProvider.registerDataRepresentationForContentType_visibility_openInPlace_loadHandler_,
-            2,
-        )
-        self.assertArgIsBlock(
-            UniformTypeIdentifiers.NSItemProvider.registerDataRepresentationForContentType_visibility_openInPlace_loadHandler_,
-            3,
-            b"@@Z@",
+            b"@@?",  # XXX
         )
 
         self.assertArgIsBlock(

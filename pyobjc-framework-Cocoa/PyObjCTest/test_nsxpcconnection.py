@@ -1,5 +1,4 @@
 import Foundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -17,8 +16,8 @@ class TestNSXPCConnection(TestCase):
 
     @min_os_level("10.8")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSXPCProxyCreating")
-        objc.protocolNamed("NSXPCListenerDelegate")
+        self.assertProtocolExists("NSXPCProxyCreating")
+        self.assertProtocolExists("NSXPCListenerDelegate")
 
     @min_os_level("10.8")
     def testConstants10_8(self):

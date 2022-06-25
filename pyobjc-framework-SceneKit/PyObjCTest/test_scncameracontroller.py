@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import SceneKit
@@ -19,7 +18,7 @@ class TestSCNCameraController(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("SCNCameraControllerDelegate")
+        self.assertProtocolExists("SCNCameraControllerDelegate")
 
     @min_os_level("10.13")
     def testMethods(self):

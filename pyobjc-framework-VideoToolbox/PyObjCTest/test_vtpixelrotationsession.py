@@ -11,7 +11,7 @@ class TestVTPixelRotationSession(TestCase):
     @min_os_level("13.0")
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTPixelRotationSessionCreate, 1)
-        self.assertArgIsAlreadyCFRetained(VideoToolbox.VTPixelRotationSessionCreate, 1)
+        self.assertArgIsCFRetained(VideoToolbox.VTPixelRotationSessionCreate, 1)
 
         VideoToolbox.VTPixelRotationSessionInvalidate
 

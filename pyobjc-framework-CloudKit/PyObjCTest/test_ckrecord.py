@@ -6,7 +6,7 @@ import objc
 class TestCKRecord(TestCase):
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("CKRecordKeyValueSetting")
+        self.assertProtocolExists("CKRecordKeyValueSetting")
 
     @min_os_level("10.10")
     def testClasses(self):

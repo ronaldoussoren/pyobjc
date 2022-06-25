@@ -134,11 +134,11 @@ class TestWebUIDelegate(TestCase):
         self.assertEqual(WebKit.WebDragSourceActionAny, UINT_MAX)
 
     def testProtocols(self):
-        objc.protocolNamed("WebOpenPanelResultListener")
+        self.assertProtocolExists("WebOpenPanelResultListener")
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        objc.protocolNamed("WebUIDelegate")
+        self.assertProtocolExists("WebUIDelegate")
 
     def testMethods(self):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewAreToolbarsVisible_)

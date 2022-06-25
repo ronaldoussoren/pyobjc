@@ -150,4 +150,4 @@ class TestNSSpeechSynthesizer(TestCase):
 
     @min_sdk_level("10.9")
     def testProtocol10_9(self):
-        objc.protocolNamed("NSSpeechSynthesizerDelegate")
+        self.assertProtocolExists("NSSpeechSynthesizerDelegate")

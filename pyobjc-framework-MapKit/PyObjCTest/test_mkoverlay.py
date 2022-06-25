@@ -1,6 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
-
 import MapKit
 
 
@@ -21,8 +19,9 @@ class TestMKOverlayHelper(MapKit.NSObject):
 class TestMKOverlay(TestCase):
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertIsInstance(objc.protocolNamed("MKOverlay"), objc.formal_protocol)
+        self.assertProtocolExists("MKOverlay")
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestMKOverlayHelper.intersectsMapRect_)
         self.assertArgHasType(
             TestMKOverlayHelper.intersectsMapRect_, 0, MapKit.MKMapRect.__typestr__

@@ -11,7 +11,7 @@ class TestWebResourceLoadDelegateHelper(WebKit.NSObject):
 class TestWebResourceLoadDelegate(TestCase):
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("WebResourceLoadDelegate")
+        self.assertProtocolExists("WebResourceLoadDelegate")
 
     def testMethods(self):
         self.assertArgHasType(

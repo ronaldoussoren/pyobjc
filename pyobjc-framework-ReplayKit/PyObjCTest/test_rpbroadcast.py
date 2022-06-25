@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 
 import ReplayKit
-import objc
 
 
 class TestRPBroadcast(TestCase):
@@ -23,5 +22,5 @@ class TestRPBroadcast(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("RPBroadcastActivityControllerDelegate")
-        objc.protocolNamed("RPBroadcastControllerDelegate")
+        self.assertProtocolExists("RPBroadcastActivityControllerDelegate")
+        self.assertProtocolExists("RPBroadcastControllerDelegate")

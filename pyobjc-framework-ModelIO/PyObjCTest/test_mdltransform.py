@@ -88,4 +88,4 @@ class TestMDLTransform(TestCase):
         )
 
     def testProtocolObjects(self):
-        objc.protocolNamed("MDLTransformComponent")
+        self.assertProtocolExists("MDLTransformComponent")

@@ -1,5 +1,4 @@
 import CoreMediaIO
-import objc
 from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 
@@ -14,7 +13,7 @@ class TestCMIOExtensionDeviceHelper(CoreMediaIO.NSObject):
 class TestCMIOExtensionDevice(TestCase):
     @min_sdk_level("12.3")
     def test_protocols(self):
-        objc.protocolNamed("CMIOExtensionDeviceSource")
+        self.assertProtocolExists("CMIOExtensionDeviceSource")
 
     def test_methods(self):
         self.assertArgHasType(

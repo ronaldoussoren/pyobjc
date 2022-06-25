@@ -22,8 +22,9 @@ class TestFinderSync(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(objc.protocolNamed("FIFinderSync"), objc.formal_protocol)
+        self.assertProtocolExists("FIFinderSync")
 
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestFinderSyncHelper.valuesForAttributes_forItemWithURL_completion_,
             2,

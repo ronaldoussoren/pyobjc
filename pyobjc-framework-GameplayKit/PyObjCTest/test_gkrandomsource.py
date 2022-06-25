@@ -20,7 +20,7 @@ class TestGKRandomSourceHelper(GameplayKit.NSObject):
 
 class TestGKRandomSource(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("GKRandom")
+        self.assertProtocolExists("GKRandom")
 
     def testMethods(self):
         self.assertResultHasType(

@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase
-import objc
 import Virtualization
 
 
@@ -10,7 +9,7 @@ class TestVZVirtioSocketListenerHelper(Virtualization.NSObject):
 
 class TestVZVirtioSocketListener(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("VZVirtioSocketListenerDelegate")
+        self.assertProtocolExists("VZVirtioSocketListenerDelegate")
 
     def test_methods(self):
         self.assertResultIsBOOL(

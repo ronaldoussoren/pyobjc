@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import AVKit
-import objc
 
 
 class TestAVRoutePickerView(TestCase):
@@ -20,4 +19,4 @@ class TestAVRoutePickerView(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("AVRoutePickerViewDelegate")
+        self.assertProtocolExists("AVRoutePickerViewDelegate")

@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
-import objc
 
 
 class TestCIFilter(TestCase):
@@ -128,4 +127,4 @@ class TestCIFilter(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("CIFilter")
+        self.assertProtocolExists("CIFilter")

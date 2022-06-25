@@ -15,15 +15,16 @@ class TestGKPublicProtocolsHelper(GameCenter.NSObject):
 class TestGCAchievement(TestCase):
     @min_os_level("10.8")
     def testProtocols(self):
-        objc.protocolNamed("GKSessionDelegate")
+        self.assertProtocolExists("GKSessionDelegate")
+        self.assertProtocolExists("GKVoiceChatClient")
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             GameCenter.TestGKPublicProtocolsHelper.session_peer_didChangeState_,
             2,
             objc._C_NSUInteger,
         )
 
-        objc.protocolNamed("GKVoiceChatClient")
         self.assertArgHasType(
             GameCenter.TestGKPublicProtocolsHelper.voiceChatService_didReceiveInvitationFromParticipantID_callID_,
             2,

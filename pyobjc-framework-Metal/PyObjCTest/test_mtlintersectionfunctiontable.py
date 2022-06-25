@@ -38,7 +38,7 @@ class TestMTLIntersectionFunctionTable(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        objc.protocolNamed("MTLIntersectionFunctionTable")
+        self.assertProtocolExists("MTLIntersectionFunctionTable")
 
     def test_methods(self):
         self.assertArgHasType(

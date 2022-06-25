@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -16,8 +15,8 @@ class TestAVCaptureFileOutput(TestCase):
         )  # noqa: B950
 
     def testProtocols(self):
-        objc.protocolNamed("AVCaptureFileOutputRecordingDelegate")
-        objc.protocolNamed("AVCaptureFileOutputDelegate")
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
+        self.assertProtocolExists("AVCaptureFileOutputDelegate")
 
     def testProtocolMethods(self):
         self.assertResultIsBOOL(

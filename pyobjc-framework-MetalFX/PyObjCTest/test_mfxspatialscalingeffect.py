@@ -31,7 +31,7 @@ class TestMFXSpatialScalingEffectHelper(MetalFX.NSObject):
     def inputWidth(self):
         return 1
 
-    def inputHeigh(self):
+    def inputHeight(self):
         return 1
 
     def outputWidth(self):
@@ -60,14 +60,14 @@ class TestMFXSpatialScalingEffect(TestCase):
         self.assertEqual(MetalFX.MFXSpatialScalingColorProcessingMode_HDR, 2)
 
     def test_protocols(self):
-        objc.protocolNamed("MFXSpatialScalingEffect")
+        self.assertProtocolExists("MFXSpatialScalingEffect")
 
     def test_protocol_methods(self):
         self.assertResultHasType(
-            TestMFXSpatialScalingEffectHelper.colorTextureUsage, b"@"
+            TestMFXSpatialScalingEffectHelper.colorTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMFXSpatialScalingEffectHelper.outputTextureUsage, b"@"
+            TestMFXSpatialScalingEffectHelper.outputTextureUsage, objc._C_NSUInteger
         )
 
         self.assertResultHasType(
@@ -90,7 +90,7 @@ class TestMFXSpatialScalingEffect(TestCase):
             TestMFXSpatialScalingEffectHelper.outputTextureFormat, b"Q"
         )
         self.assertResultHasType(TestMFXSpatialScalingEffectHelper.inputWidth, b"Q")
-        self.assertResultHasType(TestMFXSpatialScalingEffectHelper.inputHeigh, b"Q")
+        self.assertResultHasType(TestMFXSpatialScalingEffectHelper.inputHeight, b"Q")
         self.assertResultHasType(TestMFXSpatialScalingEffectHelper.outputWidth, b"Q")
         self.assertResultHasType(TestMFXSpatialScalingEffectHelper.outputHeight, b"Q")
         self.assertResultHasType(

@@ -5,7 +5,6 @@ from PyObjCTools.TestSupport import (
     min_sdk_level,
     expectedFailure,
 )
-import objc
 
 
 class TestNSKeyValueBindingHelper(AppKit.NSObject):
@@ -175,5 +174,5 @@ class TestNSKeyValueBinding(TestCase):
 
     @min_sdk_level("10.14")
     def test_protocols(self):
-        objc.protocolNamed("NSEditor")
-        objc.protocolNamed("NSEditorRegistration")
+        self.assertProtocolExists("NSEditor")
+        self.assertProtocolExists("NSEditorRegistration")

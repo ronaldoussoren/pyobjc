@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 import MetalPerformanceShaders
 
 
@@ -171,4 +170,4 @@ class TestMPSCore_MPSCoreTypes(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("MPSDeviceProvider")
+        self.assertProtocolExists("MPSDeviceProvider")

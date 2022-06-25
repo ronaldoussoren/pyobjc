@@ -57,7 +57,7 @@ class TestPKAddPaymentPassRequestHelper(PassKit.NSObject):
 
 class TestPKAddPaymentPassRequest(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("PKPaymentAuthorizationViewControllerDelegate")
+        self.assertProtocolExists("PKPaymentAuthorizationViewControllerDelegate")
 
     def test_methods(self):
         self.assertArgIsBlock(

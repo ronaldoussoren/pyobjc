@@ -1,6 +1,5 @@
 import GameKit
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestGKPublicProtocolsHelper(GameKit.NSObject):
@@ -10,8 +9,8 @@ class TestGKPublicProtocolsHelper(GameKit.NSObject):
 
 class TestGKPublicProtocols(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("GKSessionDelegate")
-        objc.protocolNamed("GKVoiceChatClient")
+        self.assertProtocolExists("GKSessionDelegate")
+        self.assertProtocolExists("GKVoiceChatClient")
 
     def testMethods(self):
         self.assertArgHasType(

@@ -1,5 +1,3 @@
-import objc
-
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import CoreML
 
@@ -18,7 +16,7 @@ class TestMLCustomModelHelper(CoreML.NSObject):
 class TestMLCustomModel(TestCase):
     @min_sdk_level("10.14")
     def testProtocols(self):
-        objc.protocolNamed("MLCustomModel")
+        self.assertProtocolExists("MLCustomModel")
 
     def testMethods(self):
         self.assertArgHasType(

@@ -13,7 +13,7 @@ class TestWebFrameLoadDelegateHelper(WebKit.NSObject):
 class TestWebFrameLoadDelegate(TestCase):
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("WebFrameLoadDelegate")
+        self.assertProtocolExists("WebFrameLoadDelegate")
 
     def testMethods(self):
         self.assertArgHasType(

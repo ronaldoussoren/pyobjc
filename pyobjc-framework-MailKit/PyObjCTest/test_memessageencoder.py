@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import MailKit
-import objc
 
 
 class TestMEMessageEncoderHelper(MailKit.NSObject):
@@ -16,7 +15,7 @@ class TestMEMessageEncoderHelper(MailKit.NSObject):
 
 class TestMEMessageEncoder(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("MEMessageEncoder")
+        self.assertProtocolExists("MEMessageEncoder")
 
     def test_methods(self):
         self.assertArgIsBlock(

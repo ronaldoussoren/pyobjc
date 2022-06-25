@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 import MapKit
 
@@ -15,7 +14,7 @@ class TestMKAnnotationHelper(MapKit.NSObject):
 class TestMKAnnotation(TestCase):
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertIsInstance(objc.protocolNamed("MKAnnotation"), objc.formal_protocol)
+        self.assertProtocolExists("MKAnnotation")
 
         self.assertResultHasType(
             TestMKAnnotationHelper.coordinate, MapKit.CLLocationCoordinate2D.__typestr__

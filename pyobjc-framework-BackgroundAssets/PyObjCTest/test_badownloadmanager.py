@@ -15,7 +15,7 @@ class TestBADownloaderHelper(BackgroundAssets.NSObject):
 
 class TestBADownloadManager(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("BADownloadManagerDelegate")
+        self.assertProtocolExists("BADownloadManagerDelegate")
 
     def test_protocol_methods(self):
         self.assertArgHasType(
@@ -37,7 +37,7 @@ class TestBADownloadManager(TestCase):
         self.assertArgIsBlock(
             TestBADownloaderHelper.download_didReceiveChallenge_completionHandler_,
             2,
-            b"v" + objc._C_NSUInteger + b"@",
+            b"v" + objc._C_NSInteger + b"@",
         )
 
     def test_methods(self):

@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSPasteboardItem(TestCase):
@@ -13,4 +12,4 @@ class TestNSPasteboardItem(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("NSPasteboardItemDataProvider")
+        self.assertProtocolExists("NSPasteboardItemDataProvider")

@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 import Accessibility
-import objc
 
 
 class TestAXAudiograph(TestCase):
@@ -11,8 +10,8 @@ class TestAXAudiograph(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        objc.protocolNamed("AXChart")
-        objc.protocolNamed("AXDataAxisDescriptor")
+        self.assertProtocolExists("AXChart")
+        self.assertProtocolExists("AXDataAxisDescriptor")
 
     def test_constants(self):
         self.assertEqual(Accessibility.AXScaleTypeLinear, 0)

@@ -46,8 +46,8 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
 class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
     def test_protocols(self):
-        objc.protocolNamed("MTLIndirectRenderCommand")
-        objc.protocolNamed("MTLIndirectComputeCommand")
+        self.assertProtocolExists("MTLIndirectRenderCommand")
+        self.assertProtocolExists("MTLIndirectComputeCommand")
 
     def test_methods(self):
         self.assertArgHasType(

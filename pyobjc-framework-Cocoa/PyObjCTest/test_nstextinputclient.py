@@ -47,7 +47,7 @@ class TestNSTextInputClientHelper(AppKit.NSObject):
 class TestNSTextInputClient(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        objc.protocolNamed("NSTextInputClient")
+        self.assertProtocolExists("NSTextInputClient")
         self.assertArgHasType(
             TestNSTextInputClientHelper.insertText_replacementRange_,
             1,

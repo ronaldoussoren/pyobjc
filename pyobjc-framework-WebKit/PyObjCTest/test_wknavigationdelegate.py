@@ -36,9 +36,9 @@ class TestWKNavigationDelegate(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        p = objc.protocolNamed("WKNavigationDelegate")
-        self.assertIsInstance(p, objc.formal_protocol)
+        self.assertProtocolExists("WKNavigationDelegate")
 
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestWKNavigationDelegateHelper.webView_decidePolicyForNavigationAction_decisionHandler_,  # noqa: B950
             2,

@@ -140,4 +140,4 @@ class TestNSFileProviderManager(TestCase):
 
     @min_sdk_level("11.3")
     def test_protocols(self):
-        objc.protocolNamed("NSFileProviderPendingSetEnumerator")
+        self.assertProtocolExists("NSFileProviderPendingSetEnumerator")

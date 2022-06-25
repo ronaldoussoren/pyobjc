@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSAccessibilityCustomRotor(TestCase):
@@ -37,4 +36,4 @@ class TestNSAccessibilityCustomRotor(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("NSAccessibilityCustomRotorItemSearchDelegate")
+        self.assertProtocolExists("NSAccessibilityCustomRotorItemSearchDelegate")

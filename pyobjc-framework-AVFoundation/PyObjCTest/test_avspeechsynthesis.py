@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
@@ -112,7 +111,6 @@ class TestAVSpeechSynthesis(TestCase):
             AVSpeechSynthesizerMarkerCallback,
         )
 
-    @expectedFailure
     @min_sdk_level("10.14")
     def testProtocols(self):
-        objc.protocolNamed("AVSpeechSynthesizerDelegate")
+        self.assertProtocolExists("AVSpeechSynthesizerDelegate")

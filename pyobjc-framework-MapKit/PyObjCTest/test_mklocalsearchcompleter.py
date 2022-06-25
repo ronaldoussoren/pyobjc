@@ -1,6 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
-
 import MapKit
 
 
@@ -23,4 +21,4 @@ class TestMKLocalSearchCompleter(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("MKLocalSearchCompleterDelegate")
+        self.assertProtocolExists("MKLocalSearchCompleterDelegate")

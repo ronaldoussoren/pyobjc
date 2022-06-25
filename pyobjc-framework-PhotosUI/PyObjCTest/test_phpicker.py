@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 import PhotosUI
 
 
@@ -22,11 +21,11 @@ class TestPHPicker(TestCase):
 
     @min_os_level("13.0")
     def testClasses(self):
-        self.assertIsFinal(PhotosUI.PHPickerFilter)
-        self.assertIsFinal(PhotosUI.PHPickerConfiguration)
-        self.assertIsFinal(PhotosUI.PHPickerResult)
-        self.assertIsFinal(PhotosUI.PHPickerViewController)
+        self.assertClassIsFinal(PhotosUI.PHPickerFilter)
+        self.assertClassIsFinal(PhotosUI.PHPickerConfiguration)
+        self.assertClassIsFinal(PhotosUI.PHPickerResult)
+        self.assertClassIsFinal(PhotosUI.PHPickerViewController)
 
     @min_sdk_level("13.0")
     def testProtocols(self):
-        objc.protoclNamed("PHPickerViewControllerDelegate")
+        self.assertProtocolExists("PHPickerViewControllerDelegate")

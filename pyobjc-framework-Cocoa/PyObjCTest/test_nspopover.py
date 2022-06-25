@@ -1,5 +1,4 @@
 import AppKit
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -61,5 +60,5 @@ class TestNSPopover(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        objc.protocolNamed("NSPopoverDelegate")
+        self.assertProtocolExists("NSPopoverDelegate")
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)

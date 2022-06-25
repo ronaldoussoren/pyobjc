@@ -1,5 +1,4 @@
 import GameKit
-import objc
 from PyObjCTools.TestSupport import TestCase
 
 
@@ -8,7 +7,7 @@ class TestGKGameCenterViewController(TestCase):
         self.assertIsEnumType(GameKit.GKGameCenterViewControllerState)
 
     def testProtocols(self):
-        objc.protocolNamed("GKGameCenterControllerDelegate")
+        self.assertProtocolExists("GKGameCenterControllerDelegate")
 
     def testConstants(self):
         self.assertEqual(GameKit.GKGameCenterViewControllerStateDefault, -1)

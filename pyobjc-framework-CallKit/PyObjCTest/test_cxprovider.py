@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import CallKit
-import objc
 
 
 class TestCXProvider(TestCase):
@@ -15,7 +14,7 @@ class TestCXProvider(TestCase):
         self.assertEqual(CallKit.CXCallEndedReasonDeclinedElsewhere, 5)
 
     def test_protocols(self):
-        objc.protocolNamed("CXProviderDelegate")
+        self.assertProtocolExists("CXProviderDelegate")
 
     def test_methods(self):
         self.assertArgIsBlock(

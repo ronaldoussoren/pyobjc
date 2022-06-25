@@ -1,5 +1,4 @@
 import AppKit
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -11,7 +10,7 @@ class RestorationHelper(AppKit.NSObject):
 class TestNSWindowRestoration(TestCase):
     @min_os_level("10.7")
     def testProtocol10_7(self):
-        objc.protocolNamed("NSWindowRestoration")
+        self.assertProtocolExists("NSWindowRestoration")
         self.assertArgIsBlock(
             RestorationHelper.restoreWindowWithIdentifier_state_completionHandler_,
             2,

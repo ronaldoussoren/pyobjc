@@ -16,7 +16,9 @@ class TestCLLocationManagerDelegateHelper(CoreLocation.NSObject):
 
 class TestCLLocationManagerDelegate(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("CLLocationManagerDelegate")
+        self.assertProtocolExists("CLLocationManagerDelegate")
+
+    def test_protocol_methods(self):
 
         self.assertResultIsBOOL(
             TestCLLocationManagerDelegateHelper.locationManagerShouldDisplayHeadingCalibration_

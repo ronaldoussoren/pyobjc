@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import MailKit
-import objc
 
 
 class TestMEMessageActionHandlerHelper(MailKit.NSObject):
@@ -10,7 +9,7 @@ class TestMEMessageActionHandlerHelper(MailKit.NSObject):
 
 class TestMEMessageActionHandler(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("MEMessageActionHandler")
+        self.assertProtocolExists("MEMessageActionHandler")
 
     def test_methods(self):
         self.assertArgIsBlock(

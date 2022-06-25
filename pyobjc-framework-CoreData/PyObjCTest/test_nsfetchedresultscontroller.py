@@ -24,7 +24,9 @@ class TestNSFetchedResultsController(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("NSFetchedResultsControllerDelegate")
+        self.assertProtocolExists("NSFetchedResultsControllerDelegate")
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSFetchedResultsControllerHelper.controller_didChangeObject_atIndexPath_forChangeType_newIndexPath_,
             3,

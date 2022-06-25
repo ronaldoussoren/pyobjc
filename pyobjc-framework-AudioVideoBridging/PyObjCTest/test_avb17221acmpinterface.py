@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import AudioVideoBridging
-import objc
 
 AVB17221ACMPInterfaceCompletion = b"v@@"
 
@@ -15,7 +14,7 @@ class TestAVB17221ACMPInterfaceHelper(AudioVideoBridging.NSObject):
 
 class TestAVB17221ACMPInterface(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("AVB17221ACMPClient")
+        self.assertProtocolExists("AVB17221ACMPClient")
 
     def test_methods(self):
         self.assertResultIsBOOL(

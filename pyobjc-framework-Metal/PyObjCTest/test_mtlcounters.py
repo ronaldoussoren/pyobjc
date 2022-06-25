@@ -79,9 +79,9 @@ class TestMTLCounters(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("MTLCounter")
-        objc.protocolNamed("MTLCounterSet")
-        objc.protocolNamed("MTLCounterSampleBuffer")
+        self.assertProtocolExists("MTLCounter")
+        self.assertProtocolExists("MTLCounterSet")
+        self.assertProtocolExists("MTLCounterSampleBuffer")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLCountersHelper.sampleCount, objc._C_NSUInteger)

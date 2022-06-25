@@ -70,4 +70,4 @@ class TestPHLivePhotoEditingContext(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("PHLivePhotoFrame")
+        self.assertProtocolExists("PHLivePhotoFrame")

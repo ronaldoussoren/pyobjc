@@ -43,7 +43,7 @@ class TestCIImageProcessor(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("CIImageProcessorInput")
+        self.assertProtocolExists("CIImageProcessorInput")
 
         self.assertResultHasType(
             TestCIImageProcessorHelper.region, Quartz.CGRect.__typestr__
@@ -52,4 +52,4 @@ class TestCIImageProcessor(TestCase):
         self.assertResultHasType(TestCIImageProcessorHelper.format, objc._C_NSInteger)
         self.assertResultHasType(TestCIImageProcessorHelper.baseAddress, b"^v")
 
-        objc.protocolNamed("CIImageProcessorOutput")
+        self.assertProtocolExists("CIImageProcessorOutput")

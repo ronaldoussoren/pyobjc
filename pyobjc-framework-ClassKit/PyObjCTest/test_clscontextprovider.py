@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 
 import ClassKit  # noqa: F401
-import objc
 
 
 class TestCLSActivityHelper(ClassKit.NSObject):
@@ -11,7 +10,7 @@ class TestCLSActivityHelper(ClassKit.NSObject):
 
 class TestCLSActivity(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("CLSContextProvider")
+        self.assertProtocolExists("CLSContextProvider")
 
     def test_methods(self):
         self.assertArgIsBlock(

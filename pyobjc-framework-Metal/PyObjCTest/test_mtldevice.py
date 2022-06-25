@@ -297,7 +297,7 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newIOCommandQueueWithDescriptor_error_(self, a, b):
         return 1
 
-    def newIOHandleWithURL_compressionMethod_error_(self, a, b):
+    def newIOHandleWithURL_compressionMethod_error_(self, a, b, c):
         return 1
 
     def sparseTileSizeInBytesForSparsePageSize_(self, a):
@@ -467,7 +467,7 @@ class TestMTLDevice(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLDevice")
+        self.assertProtocolExists("MTLDevice")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLDeviceHelper.registryID, objc._C_ULNGLNG)
@@ -963,7 +963,7 @@ class TestMTLDevice(TestCase):
 
         self.assertResultHasType(
             TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
-            Metal.MTLSize,
+            Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
@@ -988,7 +988,7 @@ class TestMTLDevice(TestCase):
 
         self.assertResultHasType(
             TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithSize_,
-            Metal.MTLSizeAndAlign,
+            Metal.MTLSizeAndAlign.__typestr__,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithSize_,

@@ -10,11 +10,11 @@ class TestBADownloaderExtensionHelper(BackgroundAssets.NSObject):
 
 class TestBADownloaderExtension(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("BADownloaderExtension")
+        self.assertProtocolExists("BADownloaderExtension")
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestBADownloaderExtensionHelper.receivedAuthenticationChallenge_download_completionHandler_,
             2,
-            b"v" + objc._C_NSUInteger + b"@",
+            b"v" + objc._C_NSInteger + b"@",
         )

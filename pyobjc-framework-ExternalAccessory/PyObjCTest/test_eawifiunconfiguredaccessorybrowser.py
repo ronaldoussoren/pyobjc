@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase
 
 import ExternalAccessory
@@ -12,7 +11,7 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("EAWiFiUnconfiguredAccessoryBrowserDelegate")
+        self.assertProtocolExists("EAWiFiUnconfiguredAccessoryBrowserDelegate")
 
     def testConstants(self):
         self.assertEqual(

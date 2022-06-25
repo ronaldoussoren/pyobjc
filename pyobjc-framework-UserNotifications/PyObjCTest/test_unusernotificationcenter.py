@@ -98,4 +98,4 @@ class TestUNUserNotificationCenter(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("UNUserNotificationCenterDelegate")
+        self.assertProtocolExists("UNUserNotificationCenterDelegate")

@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import ScriptingBridge
 
@@ -14,7 +13,7 @@ class TestSBApplication(TestCase):
 
     @min_os_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("SBApplicationDelegate")
+        self.assertProtocolExists("SBApplicationDelegate")
         self.assertArgHasType(
             TestSBApplicationHelper.eventDidFail_withError_,
             0,

@@ -31,7 +31,7 @@ class TestMPSCore_MPSImage(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("MPSImageAllocator")
+        self.assertProtocolExists("MPSImageAllocator")
 
     @min_os_level("10.13")
     def test_methods(self):

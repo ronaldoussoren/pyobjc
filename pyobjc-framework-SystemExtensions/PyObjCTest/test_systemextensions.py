@@ -1,5 +1,4 @@
 import SystemExtensions
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
@@ -56,7 +55,7 @@ class TestSystemExtensions(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("OSSystemExtensionRequestDelegate")
+        self.assertProtocolExists("OSSystemExtensionRequestDelegate")
 
     @min_os_level("10.15")
     def test_classes(self):

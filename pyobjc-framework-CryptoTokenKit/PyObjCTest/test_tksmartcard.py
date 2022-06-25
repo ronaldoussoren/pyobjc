@@ -122,4 +122,4 @@ class TestTKSmartCard(TestCase):
 
     @min_os_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("TKSmartCardUserInteractionDelegate")
+        self.assertProtocolExists("TKSmartCardUserInteractionDelegate")

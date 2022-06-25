@@ -9,7 +9,7 @@ class TestMTLIOCommandBufferHelper(Metal.NSObject):
     def addCompletedHandler_(self, a):
         pass
 
-    def loadBytes_size_sourceHandle_sourceHandleOffset_(self, a, b, c):
+    def loadBytes_size_sourceHandle_sourceHandleOffset_(self, a, b, c, d):
         pass
 
     def loadBuffer_offset_size_sourceHandle_sourceHandleOffset_(self, a, b, c, d, e):
@@ -43,7 +43,7 @@ class TestMTLIOCommandBuffer(TestCase):
 
     @min_os_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("MTLIOCommandBuffer")
+        self.assertProtocolExists("MTLIOCommandBuffer")
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(
@@ -55,7 +55,7 @@ class TestMTLIOCommandBuffer(TestCase):
         self.assertArgHasType(
             TestMTLIOCommandBufferHelper.loadBytes_size_sourceHandle_sourceHandleOffset_,
             0,
-            "n^v",
+            b"n^v",
         )
         self.assertArgHasType(
             TestMTLIOCommandBufferHelper.loadBytes_size_sourceHandle_sourceHandleOffset_,

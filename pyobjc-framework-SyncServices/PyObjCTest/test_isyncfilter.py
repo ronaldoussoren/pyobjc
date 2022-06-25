@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import SyncServices  # noqa: F401
-import objc
 
 
 class TestISyncFilterHelper(SyncServices.NSObject):
@@ -13,7 +12,9 @@ class TestISyncFilterHelper(SyncServices.NSObject):
 
 class TestISyncFilter(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("ISyncFiltering")
+        self.assertProtocolExists("ISyncFiltering")
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestISyncFilterHelper.isEqual_)
         self.assertResultIsBOOL(
             TestISyncFilterHelper.shouldApplyRecord_withRecordIdentifier_

@@ -19,10 +19,9 @@ class TestMCNearbyServiceAdvertiser(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("MCNearbyServiceAdvertiserDelegate"),
-            objc.formal_protocol,
-        )
+        self.assertProtocolExists("MCNearbyServiceAdvertiserDelegate")
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestMCNearbyServiceAdvertiserDelegateHelper.advertiser_didReceiveInvitationFromPeer_withContext_invitationHandler_,
             3,

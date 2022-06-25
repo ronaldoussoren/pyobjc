@@ -51,7 +51,7 @@ class TestNSFontPanel(TestCase):
 
     @min_sdk_level("10.14")
     def testProtocols10_14(self):
-        objc.protocolNamed("NSFontChanging")
+        self.assertProtocolExists("NSFontChanging")
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSFontPanel.sharedFontPanelExists)

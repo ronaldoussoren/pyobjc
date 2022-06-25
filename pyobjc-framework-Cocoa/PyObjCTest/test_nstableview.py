@@ -278,8 +278,8 @@ class TestNSTableView(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSTableViewDelegate")
-        objc.protocolNamed("NSTableViewDataSource")
+        self.assertProtocolExists("NSTableViewDelegate")
+        self.assertProtocolExists("NSTableViewDataSource")
 
     def testProtocols(self):
         self.assertResultHasType(

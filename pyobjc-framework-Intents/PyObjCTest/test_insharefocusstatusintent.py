@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
-import objc
 
 
 class TestINShareFocusStatusIntentHelper(Intents.NSObject):
@@ -14,7 +13,7 @@ class TestINShareFocusStatusIntentHelper(Intents.NSObject):
 class TestINShareFocusStatusIntent(TestCase):
     @min_sdk_level("12.0")
     def test_protocols(self):
-        objc.protocolNamed("INShareFocusStatusIntentHandling")
+        self.assertProtocolExists("INShareFocusStatusIntentHandling")
 
     def test_methods(self):
         self.assertArgIsBlock(

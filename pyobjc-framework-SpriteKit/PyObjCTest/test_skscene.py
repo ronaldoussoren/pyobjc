@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 import SpriteKit
 
@@ -17,4 +16,4 @@ class TestSKScene(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("SKSceneDelegate")
+        self.assertProtocolExists("SKSceneDelegate")

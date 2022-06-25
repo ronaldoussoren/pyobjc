@@ -25,7 +25,7 @@ class TestAVPlayerView(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        objc.protocolNamed("AVPlayerViewDelegate")
+        self.assertProtocolExists("AVPlayerViewDelegate")
 
     @min_os_level("10.9")
     def testClasses(self):
@@ -104,4 +104,4 @@ class TestAVPlayerView(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("AVPlayerViewPictureInPictureDelegate")
+        self.assertProtocolExists("AVPlayerViewPictureInPictureDelegate")

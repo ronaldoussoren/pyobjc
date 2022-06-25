@@ -55,7 +55,7 @@ class TestNCWidgetListViewController(TestCase):
 
     @min_os_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("NCWidgetListViewDelegate")
+        self.assertProtocolExists("NCWidgetListViewDelegate")
 
         self.assertArgHasType(
             TestNCWidgetListViewDelegateHelper.widgetList_viewControllerForRow_,

@@ -51,7 +51,7 @@ class TestUNNotificationContentExtension(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("UNNotificationContentExtension")
+        self.assertProtocolExists("UNNotificationContentExtension")
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

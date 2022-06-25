@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import MetricKit
-import objc
 
 
 class TestMXMetricManager(TestCase):
@@ -9,4 +8,4 @@ class TestMXMetricManager(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocol(self):
-        objc.protocolNamed("MXMetricManagerSubscriber")
+        self.assertProtocolExists("MXMetricManagerSubscriber")

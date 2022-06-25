@@ -1,5 +1,3 @@
-import objc
-
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import CoreML
 
@@ -12,7 +10,7 @@ class TestMLWritableHelper(CoreML.NSObject):
 class TestMLWritable(TestCase):
     @min_sdk_level("10.15")
     def testProtocols(self):
-        objc.protocolNamed("MLWritable")
+        self.assertProtocolExists("MLWritable")
 
     def testMethods(self):
         self.assertResultIsBOOL(TestMLWritableHelper.writeToURL_error_)

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestQCPlugIn(TestCase):
@@ -54,9 +53,8 @@ class TestQCPlugIn(TestCase):
         self.assertResultIsBOOL(Quartz.QCPlugIn.setValue_forOutputKey_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.loadPlugInAtPath_)
 
-    @expectedFailure
     def testProtocols(self):
-        objc.protocolNamed("QCPlugInContext")
-        objc.protocolNamed("QCPlugInInputImageSource")
-        objc.protocolNamed("QCPlugInOutputImageProvider")
+        self.assertProtocolExists("QCPlugInContext")
+        self.assertProtocolExists("QCPlugInInputImageSource")
+        self.assertProtocolExists("QCPlugInOutputImageProvider")
         self.fail("Test interface for QCPlugInContext")

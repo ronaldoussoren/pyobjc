@@ -110,24 +110,24 @@ class TestNSFileProviderReplicatedExtension(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        objc.protocolNamed("NSFileProviderEnumerating")
-        objc.protocolNamed("NSFileProviderReplicatedExtension")
-        objc.protocolNamed("NSFileProviderIncrementalContentFetching")
-        objc.protocolNamed("NSFileProviderServicing")
-        objc.protocolNamed("NSFileProviderThumbnailing")
-        objc.protocolNamed("NSFileProviderCustomAction")
+        self.assertProtocolExists("NSFileProviderEnumerating")
+        self.assertProtocolExists("NSFileProviderReplicatedExtension")
+        self.assertProtocolExists("NSFileProviderIncrementalContentFetching")
+        self.assertProtocolExists("NSFileProviderServicing")
+        self.assertProtocolExists("NSFileProviderThumbnailing")
+        self.assertProtocolExists("NSFileProviderCustomAction")
 
     @min_sdk_level("11.3")
     def test_protocols11_3(self):
-        objc.protocolNamed("NSFileProviderDomainState")
+        self.assertProtocolExists("NSFileProviderDomainState")
 
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        objc.protocolNamed("NSFileProviderUserInteractionSuppressing")
+        self.assertProtocolExists("NSFileProviderUserInteractionSuppressing")
 
     @min_sdk_level("12.3")
     def test_protocols12_3(self):
-        objc.protocolNamed("NSFileProviderPartialContentFetching")
+        self.assertProtocolExists("NSFileProviderPartialContentFetching")
 
     def test_methods(self):
         self.assertArgIsBOOL(

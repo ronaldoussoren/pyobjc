@@ -1,10 +1,9 @@
 from PyObjCTools.TestSupport import TestCase
 
 import ExtensionKit
-import objc
 
 
-class TestEXHostViewControllerHelper(ExtensionKit.NSObjet):
+class TestEXHostViewControllerHelper(ExtensionKit.NSObject):
     def shouldAcceptXPCConnection_(self, a):
         return 1
 
@@ -16,7 +15,7 @@ class TestEXHostViewController(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("EXHostViewControllerDelegate")
+        self.assertProtocolExists("EXHostViewControllerDelegate")
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

@@ -77,7 +77,7 @@ class TestMTLArgumentEncoderHelper(Metal.NSObject):
 class TestMTLArgumentEncoder(TestCase):
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
-        objc.protocolNamed("MTLArgumentEncoder")
+        self.assertProtocolExists("MTLArgumentEncoder")
 
     def test_methods(self):
         self.assertResultHasType(

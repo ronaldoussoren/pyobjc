@@ -23,7 +23,7 @@ class TestMTLBufferHelper(Metal.NSObject):
 class TestMTLBuffer(TestCase):
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
-        objc.protocolNamed("MTLBuffer")
+        self.assertProtocolExists("MTLBuffer")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLBufferHelper.length, objc._C_NSUInteger)

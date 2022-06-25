@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 import UserNotifications
-import objc
 
 
 class TestUNNotificationContent(TestCase):
@@ -17,7 +16,7 @@ class TestUNNotificationContent(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        objc.protocolNamed("UNNotificationContentProviding")
+        self.assertProtocolExists("UNNotificationContentProviding")
 
     @min_os_level("12.0")
     def test_methods12_0(self):

@@ -1,5 +1,3 @@
-import objc
-
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import CryptoTokenKit
 
@@ -12,7 +10,7 @@ class TestTKSmartCardTokenHelper(CryptoTokenKit.NSObject):
 class TestTKSmartCardToken(TestCase):
     @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed("TKSmartCardTokenDriverDelegate")
+        self.assertProtocolExists("TKSmartCardTokenDriverDelegate")
 
     @min_sdk_level("10.12")
     def testMethods(self):

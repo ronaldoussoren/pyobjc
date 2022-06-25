@@ -11,8 +11,9 @@ class TestNCWidgetSearchViewDelegateHelper(NotificationCenter.NSObject):
 class TestNCWidgetSearchViewControlle(TestCase):
     @min_os_level("10.10")
     def testClasses10_10(self):
-        objc.protocolNamed("NCWidgetSearchViewDelegate")
+        self.assertProtocolExists("NCWidgetSearchViewDelegate")
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNCWidgetSearchViewDelegateHelper.widgetSearch_searchForTerm_maxResults_,
             2,

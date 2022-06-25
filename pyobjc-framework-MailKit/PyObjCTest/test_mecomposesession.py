@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase
-import objc
 import MailKit
 
 
@@ -21,7 +20,7 @@ class TestMEComposeSession(TestCase):
         self.assertEqual(MailKit.MEComposeSessionErrorCodeInvalidBody, 2)
 
     def test_protocols(self):
-        objc.protocolNamed("MEComposeSessionHandler")
+        self.assertProtocolExists("MEComposeSessionHandler")
 
     def test_methods(self):
         self.assertArgIsBlock(

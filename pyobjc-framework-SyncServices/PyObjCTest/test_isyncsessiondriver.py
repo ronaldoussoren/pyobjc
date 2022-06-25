@@ -86,7 +86,9 @@ class TestISyncSessionDriver(TestCase):
 
     @min_os_level("10.5")
     def testProtocols(self):
-        objc.protocolNamed("ISyncSessionDriverDataSource")
+        self.assertProtocolExists("ISyncSessionDriverDataSource")
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestISyncSessionDriverHelper.preferredSyncModeForEntityName_, objc._C_UINT
         )

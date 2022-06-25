@@ -165,12 +165,12 @@ class TestNSDragging(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocols(self):
-        objc.protocolNamed("NSDraggingDestination")
-        objc.protocolNamed("NSDraggingSource")
+        self.assertProtocolExists("NSDraggingDestination")
+        self.assertProtocolExists("NSDraggingSource")
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        objc.protocolNamed("NSSpringLoadingDestination")
+        self.assertProtocolExists("NSSpringLoadingDestination")
 
     def testProtocolImplementations(self):
         self.assertResultHasType(

@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
@@ -152,7 +151,7 @@ class TestAVAsset(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("AVFragmentMinding")
+        self.assertProtocolExists("AVFragmentMinding")
 
     @min_sdk_level("10.11")
     def testProtocolMethods(self):

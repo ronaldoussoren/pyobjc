@@ -56,7 +56,8 @@ class TestCBPeriphicalManager(TestCase):
     @min_os_level("10.9")
     def testProtocols(self):
         self.assertIsInstance(
-            objc.protocolNamed("CBPeripheralManagerDelegate"), objc.formal_protocol
+            self.assertProtocolExists("CBPeripheralManagerDelegate"),
+            objc.formal_protocol,
         )
 
     @min_os_level("10.9")

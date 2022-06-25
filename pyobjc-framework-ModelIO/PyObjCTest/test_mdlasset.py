@@ -61,4 +61,4 @@ class TestMDLAsset(TestCase):
         )
 
     def testProtocolObjects(self):
-        objc.protocolNamed("MDLLightProbeIrradianceDataSource")
+        self.assertProtocolExists("MDLLightProbeIrradianceDataSource")

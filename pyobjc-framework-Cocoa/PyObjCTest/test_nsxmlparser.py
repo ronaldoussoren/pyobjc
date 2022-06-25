@@ -1,6 +1,5 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSXMLParser(TestCase):
@@ -127,4 +126,4 @@ class TestNSXMLParser(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("NSXMLParserDelegate")
+        self.assertProtocolExists("NSXMLParserDelegate")

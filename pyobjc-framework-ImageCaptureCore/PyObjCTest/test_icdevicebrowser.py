@@ -1,6 +1,5 @@
 import ImageCaptureCore
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestICDeviceBrowserHelper(ImageCaptureCore.NSObject):
@@ -16,7 +15,7 @@ class TestICDeviceBrowser(TestCase):
         self.assertIsTypedEnum(ImageCaptureCore.ICAuthorizationStatus, str)
 
     def testProtocolObjects(self):
-        objc.protocolNamed("ICDeviceBrowserDelegate")
+        self.assertProtocolExists("ICDeviceBrowserDelegate")
 
     def testMethods(self):
         self.assertArgIsBOOL(

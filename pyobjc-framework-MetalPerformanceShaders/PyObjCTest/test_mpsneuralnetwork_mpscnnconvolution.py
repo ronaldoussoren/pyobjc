@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 import MetalPerformanceShaders
 
 
@@ -60,7 +59,7 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("MPSCNNConvolutionDataSource")
+        self.assertProtocolExists("MPSCNNConvolutionDataSource")
 
     def test_methods(self):
         self.assertResultHasType(

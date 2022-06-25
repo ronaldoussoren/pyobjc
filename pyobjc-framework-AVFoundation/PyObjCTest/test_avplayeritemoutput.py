@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -55,7 +54,7 @@ class TestAVPlayerOutput(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("AVPlayerItemOutputPullDelegate")
-        objc.protocolNamed("AVPlayerItemLegibleOutputPushDelegate")
-        objc.protocolNamed("AVPlayerItemMetadataOutputPushDelegate")
-        objc.protocolNamed("AVPlayerItemOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemOutputPullDelegate")
+        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemMetadataOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemOutputPushDelegate")

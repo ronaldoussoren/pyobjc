@@ -163,14 +163,14 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(TestNSObjectHelper.supportsSecureCoding)
 
     def testProtocols(self):
-        objc.protocolNamed("NSCopying")
-        objc.protocolNamed("NSMutableCopying")
-        objc.protocolNamed("NSCoding")
+        self.assertProtocolExists("NSCopying")
+        self.assertProtocolExists("NSMutableCopying")
+        self.assertProtocolExists("NSCoding")
 
     @min_sdk_level("10.6")
     def testProtocols10_6(self):
-        objc.protocolNamed("NSDiscardableContent")
+        self.assertProtocolExists("NSDiscardableContent")
 
     @min_sdk_level("10.7")
     def testProtocols10_7(self):
-        objc.protocolNamed("NSSecureCoding")
+        self.assertProtocolExists("NSSecureCoding")

@@ -1,6 +1,5 @@
 import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class TestGKTurnBasedMatchHelper(GameKit.NSObject):
@@ -61,8 +60,8 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertIsInstance(GameKit.GKTurnTimeoutNone, float)
 
     def testProtocols(self):
-        objc.protocolNamed("GKTurnBasedEventListener")
-        objc.protocolNamed("GKTurnBasedEventHandlerDelegate")
+        self.assertProtocolExists("GKTurnBasedEventListener")
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate")
 
     def testMethods(self):
         self.assertArgIsBOOL(

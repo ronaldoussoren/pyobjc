@@ -1,6 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
-
 import PushKit
 
 
@@ -26,4 +24,4 @@ class TestPKPushRegistry(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("PKPushRegistryDelegate")
+        self.assertProtocolExists("PKPushRegistryDelegate")

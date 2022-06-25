@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 
 import Accessibility
-import objc
 
 
 class TestAXCustomContent(TestCase):
@@ -13,4 +12,4 @@ class TestAXCustomContent(TestCase):
         self.assertEqual(Accessibility.AXCustomContentImportanceHigh, 1)
 
     def test_protocols(self):
-        objc.protocolNamed("AXCustomContentProvider")
+        self.assertProtocolExists("AXCustomContentProvider")

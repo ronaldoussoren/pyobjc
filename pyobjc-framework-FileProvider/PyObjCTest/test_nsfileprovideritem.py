@@ -127,7 +127,7 @@ class TestNSFileProviderItem(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        objc.protocolNamed("NSFileProviderItem")
+        self.assertProtocolExists("NSFileProviderItem")
 
     def test_methods(self):
         self.assertResultHasType(

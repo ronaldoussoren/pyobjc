@@ -94,7 +94,7 @@ class TestNSDecimalNumber(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("NSDecimalNumberBehaviors")
+        self.assertProtocolExists("NSDecimalNumberBehaviors")
         self.assertArgHasType(
             Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_,
             0,

@@ -110,4 +110,4 @@ class TestSCNView(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("SCNCameraControlConfiguration")
+        self.assertProtocolExists("SCNCameraControlConfiguration")

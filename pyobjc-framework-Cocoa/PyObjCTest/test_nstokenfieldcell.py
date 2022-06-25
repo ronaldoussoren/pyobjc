@@ -47,7 +47,7 @@ class TestNSTokenFieldCell(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSTokenFieldCellDelegate")
+        self.assertProtocolExists("NSTokenFieldCellDelegate")
 
     def testProtocols(self):
         self.assertArgHasType(

@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSPageControllerHelper(AppKit.NSObject):
@@ -27,4 +26,4 @@ class TestNSPageController(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSPageControllerDelegate")
+        self.assertProtocolExists("NSPageControllerDelegate")

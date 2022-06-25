@@ -15,8 +15,8 @@ class TestMLBatchProviderHelper(CoreML.NSObject):
 class TestMLBatchProvider(TestCase):
     @min_sdk_level("10.14")
     def testProtocols(self):
-        objc.protocolNamed("MLBatchProvider")
-        objc.protocolNamed("MLFeatureProvider")
+        self.assertProtocolExists("MLBatchProvider")
+        self.assertProtocolExists("MLFeatureProvider")
 
     def testMethods(self):
         self.assertResultHasType(TestMLBatchProviderHelper.count, objc._C_NSInteger)

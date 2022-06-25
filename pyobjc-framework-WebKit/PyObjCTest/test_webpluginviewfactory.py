@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import WebKit
-import objc
 
 
 class TestWebPluginViewFactory(TestCase):
@@ -16,4 +15,4 @@ class TestWebPluginViewFactory(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("WebPlugInViewFactory")
+        self.assertProtocolExists("WebPlugInViewFactory")

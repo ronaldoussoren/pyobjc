@@ -1,12 +1,11 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestIKScannerDeviceView(TestCase):
     @min_os_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("IKScannerDeviceViewDelegate")
+        self.assertProtocolExists("IKScannerDeviceViewDelegate")
 
     @min_os_level("10.6")
     def testConstants10_6(self):

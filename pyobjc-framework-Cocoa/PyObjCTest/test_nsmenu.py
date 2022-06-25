@@ -26,7 +26,7 @@ class TestNSMenu(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSMenuDelegate")
+        self.assertProtocolExists("NSMenuDelegate")
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSMenuHelper.validateMenuItem_)

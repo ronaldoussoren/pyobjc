@@ -1,6 +1,5 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSCache(TestCase):
@@ -13,7 +12,7 @@ class TestNSCache(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("NSCacheDelegate")
+        self.assertProtocolExists("NSCacheDelegate")
 
     def testConvenience(self):
         c = Foundation.NSCache.alloc().init()

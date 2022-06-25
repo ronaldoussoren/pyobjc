@@ -22,10 +22,8 @@ class TestIKSlideShowHelper(Quartz.NSObject):
 
 class TestIKSlideshow(TestCase):
     @min_os_level("10.5")
-    def no_testProtocols(self):
-        self.assertIsInstance(
-            objc.protocolNamed("IKSlideshowDataSource"), objc.formal_protocol
-        )
+    def testProtocols(self):
+        self.assertProtocolExists("IKSlideshowDataSource")
 
     @min_os_level("10.5")
     def testProtocolMethods(self):

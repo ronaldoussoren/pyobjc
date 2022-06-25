@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 import NetworkExtension
 
@@ -69,4 +68,4 @@ class TestNWTCPConnection(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("NWTCPConnectionAuthenticationDelegate")
+        self.assertProtocolExists("NWTCPConnectionAuthenticationDelegate")

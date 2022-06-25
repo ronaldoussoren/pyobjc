@@ -217,6 +217,6 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("NSCollectionLayoutContainer")
-        objc.protocolNamed("NSCollectionLayoutEnvironment")
-        objc.protocolNamed("NSCollectionLayoutVisibleItem")
+        self.assertProtocolExists("NSCollectionLayoutContainer")
+        self.assertProtocolExists("NSCollectionLayoutEnvironment")
+        self.assertProtocolExists("NSCollectionLayoutVisibleItem")

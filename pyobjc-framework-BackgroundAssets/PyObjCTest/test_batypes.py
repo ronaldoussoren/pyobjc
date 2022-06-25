@@ -12,23 +12,7 @@ class TestBATypes(TestCase):
         self.assertEqual(BackgroundAssets.BADownloadStateDownloading, 2)
         self.assertEqual(BackgroundAssets.BADownloadStateFinished, 3)
 
-        self.assertIsTypedEnumType(BackgroundAssets.BADownloadState, int)
+        self.assertIsTypedEnum(BackgroundAssets.BADownloadState, int)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityMin, int)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityDefault, int)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityMax, int)
-
-        self.assertIsTypedEnum(BackgroundAssets.BADownloaderExtensionMetadataKey, str)
-        self.assertIsInstance(
-            BackgroundAssets.BADownloaderExtensionMetadataKeyApplicationIdentifier, str
-        )
-        self.assertIsInstance(
-            BackgroundAssets.BADownloaderExtensionMetadataKeyLocalizedApplicationName,
-            str,
-        )
-        self.assertIsInstance(
-            BackgroundAssets.BADownloaderExtensionMetadataKeyApplicationCacheLocationURL,
-            str,
-        )
-        self.assertIsInstance(
-            BackgroundAssets.BADownloaderExtensionMetadataKeyApplicationLocationURL, str
-        )

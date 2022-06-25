@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestAVVideoCompositingHelper(AVFoundation.NSObject):
@@ -66,7 +66,7 @@ class TestAVVideoCompositing(TestCase):
             TestAVVideoCompositingHelper.supportsWideColorSourceFrames
         )
 
-    @min_os_level("10.9")
+    @min_sdk_level("10.9")
     def testProtocols(self):
-        objc.protocolNamed("AVVideoCompositing")
-        objc.protocolNamed("AVVideoCompositionInstruction")
+        self.assertProtocolExists("AVVideoCompositing")
+        self.assertProtocolExists("AVVideoCompositionInstruction")

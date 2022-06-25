@@ -9,6 +9,9 @@ from PyObjCTools.TestSupport import (
 
 
 class TestMTLArgumentHelper(Metal.NSObject):
+    def index(self):
+        return 1
+
     def type(self):  # noqa:  A003
         return 1
 
@@ -186,11 +189,11 @@ class TestMTLArgument(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("MTLBinding")
-        objc.protocolNamed("MTLBufferBinding")
-        objc.protocolNamed("MTLThreadgroupBinding")
-        objc.protocolNamed("MTLTextureBinding")
-        objc.protocolNamed("MTLObjectPayloadBinding")
+        self.assertProtocolExists("MTLBinding")
+        self.assertProtocolExists("MTLBufferBinding")
+        self.assertProtocolExists("MTLThreadgroupBinding")
+        self.assertProtocolExists("MTLTextureBinding")
+        self.assertProtocolExists("MTLObjectPayloadBinding")
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -211,7 +214,7 @@ class TestMTLArgument(TestCase):
         )
 
     def test_protocol_methods(self):
-        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSInteger)
         self.assertResultHasType(TestMTLArgumentHelper.access, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)

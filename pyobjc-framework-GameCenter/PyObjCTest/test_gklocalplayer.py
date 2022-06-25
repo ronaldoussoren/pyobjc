@@ -70,7 +70,7 @@ class TestGKLocalPlayer(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("GKLocalPlayerListener")
+        self.assertProtocolExists("GKLocalPlayerListener")
 
     @min_os_level("10.8")
     def testConstants(self):

@@ -1,6 +1,5 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSNetServicesHelper(Foundation.NSObject):
@@ -81,5 +80,5 @@ class TestNSNetservices(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSNetServiceDelegate")
-        objc.protocolNamed("NSNetServiceBrowserDelegate")
+        self.assertProtocolExists("NSNetServiceDelegate")
+        self.assertProtocolExists("NSNetServiceBrowserDelegate")

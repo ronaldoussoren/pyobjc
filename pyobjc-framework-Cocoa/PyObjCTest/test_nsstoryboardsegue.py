@@ -1,5 +1,4 @@
 import AppKit
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -22,7 +21,7 @@ class TestNSStoryboardSegue(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        objc.protocolNamed("NSSeguePerforming")
+        self.assertProtocolExists("NSSeguePerforming")
 
         self.assertResultIsBOOL(
             TestNSStoryboardSegueHelper.shouldPerformSegueWithIdentifier_sender_

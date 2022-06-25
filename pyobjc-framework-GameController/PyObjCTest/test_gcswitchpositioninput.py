@@ -35,7 +35,7 @@ class TestGCSwitchPositionInputHelper(GameController.NSObject):
 class TestGCSwitchPositionInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("GCSwitchPositionInput")
+        self.assertProtocolExists("GCSwitchPositionInput")
 
     def test_protocol_methhods(self):
         self.assertResultIsBlock(

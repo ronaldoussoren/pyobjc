@@ -1,7 +1,6 @@
 # This just tests the definitions in the Foundation.NSKeyedArchiver header
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSKeyedArchiver(TestCase):
@@ -111,5 +110,5 @@ class TestNSKeyedArchiver(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocols(self):
-        objc.protocolNamed("NSKeyedArchiverDelegate")
-        objc.protocolNamed("NSKeyedUnarchiverDelegate")
+        self.assertProtocolExists("NSKeyedArchiverDelegate")
+        self.assertProtocolExists("NSKeyedUnarchiverDelegate")

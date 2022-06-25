@@ -27,7 +27,7 @@ class TestSCNAction(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("SCNActionable")
+        self.assertProtocolExists("SCNActionable")
 
     @min_os_level("10.10")
     def testMethods(self):

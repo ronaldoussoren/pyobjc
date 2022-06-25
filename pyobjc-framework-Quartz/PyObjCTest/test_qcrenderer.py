@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import Quartz
-import objc
 
 
 class TestQCRendererHelper(Quartz.NSObject):
@@ -14,7 +13,7 @@ class TestQCRenderer(TestCase):
         self.assertIsInstance(Quartz.QCRendererMouseLocationKey, str)
 
     def testProtocols(self):
-        objc.protocolNamed("QCCompositionRenderer")
+        self.assertProtocolExists("QCCompositionRenderer")
 
     def testMethods(self):
         self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)

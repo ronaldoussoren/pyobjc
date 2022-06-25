@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSDrawerHelper(AppKit.NSObject):
@@ -36,7 +35,7 @@ class TestNSDrawer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSDrawerDelegate")
+        self.assertProtocolExists("NSDrawerDelegate")
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)

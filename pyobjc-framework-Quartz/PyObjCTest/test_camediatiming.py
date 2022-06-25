@@ -91,4 +91,4 @@ class TestCAMediaTiming(TestCase):
 
     @min_os_level("10.5")
     def testProtocols(self):
-        objc.protocolNamed("CAMediaTiming")
+        self.assertProtocolExists("CAMediaTiming")

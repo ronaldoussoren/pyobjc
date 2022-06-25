@@ -25,9 +25,13 @@
    "kVTAlphaChannelMode_PremultipliedAlpha": { "typestr": "@" }
   },
   "cftypes": {
+   "VTPixelRotationSessionRef": {
+    "typestr": "^{OpaqueVTPixelRotationSession=}",
+    "gettypeid_func": "VTPixelRotationSessionGetTypeID"
+   },
    "VTPixelTransferSessionRef": {
     "typestr": "^{OpaqueVTPixelTransferSession=}",
-    "gettypeid_func": ":VTPixelTransferSessionGetTypeID"
+    "gettypeid_func": "VTPixelTransferSessionGetTypeID"
    },
    "VTMultiPassStorageRef": {
     "typestr": "^{OpaqueVTMultiPassStorage=}",
@@ -48,6 +52,11 @@
   },
   "formal_protocols": {},
   "functions": {
+   "VTPixelRotationSessionCreate": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "VTCompressionSessionBeginPass": {
     "args": {
      "0": {},

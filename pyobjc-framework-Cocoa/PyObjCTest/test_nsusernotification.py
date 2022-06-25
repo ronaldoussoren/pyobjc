@@ -1,5 +1,4 @@
 import Foundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -48,4 +47,4 @@ class TestNSUserNotification(TestCase):
 
     @min_os_level("10.10")
     def testProtocolsObjects(self):
-        objc.protocolNamed("NSUserNotificationCenterDelegate")
+        self.assertProtocolExists("NSUserNotificationCenterDelegate")

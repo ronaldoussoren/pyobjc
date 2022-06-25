@@ -20,6 +20,20 @@
    "ASCOSEEllipticCurveIdentifierP256": { "value": 1 }
   },
   "classes": {
+   "ASAuthorizationProviderExtensionLoginManager": {
+    "methods": [
+     {
+      "selector": "copyKeyForKeyType:",
+      "class_method": false,
+      "retval": { "already_cfretained": true }
+     },
+     {
+      "selector": "copyIdentityForKeyType:",
+      "class_method": false,
+      "retval": { "already_cfretained": true }
+     }
+    ]
+   },
    "ASWebAuthenticationSession": {
     "methods": [
      {

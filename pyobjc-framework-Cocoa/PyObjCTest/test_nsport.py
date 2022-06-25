@@ -51,5 +51,5 @@ class TestNSPort(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed("NSPortDelegate")
-        objc.protocolNamed("NSMachPortDelegate")
+        self.assertProtocolExists("NSPortDelegate")
+        self.assertProtocolExists("NSMachPortDelegate")

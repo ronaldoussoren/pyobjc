@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import HealthKit
-import objc
 
 
 class TestHKWorkoutSession(TestCase):
@@ -14,7 +13,7 @@ class TestHKWorkoutSession(TestCase):
         self.assertEqual(HealthKit.HKWorkoutSessionStateStopped, 6)
 
     def test_protocols(self):
-        objc.protocolNamed("HKWorkoutSessionDelegate")
+        self.assertProtocolExists("HKWorkoutSessionDelegate")
 
     def test_methods(self):
         self.assertArgIsOut(HealthKit.HKWorkoutSession.initWithConfiguration_error_, 1)

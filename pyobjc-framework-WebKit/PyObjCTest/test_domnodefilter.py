@@ -11,7 +11,7 @@ class TestDOMNodeFilterHelper(WebKit.NSObject):
 class TestDOMNodeFilter(TestCase):
     @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed("DOMNodeFilter")
+        self.assertProtocolExists("DOMNodeFilter")
 
     def testMethods(self):
         self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)

@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameCenter
@@ -57,14 +56,14 @@ class TestGKTurnBasedMatch(TestCase):
 
     @min_os_level("10.8")
     def testProtocols(self):
-        objc.protocolNamed("GKTurnBasedEventListener")
+        self.assertProtocolExists("GKTurnBasedEventListener")
 
         self.assertArgIsBOOL(
             TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
             2,
         )
 
-        objc.protocolNamed("GKTurnBasedEventHandlerDelegate")
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate")
         self.assertArgIsBOOL(
             TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
         )

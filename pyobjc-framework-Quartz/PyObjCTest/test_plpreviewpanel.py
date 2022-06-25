@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import Quartz
@@ -23,7 +22,7 @@ class TestQLPreviewPanel(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        objc.protocolNamed("QLPreviewPanelDataSource")
+        self.assertProtocolExists("QLPreviewPanelDataSource")
 
     def test_methods(self):
         self.assertResultIsBOOL(TestPLPreviewPanelHelper.previewPanel_handleEvent_)

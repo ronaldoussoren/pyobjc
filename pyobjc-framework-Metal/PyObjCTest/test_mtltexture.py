@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
 
-class TestMTLArgumentHelper(Metal.NSObject):
+class TestMTLTextureHelper(Metal.NSObject):
     def parentRelativeLevel(self):
         return 0
 
@@ -162,211 +162,209 @@ class TestMTLArgument(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLTexture")
+        self.assertProtocolExists("MTLTexture")
 
     def test_methods(self):
         self.assertResultHasType(
-            TestMTLArgumentHelper.parentRelativeLevel, objc._C_NSUInteger
+            TestMTLTextureHelper.parentRelativeLevel, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLArgumentHelper.parentRelativeSlice, objc._C_NSUInteger
+            TestMTLTextureHelper.parentRelativeSlice, objc._C_NSUInteger
         )
-        self.assertResultHasType(TestMTLArgumentHelper.bufferOffset, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.bufferOffset, objc._C_NSUInteger)
         self.assertResultHasType(
-            TestMTLArgumentHelper.bufferBytesPerRow, objc._C_NSUInteger
-        )
-        self.assertResultHasType(
-            TestMTLArgumentHelper.iosurfacePlane, objc._C_NSUInteger
-        )
-        self.assertResultHasType(TestMTLArgumentHelper.textureType, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.pixelFormat, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.width, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.height, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.depth, objc._C_NSUInteger)
-        self.assertResultHasType(
-            TestMTLArgumentHelper.mipmapLevelCount, objc._C_NSUInteger
-        )
-        self.assertResultHasType(TestMTLArgumentHelper.sampleCount, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.arrayLength, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.usage, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLArgumentHelper.isShareable, objc._C_NSBOOL)
-        self.assertResultHasType(
-            TestMTLArgumentHelper.isFramebufferOnly, objc._C_NSBOOL
+            TestMTLTextureHelper.bufferBytesPerRow, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLArgumentHelper.allowGPUOptimizedContents, objc._C_NSBOOL
+            TestMTLTextureHelper.iosurfacePlane, objc._C_NSUInteger
+        )
+        self.assertResultHasType(TestMTLTextureHelper.textureType, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.pixelFormat, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.width, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.height, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.depth, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestMTLTextureHelper.mipmapLevelCount, objc._C_NSUInteger
+        )
+        self.assertResultHasType(TestMTLTextureHelper.sampleCount, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.arrayLength, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.usage, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLTextureHelper.isShareable, objc._C_NSBOOL)
+        self.assertResultHasType(TestMTLTextureHelper.isFramebufferOnly, objc._C_NSBOOL)
+        self.assertResultHasType(
+            TestMTLTextureHelper.allowGPUOptimizedContents, objc._C_NSBOOL
         )
         self.assertResultHasType(
-            TestMTLArgumentHelper.compressionType, objc._C_NSUInteger
+            TestMTLTextureHelper.compressionType, objc._C_NSInteger
         )
-        self.assertResultHasType(TestMTLArgumentHelper.gpuHandle, objc._C_ULNG_LNG)
+        self.assertResultHasType(TestMTLTextureHelper.gpuHandle, objc._C_ULNG_LNG)
         self.assertResultHasType(
-            TestMTLArgumentHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
+            TestMTLTextureHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             0,
             b"o^v",
         )
         # XXX: Buffer size?
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             3,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
+            TestMTLTextureHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             0,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             3,
             b"n^v",
         )
         # XXX: Buffer size?
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
+            TestMTLTextureHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
             0,
             b"o^v",
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
+            TestMTLTextureHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
+            TestMTLTextureHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
             2,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
+            TestMTLTextureHelper.getBytes_bytesPerRow_fromRegion_mipmapLevel_,
             3,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
             0,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
             2,
             b"n^v",
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
+            TestMTLTextureHelper.replaceRegion_mipmapLevel_withBytes_bytesPerRow_,
             3,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_, 0, objc._C_NSUInteger
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_, 0, objc._C_NSUInteger
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             2,
             Metal.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             3,
             Metal.NSRange.__typestr__,
         )
 
         self.assertResultHasType(
-            TestMTLArgumentHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__
+            TestMTLTextureHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             2,
             Metal.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             3,
             Metal.NSRange.__typestr__,
         )
 
         self.assertResultHasType(
-            TestMTLArgumentHelper.firstMipmapInTail, objc._C_NSUInteger
+            TestMTLTextureHelper.firstMipmapInTail, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLArgumentHelper.tailSizeInBytes, objc._C_NSUInteger
+            TestMTLTextureHelper.tailSizeInBytes, objc._C_NSUInteger
         )
-        self.assertResultIsBOOL(TestMTLArgumentHelper.isSparse)
+        self.assertResultIsBOOL(TestMTLTextureHelper.isSparse)
 
     @min_os_level("10.14")
     def test_methods10_14(self):

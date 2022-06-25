@@ -34,7 +34,7 @@ class TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper(
 
 class TestMPSNeuralNetwork_MPSCNNInstanceNormalization(TestCase):
     def test_protocols(self):
-        objc.protocolNamed("MPSCNNInstanceNormalizationDataSource")
+        self.assertProtocolExists("MPSCNNInstanceNormalizationDataSource")
 
     def test_methods(self):
         self.assertResultHasType(

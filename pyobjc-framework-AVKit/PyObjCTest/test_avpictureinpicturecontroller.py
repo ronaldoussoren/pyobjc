@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import AVKit
-import objc
 
 
 class TestAVPictureInPictureControllerHelper(AVKit.NSObject):
@@ -13,7 +12,7 @@ class TestAVPictureInPictureControllerHelper(AVKit.NSObject):
 class TestAVPictureInPictureController(TestCase):
     @min_sdk_level("10.15")
     def testProtocols(self):
-        objc.protocolNamed("AVPictureInPictureControllerDelegate")
+        self.assertProtocolExists("AVPictureInPictureControllerDelegate")
 
     @min_os_level("10.15")
     def test_methods(self):

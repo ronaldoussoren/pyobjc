@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
@@ -28,7 +27,7 @@ class TestAVAudioPlayer(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("AVAudioPlayerDelegate")
+        self.assertProtocolExists("AVAudioPlayerDelegate")
 
     @min_os_level("10.8")
     def testMethods10_8(self):

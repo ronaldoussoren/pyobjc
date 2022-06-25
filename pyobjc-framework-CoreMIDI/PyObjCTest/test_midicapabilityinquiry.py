@@ -19,7 +19,7 @@ class TestMIDICapabilityInquiryHelper(CoreMIDI.NSObject):
 class TestMIDICapabilityInquiry(TestCase):
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        objc.protocolNamed("MIDICIProfileResponderDelegate")
+        self.assertProtocolExists("MIDICIProfileResponderDelegate")
 
     def test_structs(self):
         # XXX: Not sure if bridge is capable enough

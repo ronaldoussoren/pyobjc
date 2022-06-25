@@ -17,4 +17,4 @@ class TestVNRequestRevisionProvider(TestCase):
 
     @min_sdk_level("10.14")
     def test_protocols(self):
-        objc.protocolNamed("VNRequestRevisionProviding")
+        self.assertProtocolExists("VNRequestRevisionProviding")

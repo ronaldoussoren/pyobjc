@@ -18,7 +18,7 @@ class TestSCNBoundingVolumeHelper(SceneKit.NSObject):
 
 class TestSCNBoundingVolume(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("SCNBoundingVolume")
+        self.assertProtocolExists("SCNBoundingVolume")
 
     def testProtocolMethods(self):
         self.assertResultIsBOOL(TestSCNBoundingVolumeHelper.getBoundingBoxMin_max_)

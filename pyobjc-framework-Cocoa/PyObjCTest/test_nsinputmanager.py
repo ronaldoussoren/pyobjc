@@ -31,7 +31,7 @@ class TestNSInputManagerHelper(AppKit.NSObject):
 
 class TestNSInputManager(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("NSTextInput")
+        self.assertProtocolExists("NSTextInput")
         self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, b"v@:@")
         self.assertArgHasType(
             TestNSInputManagerHelper.setMarkedText_selectedRange_,

@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import SyncServices
-import objc
 
 
 class TestISyncCoreDataHelper(SyncServices.NSObject):
@@ -29,7 +28,9 @@ class TestISyncCoreData(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("NSPersistentStoreCoordinatorSyncing")
+        self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing")
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestISyncCoreDataHelper.persistentStoreCoordinatorShouldStartSyncing_
         )

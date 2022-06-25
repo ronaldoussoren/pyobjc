@@ -16,4 +16,4 @@ class TestABImageLoading(TestCase):
         )
 
     def testProtocols(self):
-        objc.protocolNamed("ABImageClient")
+        self.assertProtocolExists("ABImageClient")

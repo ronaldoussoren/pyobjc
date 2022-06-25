@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
-import objc
 
 
 class TestNSSpeechRecognizer(TestCase):
@@ -12,4 +11,4 @@ class TestNSSpeechRecognizer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("NSSpeechRecognizerDelegate")
+        self.assertProtocolExists("NSSpeechRecognizerDelegate")

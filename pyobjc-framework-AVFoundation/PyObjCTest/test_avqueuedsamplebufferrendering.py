@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
@@ -31,7 +30,7 @@ class TestAVQueuedSampleBufferRendering(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed("AVQueuedSampleBufferRendering")
+        self.assertProtocolExists("AVQueuedSampleBufferRendering")
 
     def testMethods(self):
         self.assertResultIsBOOL(

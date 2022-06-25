@@ -66,7 +66,7 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("ASAuthorizationProviderExtensionRegistrationHandler")
+        self.assertProtocolExists("ASAuthorizationProviderExtensionRegistrationHandler")
 
     def test_methods(self):
         self.assertArgHasType(
@@ -77,13 +77,13 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
         self.assertArgIsBlock(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginDeviceRegistrationUsingLoginManager_options_completion_,
             2,
-            b"v" + objc._C_NSUInteger,
+            b"v" + objc._C_NSInteger,
         )
 
         self.assertArgHasType(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginUserRegistrationUsingLoginManager_userName_authenticationMethod_options_completion_,
             2,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginUserRegistrationUsingLoginManager_userName_authenticationMethod_options_completion_,
@@ -93,5 +93,5 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
         self.assertArgIsBlock(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginUserRegistrationUsingLoginManager_userName_authenticationMethod_options_completion_,
             4,
-            b"v" + objc._C_NSUInteger,
+            b"v" + objc._C_NSInteger,
         )

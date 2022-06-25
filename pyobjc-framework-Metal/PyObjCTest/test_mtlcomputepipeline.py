@@ -23,7 +23,7 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
 class TestMTLComputePipeline(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed("MTLComputePipelineState")
+        self.assertProtocolExists("MTLComputePipelineState")
 
     @min_os_level("10.11")
     def test_methods10_11(self):

@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_sdk_level,
 )
-import objc
 import GameController
 
 
@@ -26,7 +25,7 @@ class TestGCPressedStateInputHelper(GameController.NSObject):
 class TestGCPressedStateInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        objc.protocolNamed("GCPressedStateInput")
+        self.assertProtocolExists("GCPressedStateInput")
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(

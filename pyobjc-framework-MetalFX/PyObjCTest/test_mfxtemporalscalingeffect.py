@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
 import MetalFX
-import objc
 
 
 class TestMFXTemporalScalingEffectHelper(MetalFX.NSObject):
@@ -88,7 +87,7 @@ class TestMFXTemporalScalingEffect(TestCase):
         )
 
     def test_protocols(self):
-        objc.protocolNamed("MFXTemporalScalingEffect")
+        self.assertProtocolExists("MFXTemporalScalingEffect")
 
     def test_protocol_methods(self):
         self.assertResultHasType(
@@ -105,7 +104,7 @@ class TestMFXTemporalScalingEffect(TestCase):
         )
 
         self.assertResultHasType(
-            TestMFXTemporalScalingEffectHelper.inputContentWidt, b"Q"
+            TestMFXTemporalScalingEffectHelper.inputContentWidth, b"Q"
         )
         self.assertArgHasType(
             TestMFXTemporalScalingEffectHelper.setInputContentWidth_, 0, b"Q"
@@ -118,12 +117,12 @@ class TestMFXTemporalScalingEffect(TestCase):
         )
 
         self.assertResultHasType(
-            TestMFXTemporalScalingEffectHelper.jitterOffset, MetalFX.CGPoint.__typestr__
+            TestMFXTemporalScalingEffectHelper.jitterOffset, MetalFX.NSPoint.__typestr__
         )
         self.assertArgHasType(
             TestMFXTemporalScalingEffectHelper.setJitterOffset_,
             0,
-            MetalFX.CGPoint.__typestr__,
+            MetalFX.NSPoint.__typestr__,
         )
 
         self.assertResultIsBOOL(TestMFXTemporalScalingEffectHelper.reset)

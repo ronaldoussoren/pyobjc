@@ -1,6 +1,5 @@
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-import objc
 
 
 class TestNSTextContent(TestCase):
@@ -15,4 +14,4 @@ class TestNSTextContent(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols(self):
-        objc.protocolNamed("NSTextContent")
+        self.assertProtocolExists("NSTextContent")

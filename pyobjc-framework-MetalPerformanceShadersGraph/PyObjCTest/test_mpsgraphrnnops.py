@@ -116,7 +116,7 @@ class TestMPSGraphRNNOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.flipZ
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setFlipZ, 0
+            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setFlipZ_, 0
         )
 
         self.assertResultIsBOOL(

@@ -95,7 +95,7 @@ class TestNSTextFinder(TestCase):
 
     @min_os_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("NSTextFinderClient")
+        self.assertProtocolExists("NSTextFinderClient")
 
     @min_os_level("10.7")
     def testProtocol10_7(self):
@@ -152,7 +152,7 @@ class TestNSTextFinder(TestCase):
             AppKit.NSRange.__typestr__,
         )
 
-        objc.protocolNamed("NSTextFinderBarContainer")
+        self.assertProtocolExists("NSTextFinderBarContainer")
 
         self.assertResultIsBOOL(FindHelper.isFindBarVisible)
         self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)

@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestIKDeviceBrowserView(TestCase):
@@ -26,4 +25,4 @@ class TestIKDeviceBrowserView(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        objc.protocolNamed("IKDeviceBrowserViewDelegate")
+        self.assertProtocolExists("IKDeviceBrowserViewDelegate")

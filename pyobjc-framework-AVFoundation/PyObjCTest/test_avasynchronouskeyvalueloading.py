@@ -25,8 +25,9 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
 
     @min_os_level("10.7")
     def testProtocols(self):
-        objc.protocolNamed("AVAsynchronousKeyValueLoading")
+        self.assertProtocolExists("AVAsynchronousKeyValueLoading")
 
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_,
             objc._C_NSInteger,

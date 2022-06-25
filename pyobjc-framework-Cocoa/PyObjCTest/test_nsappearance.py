@@ -1,5 +1,4 @@
 import AppKit
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -44,4 +43,4 @@ class TestNSAppearance(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        objc.protocolNamed("NSAppearanceCustomization")
+        self.assertProtocolExists("NSAppearanceCustomization")

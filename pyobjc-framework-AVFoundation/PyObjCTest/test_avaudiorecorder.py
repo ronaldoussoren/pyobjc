@@ -1,5 +1,4 @@
 import AVFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -34,4 +33,4 @@ class TestAVAudioRecorder(TestCase):
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_format_error_, 2)
 
     def testProtocols(self):
-        objc.protocolNamed("AVAudioRecorderDelegate")
+        self.assertProtocolExists("AVAudioRecorderDelegate")

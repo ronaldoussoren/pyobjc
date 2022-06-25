@@ -64,7 +64,7 @@ class TestMTLHeap(TestCase):
 
     @min_os_level("10.15")
     def test_protocols(self):
-        objc.protocolNamed("MTLHeap")
+        self.assertProtocolExists("MTLHeap")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLHeapHelper.storageMode, objc._C_NSUInteger)

@@ -47,7 +47,7 @@ class TestWKUIDelegate(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        p = objc.protocolNamed("WKUIDelegate")
+        p = self.assertProtocolExists("WKUIDelegate")
         self.assertIsInstance(p, objc.formal_protocol)
 
         self.assertArgIsBlock(

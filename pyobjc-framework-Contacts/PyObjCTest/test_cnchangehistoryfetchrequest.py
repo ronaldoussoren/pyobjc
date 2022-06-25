@@ -1,5 +1,3 @@
-import objc
-
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Contacts
 
@@ -7,7 +5,7 @@ import Contacts
 class TestCNChangeHistoryFetchRequest(TestCase):
     @min_os_level("10.15")
     def testProtocols(self):
-        objc.protocolNamed("CNKeyDescriptor")
+        self.assertProtocolExists("CNKeyDescriptor")
 
     @min_os_level("10.15")
     def test_methods(self):

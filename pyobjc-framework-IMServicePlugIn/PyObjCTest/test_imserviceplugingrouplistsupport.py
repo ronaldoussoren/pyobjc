@@ -1,14 +1,13 @@
 import IMServicePlugIn  # noqa: F401
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestIMServicePlugInGroupListSupport(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("IMServicePlugInGroupListSupport")
-        objc.protocolNamed("IMServicePlugInGroupListEditingSupport")
-        objc.protocolNamed("IMServicePlugInGroupListOrderingSupport")
-        objc.protocolNamed("IMServicePlugInGroupListAuthorizationSupport")
-        objc.protocolNamed("IMServicePlugInGroupListHandlePictureSupport")
-        objc.protocolNamed("IMServiceApplicationGroupListSupport")
-        objc.protocolNamed("IMServiceApplicationGroupListAuthorizationSupport")
+        self.assertProtocolExists("IMServicePlugInGroupListSupport")
+        self.assertProtocolExists("IMServicePlugInGroupListEditingSupport")
+        self.assertProtocolExists("IMServicePlugInGroupListOrderingSupport")
+        self.assertProtocolExists("IMServicePlugInGroupListAuthorizationSupport")
+        self.assertProtocolExists("IMServicePlugInGroupListHandlePictureSupport")
+        self.assertProtocolExists("IMServiceApplicationGroupListSupport")
+        self.assertProtocolExists("IMServiceApplicationGroupListAuthorizationSupport")

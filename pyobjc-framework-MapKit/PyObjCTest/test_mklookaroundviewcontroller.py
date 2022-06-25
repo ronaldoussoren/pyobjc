@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import MapKit
-import objc
 
 
 class TestMKLookAroundViewController(TestCase):
@@ -14,7 +13,7 @@ class TestMKLookAroundViewController(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols13_0(self):
-        objc.protocolNamed("MKLookAroundViewControllerDelegate")
+        self.assertProtocolExists("MKLookAroundViewControllerDelegate")
 
     @min_os_level("13.0")
     def test_methods13_0(self):

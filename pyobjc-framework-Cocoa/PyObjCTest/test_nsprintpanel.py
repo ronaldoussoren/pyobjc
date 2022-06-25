@@ -12,7 +12,7 @@ class TestNSPrintPanel(TestCase):
         self.assertIsEnumType(AppKit.NSPrintPanelOptions)
 
     def testProtocols(self):
-        objc.protocolNamed("NSPrintPanelAccessorizing")
+        self.assertProtocolExists("NSPrintPanelAccessorizing")
 
     def testConstants(self):
         self.assertEqual(AppKit.NSPrintPanelShowsCopies, 0x01)

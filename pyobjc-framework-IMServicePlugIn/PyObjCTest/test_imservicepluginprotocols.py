@@ -1,6 +1,5 @@
 import IMServicePlugIn
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestIMServicePlugInProtocolsHelper(IMServicePlugIn.NSObject):
@@ -10,8 +9,8 @@ class TestIMServicePlugInProtocolsHelper(IMServicePlugIn.NSObject):
 
 class TestIMServicePlugInProtocols(TestCase):
     def testProtocols(self):
-        objc.protocolNamed("IMServicePlugIn")
-        objc.protocolNamed("IMServiceApplication")
+        self.assertProtocolExists("IMServicePlugIn")
+        self.assertProtocolExists("IMServiceApplication")
 
         self.assertArgIsBOOL(
             TestIMServicePlugInProtocolsHelper.plugInDidLogOutWithError_reconnect_, 1

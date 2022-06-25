@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import SceneKit
@@ -52,4 +51,4 @@ class TestSCNMaterialProperty(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed("SCNNodeRendererDelegate")
+        self.assertProtocolExists("SCNNodeRendererDelegate")
