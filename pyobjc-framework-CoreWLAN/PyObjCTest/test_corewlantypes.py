@@ -159,6 +159,7 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.CWEventTypeLinkQualityDidChange, 6)
         self.assertEqual(CoreWLAN.CWEventTypeModeDidChange, 7)
         self.assertEqual(CoreWLAN.CWEventTypeScanCacheUpdated, 8)
+        self.assertEqual(CoreWLAN.CWEventTypeBtCoexStats, 9)
         self.assertEqual(CoreWLAN.CWEventTypeUnknown, Foundation.NSIntegerMax)
 
         # Introduced in 10.12

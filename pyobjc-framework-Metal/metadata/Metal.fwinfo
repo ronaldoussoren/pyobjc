@@ -1604,6 +1604,14 @@
    }
   },
   "functions": {
+   "MTLIOCompressionContextAppendData": {
+    "args": {
+     "1": { "type_modifier": "n", "type_override": "^v", "c_array_lenght_in_arg": 2 }
+    }
+   },
+   "MTLIOCreateCompressionContext": {
+    "args": { "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }}
+   },
    "MTLCreateSystemDefaultDevice": {
     "retval": { "already_retained": true }
    },

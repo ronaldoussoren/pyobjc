@@ -39,3 +39,7 @@ class TestEtherChannel(TestCase):
         self.assertArgIsBlock(
             Network.nw_ethernet_channel_send, 4, nw_ethernet_channel_send_completion_t
         )
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        self.assertResultIsRetained(Network.nw_ethernet_channel_create_with_parameters)

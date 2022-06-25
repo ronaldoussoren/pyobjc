@@ -4,6 +4,17 @@
    "kAVB17221EntityPropertyChangedCanChangeMask": { "value": "(AVB17221EntityPropertyChangedTimeToLive | AVB17221EntityPropertyChangedAvailableIndex | AVB17221EntityPropertyChangedGPTPGrandmasterID | AVB17221EntityPropertyChangedGPTPDomainNumber | AVB17221EntityPropertyChangedEntityCapabilities )" }
   },
   "classes": {
+   "AVBIPAddress": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_of_fixed_length": 16 }
+      },
+      "class_method": false,
+      "selector": "initWithIPv6Address:"
+     }
+    ]
+   },
    "AVB17221ACMPInterface": {
     "methods": [
      {
