@@ -1,5 +1,5 @@
 """
-Wrappers for the "AVFoundation" framework on macOS.
+Wrappers for the "dispatch" library on macOS.
 
 These wrappers don't include documentation, please check Apple's documentation
 for information on how to use this framework and PyObjC's documentation

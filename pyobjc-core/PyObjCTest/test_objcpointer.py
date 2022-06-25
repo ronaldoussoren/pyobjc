@@ -16,7 +16,6 @@ class TestObjCPointer(TestCase):
         self.assertEqual(objc.options.unknown_pointer_raises, False)
 
     def test_class_introspection(self):
-        self.assertIn("type", dir(objc.ObjCPointer))
         self.assertIn("pointerAsInteger", dir(objc.ObjCPointer))
 
     def test_objc_pointer_creation(self):
@@ -29,7 +28,6 @@ class TestObjCPointer(TestCase):
 
                 self.assertEqual(v.pointerAsInteger, 42)
                 self.assertEqual(v.typestr, b"^{UnwrappedStruct=ii}")
-                self.assertEqual(v.type, b"^{UnwrappedStruct=ii}")
 
                 r = OC_TestStructPointer.unwrappedToInt_(v)
                 self.assertEqual(r, 42)

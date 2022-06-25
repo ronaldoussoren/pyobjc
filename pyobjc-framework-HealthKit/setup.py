@@ -20,7 +20,7 @@ setup(
     packages=["HealthKit"],
     ext_modules=[
         Extension(
-            "AVFoundation._HealthKit",
+            "HealthKit._HealthKit",
             ["Modules/_HealthKit.m"],
             extra_link_args=["-framework", "HealthKit"],
             py_limited_api=True,

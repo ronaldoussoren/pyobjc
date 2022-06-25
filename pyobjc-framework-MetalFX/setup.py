@@ -20,7 +20,7 @@ setup(
     packages=["MetalFX"],
     ext_modules=[
         Extension(
-            "AVFoundation._MetalFX",
+            "MetalFX._MetalFX",
             ["Modules/_MetalFX.m"],
             extra_link_args=["-framework", "MetalFX"],
             py_limited_api=True,

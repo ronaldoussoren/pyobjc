@@ -1084,23 +1084,6 @@ class TestComparsionMethods(TestCase):
         ):
             OC_NumberInt.getValueOf_(2**64 + 10)
 
-    def test_getValueOfType(self):
-        for encoding, structpack in [
-            (objc._C_CHR, "b"),
-            (objc._C_INT, "i"),
-            (objc._C_SHT, "h"),
-            (objc._C_FLT, "f"),
-            (objc._C_DBL, "d"),
-        ]:
-
-            value = OC_NumberInt.getValueOf_forType_(42, encoding)
-            self.assertTrue(bytes(value).startswith(struct.pack(structpack, 42)))
-
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long', got 'int' of wrong magnitude"
-        ):
-            OC_NumberInt.getValueOf_forType_(2**66, objc._C_LNG)
-
     def test_returning_decimal(self):
         value = OC_NumberInt.numberAsDecimal_(42)
         self.assertIsInstance(value, NSDecimalNumber)
