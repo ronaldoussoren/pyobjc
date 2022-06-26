@@ -7,7 +7,7 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import AppKit
+import SharedWithYouCore
 import objc
 from SharedWithYou import _metadata
 import SharedWithYou._SharedWithYou
@@ -24,7 +24,7 @@ sys.modules["SharedWithYou"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,  # noqa: F405
         "__loader__": globals().get("__loader__", None),
     },
-    (SharedWithYou._SharedWithYou, AppKit),
+    (SharedWithYou._SharedWithYou, SharedWithYouCore),
 )
 
 del sys.modules["SharedWithYou._metadata"]

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import GameController
 
 
@@ -47,3 +47,17 @@ class TestGCInputNames(TestCase):
         self.assertIsInstance(GameController.GCInputPedalClutch, str)
         self.assertIsInstance(GameController.GCInputLeftPaddle, str)
         self.assertIsInstance(GameController.GCInputRightPaddle, str)
+
+    def test_enum_types(self):
+        self.assertIsTypedEnum(GameController.GCInputElementName, str)
+        self.assertIsTypedEnum(GameController.GCInputButtonName, str)
+        self.assertIsTypedEnum(GameController.GCInputAxisName, str)
+        self.assertIsTypedEnum(GameController.GCInputDirectionPadName, str)
+
+    @min_sdk_level("13.0")
+    def test_protocols(self):
+        self.assertProtocolExists("GCPhysicalInputElementName")
+        self.assertProtocolExists("GCButtonElementName")
+        self.assertProtocolExists("GCAxisElementName")
+        self.assertProtocolExists("GCSwitchElementName")
+        self.assertProtocolExists("GCDirectionPadElementName")

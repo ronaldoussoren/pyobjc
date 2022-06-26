@@ -40,5 +40,10 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(GCTouchedStateInput));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCPhysicalInputElementName); Py_DECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCButtonElementName); Py_DECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCAxisElementName); Py_DECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCSwitchElementName); Py_DECREF(p);
+    p = PyObjC_IdToPython(@protocol(GCDirectionPadElementName); Py_DECREF(p);
 #endif
 }

@@ -58,9 +58,6 @@ class TestMTLTextureHelper(Metal.NSObject):
     def compressionType(self):
         return 0
 
-    def gpuHandle(self):
-        return 0
-
     def gpuResourceID(self):
         return 0
 
@@ -197,7 +194,6 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.compressionType, objc._C_NSInteger
         )
-        self.assertResultHasType(TestMTLTextureHelper.gpuHandle, objc._C_ULNG_LNG)
         self.assertResultHasType(
             TestMTLTextureHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
         )

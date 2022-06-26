@@ -235,7 +235,7 @@ class TestCGPath(TestCase):
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyOfLineByIntersectingPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateSeparateComponents)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByFlattening)
-        Quartz.CGPathIntersectsPathUsingEvenOdd
+        Quartz.CGPathIntersectsPath
 
     def testConstants(self):
         self.assertEqual(Quartz.kCGLineJoinMiter, 0)

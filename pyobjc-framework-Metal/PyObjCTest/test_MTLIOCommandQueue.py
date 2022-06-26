@@ -7,9 +7,6 @@ class TestMTLIOCommandQueueHelper(Metal.NSObject):
     def newScratchBufferWithMinimumSize_(self, a):
         return 1
 
-    def allocateScratchBufferWithMinimumSize_(self, a):
-        return 1
-
 
 class TestMTLIOCommandQueue(TestCase):
     def test_constants(self):
@@ -40,11 +37,6 @@ class TestMTLIOCommandQueue(TestCase):
     def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLIOCommandQueueHelper.newScratchBufferWithMinimumSize_,
-            0,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestMTLIOCommandQueueHelper.allocateScratchBufferWithMinimumSize_,
             0,
             objc._C_NSUInteger,
         )

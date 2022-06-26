@@ -102,6 +102,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AVKit </apinotes/AVKit>`                                                       | `pyobjc-framework-AVKit`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`AVRouting </apinotes/AVRouting>`                                               | `pyobjc-framework-AVRouting`_                        |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`BackgroundAssets </apinotes/BackgroundAssets>`                                 | `pyobjc-framework-BackgroundAssets`_                 |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | BackgroundTasks                                                                      |                                                      | No public API on macOS                  |
@@ -531,9 +533,9 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`                               | `pyobjc-framework-ServiceManagement`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`SharedWithYou </apinotes/SharedWithYou>`                                       | `pyobjc-framework-SharedWithYou`_                    |                                         |
+| :doc:`SharedWithYouCore </apinotes/SharedWithYouCore>`                               | `pyobjc-framework-SharedWithYouCore`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| SharedWithYouCore                                                                    |                                                      | No public API on macOS                  |
+| :doc:`SharedWithYou </apinotes/SharedWithYou>`                                       | `pyobjc-framework-SharedWithYou`_                    |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ShazamKit </apinotes/ShazamKit>`                                               | `pyobjc-framework-ShazamKit`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -631,6 +633,7 @@ prioritizing work.
 
 .. _`pyobjc-framework-AVFoundation`: https://pypi.org/project/pyobjc-framework-AVFoundation/
 .. _`pyobjc-framework-AVKit`: https://pypi.org/project/pyobjc-framework-AVKit/
+.. _`pyobjc-framework-AVRouting`: https://pypi.org/project/pyobjc-framework-AVRouting/
 .. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
 .. _`pyobjc-framework-Accounts`: https://pypi.org/project/pyobjc-framework-Accounts/
 .. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
@@ -753,6 +756,7 @@ prioritizing work.
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
 .. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
+.. _`pyobjc-framework-SharedWithYouCore`: https://pypi.org/project/pyobjc-framework-SharedWithYouCore/
 .. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/
 .. _`pyobjc-framework-ShazamKit`: https://pypi.org/project/pyobjc-framework-ShazamKit/
 .. _`pyobjc-framework-Social`: https://pypi.org/project/pyobjc-framework-Social/

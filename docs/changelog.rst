@@ -13,55 +13,6 @@ Version 9.0a1
   The list below lists the frameworks that have
   API changes that affect the framework bindings.
 
-  - AppKit
-  - ApplicationServices
-  - AudioVideoBridging
-  - AuthenticationServices
-  - AVFAudio
-  - AVFoundation
-  - AVKit
-  - CloudKit
-  - ColorSync
-  - CoreAudio
-  - CoreAudioTypes
-  - CoreGraphics
-  - CoreHaptics
-  - CoreMedia
-  - CoreML
-  - CoreServices
-  - CoreSpotlight
-  - CoreVideo
-  - CoreWLAN
-  - EventKit
-  - FileProvider
-  - Foundation
-  - GameController
-  - ImageIO
-  - IOSurface
-  - LocalAuthentication
-  - MapKit
-  - MediaPlayer
-  - Metal
-  - MetalPerformanceShadersGraph
-  - NaturalLanguage
-  - Network
-  - NetworkExtension
-  - PassKit
-  - PDFKit
-  - Photos
-  - PhotosUI
-  - ScreenCaptureKit
-  - ServiceManagement
-  - ShazamKit
-  - Speech
-  - StoreKit
-  - UniformTypeIdentifiers
-  - VideoSubscriberAccount
-  - VideoToolbox
-  - Virtualization
-  - Vision
-  - WebKit
-
   FIXME: Move CGPoint/CGSize/CGVector/CGRect/CGRectEdge/CGAffineTransform to CoreFoundation bindings
          (NS* in Foundation are aliases, also needs updates in CoreGraphics)
 

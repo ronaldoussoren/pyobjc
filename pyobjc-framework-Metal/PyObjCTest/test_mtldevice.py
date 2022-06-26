@@ -428,9 +428,9 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLIOCompressionMethodLZMA, 3)
         self.assertEqual(Metal.MTLIOCompressionMethodLZBitmap, 4)
 
-        self.assertEqual(Metal.MTLSparsePageSize16, 16)
-        self.assertEqual(Metal.MTLSparsePageSize64, 64)
-        self.assertEqual(Metal.MTLSparsePageSize256, 256)
+        self.assertEqual(Metal.MTLSparsePageSize16, 101)
+        self.assertEqual(Metal.MTLSparsePageSize64, 102)
+        self.assertEqual(Metal.MTLSparsePageSize256, 103)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

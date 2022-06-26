@@ -166,6 +166,7 @@
    "AVSpeechBoundaryWord": { "value": 1 },
    "AVSpeechSynthesisVoiceQualityDefault": { "value": 1 },
    "AVSpeechSynthesisVoiceQualityEnhanced": { "value": 2 },
+   "AVSpeechSynthesisVoiceQualityPremium": { "value": 3 },
    "AVErrorNoSourceTrack": { "value": -11869 },
    "AVErrorVideoCompositorFailed": { "value": -11858 },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": { "value": 0 },
@@ -270,6 +271,15 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVPlayerLayer": {
+    "methods": [
+     {
+      "selector": "copyDisplayedPixelBuffer",
+      "class_method": false,
+      "retval": { "already_cfretained": true }
+     }
+    ]
+   },
    "AVAudioSession":  {
     "methods": [
      {

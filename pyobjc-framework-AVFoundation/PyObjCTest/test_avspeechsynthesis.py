@@ -30,6 +30,7 @@ class TestAVSpeechSynthesis(TestCase):
 
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityDefault, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityEnhanced, 2)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityPremium, 3)
 
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderUnspecified, 0)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderMale, 1)

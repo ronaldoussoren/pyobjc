@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 import objc
 
@@ -12,6 +12,12 @@ class TestCGAffineTransform(TestCase):
         self.assertTrue(hasattr(v, "d"))
         self.assertTrue(hasattr(v, "tx"))
         self.assertTrue(hasattr(v, "ty"))
+
+        v = Quartz.CGAffineTransformComponents()
+        self.assertIsInstance(v.scale, float)
+        self.assertIsInstance(v.horizontalShear, float)
+        self.assertIsInstance(v.rotation, float)
+        self.assertIsInstance(v.translation, Quartz.CGVector.__typestr__)
 
     def testConstants(self):
         self.assertIsInstance(
@@ -90,3 +96,8 @@ class TestCGAffineTransform(TestCase):
 
         rct = Quartz.CGRectApplyAffineTransform(((2.5, 3.5), (4.5, 5.5)), tf)
         self.assertIsInstance(rct, Quartz.CGRect)
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        Quartz.CGAffineTransformDecompose
+        Quartz.CGAffineTransformMakeWithComponents
