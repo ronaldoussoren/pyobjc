@@ -20,8 +20,14 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def inputContentWidth(self):
         return 1
 
+    def setInputContentWidth_(self, a):
+        pass
+
     def inputContentHeight(self):
         return 1
+
+    def setInputContentHeight_(self, a):
+        pass
 
     def jitterOffset(self):
         return 1
@@ -79,26 +85,26 @@ class TestMTLFXTemporalScaler(TestCase):
         self.assertNotHasAttr(MetalFX, "MTLFXTemporalScalerVersion_End")
 
     def test_protocols(self):
-        self.assertProtocolExists(MetalFX.MTLFXTemporalScaler)
+        self.assertProtocolExists("MTLFXTemporalScaler")
 
     def test_protocol_methods(self):
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.colorTextureUsage, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.colorTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.outputTextureUsage, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.outputTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.inputContentWidth, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.inputContentWidth, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestMTLFXTemporalScalerHelper.setInputContentWidth_, 0, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.setInputContentWidth_, 0, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.inputContentHeight, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.inputContentHeight, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestMTLFXTemporalScalerHelper.setInputContentHeight_, 0, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.setInputContentHeight_, 0, objc._C_NSUInteger
         )
 
         self.assertResultHasType(
@@ -122,28 +128,28 @@ class TestMTLFXTemporalScaler(TestCase):
         self.assertArgIsBOOL(TestMTLFXTemporalScalerHelper.setReset_, 0)
 
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.colorTextureFormat, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.colorTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.depthTextureFormat, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.depthTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.motionTextureFormat, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.motionTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.outputTextureFormat, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.outputTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.inputWidth, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.inputWidth, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.inputHeight, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.inputHeight, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.outputWidth, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.outputWidth, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.outputHeight, objc._C_NSInteger
+            TestMTLFXTemporalScalerHelper.outputHeight, objc._C_NSUInteger
         )
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.inputContentMinScale, objc._C_FLT

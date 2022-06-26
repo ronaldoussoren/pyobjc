@@ -5,6 +5,13 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "typed_enum": {
+   "SWCollaborationIdentifier": { "type": "@", "type_name": "NSString" },
+   "SWLocalCollaborationIdentifier": { "type": "@", "type_name": "NSString" }
+  },
+  "externs": {
+   "SharedWithYouCoreVersionString": { "ignore": true }
+  }
  }
 }

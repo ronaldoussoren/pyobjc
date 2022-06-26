@@ -4,12 +4,12 @@
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
-#import <SharedWithYou/SharedWithYou.h>
+#import <SharedWithYouCore/SharedWithYouCore.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
-#include "_SharedWithYou_protocols.m"
+#include "_SharedWithYouCore_protocols.m"
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
@@ -17,7 +17,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
-                                        "_SharedWithYou",
+                                        "_SharedWithYouCore",
                                         NULL,
                                         0,
                                         mod_methods,
@@ -26,9 +26,9 @@ static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
                                         NULL,
                                         NULL};
 
-PyObject* PyInit__SharedWithYou(void);
+PyObject* PyInit__SharedWithYouCore(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__SharedWithYou(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit__SharedWithYouCore(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);

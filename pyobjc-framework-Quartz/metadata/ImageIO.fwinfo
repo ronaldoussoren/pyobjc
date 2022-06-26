@@ -45,6 +45,7 @@
    }
   },
   "externs": {
+   "kCGImagePropertyHorizontalFOV": { "ignore": true },
    "kCGImagePropertyImageIndex": { "typestr": "@" },
    "kCGImagePropertyGroups": { "typestr": "@" },
    "kCGImagePropertyGroupIndex": { "typestr": "@" },

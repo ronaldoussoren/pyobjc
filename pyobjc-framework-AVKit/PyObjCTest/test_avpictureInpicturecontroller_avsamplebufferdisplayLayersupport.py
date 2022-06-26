@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import AVKit
-import objc
 
 
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
@@ -28,10 +27,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCase):
     @min_sdk_level("12.0")
     def testProtocols12_0(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("AVPictureInPictureSampleBufferPlaybackDelegate"),
-            objc.formal_protocol,
-        )
+        self.assertProtocolExists("AVPictureInPictureSampleBufferPlaybackDelegate")
 
     def test_methods(self):
         self.assertArgIsBOOL(

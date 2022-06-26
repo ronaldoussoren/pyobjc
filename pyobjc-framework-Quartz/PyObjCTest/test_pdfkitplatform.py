@@ -20,7 +20,9 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFKitPlatformControl, Quartz.NSControl)
         self.assertIs(Quartz.PDFKitPlatformTextField, Quartz.NSTextField)
         self.assertIs(Quartz.PDFKitPlatformTextView, Quartz.NSTextView)
-        self.assertIs(Quartz.PDFKitPlatformTextViewDelegate, Quartz.NSTextViewDelegate)
+
+        # @protocol:
+        # self.assertIs(Quartz.PDFKitPlatformTextViewDelegate, Quartz.NSTextViewDelegate)
         self.assertIs(
             Quartz.PDFKitPlatformChoiceWidgetComboBoxView, Quartz.NSPopUpButton
         )

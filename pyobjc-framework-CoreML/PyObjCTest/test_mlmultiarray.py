@@ -40,10 +40,10 @@ class TestMLMultiArray(TestCase):
         self.assertArgIsBlock(
             CoreML.MLMultiArray.getBytesWithHandler_,
             0,
-            b"vn^v" + objc._C_NSUInteger,  # XXX
+            b"vn^v" + objc._C_NSInteger,  # XXX
         )
         self.assertArgIsBlock(
             CoreML.MLMultiArray.getMutableBytesWithHandler_,
             0,
-            b"vN^v" + objc._C_NSUInteger + b"@",  # XXX
+            b"vN^v" + objc._C_NSInteger + b"@",  # XXX
         )

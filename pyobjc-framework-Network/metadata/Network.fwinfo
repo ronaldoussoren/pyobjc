@@ -18,6 +18,9 @@
   },
   "formal_protocols": {},
   "functions": {
+   "nw_ethernet_channel_create_with_parameters": {
+    "retval": { "already_retained": true }
+   },
    "nw_endpoint_copy_txt_record": {
     "retval": { "already_retained": true }
    },

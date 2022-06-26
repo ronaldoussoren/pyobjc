@@ -12,7 +12,4 @@ class TestMCNearbyServiceBrowser(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("MCNearbyServiceBrowserDelegate"),
-            objc.formal_protocol,
-        )
+        self.assertProtocolExists("MCNearbyServiceBrowserDelegate")

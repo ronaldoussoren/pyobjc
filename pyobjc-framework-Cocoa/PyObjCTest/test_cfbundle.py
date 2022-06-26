@@ -133,12 +133,16 @@ class TestCFBundle(TestCase):
         )
         bundle2 = CoreFoundation.CFBundleCreate(None, url)
         self.assertIsInstance(bundle2, CoreFoundation.CFBundleRef)
-        url = CoreFoundation.CFBundleCopyResourceURL(
-            bundle, "Formatter", "strings", None
-        )
+        if int(os_release().split(".")[0]) >= 13:
+            kind = "loctable"
+
+        else:
+            kind = "strings"
+
+        url = CoreFoundation.CFBundleCopyResourceURL(bundle, "Formatter", kind, None)
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
         url = CoreFoundation.CFBundleCopyResourceURL(
-            bundle, "Formatter", "strings", "helloworld.lproj"
+            bundle, "Formatter", kind, "helloworld.lproj"
         )
         self.assertIs(url, None)
         array = CoreFoundation.CFBundleCopyResourceURLsOfType(bundle, "strings", None)
@@ -167,16 +171,22 @@ class TestCFBundle(TestCase):
         arr2 = CoreFoundation.CFBundleCopyLocalizationsForPreferences(array, None)
         self.assertIsNot(arr2, None)
         self.assertIsInstance(arr2, CoreFoundation.CFArrayRef)
+
+        if int(os_release().split(".")[0]) >= 13:
+            kind = "loctable"
+
+        else:
+            kind = "strings"
         url = CoreFoundation.CFBundleCopyResourceURLForLocalization(
-            bundle, "Formatter", "strings", None, "Dutch"
+            bundle, "Formatter", kind, None, "Dutch"
         )
         if url is None:
             url = CoreFoundation.CFBundleCopyResourceURLForLocalization(
-                bundle, "Formatter", "strings", None, "nl"
+                bundle, "Formatter", kind, None, "nl"
             )
         if url is None:
             url = CoreFoundation.CFBundleCopyResourceURLForLocalization(
-                bundle, "Formatter", "strings", None, "en"
+                bundle, "Formatter", kind, None, "en"
             )
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
 
@@ -271,12 +281,19 @@ class TestCFBundle(TestCase):
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
+
+        if int(os_release().split(".")[0]) >= 13:
+            kind = "loctable"
+
+        else:
+            kind = "strings"
+
         url = CoreFoundation.CFBundleCopyResourceURLInDirectory(
-            bundle, "Formatter", "strings", None
+            bundle, "Formatter", kind, None
         )
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
         array = CoreFoundation.CFBundleCopyResourceURLsOfTypeInDirectory(
-            bundle, "strings", None
+            bundle, kind, None
         )
         self.assertIsNot(array, None)
         self.assertIsInstance(array, CoreFoundation.CFArrayRef)

@@ -13,9 +13,7 @@ class TestAVCaptureView(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("AVCaptureViewDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("AVCaptureViewDelegate")
 
     @min_os_level("10.10")
     def testMethods(self):

@@ -9,7 +9,7 @@ import sys
 
 import AppKit
 import objc
-from SharedWithYou import _metadata
+from SharedWithYouCore import _metadata
 import SharedWithYouCore._SharedWithYouCore
 
 sys.modules["SharedWithYouCore"] = mod = objc.ObjCLazyModule(

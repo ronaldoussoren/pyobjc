@@ -9,7 +9,7 @@ import sys
 
 import Foundation
 import objc
-from AVRouting import _metadata
+from AVRouting import _metadata, _AVRouting
 
 sys.modules["AVRouting"] = mod = objc.ObjCLazyModule(
     "AVRouting",
@@ -23,7 +23,10 @@ sys.modules["AVRouting"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (
+        _AVRouting,
+        Foundation,
+    ),
 )
 
 

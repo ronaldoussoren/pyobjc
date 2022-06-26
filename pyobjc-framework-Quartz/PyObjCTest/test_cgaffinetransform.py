@@ -14,10 +14,10 @@ class TestCGAffineTransform(TestCase):
         self.assertTrue(hasattr(v, "ty"))
 
         v = Quartz.CGAffineTransformComponents()
-        self.assertIsInstance(v.scale, float)
+        self.assertIsInstance(v.scale, Quartz.CGSize)
         self.assertIsInstance(v.horizontalShear, float)
         self.assertIsInstance(v.rotation, float)
-        self.assertIsInstance(v.translation, Quartz.CGVector.__typestr__)
+        self.assertIsInstance(v.translation, Quartz.CGVector)
 
     def testConstants(self):
         self.assertIsInstance(

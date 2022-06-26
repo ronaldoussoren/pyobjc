@@ -37,9 +37,7 @@ class TestCBCentralManager(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("CBCentralManagerDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("CBCentralManagerDelegate")
 
     @min_os_level("10.13")
     def testMethods10_13(self):

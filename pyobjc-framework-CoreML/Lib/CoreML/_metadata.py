@@ -277,7 +277,7 @@ try:
                         "retval": {"type": b"v"},
                         "arguments": {
                             0: {"type": b"^v"},
-                            1: {"type": b"^v"},
+                            1: {"type": b"n^v", "c_array_length_in_arg": 2},
                             2: {"type": b"q"},
                         },
                     }
@@ -295,7 +295,7 @@ try:
                         "retval": {"type": b"v"},
                         "arguments": {
                             0: {"type": b"^v"},
-                            1: {"type": b"^v"},
+                            1: {"type": b"N^v", "c_array_length_in_arg": 2},
                             2: {"type": b"q"},
                             3: {"type": b"@"},
                         },

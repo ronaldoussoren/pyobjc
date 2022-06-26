@@ -3,12 +3,12 @@ from PyObjCTools.TestSupport import TestCase
 import AVRouting
 
 
-class TestAVCustomRoutingControllerHelper(AVRouting.NSObject):
+class TestAVCustomRoutingEventHelper(AVRouting.NSObject):
     def customRoutingController_handleEvent_completionHandler_(self, a, b, c):
         pass
 
 
-class TestAVCustomRoutingController(TestCase):
+class TestAVCustomRoutingEvent(TestCase):
     def test_constants(self):
         self.assertIsEnumType(AVRouting.AVCustomRoutingEventReason)
         self.assertEqual(AVRouting.AVCustomRoutingEventReasonActivate, 0)

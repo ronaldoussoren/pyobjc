@@ -57,45 +57,45 @@ class TestMTLFXSpatialScaler(TestCase):
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingMode_HDR, 2)
 
     def test_protocols(self):
-        self.assertProtocolExists(MetalFX.MTLFXSpatialScaler)
+        self.assertProtocolExists("MTLFXSpatialScaler")
 
     def test_protocol_methods(self):
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.colorTextureUsage, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.colorTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.outputTextureUsage, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.outputTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.inputContentWidth, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.inputContentWidth, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestMTLFXSpatialScalerHelper.setInputContentWidth_, 0, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.setInputContentWidth_, 0, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.inputContentHeight, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.inputContentHeight, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestMTLFXSpatialScalerHelper.setInputContentHeight_, 0, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.setInputContentHeight_, 0, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.colorTextureFormat, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.colorTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.outputTextureFormat, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.outputTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.inputWidth, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.inputWidth, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.inputHeight, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.inputHeight, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.outputWidth, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.outputWidth, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.outputHeight, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.outputHeight, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestMTLFXSpatialScalerHelper.colorProcessingMode, objc._C_NSInteger
+            TestMTLFXSpatialScalerHelper.colorProcessingMode, objc._C_NSUInteger
         )

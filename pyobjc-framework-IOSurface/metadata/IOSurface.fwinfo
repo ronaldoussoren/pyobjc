@@ -48,6 +48,7 @@
    "kIOSurfaceComponentNameChromaBlue": { "value": 7 }
   },
   "externs": {
+   "IOSurfacePropertyKeyName": { "typestr": "@" },
    "kIOSurfaceColorSpace": { "typestr": "@" },
    "kIOSurfaceICCProfile": { "typestr": "@" },
    "IOSurfacePropertyKeyAllocSize": { "typestr": "@" },

@@ -31,6 +31,7 @@ FRAMEWORK_WRAPPERS = [
     ("AutomaticAssessmentConfiguration", "10.15", None),
     ("AVKit", "10.9", None),
     ("AVFoundation", "10.7", None),
+    ("AVRouting", "13.0", None),
     ("Accounts", "10.8", None),
     ("AddressBook", None, None),
     ("AppleScriptKit", None, None),

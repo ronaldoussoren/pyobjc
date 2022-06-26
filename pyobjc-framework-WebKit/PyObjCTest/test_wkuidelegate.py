@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit  # noqa: F401
-import objc
 
 
 class TestWKUIDelegateHelper(WebKit.NSObject):
@@ -47,8 +46,7 @@ class TestWKUIDelegate(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        p = self.assertProtocolExists("WKUIDelegate")
-        self.assertIsInstance(p, objc.formal_protocol)
+        self.assertProtocolExists("WKUIDelegate")
 
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_,  # noqa: B950

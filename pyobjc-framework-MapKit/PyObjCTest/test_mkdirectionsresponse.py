@@ -14,5 +14,5 @@ class TestMKDirectionsRequest(TestCase):
 
     @min_os_level("13.0")
     def test_methods13_0(self):
-        self.assertResultIsBOOL(MapKit.MKDirectionsResponse.hasTolls)
-        self.assertResultIsBOOL(MapKit.MKDirectionsResponse.hasHighways)
+        self.assertResultIsBOOL(MapKit.MKRoute.hasTolls)
+        self.assertResultIsBOOL(MapKit.MKRoute.hasHighways)

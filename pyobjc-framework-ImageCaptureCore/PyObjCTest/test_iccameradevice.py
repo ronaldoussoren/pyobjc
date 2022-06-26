@@ -96,9 +96,6 @@ class TestICCameraDevice(TestCase):
             ImageCaptureCore.ICCameraDevice.isAccessRestrictedAppleDevice
         )
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.tetheredCaptureEnabled)
-        self.assertArgIsBOOL(
-            ImageCaptureCore.ICCameraDevice.setTetheredCaptureEnabled_, 0
-        )
         self.assertArgIsSEL(
             ImageCaptureCore.ICCameraDevice.requestDownloadFile_options_downloadDelegate_didDownloadSelector_contextInfo_,
             3,

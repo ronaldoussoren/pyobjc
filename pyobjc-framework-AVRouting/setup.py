@@ -6,8 +6,8 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
-
-from pyobjc_setup import setup
+import os
+from pyobjc_setup import setup, Extension
 
 VERSION = "9.0a1"
 
@@ -16,6 +16,19 @@ setup(
     description="Wrappers for the framework AVRouting on macOS",
     min_os_level="13.0",
     packages=["AVRouting"],
+    ext_modules=[
+        Extension(
+            "AVRouting._AVRouting",
+            ["Modules/_AVRouting.m"],
+            extra_link_args=["-framework", "AVRouting"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_AVRouting")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

@@ -38,10 +38,9 @@ class TestMCSession(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("MCSessionDelegate"), objc.formal_protocol
-        )
+        self.assertProtocolExists("MCSessionDelegate"), objc.formal_protocol
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMCSessionHelper.session_peer_didChangeState_, 2, objc._C_NSUInteger
         )

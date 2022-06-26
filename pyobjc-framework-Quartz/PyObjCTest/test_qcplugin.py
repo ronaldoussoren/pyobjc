@@ -57,4 +57,3 @@ class TestQCPlugIn(TestCase):
         self.assertProtocolExists("QCPlugInContext")
         self.assertProtocolExists("QCPlugInInputImageSource")
         self.assertProtocolExists("QCPlugInOutputImageProvider")
-        self.fail("Test interface for QCPlugInContext")

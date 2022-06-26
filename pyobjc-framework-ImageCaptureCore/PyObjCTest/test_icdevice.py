@@ -67,7 +67,6 @@ class TestICDevice(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isRemote)
-        self.assertResultIsBOOL(ImageCaptureCore.ICDevice.hasConfigurableWiFiInterface)
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.hasOpenSession)
 
         self.assertArgIsSEL(

@@ -5,6 +5,10 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "enum": {
+   "MTLFXSpatialScalerVersion_End": { "ignore": true },
+   "MTLFXTemporalScalerVersion_End": { "ignore": true }
+  }
  }
 }

@@ -129,8 +129,8 @@ class TestPDFView(TestCase):
         self.assertResultIsBOOL(Quartz.PDFView.isInMarkupMode)
         self.assertArgIsBOOL(Quartz.PDFView.setInMarkupMode_, 0)
 
-        self.assertResultIsBOOL(Quartz.PDFView.isFindInteractionEnabled)
-        self.assertArgIsBOOL(Quartz.PDFView.setFindInteractionEnabled_, 0)
+        # self.assertResultIsBOOL(Quartz.PDFView.isFindInteractionEnabled)
+        # self.assertArgIsBOOL(Quartz.PDFView.setFindInteractionEnabled_, 0)
 
     @min_sdk_level("10.13")
     def testProtocols(self):

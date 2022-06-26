@@ -56,8 +56,11 @@ class TestGCInputNames(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCPhysicalInputElementName")
-        self.assertProtocolExists("GCButtonElementName")
-        self.assertProtocolExists("GCAxisElementName")
-        self.assertProtocolExists("GCSwitchElementName")
-        self.assertProtocolExists("GCDirectionPadElementName")
+        pass
+
+        # These are compile time only protocols:
+        # self.assertProtocolExists("GCPhysicalInputElementName")
+        # self.assertProtocolExists("GCButtonElementName")
+        # self.assertProtocolExists("GCAxisElementName")
+        # self.assertProtocolExists("GCSwitchElementName")
+        # self.assertProtocolExists("GCDirectionPadElementName")

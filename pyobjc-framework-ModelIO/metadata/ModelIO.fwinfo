@@ -1271,18 +1271,6 @@
       }
      },
      {
-      "selector": "primitiveType",
-      "class_method": false,
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "selector": "setPrimitiveType:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
       "selector": "canResolveAssetNamed:",
       "class_method": false,
       "retval": { "type_override": "Z" }

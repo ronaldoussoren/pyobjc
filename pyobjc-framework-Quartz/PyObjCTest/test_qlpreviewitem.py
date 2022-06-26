@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import Quartz  # noqa: F401
@@ -7,5 +6,4 @@ import Quartz  # noqa: F401
 class TestQLPreviewItem(TestCase):
     @min_os_level("10.6")
     def testClasses(self):
-        v = self.assertProtocolExists("QLPreviewItem")
-        self.assertIsInstance(v, objc.formal_protocol)
+        self.assertProtocolExists("QLPreviewItem")
