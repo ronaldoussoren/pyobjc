@@ -968,12 +968,12 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
             0,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_sparsePageSize_,
@@ -998,5 +998,5 @@ class TestMTLDevice(TestCase):
 
         self.assertResultHasType(
             TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithDescriptor_,
-            Metal.MTLSizeAndAlign,
+            Metal.MTLSizeAndAlign.__typestr__,
         )

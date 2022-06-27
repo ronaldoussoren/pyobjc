@@ -22,7 +22,7 @@ class TestLAPrivateKey(TestCase):
             LocalAuthentication.LAPrivateKey.canDecryptUsingSecKeyAlgorithm_
         )
         self.assertArgIsBlock(
-            LocalAuthentication.LAPrivateKey.exchangeKeysWithPublicKey_secKeyAlgorithm_secKeyParameters_,
+            LocalAuthentication.LAPrivateKey.exchangeKeysWithPublicKey_secKeyAlgorithm_secKeyParameters_completion_,
             3,
             b"v@@",
         )

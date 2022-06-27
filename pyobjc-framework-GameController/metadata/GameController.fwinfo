@@ -4,15 +4,267 @@
  "definitions": {
   "typed_enum": {
    "GCHapticsLocality": { "type": "@", "type_name": "NSString" },
+   "GCInputAxisName": { "type": "@", "type_name": "NSString" },
+   "GCInputElementName": { "type": "@", "type_name": "NSString" },
+   "GCInputButtonName": { "type": "@", "type_name": "NSString" },
+   "GCInputDirectionPadName": { "type": "@", "type_name": "NSString" },
    "GCKeyCode": { "type": "Q" }
   },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "inputStateAvailableHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setInputStateAvailableHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	  "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "positionDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "q" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setPositionDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "q" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "elementValueDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setElementValueDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "touchedDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setTouchedDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "Z" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "pressedDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": "@" },
+	 "3": { "type": "Z" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setPressedDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "Z" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "deltaDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "f" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setDeltaDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "f" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "valueDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "f" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setValueDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "f" }
+	 },
+	  "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "GCPhysicalInputProfile": {
     "methods": [
      {
       "selector": "hasRemappedElements",
       "class_method": false,
       "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "valueDidChangeHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setValueDidChangeHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+      }
      }
     ]
    },

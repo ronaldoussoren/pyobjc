@@ -40,12 +40,12 @@ class TestGCSwitchPositionInput(TestCase):
     def test_protocol_methhods(self):
         self.assertResultIsBlock(
             GameController.TestGCSwitchPositionInputHelper.positionDidChangeHandler,
-            b"v@" + objc._C_NSInteger,
+            b"v@@" + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
             GameController.TestGCSwitchPositionInputHelper.setPositionDidChangeHandler_,
             0,
-            b"v@" + objc._C_NSInteger,
+            b"v@@" + objc._C_NSInteger,
         )
 
         self.assertResultHasType(

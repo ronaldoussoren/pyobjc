@@ -15,10 +15,11 @@ class TestNSCache(TestCase):
         self.assertProtocolExists("NSCacheDelegate")
 
     def testConvenience(self):
+        key = "key"
         c = Foundation.NSCache.alloc().init()
-        c.setObject_forKey_(42, "key")
-        self.assertEqual(c.objectForKey_("key"), 42)
-        self.assertEqual(c.objectForKey_("key"), 42)
+        c.setObject_forKey_(42, key)
+        self.assertEqual(c.objectForKey_(key), 42)
+        self.assertEqual(c.objectForKey_(key), 42)
 
         self.assertEqual(c["key"], 42)
         c["key"] = 21

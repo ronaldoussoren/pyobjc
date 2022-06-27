@@ -119,6 +119,80 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "setMeshSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "setMeshBuffers:offsets:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "setObjectBuffers:offsets:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      }
+     },
+     {
+      "selector": "setMeshSamplerStates:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setMeshTextures:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setMeshBytes:length:atIndex:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setObjectSamplerStates:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setObjectTextures:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setObjectBytes:length:atIndex:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "loadBytes:size:sourceHandle:sourceHandleOffset:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
       "selector": "setTileIntersectionFunctionTables:withBufferRange:",
       "class_method": false,
       "args": {
@@ -1606,7 +1680,7 @@
   "functions": {
    "MTLIOCompressionContextAppendData": {
     "args": {
-     "1": { "type_modifier": "n", "type_override": "^v", "c_array_lenght_in_arg": 2 }
+     "1": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 2 }
     }
    },
    "MTLIOCreateCompressionContext": {

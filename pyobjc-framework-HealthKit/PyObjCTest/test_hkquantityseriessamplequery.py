@@ -17,7 +17,7 @@ class TestHKQuantitySeriesSampleQuery(TestCase):
         self.assertArgIsBlock(
             HealthKit.HKQuantitySeriesSampleQuery.initWithQuantityType_predicate_quantityHandler_,
             2,
-            b"v@@N^dN^@Z@",
+            b"v@@@@Z@",
         )
         self.assertArgIsBlock(
             HealthKit.HKQuantitySeriesSampleQuery.initWithSample_quantityHandler_,

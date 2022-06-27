@@ -8,6 +8,3 @@ class TestHKObjectType(TestCase):
         self.assertResultIsBOOL(HealthKit.HKSampleType.isMaximumDurationRestricted)
         self.assertResultIsBOOL(HealthKit.HKSampleType.isMinimumDurationRestricted)
         self.assertResultIsBOOL(HealthKit.HKSampleType.allowsRecalibrationForEstimates)
-        self.assertResultIsBOOL(
-            HealthKit.HKQuantityAggregationStyle.isCompatibleWithUnit_
-        )

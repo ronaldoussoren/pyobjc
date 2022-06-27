@@ -29,16 +29,13 @@ class TestGCPressedStateInput(TestCase):
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(
-            TestGCPressedStateInputHelper.pressedDidChangeHandler, b"v@Z"
+            TestGCPressedStateInputHelper.pressedDidChangeHandler, b"v@@Z"
         )
         self.assertArgIsBlock(
-            TestGCPressedStateInputHelper.setPressedDidChangeHandler_, 0, b"v@Z"
+            TestGCPressedStateInputHelper.setPressedDidChangeHandler_, 0, b"v@@Z"
         )
 
         self.assertResultIsBOOL(TestGCPressedStateInputHelper.isPressed)
-        self.assertResultIsHasType(
+        self.assertResultHasType(
             TestGCPressedStateInputHelper.lastPressedStateTimestamp, b"d"
-        )
-        self.assertResultIsHasType(
-            TestGCPressedStateInputHelper.setLastPressedStateTimestamp_, 0, b"d"
         )

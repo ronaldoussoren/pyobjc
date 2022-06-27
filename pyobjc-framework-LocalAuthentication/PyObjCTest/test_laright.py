@@ -30,5 +30,5 @@ class TestLARight(TestCase):
             LocalAuthentication.LARight.checkCanAuthorizeWithCompletion_, 0, b"v@"
         )
         self.assertArgIsBlock(
-            LocalAuthentication.LARight.deauthorizeWithCompletion_, 0, b"v@"
+            LocalAuthentication.LARight.deauthorizeWithCompletion_, 0, b"v"
         )

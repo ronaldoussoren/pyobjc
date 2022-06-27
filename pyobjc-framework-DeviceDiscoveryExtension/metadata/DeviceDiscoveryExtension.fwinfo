@@ -5,6 +5,9 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "enum": {
+   "DDErrorCodeNext": { "ignore": true }
+  }
  }
 }

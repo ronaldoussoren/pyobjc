@@ -10,9 +10,6 @@ class TestMTLHeapHelper(Metal.NSObject):
     def cpuCacheMode(self):
         return 1
 
-    def sparsePageSize(self):
-        return 1
-
     def hazardTrackingMode(self):
         return 1
 
@@ -112,8 +109,6 @@ class TestMTLHeap(TestCase):
         self.assertArgHasType(
             TestMTLHeapHelper.newTextureWithDescriptor_offset_, 1, objc._C_NSUInteger
         )
-
-        self.assertResultHasType(TestMTLHeapHelper.sparsePageSize, objc._C_NSInteger)
 
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithSize_, 0, objc._C_NSUInteger

@@ -9,5 +9,5 @@ class TestHKSourceRevision(TestCase):
 
         self.assertIsInstance(
             HealthKit.HKSourceRevisionAnyOperatingSystem,
-            HealthKit.NSOperatingSystemVersion.__typestr__,
+            HealthKit.NSOperatingSystemVersion,
         )

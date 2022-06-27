@@ -2,6 +2,7 @@
  "definitions": {
   "typed_enum": {
    "NSControlStateValue": { "type": "q" },
+   "NSToolbarUserInfoKey": { "type": "@", "type_name": "NSString" },
    "NSTextEffectStyle": { "type": "@", "type_name": "NSString" },
    "NSAttributedStringDocumentType": { "type": "@", "type_name": "NSString" },
    "NSTextLayoutSectionKey": { "type": "@", "type_name": "NSString" },
@@ -112,380 +113,28 @@
    }
   },
   "classes": {
-   "null": {
+   "NSComboButton": {
     "methods": [
      {
-      "args": {
-       "0": {}
-      },
+      "selector": "comboButtonWithTitle:image:menu:target:action:",
       "class_method": true,
-      "selector": "graphicsContextWithGraphicsPort:flipped:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "graphicsPort"
-     },
-     {
       "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "setDesktopImageURL:forScreen:options:error:"
+       "4": { "sel_of_type": "v@:@" }
+      }
      },
      {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "launchApplicationAtURL:options:configuration:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "openURL:options:configuration:error:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "openURLs:withApplicationAtURL:options:configuration:error:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "launchAppWithBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifier:"
-     },
-     {
-      "args": {
-       "4": {}
-      },
-      "class_method": false,
-      "selector": "openURLs:withAppBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifiers:"
-     },
-     {
-      "args": {
-       "4": {}
-      },
-      "class_method": false,
-      "selector": "performFileOperation:source:destination:files:tag:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "getInfoForFile:application:type:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "typeOfFile:error:"
-     },
-     {
-      "args": {
-       "4": {}
-      },
-      "class_method": false,
-      "selector": "presentError:modalForWindow:delegate:didPresentSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "view:stringForToolTip:point:userData:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "knowsPageRange:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "adjustPageWidthNew:left:right:limit:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "adjustPageHeightNew:top:bottom:limit:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "instantiateNibWithOwner:topLevelObjects:"
-     },
-     {
+      "selector": "comboButtonWithTitle:menu:target:action:",
       "class_method": true,
-      "retval": {},
-      "selector": "menuZone"
+      "args": {
+       "3": { "sel_of_type": "v@:@" }
+      }
      },
      {
-      "args": {
-       "0": {}
-      },
+      "selector": "comboButtonWithImage:menu:target:action:",
       "class_method": true,
-      "selector": "setMenuZone:"
-     },
-     {
       "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "commitEditingWithDelegate:didCommitSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "commitEditingAndReturnError:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "saveToURL:ofType:forSaveOperation:error:"
-     },
-     {
-      "args": {
-       "4": {}
-      },
-      "class_method": false,
-      "selector": "saveToFile:saveOperation:delegate:didSaveSelector:contextInfo:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "beginModalSessionForWindow:relativeToWindow:"
-     },
-     {
-      "args": {
-       "4": {}
-      },
-      "class_method": false,
-      "selector": "beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "class_method": true,
-      "selector": "alertWithMessageText:defaultButton:alternateButton:otherButton:informativeTextWithFormat:",
-      "variadic": true
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "getBoundingRects:forGlyphs:count:"
-     },
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "getAdvancements:forGlyphs:count:"
-     },
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "getAdvancements:forPackedGlyphs:length:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithWindowRef:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "windowRef"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "openDocumentWithContentsOfURL:display:error:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "reopenDocumentForURL:withContentsOfURL:error:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithIconRef:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "loadNibNamed:owner:topLevelObjects:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": true,
-      "selector": "loadNibFile:externalNameTable:withZone:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "loadNibFile:externalNameTable:withZone:"
-     },
-     {
-      "args": {
-       "5": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "6": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "5": {}
-      },
-      "class_method": false,
-      "selector": "beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "completionsForPartialWordRange:indexOfSelectedItem:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "dragImageForSelectionWithEvent:origin:"
-     },
-     {
-      "args": {
-       "2": {},
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "smartInsertForString:replacingRange:beforeString:afterString:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "dragImageForRows:event:dragImageOffset:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "appendBezierPathWithGlyphs:count:inFont:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "appendBezierPathWithPackedGlyphs:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "fetchWithRequest:merge:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "configurePersistentStoreCoordinatorForURL:ofType:error:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "searchString:inUserInterfaceItemString:searchRange:foundRange:"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "graphicsPort"
-     },
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "windowRef"
+       "3": { "sel_of_type": "v@:@" }
+      }
      }
     ]
    },
@@ -1049,11 +698,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1067,11 +716,11 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          }
         },
         "retval": {
-         "typestr": "Z"
+         "type": "Z"
         }
        }
       },
@@ -32083,7 +31732,7 @@
    },
    "NSDrawBitmap": {
     "args": {
-     "10": {}
+     "10": { "c_array_of_fixed_length": 5, "type_modifier": "n", "type_override": "^C" }
     }
    },
    "NSDrawColorTiledRects": {

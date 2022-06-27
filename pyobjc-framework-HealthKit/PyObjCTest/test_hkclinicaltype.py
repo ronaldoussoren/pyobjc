@@ -4,7 +4,7 @@ import HealthKit
 
 class TestHKClinicalType(TestCase):
     def test_constants(self):
-        self.assertIsTypedEnum(HealthKit.HKClinicalTypeIdentifier)
+        self.assertIsTypedEnum(HealthKit.HKClinicalTypeIdentifier, str)
 
         self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierAllergyRecord, str)
         self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierConditionRecord, str)

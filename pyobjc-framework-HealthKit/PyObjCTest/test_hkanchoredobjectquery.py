@@ -15,12 +15,12 @@ class TestHKAnchoredObjectQuery(TestCase):
         )
 
         self.assertArgIsBlock(
-            HealthKit.HKAnchoredObjectQuery.initWithType_predicate_anchor_limit_resultHandler_,
+            HealthKit.HKAnchoredObjectQuery.initWithType_predicate_anchor_limit_completionHandler_,
             4,
-            b"v@@@@@",
+            b"v@@Q@",
         )
         self.assertArgIsBlock(
-            HealthKit.HKAnchoredObjectQuery.initWithQueryDescriptors_anchor_limit_resultHandler_,
+            HealthKit.HKAnchoredObjectQuery.initWithQueryDescriptors_anchor_limit_resultsHandler_,
             3,
             b"v@@@@@",
         )

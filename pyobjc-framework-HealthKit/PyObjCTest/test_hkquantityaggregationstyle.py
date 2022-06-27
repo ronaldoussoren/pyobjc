@@ -5,12 +5,15 @@ import HealthKit
 class TestHKQuantityAggregationStyle(TestCase):
     def test_constants(self):
         self.assertIsEnumType(HealthKit.HKQuantityAggregationStyle)
-        self.assertEqual(HealthKit.HKQuantityAggregationStyleCumulative, 1)
-        self.assertEqual(HealthKit.HKQuantityAggregationStyleDiscreteArithmetic, 2)
-        self.assertEqual(HealthKit.HKQuantityAggregationStyleDiscrete, 3)
+        self.assertEqual(HealthKit.HKQuantityAggregationStyleCumulative, 0)
+        self.assertEqual(HealthKit.HKQuantityAggregationStyleDiscreteArithmetic, 1)
         self.assertEqual(
-            HealthKit.HKQuantityAggregationStyleDiscreteTemporallyWeighted, 4
+            HealthKit.HKQuantityAggregationStyleDiscrete,
+            HealthKit.HKQuantityAggregationStyleDiscreteArithmetic,
         )
         self.assertEqual(
-            HealthKit.HKQuantityAggregationStyleDiscreteEquivalentContinuousLevel, 5
+            HealthKit.HKQuantityAggregationStyleDiscreteTemporallyWeighted, 2
+        )
+        self.assertEqual(
+            HealthKit.HKQuantityAggregationStyleDiscreteEquivalentContinuousLevel, 3
         )

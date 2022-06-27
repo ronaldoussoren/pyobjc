@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_sdk_level,
 )
-import objc
 import GameController
 
 
@@ -46,12 +45,9 @@ class TestGCDevicePhysicalInput(TestCase):
             TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v"
         )
 
-        self.assertResultHasType(
-            TestGCDevicePhysicalInputHelper.inputStateAvailableHandler,
-            objc._C_NSUInteger,
+        self.assertResultIsBlock(
+            TestGCDevicePhysicalInputHelper.inputStateAvailableHandler, b"v"
         )
-        self.assertArgHasType(
-            TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_,
-            0,
-            objc._C_NSUInteger,
+        self.assertArgIsBlock(
+            TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v"
         )

@@ -13,5 +13,5 @@ class TestHKHeartbeatSeriesBuilder(TestCase):
             HealthKit.HKHeartbeatSeriesBuilder.addMetadata_completion_, 1, b"vZ@"
         )
         self.assertArgIsBlock(
-            HealthKit.HKHeartbeatSeriesBuilder.finishSeriesWithCompletion_, 0, b"v@@@"
+            HealthKit.HKHeartbeatSeriesBuilder.finishSeriesWithCompletion_, 0, b"v@@"
         )

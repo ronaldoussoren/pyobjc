@@ -127,11 +127,11 @@ class TestMTLIOCommandBuffer(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLIOCommandBufferHelper.waitForEvent_value, 1, objc._C_ULNG_LNG
+            TestMTLIOCommandBufferHelper.waitForEvent_value_, 1, objc._C_ULNG_LNG
         )
 
         self.assertArgHasType(
-            TestMTLIOCommandBufferHelper.signalEvent_value, 1, objc._C_ULNG_LNG
+            TestMTLIOCommandBufferHelper.signalEvent_value_, 1, objc._C_ULNG_LNG
         )
 
         self.assertResultHasType(

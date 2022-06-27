@@ -4,7 +4,7 @@ import DeviceDiscoveryExtension
 
 class TestDDDevice(TestCase):
     def test_constants(self):
-        self.assertIsTypedEnum(DeviceDiscoveryExtension.DDDeviceProtocolString, str)
+        # self.assertIsTypedEnum(DeviceDiscoveryExtension.DDDeviceProtocolString, str)
 
         self.assertIsInstance(
             DeviceDiscoveryExtension.DDDeviceProtocolStringInvalid, str
@@ -36,7 +36,7 @@ class TestDDDevice(TestCase):
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceStateInvalidating, 30)
 
     def test_functions(self):
-        DeviceDiscoveryExtension.DDDeviceFlagsToString
+        # DeviceDiscoveryExtension.DDDeviceFlagsToString
         DeviceDiscoveryExtension.DDDeviceProtocolToString
         DeviceDiscoveryExtension.DDDeviceCategoryToString
         DeviceDiscoveryExtension.DDDeviceStateToString

@@ -9,5 +9,5 @@ class TestLAContext_Authorization(TestCase):
             LocalAuthentication.LAContext.evaluateRight_localizedReason_reply_, 2, b"v@"
         )
         self.assertArgIsBlock(
-            LocalAuthentication.LAContext.evaluateRight_reply_, 1, b"v@"
+            LocalAuthentication.LAContext.evaluateRight_localizedReason_reply_, 2, b"v@"
         )

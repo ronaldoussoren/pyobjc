@@ -19,7 +19,7 @@ class TestLAPublicKey(TestCase):
         self.assertArgIsBlock(
             LocalAuthentication.LAPublicKey.verifyData_signature_secKeyAlgorithm_completion_,
             3,
-            b"v@@",
+            b"v@",
         )
         self.assertResultIsBOOL(
             LocalAuthentication.LAPublicKey.canVerifyUsingSecKeyAlgorithm_

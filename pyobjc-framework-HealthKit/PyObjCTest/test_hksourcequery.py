@@ -4,8 +4,8 @@ import HealthKit
 
 class TestHKSourceQuery(TestCase):
     def test_methods(self):
-        self.assertIsInstance(
-            HealthKit.HKSourceQuery.initWithSampleType_samplePredicate_completionHanlder_,
+        self.assertArgIsBlock(
+            HealthKit.HKSourceQuery.initWithSampleType_samplePredicate_completionHandler_,
             2,
             b"v@@@",
         )

@@ -168,8 +168,8 @@ class TestMTLLibrary(TestCase):
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(
-            Metal.MTLVertexAttribute.alloc().init().preserveInvariance
+            Metal.MTLCompileOptions.alloc().init().preserveInvariance
         )
         self.assertArgIsBOOL(
-            Metal.MTLVertexAttribute.alloc().init().setPreserveInvariance_, 0
+            Metal.MTLCompileOptions.alloc().init().setPreserveInvariance_, 0
         )

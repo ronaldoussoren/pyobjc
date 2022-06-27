@@ -216,13 +216,10 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setObjectTexture_atIndex_(self, a, b):
         pass
 
-    def setObjectBuffer_offsets_withRange_(self, a, b, c):
+    def setObjectBuffers_offsets_withRange_(self, a, b, c):
         pass
 
     def setObjectTextures_withRange_(self, a, b):
-        pass
-
-    def setObjectBuffers_offsets_withRange_(self, a, b, c):
         pass
 
     def setObjectSamplerState_atIndex_(self, a, b):
@@ -270,12 +267,12 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_(self, a, b, c, d):
         pass
 
-    def drawMeshThreadgroups_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_(
+    def drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_(
         self, a, b, c
     ):
         pass
 
-    def drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_(
+    def drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_(
         self, a, b, c
     ):
         pass
@@ -1165,27 +1162,27 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             0,
             b"n^@",
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             0,
             2,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             1,
             b"n^" + objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             1,
             2,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             2,
             Metal.NSRange.__typestr__,
         )
@@ -1215,17 +1212,17 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             0,
-            "n^@",
+            b"n^@",
         )
-        self.asserSizeInArg(
+        self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_, 0, 2
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             1,
-            "n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_NSUInteger,
         )
-        self.asserSizeInArg(
+        self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_, 1, 2
         )
         self.assertArgHasType(
@@ -1241,9 +1238,9 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectTextures_withRange_, 0, "n^@"
+            TestMTLRenderCommandEncoderHelper.setObjectTextures_withRange_, 0, b"n^@"
         )
-        self.asserSizeInArg(
+        self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setObjectTextures_withRange_, 0, 1
         )
         self.assertArgHasType(
@@ -1261,9 +1258,9 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_,
             0,
-            "n^@",
+            b"n^@",
         )
-        self.asserSizeInArg(
+        self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 0, 1
         )
         self.assertArgHasType(
@@ -1275,47 +1272,24 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectSamplerState_atIndex_,
             1,
-            objc._C_FLT,
-        )
-        self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerState_atIndex_,
-            2,
-            objc._C_FLT,
-        )
-        self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerState_atIndex_,
-            3,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_,
             0,
-            "n^@",
+            b"n^@",
         )
-        self.asserSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 0, 3
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 0, 1
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_,
             1,
-            "n^" + objc._C_FLT,
-        )
-        self.asserSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 1, 3
-        )
-        self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_,
-            2,
-            "n^" + objc._C_FLT,
-        )
-        self.asserSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 2, 3
-        )
-        self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_,
-            3,
             Metal.NSRange.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setObjectSamplerStates_withRange_, 0, 1
         )
 
         self.assertArgHasType(
@@ -1347,8 +1321,13 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setMeshBuffer_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setMeshBuffer_offset_atIndex_,
             1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setMeshBuffer_offset_atIndex_,
+            2,
             objc._C_NSUInteger,
         )
 
@@ -1374,7 +1353,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshBuffers_offsets_withRange_,
             1,
-            b"n^" + objc.C_C_NSUInteger,
+            b"n^" + objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setMeshBuffers_offsets_withRange_, 1, 2
@@ -1424,12 +1403,12 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             1,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             2,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
@@ -1438,7 +1417,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setMeshSamplerState_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             0,
             b"n^@",
         )
@@ -1450,7 +1429,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             1,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
@@ -1460,7 +1439,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             2,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setMeshSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
@@ -1474,33 +1453,33 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             0,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             1,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             2,
             Metal.MTLSize.__typestr__,
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             0,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             1,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             2,
             Metal.MTLSize.__typestr__,
         )
@@ -1511,12 +1490,12 @@ class TestMTLRenderCommandEncoder(TestCase):
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             2,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadGroup_threadsPerMeshThreadgroup_,
+            TestMTLRenderCommandEncoderHelper.drawMeshThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,
             3,
             Metal.MTLSize.__typestr__,
         )
@@ -2393,27 +2372,27 @@ class TestMTLRenderCommandEncoder2(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             0,
             b"n^@",
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             0,
             2,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             1,
             b"n^" + objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             1,
             2,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setObjectBuffer_offsets_withRange_,
+            TestMTLRenderCommandEncoderHelper.setObjectBuffers_offsets_withRange_,
             2,
             Metal.NSRange.__typestr__,
         )

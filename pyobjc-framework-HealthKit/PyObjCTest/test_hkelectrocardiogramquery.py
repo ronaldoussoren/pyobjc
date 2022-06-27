@@ -7,5 +7,5 @@ class TestHKElectrocardiogramQuery(TestCase):
         self.assertArgIsBlock(
             HealthKit.HKElectrocardiogramQuery.initWithElectrocardiogram_dataHandler_,
             1,
-            b"v@@Z@@",
+            b"v@@Z@",
         )
