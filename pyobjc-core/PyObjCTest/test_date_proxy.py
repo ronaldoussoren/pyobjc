@@ -44,11 +44,9 @@ objc.registerMetaDataForSelector(
 # Start of epoch for NSDate
 REFDATE = datetime.datetime(2001, 1, 1, 0, 0, 0, 0, datetime.timezone.utc)
 
-TIMEZONE = datetime.timezone(offset=datetime.timedelta(seconds=3600))
-
 
 def as_datetime(value):
-    if isinstance(value, datetime.date):
+    if isinstance(value, datetime.date) and not isinstance(value, datetime.datetime):
         return datetime.datetime.fromtimestamp(float(value.strftime("%s")))
     return value
 
@@ -69,7 +67,7 @@ class TestDateInObjC(TestCase):
             # check.
             self.assertLessEqual(abs(py - oc), 1)
         else:
-            self.assertEqual(py, oc)
+            self.assertLessEqual(abs(py - oc), 0.5)
 
     def test_since1970(self):
         py = as_datetime(self.value).timestamp()
@@ -189,8 +187,10 @@ class TestDateInObjC(TestCase):
             )
 
 
-class TestTZAwareDateInObjC(TestDateInObjC):
-    value = datetime.datetime.now(TIMEZONE) - datetime.timedelta(days=28)
+class TestTZAwareDatetimeInObjC(TestDateInObjC):
+    value = datetime.datetime.now().astimezone(
+        tz=datetime.timezone.utc
+    ) - datetime.timedelta(days=28)
 
 
 class TestDate(TestDateInObjC):
@@ -245,7 +245,7 @@ class TestInteractingWithNSDate(TestCase):
         seconds = time.time()
 
         oc = NSDate.dateWithTimeIntervalSince1970_(seconds)
-        py = datetime.datetime.fromtimestamp(seconds + 7200, TIMEZONE)
+        py = datetime.datetime.fromtimestamp(seconds + 7200, datetime.timezone.utc)
 
         with self.subTest("py is later, ask oc"):
             v = OC_DateInt.earlierOf_and_(oc, py)
@@ -256,7 +256,7 @@ class TestInteractingWithNSDate(TestCase):
             self.assertIs(v, oc)
 
         oc = NSDate.dateWithTimeIntervalSince1970_(seconds)
-        py = datetime.datetime.fromtimestamp(seconds - 7200, TIMEZONE)
+        py = datetime.datetime.fromtimestamp(seconds - 7200, datetime.timezone.utc)
 
         with self.subTest("py is earlier, ask oc"):
             v = OC_DateInt.earlierOf_and_(oc, py)
