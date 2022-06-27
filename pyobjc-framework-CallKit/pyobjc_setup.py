@@ -209,7 +209,6 @@ Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3 :: Only
-Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
@@ -473,7 +472,7 @@ def Extension(*args, **kwds):
         # Explicitly use the most recent SDK to avoid compile problems.
         data = subprocess.check_output(
             ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
-            universal_newlines=True,
+            text=True,
         ).strip()
 
         if data:
@@ -655,7 +654,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,
-        python_requires=">=3.6",
+        python_requires=">=3.7",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         **k,
     )

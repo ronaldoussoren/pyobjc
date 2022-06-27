@@ -16,6 +16,8 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
+PyObjC 9 will support Python 3.7 and later.
+
 PyObjC 8.5 was released on 2022-04-19. See the :doc:`changelog <changelog>` for more information. PyObjC 8 supports Python 3.6 and later.
 
 PyObjC 5.3 is the last version supporting Python 2 and was released on 2019-10-16.
@@ -23,7 +25,7 @@ PyObjC 5.3 is the last version supporting Python 2 and was released on 2019-10-1
 Supported platforms
 -------------------
 
-PyObjC supports Python 3.6 or later and does not support Python 2.
+PyObjC supports Python 3.7 or later and does not support Python 2.
 PyObjC does not support other python implementation such as PyPy and Jython.
 
 PyObjC is regularly tested on macOS 10.14 and should work on macOS

@@ -28,6 +28,8 @@ Version 9.0a1
   - SharedWithYou
   - SharedWithYouCore
 
+* #416: PyObjC 9.0 requires Python 3.7 or later
+
 * #384: Remove support for BridgeSupport files
 
   The bridge itself hasn't used these files for a long time, and system

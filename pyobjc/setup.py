@@ -260,11 +260,11 @@ Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
-Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3.10
+Programming Language :: Python :: 3.11
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -634,7 +634,7 @@ setup(
     extras_require={
         "allbindings": BASE_REQUIRES + framework_requires(include_all=True)
     },
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     setup_requires=[],
     classifiers=CLASSIFIERS,
     license="MIT License",

@@ -21,8 +21,8 @@ def get_config_var(var):
     return _get_config_var(var) or ""
 
 
-# We need at least Python 3.6
-MIN_PYTHON = (3, 6)
+# We need at least Python 3.7
+MIN_PYTHON = (3, 7)
 
 if sys.version_info < MIN_PYTHON:
     vstr = ".".join(map(str, MIN_PYTHON))
@@ -555,7 +555,7 @@ class oc_build_ext(build_ext.build_ext):
             if os.path.exists("/usr/bin/xcrun"):
                 self.sdk_root = subprocess.check_output(
                     ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
-                    universal_newlines=True,
+                    text=True,
                 ).strip()
 
                 if not self.sdk_root:
