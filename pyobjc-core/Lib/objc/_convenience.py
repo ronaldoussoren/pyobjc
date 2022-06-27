@@ -8,6 +8,7 @@ from objc._objc import (
     currentBundle,
     lookUpClass,
     options,
+    registerMetaDataForSelector,
     selector,
 )
 import PyObjCTools.KeyValueCoding as kvc
@@ -24,6 +25,17 @@ options._getKeyPath = kvc.getKeyPath
 options._setKeyPath = kvc.setKeyPath
 
 del kvc
+
+for method in (
+    b"alloc",
+    b"copy",
+    b"copyWithZone:",
+    b"mutableCopy",
+    b"mutableCopyWithZone:",
+):
+    registerMetaDataForSelector(
+        b"NSObject", method, {"retval": {"already_retained": True}}
+    )
 
 
 def register(f):

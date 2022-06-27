@@ -26,7 +26,6 @@ from ._convenience_nsarray import *  # noqa: F401, F403, E402
 from ._convenience_nsstring import *  # noqa: F401, F403, E402
 from ._convenience_mapping import *  # noqa: F401, F403, E402
 from ._convenience_sequence import *  # noqa: F401, F403, E402
-from ._bridgesupport import *  # noqa: F401, F403, E402
 from ._dyld import *  # noqa: F401, F403, E402
 from ._protocols import *  # noqa: F401, F403, E402
 from ._descriptors import *  # noqa: F401, F403, E402
@@ -38,6 +37,7 @@ from ._context import *  # noqa: F401, F403, E402
 from ._properties import *  # noqa: F401, F403, E402
 from ._lazyimport import *  # noqa: F401, F403, E402
 from ._compat import *  # noqa: F401, F403, E402
+from . import _structtype  # noqa: F401, F403, E402
 from . import _callable_docstr  # noqa: F401, F403, E402
 from . import _pycoder  # noqa: F401, F403, E402
 

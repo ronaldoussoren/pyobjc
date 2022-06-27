@@ -28,6 +28,11 @@ Version 9.0a1
   - SharedWithYou
   - SharedWithYouCore
 
+* #384: Remove support for BridgeSupport files
+
+  The bridge itself hasn't used these files for a long time, and system
+  bridgesupport files are basically unusable.
+
 * #415: Remove ``objc._setClassExtender``
 
   This was an internal function that's no longer used by PyObjC itself.

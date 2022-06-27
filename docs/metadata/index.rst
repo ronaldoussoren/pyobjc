@@ -14,6 +14,5 @@ the methods by which the metadata can be loaded.
 .. toctree::
    :maxdepth: 1
 
-   bridgesupport
    compiled
    manual
