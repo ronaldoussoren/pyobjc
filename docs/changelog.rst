@@ -55,6 +55,12 @@ Version 9.0a1
   The ``typestr`` attribute contains the same value and has
   more consistent naming with the rest of PyObjC.
 
+* #436: ``Quarrtz.CVPixelBufferCreateWithBytes`` now conforms to the
+  PyObjC standard for returning values: it returns a tuple of two
+  values, the C return value and the value return through ``pixelBufferOut``.
+
+  In older versions the return value was only the value return through
+  ``pixelBufferOut``.
 
 Version 8.6
 -----------

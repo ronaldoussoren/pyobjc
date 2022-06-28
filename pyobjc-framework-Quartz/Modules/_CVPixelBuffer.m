@@ -37,6 +37,9 @@ static PyObject*
 mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
                                  PyObject* args)
 {
+    CVReturn         rv;
+    PyObject*        py_rv;
+    PyObject*        func_result;
     CFAllocatorRef   allocator;
     size_t           width;
     size_t           height;
@@ -106,10 +109,7 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            /* XXX: Bug: the return value of CVPixelBufferCreateWithBytes is
-             * not returned to Python!!!
-             */
-            (void)CVPixelBufferCreateWithBytes(
+            rv = CVPixelBufferCreateWithBytes(
                 allocator, width, height, pixelFormatType,
                 PyObjCMemView_GetBuffer(view)->buf, bytesPerRow,
                 mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
@@ -133,7 +133,26 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
 
     py_pixelBuffer = PyObjC_ObjCToPython(@encode(CVPixelBufferRef), &pixelBuffer);
     CFRelease(pixelBuffer); /* Compensate for create rule */
-    return py_pixelBuffer;
+    if (py_pixelBuffer == NULL) {
+        return NULL;
+    }
+
+    py_rv = PyObjC_ObjCToPython(@encode(CVReturn), &rv);
+    if (py_rv == NULL) {
+        Py_DECREF(py_pixelBuffer);
+        return NULL;
+    }
+
+    func_result = PyTuple_New(2);
+    if (func_result == NULL) {
+        Py_DECREF(py_pixelBuffer);
+        Py_DECREF(py_rv);
+    }
+
+    PyTuple_SET_ITEM(func_result, 0, py_rv);
+    PyTuple_SET_ITEM(func_result, 1, py_pixelBuffer);
+
+    return func_result;
 }
 
 static PyMethodDef mod_methods[] = {{"CVPixelBufferCreateWithBytes",
