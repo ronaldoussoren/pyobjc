@@ -62,6 +62,10 @@ Version 9.0a1
   In older versions the return value was only the value return through
   ``pixelBufferOut``.
 
+* 464: The encodings ``objc._C_NSBOOL`` and ``objc._C_BOOL`` are now treated
+  exactly the same as the types ``BOOL`` and ``bool`` have the same size
+  and representation on arm64 and x86_64.
+
 Version 8.6
 -----------
 

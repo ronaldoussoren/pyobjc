@@ -1400,35 +1400,37 @@ class TestTestSupport(TestCase):
             self.fail("test pass for not-input argument")
 
     def test_arg_bool(self):
-        m = Method(3, {"type": objc._C_NSBOOL})
-        try:
-            self.assertArgIsBOOL(m, 3)
-        except self.failureException:
-            raise
-            self.fail("unexpected test failure")
+        for tp in (objc._C_NSBOOL, objc._C_BOOL):
+            with self.subTest(encoding=tp):
+                m = Method(3, {"type": tp})
+                try:
+                    self.assertArgIsBOOL(m, 3)
+                except self.failureException:
+                    raise
+                    self.fail("unexpected test failure")
 
-        m = Method(3, {"type": objc._C_NSBOOL}, selector=True)
-        try:
-            self.assertArgIsBOOL(m, 1)
-        except self.failureException:
-            self.fail("unexpected test failure")
+                m = Method(3, {"type": tp}, selector=True)
+                try:
+                    self.assertArgIsBOOL(m, 1)
+                except self.failureException:
+                    self.fail("unexpected test failure")
 
-        m = Method(3, {"type": b"@"})
-        try:
-            self.assertArgIsBOOL(m, 3)
-        except self.failureException:
-            pass
-        else:
-            self.fail("unexpected test pass")
+                m = Method(3, {"type": b"@"})
+                try:
+                    self.assertArgIsBOOL(m, 3)
+                except self.failureException:
+                    pass
+                else:
+                    self.fail("unexpected test pass")
 
-        m = Method(3, {"type": b"@"}, selector=True)
-        try:
-            self.assertArgIsBOOL(m, 1)
-        except self.failureException:
-            pass
+                m = Method(3, {"type": b"@"}, selector=True)
+                try:
+                    self.assertArgIsBOOL(m, 1)
+                except self.failureException:
+                    pass
 
-        else:
-            self.fail("unexpected test pass")
+                else:
+                    self.fail("unexpected test pass")
 
     def test_assertHasAttr(self):
         with self.assertRaisesRegex(self.failureException, "foo"):
@@ -2053,25 +2055,27 @@ class TestTestSupport(TestCase):
             self.assertResultIsBlock(m, "v")
 
     def test_result_bool(self):
-        m = Method(None, {"type": objc._C_NSBOOL})
-        self.assertResultIsBOOL(m)
+        for tp in (objc._C_NSBOOL, objc._C_BOOL):
+            with self.subTest(encoding=tp):
+                m = Method(None, {"type": tp})
+                self.assertResultIsBOOL(m)
 
-        m = Method(None, {"type": objc._C_NSBOOL}, selector=True)
-        self.assertResultIsBOOL(m)
+                m = Method(None, {"type": tp}, selector=True)
+                self.assertResultIsBOOL(m)
 
-        m = Method(None, {"type": b"@"})
-        with self.assertRaisesRegex(
-            self.failureException,
-            f"result of <.*> is not of type BOOL, but {objc._C_ID}",
-        ):
-            self.assertResultIsBOOL(m)
+                m = Method(None, {"type": b"@"})
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    f"result of <.*> is not of type BOOL, but {objc._C_ID}",
+                ):
+                    self.assertResultIsBOOL(m)
 
-        m = Method(None, {"type": b"@"}, selector=True)
-        with self.assertRaisesRegex(
-            self.failureException,
-            f"result of <.*> is not of type BOOL, but {objc._C_ID}",
-        ):
-            self.assertResultIsBOOL(m)
+                m = Method(None, {"type": b"@"}, selector=True)
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    f"result of <.*> is not of type BOOL, but {objc._C_ID}",
+                ):
+                    self.assertResultIsBOOL(m)
 
     def test_running(self):
         orig_use = TestSupport._usepool

@@ -363,9 +363,8 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
 #ifdef _C_ATOM
     case _C_ATOM:
 #endif
-#ifdef _C_BOOL
     case _C_BOOL:
-#endif
+    case _C_NSBOOL:
     case _C_SHT:
     case _C_USHT:
     case _C_INT:
@@ -380,7 +379,6 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     case _C_UNICHAR:
     case _C_CHAR_AS_TEXT:
     case _C_CHAR_AS_INT:
-    case _C_NSBOOL:
         ++type;
         break;
 
@@ -524,9 +522,8 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
 #ifdef _C_ATOM
     case _C_ATOM:
 #endif
-#ifdef _C_BOOL
     case _C_BOOL:
-#endif
+    case _C_NSBOOL:
     case _C_SHT:
     case _C_USHT:
     case _C_INT:
@@ -541,7 +538,6 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
     case _C_UNICHAR:
     case _C_CHAR_AS_TEXT:
     case _C_CHAR_AS_INT:
-    case _C_NSBOOL:
     case _C_BFLD: /* Not really 1 character, but close enough  */
         ++type;
         break;
@@ -702,18 +698,15 @@ PyObjCRT_AlignOfType(const char* start_type)
         return __alignof__(short);
     case _C_USHT:
         return __alignof__(unsigned short);
-#ifdef _C_BOOL
     case _C_BOOL:
+    case _C_NSBOOL:
         return __alignof__(bool);
-#endif
     case _C_UNICHAR:
         return __alignof__(UniChar);
     case _C_CHAR_AS_TEXT:
         return __alignof__(char);
     case _C_CHAR_AS_INT:
         return __alignof__(char);
-    case _C_NSBOOL:
-        return __alignof__(BOOL);
     case _C_INT:
         return __alignof__(int);
     case _C_UINT:
@@ -873,10 +866,9 @@ PyObjCRT_SizeOfType(const char* start_type)
         return sizeof(short);
     case _C_USHT:
         return sizeof(unsigned short);
-#ifdef _C_BOOL
     case _C_BOOL:
+    case _C_NSBOOL:
         return sizeof(bool);
-#endif
     case _C_INT:
         return sizeof(int);
     case _C_UINT:
@@ -897,8 +889,6 @@ PyObjCRT_SizeOfType(const char* start_type)
         return sizeof(char);
     case _C_CHAR_AS_INT:
         return sizeof(char);
-    case _C_NSBOOL:
-        return sizeof(BOOL);
 
     case _C_PTR:
     case _C_CHARPTR:
@@ -1813,14 +1803,9 @@ pythonify_c_value(const char* type, void* datum)
         break;
     }
 
-#ifdef _C_BOOL
     case _C_BOOL:
-        retobject = (PyObject*)PyBool_FromLong(*(bool*)datum);
-        break;
-#endif
-
     case _C_NSBOOL:
-        retobject = (PyObject*)PyBool_FromLong(*(BOOL*)datum);
+        retobject = (PyObject*)PyBool_FromLong(*(bool*)datum);
         break;
 
     case _C_INT:
@@ -1941,13 +1926,13 @@ PyObjCRT_SizeOfReturnType(const char* type)
     switch (*type) {
     case _C_CHR:
     case _C_BOOL:
+    case _C_NSBOOL:
     case _C_UCHR:
     case _C_SHT:
     case _C_USHT:
     case _C_UNICHAR:
     case _C_CHAR_AS_TEXT:
     case _C_CHAR_AS_INT:
-    case _C_NSBOOL:
         return sizeof(long);
     default:
         return PyObjCRT_SizeOfType(type);
@@ -2448,14 +2433,9 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         }
         return r;
 
-#ifdef _C_BOOL
     case _C_BOOL:
-        *(bool*)datum = PyObject_IsTrue(argument);
-        return 0;
-#endif
-
     case _C_NSBOOL:
-        *(BOOL*)datum = PyObject_IsTrue(argument);
+        *(bool*)datum = PyObject_IsTrue(argument);
         return 0;
 
     case _C_UNICHAR:

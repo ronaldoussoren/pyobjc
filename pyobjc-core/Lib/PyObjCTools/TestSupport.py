@@ -842,7 +842,7 @@ class TestCase(_unittest.TestCase):
     def assertResultIsBOOL(self, method, message=None):
         info = method.__metadata__()
         typestr = info["retval"]["type"]
-        if typestr != objc._C_NSBOOL:
+        if typestr not in (objc._C_NSBOOL, objc._C_BOOL):
             self.fail(
                 message or f"result of {method} is not of type BOOL, but {typestr!r}"
             )
@@ -854,7 +854,7 @@ class TestCase(_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         typestr = info["arguments"][argno + offset]["type"]
-        if typestr != objc._C_NSBOOL:
+        if typestr not in (objc._C_NSBOOL, objc._C_BOOL):
             self.fail(
                 message
                 or "arg %d of %s is not of type BOOL, but %r" % (argno, method, typestr)

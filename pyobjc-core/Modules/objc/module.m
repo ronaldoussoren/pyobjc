@@ -2083,6 +2083,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void)
 {
+    _Static_assert(sizeof(BOOL) == sizeof(bool), "BOOL and bool should have same size");
     PyObject *m, *d, *v;
 
     if (PyObjC_Initialized) { // LCOV_BR_EXCL_LINE

@@ -1289,6 +1289,11 @@ The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`,
 and :const:`_C_CHAR_AS_INT` are inventions of PyObjC and are not used in
 the Objective-C runtime.
 
+The value :const:`_C_NSBOOL` is deprecated as of PyObjC 9, use :const:`_C_BOOL`
+instead. The two constants are treated exactly the same in PyObjC now that
+the corresponding C types have the same representation (which wasn't true
+for PowerPC).
+
 Complex types
 ..............
 
