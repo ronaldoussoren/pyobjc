@@ -1331,6 +1331,18 @@ More complex types can be represented using longer type strings:
 * The C construct 'const' is mapped to :const:`_C_CONST`, that is a
   *const char\** is represented as :const:`_C_CONST` + :const:`_C_CHARPTR`.
 
+* A C vector or matrix type (e.g. ``vector_float3`` and ``matrix_float3x3``
+  are represented as follows:
+
+  - Vector: :const:`_C_VECTOR_B` *N* *type* :const:`_C_VECTOR_E`
+  - Matrix: :const:`_C_VECTOR_B` *N* ``","`` *M* *type* :const:`_C_VECTOR_E`
+
+  These representations are not supported in the Objective-C runtime, but are
+  inventions by PyObjC. Because libffi does not support the corresponding
+  C types these encodings are supported in limited subset of possible
+  method signatures (basically only those signatures that are used by
+  Apple system libraries).
+
 Additional prefixes
 ...................
 

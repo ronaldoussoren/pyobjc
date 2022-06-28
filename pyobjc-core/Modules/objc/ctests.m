@@ -8,6 +8,7 @@
 #include "pyobjc-unittest.h"
 
 #include <fcntl.h>
+#include <simd/simd.h>
 
 // LCOV_BR_EXCL_START
 // LCOV_EXCL_START
@@ -90,6 +91,69 @@ ASSERT_EQUALS(invokeHelper.s[1], v1.s[1], "%d");
 ASSERT_EQUALS(invokeHelper.s[2], v1.s[2], "%d");
 ASSERT_EQUALS(invokeHelper.s[3], v1.s[3], "%d");
 ASSERT_EQUALS(invokeHelper.s[4], v1.s[4], "%d");
+
+END_UNITTEST
+
+/* Note: VectorSize and VectorAlign
+ *  (a) test the same set of types
+ *  (b) test all vector/matrix types found in system frameworks
+ *      that are wrapped in PyObjC.
+ */
+BEGIN_UNITTEST(VectorSize)
+ASSERT_EQUALS(sizeof(vector_uchar16), PyObjCRT_SizeOfType("<16C>"), "%d");
+ASSERT_EQUALS(sizeof(vector_short2), PyObjCRT_SizeOfType("<2s>"), "%d");
+ASSERT_EQUALS(sizeof(vector_ushort2), PyObjCRT_SizeOfType("<2S>"), "%d");
+ASSERT_EQUALS(sizeof(vector_ushort4), PyObjCRT_SizeOfType("<4S>"), "%d");
+ASSERT_EQUALS(sizeof(vector_int2), PyObjCRT_SizeOfType("<2i>"), "%d");
+ASSERT_EQUALS(sizeof(vector_uint3), PyObjCRT_SizeOfType("<3I>"), "%d");
+ASSERT_EQUALS(sizeof(vector_float2), PyObjCRT_SizeOfType("<2f>"), "%d");
+ASSERT_EQUALS(sizeof(vector_float3), PyObjCRT_SizeOfType("<3f>"), "%d");
+ASSERT_EQUALS(sizeof(vector_float4), PyObjCRT_SizeOfType("<4f>"), "%d");
+ASSERT_EQUALS(sizeof(vector_double2), PyObjCRT_SizeOfType("<2d>"), "%d");
+ASSERT_EQUALS(sizeof(vector_double3), PyObjCRT_SizeOfType("<3d>"), "%d");
+ASSERT_EQUALS(sizeof(vector_double4), PyObjCRT_SizeOfType("<4d>"), "%d");
+ASSERT_EQUALS(sizeof(matrix_float2x2), PyObjCRT_SizeOfType("<2,2f>"), "%d");
+ASSERT_EQUALS(sizeof(matrix_float3x3), PyObjCRT_SizeOfType("<3,3f>"), "%d");
+ASSERT_EQUALS(sizeof(matrix_float4x3), PyObjCRT_SizeOfType("<4,3f>"), "%d");
+ASSERT_EQUALS(sizeof(matrix_float4x4), PyObjCRT_SizeOfType("<4,4f>"), "%d");
+ASSERT_EQUALS(sizeof(matrix_double4x4), PyObjCRT_SizeOfType("<4,4d>"), "%d");
+
+Py_ssize_t n = PyObjCRT_SizeOfType("<4,4di");
+FAIL_IF(n != -1);
+PyErr_Clear();
+
+n = PyObjCRT_SizeOfType("<d>");
+FAIL_IF(n != -1);
+PyErr_Clear();
+
+END_UNITTEST
+
+BEGIN_UNITTEST(VectorAlign)
+ASSERT_EQUALS(__alignof__(vector_uchar16), PyObjCRT_AlignOfType("<16C>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_short2), PyObjCRT_AlignOfType("<2s>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_ushort2), PyObjCRT_AlignOfType("<2S>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_ushort4), PyObjCRT_AlignOfType("<4S>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_int2), PyObjCRT_AlignOfType("<2i>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_uint3), PyObjCRT_AlignOfType("<3I>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_float2), PyObjCRT_AlignOfType("<2f>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_float3), PyObjCRT_AlignOfType("<3f>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_float4), PyObjCRT_AlignOfType("<4f>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_double2), PyObjCRT_AlignOfType("<2d>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_double3), PyObjCRT_AlignOfType("<3d>"), "%d");
+ASSERT_EQUALS(__alignof__(vector_double4), PyObjCRT_AlignOfType("<4d>"), "%d");
+ASSERT_EQUALS(__alignof__(matrix_float2x2), PyObjCRT_AlignOfType("<2,2f>"), "%d");
+ASSERT_EQUALS(__alignof__(matrix_float3x3), PyObjCRT_AlignOfType("<3,3f>"), "%d");
+ASSERT_EQUALS(__alignof__(matrix_float4x3), PyObjCRT_AlignOfType("<4,3f>"), "%d");
+ASSERT_EQUALS(__alignof__(matrix_float4x4), PyObjCRT_AlignOfType("<4,4f>"), "%d");
+ASSERT_EQUALS(__alignof__(matrix_double4x4), PyObjCRT_AlignOfType("<4,4d>"), "%d");
+
+Py_ssize_t n = PyObjCRT_AlignOfType("<4,4di");
+FAIL_IF(n != -1);
+PyErr_Clear();
+
+n = PyObjCRT_AlignOfType("<d>");
+FAIL_IF(n != -1);
+PyErr_Clear();
 
 END_UNITTEST
 
@@ -964,6 +1028,8 @@ END_UNITTEST
 
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
+                                    TESTDEF(VectorSize),
+                                    TESTDEF(VectorAlign),
                                     TESTDEF(StructSize),
                                     TESTDEF(StructAlign),
                                     TESTDEF(FillStruct1),

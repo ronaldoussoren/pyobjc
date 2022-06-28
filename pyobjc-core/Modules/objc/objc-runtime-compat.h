@@ -43,6 +43,19 @@ struct PyObjC_method {
 #define _C_CHAR_AS_INT 'z'
 #define _C_NSBOOL 'Z'
 
+/*
+ * Vector/maxtrix types don't have a representation
+ * in type encoding. PyObjC uses the following convention:
+ *
+ * vector_float2:  <2f>
+ * matrix_float3x3: <3,3f>
+ *
+ * These encodings are only used for signature-specific
+ * dispatching, libffi does not support these types
+ */
+#define _C_VECTOR_B '<'
+#define _C_VECTOR_E '>'
+
 /* Some functions that are missing (oddly enough) */
 BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
 

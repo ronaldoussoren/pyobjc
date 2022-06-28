@@ -17,6 +17,7 @@
 
 #include "pyobjc.h"
 #include <objc/Protocol.h>
+#include <simd/simd.h>
 
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -323,6 +324,121 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
     }
 }
 
+static struct vector_info {
+    char*      encoding;
+    Py_ssize_t size;
+    Py_ssize_t align;
+    /* XXX: Add functions to serialize and deserialize */
+} gVectorInfo[] = {{
+                       .encoding = "<16C>",
+                       .size     = sizeof(vector_uchar16),
+                       .align    = __alignof__(vector_uchar16),
+                   },
+                   {
+                       .encoding = "<2s>",
+                       .size     = sizeof(vector_short2),
+                       .align    = __alignof__(vector_short2),
+                   },
+                   {
+                       .encoding = "<2S>",
+                       .size     = sizeof(vector_ushort2),
+                       .align    = __alignof__(vector_ushort2),
+                   },
+                   {
+                       .encoding = "<4S>",
+                       .size     = sizeof(vector_ushort4),
+                       .align    = __alignof__(vector_ushort4),
+                   },
+                   {
+                       .encoding = "<2i>",
+                       .size     = sizeof(vector_int2),
+                       .align    = __alignof__(vector_int2),
+                   },
+                   {
+                       .encoding = "<3I>",
+                       .size     = sizeof(vector_uint3),
+                       .align    = __alignof__(vector_uint3),
+                   },
+                   {
+                       .encoding = "<2f>",
+                       .size     = sizeof(vector_float2),
+                       .align    = __alignof__(vector_float2),
+                   },
+                   {
+                       .encoding = "<3f>",
+                       .size     = sizeof(vector_float3),
+                       .align    = __alignof__(vector_float3),
+                   },
+                   {
+                       .encoding = "<4f>",
+                       .size     = sizeof(vector_float4),
+                       .align    = __alignof__(vector_float4),
+                   },
+                   {
+                       .encoding = "<2d>",
+                       .size     = sizeof(vector_double2),
+                       .align    = __alignof__(vector_double2),
+                   },
+                   {
+                       .encoding = "<3d>",
+                       .size     = sizeof(vector_double3),
+                       .align    = __alignof__(vector_double3),
+                   },
+                   {
+                       .encoding = "<4d>",
+                       .size     = sizeof(vector_double4),
+                       .align    = __alignof__(vector_double4),
+                   },
+                   {
+                       .encoding = "<2,2f>",
+                       .size     = sizeof(matrix_float2x2),
+                       .align    = __alignof__(matrix_float2x2),
+                   },
+                   {
+                       .encoding = "<3,3f>",
+                       .size     = sizeof(matrix_float3x3),
+                       .align    = __alignof__(matrix_float3x3),
+                   },
+                   {
+                       .encoding = "<4,3f>",
+                       .size     = sizeof(matrix_float4x3),
+                       .align    = __alignof__(matrix_float4x3),
+                   },
+                   {
+                       .encoding = "<4,4f>",
+                       .size     = sizeof(matrix_float4x4),
+                       .align    = __alignof__(matrix_float4x4),
+                   },
+                   {
+                       .encoding = "<4,4d>",
+                       .size     = sizeof(matrix_double4x4),
+                       .align    = __alignof__(matrix_double4x4),
+                   },
+                   {
+                       NULL, -1, -1 /* Sentinel */
+                   }};
+
+/* XXX: This lookup function is fairly inefficient */
+static struct vector_info*
+vector_lookup(const char* type)
+{
+    const char* end = type;
+    while (*end && *end != _C_VECTOR_E)
+        end++;
+    end++;
+
+    struct vector_info* cur = gVectorInfo;
+    while (cur->encoding != NULL) {
+        if (strncmp(cur->encoding, type, end - type) == 0) {
+            return cur;
+        }
+        cur++;
+    }
+
+    PyErr_Format(PyObjCExc_InternalError, "Unsupported SIMD encoding: %s", type);
+    return cur;
+}
+
 const char*
 PyObjCRT_SkipTypeQualifiers(const char* type)
 {
@@ -393,6 +509,25 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
             /* Block pointer */
             type++;
         }
+        break;
+
+    case _C_VECTOR_B:
+        /* Skip length specifier,  type and _C_VECTOR_E */
+        while (isdigit(*++type))
+            ;
+        if (*type == ',') {
+            type++;
+            while (isdigit(*++type))
+                ;
+        }
+        type = PyObjCRT_SkipTypeSpec(type);
+        if (type && *type != _C_VECTOR_E) {
+            PyErr_Format(PyObjCExc_InternalError,
+                         "Invalid SIMD definition in type signature: %s", start_type);
+            return NULL;
+        }
+        if (type)
+            type++;
         break;
 
     case _C_ARY_B:
@@ -729,6 +864,10 @@ PyObjCRT_AlignOfType(const char* start_type)
 #endif
     case _C_PTR:
         return __alignof__(void*);
+
+    case _C_VECTOR_B:
+        return vector_lookup(type)->align;
+
     case _C_ARY_B:
         while (isdigit(*++type)) /* do nothing */
             ;
@@ -896,6 +1035,9 @@ PyObjCRT_SizeOfType(const char* start_type)
     case _C_ATOM:
 #endif
         return sizeof(char*);
+
+    case _C_VECTOR_B:
+        return vector_lookup(type)->size;
 
     case _C_ARY_B: {
         Py_ssize_t len = atoi(type + 1);
