@@ -68,12 +68,8 @@ Version 9.0a1
 
 * #94: Add support for SIMD types in APIs (types such as ``vector_float3``)
 
-  The values are represented in Python as tuples (vector) or nested tuples (matrix),
-  that is ``vector_float3(0.1f, 0.5f)`` is ``(0.1, 0.5)`` in Python and
-  ``matrix_int2x2(...)`` is ``((a, b), (c, d))`` in Python.
-
-  XXX: At commit there is minimal support, the bridge has been updated with
-  minimal support but framework bindings still have to be updated (with tests).
+  The python representation of these types are types with the same name in
+  defined in :mod:`objc.simd`.
 
   Because the FFI library used by PyObjC (libffi) does not support these types
   the bridge only supports the method signatures found in system frameworks,
