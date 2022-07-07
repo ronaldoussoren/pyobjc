@@ -9,10 +9,6 @@ class TestMTLIOCompressor(TestCase):
         self.assertEqual(Metal.MTLIOCompressionStatusError, 1)
 
     @min_os_level("13.0")
-    def test_constants13_0(self):
-        self.assertIsInstance(Metal.kMTLIOCompressionContextDefaultChunkSize, int)
-
-    @min_os_level("13.0")
     def test_functions(self):
         # XXX: Tweak the "context" type?
         self.assertArgIsIn(Metal.MTLIOCreateCompressionContext, 0)
@@ -22,3 +18,4 @@ class TestMTLIOCompressor(TestCase):
         self.assertArgSizeInArg(Metal.MTLIOCompressionContextAppendData, 1, 2)
 
         Metal.MTLIOFlushAndDestroyCompressionContext
+        Metal.MTLIOCompressionContextDefaultChunkSize

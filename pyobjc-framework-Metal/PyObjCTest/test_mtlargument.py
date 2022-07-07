@@ -169,7 +169,6 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
         self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
         self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
-        self.assertEqual(Metal.MTLArgumentTypeObjectPayload, 34)
 
         self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
         self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)

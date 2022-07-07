@@ -31,3 +31,7 @@ class TestPathMonitor(TestCase):
     @min_os_level("11.0")
     def test_functions11_0(self):
         Network.nw_path_monitor_prohibit_interface_type
+
+    @min_os_level("13.0")
+    def test_functions13_0(self):
+        self.assertResultIsRetained(Network.nw_path_monitor_create_for_ethernet_channel)

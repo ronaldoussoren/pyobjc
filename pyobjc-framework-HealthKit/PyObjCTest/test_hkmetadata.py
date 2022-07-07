@@ -194,3 +194,6 @@ class TestHKMetadata(TestCase):
         self.assertIsInstance(HealthKit.HKMetadataKeySWOLFScore, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToLowerBound, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToUpperBound, str)
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
+        )

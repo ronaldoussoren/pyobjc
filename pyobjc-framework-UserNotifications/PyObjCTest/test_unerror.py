@@ -24,3 +24,4 @@ class TestUNError(TestCase):
             UserNotifications.UNErrorCodeContentProvidingObjectNotAllowed, 1500
         )
         self.assertEqual(UserNotifications.UNErrorCodeContentProvidingInvalid, 1501)
+        self.assertEqual(UserNotifications.UNErrorCodeBadgeInputInvalid, 1600)

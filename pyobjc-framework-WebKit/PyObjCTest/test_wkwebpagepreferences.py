@@ -15,3 +15,8 @@ class TestWebPagePreferences(TestCase):
     def test_methods11_0(self):
         self.assertResultIsBOOL(WebKit.WKWebpagePreferences.allowsContentJavaScript)
         self.assertArgIsBOOL(WebKit.WKWebpagePreferences.setAllowsContentJavaScript_, 0)
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(WebKit.WKWebpagePreferences.isLockdownModeEnabled)
+        self.assertArgIsBOOL(WebKit.WKWebpagePreferences.setLockdownModeEnabled_, 0)

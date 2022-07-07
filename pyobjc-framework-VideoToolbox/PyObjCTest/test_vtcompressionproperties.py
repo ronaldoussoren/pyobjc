@@ -294,3 +294,11 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_MinAllowedFrameQP,
             str,
         )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_EstimatedAverageBytesPerFrame,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_PreserveAlphaChannel,
+            str,
+        )

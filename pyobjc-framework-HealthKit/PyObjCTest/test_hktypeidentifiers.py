@@ -169,6 +169,9 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietaryCaffeine, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietaryWater, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierUVExposure, str)
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierAtrialFibrillationBurden, str
+        )
 
         self.assertIsTypedEnum(HealthKit.HKCategoryTypeIdentifier, str)
 

@@ -12,9 +12,6 @@ class TestDDDevice(TestCase):
         self.assertIsInstance(DeviceDiscoveryExtension.DDDeviceProtocolStringDIAL, str)
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceFlags)
-        self.assertEqual(DeviceDiscoveryExtension.DDDeviceFlagsNone, 0)
-        self.assertEqual(DeviceDiscoveryExtension.DDDeviceFlagsSupportsAudio, 1 << 1)
-        self.assertEqual(DeviceDiscoveryExtension.DDDeviceFlagsSupportsVideo, 1 << 2)
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceProtocol)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceProtocolInvalid, 0)
@@ -27,6 +24,8 @@ class TestDDDevice(TestCase):
         )
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryTVWithMediaBox, 2)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryTV, 3)
+        self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryLaptopComputer, 4)
+        self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryDesktopComputer, 5)
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceState)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceStateInvalid, 0)
@@ -36,7 +35,6 @@ class TestDDDevice(TestCase):
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceStateInvalidating, 30)
 
     def test_functions(self):
-        # DeviceDiscoveryExtension.DDDeviceFlagsToString
         DeviceDiscoveryExtension.DDDeviceProtocolToString
         DeviceDiscoveryExtension.DDDeviceCategoryToString
         DeviceDiscoveryExtension.DDDeviceStateToString

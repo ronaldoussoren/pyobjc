@@ -18,3 +18,7 @@ class TestWKWebsiteDataRecord(TestCase):
     def testConstants10_13_4(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeFetchCache, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeServiceWorkerRegistrations, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeFileSystem, str)

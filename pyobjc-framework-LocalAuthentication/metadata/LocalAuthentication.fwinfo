@@ -67,21 +67,6 @@
      },
      {
       "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      },
-      "class_method": false,
-      "selector": "evaluateRight:localizedReason:reply:"
-     },
-     {
-      "args": {
        "3": {
         "callable": {
 	 "arguments": {

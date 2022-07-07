@@ -12,6 +12,7 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsTypedEnum(AppKit.NSFontTextStyle, str)
         self.assertIsTypedEnum(AppKit.NSFontTextStyleOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSFontWeight, float)
+        self.assertIsTypedEnum(AppKit.NSFontWidth, float)
 
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
@@ -95,6 +96,12 @@ class TestNSFontDescriptor(TestCase):
         self.assertEqual(AppKit.NSFontDescriptorClassScripts, 10 << 28)
         self.assertEqual(AppKit.NSFontDescriptorClassSymbolic, 12 << 28)
 
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertIsInstance(AppKit.NSFontWidthCondensed, float)
+        self.assertIsInstance(AppKit.NSFontWidthStandard, float)
+        self.assertIsInstance(AppKit.NSFontWidthExpanded, float)
+
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(AppKit.NSFontWeightUltraLight, float)
@@ -127,6 +134,10 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontTextStyleFootnote, str)
         self.assertIsInstance(AppKit.NSFontTextStyleCaption1, str)
         self.assertIsInstance(AppKit.NSFontTextStyleCaption2, str)
+
+    @min_os_level("13.0")
+    def testConstants13_0(self):
+        self.assertIsInstance(AppKit.NSFontWidthCompressed, float)
 
     @min_os_level("10.13")
     def testMethods10_13(self):

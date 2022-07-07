@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import UserNotifications
 import objc
 
@@ -86,6 +86,18 @@ class TestUNUserNotificationCenter(TestCase):
             b"v@",
         )
 
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            UserNotifications.UNUserNotificationCenter.setBadgeCount_withCompletionHandler_,
+            1,
+            b"v@",
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("UNUserNotificationCenterDelegate")
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestUNUserNotificationCenterHelper.userNotificationCenter_willPresentNotification_withCompletionHandler_,  # noqa: B950
             2,
@@ -96,6 +108,3 @@ class TestUNUserNotificationCenter(TestCase):
             2,
             b"v",
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("UNUserNotificationCenterDelegate")

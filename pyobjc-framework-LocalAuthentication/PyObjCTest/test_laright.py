@@ -11,15 +11,6 @@ class TestLARight(TestCase):
         self.assertEqual(LocalAuthentication.LARightStateNotAuthorized, 3)
 
     @min_os_level("13.0")
-    def test_constants13_0(self):
-        self.assertIsInstance(
-            LocalAuthentication.LARightDidBecomeAuthorizedNotification, str
-        )
-        self.assertIsInstance(
-            LocalAuthentication.LARightDidBecomeUnauthorizedNotification, str
-        )
-
-    @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertArgIsBlock(
             LocalAuthentication.LARight.authorizeWithLocalizedReason_completion_,
