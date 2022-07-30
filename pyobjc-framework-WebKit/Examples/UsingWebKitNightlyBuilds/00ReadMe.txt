@@ -14,7 +14,7 @@ Instructions
    this directory
 
 
-2. Run ``python rewriteHeaders.py`` from this directory to extract
+2. Run ``python rewrite_headers.py`` from this directory to extract
    the frameworks
 
 3. Apply the patch to setup.py in this directory
