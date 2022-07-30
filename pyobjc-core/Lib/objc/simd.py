@@ -27,11 +27,16 @@ __all__ = (
 
 
 def make_type(
-    name, zero, cast_type, count, len2_type=None, len3_type=None, is_signed=True
+    name,
+    zero,
+    cast_type,
+    count,
+    len2_type=None,
+    len3_type=None,
+    is_signed=True,
+    limitrange=lambda x: x,
+    typestr=None,
 ):
-    # XXX: Add:
-    # - Range checks/limits (for integer types)
-
     assert count > 0
     if count in (3, 4):
         assert len2_type is not None
@@ -53,7 +58,7 @@ def make_type(
                 raise ValueError(values)
 
             else:
-                self._values = [cast_type(v) for v in values]
+                self._values = [limitrange(cast_type(v)) for v in values]
 
     else:
 
@@ -81,6 +86,8 @@ def make_type(
 
             else:
                 raise ValueError(f"Expecting {count} values, got {len(parts)}")
+
+            self._values = [limitrange(v) for v in self._values]
 
     def as_tuple(self):
         return tuple(self._values)
@@ -113,32 +120,31 @@ def make_type(
         if other is NotImplemented:
             return NotImplemented
 
-        return self.__class__(*(x + y for x, y in zip(self, other)))
+        return self.__class__(*(limitrange(x + y) for x, y in zip(self, other)))
 
     def __radd__(self, other):
         other = self._cast_self(other)
         if other is NotImplemented:
             return NotImplemented
 
-        return self.__class__(*(y + x for x, y in zip(self, other)))
+        return self.__class__(*(limitrange(y + x) for x, y in zip(self, other)))
 
     def __mul__(self, other):
         other = self._cast_self(other)
         if other is NotImplemented:
             return NotImplemented
 
-        return self.__class__(*(x * y for x, y in zip(self, other)))
+        return self.__class__(*(limitrange(x * y) for x, y in zip(self, other)))
 
     def __rmul__(self, other):
         other = self._cast_self(other)
         if other is NotImplemented:
             return NotImplemented
 
-        return self.__class__(*(y * x for x, y in zip(self, other)))
+        return self.__class__(*(limitrange(y * x) for x, y in zip(self, other)))
 
     def __matmul__(self, other: "vector_float2") -> "vector_float2":
-        other = self._cast_self(other)
-        if other is NotImplemented:
+        if not isinstance(other, self.__class__):
             return NotImplemented
 
         return sum(x * y for x, y in zip(self, other))
@@ -370,56 +376,82 @@ def make_type(
 
         class_dict["xyzw"] = xyzw
 
-    return type(name, (object,), class_dict)
+    if typestr is not None:
+        class_dict["__typestr__"] = typestr
+
+    result = type(name, (object,), class_dict)
+    objc._registerVectorType(result)
+    return result
 
 
-"""
-    class vector_float2:
-        __slots__ = ('_values',)
-
-
-        @property
-        def x(self) -> float:
-            return self._values[0]
-
-        @x.setter
-        def x(self, value: float) -> None:
-            self._values[0] = value
-
-        @property
-        def y(self) -> float:
-            return self._values[1]
-
-        @x.setter
-        def y(self, value :float) -> None:
-            self._values[1] = value
-
-        @property
-        def xy(self) -> "vector_float2":
-            return vector_float2(self)
-
-        @xy.setter
-        def xy(self, value: "vector_float2") -> None:
-            if not isinstance(value, vector_float2):
-                raise TypeError(value)
-
-            self._values[:] = value._values[:]
-"""
-
-vector_float2 = make_type("vector_float2", 0.0, float, 2)
-vector_float3 = make_type("vector_float3", 0.0, float, 3, vector_float2)
-vector_float4 = make_type("vector_float4", 0.0, float, 4, vector_float2, vector_float3)
-
-vector_double2 = make_type("vector_double2", 0.0, float, 2)
-vector_double3 = make_type("vector_double3", 0.0, float, 3, vector_double2)
-vector_double4 = make_type(
-    "vector_double4", 0.0, float, 4, vector_double2, vector_double3
+vector_float2 = make_type("vector_float2", 0.0, float, 2, typestr=b"<2f>")
+vector_float3 = make_type(
+    "vector_float3", 0.0, float, 3, vector_float2, typestr=b"<3f>"
+)
+vector_float4 = make_type(
+    "vector_float4", 0.0, float, 4, vector_float2, vector_float3, typestr=b"<4f>"
 )
 
-vector_short2 = make_type("vector_short2", 0, operator.index, 2)
-vector_ushort2 = make_type("vector_ushort2", 0, operator.index, 2, is_signed=False)
+vector_double2 = make_type("vector_double2", 0.0, float, 2, typestr=b"<2d>")
+vector_double3 = make_type(
+    "vector_double3", 0.0, float, 3, vector_double2, typestr=b"<3d>"
+)
+vector_double4 = make_type(
+    "vector_double4", 0.0, float, 4, vector_double2, vector_double3, typestr=b"<4d>"
+)
+
+
+def limit_short(v):
+    v = v & 0xFFFF
+    if v & 0x8000:
+        v = ~v + 1 & 0xFFFF
+        return -v
+    else:
+        return v
+
+
+def limit_int(v):
+    v = v & 0xFFFFFFFF
+    if v & 0x80000000:
+        v = ~v + 1 & 0xFFFFFFFF
+        return -v
+    else:
+        return v
+
+
+def limit_uchar(v):
+    return v % 0xFF
+
+
+def limit_ushort(v):
+    return v % 0xFFFF
+
+
+def limit_uint(v):
+    return v % 0xFFFFFFFF
+
+
+vector_short2 = make_type(
+    "vector_short2", 0, operator.index, 2, limitrange=limit_short, typestr=b"<2s>"
+)
+vector_ushort2 = make_type(
+    "vector_ushort2",
+    0,
+    operator.index,
+    2,
+    is_signed=False,
+    limitrange=limit_ushort,
+    typestr=b"<2S>",
+)
 vector_ushort3 = make_type(
-    "vector_ushort3", 0, operator.index, 3, vector_ushort2, is_signed=False
+    "vector_ushort3",
+    0,
+    operator.index,
+    3,
+    vector_ushort2,
+    is_signed=False,
+    limitrange=limit_ushort,
+    typestr=b"<3S>",
 )
 vector_ushort4 = make_type(
     "vector_ushort4",
@@ -429,15 +461,42 @@ vector_ushort4 = make_type(
     vector_ushort2,
     vector_ushort3,
     is_signed=False,
+    limitrange=limit_ushort,
+    typestr=b"<4S>",
 )
 
-vector_int2 = make_type("vector_int2", 0, operator.index, 2)
-vector_uint2 = make_type("vector_uint2", 0, operator.index, 2, is_signed=False)
+vector_int2 = make_type(
+    "vector_int2", 0, operator.index, 2, limitrange=limit_int, typestr=b"<2i>"
+)
+vector_uint2 = make_type(
+    "vector_uint2",
+    0,
+    operator.index,
+    2,
+    is_signed=False,
+    limitrange=limit_uint,
+    typestr=b"<2I>",
+)
 vector_uint3 = make_type(
-    "vector_uint3", 0, operator.index, 3, vector_uint2, is_signed=False
+    "vector_uint3",
+    0,
+    operator.index,
+    3,
+    vector_uint2,
+    is_signed=False,
+    limitrange=limit_uint,
+    typestr=b"<3I>",
 )
 
-vector_uchar16 = make_type("vector_uchar16", 0, operator.index, 16, is_signed=False)
+vector_uchar16 = make_type(
+    "vector_uchar16",
+    0,
+    operator.index,
+    16,
+    is_signed=False,
+    limitrange=limit_uchar,
+    typestr=b"<16C>",
+)
 
 
 if 0:

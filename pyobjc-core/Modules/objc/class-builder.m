@@ -401,7 +401,9 @@ exit:
     return 0;
 }
 
-/* XXX: This function and tc2tc should be in objc_support.m  */
+/* XXX: This function and tc2tc should be in objc_support.m
+ * XXX: _C_VECTOR... requires completely removing part of the buffer
+ */
 int
 PyObjC_RemoveInternalTypeCodes(char* buf)
 {

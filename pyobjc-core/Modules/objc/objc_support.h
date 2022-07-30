@@ -80,6 +80,8 @@ extern Py_ssize_t  PyObjCRT_AlignedSize(const char* type) __attribute__((__pure_
 
 extern const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 
+extern int PyObjCRT_RegisterVectorType(const char* typestr, PyObject* pytype);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* _objc_support_H */

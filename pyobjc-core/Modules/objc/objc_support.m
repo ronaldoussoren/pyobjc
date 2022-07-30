@@ -324,98 +324,203 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
     }
 }
 
+#define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
+    static PyObject* _Nullable ctype##_as_tuple(void* _pvalue)                           \
+    {                                                                                    \
+        ctype*    pvalue = (ctype*)_pvalue;                                              \
+        PyObject* rv     = PyTuple_New(elemcount);                                       \
+        if (rv == NULL) {                                                                \
+            return NULL;                                                                 \
+        }                                                                                \
+                                                                                         \
+        for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
+            PyObject* elem = convertelem((*pvalue)[i]);                                  \
+            if (elem == NULL) {                                                          \
+                Py_DECREF(rv);                                                           \
+                return NULL;                                                             \
+            }                                                                            \
+            PyTuple_SET_ITEM(rv, i, elem);                                               \
+        }                                                                                \
+                                                                                         \
+        return rv;                                                                       \
+    }
+
+#define VECTOR_FROM_PYTHON(ctype, elemcount, convertelem)                                \
+    static int ctype##_from_python(PyObject* py, void* _pvalue)                          \
+    {                                                                                    \
+        ctype* pvalue = (ctype*)_pvalue;                                                 \
+                                                                                         \
+        if (!PySequence_Check(py) || PySequence_Length(py) != elemcount) {               \
+            PyErr_SetString(PyExc_ValueError,                                            \
+                            "Expecting value with " #elemcount " elements");             \
+            return -1;                                                                   \
+        }                                                                                \
+                                                                                         \
+        for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
+            PyObject* e = PySequence_GetItem(py, i);                                     \
+            if (e == NULL) {                                                             \
+                return -1;                                                               \
+            }                                                                            \
+            (*pvalue)[i] = convertelem(e);                                               \
+            Py_DECREF(e);                                                                \
+            if (PyErr_Occurred()) {                                                      \
+                return -1;                                                               \
+            }                                                                            \
+        }                                                                                \
+        return 0;                                                                        \
+    }
+
+VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_float3, 3, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_float4, 4, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble);
+
+VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_float3, 3, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_float4, 4, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_double2, 2, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_double3, 3, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_double4, 4, PyFloat_AsDouble);
+
 static struct vector_info {
     char*      encoding;
     Py_ssize_t size;
     Py_ssize_t align;
-    /* XXX: Add functions to serialize and deserialize */
+    PyObject* _Nullable pytype;
+    PyObject* _Nullable (*as_tuple)(void*);
+    int (*from_python)(PyObject*, void*);
 } gVectorInfo[] = {{
-                       .encoding = "<16C>",
-                       .size     = sizeof(vector_uchar16),
-                       .align    = __alignof__(vector_uchar16),
+                       .encoding    = "<16C>",
+                       .size        = sizeof(vector_uchar16),
+                       .align       = __alignof__(vector_uchar16),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_uchar16_as_tuple,
+                       .from_python = vector_uchar16_from_python,
                    },
                    {
-                       .encoding = "<2s>",
-                       .size     = sizeof(vector_short2),
-                       .align    = __alignof__(vector_short2),
+                       .encoding    = "<2s>",
+                       .size        = sizeof(vector_short2),
+                       .align       = __alignof__(vector_short2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_short2_as_tuple,
+                       .from_python = vector_short2_from_python,
                    },
                    {
-                       .encoding = "<2S>",
-                       .size     = sizeof(vector_ushort2),
-                       .align    = __alignof__(vector_ushort2),
+                       .encoding    = "<2S>",
+                       .size        = sizeof(vector_ushort2),
+                       .align       = __alignof__(vector_ushort2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_ushort2_as_tuple,
+                       .from_python = vector_ushort2_from_python,
                    },
                    {
-                       .encoding = "<4S>",
-                       .size     = sizeof(vector_ushort4),
-                       .align    = __alignof__(vector_ushort4),
+                       .encoding    = "<3S>",
+                       .size        = sizeof(vector_ushort3),
+                       .align       = __alignof__(vector_ushort3),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_ushort3_as_tuple,
+                       .from_python = vector_ushort3_from_python,
                    },
                    {
-                       .encoding = "<2i>",
-                       .size     = sizeof(vector_int2),
-                       .align    = __alignof__(vector_int2),
+                       .encoding    = "<4S>",
+                       .size        = sizeof(vector_ushort4),
+                       .align       = __alignof__(vector_ushort4),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_ushort4_as_tuple,
+                       .from_python = vector_ushort4_from_python,
                    },
                    {
-                       .encoding = "<3I>",
-                       .size     = sizeof(vector_uint3),
-                       .align    = __alignof__(vector_uint3),
+                       .encoding    = "<2i>",
+                       .size        = sizeof(vector_int2),
+                       .align       = __alignof__(vector_int2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_int2_as_tuple,
+                       .from_python = vector_int2_from_python,
                    },
                    {
-                       .encoding = "<2f>",
-                       .size     = sizeof(vector_float2),
-                       .align    = __alignof__(vector_float2),
+                       .encoding    = "<2I>",
+                       .size        = sizeof(vector_uint2),
+                       .align       = __alignof__(vector_uint2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_uint2_as_tuple,
+                       .from_python = vector_uint2_from_python,
                    },
                    {
-                       .encoding = "<3f>",
-                       .size     = sizeof(vector_float3),
-                       .align    = __alignof__(vector_float3),
+                       .encoding    = "<3I>",
+                       .size        = sizeof(vector_uint3),
+                       .align       = __alignof__(vector_uint3),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_uint3_as_tuple,
+                       .from_python = vector_uint3_from_python,
                    },
                    {
-                       .encoding = "<4f>",
-                       .size     = sizeof(vector_float4),
-                       .align    = __alignof__(vector_float4),
+                       .encoding    = "<2f>",
+                       .size        = sizeof(vector_float2),
+                       .align       = __alignof__(vector_float2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_float2_as_tuple,
+                       .from_python = vector_float2_from_python,
                    },
                    {
-                       .encoding = "<2d>",
-                       .size     = sizeof(vector_double2),
-                       .align    = __alignof__(vector_double2),
+                       .encoding    = "<3f>",
+                       .size        = sizeof(vector_float3),
+                       .align       = __alignof__(vector_float3),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_float3_as_tuple,
+                       .from_python = vector_float3_from_python,
                    },
                    {
-                       .encoding = "<3d>",
-                       .size     = sizeof(vector_double3),
-                       .align    = __alignof__(vector_double3),
+                       .encoding    = "<4f>",
+                       .size        = sizeof(vector_float4),
+                       .align       = __alignof__(vector_float4),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_float4_as_tuple,
+                       .from_python = vector_float4_from_python,
                    },
                    {
-                       .encoding = "<4d>",
-                       .size     = sizeof(vector_double4),
-                       .align    = __alignof__(vector_double4),
+                       .encoding    = "<2d>",
+                       .size        = sizeof(vector_double2),
+                       .align       = __alignof__(vector_double2),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_double2_as_tuple,
+                       .from_python = vector_double2_from_python,
                    },
                    {
-                       .encoding = "<2,2f>",
-                       .size     = sizeof(matrix_float2x2),
-                       .align    = __alignof__(matrix_float2x2),
+                       .encoding    = "<3d>",
+                       .size        = sizeof(vector_double3),
+                       .align       = __alignof__(vector_double3),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_double3_as_tuple,
+                       .from_python = vector_double3_from_python,
                    },
                    {
-                       .encoding = "<3,3f>",
-                       .size     = sizeof(matrix_float3x3),
-                       .align    = __alignof__(matrix_float3x3),
+                       .encoding    = "<4d>",
+                       .size        = sizeof(vector_double4),
+                       .align       = __alignof__(vector_double4),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_double4_as_tuple,
+                       .from_python = vector_double4_from_python,
                    },
                    {
-                       .encoding = "<4,3f>",
-                       .size     = sizeof(matrix_float4x3),
-                       .align    = __alignof__(matrix_float4x3),
-                   },
-                   {
-                       .encoding = "<4,4f>",
-                       .size     = sizeof(matrix_float4x4),
-                       .align    = __alignof__(matrix_float4x4),
-                   },
-                   {
-                       .encoding = "<4,4d>",
-                       .size     = sizeof(matrix_double4x4),
-                       .align    = __alignof__(matrix_double4x4),
-                   },
-                   {
-                       NULL, -1, -1 /* Sentinel */
+                       NULL, -1, -1, NULL, NULL, NULL /* Sentinel */
                    }};
 
 /* XXX: This lookup function is fairly inefficient */
@@ -437,6 +542,22 @@ vector_lookup(const char* type)
 
     PyErr_Format(PyObjCExc_InternalError, "Unsupported SIMD encoding: %s", type);
     return cur;
+}
+
+int
+PyObjCRT_RegisterVectorType(const char* typestr, PyObject* pytype)
+{
+    struct vector_info* info = vector_lookup(typestr);
+    if (info == NULL) {
+        return -1;
+    }
+
+    if (info->pytype) {
+        Py_CLEAR(info->pytype);
+    }
+    info->pytype = pytype;
+    Py_INCREF(pytype);
+    return 0;
 }
 
 const char*
@@ -515,11 +636,6 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
         /* Skip length specifier,  type and _C_VECTOR_E */
         while (isdigit(*++type))
             ;
-        if (*type == ',') {
-            type++;
-            while (isdigit(*++type))
-                ;
-        }
         type = PyObjCRT_SkipTypeSpec(type);
         if (type && *type != _C_VECTOR_E) {
             PyErr_Format(PyObjCExc_InternalError,
@@ -2049,6 +2165,21 @@ pythonify_c_value(const char* type, void* datum)
         Py_INCREF(retobject);
         break;
 
+    case _C_VECTOR_B: {
+        struct vector_info* info = vector_lookup(type);
+        if (info == NULL) {
+            return NULL;
+        }
+        PyObject* args = info->as_tuple(datum);
+        if (info->pytype == NULL) {
+            return args;
+        } else {
+            PyObject* retval = PyObject_Call(info->pytype, args, NULL);
+            Py_DECREF(args);
+            return retval;
+        }
+    } break;
+
     default:
         PyErr_Format(PyObjCExc_Error,
                      "pythonify_c_value: unhandled value type (%c|%d|%s)", *type, *type,
@@ -2885,6 +3016,14 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
     case _C_ARY_B:
         return depythonify_c_array(type, argument, datum);
+
+    case _C_VECTOR_B: {
+        struct vector_info* info = vector_lookup(type);
+        if (info == NULL) {
+            return -1;
+        }
+        return info->from_python(argument, datum);
+    } break;
 
     default:
         PyErr_Format(PyExc_ValueError, "depythonifying unknown typespec 0x%x", *type);

@@ -1709,6 +1709,29 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
 
 #endif
 
+static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
+                                                  __attribute__((__unused__)),
+                                                  PyObject* object)
+{
+    PyObject* typestr = PyObject_GetAttrString(object, "__typestr__");
+    if (typestr == NULL) {
+        return NULL;
+    }
+    if (!PyBytes_CheckExact(typestr)) {
+        PyErr_SetString(PyExc_TypeError, "__typstr__ must be bytes");
+        Py_DECREF(typestr);
+        return NULL;
+    }
+    int r = PyObjCRT_RegisterVectorType(PyBytes_AsString(typestr), object);
+    Py_DECREF(typestr);
+    if (r == -1) {
+        return NULL;
+    } else {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -1907,6 +1930,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_O,
         .ml_doc   = "_dyld_shared_cache_contains_path(path)\n" CLINIC_SEP
                   "\nForce a rescan of the method table of a class",
+    },
+    {
+        .ml_name  = "_registerVectorType",
+        .ml_meth  = (PyCFunction)mod_registerVectorType,
+        .ml_flags = METH_O,
+        .ml_doc   = "_registerVectorType(type)\n" CLINIC_SEP
+                  "\nRegister SIMD type with the bridge.",
     },
     {
         .ml_name = NULL /* SENTINEL */

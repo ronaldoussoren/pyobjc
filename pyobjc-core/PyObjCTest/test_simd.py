@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import TestCase
 
 from objc import simd
+import objc
 
 
 def calc_xyzw():
@@ -18,10 +19,6 @@ XYZW_ATTR = calc_xyzw()
 
 
 class TestSIMDVectorTypes(TestCase):
-    # XXX:
-    # - Tests for various operators
-    # - Tests that handle out of range values (including operators)
-
     def assert_has_xyzw(self, value, nelem):
         """
         Assert that the correct "xyzw" properties
@@ -42,7 +39,7 @@ class TestSIMDVectorTypes(TestCase):
         for n in expected:
             self.assertHasAttr(value, n)
 
-    def assert_vector_type(self, vtype, etype, nelem, is_signed):
+    def assert_vector_type(self, vtype, etype, nelem, is_signed, typestr):
         a = vtype()
         self.assertEqual(len(a), nelem)
         self.assertTrue(all(a[i] == etype() for i in range(nelem)))
@@ -51,6 +48,7 @@ class TestSIMDVectorTypes(TestCase):
         a = vtype(etype(42))
         self.assertEqual(len(a), nelem)
         self.assertTrue(all(a[i] == etype(42) for i in range(nelem)))
+        self.assertTrue(all(isinstance(a[i], etype) for i in range(nelem)))
 
         if nelem != 2:
             with self.assertRaises(ValueError):
@@ -64,6 +62,10 @@ class TestSIMDVectorTypes(TestCase):
 
         a[0] = a[1]
         self.assertEqual(a[0], a[1])
+
+        a[0] = 42
+        self.assertEqual(a[0], etype(42))
+        self.assertIsInstance(a[0], etype)
 
         a = vtype(*(etype(n) for n in range(nelem)))
         self.assertEqual(a.x, etype(0))
@@ -104,6 +106,86 @@ class TestSIMDVectorTypes(TestCase):
             with self.assertRaises(TypeError):
                 +a
 
+        a = vtype(*range(1, nelem + 1))
+        b = vtype(*(2 * n for n in range(1, nelem + 1)))
+
+        c = a * b
+        self.assertIsInstance(c, vtype)
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] * b[i])
+
+        c = a * 3
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] * 3)
+
+        c = 3 * a
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] * 3)
+
+        c = a + b
+        self.assertIsInstance(c, vtype)
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] + b[i])
+
+        c = a + 3
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] + 3)
+
+        c = 3 + a
+        for i in range(len(c)):
+            self.assertEqual(c[i], a[i] + 3)
+
+        c = a @ b
+        self.assertEqual(c, sum(n * m for n, m in zip(a.as_tuple(), b.as_tuple())))
+
+        with self.assertRaises(TypeError):
+            c = a @ 1
+
+        with self.assertRaises(TypeError):
+            c = 1 @ a
+
+        a1 = vtype(*range(1, nelem + 1))
+        a2 = vtype(*range(1, nelem + 1))
+        b1 = vtype(*(2 * n for n in range(1, nelem + 1)))
+
+        self.assertTrue(a1 == a2)
+        self.assertFalse(a1 == b1)
+
+        self.assertFalse(a1 != a2)
+        self.assertTrue(a1 != b1)
+
+        self.assertFalse(a1 < a2)
+        self.assertTrue(a1 < b1)
+
+        self.assertTrue(a1 <= a2)
+        self.assertFalse(b1 <= a2)
+
+        self.assertFalse(a1 > a2)
+        self.assertTrue(b1 > a1)
+
+        self.assertTrue(a1 >= a2)
+        self.assertFalse(a1 >= b1)
+
+        a = vtype(*range(nelem))
+        b = vtype(*range(nelem))
+        b[nelem - 1] = 0
+
+        self.assertFalse(a == b)
+        self.assertTrue(a != b)
+        self.assertTrue(a > b)
+        self.assertTrue(a >= b)
+        self.assertFalse(b > a)
+        self.assertFalse(b >= a)
+        self.assertTrue(b < a)
+        self.assertTrue(b <= a)
+        self.assertFalse(a < b)
+        self.assertFalse(a <= b)
+
+        self.assertEqual(
+            vtype.__typestr__,
+            b"".join([objc._C_VECTOR_B, b"%d" % (nelem,), typestr, objc._C_VECTOR_E]),
+        )
+
     def test_vector_uchar16(self):
         a = simd.vector_uchar16()
         self.assertEqual(len(a), 16)
@@ -130,38 +212,43 @@ class TestSIMDVectorTypes(TestCase):
         with self.assertRaises(TypeError):
             a[0] = 4.5
 
+        self.assertEqual(
+            simd.vector_uchar16.__typestr__,
+            b"".join([objc._C_VECTOR_B, b"16", objc._C_UCHR, objc._C_VECTOR_E]),
+        )
+
     def test_vector_short2(self):
-        self.assert_vector_type(simd.vector_short2, int, 2, True)
+        self.assert_vector_type(simd.vector_short2, int, 2, True, objc._C_SHT)
 
     def test_vector_ushort2(self):
-        self.assert_vector_type(simd.vector_ushort2, int, 2, False)
+        self.assert_vector_type(simd.vector_ushort2, int, 2, False, objc._C_USHT)
 
     def test_vector_ushort4(self):
-        self.assert_vector_type(simd.vector_ushort4, int, 4, False)
+        self.assert_vector_type(simd.vector_ushort4, int, 4, False, objc._C_USHT)
 
     def test_vector_int2(self):
-        self.assert_vector_type(simd.vector_int2, int, 2, True)
+        self.assert_vector_type(simd.vector_int2, int, 2, True, objc._C_INT)
 
     def test_vector_uint3(self):
-        self.assert_vector_type(simd.vector_uint3, int, 3, False)
+        self.assert_vector_type(simd.vector_uint3, int, 3, False, objc._C_UINT)
 
     def test_vector_float2(self):
-        self.assert_vector_type(simd.vector_float2, float, 2, True)
+        self.assert_vector_type(simd.vector_float2, float, 2, True, objc._C_FLT)
 
     def test_vector_float3(self):
-        self.assert_vector_type(simd.vector_float3, float, 3, True)
+        self.assert_vector_type(simd.vector_float3, float, 3, True, objc._C_FLT)
 
     def test_vector_float4(self):
-        self.assert_vector_type(simd.vector_float4, float, 4, True)
+        self.assert_vector_type(simd.vector_float4, float, 4, True, objc._C_FLT)
 
     def test_vector_double2(self):
-        self.assert_vector_type(simd.vector_double2, float, 2, True)
+        self.assert_vector_type(simd.vector_double2, float, 2, True, objc._C_DBL)
 
     def test_vector_double3(self):
-        self.assert_vector_type(simd.vector_double3, float, 3, True)
+        self.assert_vector_type(simd.vector_double3, float, 3, True, objc._C_DBL)
 
     def test_vector_double4(self):
-        self.assert_vector_type(simd.vector_double4, float, 4, True)
+        self.assert_vector_type(simd.vector_double4, float, 4, True, objc._C_DBL)
 
 
 class TestSIMDMatrixTypes(TestCase):

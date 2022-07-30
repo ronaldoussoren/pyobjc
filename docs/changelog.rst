@@ -6,27 +6,36 @@ An overview of the relevant changes in new, and older, releases.
 Version 9.0a1
 -------------
 
-* Support for macOS 13 (Xcode 14 beta 1)
+* Support for macOS 13 (Xcode 14 beta 4)
 
 * Updated framework bindings for macOS 13
 
   The list below lists the frameworks that have
   API changes that affect the framework bindings.
 
-  FIXME: Move CGPoint/CGSize/CGVector/CGRect/CGRectEdge/CGAffineTransform to CoreFoundation bindings
-         (NS* in Foundation are aliases, also needs updates in CoreGraphics)
-
 * Added bindings for the following frameworks
   (all new in macOS 13):
 
   - AVRouting
   - BackgroundAssets
-  - DeviceDiscoveryExtension
   - ExtensionKit
   - HealthKit
   - MetalFX
   - SharedWithYou
   - SharedWithYouCore
+
+* The definition of a number of basic structs has moved in the SDK for
+  macOS 13 and PyObjC conforms to this change on all platforms.
+
+  In particular:
+
+  - ``CGPoint``, ``CGSize``, ``CGVector``, ``CGRect``, ``CGAffineTransform`` and ``CGAffineTransformComponents``
+    are now defined in the ``CoreFoundation`` module.
+  - ``NSPoint``, ``NSSize`` and ``NSRect`` are now aliases for the corresponding ``CG*`` types
+     (instead of the other way around in previous versions of PyObjC).
+
+  Both changes should require no changes to scripts, unless code relies on the
+  particular ``__name__`` of a type.
 
 * #416: PyObjC 9.0 requires Python 3.7 or later
 

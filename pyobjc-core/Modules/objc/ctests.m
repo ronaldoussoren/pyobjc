@@ -112,11 +112,6 @@ ASSERT_EQUALS(sizeof(vector_float4), PyObjCRT_SizeOfType("<4f>"), "%d");
 ASSERT_EQUALS(sizeof(vector_double2), PyObjCRT_SizeOfType("<2d>"), "%d");
 ASSERT_EQUALS(sizeof(vector_double3), PyObjCRT_SizeOfType("<3d>"), "%d");
 ASSERT_EQUALS(sizeof(vector_double4), PyObjCRT_SizeOfType("<4d>"), "%d");
-ASSERT_EQUALS(sizeof(matrix_float2x2), PyObjCRT_SizeOfType("<2,2f>"), "%d");
-ASSERT_EQUALS(sizeof(matrix_float3x3), PyObjCRT_SizeOfType("<3,3f>"), "%d");
-ASSERT_EQUALS(sizeof(matrix_float4x3), PyObjCRT_SizeOfType("<4,3f>"), "%d");
-ASSERT_EQUALS(sizeof(matrix_float4x4), PyObjCRT_SizeOfType("<4,4f>"), "%d");
-ASSERT_EQUALS(sizeof(matrix_double4x4), PyObjCRT_SizeOfType("<4,4d>"), "%d");
 
 Py_ssize_t n = PyObjCRT_SizeOfType("<4,4di");
 FAIL_IF(n != -1);
@@ -141,11 +136,6 @@ ASSERT_EQUALS(__alignof__(vector_float4), PyObjCRT_AlignOfType("<4f>"), "%d");
 ASSERT_EQUALS(__alignof__(vector_double2), PyObjCRT_AlignOfType("<2d>"), "%d");
 ASSERT_EQUALS(__alignof__(vector_double3), PyObjCRT_AlignOfType("<3d>"), "%d");
 ASSERT_EQUALS(__alignof__(vector_double4), PyObjCRT_AlignOfType("<4d>"), "%d");
-ASSERT_EQUALS(__alignof__(matrix_float2x2), PyObjCRT_AlignOfType("<2,2f>"), "%d");
-ASSERT_EQUALS(__alignof__(matrix_float3x3), PyObjCRT_AlignOfType("<3,3f>"), "%d");
-ASSERT_EQUALS(__alignof__(matrix_float4x3), PyObjCRT_AlignOfType("<4,3f>"), "%d");
-ASSERT_EQUALS(__alignof__(matrix_float4x4), PyObjCRT_AlignOfType("<4,4f>"), "%d");
-ASSERT_EQUALS(__alignof__(matrix_double4x4), PyObjCRT_AlignOfType("<4,4d>"), "%d");
 
 Py_ssize_t n = PyObjCRT_AlignOfType("<4,4di");
 FAIL_IF(n != -1);

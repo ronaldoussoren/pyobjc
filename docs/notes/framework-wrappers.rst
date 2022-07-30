@@ -232,8 +232,6 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`DeviceCheck </apinotes/DeviceCheck>`                                           | `pyobjc-framework-DeviceCheck`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`DeviceDiscoveryExtension </apinotes/DeviceDiscoveryExtension>`                 | `pyobjc-framework-DeviceDiscoveryExtension`_         |                                         |
-+--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | DirectoryService                                                                     | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`DiscRecording </apinotes/DiscRecording>`                                       | `pyobjc-framework-DiscRecording`_                    |                                         |
@@ -681,7 +679,6 @@ prioritizing work.
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
 .. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/
 .. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
-.. _`pyobjc-framework-DeviceDiscoveryExtension`: https://pypi.org/project/pyobjc-framework-DeviceDiscoveryExtension/
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
 .. _`pyobjc-framework-DiskArbitration`: https://pypi.org/project/pyobjc-framework-DiskArbitration/

@@ -1331,11 +1331,11 @@ More complex types can be represented using longer type strings:
 * The C construct 'const' is mapped to :const:`_C_CONST`, that is a
   *const char\** is represented as :const:`_C_CONST` + :const:`_C_CHARPTR`.
 
-* A C vector or matrix type (e.g. ``vector_float3`` and ``matrix_float3x3``
-  are represented as follows:
+* A C SIMD vector type (e.g. ``vector_float3``)
+  is represented as follows:  :const:`_C_VECTOR_B` *N* *type* :const:`_C_VECTOR_E`.
 
-  - Vector: :const:`_C_VECTOR_B` *N* *type* :const:`_C_VECTOR_E`
-  - Matrix: :const:`_C_VECTOR_B` *N* ``","`` *M* *type* :const:`_C_VECTOR_E`
+  Matrix types (e.g. ``matrix_float2x3``) are C structs containing SIMD vectors,
+  and are represented in the usual way.
 
   These representations are not supported in the Objective-C runtime, but are
   inventions by PyObjC. Because libffi does not support the corresponding
