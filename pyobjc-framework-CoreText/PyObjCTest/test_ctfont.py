@@ -12,6 +12,7 @@ class TestCTFont(TestCase):
     def testConstants10_6(self):
         self.assertEqual(CoreText.kCTFontOptionsDefault, 0)
         self.assertEqual(CoreText.kCTFontOptionsPreventAutoActivation, 1 << 0)
+        self.assertEqual(CoreText.kCTFontOptionsPreventAutoDownload, 1 << 1)
         self.assertEqual(CoreText.kCTFontOptionsPreferSystemFont, 1 << 2)
 
     @min_os_level("10.8")

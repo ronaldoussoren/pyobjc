@@ -733,3 +733,9 @@ class TestStringEncodingExt(TestCase):
         self.assertResultIsBOOL(CoreFoundation.CFStringIsHyphenationAvailableForLocale)
         v = CoreFoundation.CFStringIsHyphenationAvailableForLocale(loc)
         self.assertIsInstance(v, bool)
+
+    def test_functions13_0(self):
+        self.assertArgIsPrintf(
+            CoreFoundation.CFStringCreateStringWithValidatedFormat, 2
+        )
+        self.assertArgIsOut(CoreFoundation.CFStringCreateStringWithValidatedFormat, 3)

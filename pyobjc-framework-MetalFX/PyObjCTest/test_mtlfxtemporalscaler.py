@@ -79,11 +79,6 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
 
 
 class TestMTLFXTemporalScaler(TestCase):
-    def test_constants(self):
-        self.assertIsEnumType(MetalFX.MTLFXTemporalScalerVersion)
-        self.assertEqual(MetalFX.MTLFXTemporalScalerVersion_v1, 0)
-        self.assertNotHasAttr(MetalFX, "MTLFXTemporalScalerVersion_End")
-
     def test_protocols(self):
         self.assertProtocolExists("MTLFXTemporalScaler")
 

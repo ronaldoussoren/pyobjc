@@ -539,3 +539,40 @@ class TestPickle(TestCase):
             3,
             b"v^v" + objc._C_NSUInteger,
         )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        # XXX: I'm not sure this is correct, these methods are in headers but are not documented in any way.
+        self.assertArgIsPrintf(
+            Foundation.NSString.initWithValidatedFormat_validFormatSpecifiers_error_, 0
+        )
+        self.assertArgIsOut(
+            Foundation.NSString.initWithValidatedFormat_validFormatSpecifiers_error_, 2
+        )
+
+        self.assertArgIsPrintf(
+            Foundation.NSString.initWithValidatedFormat_validFormatSpecifiers_locale_error_,
+            0,
+        )
+        self.assertArgIsOut(
+            Foundation.NSString.initWithValidatedFormat_validFormatSpecifiers_locale_error_,
+            3,
+        )
+
+        self.assertArgIsPrintf(
+            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_error_,
+            0,
+        )
+        self.assertArgIsOut(
+            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_error_,
+            2,
+        )
+
+        self.assertArgIsPrintf(
+            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
+            0,
+        )
+        self.assertArgIsOut(
+            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
+            3,
+        )

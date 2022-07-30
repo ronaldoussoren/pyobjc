@@ -1,5 +1,6 @@
 import AppKit
 import Foundation
+import CoreFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -7,6 +8,11 @@ class TestNSGeometry(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSAlignmentOptions)
         self.assertIsEnumType(Foundation.NSRectEdge)
+
+    def test_struct_are_aliases(self):
+        self.assertIs(Foundation.NSPoint, CoreFoundation.CGPoint)
+        self.assertIs(Foundation.NSSize, CoreFoundation.CGSize)
+        self.assertIs(Foundation.NSRect, CoreFoundation.CGRect)
 
     def testConstants(self):
         self.assertEqual(AppKit.NSMinXEdge, 0)

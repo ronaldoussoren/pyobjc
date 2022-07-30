@@ -97,7 +97,7 @@ class TestCSSearchableIndex(TestCase):
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertArgIsBlock(
-            CoreSpotlight.CSSearchableIndex.provideDataForBundle_identifier_type_completionHandler_,
+            CoreSpotlight.CSSearchableIndex.fetchDataForBundleIdentifier_itemIdentifier_contentType_completionHandler_,
             3,
             b"v@@",
         )

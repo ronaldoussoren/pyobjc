@@ -290,6 +290,18 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CFStringCreateStringWithValidatedFormat": {
+    "args": {
+     "3": { "print_format": true },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "CFStringCreateStringWithValidatedFormatAndArguments": {
+    "suggestion": "use CFStringCreateStringWithValidatedFormat instead",
+    "args": {
+     "5": { "type_modifier": "o" }
+    }
+   },
    "CFDateFormatterCreateISO8601Formatter": {
     "args": {
      "0": { "typestr": "@" },

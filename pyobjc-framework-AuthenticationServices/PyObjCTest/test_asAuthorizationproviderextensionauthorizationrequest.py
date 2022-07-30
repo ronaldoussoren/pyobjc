@@ -10,6 +10,13 @@ class TestASAuthorizationProviderExtensionAuthorizationRequest(TestCase):
             str,
         )
 
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderAuthorizationOperationDirectRequest,
+            str,
+        )
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(

@@ -12107,6 +12107,55 @@
    "NSString": {
     "methods": [
      {
+      "selector": "initWithValidatedFormat:validatedFormatSpecifiers:error:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true },
+       "2": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true },
+       "3": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "initWithValidatedFormat:validatedFormatSpecifiers:arguments:error:",
+      "class_method": false,
+      "suggestion": "use -initWithValidatedFormat:validatedFormatSpecifiers:error:",
+      "args": {
+       "3": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "initWithValidatedFormat:validatedFormatSpecifiers:locale:arguments:error:",
+      "class_method": false,
+      "suggestion": "use -initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
+      "args": {
+       "4": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "stringWithValidatedFormat:validatedFormatSpecifiers:error:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true },
+       "2": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "stringWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true },
+       "3": { "type_override": "o" }
+      }
+     },
+
+     {
       "selector": "stringEncodingForData:encodingOptions:convertedString:usedLossyConversion:",
       "class_method": true,
       "args": {

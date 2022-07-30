@@ -136,6 +136,13 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDeviceTransportTypeContinuityCapture, fourcc(b"ccap")
         )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeContinuityCaptureWired, fourcc(b"ccwd")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeContinuityCaptureWireless,
+            fourcc(b"ccwl"),
+        )
 
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyConfigurationApplication, fourcc(b"capp")

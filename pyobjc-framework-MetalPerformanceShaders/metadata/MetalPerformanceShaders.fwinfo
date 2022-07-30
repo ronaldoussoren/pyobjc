@@ -1372,6 +1372,9 @@
    "MPSFunctionConstantIndex": {
     "value": "MPSDeviceCapsIndex-1"
    },
+   "MPSNDArrayConstantMultiDestIndex": {
+    "value": "MPSDeviceCapsIndex-7"
+   },
    "MPSTextureLinkingConstantIndex": {
     "value": "MPSDeviceCapsIndex-6"
    },

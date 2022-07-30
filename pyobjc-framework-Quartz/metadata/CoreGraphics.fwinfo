@@ -7005,14 +7005,10 @@
   },
   "structs": {
    "CGAffineTransform": {
-    "fieldnames": [
-     "a",
-     "b",
-     "c",
-     "d",
-     "tx",
-     "ty"
-    ]
+    "ignore": true
+   },
+   "CGAffineTransformComponents": {
+    "ignore": true
    },
    "CGDataProviderDirectCallbacks": {
     "ignore": true
@@ -7052,18 +7048,10 @@
     ]
    },
    "CGPoint": {
-    "alias": "Foundation.NSPoint",
-    "fieldnames": [
-     "x",
-     "y"
-    ]
+    "ignore": true
    },
    "CGRect": {
-    "alias": "Foundation.NSRect",
-    "fieldnames": [
-     "origin",
-     "size"
-    ]
+    "ignore": true
    },
    "CGScreenUpdateMoveDelta": {
     "fieldnames": [
@@ -7072,11 +7060,10 @@
     ]
    },
    "CGSize": {
-    "alias": "Foundation.NSSize",
-    "fieldnames": [
-     "width",
-     "height"
-    ]
+    "ignore": true
+   },
+   "CGVector": {
+    "ignore": true
    }
   }
  }

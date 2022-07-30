@@ -9,9 +9,6 @@ class TestSWHighlightCenter(TestCase):
 
     def test_methods(self):
         self.assertArgIsOut(
-            SharedWithYou.SWHighlightCenter.collaborationHighlightForURL_error_, 1
-        )
-        self.assertArgIsOut(
             SharedWithYou.SWHighlightCenter.collaborationHighlightForIdentifier_error_,
             1,
         )
@@ -20,4 +17,17 @@ class TestSWHighlightCenter(TestCase):
             2,
             b"v@@",
         )
-        self.assertArgIsOut(SharedWithYou.SWHighlightCenter.highlightForURL_error_, 1)
+        self.assertResultIsBOOL(
+            SharedWithYou.SWHighlightCenter.isSystemCollaborationSupportAvailable
+        )
+
+        self.assertArgIsBlock(
+            SharedWithYou.SWHighlightCenter.getHighlightForURL_completionHanlder_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            SharedWithYou.SWHighlightCenter.getCollaborationHighlightForURL_completionHandler_,
+            1,
+            b"v@@",
+        )
