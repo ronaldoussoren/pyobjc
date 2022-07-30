@@ -68,7 +68,6 @@ FRAMEWORK_WRAPPERS = [
     ("CryptoTokenKit", "10.10", None),
     ("DataDetection", "12.0", None),
     ("DeviceCheck", "10.15", None),
-    ("DeviceDiscoveryExtension", "13.0", None),
     ("DictionaryServices", "10.5", None),
     ("DiscRecording", None, None),
     ("DiscRecordingUI", None, None),
