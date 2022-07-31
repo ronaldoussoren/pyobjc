@@ -84,6 +84,42 @@ Version 9.0a1
   the bridge only supports the method signatures found in system frameworks,
   other signatures will result in exceptions at runtime.
 
+* Because of the previous change APIs that have a SIMD type are now callable
+  from Python. In particular, the following APIs are now supported:
+
+  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat2_``
+  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat3_``
+  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat4_``
+  - ``SpriteKit.SKAttributeValue.vectorFloat2Value``
+  - ``SpriteKit.SKAttributeValue.vectorFloat3Value``
+  - ``SpriteKit.SKAttributeValue.vectorFloat4Value``
+  - ``SpriteKit.SKAttributeValue.setVectorFloat2Value_``
+  - ``SpriteKit.SKAttributeValue.setVectorFloat3Value_``
+  - ``SpriteKit.SKAttributeValue.setVectorFloat4Value_``
+  - ``SpriteKit.SKWarpGeometryGrid.gridWithColumns_rows_sourcePositions_destPositions_``
+  - ``SpriteKit.SKWarpGeometryGrid.initWithColumns_rows_sourcePositions_destPositions_``
+  - ``SpriteKit.SKWarpGeometryGrid.gridByReplacingSourcePositions_``
+  - ``SpriteKit.SKWarpGeometryGrid.gridByReplacingDestPositions_``
+  - ``Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint``
+  - ``Vision.VNImagePointForFaceLandmarkPoint``
+
+* Changes due to generic implementation for SIMD types:
+
+  - ``SpriteKit.SK3DNode.projectPoint_``: The result is now ``objc.simd.vector_float3`` instead of a tuple
+  - ``SpriteKit.SK3DNode.unprojectPoint_``: The result is now ``objc.simd.vector_float3`` instead of a tuple
+  - ``SpriteKit.SKFieldNode.direction``: The result is now ``objc.simd.vector_float3`` instead of a tuple
+  - ``SpriteKit.SKPhysicsWorld.sampleFieldsAt_``: The result is now ``objc.simd.vector_float3`` instead of a tuple
+
+* Still not supported (requires some more infrastructure):
+
+  - ``SpriteKit.SKFieldNode.customFieldWithEvaluationBlock_``
+
+* The registered metadata can now contain a key ``full_signature`` with the
+  full encoding type signature for a method. This is used to replace the
+  encoding extracted from the Objective-C runtime when one or more types have
+  an empty encoding in the Objective-C runtime (such as the SIMD types mentioned
+  earlier)
+
 
 Version 8.6
 -----------

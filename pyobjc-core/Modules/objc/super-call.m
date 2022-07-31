@@ -156,7 +156,6 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     return 0;
 }
 
-#if 0
 int
 PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
                                 PyObjCFFI_ClosureFunc call_to_python)
@@ -208,7 +207,6 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     return 0;
 }
-#endif
 
 /*
  * May of may not raise an exception when the return value is NULL

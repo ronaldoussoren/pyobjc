@@ -104,14 +104,14 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "%",
-       "typestr_special": true
+       "typestr": null,
+       "typestr_special": false
       },
       "selector": "projectPoint:",
       "visibility": "public"
@@ -119,14 +119,14 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "%",
-       "typestr_special": true
+       "typestr": null,
+       "typestr_special": false
       },
       "selector": "unprojectPoint:",
       "visibility": "public"
@@ -3768,8 +3768,8 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": true,
@@ -3783,8 +3783,8 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": true,
@@ -4072,8 +4072,8 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "%",
-       "typestr_special": true
+       "typestr": null,
+       "typestr_special": false
       },
       "selector": "direction",
       "visibility": "public"
@@ -4081,8 +4081,8 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": false,
@@ -4241,8 +4241,8 @@
        "nonatomic"
       ],
       "name": "direction",
-      "typestr": "%",
-      "typestr_special": true
+      "typestr": null,
+      "typestr_special": false
      },
      {
       "attributes": [
@@ -8045,14 +8045,14 @@
      {
       "args": [
        {
-        "typestr": "%",
-        "typestr_special": true
+        "typestr": null,
+        "typestr_special": false
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "%",
-       "typestr_special": true
+       "typestr": null,
+       "typestr_special": false
       },
       "selector": "sampleFieldsAt:",
       "visibility": "public"

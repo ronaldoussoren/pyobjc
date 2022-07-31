@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import SpriteKit
 import Quartz
+from objc import simd
 
 
 class TestSKPhysicsWorld(TestCase):
@@ -21,13 +22,16 @@ class TestSKPhysicsWorld(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
+        self.assertResultHasType(
+            SpriteKit.SKPhysicsWorld.sampleFieldsAt_, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SpriteKit.SKPhysicsWorld.sampleFieldsAt_, 0, simd.vector_float3.__typestr__
+        )
+
         o = SpriteKit.SKPhysicsWorld.alloc().init()
         v = o.sampleFieldsAt_((9, 10, 11))
-        self.assertIsInstance(v, tuple)
-        self.assertEqual(len(v), 3)
-        self.assertIsInstance(v[0], float)
-        self.assertIsInstance(v[1], float)
-        self.assertIsInstance(v[2], float)
+        self.assertIsInstance(v, simd.vector_float3)
 
     @min_os_level("10.10")
     def testProtocols(self):

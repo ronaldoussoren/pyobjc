@@ -32,7 +32,6 @@ extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
                                         PyObjC_CallFunc       call_to_objc,
                                         PyObjCFFI_ClosureFunc call_to_python);
 
-#if 0
 /*!
  * @function PyObjC_RegisterSignatureMapping
  * @abstract Register a mapping for methods with a specific signature
@@ -43,7 +42,6 @@ extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
  */
 extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_super,
                                            PyObjCFFI_ClosureFunc call_to_python);
-#endif
 
 /*!
  * @function PyObjC_FindCallFunc

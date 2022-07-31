@@ -1277,6 +1277,11 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         result->argtype[i] = NULL;
     }
 
+    value = PyDict_GetItemString(metadata, "full_signature");
+    if (value != NULL && PyBytes_Check(value)) {
+        result->signature = PyObjCUtil_Strdup(PyBytes_AsString(value));
+    }
+
     if (process_metadata_dict(result, metadata, NO) < 0) {
         Py_DECREF(result);
         return NULL;
@@ -1574,7 +1579,11 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
     metadata = PyObjC_FindInRegistry(registry, cls, sel);
     PyObjC_Assert(metadata == NULL || PyObjCMethodSignature_Check(metadata), NULL);
 
-    methinfo = new_methodsignature(signature);
+    if (metadata != NULL && ((PyObjCMethodSignature*)metadata)->signature) {
+        methinfo = new_methodsignature(((PyObjCMethodSignature*)metadata)->signature);
+    } else {
+        methinfo = new_methodsignature(signature);
+    }
     if (methinfo == NULL) {
         return NULL;
     }

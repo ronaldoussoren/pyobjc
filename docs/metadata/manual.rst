@@ -34,6 +34,12 @@ and :class:`selector` objects, which makes it possible to introspect the metadat
 
 The metadata is a Python dictionary with a particular structure (all keys are optional):
 
+* *full_signature*: The complete type encoding for a method (return value, implicit arguments and explicit arguments).
+
+  Use this when one of the has a empty type encoding in the compiler, in particular to specify the type encoding for
+  types with a SIMD type (such as ``vector_float3``). An example value is ``"<2f>@:q"``, for a selector that
+  returns a ``vector_float2`` and has an ``NSInteger`` argument (the other two characters are the implicit arguments).
+
 * *arguments*: A dictionary containing more information on arguments. The keys of this dictionary are integers
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is
   visible in a prototype). The values are metadata dictionaries for the arguments and are described
