@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 import SceneKit
+from objc import simd
 
 
 class TestSCNLight(TestCase):
@@ -74,3 +75,38 @@ class TestSCNLight(TestCase):
 
         self.assertResultIsBOOL(SceneKit.SCNLight.doubleSided)
         self.assertArgIsBOOL(SceneKit.SCNLight.setDoubleSided_, 0)
+
+        self.assertResultHasType(
+            SceneKit.SCNLight.probeExtents, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNLight.setProbeExtents_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNLight.probeOffset, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNLight.setProbeOffset_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNLight.parallaxExtentsFactor, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNLight.setParallaxExtentsFactor_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNLight.parallaxCenterOffset, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNLight.setParallaxCenterOffset_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNLight.areaExtents, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNLight.setAreaExtents_, 0, simd.simd_float3.__typestr__
+        )

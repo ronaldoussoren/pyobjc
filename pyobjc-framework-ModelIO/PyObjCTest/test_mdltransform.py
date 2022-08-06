@@ -70,20 +70,38 @@ class TestMDLTransform(TestCase):
             ModelIO.TestMDLTransformHelper.setMaximumTime_, 0, objc._C_DBL
         )
 
-        # self.assertArgHasType(ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 0, ...) # SIMD
+        self.assertArgHasType(
+            ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_,
+            0,
+            simd.matrix_float4x4.__typestr__,
+        )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 1, objc._C_DBL
         )
 
-        # self.assertArgHasType(ModelIO.TestMDLTransformHelper.setLocalTransform_, 0, ...) # SIMD
+        self.assertArgHasType(
+            ModelIO.TestMDLTransformHelper.setLocalTransform_,
+            0,
+            simd.matrix_float4x4.__typestr__,
+        )
 
-        # self.assertResultHasType(ModelIO.TestMDLTransformHelper.localTransformAtTime_, ...) # SIMD
+        self.assertResultHasType(
+            ModelIO.TestMDLTransformHelper.localTransformAtTime_,
+            simd.matrix_float4x4.__typestr__,
+        )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.localTransformAtTime_, 0, objc._C_DBL
         )
 
-        # self.assertResultHasType(ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_, ...) # SIMD
-        # self.assertArgHasType(ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_, 1, objc._C_DBL)
+        self.assertResultHasType(
+            ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
+            1,
+            objc._C_DBL,
+        )
 
         self.assertArgHasType(
             ModelIO.MDLTransform.initWithMatrix_, 0, simd.matrix_float4x4.__typestr__

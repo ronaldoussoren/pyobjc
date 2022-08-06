@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Vision
+from objc import simd
 
 
 class TestVNObservation(TestCase):
@@ -7,8 +8,15 @@ class TestVNObservation(TestCase):
     def test_constants11_0(self):
         self.assertIsInstance(Vision.VNRecognizedPointGroupKeyAll, str)
 
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertArgHasType(
+            Vision.VNImageHomographicAlignmentObservation.warpTransform,
+            simd.matrix_float3x3.__typestr__,
+        )
+
     @min_os_level("10.15")
-    def test_methods(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             Vision.VNClassificationObservation.hasMinimumRecall_forPrecision_
         )
@@ -28,6 +36,11 @@ class TestVNObservation(TestCase):
 
     @min_os_level("11.0")
     def test_methods11_0(self):
+        self.assertResultHasType(
+            Vision.VNTrajectoryObservation.equationCoefficients,
+            simd.simd_float3.__typestr__,
+        )
+
         self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndex_error_, 1)
         self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndexPath_error_, 1)
 

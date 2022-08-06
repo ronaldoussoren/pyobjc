@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Vision
+from objc import simd
 
 
 class TestVNGeometry(TestCase):
@@ -10,4 +11,7 @@ class TestVNGeometry(TestCase):
             Vision.VNCircle.containsPoint_inCircumferentialRingOfWidth_
         )
 
-        # XXX: VNContour.normalizedPoints
+        self.assertResultIsVariableSize(Vision.VNContour.normalizedPoints)
+        self.assertResultHasType(
+            Vision.VNContour.normalizedPoints, b"^" + simd.simd_float2.__typestr__
+        )

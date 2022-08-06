@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import SceneKit
+from objc import simd
 
 
 class TestSCNMaterialProperty(TestCase):
@@ -47,6 +48,162 @@ class TestSCNMaterialProperty(TestCase):
     def testMethods10_12(self):
         self.assertArgIsBlock(
             SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b"v@o^Z"
+        )
+
+    @min_os_level("10.13")
+    def testMethods10_13(self):
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdTransform, simd.simd_float4x4.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdPosition, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdRotation, simd.simd_float4.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdOrientation, simd.simd_quadf.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdEulerAngles, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdScale, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdPivot, simd.simd_float4x4.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldPosition, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldOrientation, simd.simd_quadf.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldTransform, simd.simd_float4x4.__typestr__
+        )
+
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdTransform_, 0, simd.simd_float4x4.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdPosition_, 0, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdRotation_, 0, simd.simd_float4.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdOrientation_, 0, simd.simd_quadf.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdEulerAngles_, 0, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdScale_, 0, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdPivot_, 0, simd.simd_float4x4.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdWorldPosition_, 0, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdWorldOrientation_, 0, simd.simd_quadf.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.setSimdWorldTransform_, 0, simd.simd_float4x4.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdConvertPosition_toNode_, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdConvertPosition_toNode_,
+            0,
+            simd.simd_float3.__typestr__,
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdConvertPosition_fromNode_, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdConvertPosition_fromNode_,
+            0,
+            simd.simd_float3.__typestr__,
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdConvertVector_fromNode_, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdConvertVector_fromNode_,
+            0,
+            simd.simd_float3.__typestr__,
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdConvertVector_toNode_, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdConvertVector_toNode_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdConvertTransform_toNode_,
+            simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdConvertTransform_toNode_,
+            0,
+            simd.simd_float4x4.__typestr__,
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdLocalUp, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdLocalRight, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdLocalFront, simd.simd_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldUp, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldRight, simd.simd_float3.__typestr__
+        )
+        self.assertResultHasType(
+            SceneKit.SCNNode.simdWorldFront, simd.simd_float3.__typestr__
+        )
+
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLookAt_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLookAt_up_localFront_, 0, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLookAt_up_localFront_, 1, simd.simd_float3.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLookAt_up_localFront_, 2, simd.simd_float3.__typestr__
+        )
+
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLocalTranslateBy_, 0, simd.simd_float3.__typestr__
+        )
+
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdLocalRotateBy_, 0, simd.simd_quadf.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdRotateBy_aroundTarget_, 0, simd.simd_quadf.__typestr__
+        )
+        self.assertArgHasType(
+            SceneKit.SCNNode.simdRotateBy_aroundTarget_, 1, simd.simd_float3.__typestr__
         )
 
     @min_sdk_level("10.10")

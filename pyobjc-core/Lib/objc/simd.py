@@ -9,6 +9,8 @@ import objc
 import operator
 
 __all__ = (
+    "simd_float3",
+    "simd_float4",
     "vector_float2",
     "vector_float3",
     "vector_float4",
@@ -498,6 +500,9 @@ vector_uchar16 = make_type(
     typestr=b"<16C>",
 )
 
+simd_float3 = vector_float3
+simd_float4 = vector_float4
+
 
 if 0:
     # XXX: Add math operators
@@ -518,3 +523,5 @@ if 0:
     )
     simd_quadf = objc.createStructType("quadf", b"{simd_quadf=[<4f>]}", ["vector"])
     simd_quadd = objc.createStructType("quadf", b"{simd_quadd=[<4d>]}", ["vector"])
+
+    simd_float4x4 = matrix_float4x4

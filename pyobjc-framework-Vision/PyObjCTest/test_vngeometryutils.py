@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Vision
+from objc import simd
 
 
 class TestVNGeometryUtils(TestCase):
@@ -8,16 +9,20 @@ class TestVNGeometryUtils(TestCase):
         self.assertArgIsOut(Vision.VNGeometryUtils.boundingCircleForContour_error_, 1)
         self.assertArgIsOut(Vision.VNGeometryUtils.boundingCircleForPoints_error_, 1)
 
-        # XXX: SIMD argument
-        # self.assertArgIsIn(
-        #     Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 0
-        # )
-        # self.assertArgSizeInArg(
-        #     Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 0, 1
-        # )
-        # self.assertArgIsOut(
-        #     Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 2
-        # )
+        self.assertArgHasType(
+            Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_,
+            0,
+            simd.simd_float2.__typestr__,
+        )
+        self.assertArgIsIn(
+            Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 0
+        )
+        self.assertArgSizeInArg(
+            Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 0, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 2
+        )
 
         self.assertResultIsBOOL(
             Vision.VNGeometryUtils.calculateArea_forContour_orientedArea_error_

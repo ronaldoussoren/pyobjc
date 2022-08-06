@@ -1,5 +1,14 @@
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 import ModelIO
+from objc import simd
+
+
+class TestMDLTransformStackHelper(ModelIO.NSObject):
+    def float4x4AtTime_(self, a):
+        return 1
+
+    def double4x4AtTime_(self, a):
+        return 1
 
 
 class TestMDLTransformStack(TestCase):
@@ -18,4 +27,21 @@ class TestMDLTransformStack(TestCase):
     def testProtocols(self):
         self.assertProtocolExists("MDLTransformOp")
 
-        # XXX: Protocol contains matrix types, needs more work
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestMDLTransformStackHelper.float4x4AtTime_,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertResultHasType(
+            TestMDLTransformStackHelper.double4x4AtTime_,
+            simd.matrix_double4x4.__typestr__,
+        )
+
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertResultHasType(
+            ModelIO.MDLTransformStack.float4x4AtTime, simd.matrix_float4x4.__typestr__
+        )
+        self.assertResultHasType(
+            ModelIO.MDLTransformStack.double4x4AtTime, simd.matrix_double4x4.__typestr__
+        )

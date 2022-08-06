@@ -99,6 +99,14 @@ class TestSceneKitTypes(TestCase):
         SceneKit.SCNVector4FromGLKVector4
         SceneKit.SCNVector4ToGLKVector4
 
+    def test_inlineFunctions(self):
+        SceneKit.SCNVector3ToFloat3
+        SceneKit.SCNVector4ToFloat4
+        SceneKit.SCNMatrix4ToMat4
+        SceneKit.SCNVector3FromFloat3
+        SceneKit.SCNVector4FromFloat4
+        SceneKit.SCNMatrix4FromMat4
+
     @min_os_level("10.10")
     def testFunctions10_10(self):
         v = SceneKit.SCNMatrix4MakeRotation(1, 2, 3, 4)
