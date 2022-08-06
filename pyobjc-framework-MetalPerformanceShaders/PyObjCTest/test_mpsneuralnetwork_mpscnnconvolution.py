@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import MetalPerformanceShaders
+from objc import simd
 
 
 class TestMPSNeuralNetwork_MPSCNNConvolutionHelper(MetalPerformanceShaders.NSObject):
@@ -27,7 +28,8 @@ class TestMPSNeuralNetwork_MPSCNNConvolutionHelper(MetalPerformanceShaders.NSObj
     def kernelWeightsDataType(self):
         return 1
 
-    # def rangesForUInt8Kernel(self): return 1
+    def rangesForUInt8Kernel(self):
+        return 1
 
 
 class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
@@ -91,6 +93,14 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.kernelWeightsDataType, b"I"
+        )
+
+        self.assertResultHasType(
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.rangesForUInt8Kernel,
+            b"^" + simd.vector_float2,
+        )
+        self.assertResultIsVariableSize(
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.rangesForUInt8Kernel
         )
 
     @min_os_level("10.13")

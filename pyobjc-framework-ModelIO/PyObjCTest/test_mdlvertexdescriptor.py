@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 import ModelIO
+from objc import simd
 
 
 class TestMDLVertexDescriptor(TestCase):
@@ -202,4 +203,15 @@ class TestMDLVertexDescriptor(TestCase):
         self.assertEqual(
             ModelIO.MDLVertexFormatUInt1010102Normalized,
             ModelIO.MDLVertexFormatUIntBits | ModelIO.MDLVertexFormatPackedBit | 4,
+        )
+
+    def test_methods(self):
+        self.assertResultHasType(
+            ModelIO.MDLVertexAttribute.initializationValue,
+            simd.vector_float4.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLVertexAttribute.setInitializationValue_,
+            0,
+            simd.vector_float4.__typestr__,
         )

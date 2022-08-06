@@ -14,8 +14,6 @@ API Notes
 
 * ``SK_VERSION``: This constant is not exposed as it changes with the SDK used.
 
-* ``vector_float3``: Values of this type are represented as tuples of 3 floats in Python.
-
 * ``+[SKFieldNode customFieldWithEvaluationBlock:]``
 
   This method is not supported yet (requires changes to the core bridge)

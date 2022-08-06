@@ -85,23 +85,7 @@ Version 9.0a1
   other signatures will result in exceptions at runtime.
 
 * Because of the previous change APIs that have a SIMD type are now callable
-  from Python. In particular, the following APIs are now supported:
-
-  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat2_``
-  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat3_``
-  - ``SpriteKit.SKAttributeValue.valueWithVectorFloat4_``
-  - ``SpriteKit.SKAttributeValue.vectorFloat2Value``
-  - ``SpriteKit.SKAttributeValue.vectorFloat3Value``
-  - ``SpriteKit.SKAttributeValue.vectorFloat4Value``
-  - ``SpriteKit.SKAttributeValue.setVectorFloat2Value_``
-  - ``SpriteKit.SKAttributeValue.setVectorFloat3Value_``
-  - ``SpriteKit.SKAttributeValue.setVectorFloat4Value_``
-  - ``SpriteKit.SKWarpGeometryGrid.gridWithColumns_rows_sourcePositions_destPositions_``
-  - ``SpriteKit.SKWarpGeometryGrid.initWithColumns_rows_sourcePositions_destPositions_``
-  - ``SpriteKit.SKWarpGeometryGrid.gridByReplacingSourcePositions_``
-  - ``SpriteKit.SKWarpGeometryGrid.gridByReplacingDestPositions_``
-  - ``Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint``
-  - ``Vision.VNImagePointForFaceLandmarkPoint``
+  from Python.
 
 * Changes due to generic implementation for SIMD types:
 

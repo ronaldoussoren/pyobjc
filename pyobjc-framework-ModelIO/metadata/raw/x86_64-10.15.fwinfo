@@ -2298,7 +2298,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBoxAtTime:",
@@ -2368,7 +2368,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -2621,7 +2621,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=}",
+      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -2801,7 +2801,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=}",
+        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        },
        {
@@ -5710,7 +5710,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -6899,7 +6899,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=}",
+      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -7404,7 +7404,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBoxAtTime:",
@@ -12914,7 +12914,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=}",
+        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        },
        {
@@ -13026,7 +13026,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLVoxelIndexExtent=}",
+        "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
         "typestr_special": true
        }
       ],
@@ -13232,7 +13232,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "voxelBoundingBoxAtIndex:",
@@ -13302,7 +13302,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLVoxelIndexExtent=}",
+       "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
        "typestr_special": true
       },
       "selector": "voxelIndexExtent",
@@ -13312,7 +13312,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -13396,7 +13396,7 @@
        "readonly"
       ],
       "name": "voxelIndexExtent",
-      "typestr": "{_MDLVoxelIndexExtent=}",
+      "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
       "typestr_special": true
      },
      {
@@ -13405,7 +13405,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=}",
+      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -13727,7 +13727,7 @@
      {
       "args": [
        {
-        "typestr": null,
+        "typestr": "<3f>",
         "typestr_special": false
        }
       ],
@@ -13745,7 +13745,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=}",
+       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -13754,7 +13754,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=}",
+        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        }
       ],
@@ -13798,7 +13798,7 @@
     "properties": [
      {
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=}",
+      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -14549,7 +14549,7 @@
      "minBounds"
     ],
     "special": true,
-    "typestr": "{_MDLAxisAlignedBoundingBox=}"
+    "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}"
    },
    "MDLVoxelIndexExtent": {
     "fieldnames": [
@@ -14557,7 +14557,7 @@
      "maximumExtent"
     ],
     "special": true,
-    "typestr": "{_MDLVoxelIndexExtent=}"
+    "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}"
    }
   }
  },

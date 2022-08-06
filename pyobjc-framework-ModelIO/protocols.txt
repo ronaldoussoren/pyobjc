@@ -1,6 +1,0 @@
-MDLLightProbeIrradianceDataSource
-MDLMeshBuffer;
-MDLMeshBufferAllocator;
-MDLMeshBufferZone;
-MDLNamed
-MDLObjectContainerComponent

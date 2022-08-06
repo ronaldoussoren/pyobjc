@@ -1212,10 +1212,10 @@
      {
       "selector": "copyJointBindTransformsInto:maxCount:",
       "class_method": false,
-      "retval": { "type_override": ["I", "Q"] },
+      "retval": { "type_override": "Q" },
       "args": {
        "0": { "type_override": "?", "comment": "matrix_float4x4" },
-       "1": { "type_override": ["I", "Q"] }
+       "1": { "type_override": "Q" }
       }
      }
     ]
@@ -1264,10 +1264,10 @@
      {
       "selector": "copyJointBindTransformsInto:maxCount:",
       "class_method": false,
-      "retval": { "type_override": ["I", "Q"] },
+      "retval": { "type_override": "Q" },
       "args": {
        "0": { "type_override": "?", "comment": "matrix_float4x4" },
-       "1": { "type_override": ["I", "Q"] }
+       "1": { "type_override": "Q" }
       }
      },
      {
@@ -1335,72 +1335,72 @@
      {
       "selector": "sphericalHarmonicsLevel",
       "class_method": false,
-      "retval": { "type_override": [ "I", "Q" ] }
+      "retval": { "type_override": "Q" }
      },
      {
       "selector": "setSphericalHarmonicsLevel:",
       "class_method": false,
       "args": {
-       "0": { "type_override": [ "I", "Q" ] }
+       "0": { "type_override": "Q" }
       }
      },
      {
       "selector": "fillData:offset:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "I", "Q" ] }
+       "1": { "type_override": "Q" }
       }
      },
      {
       "selector": "length",
       "class_method": false,
-      "retval": { "type_override": [ "I", "Q" ] }
+      "retval": { "type_override": "Q" }
      },
      {
       "selector": "type",
       "class_method": false,
-      "retval": { "type_override": [ "I", "Q" ] }
+      "retval": { "type_override": "Q" }
      },
      {
       "selector": "capacity",
       "class_method": false,
-      "retval": { "type_override": [ "I", "Q" ] }
+      "retval": { "type_override": "Q" }
      },
      {
       "selector": "newZone:",
       "class_method": false,
       "args": {
-       "0": { "type_override": [ "I", "Q" ] }
+       "0": { "type_override": "Q" }
       }
      },
      {
       "selector": "newBuffer:type:",
       "class_method": false,
       "args": {
-       "0": { "type_override": [ "I", "Q" ] },
-       "1": { "type_override": [ "I", "Q" ] }
+       "0": { "type_override": "Q" },
+       "1": { "type_override": "Q" }
       }
      },
      {
       "selector": "newBufferWithData:type:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "I", "Q" ] }
+       "1": { "type_override": "Q" }
       }
      },
      {
       "selector": "newBufferFromZone:length:type:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "I", "Q" ] },
-       "2": { "type_override": [ "I", "Q" ] }
+       "1": { "type_override": "Q" },
+       "2": { "type_override": "Q" }
       }
      },
      {
       "selector": "newBufferFromZone:data:type:",
       "class_method": false,
       "args": {
-       "2": { "type_override": [ "I", "Q" ] }
+       "2": { "type_override": "Q" }
       }
      }
     ]

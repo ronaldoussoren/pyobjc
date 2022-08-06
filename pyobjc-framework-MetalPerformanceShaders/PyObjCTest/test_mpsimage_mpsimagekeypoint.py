@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MetalPerformanceShaders
+from objc import simd
 
 
 class TestMPSImage_MPSImageHistogram(TestCase):
@@ -10,10 +11,13 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         self.assertIsInstance(v.minimumThresholdValue, float)
         self.assertPickleRoundTrips(v)
 
-        self.assertNotHasAttr(MetalPerformanceShaders, "MPSImageKeypointData")
-        # v = MetalPerformanceShaders.MPSImageKeypointData()
-        # self.assertIsInstance(v.keypointCoordinate, objc.vector_ushort2)
-        # self.assertIsInstance(v.keypointColorValue, float)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSImageKeypointData.__typestr__,
+            b"{_.MPSImageKeypointData=<2S>f}",
+        )
+        v = MetalPerformanceShaders.MPSImageKeypointData()
+        self.assertIsInstance(v.keypointCoordinate, simd.vector_ushort2)
+        self.assertIsInstance(v.keypointColorValue, float)
 
     @min_os_level("10.13")
     def test_methods(self):

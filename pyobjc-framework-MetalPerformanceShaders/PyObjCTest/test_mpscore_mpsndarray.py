@@ -1,10 +1,16 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import MetalPerformanceShaders
+from objc import simd
 
 
 class TestMPSCore_MPSNDArray(TestCase):
     @min_os_level("10.15")
     def test_methods(self):
+        self.assertResultHasType(
+            MetalPerformanceShaders.MPSNDArrayDescriptor.dimensionOrder,
+            simd.vector_uchar16.__typestr__,
+        )
+
         self.assertIsNullTerminated(
             MetalPerformanceShaders.MPSNDArrayDescriptor.descriptorWithDataType_dimensionSizes_
         )

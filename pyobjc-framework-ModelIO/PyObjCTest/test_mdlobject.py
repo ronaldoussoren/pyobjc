@@ -5,6 +5,11 @@ import ModelIO
 class TestMDLObject(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
+        self.assertResultHasType(
+            ModelIO.MDLObject.boundingBoxAtTime_,
+            ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
+        )
+
         self.assertResultIsBOOL(ModelIO.MDLObject.hidden)
         self.assertArgIsBOOL(ModelIO.MDLObject.setHidden_, 0)
 

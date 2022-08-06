@@ -2,14 +2,56 @@ from PyObjCTools.TestSupport import TestCase
 
 import GameplayKit
 
+from objc import simd
+
 
 class TestGKGridGraph(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(GameplayKit.GKGridGraph.diagonalsAllowed)
 
-        # SIMD types
-        # self.assertArgIsBOOL(GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_, 3)
-        # self.assertArgIsBOOL(GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_, 3)
+        self.assertResultHasType(
+            GameplayKit.GKGridGraph.gridOrigin, simd.vector_int2.__typestr__
+        )
 
-        # self.assertArgIsBOOL(GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_, 3)
-        # self.assertArgIsBOOL(GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_, 3)
+        # SIMD types
+        self.assertArgIsHasType(
+            GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
+            0,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
+            3,
+        )
+        self.assertArgIsHasType(
+            GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
+            0,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
+            3,
+        )
+
+        self.assertArgIsHasType(
+            GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
+            0,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
+            3,
+        )
+        self.assertArgIsHasType(
+            GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
+            0,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
+            3,
+        )
+
+        self.assertArgIsHasType(
+            GameplayKit.GKGridGraph.nodeAtGridPosition_, 0, simd.vector_int2.__typestr__
+        )

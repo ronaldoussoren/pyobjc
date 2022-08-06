@@ -1531,48 +1531,6 @@
   },
   "informal_protocols": {},
   "structs": {
-   "MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates": {
-    "ignore": true
-   },
-   "MPSAxisAlignedBoundingBox": {
-    "ignore": true
-   },
-   "MPSCustomKernelInfo": {
-    "ignore": true
-   },
-   "MPSCustomKernelSourceInfo": {
-    "ignore": true
-   },
-   "MPSImageHistogramInfo": {
-    "ignore": true
-   },
-   "MPSImageKeypointData": {
-    "ignore": true
-   },
-   "MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates": {
-    "ignore": true
-   },
-   "MPSIntersectionDistancePrimitiveIndexCoordinates": {
-    "ignore": true
-   },
-   "MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates": {
-    "ignore": true
-   },
-   "MPSPackedFloat3": {
-    "ignore": true
-   },
-   "MPSRayOriginDirection": {
-    "ignore": true
-   },
-   "MPSRayOriginMaskDirectionMaxDistance": {
-    "ignore": true
-   },
-   "MPSRayOriginMinDistanceDirectionMaxDistance": {
-    "ignore": true
-   },
-   "MPSRayPackedOriginDirection": {
-    "ignore": true
-   }
   }
  }
 }

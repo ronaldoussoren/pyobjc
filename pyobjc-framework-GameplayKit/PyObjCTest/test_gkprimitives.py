@@ -5,19 +5,16 @@ import GameplayKit
 
 class TestGKPrimitives(TestCase):
     def testStructs(self):
-        # SIMD:
-        # v = GameKit.GKBox()
-        # self.assertIsInstance(v.boxMin, ...)
-        # self.assertIsInstance(v.boxMax, ...)
+        self.assertEqual(GameplayKit.GKBox.__typestr__, b"{GKBox=<3f><3f>}")
+        v = GameplayKit.GKBox()
+        self.assertIsInstance(v.boxMin, None)
+        self.assertIsInstance(v.boxMax, None)
 
-        # v = GameKit.GKQuad()
-        # self.assertIsInstance(v.quadMin, ...)
-        # self.assertIsInstance(v.quadMax, ...)
+        self.assertEqual(GameplayKit.GKQuad.__typestr__, b"{GKQuad=<2f><2f>}")
+        v = GameplayKit.GKQuad()
+        self.assertIsInstance(v.quadMin, None)
+        self.assertIsInstance(v.quadMax, None)
 
-        # v = GameKit.GKTriangle()
-        # self.assertIsInstance(v.points, ...)
-        pass
-
-    def testMethods(self):
-        self.assertResultIsBOOL(GameplayKit.GKAgent3D.rightHanded)
-        self.assertArgIsBOOL(GameplayKit.GKAgent3D.setRightHanded_, 0)
+        self.assertEqual(GameplayKit.GKTriangle.__typestr__, b"{GKTriangle=<3f>[3]}")
+        v = GameplayKit.GKTriangle()
+        self.assertIs(v.points, None)

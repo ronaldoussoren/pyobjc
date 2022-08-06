@@ -1,17 +1,21 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MetalPerformanceShaders
+from objc import simd
 
 
 class TestMPSImage_MPSImageHistogram(TestCase):
     def test_structs(self):
         # Vector types:
-        self.assertNotHasAttr(MetalPerformanceShaders, "MPSImageHistogramInfo")
-        # v = MetalPerformanceShaders.MPSImageHistogramInfo()
-        # self.assertIsInstance(v.numberOfHistogramEntries, int)
-        # self.assertIsInstance(v.histogramForAlpha, bool)
-        # self.assertIsInstance(v.minPixelValue, objc.vector_float4)
-        # self.assertIsInstance(v.maxPixelValue, objc.vector_float4)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+            b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
+        )
+        v = MetalPerformanceShaders.MPSImageHistogramInfo()
+        self.assertIsInstance(v.numberOfHistogramEntries, int)
+        self.assertIsInstance(v.histogramForAlpha, bool)
+        self.assertIsInstance(v.minPixelValue, simd.vector_float4)
+        self.assertIsInstance(v.maxPixelValue, simd.vector_float4)
 
     @min_os_level("10.13")
     def test_methods(self):
@@ -23,9 +27,41 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         self.assertArgIsIn(
             MetalPerformanceShaders.MPSImageHistogram.initWithDevice_histogramInfo_, 1
         )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSImageHistogram.initWithDevice_histogramInfo_,
+            1,
+            b"n^" + MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
+
+        self.assertResultHastype(
+            MetalPerformanceShaders.MPSImageHistogram.histogramInfo,
+            MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
+
+        self.assertResultHastype(
+            MetalPerformanceShaders.MPSImageHistogram.minPixelThresholdValue,
+            simd.vector_float4.__typestr__,
+        )
+        self.assertArgHastype(
+            MetalPerformanceShaders.MPSImageHistogram.setMinPixelThresholdValue_,
+            0,
+            simd.vector_float4.__typestr__,
+        )
 
     @min_os_level("10.14")
     def test_methods10_14(self):
+        self.assertResultHastype(
+            MetalPerformanceShaders.MPSImageNormalizedHistogram.histogramInfo,
+            MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
+        self.assertResultHastype(
+            MetalPerformanceShaders.MPSImageHistogramEqualization.histogramInfo,
+            MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
+        self.assertResultHastype(
+            MetalPerformanceShaders.MPSImageHistogramSpecification.histogramInfo,
+            MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSImageNormalizedHistogram.zeroHistogram
         )
@@ -37,13 +73,28 @@ class TestMPSImage_MPSImageHistogram(TestCase):
             MetalPerformanceShaders.MPSImageNormalizedHistogram.initWithDevice_histogramInfo_,
             1,
         )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSImageNormalizedHistogram.initWithDevice_histogramInfo_,
+            1,
+            b"n^" + MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
 
         self.assertArgIsIn(
             MetalPerformanceShaders.MPSImageHistogramEqualization.initWithDevice_histogramInfo_,
             1,
         )
+        self.assertArgIsIn(
+            MetalPerformanceShaders.MPSImageHistogramEqualization.initWithDevice_histogramInfo_,
+            1,
+            b"n^" + MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
+        )
 
         self.assertArgIsIn(
             MetalPerformanceShaders.MPSImageHistogramSpecification.initWithDevice_histogramInfo_,
             1,
+        )
+        self.assertArgIsIn(
+            MetalPerformanceShaders.MPSImageHistogramSpecification.initWithDevice_histogramInfo_,
+            1,
+            b"n^" + MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )

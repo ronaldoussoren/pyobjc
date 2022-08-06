@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import ModelIO
+from objc import simd
 
 
 class TestMDLAnimatedValue(TestCase):
@@ -17,10 +18,6 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsOut(ModelIO.MDLAnimatedValue.getTimes_maxCount_, 0)
         self.assertArgSizeInArg(ModelIO.MDLAnimatedValue.getTimes_maxCount_, 0, 1)
         self.assertArgSizeInResult(ModelIO.MDLAnimatedValue.getTimes_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedValue.copyTimesInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedValue.copyTimesInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedValue.copyTimesInto_maxCount_, 0)
 
         self.assertArgIsIn(
             ModelIO.MDLAnimatedScalarArray.setFloatArray_count_atTime_, 0
@@ -78,14 +75,6 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_atTime_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_atTime_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_atTime_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.copyDoubleArrayInto_maxCount_atTime_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.copyDoubleArrayInto_maxCount_atTime_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.copyDoubleArrayInto_maxCount_atTime_, 0)
-
         self.assertArgIsIn(
             ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_, 0
         )
@@ -131,14 +120,6 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsIn(
             ModelIO.MDLAnimatedScalarArray.resetWithDoubleArray_count_atTimes_count_, 2
         )
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.copyFloatArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedValue.copyDoubleArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedValue.copyDoubleArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedValue.copyDoubleArrayInto_maxCount_, 0)
 
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedScalar.resetWithFloatArray_atTimes_count_, 0, 2
@@ -160,14 +141,6 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedScalar.resetWithDoubleArray_atTimes_count_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedScalar.copyFloatArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedScalar.copyFloatArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedScalar.copyFloatArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedScalar.copyDoubleArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedScalar.copyDoubleArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedScalar.copyDoubleArrayInto_maxCount_, 0)
-
         self.assertArgSizeInArg(ModelIO.MDLAnimatedScalar.getFloatArray_maxCount_, 0, 1)
         self.assertArgSizeInResult(ModelIO.MDLAnimatedScalar.getFloatArray_maxCount_, 0)
         self.assertArgIsOut(ModelIO.MDLAnimatedScalar.getFloatArray_maxCount_, 0)
@@ -181,10 +154,12 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsOut(ModelIO.MDLAnimatedScalar.getDoubleArray_maxCount_, 0)
 
     @min_os_level("10.13")
-    @expectedFailure
     def testMethodsVector(self):
-        # Note: SIMD types like 'vector_float2' are not supported and cannot be tested properly
-
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.setFloat3Array_count_atTime_,
+            0,
+            b"n^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.setFloat3Array_count_atTime_, 0, 1
         )
@@ -192,6 +167,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.setFloat3Array_count_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.setDouble3Array_count_atTime_,
+            0,
+            b"n^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.setDouble3Array_count_atTime_, 0, 1
         )
@@ -199,6 +179,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.setDouble3Array_count_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_atTime_,
+            0,
+            b"o^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_atTime_, 0, 1
         )
@@ -209,6 +194,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_atTime_,
+            0,
+            b"o^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_atTime_, 0, 1
         )
@@ -219,6 +209,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.resetWithFloat3Array_count_atTimes_count_,
+            0,
+            b"n^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.resetWithFloat3Array_count_atTimes_count_,
             0,
@@ -236,6 +231,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.resetWithFloat3Array_count_atTimes_count_, 2
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.resetWithDouble3Array_count_atTimes_count_,
+            0,
+            b"n^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.resetWithDouble3Array_count_atTimes_count_,
             0,
@@ -255,6 +255,11 @@ class TestMDLAnimatedValue(TestCase):
             2,
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_,
+            0,
+            b"o^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_, 0, 1
         )
@@ -263,6 +268,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector3Array.getFloat3Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_,
+            0,
+            b"o^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_, 0, 1
         )
@@ -273,6 +283,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3Array.getDouble3Array_maxCount_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.setFloatQuaternionArray_count_atTime_,
+            0,
+            b"n^" + simd.simd_quatf.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.setFloatQuaternionArray_count_atTime_,
             0,
@@ -282,6 +297,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedQuaternionArray.setFloatQuaternionArray_count_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.setDoubleQuaternionArray_count_atTime_,
+            0,
+            b"n^" + simd.simd_quatd.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.setDoubleQuaternionArray_count_atTime_,
             0,
@@ -291,6 +311,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedQuaternionArray.setDoubleQuaternionArray_count_atTime_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_count_atTime_,
+            0,
+            b"o^" + simd.simd_quatf.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_atTime_,
             0,
@@ -305,6 +330,11 @@ class TestMDLAnimatedValue(TestCase):
             0,
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_count_atTime_,
+            0,
+            b"o^" + simd.simd_quatd.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_atTime_,
             0,
@@ -319,6 +349,11 @@ class TestMDLAnimatedValue(TestCase):
             0,
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.resetWithFloatQuaternionArray_count_atTimes_count_,
+            0,
+            b"n^" + simd.simd_quatf.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.resetWithFloatQuaternionArray_count_atTimes_count_,
             0,
@@ -338,6 +373,11 @@ class TestMDLAnimatedValue(TestCase):
             2,
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.resetWithDoubleQuaternionArray_count_atTimes_count_,
+            0,
+            b"n^" + simd.simd_quatd.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.resetWithDoubleQuaternionArray_count_atTimes_count_,
             0,
@@ -357,6 +397,11 @@ class TestMDLAnimatedValue(TestCase):
             2,
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_,
+            0,
+            b"o^" + simd.simd_quatf.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_, 0, 1
         )
@@ -367,6 +412,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_,
+            0,
+            b"o^" + simd.simd_quatf.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_, 0, 1
         )
@@ -377,6 +427,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count,
+            0,
+            b"o^" + simd.vector_float2.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count_, 0, 2
         )
@@ -387,6 +442,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count,
+            0,
+            b"o^" + simd.vector_double2.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count_, 0, 2
         )
@@ -397,14 +457,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector2.copyFloat2ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector2.copyFloat2ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector2.copyFloat2ArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector2.copyDouble2ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector2.copyDouble2ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector2.copyDouble2ArrayInto_maxCount_, 0)
-
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector2.getFloat2Array_maxCount_,
+            0,
+            b"o^" + simd.vector_float2.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.getFloat2Array_maxCount_, 0, 1
         )
@@ -413,6 +470,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector2.getFloat2Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector2.getDouble2Array_maxCount_,
+            0,
+            b"o^" + simd.vector_double2.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.getDouble2Array_maxCount_, 0, 1
         )
@@ -421,6 +483,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector2.getDouble2Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3.resetWithFloat3Array_,
+            0,
+            b"n^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3.resetWithFloat3Array_atTimes_count_, 0, 2
         )
@@ -431,6 +498,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3.resetWithFloat3Array_atTimes_count_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3.resetWithDouble3Array_,
+            0,
+            b"n^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3.resetWithDouble3Array_atTimes_count_, 0, 2
         )
@@ -441,14 +513,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector3.resetWithDouble3Array_atTimes_count_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector3.copyFloat3ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector3.copyFloat3ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector3.copyFloat3ArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector3.copyDouble3ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector3.copyDouble3ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector3.copyDouble3ArrayInto_maxCount_, 0)
-
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3.getFloat3Array_maxCount_,
+            0,
+            b"o^" + simd.vector_float3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3.getFloat3Array_maxCount_, 0, 1
         )
@@ -457,6 +526,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector3.getFloat3Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector3.getDouble3Array_maxCount_,
+            0,
+            b"o^" + simd.vector_double3.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector3.getDouble3Array_maxCount_, 0, 1
         )
@@ -465,6 +539,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector3.getDouble3Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4.resetWithFloat4Array_atTimes_count_,
+            0,
+            b"n^" + simd.vector_float4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4.resetWithFloat4Array_atTimes_count_, 0, 2
         )
@@ -475,6 +554,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector4.resetWithFloat4Array_atTimes_count_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4.resetWithDouble4Array_atTimes_count_,
+            0,
+            b"n^" + simd.vector_double4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4.resetWithDouble4Array_atTimes_count_, 0, 2
         )
@@ -485,14 +569,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector4.resetWithDouble4Array_atTimes_count_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector4.copyFloat4ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector4.copyFloat4ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector4.copyFloat4ArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector4.copyDouble4ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector4.copyDouble4ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector4.copyDouble4ArrayInto_maxCount_, 0)
-
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4.getFloat4Array_maxCount_,
+            0,
+            b"o^" + simd.vector_float4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4.getFloat4Array_maxCount_, 0, 1
         )
@@ -501,6 +582,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector4.getFloat4Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4.getDouble4Array_maxCount_,
+            0,
+            b"o^" + simd.vector_double4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4.getDouble4Array_maxCount_, 0, 1
         )
@@ -509,6 +595,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector4.getDouble4Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_,
+            0,
+            b"n^" + simd.matrix_float4x4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_, 0, 2
         )
@@ -519,6 +610,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_, 0
         )
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_,
+            0,
+            b"n^" + simd.matrix_double4x4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0, 2
         )
@@ -529,14 +625,11 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0
         )
 
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector4x4.copyFloat4x4ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector4x4.copyFloat4x4ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector4x4.copyFloat4x4ArrayInto_maxCount_, 0)
-
-        # self.assertArgSizeInArg(ModelIO.MDLAnimatedVector4x4.copyDouble4x4ArrayInto_maxCount_, 0, 1)
-        # self.assertArgSizeInResult(ModelIO.MDLAnimatedVector4x4.copyDouble4x4ArrayInto_maxCount_, 0)
-        # self.assertArgIsOut(ModelIO.MDLAnimatedVector4x4.copyDouble4x4ArrayInto_maxCount_, 0)
-
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_,
+            0,
+            b"o^" + simd.matrix_float4x4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_, 0, 1
         )
@@ -545,6 +638,11 @@ class TestMDLAnimatedValue(TestCase):
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_, 0)
 
+        self.assertArgHasType(
+            ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_,
+            0,
+            b"o^" + simd.matrix_double4x4.__typestr__,
+        )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_, 0, 1
         )

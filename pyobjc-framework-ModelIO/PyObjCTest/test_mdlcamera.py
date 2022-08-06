@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase
 import ModelIO
+from objc import simd
 
 
 class TestMDLCamera(TestCase):
@@ -11,4 +12,90 @@ class TestMDLCamera(TestCase):
         self.assertEqual(ModelIO.MDLCameraProjectionOrthographic, 1)
 
     def testMethods(self):
+        self.assertResultHasType(
+            ModelIO.MDLCamera.projectionMatrix, simd.matrix_float4x4.__typestr__
+        )
+
+        self.assertArgHasType(
+            ModelIO.MDLCamera.frameBoundingBox_setNearAndFar_,
+            0,
+            ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
+        )
         self.assertArgIsBOOL(ModelIO.MDLCamera.frameBoundingBox_setNearAndFar_, 1)
+
+        self.assertArgHasType(
+            ModelIO.MDLCamera.lookAt_, 0, simd.vector_float3.__typestr__
+        )
+
+        self.assertArgHasType(
+            ModelIO.MDLCamera.lookAt_from_, 0, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.lookAt_from_, 1, simd.vector_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.rayTo_forViewPoint_, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.rayTo_forViewPoint_, 0, simd.vector_int2.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.rayTo_forViewPoint_, 1, simd.vector_int2.__typestr__
+        )
+
+        self.assertArgHasType(
+            ModelIO.MDLCamera.bokehKernelWithSize_, 0, simd.vector_int2.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.sensorEnlargement, simd.vector_float2.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.setSensorEnlargement_, 0, simd.vector_float2.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.sensorShift, simd.vector_float2.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.setSensorShift_, 0, simd.vector_float2.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.flash, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.setFlash_, 0, simd.vector_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.exposureCompression, simd.vector_float2.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.setExposureCompression_, 0, simd.vector_float2.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLCamera.exposure, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLCamera.setExposure_, 0, simd.vector_float3.__typestr__
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLStereoscopicCamera.leftViewMatrix,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertResultHasType(
+            ModelIO.MDLStereoscopicCamera.rightViewMatrix,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertResultHasType(
+            ModelIO.MDLStereoscopicCamera.leftProjectionMatrix,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertResultHasType(
+            ModelIO.MDLStereoscopicCamera.rightProjectionMatrix,
+            simd.matrix_float4x4.__typestr__,
+        )

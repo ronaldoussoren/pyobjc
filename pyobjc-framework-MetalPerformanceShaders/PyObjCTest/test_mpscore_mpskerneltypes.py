@@ -109,10 +109,36 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertIsInstance(v.shift, int)
         self.assertPickleRoundTrips(v)
 
-        # self.fail("MPSCustomKernelSourceInfo")  # Vector types
-        # self.fail("MPSCustomKernelInfo")  # Vector types
-        self.assertNotHasAttr(MetalPerformanceShaders, "MPSCustomKernelSourceInfo")
-        self.assertNotHasAttr(MetalPerformanceShaders, "MPSCustomKernelInfo")
+        self.assertEqual(
+            MetalPerformanceShaders.MPSCustomKernelSourceInfo.__typestr__,
+            b"{_MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}",
+        )
+        v = MetalPerformanceShaders.MPSCustomKernelSourceInfo()
+        self.assertIs(v.kernelOrigin, None)
+        self.assertIs(v.kernelPhase, None)
+        self.assertIs(v.kernelSize, None)
+        self.assertIs(v.offset, None)
+        self.assertIs(v.stride, None)
+        self.assertIs(v.dilationRate, None)
+        self.assertIsInstance(v.featureChannelOffset, int)
+        self.assertIsInstance(v.featureChannels, int)
+        self.assertIsInstance(v.imageArrayOffset, int)
+        self.assertIsInstance(v.imageArraySize, int)
+
+        self.assertEqual(
+            MetalPerformanceShaders.MPSCustomKernelInfo.__typestr__,
+            b"{_MPSCustomKernelInfo=<4S><4S>SSSSSSQ}",
+        )
+        v = MetalPerformanceShaders.MPSCustomKernelInfo()
+        self.assertIs(v.clipOrigin, None)
+        self.assertIs(v.clipSize, None)
+        self.assertIsInstance(v.destinationFeatureChannels, int)
+        self.assertIsInstance(v.destImageArraySize, int)
+        self.assertIsInstance(v.sourceImageCount, int)
+        self.assertIsInstance(v.threadgroupSize, int)
+        self.assertIsInstance(v.subbatchIndex, int)
+        self.assertIsInstance(v.subbatchStride, int)
+        self.assertIsInstance(v.idiv, int)
 
         v = MetalPerformanceShaders.MPSCustomKernelArgumentCount()
         self.assertIsInstance(v.destinationTextureCount, int)

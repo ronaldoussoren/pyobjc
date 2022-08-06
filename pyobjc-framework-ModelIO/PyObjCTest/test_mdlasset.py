@@ -1,17 +1,10 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 import ModelIO
+from objc import simd
 
 
 class TestMDLAssetHelper(ModelIO.NSObject):
-    # XXX: vector tytes
-    # def boundingBox(self):
-    #    return 1
-
-    # XXX: vector tytes
-    # def setBoundingBox_(self, v):
-    #    pass
-
     def sphericalHarmonicsLevel(self):
         return 1
 
@@ -39,10 +32,20 @@ class TestMDLAsset(TestCase):
 
         self.assertResultIsBOOL(ModelIO.MDLAsset.canExportFileExtension_)
 
-        # XXX: SIMD types
-        # self.assertResultHasType(TestMDLAssetHelper.boundingBox, ...)
-        # self.assertArgHasType(TestMDLAssetHelper.setBoundingBox_, 0, ...)
-        # self.assertArgHasType(TestMDLAssetHelper.sphericalHarmonicsCoefficientsAtPosition_, 0, ...)
+        self.assertResultHasType(
+            TestMDLAssetHelper.boundingBox,
+            ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMDLAssetHelper.setBoundingBox_,
+            0,
+            ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMDLAssetHelper.sphericalHarmonicsCoefficientsAtPosition_,
+            0,
+            simd.vector_float3.__typstr__,
+        )
 
         self.assertResultHasType(
             TestMDLAssetHelper.sphericalHarmonicsLevel, objc._C_NSUInteger
@@ -58,6 +61,13 @@ class TestMDLAsset(TestCase):
         )
         self.assertArgIsOut(
             ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 3
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLAssset.upAxis, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLAssset.setUpAxis_, 0, simd.vector_float3.__typestr__
         )
 
     def testProtocolObjects(self):

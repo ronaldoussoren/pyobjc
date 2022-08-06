@@ -64,4 +64,10 @@ class TestMDLTypes(TestCase):
 
     @expectedFailure
     def testStructs(self):
-        self.fail("MDLAxisAlignedBoundingBox is SIMD type")
+        self.assertEqual(
+            ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
+            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+        )
+        v = ModelIO.MDLAxisAlignedBoundingBox()
+        self.assertIs(v.maxBounds, None)
+        self.assertIs(v.minBounds, None)
