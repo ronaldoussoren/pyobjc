@@ -53,7 +53,8 @@ extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call
  *     This finds the function that can be used to call the Objective-C
  *     implementation of the specified method.
  */
-extern PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class aClass, SEL sel);
+extern PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class aClass, SEL sel,
+                                                     const char* signature);
 
 /*!
  * @function PyObjC_MakeIMP

@@ -976,7 +976,6 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             /* The new signature is not compatible enough, ignore the
              * override.
              */
-            printf("Types not compatible: %s   %s\n", descr->type, type);
             type = descr->type;
         }
 

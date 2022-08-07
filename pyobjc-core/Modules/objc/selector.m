@@ -639,7 +639,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
     if (self->sel_call_func) {
         execute = self->sel_call_func;
     } else {
-        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector);
+        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
+                                      self->base.sel_methinfo->signature);
         if (execute == NULL)
             return NULL;
         self->sel_call_func = execute;
@@ -807,12 +808,14 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
             /* PyObjCClass_ClassForMetaClass will only return a class proxy for a non-Nil
              * class */
             meth->sel_call_func = PyObjC_FindCallFunc(
-                (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector);
+                (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector,
+                meth->base.sel_methinfo->signature);
             Py_CLEAR(class_obj);
 
         } else {
             meth->sel_call_func =
-                PyObjC_FindCallFunc(meth->base.sel_class, meth->base.sel_selector);
+                PyObjC_FindCallFunc(meth->base.sel_class, meth->base.sel_selector,
+                                    meth->base.sel_methinfo->signature);
         }
         if (meth->sel_call_func == NULL) {
             Py_DECREF(result);

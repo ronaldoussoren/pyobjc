@@ -427,6 +427,11 @@ ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
     case _C_ARY_B:
         return array_to_ffi_type(argtype);
 
+    case _C_VECTOR_B:
+        PyErr_SetString(PyExc_NotImplementedError,
+                        "Vector types not supported by libffi caller");
+        return NULL;
+
     case _C_IN:
     case _C_OUT:
     case _C_INOUT:

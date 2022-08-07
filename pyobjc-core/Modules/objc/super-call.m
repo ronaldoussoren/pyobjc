@@ -167,7 +167,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     r = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
     if (r == -1) {
-        PyErr_SetString(PyObjCExc_Error, "cannot simplify signature");
+        PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         return -1;
     }
 
@@ -285,22 +285,6 @@ error:
     return NULL;
 }
 
-PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel)
-{
-    struct registry* special;
-
-    PyObjC_Assert(special_registry != NULL, NULL);
-
-    special = search_special(class, sel);
-    if (special) {
-        return special->call_to_objc;
-    } else if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return PyObjCFFI_Caller;
-}
-
 static struct registry* _Nullable find_signature(const char* signature)
 {
     PyObject* o;
@@ -309,7 +293,7 @@ static struct registry* _Nullable find_signature(const char* signature)
 
     res = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
     if (res == -1) {
-        PyErr_SetString(PyObjCExc_Error, "cannot simplify signature");
+        PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         return NULL;
     }
 
@@ -326,6 +310,33 @@ static struct registry* _Nullable find_signature(const char* signature)
         return NULL;
 
     return PyCapsule_GetPointer(o, "objc.__memblock__");
+}
+
+PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* signature)
+{
+    struct registry* special;
+
+    PyObjC_Assert(special_registry != NULL, NULL);
+
+    special = search_special(class, sel);
+    if (special) {
+        return special->call_to_objc;
+    } else if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    special = find_signature(signature);
+    if (special) {
+        return special->call_to_objc;
+    } else if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    const char* sel_signature = sel_getName(sel);
+    if (sel_signature == NULL) {
+        return NULL;
+    }
+    return PyObjCFFI_Caller;
 }
 
 extern IMP
