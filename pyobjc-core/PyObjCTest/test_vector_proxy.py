@@ -46,6 +46,15 @@ class TestRepythonify(TestCase):
 objc.registerMetaDataForSelector(
     b"OC_Vector", b"getVectorFloat3", {"full_signature": b"<3f>@:"}
 )
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"calcId:andFloat2:", {"full_signature": b"@@:@<2f>"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"calcId:andFloat3:", {"full_signature": b"@@:@<3f>"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"calcId:andFloat4:", {"full_signature": b"@@:@<4f>"}
+)
 
 
 # XXX: Add test that tries to call before overriding with 'full_signature'
@@ -57,20 +66,50 @@ class TestMethods(TestCase):
             OC_Vector.getVectorFloat3, simd.vector_float3.__typestr__
         )
         oc = OC_Vector.alloc().init()
-        self.assertEqual(oc.getVectorFloat3(), simd.vector_float3(1.5, 2.5, 3.5))
+        self.assertEqual(oc.getVectorFloat3(), simd.vector_float3(-8.5, 9.5, 12.5))
 
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
             oc.getVectorFloat3(42)
 
+    def test_calcId_andFloat2(self):
+        self.assertArgHasType(
+            OC_Vector.calcId_andFloat2_, 1, simd.vector_float2.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.calcId_andFloat2_("hello", (1.5, 2.5))
+        self.assertEqual(result, (("hello", simd.vector_float2(1.5, 2.5))))
+
+    def test_calcId_andFloat3(self):
+        self.assertArgHasType(
+            OC_Vector.calcId_andFloat3_, 1, simd.vector_float3.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.calcId_andFloat3_("hello2", (1.5, 2.5, 3.5))
+        self.assertEqual(result, (("hello2", simd.vector_float3(1.5, 2.5, 3.5))))
+
+    def test_calcId_andFloat4(self):
+        self.assertArgHasType(
+            OC_Vector.calcId_andFloat4_, 1, simd.vector_float4.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.calcId_andFloat4_("hello2", (-1.5, -2.5, -3.5, -4.5))
+        self.assertEqual(
+            result, (("hello2", simd.vector_float4(-1.5, -2.5, -3.5, -4.5)))
+        )
+
 
 class TestIMP(TestCase):
+    # Similar to TestMethods, but using method IMPs.
+
     def test_return_vector_float3(self):
         self.assertResultHasType(
             OC_Vector.getVectorFloat3, simd.vector_float3.__typestr__
         )
         oc = OC_Vector.alloc().init()
         imp = oc.methodForSelector_(b"getVectorFloat3")
-        self.assertEqual(imp(oc), simd.vector_float3(1.5, 2.5, 3.5))
+        self.assertEqual(imp(oc), simd.vector_float3(-8.5, 9.5, 12.5))
 
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
             imp(oc, 42)
+
+    # XXX: All tests in the class above should be here as well.
