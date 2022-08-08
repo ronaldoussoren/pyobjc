@@ -56,8 +56,8 @@
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
             Py_CLEAR(values);                                                            \
+            values = PyObjC_ObjCToPython(encoding, &value);                              \
         PyObjC_END_WITH_GIL                                                              \
-        values = PyObjC_ObjCToPython(encoding, &value);                                  \
     }
 
 #define SET_VALUE_VALUE(name, name2, type1, encoding1, type2, encoding2)                 \
