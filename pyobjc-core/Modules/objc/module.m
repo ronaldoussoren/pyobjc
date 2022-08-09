@@ -1725,6 +1725,7 @@ static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
     int r = PyObjCRT_RegisterVectorType(PyBytes_AsString(typestr), object);
     Py_DECREF(typestr);
     if (r == -1) {
+        PyObjC_Assert(PyErr_Occurred(), NULL);
         return NULL;
     } else {
         Py_INCREF(Py_None);

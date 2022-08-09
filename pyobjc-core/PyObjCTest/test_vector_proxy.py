@@ -19,6 +19,8 @@ CASES = [
     (simd.vector_ushort3, (42, 55, 44)),
     (simd.vector_ushort4, (1, 2, 3, 4)),
     (simd.vector_int2, (1, 2)),
+    (simd.vector_int3, (1, 2, 3)),
+    (simd.vector_int4, (1, 2, 3, 4)),
     (simd.vector_int2, (-1, -2)),
     (simd.vector_uint2, (1, 2)),
     (simd.vector_uint3, (1, 2, 3)),
@@ -42,6 +44,29 @@ class TestRepythonify(TestCase):
                 self.assertIsInstance(value, simd_type)
                 self.assertEqual(value, expected)
 
+
+GKBox = objc.createStructType("GKBox", b"{GKBox=<3f><3f>}", ["boxMax", "boxMin"])
+GKQuad = objc.createStructType("GKQuad", b"{GKQuad=<2f><2f>}", ["quadMax", "quadMin"])
+MDLAxisAlignedBoundingBox = objc.createStructType(
+    "MDLAxisAlignedBoundingBox",
+    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+    ["maxBounds", "minBounds"],
+)
+MDLVoxelIndexExtent = objc.createStructType(
+    "MDLVoxelIndexExtent",
+    b"{_MDLVoxelIndexExtent=<4i><4i>}",
+    ["maximumExtent", "minimumExtent"],
+)
+MPSAxisAlignedBoundingBox = objc.createStructType(
+    "MPSAxisAlignedBoundingBox",
+    b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+    ["max", "min"],
+)
+MPSImageHistogramInfo = objc.createStructType(
+    "MPSImageHistogramInfo",
+    b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
+    ["numberOfHistogramEntries", "histogramForAlpha", "minPixelValue", "maxPixelValue"],
+)
 
 objc.registerMetaDataForSelector(
     b"OC_Vector", b"getVectorFloat3", {"full_signature": b"<3f>@:"}
@@ -83,21 +108,62 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"OC_Vector", b"getVectorInt2", {"full_signature": b"<2i>@:"}
 )
-
-"""
-GET_VALUE(getGKBox, GKBox, ((GKBox){{1.5, 2.5, 3.5}, {4.5, 5.5, 6.5}}))
-GET_VALUE(getGKQuad, GKQuad, ((GKQuad){{7.5, 8.5}, {9.5, 10.5}}))
-GET_VALUE(getMDLAxisAlignedBoundingBox, MDLAxisAlignedBoundingBox,
-GET_VALUE(getMDLVoxelIndexExtent, MDLVoxelIndexExtent,
-GET_VALUE(getMPSAxisAlignedBoundingBox, MPSAxisAlignedBoundingBox,
-GET_VALUE(getMPSImageHistogramInfo, MPSImageHistogramInfo,
-GET_VALUE(getMatrixDouble4x4, matrix_double4x4,
-GET_VALUE(getMatrixFloat2x2, matrix_float2x2,
-GET_VALUE(getMatrixFloat3x3, matrix_float3x3,
-GET_VALUE(getMatrixFloat4x4, matrix_float4x4,
-GET_VALUE(getSimdFloat4x4, simd_float4x4,
-GET_VALUE(getSimdQautf, simd_quatf, ((simd_quatf){{-420.5, -421.5, -422.5}}))
-"""
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"getGKBox", {"full_signature": GKBox.__typestr__ + b"@:"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"getGKQuad", {"full_signature": GKQuad.__typestr__ + b"@:"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMDLAxisAlignedBoundingBox",
+    {"full_signature": MDLAxisAlignedBoundingBox.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMDLVoxelIndexExtent",
+    {"full_signature": MDLVoxelIndexExtent.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMPSAxisAlignedBoundingBox",
+    {"full_signature": MPSAxisAlignedBoundingBox.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMPSImageHistogramInfo",
+    {"full_signature": MPSImageHistogramInfo.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMatrixDouble4x4",
+    {"full_signature": simd.matrix_double4x4.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMatrixFloat2x2",
+    {"full_signature": simd.matrix_float2x2.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMatrixFloat3x3",
+    {"full_signature": simd.matrix_float3x3.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getMatrixFloat4x4",
+    {"full_signature": simd.matrix_float4x4.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getSimdFloat4x4",
+    {"full_signature": simd.simd_float4x4.__typestr__ + b"@:"},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"getSimdQuatf",
+    {"full_signature": simd.simd_quatf.__typestr__ + b"@:"},
+)
 
 
 # XXX: Add test that tries to call before overriding with 'full_signature'
@@ -222,42 +288,176 @@ class TestMethods(TestCase):
         result = oc.getVectorInt2()
         self.assertEqual(result, simd.vector_int2(42, 43))
 
+    def test_getGKBox(self):
+        self.assertResultHasType(OC_Vector.getGKBox, GKBox.__typestr__)
+        oc = OC_Vector.alloc().init()
+        result = oc.getGKBox()
+        self.assertEqual(
+            result,
+            GKBox(simd.vector_float3(1.5, 2.5, 3.5), simd.vector_float3(4.5, 5.5, 6.5)),
+        )
 
-"""
-GET_VALUE(getGKBox, GKBox, ((GKBox){{1.5, 2.5, 3.5}, {4.5, 5.5, 6.5}}))
-GET_VALUE(getGKQuad, GKQuad, ((GKQuad){{7.5, 8.5}, {9.5, 10.5}}))
-GET_VALUE(getMDLAxisAlignedBoundingBox, MDLAxisAlignedBoundingBox,
-          ((MDLAxisAlignedBoundingBox){{11.5, 12.5, 13.5}, {14.5, 15.5, 16.5}}))
-GET_VALUE(getMDLVoxelIndexExtent, MDLVoxelIndexExtent,
-          ((MDLVoxelIndexExtent){{-1, -2, -3, -4}, {-5, -6, -7, -8}}))
-GET_VALUE(getMPSAxisAlignedBoundingBox, MPSAxisAlignedBoundingBox,
-          ((MPSAxisAlignedBoundingBox){{-1.5, -2.5, -3.5}, {-5.5, -6.5, -7.5}}))
-GET_VALUE(getMPSImageHistogramInfo, MPSImageHistogramInfo,
-          ((MPSImageHistogramInfo){
-              1ULL << 40, YES, {-8.5, -9.5, -10.5, -11.5}, {-12.5, -13.5, -14.5, -15.5}}))
-GET_VALUE(getMatrixDouble4x4, matrix_double4x4,
-          ((matrix_double4x4){{{-20.5, -21.5, -22.5, -23.5},
-                               {-30.5, -31.5, -32.5, -33.5},
-                               {-40.5, -41.5, -42.5, -43.5},
-                               {-50.5, -51.5, -52.5, -53.5}}}))
-GET_VALUE(getMatrixFloat2x2, matrix_float2x2,
-          ((matrix_float2x2){{{-20.5, -21.5}, {-30.5, -31.5}}}))
-GET_VALUE(getMatrixFloat3x3, matrix_float3x3,
-          ((matrix_float3x3){{{-120.5, -121.5, -122.5},
-                              {-130.5, -131.5, -132.5},
-                              {-140.5, -141.5, -142.5}}}))
-GET_VALUE(getMatrixFloat4x4, matrix_float4x4,
-          ((matrix_float4x4){{{-220.5, -221.5, -222.5},
-                              {-230.5, -231.5, -232.5},
-                              {-240.5, -241.5, -242.5},
-                              {-250.5, -251.5, -252.5}}}))
-GET_VALUE(getSimdFloat4x4, simd_float4x4,
-          ((simd_float4x4){{{-320.5, -321.5, -322.5},
-                            {-330.5, -331.5, -332.5},
-                            {-340.5, -341.5, -342.5},
-                            {-350.5, -351.5, -352.5}}}))
-GET_VALUE(getSimdQautf, simd_quatf, ((simd_quatf){{-420.5, -421.5, -422.5}}))
-"""
+    def test_getGKQuad(self):
+        self.assertResultHasType(OC_Vector.getGKQuad, GKQuad.__typestr__)
+        oc = OC_Vector.alloc().init()
+        result = oc.getGKQuad()
+        self.assertEqual(
+            result, GKQuad(simd.vector_float2(7.5, 8.5), simd.vector_float2(9.5, 10.5))
+        )
+
+    def test_getMDLAxisAlignedBoundingBox(self):
+        self.assertResultHasType(
+            OC_Vector.getMDLAxisAlignedBoundingBox,
+            MDLAxisAlignedBoundingBox.__typestr__,
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMDLAxisAlignedBoundingBox()
+        self.assertEqual(
+            result,
+            MDLAxisAlignedBoundingBox(
+                simd.vector_float3(11.5, 12.5, 13.5),
+                simd.vector_float3(14.5, 15.5, 16.5),
+            ),
+        )
+
+    def test_getMDLVoxelIndexExtent(self):
+        self.assertResultHasType(
+            OC_Vector.getMDLVoxelIndexExtent, MDLVoxelIndexExtent.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMDLVoxelIndexExtent()
+        self.assertEqual(
+            result,
+            MDLVoxelIndexExtent(
+                simd.vector_int4(-1, -2, -3, -4), simd.vector_int4(-5, -6, -7, -8)
+            ),
+        )
+
+    def test_getMPSAxisAlignedBoundingBox(self):
+        self.assertResultHasType(
+            OC_Vector.getMPSAxisAlignedBoundingBox,
+            MPSAxisAlignedBoundingBox.__typestr__,
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMPSAxisAlignedBoundingBox()
+        self.assertEqual(
+            result,
+            MPSAxisAlignedBoundingBox(
+                simd.vector_float3(-1.5, -2.5, -3.5),
+                simd.vector_float3(-5.5, -6.5, -7.5),
+            ),
+        )
+
+    def test_getMPSImageHistogramInfo(self):
+        self.assertResultHasType(
+            OC_Vector.getMPSImageHistogramInfo, MPSImageHistogramInfo.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMPSImageHistogramInfo()
+        self.assertEqual(
+            result,
+            MPSImageHistogramInfo(
+                1 << 40,
+                True,
+                simd.vector_float4(-8.5, -9.5, -10.5, -11.5),
+                simd.vector_float4(-12.5, -13.5, -14.5, -15.5),
+            ),
+        )
+
+    def test_getMatrixDouble4x4(self):
+        self.assertResultHasType(
+            OC_Vector.getMatrixDouble4x4, simd.matrix_double4x4.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMatrixDouble4x4()
+        self.assertEqual(
+            result,
+            simd.matrix_double4x4(
+                [
+                    simd.vector_double4(-21.5, -22.5, -23.5, 0),
+                    simd.vector_double4(-30.5, -31.5, -32.5, -33.5),
+                    simd.vector_double4(-40.5, -41.5, -42.5, -43.5),
+                    simd.vector_double4(-50.5, -51.5, -52.5, -53.5),
+                ]
+            ),
+        )
+
+    def test_getMatrixFloat2x2(self):
+        self.assertResultHasType(
+            OC_Vector.getMatrixFloat2x2, simd.matrix_float2x2.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMatrixFloat2x2()
+        self.assertEqual(
+            result,
+            simd.matrix_float2x2(
+                [
+                    simd.vector_float2(-20.5, -21.5),
+                    simd.vector_float2(-30.5, -31.5),
+                ]
+            ),
+        )
+
+    def test_getMatrixFloat3x3(self):
+        self.assertResultHasType(
+            OC_Vector.getMatrixFloat3x3, simd.matrix_float3x3.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMatrixFloat3x3()
+        self.assertEqual(
+            result,
+            simd.matrix_float3x3(
+                [
+                    simd.vector_float3(-120.5, -121.5, -122.5),
+                    simd.vector_float3(-130.5, -131.5, -132.5),
+                    simd.vector_float3(-140.5, -141.5, -142.5),
+                ]
+            ),
+        )
+
+    def test_getMatrixFloat4x4(self):
+        self.assertResultHasType(
+            OC_Vector.getMatrixFloat4x4, simd.matrix_float4x4.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getMatrixFloat4x4()
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                [
+                    simd.vector_float4(-220.5, -221.5, -222.5, 0),
+                    simd.vector_float4(-230.5, -231.5, -232.5, 0),
+                    simd.vector_float4(-240.5, -241.5, -242.5, 0),
+                    simd.vector_float4(-250.5, -251.5, -252.5, 0),
+                ]
+            ),
+        )
+
+    def test_getSimdFloat4x4(self):
+        self.assertResultHasType(
+            OC_Vector.getSimdFloat4x4, simd.simd_float4x4.__typestr__
+        )
+        oc = OC_Vector.alloc().init()
+        result = oc.getSimdFloat4x4()
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                [
+                    simd.vector_float4(-320.5, -321.5, -322.5, 0),
+                    simd.vector_float4(-330.5, -331.5, -332.5, 0),
+                    simd.vector_float4(-340.5, -341.5, -342.5, 0),
+                    simd.vector_float4(-350.5, -351.5, -352.5, 0),
+                ]
+            ),
+        )
+
+    def test_getSimdQuatf(self):
+        self.assertResultHasType(OC_Vector.getSimdQuatf, simd.simd_quatf.__typestr__)
+        oc = OC_Vector.alloc().init()
+        result = oc.getSimdQuatf()
+        self.assertEqual(
+            result, simd.simd_quatf(simd.vector_float4(-420.5, -421.5, -422.5, 0))
+        )
 
 
 class TestIMP(TestCase):

@@ -10,6 +10,8 @@ import operator
 
 __all__ = (
     "simd_int2",
+    "simd_int3",
+    "simd_int4",
     "simd_uint2",
     "simd_uint3",
     "simd_double2",
@@ -34,6 +36,8 @@ __all__ = (
     "vector_ushort3",
     "vector_ushort4",
     "vector_int2",
+    "vector_int3",
+    "vector_int4",
     "vector_uint2",
     "vector_uint3",
     "vector_uchar16",
@@ -482,6 +486,25 @@ vector_ushort4 = make_type(
 vector_int2 = make_type(
     "vector_int2", 0, operator.index, 2, limitrange=limit_int, typestr=b"<2i>"
 )
+vector_int3 = make_type(
+    "vector_int3",
+    0,
+    operator.index,
+    3,
+    vector_int2,
+    limitrange=limit_int,
+    typestr=b"<3i>",
+)
+vector_int4 = make_type(
+    "vector_int4",
+    0,
+    operator.index,
+    4,
+    vector_int2,
+    vector_int3,
+    limitrange=limit_int,
+    typestr=b"<4i>",
+)
 vector_uint2 = make_type(
     "vector_uint2",
     0,
@@ -513,6 +536,8 @@ vector_uchar16 = make_type(
 )
 
 simd_int2 = vector_int2
+simd_int3 = vector_int3
+simd_int4 = vector_int4
 simd_uint2 = vector_uint2
 simd_uint3 = vector_uint3
 simd_float2 = vector_float2
@@ -529,23 +554,23 @@ simd_uchar16 = vector_uchar16
 
 
 matrix_float2x2 = objc.createStructType(
-    "matrix_float2x2", b"{matrix_float2x2=[2<2f>]}", ["columns"]
+    "matrix_float2x2", b"{_matrix_float2x2=[2<2f>]}", ["columns"]
 )
 matrix_float3x3 = objc.createStructType(
-    "matrix_float3x3", b"{matrix_float3x3=[3<3f>]}", ["columns"]
+    "matrix_float3x3", b"{_matrix_float3x3=[3<3f>]}", ["columns"]
 )
 matrix_float4x3 = objc.createStructType(
-    "matrix_float4x3", b"{matrix_float4x3=[4<3f>]}", ["columns"]
+    "matrix_float4x3", b"{_matrix_float4x3=[4<3f>]}", ["columns"]
 )
 matrix_float4x4 = objc.createStructType(
-    "matrix_float4x4", b"{matrix_float4x4=[4<3f>]}", ["columns"]
+    "matrix_float4x4", b"{_matrix_float4x4=[4<4f>]}", ["columns"]
 )
 matrix_double4x4 = objc.createStructType(
-    "matrix_double4x4", b"{matrix_double4x4=[4<3f>]}", ["columns"]
+    "matrix_double4x4", b"{_matrix_double4x4=[4<4d>]}", ["columns"]
 )
-simd_quatf = objc.createStructType("quatf", b"{simd_quatf=[<4f>]}", ["vector"])
-simd_quatd = objc.createStructType("quatf", b"{simd_quatd=[<4d>]}", ["vector"])
+simd_quatf = objc.createStructType("quatf", b"{_simd_quatf=<4f>}", ["vector"])
+simd_quatd = objc.createStructType("quatf", b"{_simd_quatd=<4d>}", ["vector"])
 
 simd_float4x4 = objc.createStructType(
-    "simd_float4x4", b"{simd_float4x4=[4<4f>]}", ["columns"]
+    "simd_float4x4", b"{_simd_float4x4=[4<4f>]}", ["columns"]
 )

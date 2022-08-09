@@ -232,6 +232,14 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     while (isdigit(*++argtype))
         ;
     type->elements[0] = PyObjCFFI_Typestr2FFI(argtype);
+    if (type->elements[0] == NULL) {
+        /* Unsupported element type */
+        // LCOV_EXCL_START
+        PyMem_Free(type);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
     for (i = 1; i < field_count; i++) {
         type->elements[i] = type->elements[0];
     }

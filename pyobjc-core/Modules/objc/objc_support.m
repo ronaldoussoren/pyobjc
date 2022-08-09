@@ -376,6 +376,8 @@ VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_int3, 3, PyLong_FromLong);
+VECTOR_TO_PYTHON(vector_int4, 4, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong);
 VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble);
@@ -391,6 +393,8 @@ VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_int3, 3, (int)PyLong_AsLong);
+VECTOR_FROM_PYTHON(vector_int4, 4, (int)PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong);
 VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble);
@@ -454,6 +458,22 @@ static struct vector_info {
                        .pytype      = NULL,
                        .as_tuple    = vector_int2_as_tuple,
                        .from_python = vector_int2_from_python,
+                   },
+                   {
+                       .encoding    = "<3i>",
+                       .size        = sizeof(vector_int3),
+                       .align       = __alignof__(vector_int3),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_int3_as_tuple,
+                       .from_python = vector_int3_from_python,
+                   },
+                   {
+                       .encoding    = "<4i>",
+                       .size        = sizeof(vector_int4),
+                       .align       = __alignof__(vector_int4),
+                       .pytype      = NULL,
+                       .as_tuple    = vector_int4_as_tuple,
+                       .from_python = vector_int4_from_python,
                    },
                    {
                        .encoding    = "<2I>",
@@ -548,7 +568,7 @@ int
 PyObjCRT_RegisterVectorType(const char* typestr, PyObject* pytype)
 {
     struct vector_info* info = vector_lookup(typestr);
-    if (info == NULL) {
+    if (PyErr_Occurred()) {
         return -1;
     }
 
@@ -2167,7 +2187,7 @@ pythonify_c_value(const char* type, void* datum)
 
     case _C_VECTOR_B: {
         struct vector_info* info = vector_lookup(type);
-        if (info == NULL) {
+        if (info->size == -1) {
             return NULL;
         }
         PyObject* args = info->as_tuple(datum);
@@ -3019,7 +3039,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
     case _C_VECTOR_B: {
         struct vector_info* info = vector_lookup(type);
-        if (info == NULL) {
+        if (info->size == -1) {
             return -1;
         }
         return info->from_python(argument, datum);

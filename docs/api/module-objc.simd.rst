@@ -317,6 +317,26 @@ does not support named accessors to elements.
 
    .. versionadded: 9.0
 
+.. class:: vector_int3
+
+   A vector of 3 integer values. In C these values
+   are C *int* values.
+
+   The values of elements of the vector are automatically
+   restricted to the range of a C *int*.
+
+   .. versionadded: 9.0
+
+.. class:: vector_int4
+
+   A vector of 4 integer values. In C these values
+   are C *int* values.
+
+   The values of elements of the vector are automatically
+   restricted to the range of a C *int*.
+
+   .. versionadded: 9.0
+
 .. class:: vector_uint2
 
    A vector of 2 integer values. In C these values

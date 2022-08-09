@@ -138,7 +138,7 @@ GET_VALUE(getSimdFloat4x4, simd_float4x4,
                             {-330.5, -331.5, -332.5},
                             {-340.5, -341.5, -342.5},
                             {-350.5, -351.5, -352.5}}}))
-GET_VALUE(getSimdQautf, simd_quatf, ((simd_quatf){{-420.5, -421.5, -422.5}}))
+GET_VALUE(getSimdQuatf, simd_quatf, ((simd_quatf){{-420.5, -421.5, -422.5}}))
 
 SET_VALUE_VALUE(setVectorFloat3, andFloat3, simd_float3, "<3f>", simd_float3, "<3f>")
 SET_VALUE_VALUE(setVectorFloat3, andInt4, simd_float3, "<3f>", simd_int4, "<4i>")
