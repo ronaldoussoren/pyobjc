@@ -387,3 +387,25 @@ class TestReboundMethod(TestCase):
 
         f = Foo()
         f.alloc().init()
+
+
+class TestReplaceMethod(TestCase):
+    def test_replace_method(self):
+        # GH #479
+        NSAppleScript = objc.lookUpClass("NSAppleScript")
+        o = NSAppleScript.alloc().initWithSource_("tell application Safari to quit")
+        self.assertIsNot(o, None)
+
+        v = o.source()
+        self.assertIsInstance(v, str)
+
+        # In some applications it is useful to replace an Objective-C method
+        # by a property definition, like so:
+        NSAppleScript.source = property(
+            lambda self: self.pyobjc_instanceMethods.source()
+        )
+
+        v2 = o.source
+        self.assertIsInstance(v, str)
+
+        self.assertEqual(v, v2)

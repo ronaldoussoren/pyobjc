@@ -8,6 +8,9 @@ Version 8.5.1
 
 * #489: Fix incompatibility with Python 3.11
 
+* #479: Revert change that made it impossible to replace a method
+        with a property.
+
 Version 8.5
 -----------
 
