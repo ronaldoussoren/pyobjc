@@ -892,6 +892,10 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
         pass
 
     @skipUnless(0, "python unittest not relevant for archiving")
+    def test_evil_class_mutating_dict(self):
+        pass
+
+    @skipUnless(0, "python unittest not relevant for archiving")
     def test_buffers_numpy(self):
         pass
 
