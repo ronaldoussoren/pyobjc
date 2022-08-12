@@ -31,3 +31,7 @@ class TestITLibrary(TestCase):
 
         self.assertEqual(iTunesLibrary.ITLibInitOptionNone, 0)
         self.assertEqual(iTunesLibrary.ITLibInitOptionLazyLoadData, 1)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(iTunesLibrary.ITLibraryDidChangeNotification, str)

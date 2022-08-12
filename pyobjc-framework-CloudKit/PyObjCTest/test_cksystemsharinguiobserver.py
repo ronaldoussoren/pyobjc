@@ -23,28 +23,3 @@ class TestCKSystemSharingUIObserver(TestCase):
             0,
             b"v@@",
         )
-
-        self.assertResultIsBlock(
-            CloudKit.CKSystemSharingUIObserver.systemUIDidSaveShareBlock, b"v@@@"
-        )
-        self.assertArgIsBlock(
-            CloudKit.CKSystemSharingUIObserver.setSystemUIDidSaveShareBlock_, 0, b"v@@@"
-        )
-
-        self.assertResultIsBlock(
-            CloudKit.CKSystemSharingUIObserver.systemUIDidSaveShareBlock, b"v@@@"
-        )
-        self.assertArgIsBlock(
-            CloudKit.CKSystemSharingUIObserver.setSystemUIDidSaveShareBlock_,
-            0,
-            b"v@@@",
-        )
-
-        self.assertResultIsBlock(
-            CloudKit.CKSystemSharingUIObserver.systemUIDidStopSharingBlock, b"v@@"
-        )
-        self.assertArgIsBlock(
-            CloudKit.CKSystemSharingUIObserver.setSystemUIDidStopSharingBlock_,
-            0,
-            b"v@@",
-        )

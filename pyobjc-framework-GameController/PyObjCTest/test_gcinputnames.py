@@ -54,11 +54,6 @@ class TestGCInputNames(TestCase):
         self.assertIsTypedEnum(GameController.GCInputAxisName, str)
         self.assertIsTypedEnum(GameController.GCInputDirectionPadName, str)
 
-        self.assertIsTypedEnum(GameController.GCInputButtonL4, str)
-        self.assertIsTypedEnum(GameController.GCInputButtonL5, str)
-        self.assertIsTypedEnum(GameController.GCInputButtonR4, str)
-        self.assertIsTypedEnum(GameController.GCInputButtonR5, str)
-
     @min_sdk_level("13.0")
     def test_protocols(self):
         pass

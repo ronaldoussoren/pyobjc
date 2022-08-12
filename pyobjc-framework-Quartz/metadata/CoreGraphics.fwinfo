@@ -503,6 +503,10 @@
     }
    },
    "CGColorSpaceCreateCalibratedGray": {
+    "args": {
+     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -535,6 +539,12 @@
     }
    },
    "CGColorSpaceCreateCalibratedRGB": {
+    "args": {
+     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "3": { "type_override": "^d", "c_array_of_fixed_length": 9, "type_modifier": "n" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -565,6 +575,11 @@
     }
    },
    "CGColorSpaceCreateLab": {
+    "args": {
+     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "type_override": "^d", "c_array_of_fixed_length": 4, "type_modifier": "n" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -1351,7 +1366,7 @@
    "CGFontCreatePostScriptEncoding": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 256, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
@@ -3444,6 +3459,12 @@
     }
    },
    "CGColorSpaceCreateCalibratedRGB": {
+    "args": {
+     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "3": { "type_override": "^d", "c_array_of_fixed_length": 9, "type_modifier": "n" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -3483,6 +3504,11 @@
     }
    },
    "CGColorSpaceCreateLab": {
+    "args": {
+     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "type_override": "^d", "c_array_of_fixed_length": 4, "type_modifier": "n" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -5135,7 +5161,8 @@
    },
    "CGFontCreatePostScriptEncoding": {
     "args": {
-     "0": {}
+     "0": {},
+     "1": { "type_override": "^d", "c_array_of_fixed_length": 256, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true

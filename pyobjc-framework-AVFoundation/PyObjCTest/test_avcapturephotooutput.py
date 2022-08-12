@@ -11,3 +11,11 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoSettings.setHighResolutionPhotoEnabled_, 0
         )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.preservesLivePhotoCaptureSuspendedOnSessionStop
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
+            0,
+        )

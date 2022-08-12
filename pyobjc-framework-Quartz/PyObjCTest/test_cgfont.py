@@ -159,6 +159,8 @@ class TestCGFont(TestCase):
         if psfont is not None:
             self.assertIsInstance(psfont, Quartz.CFDataRef)
 
+        self.assertArgIsIn(Quartz.CGFontCreatePostScriptEncoding, 1)
+        self.assertArgIsFixedSize(Quartz.CGFontCreatePostScriptEncoding, 1, 256)
         self.assertResultIsCFRetained(Quartz.CGFontCreatePostScriptEncoding)
         glyph_map = glyphs + [0] * (256 - len(glyphs))
         psfont = Quartz.CGFontCreatePostScriptEncoding(font, glyph_map)

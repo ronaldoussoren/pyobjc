@@ -48,10 +48,11 @@ class TestMTLFXSpatialScalerHelper(MetalFX.NSObject):
 class TestMTLFXSpatialScaler(TestCase):
     def test_constants(self):
         self.assertIsEnumType(MetalFX.MTLFXSpatialScalerVersion)
+
         self.assertIsEnumType(MetalFX.MTLFXSpatialScalerColorProcessingMode)
-        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingMode_Perceptual, 0)
-        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingMode_Linear, 1)
-        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingMode_HDR, 2)
+        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModePerceptual, 0)
+        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeLinear, 1)
+        self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeHDR, 2)
 
     def test_protocols(self):
         self.assertProtocolExists("MTLFXSpatialScaler")

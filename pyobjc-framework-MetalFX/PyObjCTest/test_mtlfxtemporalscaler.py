@@ -77,6 +77,12 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def inputContentMaxScale(self):
         return 1
 
+    def isDepthReversed(self):
+        return 1
+
+    def setDepthReversed_(self, a):
+        pass
+
 
 class TestMTLFXTemporalScaler(TestCase):
     def test_protocols(self):
@@ -152,6 +158,8 @@ class TestMTLFXTemporalScaler(TestCase):
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.inputContentMaxScale, objc._C_FLT
         )
+        self.assertResultIsBOOL(TestMTLFXTemporalScalerHelper.isDepthReversed)
+        self.assertArgIsBOOL(TestMTLFXTemporalScalerHelper.setDepthReversed_, 0)
 
     def test_methods(self):
         self.assertResultIsBOOL(

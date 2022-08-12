@@ -14216,7 +14216,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float3x3=?}",
+       "typestr": "{_matrix_float3x3=[3<3f>]}",
        "typestr_special": true
       },
       "selector": "intrinsicMatrix",
@@ -14236,7 +14236,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x3=?}",
+       "typestr": "{_matrix_float4x3=[4<3f>]}",
        "typestr_special": true
       },
       "selector": "extrinsicMatrix",
@@ -14291,7 +14291,7 @@
        "readonly"
       ],
       "name": "intrinsicMatrix",
-      "typestr": "{_matrix_float3x3=?}",
+      "typestr": "{_matrix_float3x3=[3<3f>]}",
       "typestr_special": true
      },
      {
@@ -14309,7 +14309,7 @@
        "readonly"
       ],
       "name": "extrinsicMatrix",
-      "typestr": "{_matrix_float4x3=?}",
+      "typestr": "{_matrix_float4x3=[4<3f>]}",
       "typestr_special": true
      },
      {

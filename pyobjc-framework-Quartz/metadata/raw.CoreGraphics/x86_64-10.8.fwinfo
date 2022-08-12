@@ -1338,11 +1338,11 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "blackPoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "gamma",
@@ -1358,19 +1358,19 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "blackPoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "gamma",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "matrix",
-      "typestr": "[9d]"
+      "typestr": "^d"
      }
     ],
     "retval": {
@@ -1462,15 +1462,15 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "blackPoint",
-      "typestr": "[3d]"
+      "typestr": "^d"
      },
      {
       "name": "range",
-      "typestr": "[4d]"
+      "typestr": "^d"
      }
     ],
     "retval": {
@@ -6240,7 +6240,7 @@
      },
      {
       "name": "encoding",
-      "typestr": "[256S]"
+      "typestr": "^S"
      }
     ],
     "retval": {

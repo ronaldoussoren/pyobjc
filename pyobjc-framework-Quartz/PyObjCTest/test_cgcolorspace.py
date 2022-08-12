@@ -114,6 +114,11 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_709_HLG, str)
 
     def testFunctions(self):
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedGray, 0)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedGray, 0, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedGray, 1)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedGray, 1, 3)
+
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateDeviceGray)
         self.assertIsInstance(
             Quartz.CGColorSpaceCreateDeviceGray(), Quartz.CGColorSpaceRef
@@ -133,6 +138,15 @@ class TestCGColorSpace(TestCase):
         csp = Quartz.CGColorSpaceCreateCalibratedGray((0, 0, 0), (1, 1, 1), 0.8)
         self.assertIsInstance(csp, Quartz.CGColorSpaceRef)
 
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedRGB, 0)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedRGB, 0, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedRGB, 1)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedRGB, 1, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedRGB, 2)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedRGB, 2, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedRGB, 3)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedRGB, 3, 9)
+
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateCalibratedRGB)
         csp = Quartz.CGColorSpaceCreateCalibratedRGB(
             (0.5, 0.5, 0.2),
@@ -142,6 +156,12 @@ class TestCGColorSpace(TestCase):
         )
         self.assertIsInstance(csp, Quartz.CGColorSpaceRef)
 
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedLab, 0)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedLab, 0, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedLab, 1)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedLab, 1, 3)
+        self.assertArgIsIn(Quartz.CGColorSpaceCreateCalibratedLab, 2)
+        self.assertArgIsFixedSize(Quartz.CGColorSpaceCreateCalibratedLab, 2, 4)
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateLab)
         csp = Quartz.CGColorSpaceCreateLab(
             (0.1, 0.1, 0.1), (0.99, 0.99, 0.99), (0.1, 0.79, 0.5, 0.99)

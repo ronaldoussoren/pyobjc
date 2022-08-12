@@ -75,3 +75,9 @@ class TestGCController(TestCase):
         self.assertIsInstance(
             GameController.GCControllerDidStopBeingCurrentNotification, str
         )
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            GameController.GCControllerUserCustomizationsDidChangeNotification, str
+        )
