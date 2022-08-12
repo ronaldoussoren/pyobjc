@@ -7,7 +7,6 @@ extern int PyObjC_setup_nsdata(void);
 extern int PyObjC_setup_nscoder(void);
 extern int PyObjC_setup_nsdecimal(PyObject* m);
 extern int PyObjC_setup_nsobject(void);
-extern int PyObjC_setup_simple_methods(void);
 extern int PyObjC_setup_simd(void);
 
 extern PyObject* _Nullable pythonify_nsdecimal(void* value);
