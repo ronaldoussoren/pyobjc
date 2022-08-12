@@ -65,7 +65,7 @@ class TestDescribeType(TestCase):
                 + objc._C_INT
                 + objc._C_STRUCT_E
             ),
-            "struct hello*",
+            "hello*",
         )
 
         _ = objc.createOpaquePointerType("NamedPointer", b"^{NamedTestPointer1=}")
@@ -104,7 +104,7 @@ class TestDescribeType(TestCase):
                 + objc._C_INT
                 + objc._C_STRUCT_E
             ),
-            "struct name",
+            "name",
         )
         self.assertEqual(
             mod.describe_type(
@@ -115,7 +115,7 @@ class TestDescribeType(TestCase):
                 + objc._C_INT
                 + objc._C_STRUCT_E
             ),
-            "struct name",
+            "name",
         )
 
         _ = objc.createStructType(
