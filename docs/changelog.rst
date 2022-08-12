@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.5.1
+-------------
+
+* #489: Fix incompatibility with Python 3.11
+
 Version 8.5
 -----------
 
