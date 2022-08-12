@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "8.5"
+VERSION = "8.5.1"
 
 setup(
     name="pyobjc-framework-libdispatch",
