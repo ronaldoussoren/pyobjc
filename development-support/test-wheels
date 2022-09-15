@@ -61,6 +61,7 @@ def main():
                     [
                         interpreter,
                         os.path.join(os.path.dirname(__file__), "wheel-smoke-test.py"),
+                        pyobjc_ver(),
                     ]
                 )
 

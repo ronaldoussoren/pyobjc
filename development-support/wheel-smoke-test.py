@@ -4,11 +4,16 @@ copy of PyObjC
 
 # NOTE: This file is not yet complete
 """
+import sys
 
 import functools
 import platform
 
-import objc  # noqa: F401
+import objc
+
+if sys.argv[1] != objc.__version__:
+    raise SystemExit("Version mismatch")
+
 from AddressBook import *  # noqa: F401, F403
 from AppleScriptKit import *  # noqa: F401, F403
 from AppleScriptObjC import *  # noqa: F401, F403
