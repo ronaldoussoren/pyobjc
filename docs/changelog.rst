@@ -13,6 +13,8 @@ Version 8.5.1
 
 * #493: Fix typo in CoreFoundation types in the CoreMedia bindings
 
+* #492: Workaround for "_Tundra" types in AVFoundation
+
 Version 8.5
 -----------
 

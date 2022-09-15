@@ -398,7 +398,13 @@ aliases = {
     "AVAssetReferenceRestrictionDefaultPolicy": "AVAssetReferenceRestrictionForbidLocalReferenceToRemote",
     "AVPlayerInterstitialEventRestrictionDefaultPolicy": "AVPlayerInterstitialEventRestrictionNone",
 }
-r = objc.registerMetaDataForSelector
+
+
+def r(cls, sel, meta):
+    objc.registerMetaDataForSelector(cls, sel, meta)
+    objc.registerMetaDataForSelector(cls + b"_Tundra", sel, meta)
+
+
 objc._updatingMetadata(True)
 try:
     r(b"AVAsset", b"canContainFragments", {"retval": {"type": "Z"}})
