@@ -276,6 +276,21 @@ class TestNSDocument(TestCase):
             b"v@",
         )
 
+        self.assertResultIsBOOL(
+            AppKit.NSDocument.relinquishPresentedItemToReader_, 0, b"v@?"
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSDocument.relinquishPresentedItemToWriter_, 0, b"v@?"
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSDocument.savePresentedItemChangesWithCompletionHandler_, 0, b"v@"
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSDocument.accommodatePresentedItemDeletionWithCompletionHandler_,
+            0,
+            b"v@",
+        )
+
     @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertArgIsBOOL(AppKit.NSDocument.setDraft_, 0)

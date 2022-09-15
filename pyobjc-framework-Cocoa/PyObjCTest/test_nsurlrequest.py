@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
     min_sdk_level,
-    expectedFailure,
 )
 
 
@@ -76,14 +75,9 @@ class TestNSURLRequest(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLRequest.assumesHTTP3Capable)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAssumesHTTP3Capable_, 0)
 
-    @expectedFailure
-    @min_os_level("13.0")
-    def testMethods13_0_missing(self):
-        # XXX
-        self.assertResultIsBOOL(Foundation.NSURLRequest.requiresDNSSECValidation)
-
     @min_os_level("13.0")
     def testMethods13_0(self):
+        self.assertResultIsBOOL(Foundation.NSURLRequest.requiresDNSSECValidation)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setRequiresDNSSECValidation_, 0
         )
