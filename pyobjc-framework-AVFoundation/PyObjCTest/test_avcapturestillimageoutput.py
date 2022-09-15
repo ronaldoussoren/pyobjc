@@ -11,6 +11,14 @@ class TestAVCaptureStillImageOutput(TestCase):
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
+    @min_os_level("12.0")
+    def testMethodsTundra10_7(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureStillImageOutput_Tundra.captureStillImageAsynchronouslyFromConnection_completionHandler_,  # noqa: B950
+            1,
+            b"v^{opaqueCMSampleBuffer=}@",
+        )
+
     @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(

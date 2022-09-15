@@ -37,6 +37,30 @@ class TestAVCaptureOutput(TestCase):
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
+    @min_os_level("12.0")
+    def test_methodsTundra(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureVideoDataOutput_Tundra.alwaysDiscardsLateVideoFrames
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureVideoDataOutput_Tundra.setAlwaysDiscardsLateVideoFrames_,
+            0,  # noqa: B950
+        )
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureStillImageOutput_Tundra.isCapturingStillImage
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureStillImageOutput_Tundra.captureStillImageAsynchronouslyFromConnection_completionHandler_,  # noqa: B950
+            1,
+            b"v^{opaqueCMSampleBuffer=}@",
+        )
+
     def testProtocols(self):
         self.assertProtocolExists("AVCaptureVideoDataOutputSampleBufferDelegate")
         self.assertProtocolExists("AVCaptureAudioDataOutputSampleBufferDelegate")

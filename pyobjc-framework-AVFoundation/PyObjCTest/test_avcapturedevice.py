@@ -171,15 +171,74 @@ class TestAVCaptureDevice(TestCase):
         )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
 
+    @min_os_level("12.0")
+    def testMethods_Clones(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasMediaType_)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.lockForConfiguration_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVCaptureDevice_Tundra.lockForConfiguration_, 0
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.supportsAVCaptureSessionPreset_
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isConnected)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isInUseByAnotherApplication
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isSuspended)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasFlash)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isFlashModeSupported_
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasTorch)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isTorchModeSupported_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isFocusModeSupported_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isFocusPointOfInterestSupported
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isAdjustingFocus)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isExposureModeSupported_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isExposurePointOfInterestSupported
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isAdjustingExposure)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isWhiteBalanceModeSupported_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isAdjustingWhiteBalance
+        )
+
     @expectedFailure  # XXX
     @min_os_level("10.7")
     def testMethods_error_on_11(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.transportControlsSupported
+        )
 
     @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_,
+            1,
+            b"vZ",
+        )
+
+    @min_os_level("12.0")
+    def testMethodsTundra10_14(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureDevice_Tundra.requestAccessForMediaType_completionHandler_,
             1,
             b"vZ",
         )
@@ -198,37 +257,87 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
+    def testMethodsTundra10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isFlashAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchActive)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.setTorchModeOnWithLevel_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVCaptureDevice_Tundra.setTorchModeOnWithLevel_error_, 1
+        )
+
+    @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isHighPhotoQualitySupported
         )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isHighPhotoQualitySupported
+        )
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectEnabled)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isPortraitEffectEnabled
+        )
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectActive)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isPortraitEffectActive
+        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isPortraitEffectSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isPortraitEffectSupported
         )
 
     @min_os_level("12.3")
     def test_methods12_3(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setCenterStageEnabled_, 0)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isCenterStageEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.setCenterStageEnabled_, 0
+        )
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isCenterStageActive)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isCenterStageActive)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isCenterStageSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isCenterStageSupported
         )
 
     @min_os_level("13.0")
     def testMethods13_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isContinuityCamera)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isContinuityCamera
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightEnabled)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightEnabled
+        )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.setStudioLightEnabled_, 0
         )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.setStudioLightEnabled_, 0
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightActive)
         self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightActive
+        )
+        self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isStudioLightSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightSupported
         )

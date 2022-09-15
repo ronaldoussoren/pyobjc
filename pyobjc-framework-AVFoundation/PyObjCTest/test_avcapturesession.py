@@ -92,6 +92,48 @@ class TestAVCaptureSession(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
 
+    @min_os_level("12.0")
+    def test_methodsTundra(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureSession_Tundra.canSetSessionPreset_
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddInput_)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddOutput_)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddConnection_)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.isRunning)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureConnection_Tundra.isEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureConnection_Tundra.setEnabled_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureConnection_Tundra.isActive)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.isVideoMirroringSupported
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureConnection_Tundra.isVideoMirrored)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.automaticallyAdjustsVideoMirroring
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.setAutomaticallyAdjustsVideoMirroring_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.isVideoOrientationSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.isVideoFieldModeSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection_Tundra.isVideoMinFrameDurationSupported
+        )
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel_Tundra.isEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel_Tundra.setEnabled_, 0)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel_Tundra.isEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel_Tundra.setEnabled_, 0)
+
     @expectedFailure
     @min_os_level("11.0")
     def testMethods11_0(self):

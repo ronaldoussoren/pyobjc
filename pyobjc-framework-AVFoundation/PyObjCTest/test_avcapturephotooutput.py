@@ -11,11 +11,24 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoSettings.setHighResolutionPhotoEnabled_, 0
         )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings_Tundra.isHighResolutionPhotoEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings_Tundra.setHighResolutionPhotoEnabled_, 0
+        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVCapturePhotoSettings.preservesLivePhotoCaptureSuspendedOnSessionStop
         )
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoSettings.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
+            0,
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings_Tundra.preservesLivePhotoCaptureSuspendedOnSessionStop
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings_Tundra.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
             0,
         )

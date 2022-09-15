@@ -14,6 +14,13 @@ class TestAVCaptureFileOutput(TestCase):
             AVFoundation.AVCaptureFileOutput.isRecordingPaused
         )  # noqa: B950
 
+    @min_os_level("12.0")
+    def test_methodsTundra(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
+        )  # noqa: B950
+
     def testProtocols(self):
         self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
         self.assertProtocolExists("AVCaptureFileOutputDelegate")
@@ -28,7 +35,14 @@ class TestAVCaptureFileOutput(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.isPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled
         )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput_Tundra.isPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled
+        )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.setPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled_,
+            0,
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput_Tundra.setPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled_,
             0,
         )
