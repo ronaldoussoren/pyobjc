@@ -11,6 +11,8 @@ Version 8.5.1
 * #479: Revert change that made it impossible to replace a method
         with a property.
 
+* #493: Fix typo in CoreFoundation types in the CoreMedia bindings
+
 Version 8.5
 -----------
 

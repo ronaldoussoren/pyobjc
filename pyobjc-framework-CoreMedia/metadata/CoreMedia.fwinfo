@@ -9,7 +9,7 @@
   },
   "cftypes": {
    "CMBlockBufferRef": {
-    "typestr": "^{opaqueCMBlockBuffer=}",
+    "typestr": "^{OpaqueCMBlockBuffer=}",
     "gettypeid_func": "CMBlockBufferGetTypeID"
    },
    "CMFormatDescriptionRef": {
@@ -29,7 +29,7 @@
     "gettypeid_func": "CMSampleBufferGetTypeID"
    },
    "CMTimebaseRef": {
-    "typestr": "^{opaqueCMTimebase=}",
+    "typestr": "^{OpaqueCMTimebase=}",
     "gettypeid_func": "CMTimebaseGetTypeID"
    },
    "CMSimpleQueueef": {
@@ -37,7 +37,7 @@
     "gettypeid_func": "CMSimpleQueueetTypeID"
    },
    "CMClockRef": {
-    "typestr": "^{opaqueCMClock=}",
+    "typestr": "^{OpaqueCMClock=}",
     "gettypeid_func": "CMClockGetTypeID"
    },
    "CMSampleBufferrRef": {
@@ -45,7 +45,7 @@
     "gettypeid_func": "CMSampleBufferrGetTypeID"
    },
    "CMMemoryPoolRef": {
-    "typestr": "^{opaqueCMMemoryPool=}",
+    "typestr": "^{OpaqueCMMemoryPool=}",
     "gettypeid_func": "CMMemoryPoolGetTypeID"
    }
   },

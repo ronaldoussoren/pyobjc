@@ -1564,17 +1564,17 @@ aliases = {
 }
 cftypes = [
     ("CMBufferQueueRef", b"^{opaqueCMBufferQueue=}", "CMBufferQueueGetTypeID", None),
-    ("CMMemoryPoolRef", b"^{opaqueCMMemoryPool=}", "CMMemoryPoolGetTypeID", None),
+    ("CMMemoryPoolRef", b"^{OpaqueCMMemoryPool=}", "CMMemoryPoolGetTypeID", None),
     (
         "CMFormatDescriptionRef",
         b"^{opaqueCMFormatDescription=}",
         "CMFormatDescriptionGetTypeID",
         None,
     ),
-    ("CMTimebaseRef", b"^{opaqueCMTimebase=}", "CMTimebaseGetTypeID", None),
+    ("CMTimebaseRef", b"^{OpaqueCMTimebase=}", "CMTimebaseGetTypeID", None),
     ("CMSimpleQueueRef", b"^{opaqueCMSimpleQueue=}", "CMSimpleQueueGetTypeID", None),
-    ("CMClockRef", b"^{opaqueCMClock=}", "CMClockGetTypeID", None),
-    ("CMBlockBufferRef", b"^{opaqueCMBlockBuffer=}", "CMBlockBufferGetTypeID", None),
+    ("CMClockRef", b"^{OpaqueCMClock=}", "CMClockGetTypeID", None),
+    ("CMBlockBufferRef", b"^{OpaqueCMBlockBuffer=}", "CMBlockBufferGetTypeID", None),
     ("CMSimpleQueueef", b"^{opaqueCMSimpleQueue}", "CMSimpleQueueetTypeID", None),
     ("CMSampleBufferRef", b"^{opaqueCMSampleBuffer=}", "CMSampleBufferGetTypeID", None),
     (
