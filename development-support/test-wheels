@@ -41,6 +41,7 @@ def main():
                         DIST_DIR,
                         "--no-index",
                         "--no-cache-dir",
+                        "--only-binary", ":all:",
                         f"pyobjc=={pyobjc_ver()}",
                     ]
                 ).decode("utf-8")
