@@ -166,6 +166,15 @@ wrappers.
       Asserts that the callable has metadata that indicates that the argument
       *argno* is a null terminated array.
 
+   .. method:: assertArgIsIDLike(method, argno[, message])
+
+      Asserts that the type of argument *argno* is ``_C_ID``, or a known
+      CoreFoundation type encoding.
+
+   .. method:: resultArgIsIDLike(method[, message])
+
+      Asserts that the type of the return value is ``_C_ID``, or a known
+      CoreFoundation type encoding.
 
    .. method:: assertResultIsVariableSize(method[, message])
 

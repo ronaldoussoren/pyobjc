@@ -37,6 +37,12 @@ Version 9.0a1
   Both changes should require no changes to scripts, unless code relies on the
   particular ``__name__`` of a type.
 
+* The extension API ("pyobjc-api.h") now has nullability annotations, which may lead to compilation
+  errors or warnings when compiling 3th-party extensions using this API.
+
+* The extension API ("pyobjc-api.h") has a changed interface for creating method IMPs, because
+  of this extensions for older versions of PyObjC cannot be used with PyObjC 9.
+
 * #416: PyObjC 9.0 requires Python 3.7 or later
 
 * #384: Remove support for BridgeSupport files
@@ -103,6 +109,26 @@ Version 9.0a1
   encoding extracted from the Objective-C runtime when one or more types have
   an empty encoding in the Objective-C runtime (such as the SIMD types mentioned
   earlier)
+
+* The Objective-C proxy for Python methods that require a custom
+  helper (instead of using libffi) now use ``imp_implementationWithBlock``.
+
+* #492: For a number of classes in ``AVFoundation``  the system actually uses
+  instances from a parallel class hierarchy with ``_Tundra`` as a suffix of the
+  class name.
+
+  Updated the metadata generator to automatically register the same metadata updates
+  for these classes as for the original classes.
+
+* #493: Fix typos in CoreMedioIO metadata for CoreFoundation types
+
+* #495: Added two new assertions to ``PyObjCTools.TestSupport.TestCase``:
+
+  - ``assertArgIsIDLike``
+  - ``assertResultIsIDLike``
+
+  These assert that the type of an argument or return value is
+  a Objective-C or CoreFoundation object, or a pointer to one.
 
 
 Version 8.6
