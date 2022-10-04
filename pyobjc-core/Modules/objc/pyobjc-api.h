@@ -78,8 +78,8 @@ struct pyobjc_api {
         const char* _Nonnull, const char* _Nonnull,
         PyObject* _Nullable (*_Nonnull pythonify)(void* _Nonnull),
         int (*_Nonnull depythonify)(PyObject* _Nonnull, void* _Nonnull));
-    void (*_Nonnull unsupported_method_imp)(void* _Nonnull, void* _Nonnull,
-                                            void* _Nonnull* _Nonnull, void* _Nonnull);
+    IMP _Nullable (*_Nonnull unsupported_method_imp)(PyObject* _Nonnull,
+                                                     PyObject* _Nonnull);
     PyObject* _Nullable (*_Nonnull unsupported_method_caller)(
         PyObject* _Nonnull, PyObject* _Nonnull, PyObject* _Nonnull const* _Nonnull,
         size_t);

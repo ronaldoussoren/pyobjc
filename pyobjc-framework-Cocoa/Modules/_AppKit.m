@@ -2,6 +2,7 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
+#include <objc/runtime.h>
 
 #import <AppKit/AppKit.h>
 

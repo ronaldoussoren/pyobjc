@@ -83,7 +83,7 @@ extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass,
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be implemented in Python.
  */
-extern IMP PyObjCUnsupportedMethod_IMP(PyObject* _Nonnullcallable,
+extern IMP PyObjCUnsupportedMethod_IMP(PyObject* _Nonnull callable,
                                        PyObjCMethodSignature* _Nonnull methinfo);
 
 /*!
