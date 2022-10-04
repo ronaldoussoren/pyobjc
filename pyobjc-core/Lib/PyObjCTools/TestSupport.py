@@ -325,6 +325,8 @@ _typealias = {}
 _typealias[objc._C_LNG_LNG] = objc._C_LNG
 _typealias[objc._C_ULNG_LNG] = objc._C_ULNG
 
+_idlike_cache = set()
+
 
 class TestCase(_unittest.TestCase):
     """
@@ -405,6 +407,58 @@ class TestCase(_unittest.TestCase):
                 or "%s is not a variadic function with a "
                 "null-terminated list of arguments" % (method,)
             )
+
+    def assertArgIsIDLike(self, method, argno, message=None):
+        global _idlike_cache
+
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        tp = info["arguments"][argno + offset].get("type")
+
+        if tp in {b"@", b"^@"}:
+            return
+
+        if tp in _idlike_cache:
+            return
+        elif b"^" + tp in _idlike_cache:
+            return
+
+        # Assume that tests are supposed to pass,
+        # our cache may be out of date
+        _idlike_cache = set(objc._idSignatures())
+        if tp in _idlike_cache:
+            return
+        elif b"^" + tp in _idlike_cache:
+            return
+
+        self.fail(message or "argument %d of %r is not IDLike" % (argno, method))
+
+    def assertResultIsIDLike(self, method, message=None):
+        global _idlike_cache
+
+        info = method.__metadata__()
+        tp = info["retval"].get("type")
+
+        if tp in {b"@", b"^@"}:
+            return
+
+        if tp in _idlike_cache:
+            return
+        elif b"^" + tp in _idlike_cache:
+            return
+
+        # Assume that tests are supposed to pass,
+        # our cache may be out of date
+        _idlike_cache = set(objc._idSignatures())
+        if tp in _idlike_cache:
+            return
+        elif b"^" + tp in _idlike_cache:
+            return
+
+        self.fail(message or f"result of {method!r} is not IDLike")
 
     def assertArgIsNullTerminated(self, method, argno, message=None):
         if isinstance(method, objc.selector):
