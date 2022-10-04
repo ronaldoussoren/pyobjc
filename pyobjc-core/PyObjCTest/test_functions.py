@@ -92,7 +92,7 @@ class TestFunctions(TestCase):
             NSRectClipList.__doc__,  # noqa: F821
             textwrap.dedent(
                 """\
-            void NSRectClipList(in struct CGRect* arg0, long long arg1);
+            void NSRectClipList(in CGRect* arg0, long long arg1);
 
             arg0: array with length in arg1"""
             ),

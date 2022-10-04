@@ -17,6 +17,9 @@ extern BOOL PyObjC_UpdatingMetaData;
 
 extern int PyObjC_InitSuperCallRegistry(void);
 
+typedef IMP _Nullable (*PyObjC_MakeIMPBlockFunc)(
+    PyObject* _Nonnull callable, PyObjCMethodSignature* _Nonnull methinfo);
+
 /*!
  * @function PyObjC_RegisterMethodMapping
  * @abstract Register a mapping for a specific method
@@ -29,8 +32,8 @@ extern int PyObjC_InitSuperCallRegistry(void);
  * @result Returns 0 on success, -1 on error.
  */
 extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
-                                        PyObjC_CallFunc       call_to_objc,
-                                        PyObjCFFI_ClosureFunc call_to_python);
+                                        PyObjC_CallFunc         call_to_objc,
+                                        PyObjC_MakeIMPBlockFunc call_to_python);
 
 /*!
  * @function PyObjC_RegisterSignatureMapping
@@ -41,7 +44,7 @@ extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
  * @result Returns 0 on success, -1 on failure
  */
 extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_super,
-                                           PyObjCFFI_ClosureFunc call_to_python);
+                                           PyObjC_MakeIMPBlockFunc call_to_python);
 
 /*!
  * @function PyObjC_FindCallFunc
@@ -80,8 +83,8 @@ extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass,
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be implemented in Python.
  */
-extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void* _Nullable* _Nullable,
-                                        void*);
+extern IMP PyObjCUnsupportedMethod_IMP(PyObject* _Nonnullcallable,
+                                       PyObjCMethodSignature* _Nonnull methinfo);
 
 /*!
  * @constant PyOBjCUnsupportedMethod_Caller

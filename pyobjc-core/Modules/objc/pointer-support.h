@@ -13,9 +13,10 @@ extern int PyObjCPointerWrapper_Register(const char* type_name, const char*,
                                          PyObjCPointerWrapper_FromPythonFunc depythonify);
 
 extern int PyObjCPointerWrapper_RegisterID(const char* name, const char*);
+extern PyObject* _Nullable PyObjCPointer_GetIDEncodings(void);
 
 extern int PyObjCPointerWrapper_RegisterCF(const char*);
-extern PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char*, void*);
+extern PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char*, const void*);
 
 extern int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);
 extern int PyObjCPointerWrapper_Init(void);

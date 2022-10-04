@@ -20,15 +20,15 @@ IS_AUTHORIZATIONITEM(const char* typestr)
     return strncmp(typestr, "{_AuthorizationItem=^cL^vI}", 27) == 0;
 }
 
-PyObject* _Nullable pythonify_authorizationitem(void* _value)
+PyObject* _Nullable pythonify_authorizationitem(const void* _value)
 {
-    struct auth_item_set* value = (struct auth_item_set*)_value;
-    PyObject*             result;
-    const char*           oc_typestr;
-    Py_ssize_t            pack;
-    int                   have_tuple = 0;
-    PyObject*             t;
-    int                   r;
+    const struct auth_item_set* value = (const struct auth_item_set*)_value;
+    PyObject*                   result;
+    const char*                 oc_typestr;
+    Py_ssize_t                  pack;
+    int                         have_tuple = 0;
+    PyObject*                   t;
+    int                         r;
 
     result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, &oc_typestr,
                                            &pack);

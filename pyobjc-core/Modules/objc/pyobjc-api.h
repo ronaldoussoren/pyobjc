@@ -31,6 +31,8 @@ typedef void Py_buffer;
 
 #include <objc/objc-runtime.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Current API version, increase whenever:
  * - Semantics of current functions change
  * - Functions are removed
@@ -39,7 +41,7 @@ typedef void Py_buffer;
  * can be used for detecting if a function has been added.
  */
 #ifndef PYOBJC_API_VERSION
-#define PYOBJC_API_VERSION 23
+#define PYOBJC_API_VERSION 25
 #endif
 
 #define PYOBJC_API_NAME "__C_API__"
@@ -51,54 +53,65 @@ typedef void Py_buffer;
 /*
  * Only add items to the end of this list!
  */
-typedef int(RegisterMethodMappingFunctionType)(Class, SEL,
-                                               PyObject* (*)(PyObject*, PyObject*,
-                                                             PyObject* const*, size_t),
-                                               void (*)(void*, void*, void**, void*));
+typedef int(RegisterMethodMappingFunctionType)(
+    Class, SEL,
+    PyObject* _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull,
+                                    PyObject* _Nonnull const* _Nonnull, size_t),
+    IMP _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull));
 
 struct pyobjc_api {
     int                                api_version; /* API version */
     size_t                             struct_len;  /* Length of this struct */
     RegisterMethodMappingFunctionType* register_method_mapping;
-    id (*obj_get_object)(PyObject*);
-    Class (*cls_get_class)(PyObject*);
-    int (*depythonify_python_object)(PyObject*, id*);
-    PyObject* (*id_to_python)(id);
-    void (*err_objc_to_python)(NSObject*);
-    int (*py_to_objc)(const char*, PyObject*, void*);
-    PyObject* (*objc_to_py)(const char*, void*);
-    Py_ssize_t (*sizeof_type)(const char*);
-    Class (*sel_get_class)(PyObject* sel);
-    SEL (*sel_get_sel)(PyObject* sel);
-    int (*register_pointer_wrapper)(const char*, const char*,
-                                    PyObject* (*pythonify)(void*),
-                                    int (*depythonify)(PyObject*, void*));
-    void (*unsupported_method_imp)(void*, void*, void**, void*);
-    PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject* const*,
-                                           size_t);
-    void (*err_python_to_objc_gil)(PyGILState_STATE* state);
-    int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
-    void (*free_c_array)(int, Py_buffer*);
-    int (*py_to_c_array)(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                         PyObject**, Py_buffer*);
-    PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
-    PyTypeObject* imp_type;
-    IMP (*imp_get_imp)(PyObject*);
-    SEL (*imp_get_sel)(PyObject*);
-    PyObject* (*newtransient)(id objc_object, int* cookie);
-    void (*releasetransient)(PyObject* proxy, int cookie);
-    PyObject** pyobjc_null;
-    int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict,
-                             PyObject* value, void* datum, BOOL, BOOL);
-    PyObject* (*varlistnew)(const char* tp, void* array);
-    int (*pyobjcobject_convert)(PyObject*, void*);
-    int (*register_id_alias)(const char*, const char*);
-    int (*memview_check)(PyObject*);
-    PyObject* (*memview_new)(void);
-    Py_buffer* (*memview_getbuffer)(PyObject*);
-    int (*checkargcount)(PyObject* callable, size_t min_args, size_t max_args,
-                         size_t nargsf);
-    int (*checknokwnames)(PyObject* callable, PyObject* kwnames);
+    id _Nullable (*_Nonnull obj_get_object)(PyObject* _Nonnull);
+    Class _Nullable (*_Nonnull cls_get_class)(PyObject* _Nonnull);
+    int (*_Nonnull depythonify_python_object)(PyObject* _Nonnull, id _Nullable* _Nonnull);
+    PyObject* _Nullable (*_Nonnull id_to_python)(id _Nullable);
+    void (*_Nonnull err_objc_to_python)(NSObject* _Nonnull);
+    int (*_Nonnull py_to_objc)(const char* _Nonnull, PyObject* _Nonnull, void* _Nonnull);
+    PyObject* _Nullable (*_Nonnull objc_to_py)(const char* _Nonnull,
+                                               const void* _Nonnull);
+    Py_ssize_t (*_Nonnull sizeof_type)(const char* _Nonnull);
+    Class _Nullable (*_Nonnull sel_get_class)(PyObject* _Nonnull sel);
+    SEL _Nullable (*_Nonnull sel_get_sel)(PyObject* _Nonnull sel);
+    int (*_Nonnull register_pointer_wrapper)(
+        const char* _Nonnull, const char* _Nonnull,
+        PyObject* _Nullable (*_Nonnull pythonify)(void* _Nonnull),
+        int (*_Nonnull depythonify)(PyObject* _Nonnull, void* _Nonnull));
+    void (*_Nonnull unsupported_method_imp)(void* _Nonnull, void* _Nonnull,
+                                            void* _Nonnull* _Nonnull, void* _Nonnull);
+    PyObject* _Nullable (*_Nonnull unsupported_method_caller)(
+        PyObject* _Nonnull, PyObject* _Nonnull, PyObject* _Nonnull const* _Nonnull,
+        size_t);
+    void (*_Nonnull err_python_to_objc_gil)(PyGILState_STATE* _Nonnull state);
+    int (*_Nonnull simplify_sig)(const char* signature, char* buf, size_t buflen);
+    void (*_Nonnull free_c_array)(int, Py_buffer*);
+    int (*_Nonnull py_to_c_array)(BOOL, BOOL, const char* _Nonnull, PyObject* _Nonnull,
+                                  void* _Nullable* _Nonnull, Py_ssize_t* _Nullable,
+                                  PyObject* _Nonnull* _Nonnull, Py_buffer* _Nonnull);
+    PyObject* _Nullable (*_Nonnull c_array_to_py)(const char* _Nonnull,
+                                                  const void* _Nonnull, Py_ssize_t);
+    PyTypeObject* _Nonnull imp_type;
+    IMP _Nullable (*_Nonnull imp_get_imp)(PyObject* _Nonnull);
+    SEL _Nullable (*_Nonnull imp_get_sel)(PyObject* _Nonnull);
+    PyObject* _Nullable (*_Nonnull newtransient)(id _Nullable objc_object,
+                                                 int* _Nonnull cookie);
+    void (*_Nonnull releasetransient)(PyObject* _Nonnull proxy, int cookie);
+    PyObject* _Nonnull* _Nonnull pyobjc_null;
+    int (*_Nonnull dep_c_array_count)(const char* _Nonnull type, Py_ssize_t count,
+                                      BOOL strict, PyObject* _Nonnull value,
+                                      void* _Nonnull datum, BOOL, BOOL);
+    PyObject* _Nullable (*_Nonnull varlistnew)(const char* _Nonnull tp,
+                                               void* _Nonnull array);
+    int (*_Nonnull pyobjcobject_convert)(PyObject* _Nonnull, void* _Nonnull);
+    int (*_Nonnull register_id_alias)(const char* _Nonnull, const char* _Nonnull);
+    int (*_Nonnull memview_check)(PyObject* _Nonnull);
+    PyObject* _Nullable (*_Nonnull memview_new)(void);
+    Py_buffer* _Nullable (*_Nonnull memview_getbuffer)(PyObject* _Nonnull);
+    int (*_Nonnull checkargcount)(PyObject* _Nonnull callable, size_t min_args,
+                                  size_t max_args, size_t nargsf);
+    int (*_Nonnull checknokwnames)(PyObject* _Nonnull callable,
+                                   PyObject* _Nullable kwnames);
 };
 
 #ifndef PYOBJC_BUILD
@@ -192,5 +205,7 @@ extern struct pyobjc_api objc_api;
 extern int               PyObjCAPI_Register(PyObject* module);
 
 #endif /* !PYOBJC_BUILD */
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_API_H */

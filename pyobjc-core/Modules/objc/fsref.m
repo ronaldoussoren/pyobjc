@@ -139,14 +139,14 @@ PyObjC_encode_fsref(PyObject* value, void* buffer)
     return -1;
 }
 
-PyObject* _Nullable PyObjC_decode_fsref(void* buffer)
+PyObject* _Nullable PyObjC_decode_fsref(const void* buffer)
 {
     PyObjC_FSRefObject* result = PyObject_New(PyObjC_FSRefObject, &PyObjC_FSRefType);
 
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
-    result->ref = *(FSRef*)buffer;
+    result->ref = *(const FSRef*)buffer;
     return (PyObject*)result;
 }
 

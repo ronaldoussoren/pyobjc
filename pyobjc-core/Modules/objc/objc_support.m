@@ -325,10 +325,10 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 }
 
 #define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
-    static PyObject* _Nullable ctype##_as_tuple(void* _pvalue)                           \
+    static PyObject* _Nullable ctype##_as_tuple(const void* _pvalue)                     \
     {                                                                                    \
-        ctype*    pvalue = (ctype*)_pvalue;                                              \
-        PyObject* rv     = PyTuple_New(elemcount);                                       \
+        const ctype* pvalue = (const ctype*)_pvalue;                                     \
+        PyObject*    rv     = PyTuple_New(elemcount);                                    \
         if (rv == NULL) {                                                                \
             return NULL;                                                                 \
         }                                                                                \
@@ -409,7 +409,7 @@ static struct vector_info {
     Py_ssize_t size;
     Py_ssize_t align;
     PyObject* _Nullable pytype;
-    PyObject* _Nullable (*as_tuple)(void*);
+    PyObject* _Nullable (*as_tuple)(const void*);
     int (*from_python)(PyObject*, void*);
 } gVectorInfo[] = {{
                        .encoding    = "<16C>",
@@ -1306,43 +1306,43 @@ PyObjCRT_SizeOfType(const char* start_type)
     }
 }
 
-PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* datum,
+PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, const void* datum,
                                                      BOOL alreadyRetained,
                                                      BOOL alreadyCFRetained)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
 
-    Py_ssize_t     count      = 0;
-    Py_ssize_t     sizeofitem = PyObjCRT_SizeOfType(type);
-    unsigned char* curdatum   = datum;
+    Py_ssize_t           count      = 0;
+    Py_ssize_t           sizeofitem = PyObjCRT_SizeOfType(type);
+    const unsigned char* curdatum   = datum;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
 
     switch (*type) {
     case _C_CHARPTR:
-        while (*(char**)curdatum != NULL) {
+        while (*(const char**)curdatum != NULL) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_ID:
-        while (*(id*)curdatum != NULL) {
+        while (*(const id*)curdatum != NULL) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_PTR:
-        while (*(void**)curdatum != NULL) {
+        while (*(const void**)curdatum != NULL) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_UCHR:
-        while (*(unsigned char*)curdatum != 0) {
+        while (*(const unsigned char*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
@@ -1350,36 +1350,36 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
 
     case _C_VOID:
     case _C_CHR:
-        return PyBytes_FromString((char*)curdatum);
+        return PyBytes_FromString((const char*)curdatum);
         break;
 
     case _C_CHAR_AS_TEXT:
-        return PyBytes_FromString((char*)curdatum);
+        return PyBytes_FromString((const char*)curdatum);
         break;
 
     case _C_USHT:
-        while (*(unsigned short*)curdatum != 0) {
+        while (*(const unsigned short*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_SHT:
-        while (*(short*)curdatum != 0) {
+        while (*(const short*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_UINT:
-        while (*(unsigned int*)curdatum != 0) {
+        while (*(const unsigned int*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_INT:
-        while (*(int*)curdatum != 0) {
+        while (*(const int*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
@@ -1387,7 +1387,7 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
 
     case _C_ULNG:
     case _C_ULNG_LNG:
-        while (*(unsigned long*)curdatum != 0) {
+        while (*(const unsigned long*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
@@ -1395,21 +1395,21 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
 
     case _C_LNG:
     case _C_LNG_LNG:
-        while (*(long*)curdatum != 0) {
+        while (*(const long*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_UNICHAR:
-        while (*(UniChar*)curdatum != 0) {
+        while (*(const UniChar*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
         break;
 
     case _C_CHAR_AS_INT:
-        while (*(char*)curdatum != 0) {
+        while (*(const char*)curdatum != 0) {
             count++;
             curdatum += sizeofitem;
         }
@@ -1431,14 +1431,14 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* dat
 
 /*#F Returns a tuple of objects representing the content of a C array
 of type @var{type} pointed by @var{datum}. */
-static PyObject* _Nullable pythonify_c_array(const char* type, void* datum)
+static PyObject* _Nullable pythonify_c_array(const char* type, const void* datum)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
 
-    PyObject*      ret;
-    Py_ssize_t     nitems, itemidx, sizeofitem;
-    unsigned char* curdatum;
+    PyObject*            ret;
+    Py_ssize_t           nitems, itemidx, sizeofitem;
+    const unsigned char* curdatum;
 
     nitems = atoi(type + 1);
     while (isdigit(*++type))
@@ -1473,7 +1473,7 @@ static PyObject* _Nullable pythonify_c_array(const char* type, void* datum)
 
 /*#F Returns a tuple of objects representing the content of a C structure
 of type @var{type} pointed by @var{datum}. */
-static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
+static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datum)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -2032,7 +2032,7 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 }
 
 PyObject*
-pythonify_c_value(const char* type, void* datum)
+pythonify_c_value(const char* type, const void* datum)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -2404,7 +2404,7 @@ depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 }
 
 PyObject* _Nullable /*  XXX: No longer necessary */
-    pythonify_c_return_value(const char* type, void* datum) /* XXX */
+    pythonify_c_return_value(const char* type, const void* datum) /* XXX */
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);

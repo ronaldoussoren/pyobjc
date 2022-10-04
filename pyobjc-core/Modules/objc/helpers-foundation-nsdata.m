@@ -50,56 +50,51 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
     return PyMemoryView_FromBuffer(&info);
 }
 
-static void
-imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
-                 void* callable)
+static IMP
+mkimp_NSData_bytes(PyObject*              callable,
+                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
-    id self = *(id*)args[0];
-    // SEL _meth = *(SEL*)args[1];
-    void** pretval = (void**)resp;
+    Py_INCREF(callable);
+    void* (^block)(id) = ^(id _Nullable self) {
+      PyObject* result;
+      PyObject* pyself = NULL;
+      int       cookie = 0;
 
-    PyObject* result;
-    PyObject* pyself = NULL;
-    int       cookie = 0;
+      PyGILState_STATE state = PyGILState_Ensure();
 
-    PyGILState_STATE state = PyGILState_Ensure();
+      pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL)
+          goto error;
 
-    pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL)
-        goto error;
+      PyObject* arglist[2] = {NULL, pyself};
 
-    PyObject* arglist[2] = {NULL, pyself};
+      result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      pyself = NULL;
+      if (result == NULL)
+          goto error;
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    PyObjCObject_ReleaseTransient(pyself, cookie);
-    pyself = NULL;
-    if (result == NULL)
-        goto error;
+      if (result == Py_None) {
+          Py_DECREF(result);
+          PyGILState_Release(state);
+          return NULL;
+      }
 
-    if (result == Py_None) {
-        *pretval = NULL;
-        Py_DECREF(result);
-        PyGILState_Release(state);
-        return;
-    }
+      OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
+                                                                     writable:NO];
+      if (temp == nil) {
+          goto error;
+      }
+      [temp autorelease];
+      PyGILState_Release(state);
+      return [temp buffer];
 
-    {
-        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
-                                                                       writable:NO];
-        if (temp == nil) {
-            *pretval = NULL;
-            goto error;
-        }
-        [temp autorelease];
-        *pretval = [temp buffer];
-        PyGILState_Release(state);
-    }
-    return;
-
-error:
-    PyObjCErr_ToObjCWithGILState(&state);
-    *pretval = NULL;
+  error:
+      PyObjCErr_ToObjCWithGILState(&state);
+      return NULL;
+    };
+    return imp_implementationWithBlock(block);
 }
 
 static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        method,
@@ -160,52 +155,50 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
     return result;
 }
 
-static void
-imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* resp,
-                               void** args, void* callable)
+static IMP
+mkimp_NSMutableData_mutableBytes(PyObject* callable, PyObjCMethodSignature* methinfo
+                                 __attribute__((__unused__)))
 {
-    id self = *(id*)args[0];
-    // SEL _meth = *(SEL*)args[1];
-    void**    pretval = (void**)resp;
-    PyObject* result;
-    PyObject* pyself = NULL;
-    int       cookie = 0;
+    Py_INCREF(callable);
+    void* (^block)(id) = ^(id _Nullable self) {
+      PyObject* result;
+      PyObject* pyself = NULL;
+      int       cookie = 0;
 
-    PyGILState_STATE state = PyGILState_Ensure();
+      PyGILState_STATE state = PyGILState_Ensure();
 
-    pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL)
-        goto error;
+      pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL)
+          goto error;
 
-    PyObject* arglist[2] = {NULL, pyself};
-    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    PyObjCObject_ReleaseTransient(pyself, cookie);
-    pyself = NULL;
-    if (result == NULL)
-        goto error;
+      PyObject* arglist[2] = {NULL, pyself};
+      result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      pyself = NULL;
+      if (result == NULL)
+          goto error;
 
-    if (result == Py_None) {
-        *pretval = NULL;
-        Py_DECREF(result);
-        PyGILState_Release(state);
-        return;
-    }
+      if (result == Py_None) {
+          Py_DECREF(result);
+          PyGILState_Release(state);
+          return NULL;
+      }
 
-    OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
-                                                                   writable:YES];
-    if (temp == nil) {
-        *pretval = NULL;
-        goto error;
-    }
-    [temp autorelease];
-    *pretval = [temp buffer];
-    PyGILState_Release(state);
-    return;
+      OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:result
+                                                                     writable:YES];
+      if (temp == nil) {
+          goto error;
+      }
+      [temp autorelease];
+      PyGILState_Release(state);
+      return [temp buffer];
 
-error:
-    *pretval = NULL;
-    PyObjCErr_ToObjCWithGILState(&state);
+  error:
+      PyObjCErr_ToObjCWithGILState(&state);
+      return NULL;
+    };
+    return imp_implementationWithBlock(block);
 }
 
 int
@@ -217,7 +210,7 @@ PyObjC_setup_nsdata(void)
     if (classNSData != NULL) { // LCOV_BR_EXCL_LINE
 
         if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-                classNSData, @selector(bytes), call_NSData_bytes, imp_NSData_bytes)
+                classNSData, @selector(bytes), call_NSData_bytes, mkimp_NSData_bytes)
             < 0) {
             return -1; // LCOV_EXCL_LINE
         }
@@ -227,7 +220,7 @@ PyObjC_setup_nsdata(void)
 
         if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
                 classNSMutableData, @selector(mutableBytes),
-                call_NSMutableData_mutableBytes, imp_NSMutableData_mutableBytes)
+                call_NSMutableData_mutableBytes, mkimp_NSMutableData_mutableBytes)
             < 0) {
             return -1; // LCOV_EXCL_LINE
         }

@@ -1076,7 +1076,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     }
 }
 
-PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, void* array,
+PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* array,
                                           Py_ssize_t size)
 {
     PyObject*  result;
@@ -1178,7 +1178,7 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
     return 0;
 }
 
-PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, void* array,
+PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* array,
                                            Py_ssize_t size, bool alreadyRetained,
                                            bool alreadyCFRetained)
 {

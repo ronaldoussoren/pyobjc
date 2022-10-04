@@ -183,7 +183,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 }
 
 PyObject*
-PyObjC_SockAddrToPython(void* value)
+PyObjC_SockAddrToPython(const void* value)
 {
     switch (((struct sockaddr*)value)->sa_family) {
     case AF_INET: {

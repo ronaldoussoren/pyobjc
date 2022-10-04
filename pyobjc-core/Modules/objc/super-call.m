@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* XXX: Consider using a minimal python type instead of a capsule */
 struct registry {
-    PyObjC_CallFunc       call_to_objc;
-    PyObjCFFI_ClosureFunc call_to_python;
+    PyObjC_CallFunc         call_to_objc;
+    PyObjC_MakeIMPBlockFunc make_call_to_python_block;
 };
 
 /* Dict mapping from signature-string to a 'struct registry' */
@@ -64,14 +64,14 @@ memblock_capsule_cleanup(PyObject* ptr)
  */
 int
 PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc call_to_objc,
-                             PyObjCFFI_ClosureFunc call_to_python)
+                             PyObjC_MakeIMPBlockFunc make_call_to_python_block)
 {
     struct registry* v;
     PyObject*        pyclass;
     PyObject*        entry;
     PyObject*        lst;
 
-    if (!call_to_python) {
+    if (!make_call_to_python_block) {
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterMethodMapping: all functions required");
         return -1;
@@ -98,8 +98,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         return -1;
         // LCOV_EXCL_STOP
     }
-    v->call_to_objc   = call_to_objc;
-    v->call_to_python = call_to_python;
+    v->call_to_objc              = call_to_objc;
+    v->make_call_to_python_block = make_call_to_python_block;
 
     entry = PyTuple_New(2);
     if (entry == NULL) { // LCOV_BR_EXCL_LINE
@@ -158,7 +158,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 
 int
 PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
-                                PyObjCFFI_ClosureFunc call_to_python)
+                                PyObjC_MakeIMPBlockFunc make_call_to_python_block)
 {
     struct registry* v;
     PyObject*        entry;
@@ -171,7 +171,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         return -1;
     }
 
-    if (!call_to_objc || !call_to_python) {
+    if (!call_to_objc || !make_call_to_python_block) {
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterSignatureMapping: all functions required");
         return -1;
@@ -182,8 +182,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         PyErr_NoMemory();
         return -1;
     }
-    v->call_to_objc   = call_to_objc;
-    v->call_to_python = call_to_python;
+    v->call_to_objc              = call_to_objc;
+    v->make_call_to_python_block = make_call_to_python_block;
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
     if (entry == NULL) {
@@ -339,20 +339,24 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
     return PyObjCFFI_Caller;
 }
 
+/*
+ * XXX: Ideally there'd be a function to clean up the IMP, that requires
+ *      additional state though.
+ */
 extern IMP
 PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject* imp)
 {
-    struct registry*       generic;
-    struct registry*       special;
-    SEL                    aSelector = PyObjCSelector_GetSelector(sel);
-    PyObjCFFI_ClosureFunc  func      = NULL;
-    IMP                    retval;
-    PyObjCMethodSignature* methinfo;
+    struct registry*        generic;
+    struct registry*        special;
+    SEL                     aSelector = PyObjCSelector_GetSelector(sel);
+    PyObjC_MakeIMPBlockFunc func      = NULL;
+    IMP                     retval;
+    PyObjCMethodSignature*  methinfo;
 
     if (super_class != nil) {
         special = search_special(super_class, aSelector);
         if (special) {
-            func = special->call_to_python;
+            func = special->make_call_to_python_block;
         } else if (PyErr_Occurred()) {
             return NULL;
         }
@@ -365,7 +369,7 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
         }
         generic = find_signature(sel_signature);
         if (generic != NULL) {
-            func = generic->call_to_python;
+            func = generic->make_call_to_python_block;
         } else if (PyErr_Occurred()) {
             return NULL;
         }
@@ -389,10 +393,7 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
         if (methinfo == NULL) {
             return NULL;
         }
-        retval = PyObjCFFI_MakeClosure(methinfo, func, imp);
-        if (retval != NULL) {
-            Py_INCREF(imp);
-        }
+        retval = func(imp, methinfo);
         Py_DECREF(methinfo);
         return retval;
     } else {
@@ -423,17 +424,15 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
 
 // LCOV_EXCL_START
 /* The two functions below are never called */
-void
-PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)),
-                            void* resp __attribute__((__unused__)), void** args,
-                            void* userdata __attribute__((__unused__)))
+IMP
+PyObjCUnsupportedMethod_IMP(PyObject* _Nonnull callable __attribute__((__unused__)),
+                            PyObjCMethodSignature* _Nonnull methinfo
+                            __attribute__((__unused__)))
 {
+    /* XXX: Don't particularly like using NSException here */
     @throw [NSException
         exceptionWithName:NSInvalidArgumentException
-                   reason:[NSString
-                              stringWithFormat:
-                                  @"Implementing %s from Python is not supported for %@",
-                                  sel_getName(*(SEL*)args[1]), *(id*)args[0]]
+                   reason:@"Implementing this method from Python is not supported"
                  userInfo:nil];
 }
 

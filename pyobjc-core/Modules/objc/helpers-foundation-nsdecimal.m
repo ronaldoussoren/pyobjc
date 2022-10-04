@@ -25,7 +25,7 @@ typedef struct {
 
 #define Decimal_Value(v) ((DecimalObject*)(v))->value
 
-static PyObject* _Nullable Decimal_New(NSDecimal* aDecimal);
+static PyObject* _Nullable Decimal_New(const NSDecimal* aDecimal);
 static PyObject* _Nullable decimal_repr(PyObject* self);
 static PyObject* _Nullable decimal_richcompare(PyObject* self, PyObject* other, int type);
 static void decimal_dealloc(PyObject* self);
@@ -732,7 +732,7 @@ Decimal_Convert(PyObject* self, void* val)
 }
 
 static PyObject*
-Decimal_New(NSDecimal* aDecimal)
+Decimal_New(const NSDecimal* aDecimal)
 {
     DecimalObject* result;
 
@@ -746,10 +746,10 @@ Decimal_New(NSDecimal* aDecimal)
 }
 
 PyObject*
-pythonify_nsdecimal(void* value)
+pythonify_nsdecimal(const void* value)
 {
     PyObject* v;
-    v = Decimal_New((NSDecimal*)value);
+    v = Decimal_New((const NSDecimal*)value);
     return v;
 }
 
@@ -851,55 +851,57 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     return id_to_python(res);
 }
 
-static void
-imp_NSDecimalNumber_initWithDecimal_(ffi_cif* cif __attribute__((__unused__)), void* resp,
-                                     void** args, void* callable)
+static IMP
+mkimp_NSDecimalNumber_initWithDecimal_(PyObject* callable, PyObjCMethodSignature* methinfo
+                                       __attribute__((__unused__)))
 {
-    id        self     = *(id*)args[0];
-    NSDecimal aDecimal = *(NSDecimal*)args[2];
-    id*       pretval  = (id*)resp;
+    Py_INCREF(callable);
+    NSDecimalNumber* (^block)(NSDecimalNumber*, NSDecimal) =
+        ^(NSDecimalNumber* _Nullable self, NSDecimal aDecimal) {
+          NSDecimalNumber* rv;
+          PyObject*        result = NULL;
+          PyObject*        v      = NULL;
+          PyObject*        pyself = NULL;
+          int              cookie = 0;
 
-    PyObject* result = NULL;
-    PyObject* v      = NULL;
-    PyObject* pyself = NULL;
-    int       cookie = 0;
+          PyGILState_STATE state = PyGILState_Ensure();
 
-    PyGILState_STATE state = PyGILState_Ensure();
+          pyself = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL)
+              goto error;
 
-    pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL)
-        goto error;
+          v = Decimal_New(&aDecimal);
+          if (v == NULL)
+              goto error;
 
-    v = Decimal_New(&aDecimal);
-    if (v == NULL)
-        goto error;
+          PyObject* arglist[3] = {NULL, pyself, v};
+          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                                     2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          Py_DECREF(v);
+          v = NULL;
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+          pyself = NULL;
+          if (result == NULL) {
+              goto error;
+          }
 
-    PyObject* arglist[3] = {NULL, pyself, v};
-    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v);
-    v = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie);
-    pyself = NULL;
-    if (result == NULL) {
-        goto error;
-    }
+          if (depythonify_python_object(result, &rv) == -1) {
+              Py_DECREF(result);
+              goto error;
+          }
+          Py_DECREF(result);
+          PyGILState_Release(state);
+          return rv;
 
-    if (depythonify_python_object(result, pretval) == -1) {
-        Py_DECREF(result);
-        goto error;
-    }
-    Py_DECREF(result);
-    PyGILState_Release(state);
-    return;
-
-error:
-    *pretval = nil;
-    Py_XDECREF(v);
-    if (pyself) {
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-    }
-    PyObjCErr_ToObjCWithGILState(&state);
+      error:
+          Py_XDECREF(v);
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+          return (NSDecimalNumber*)nil;
+        };
+    return imp_implementationWithBlock(block);
 }
 
 static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        method,
@@ -942,94 +944,100 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
     return Decimal_New(&aDecimal);
 }
 
-static void
-imp_NSDecimalNumber_decimalNumberWithDecimal_(ffi_cif* cif __attribute__((__unused__)),
-                                              void* resp, void** args, void* callable)
+static IMP
+mkimp_NSDecimalNumber_decimalNumberWithDecimal_(PyObject*              callable,
+                                                PyObjCMethodSignature* methinfo
+                                                __attribute__((__unused__)))
 {
-    Class     self     = *(id*)args[0];
-    NSDecimal aDecimal = *(NSDecimal*)args[2];
-    id*       pretval  = (id*)resp;
+    Py_INCREF(callable);
+    NSDecimalNumber* (^block)(Class, NSDecimal) =
+        ^(Class _Nullable self, NSDecimal aDecimal) {
+          NSDecimalNumber* rv;
+          PyObject*        result = NULL;
+          PyObject*        v      = NULL;
+          PyObject*        pyself = NULL;
 
-    PyObject* result = NULL;
-    PyObject* v      = NULL;
-    PyObject* pyself = NULL;
+          PyGILState_STATE state = PyGILState_Ensure();
 
-    PyGILState_STATE state = PyGILState_Ensure();
+          pyself = PyObjCClass_New(self);
+          if (pyself == NULL)
+              goto error;
 
-    pyself = PyObjCClass_New(self);
-    if (pyself == NULL)
-        goto error;
+          v = Decimal_New(&aDecimal);
+          if (v == NULL)
+              goto error;
 
-    v = Decimal_New(&aDecimal);
-    if (v == NULL)
-        goto error;
+          PyObject* arglist[3] = {NULL, pyself, v};
 
-    PyObject* arglist[3] = {NULL, pyself, v};
+          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                       2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          Py_DECREF(v);
+          v = NULL;
+          Py_DECREF(pyself);
+          pyself = NULL;
+          if (result == NULL) {
+              goto error;
+          }
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v);
-    v = NULL;
-    Py_DECREF(pyself);
-    pyself = NULL;
-    if (result == NULL) {
-        goto error;
-    }
+          if (depythonify_python_object(result, &rv) == -1) {
+              Py_DECREF(result);
+              goto error;
+          }
+          Py_DECREF(result);
+          PyGILState_Release(state);
+          return rv;
 
-    if (depythonify_python_object(result, pretval) == -1) {
-        Py_DECREF(result);
-        goto error;
-    }
-    Py_DECREF(result);
-    PyGILState_Release(state);
-    return;
-
-error:
-    *pretval = nil;
-    Py_XDECREF(v);
-    Py_XDECREF(pyself);
-    PyObjCErr_ToObjCWithGILState(&state);
+      error:
+          Py_XDECREF(v);
+          Py_XDECREF(pyself);
+          PyObjCErr_ToObjCWithGILState(&state);
+          return (NSDecimalNumber*)nil;
+        };
+    return imp_implementationWithBlock(block);
 }
 
-static void
-imp_NSDecimalNumber_decimalValue(ffi_cif* cif __attribute__((__unused__)), void* resp,
-                                 void** args, void* callable)
+static IMP
+mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* methinfo
+                                   __attribute__((__unused__)))
 {
-    id         self    = *(id*)args[0];
-    NSDecimal* pretval = (NSDecimal*)resp;
-    NSDecimal* res     = NULL;
+    Py_INCREF(callable);
 
-    PyObject* result = NULL;
-    PyObject* v      = NULL;
+    NSDecimal (^block)(id) = ^(id _Nullable self) {
+      NSDecimal* res = NULL;
 
-    PyGILState_STATE state = PyGILState_Ensure();
+      PyObject* result = NULL;
+      PyObject* v      = NULL;
 
-    v = id_to_python(self);
-    if (v == NULL)
-        goto error;
+      PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* arglist[2] = {NULL, v};
-    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v);
-    v = NULL;
-    if (result == NULL)
-        goto error;
+      v = id_to_python(self);
+      if (v == NULL)
+          goto error;
 
-    Decimal_Convert(result, &res);
-    if (res == NULL) {
-        Py_DECREF(result);
-        goto error;
-    }
+      PyObject* arglist[2] = {NULL, v};
+      result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      Py_DECREF(v);
+      v = NULL;
+      if (result == NULL)
+          goto error;
 
-    *pretval = *res;
-    Py_DECREF(result);
-    PyGILState_Release(state);
-    return;
+      Decimal_Convert(result, &res);
+      if (res == NULL) {
+          Py_DECREF(result);
+          goto error;
+      }
 
-error:
-    Py_XDECREF(v);
-    PyObjCErr_ToObjCWithGILState(&state);
+      Py_DECREF(result);
+      PyGILState_Release(state);
+      return *res;
+
+  error:
+      Py_XDECREF(v);
+      PyObjCErr_ToObjCWithGILState(&state);
+      __builtin_unreachable(); // LCOV_EXCL_LINE
+    };
+    return imp_implementationWithBlock(block);
 }
 
 int
@@ -1059,7 +1067,7 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, @selector(initWithDecimal:),
                                      call_NSDecimalNumber_initWithDecimal_,
-                                     imp_NSDecimalNumber_initWithDecimal_)
+                                     mkimp_NSDecimalNumber_initWithDecimal_)
         < 0) {
         return -1;
     }
@@ -1070,7 +1078,7 @@ PyObjC_setup_nsdecimal(PyObject* m)
         if (PyObjC_RegisterMethodMapping(classNSDecimalNumberPlaceholder,
                                          @selector(initWithDecimal:),
                                          call_NSDecimalNumber_initWithDecimal_,
-                                         imp_NSDecimalNumber_initWithDecimal_)
+                                         mkimp_NSDecimalNumber_initWithDecimal_)
             < 0) {
 
             return -1;
@@ -1080,14 +1088,14 @@ PyObjC_setup_nsdecimal(PyObject* m)
     if (PyObjC_RegisterMethodMapping(classNSDecimalNumber,
                                      @selector(decimalNumberWithDecimal:),
                                      call_NSDecimalNumber_decimalNumberWithDecimal_,
-                                     imp_NSDecimalNumber_decimalNumberWithDecimal_)
+                                     mkimp_NSDecimalNumber_decimalNumberWithDecimal_)
         < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSNumber, @selector(decimalValue),
                                      call_NSDecimalNumber_decimalValue,
-                                     imp_NSDecimalNumber_decimalValue)
+                                     mkimp_NSDecimalNumber_decimalValue)
         < 0) {
         return -1;
     }

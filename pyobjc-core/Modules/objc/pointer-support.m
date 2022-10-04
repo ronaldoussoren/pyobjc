@@ -21,7 +21,7 @@ struct wrapper {
     const char* name;
     const char* signature;
     size_t      offset;
-    PyObject* (*pythonify)(void*);
+    PyObject* _Nullable (*pythonify)(void*);
     int (*depythonify)(PyObject*, void*);
 };
 
@@ -65,6 +65,7 @@ find_end_of_structname(const char* signature)
 
 static struct wrapper* _Nullable FindWrapper(const char* signature)
 {
+    /* XXX: This is a linear search, find better way to do this! */
     Py_ssize_t i;
 
     for (i = 0; i < item_count; i++) {
@@ -93,7 +94,7 @@ static struct wrapper* _Nullable FindWrapper(const char* signature)
     return NULL;
 }
 
-static PyObject* _Nullable ID_to_py(void* idValue)
+static PyObject* _Nullable ID_to_py(const void* idValue)
 {
     if (idValue == kCFAllocatorUseContext) {
         /* kCFAllocatorUseContext is a bit too magic for its
@@ -108,7 +109,7 @@ static PyObject* _Nullable ID_to_py(void* idValue)
             return result;
         }
 
-        result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), idValue);
+        result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), (void*)idValue);
 
         if (result != NULL) {
             PyObjC_RegisterPythonProxy(idValue, result);
@@ -122,6 +123,31 @@ static int
 py_to_ID(PyObject* obj, void* output)
 {
     return depythonify_python_object(obj, output);
+}
+
+PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
+{
+    Py_ssize_t i;
+    PyObject*  result = PyList_New(0);
+    if (result == NULL) {
+        return NULL;
+    }
+    for (i = 0; i < item_count; i++) {
+        if (items[i].pythonify == (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py) {
+            PyObject* cur = PyBytes_FromString(items[i].signature);
+            if (cur == NULL) {
+                Py_DECREF(result);
+                return NULL;
+            }
+            if (PyList_Append(result, cur) == -1) {
+                Py_DECREF(cur);
+                Py_DECREF(result);
+                return NULL;
+            }
+            Py_DECREF(cur);
+        }
+    }
+    return result;
 }
 
 int
@@ -189,7 +215,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     return 0;
 }
 
-PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, void* datum)
+PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, const void* datum)
 {
     struct wrapper* item;
     PyObject*       result;

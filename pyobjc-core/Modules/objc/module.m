@@ -802,6 +802,14 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
     return protocols;
 }
 
+PyDoc_STRVAR(idSignatures_doc,
+             "_idSignatures()\n" CLINIC_SEP "\n"
+             "Returns a list of type encodings that refer to 'id' or 'CFTypeRef'\n");
+static PyObject* _Nullable idSignatures(PyObject* self __attribute__((__unused__)))
+{
+    return PyObjCPointer_GetIDEncodings();
+}
+
 PyDoc_STRVAR(protocolNamed_doc,
              "_protocolNamed(name)\n" CLINIC_SEP "\n"
              "Returns an Objective-C protocol named *name*.\n"
@@ -1859,6 +1867,10 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)copyMetadataRegistry,
      .ml_flags = METH_NOARGS,
      .ml_doc   = copyMetadataRegistry_doc},
+    {.ml_name  = "_idSignatures",
+     .ml_meth  = (PyCFunction)idSignatures,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = idSignatures_doc},
     {.ml_name  = "_updatingMetadata",
      .ml_meth  = (PyCFunction)_updatingMetadata,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
@@ -2076,6 +2088,7 @@ struct objc_int_values {
     {"MAC_OS_X_VERSION_12_3", MAC_OS_X_VERSION_12_3},
     {"MAC_OS_X_VERSION_12_4", MAC_OS_X_VERSION_12_4},
     {"MAC_OS_X_VERSION_12_5", MAC_OS_X_VERSION_12_5},
+    {"MAC_OS_X_VERSION_12_6", MAC_OS_X_VERSION_12_6},
     {"MAC_OS_X_VERSION_13_0", MAC_OS_X_VERSION_13_0},
     {"PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE},
     {"_NSNotFound", NSNotFound},

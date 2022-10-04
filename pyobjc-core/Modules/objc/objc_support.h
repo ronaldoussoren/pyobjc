@@ -35,12 +35,13 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
   @var{type}, that should be coming from an ObjC @encode directive,
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
-extern PyObject* _Nullable pythonify_c_value(const char* type, void* datum);
+extern PyObject* _Nullable pythonify_c_value(const char* type, const void* datum);
 extern PyObject* _Nullable id_to_python(id _Nullable obj);
-extern PyObject* _Nullable pythonify_c_return_value(const char* type, void* datum);
+extern PyObject* _Nullable pythonify_c_return_value(const char* type, const void* datum);
 
-extern PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* datum,
-                                                            BOOL already_retained,
+extern PyObject* _Nullable pythonify_c_array_nullterminated(const char* type,
+                                                            const void* datum,
+                                                            BOOL        already_retained,
                                                             BOOL already_cfretained);
 
 extern int depythonify_c_array_count(const char* type, Py_ssize_t count, BOOL strict,

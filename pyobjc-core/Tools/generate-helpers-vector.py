@@ -31,7 +31,7 @@ from objc._callable_docstr import describe_type
 FILE = pathlib.Path(__file__).resolve().parent.parent / "Modules/objc/helpers-vector.m"
 
 CALL_PREFIX = "call"
-IMP_PREFIX = "imp"
+MKIMP_PREFIX = "mkimp"
 
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 ALL_SIGNATURES = [
@@ -219,10 +219,12 @@ def function_name(prefix: str, signature: bytes) -> str:
     return "_".join(name)
 
 
-def generate_caller(stream: typing.IO[str], signature: bytes) -> None:
+def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     """
     Generate the function to call a selector with the specified signature
     """
+    # XXX: For methods returning an object check if self is uninitialized
+    #      (see FFI caller)
     signature_parts = objc.splitSignature(signature)
     rv_type = signature_parts[0]
     arg_types = signature_parts[3:]
@@ -323,6 +325,118 @@ def generate_caller(stream: typing.IO[str], signature: bytes) -> None:
     print("}", file=stream)
 
 
+def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
+    """
+    Generate a function that creates an IMP that will call
+    a Python function from Objective-C
+    """
+    # XXX:
+    # - For methods returning an object: check if the 'methinfo'
+    #   says that the result is "already_retained" or "already_cfretained"
+    #   and adjust the retaincount
+    signature_parts = objc.splitSignature(signature)
+    rv_type = signature_parts[0]
+    arg_types = signature_parts[3:]
+
+    if arg_types:
+        arg_type_names = ", " + ", ".join([describe_type(arg) for arg in arg_types])
+        arg_decl = ", " + ", ".join(
+            f"{describe_type(arg)} arg{idx}" for idx, arg in enumerate(arg_types)
+        )
+    else:
+        arg_type_names = ""
+        arg_decl = ""
+
+    print("", file=stream)
+    print("static IMP", file=stream)
+    print(f"{function_name(MKIMP_PREFIX, signature)}(", file=stream)
+    print("    PyObject* callable,", file=stream)
+    print(
+        "    PyObjCMethodSignature* methinfo __attribute__((__unused__)))", file=stream
+    )
+    print("{", file=stream)
+    print("    Py_INCREF(callable);", file=stream)
+    print("", file=stream)
+    print(
+        f"    {describe_type(rv_type)} (^block)(id{arg_type_names}) = ^(id _Nullable self{arg_decl}) {{",
+        file=stream,
+    )
+    print("        PyGILState_STATE state = PyGILState_Ensure();", file=stream)
+    print("", file=stream)
+    print("        int       cookie;", file=stream)
+    print(f"        PyObject* args[{len(arg_types)+2}] = {{NULL}};", file=stream)
+    print(
+        "        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);",
+        file=stream,
+    )
+    print("        if (pyself == NULL) {", file=stream)
+    print("            goto error;", file=stream)
+    print("        }", file=stream)
+    print("", file=stream)
+    print("        args[1] = pyself;", file=stream)
+    for idx, tp in enumerate(arg_types):
+        print(
+            f'        args[{idx+2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
+            file=stream,
+        )
+        print(f"        if (args[{idx+2}] == NULL) goto error;", file=stream)
+    print("", file=stream)
+    print(
+        "        PyObject* result = PyObject_Vectorcall(callable, args + 1,",
+        file=stream,
+    )
+    print(
+        f"                                          {len(arg_types)+1} | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);",
+        file=stream,
+    )
+    print("        if (result == NULL) goto error;", file=stream)
+    if rv_type == objc._C_VOID:
+        print("        if (result != Py_None) {", file=stream)
+        print("            Py_DECREF(result);", file=stream)
+        print(
+            '            PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",',
+            file=stream,
+        )
+        print("                         callable);", file=stream)
+        print("            goto error;", file=stream)
+        print("        }", file=stream)
+    else:
+        print(f"        {describe_type(rv_type)} oc_result;", file=stream)
+        print(
+            f'        if (depythonify_c_value("{rv_type.decode()}", result, &oc_result) == -1) {{',
+            file=stream,
+        )
+        print("            Py_DECREF(result);", file=stream)
+        print("            goto error;", file=stream)
+        print("         }", file=stream)
+        print("", file=stream)
+    print("        Py_DECREF(result);", file=stream)
+    print(f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream)
+    print("            Py_CLEAR(args[i]);", file=stream)
+    print("        }", file=stream)
+    print("", file=stream)
+    print("        PyObjCObject_ReleaseTransient(pyself, cookie);", file=stream)
+    print("        PyGILState_Release(state);", file=stream)
+    if rv_type == objc._C_VOID:
+        print("        return;", file=stream)
+    else:
+        print("        return oc_result;", file=stream)
+    print("", file=stream)
+    print("    error:", file=stream)
+    print("        if (pyself) {", file=stream)
+    print("            PyObjCObject_ReleaseTransient(pyself, cookie);", file=stream)
+    print("        }", file=stream)
+    print("", file=stream)
+    print(f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream)
+    print("            Py_CLEAR(args[i]);", file=stream)
+    print("        }", file=stream)
+    print("        PyObjCErr_ToObjCWithGILState(&state);", file=stream)
+    print("    };", file=stream)
+    print("", file=stream)
+    print("    return imp_implementationWithBlock(block);", file=stream)
+    print("}", file=stream)
+
+
 def BOOL_to_bool(signature: bytes) -> bytes:
     """
     Return 'signature' replacing _C_NSBOOL by _C_BOOL.
@@ -350,19 +464,26 @@ def generate_setup_function(stream: typing.IO[str]):
     Generate the function that's used to register
     the generated functions with the core bridge.
     """
+    # XXX: Register the mkimp implementation "somewhere"
+    #      (Preferable: drop the older PyObjCUnsupportedMethod_IMP
+    #       variant, mkimp is a better interface because this
+    #       matches the semantics of the FFI caller.
+    #
+    #       This requires wider changes..
     print("int", file=stream)
     print("PyObjC_setup_simd(void)", file=stream)
     print("{", file=stream)
 
     for signature in ALL_SIGNATURES:
         call_name = function_name(CALL_PREFIX, signature)
+        mkimp_name = function_name(MKIMP_PREFIX, signature)
         print("", file=stream)
         print(
             "    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE", file=stream
         )
         print(f'        "{signature.decode()}",', file=stream)
         print(f"        {call_name},", file=stream)
-        print("        PyObjCUnsupportedMethod_IMP) == -1) {", file=stream)
+        print(f"        {mkimp_name}) == -1) {{", file=stream)
         print("            return -1; // LCOV_EXCL_LINE", file=stream)
         print("    }", file=stream)
 
@@ -377,7 +498,7 @@ def generate_setup_function(stream: typing.IO[str]):
             )
             print(f'        "{alt_signature.decode()}",', file=stream)
             print(f"        {call_name},", file=stream)
-            print("        PyObjCUnsupportedMethod_IMP) == -1) {", file=stream)
+            print(f"        {mkimp_name}) == -1) {{", file=stream)
             print("            return -1; // LCOV_EXCL_LINE", file=stream)
             print("    }", file=stream)
 
@@ -390,7 +511,8 @@ def main():
     with open(FILE, "w") as stream:
         print(PREFIX, file=stream)
         for signature in ALL_SIGNATURES:
-            generate_caller(stream, signature)
+            generate_call(stream, signature)
+            generate_mkimp(stream, signature)
         generate_setup_function(stream)
 
 

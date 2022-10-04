@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
     (strncmp(typestr, @encode(FSRef), sizeof(@encode(FSRef)) - 1) == 0)
 
 extern int PyObjC_encode_fsref(PyObject*, void*);
-extern PyObject* _Nullable PyObjC_decode_fsref(void*);
+extern PyObject* _Nullable PyObjC_decode_fsref(const void*);
 
 extern PyTypeObject PyObjC_FSRefType;
 #define PyObjC_FSRefCheck(value) PyObject_TypeCheck(value, &PyObjC_FSRefType)
