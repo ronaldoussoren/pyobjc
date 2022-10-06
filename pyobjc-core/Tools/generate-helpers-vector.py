@@ -19,16 +19,24 @@ XXX: Use the Parse helpers to simplify the generated
 XXX: Also use this for simple basic methods '-(id)method',
      '-(void)method:arg', and '(void)method', but this also
      needs the 'imp' variants.
-
 """
 
 import objc
+from objc import simd
 import typing
 import pathlib
 import Quartz  # noqa: F401
 from objc._callable_docstr import describe_type
 
-FILE = pathlib.Path(__file__).resolve().parent.parent / "Modules/objc/helpers-vector.m"
+HELPER_FILE = (
+    pathlib.Path(__file__).resolve().parent.parent / "Modules/objc/helpers-vector.m"
+)
+TESTEXT_FILE = (
+    pathlib.Path(__file__).resolve().parent.parent / "Modules/objc/test/vectorcall.m"
+)
+TEST_FILE = (
+    pathlib.Path(__file__).resolve().parent.parent / "PyObjCTest/test_vectorcall.py"
+)
 
 CALL_PREFIX = "call"
 MKIMP_PREFIX = "mkimp"
@@ -166,7 +174,7 @@ ALL_SIGNATURES = [
     b"{_simd_quatf=<4f>}@:d",
 ]
 
-PREFIX = """\
+HELPER_PREFIX = """\
 /*
  * This file is generated using Tools/generate-helpers-vector.py
  *
@@ -179,6 +187,96 @@ PREFIX = """\
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
 
+"""
+
+TESTEXT_PREFIX = """\
+/*
+ * This file is generated using Tools/generate-helpers-vector.py
+ *
+ *     ** DO NOT EDIT **
+ */
+#include "Python.h"
+#include "pyobjc-api.h"
+#import <simd/simd.h>
+#include <stdarg.h>
+
+#import <Foundation/Foundation.h>
+
+#import <GameplayKit/GameplayKit.h>
+#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#import <ModelIO/ModelIO.h>
+
+@interface OC_VectorCall : NSObject {
+    PyObject* values;
+}
+@end
+
+@implementation OC_VectorCall
+- (instancetype)init
+{
+    self = [super init];
+    if (self == nil) {
+        return nil;
+    }
+    values = NULL;
+    return self;
+}
+
+-(id _Nullable)storedvalue
+{
+    return depythonify_python_object(values);
+}
+"""
+
+TESTEXT_SUFFIX = """\
+@end
+
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
+
+static struct PyModuleDef mod_module = {
+    PyModuleDef_HEAD_INIT, "vectorcall", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+
+PyObject* PyInit_vectorcall(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit_vectorcall(void)
+{
+    PyObject* m;
+
+    m = PyModule_Create(&mod_module);
+    if (!m) {
+        return NULL;
+    }
+
+    PyObjC_ImportAPI(m);
+
+    if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class])) < 0) {
+        return NULL;
+    }
+
+    return m;
+}
+"""
+
+TEST_PREFIX = """\
+#
+# This file is generated using Tools/generate-helpers-vector.py
+#
+#    ** DO NOT EDIT **
+#
+from PyObjCTools.TestSupport import TestCase
+import objc
+from objc import simd
+
+from .vectorcall import OC_VectorCall
+
+class Fake:
+    @property
+    def __pyobjc_object__(self):
+        raise TypeError("Cannot proxy")
+
+NoObjCValueObject = Fake()
+
+# Register full signatures for the helper methods
 """
 
 
@@ -507,13 +605,301 @@ def generate_setup_function(stream: typing.IO[str]):
     print("}", file=stream)
 
 
+def sel_for_signature(signature):
+    name = []
+    for idx, part in enumerate(objc.splitSignature(signature)):
+        if idx in (1, 2):
+            continue
+        if part == objc._C_ID:
+            name.append("id")
+        elif part == objc._C_SEL:
+            name.append("SEL")
+        elif part == objc._C_CLASS:
+            name.append("Class")
+        elif len(part) == 1:
+            name.append(part.decode())
+        elif part.startswith(objc._C_VECTOR_B):
+            name.append("v" + part.decode()[1:-1])
+        elif part.startswith(objc._C_STRUCT_B):
+            name.append(objc.splitStructSignature(part)[0].lstrip("_"))
+        elif part.startswith(objc._C_PTR + objc._C_STRUCT_B):
+            label, fields = objc.splitStructSignature(part[1:])
+            if fields:
+                raise RuntimeError(
+                    f"Don't know how to handle {part!r} in {signature!r}"
+                )
+
+            # Likely a CFType
+            name.append(label.lstrip("_"))
+
+        else:
+            raise RuntimeError(f"Don't know how to handle {part!r} in {signature!r}")
+
+    return ":".join(name) + (":" if len(name) > 1 else "")
+
+
+def generate_callimp_inst(stream, signature):
+    pass
+
+
+def generate_callimp_cls(stream, signature):
+    pass
+
+
+def generate_register(stream, signature):
+    print(
+        f'objc.registerMetaDataForSelector(b"OC_VectorCall", '
+        f'b"{sel_for_signature(signature)}", '
+        f'{{"full_signature": b"{signature.decode()}"}})',
+        file=stream,
+    )
+    print(
+        f'objc.registerMetaDataForSelector(b"OC_VectorCall", '
+        f'b"cls{sel_for_signature(signature)}", '
+        f'{{"full_signature": b"{signature.decode()}"}})',
+        file=stream,
+    )
+
+
+class LiteralRepr:
+    def __init__(self, value: str) -> None:
+        self._value = value
+
+    def __repr__(self) -> str:
+        return self._value
+
+
+# VAlues to use during testing, valid entries must match what's used in
+# the ObjC generator for return values.
+VALUES = {
+    # typestr: (valid, invalid)
+    objc._C_ID: ("hello", LiteralRepr("NoObjCValueObject")),
+    objc._C_INT: (-42, None),
+    objc._C_UINT: (42, None),
+    objc._C_SHT: (-5, None),
+    objc._C_USHT: (55, None),
+    objc._C_LNG: (-(2**44), None),
+    objc._C_ULNG: (2**45, None),
+    objc._C_LNGLNG: (-(2**44), None),
+    objc._C_ULNGLNG: (2**45, None),
+    objc._C_FLT: (2.5e9, None),
+    objc._C_DBL: (-55.7e10, None),
+    objc._C_BOOL: (True, None),
+    objc._C_NSBOOL: (False, None),
+    objc._C_CLASS: (LiteralRepr('objc.lookUpClass("NSObject")'), 42),
+    b"{GKBox=<3f><3f>}": (
+        (simd.vector_float3(1, 2, 3), simd.vector_float3(4, 5, 6)),
+        None,
+    ),
+    b"{_MPSAxisAlignedBoundingBox=<3f><3f>}": (
+        (simd.vector_float3(1.5, 2.5, 3.5), simd.vector_float3(4.5, 5.5, 6.5)),
+        None,
+    ),
+    b"{GKQuad=<2f><2f>}": (
+        (simd.vector_float2(9, 10), simd.vector_float2(11, 12)),
+        None,
+    ),
+    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}": (
+        (simd.vector_float3(-8, -9, -10), simd.vector_float3(-11, -12, -13)),
+        None,
+    ),
+    b"^{CGColor=}": ("color!", LiteralRepr("NoObjCValueObject")),
+    b"^{CGColorSpace=}": ("colorspace!", LiteralRepr("NoObjCValueObject")),
+    b"{_MDLVoxelIndexExtent=<4i><4i>}": (
+        (simd.vector_int4(100, 101, 102, 103), simd.vector_int4(-20, -21, -22, -23)),
+        None,
+    ),
+    b"{GKTriangle=[3<3f>]}": (
+        (
+            [
+                simd.vector_float3(-8.5, -9.5, -10.5),
+                simd.vector_float3(-11.5, -12.5, -13.5),
+                simd.vector_float3(-7.5, 1.5, 22.5),
+            ]
+        ),
+        None,
+    ),
+    b"{_MPSImageHistogramInfo=QZ<4f><4f>}": (
+        (
+            2**42,
+            True,
+            simd.vector_float4(1, 2, 3, 4),
+            simd.vector_float4(-1, -2, -3, -4),
+        ),
+        None,
+    ),
+}
+
+SIMD_TYPES = {
+    objc._C_UCHR: "uchar",
+    objc._C_INT: "int",
+    objc._C_UINT: "uint",
+    objc._C_SHT: "int",
+    objc._C_USHT: "uint",
+    objc._C_FLT: "float",
+    objc._C_DBL: "double",
+}
+
+
+def valid_value(typestr):
+    if typestr.startswith(objc._C_VECTOR_B):
+        t = typestr[-2:-1]
+        c = int(typestr[1:-2])
+        if t in (objc._C_FLT, objc._C_DBL):
+            return getattr(simd, f"vector_{SIMD_TYPES[t]}{c}")(
+                *(x * 1.5 for x in range(c))
+            )
+        else:
+            return getattr(simd, f"vector_{SIMD_TYPES[t]}{c}")(*range(c))
+    if typestr.startswith(objc._C_STRUCT_B):
+        name, elem = objc.splitStructSignature(typestr)
+        matrix = getattr(simd, name[1:], None)
+        if matrix is not None:
+            assert len(elem) == 1
+            elemtp = elem[0][-1]
+            if elemtp.startswith(objc._C_ARY_B):
+                elemtp = elemtp[1:-1]
+                cnt = b""
+                while elemtp[:1].isdigit():
+                    cnt = cnt + elemtp[:1]
+                    elemtp = elemtp[1:]
+
+                value = [valid_value(elemtp)] * int(cnt)
+            else:
+                value = valid_value(elemtp)
+            return LiteralRepr(f"simd.{name[1:]}({value!r})")
+
+    return VALUES[typestr][0]
+
+
+def invalid_value(typestr):
+    if typestr.startswith(objc._C_VECTOR_B):
+        return None
+    if typestr.startswith(objc._C_STRUCT_B):
+        return None
+    return VALUES[typestr][1]
+
+
+def generate_call_testcase_inst(stream, signature):
+    sel = sel_for_signature(signature).replace(
+        ":", "_"
+    )  # XXX: "kind" argument (instance, class, IMP)
+
+    print(f"    def test_{sel}(self):", file=stream)
+    sigparts = objc.splitSignature(signature)
+
+    print("        # Check that the signature is as expected", file=stream)
+    print(
+        f"        self.assertResultHasType(OC_VectorCall.{sel}, {sigparts[0]})",
+        file=stream,
+    )
+    for idx, p in enumerate(sigparts[3:]):
+        print(
+            f"        self.assertArgHasType(OC_VectorCall.{sel}, {idx}, {p})",
+            file=stream,
+        )
+    print("", file=stream)
+    print("        # Create test object", file=stream)
+    print("        oc = OC_VectorCall.alloc().init()", file=stream)
+    print("        self.assertIsNot(oc, None)", file=stream)
+    print("", file=stream)
+
+    print("        # Valid call", file=stream)
+    print(
+        f"        rv = oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        file=stream,
+    )
+    if sigparts[0] == objc._C_VOID:
+        print("        self.assertIs(rv, None)", file=stream)
+    else:
+        print(
+            f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})", file=stream
+        )
+
+    print("", file=stream)
+
+    print("        stored = oc.storedvalue()", file=stream)
+    print("        self.assertIsInstance(stored, (list, tuple))", file=stream)
+    print(f"        self.assertEqual(len(stored), {len(sigparts)-3})", file=stream)
+    for i, s in enumerate(sigparts[3:]):
+        print(f"        self.assertEqual(stored[{i}], {valid_value(s)!r})", file=stream)
+    print("", file=stream)
+    print("        # Too few arguments call", file=stream)
+    print(
+        "        with self.assertRaisesRegex(TypeError, 'execpted.*arguments.*got'):",
+        file=stream,
+    )
+    print(
+        f"            self.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
+        file=stream,
+    )
+    print("", file=stream)
+    print("        # Too many arguments call", file=stream)
+    print(
+        "        with self.assertRaisesRegex(TypeError, 'execpted.*arguments.*got'):",
+        file=stream,
+    )
+    print(
+        f"            self.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:] + (sigparts[1],))})",
+        file=stream,
+    )
+    print("", file=stream)
+    if len(sigparts) > 3:
+        print("        # Bad value for arguments", file=stream)
+    for idx in range(len(sigparts) - 3):
+        print("        with self.assertRaises(TypeError):", file=stream)
+        print(
+            f"            self.{sel}("
+            f"{', '.join(repr(invalid_value(s) if i == idx else valid_value(s)) for i, s in enumerate(sigparts[3:]))})",
+            file=stream,
+        )
+        print("", file=stream)
+    print("", file=stream)
+
+    # XXX: Actually test
+    #
+    # - Second test (requires more updates: class method instead of instance)
+    # - Third/fourth test: Call through IMP for instance/class method
+
+
 def main():
-    with open(FILE, "w") as stream:
-        print(PREFIX, file=stream)
+    # Helper in objc._objc
+    with open(HELPER_FILE, "w") as stream:
+        print(HELPER_PREFIX, file=stream)
         for signature in ALL_SIGNATURES:
             generate_call(stream, signature)
             generate_mkimp(stream, signature)
         generate_setup_function(stream)
+
+    # Test extension for testing calling
+    with open(TESTEXT_FILE, "w") as stream:
+        print(TESTEXT_PREFIX, file=stream)
+
+        for signature in ALL_SIGNATURES:
+            generate_callimp_inst(stream, signature)
+            generate_callimp_cls(stream, signature)
+
+        print(TESTEXT_SUFFIX, file=stream)
+
+    # Test extension for testing implementing
+    #  (or in same file?)
+
+    # Unittest file
+    with open(TEST_FILE, "w") as stream:
+        print(TEST_PREFIX, file=stream)
+
+        for signature in ALL_SIGNATURES:
+            generate_register(stream, signature)
+
+        print("\n", file=stream)
+        print("class TestVectorCall(TestCase):", file=stream)
+        for signature in ALL_SIGNATURES:
+            generate_call_testcase_inst(stream, signature)
+            # generate_call_testcase_cls(stream, signature)
+            # generate_call_testcase_inst_imp(stream, signature)
+            # generate_call_testcase_cls_imp(stream, signature)
+            # generate_imp_testcase_inst(stream, signature)
+            # generate_imp_testcase_cls(stream, signature)
 
 
 if __name__ == "__main__":

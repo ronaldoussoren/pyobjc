@@ -41,6 +41,14 @@ __all__ = (
     "vector_uint2",
     "vector_uint3",
     "vector_uchar16",
+    "matrix_float2x2",
+    "matrix_float3x3",
+    "matrix_float4x3",
+    "matrix_float4x4",
+    "matrix_double4x4",
+    "simd_quatf",
+    "simd_quatd",
+    "simd_float4x4",
 )
 
 
@@ -111,7 +119,7 @@ def make_type(
         return tuple(self._values)
 
     def __repr__(self):
-        return f"{name}({', '.join(map(str, self._values))})"
+        return f"objc.simd.{name}({', '.join(map(str, self._values))})"
 
     def __len__(self):
         return count
