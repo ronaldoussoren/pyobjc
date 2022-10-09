@@ -121,6 +121,9 @@ def make_type(
     def __repr__(self):
         return f"objc.simd.{name}({', '.join(map(str, self._values))})"
 
+    def _objc_literal(self):
+        return f"({name}){{{', '.join(map(str, self._values))}}}"
+
     def __len__(self):
         return count
 
@@ -232,6 +235,7 @@ def make_type(
         "as_tuple": as_tuple,
         "_cast_self": _cast_self,
         "__repr__": __repr__,
+        "_objc_literal": _objc_literal,
         "__len__": __len__,
         "__getitem__": __getitem__,
         "__setitem__": __setitem__,
@@ -576,8 +580,8 @@ matrix_float4x4 = objc.createStructType(
 matrix_double4x4 = objc.createStructType(
     "matrix_double4x4", b"{_matrix_double4x4=[4<4d>]}", ["columns"]
 )
-simd_quatf = objc.createStructType("quatf", b"{_simd_quatf=<4f>}", ["vector"])
-simd_quatd = objc.createStructType("quatf", b"{_simd_quatd=<4d>}", ["vector"])
+simd_quatf = objc.createStructType("simd_quatf", b"{_simd_quatf=<4f>}", ["vector"])
+simd_quatd = objc.createStructType("simd_quatd", b"{_simd_quatd=<4d>}", ["vector"])
 
 simd_float4x4 = objc.createStructType(
     "simd_float4x4", b"{_simd_float4x4=[4<4f>]}", ["columns"]

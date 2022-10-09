@@ -7,6 +7,11 @@ from PyObjCTools.TestSupport import TestCase
 import objc
 from objc import simd
 
+
+# Needs to be replaced by minimal definitions for
+# CGColor and CGColorSpace
+import Quartz  # noqa: F401
+
 from .vectorcall import OC_VectorCall
 
 
@@ -33,10 +38,10 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsv2d", {"full_signature": b"<2d>@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2d:d:", {"full_signature": b"<2d>@:d"}
+    b"OC_VectorCall", b"v2dd:", {"full_signature": b"<2d>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2d:d:", {"full_signature": b"<2d>@:d"}
+    b"OC_VectorCall", b"clsv2dd:", {"full_signature": b"<2d>@:d"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"v2f", {"full_signature": b"<2f>@:"}
@@ -45,22 +50,22 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsv2f", {"full_signature": b"<2f>@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2f:Q:", {"full_signature": b"<2f>@:Q"}
+    b"OC_VectorCall", b"v2fQ:", {"full_signature": b"<2f>@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2f:Q:", {"full_signature": b"<2f>@:Q"}
+    b"OC_VectorCall", b"clsv2fQ:", {"full_signature": b"<2f>@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2f:d:", {"full_signature": b"<2f>@:d"}
+    b"OC_VectorCall", b"v2fd:", {"full_signature": b"<2f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2f:d:", {"full_signature": b"<2f>@:d"}
+    b"OC_VectorCall", b"clsv2fd:", {"full_signature": b"<2f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2f:q:", {"full_signature": b"<2f>@:q"}
+    b"OC_VectorCall", b"v2fq:", {"full_signature": b"<2f>@:q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2f:q:", {"full_signature": b"<2f>@:q"}
+    b"OC_VectorCall", b"clsv2fq:", {"full_signature": b"<2f>@:q"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"v2i", {"full_signature": b"<2i>@:"}
@@ -69,10 +74,10 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsv2i", {"full_signature": b"<2i>@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3d:d:", {"full_signature": b"<3d>@:d"}
+    b"OC_VectorCall", b"v3dd:", {"full_signature": b"<3d>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3d:d:", {"full_signature": b"<3d>@:d"}
+    b"OC_VectorCall", b"clsv3dd:", {"full_signature": b"<3d>@:d"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"v3f", {"full_signature": b"<3f>@:"}
@@ -81,46 +86,46 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsv3f", {"full_signature": b"<3f>@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:v2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
+    b"OC_VectorCall", b"v3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:v2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
+    b"OC_VectorCall", b"clsv3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:v3f:", {"full_signature": b"<3f>@:<3f>"}
+    b"OC_VectorCall", b"v3fv3f:", {"full_signature": b"<3f>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:v3f:", {"full_signature": b"<3f>@:<3f>"}
+    b"OC_VectorCall", b"clsv3fv3f:", {"full_signature": b"<3f>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:v3f:id:", {"full_signature": b"<3f>@:<3f>@"}
+    b"OC_VectorCall", b"v3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:v3f:id:", {"full_signature": b"<3f>@:<3f>@"}
+    b"OC_VectorCall", b"clsv3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:v4i:", {"full_signature": b"<3f>@:<4i>"}
+    b"OC_VectorCall", b"v3fv4i:", {"full_signature": b"<3f>@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:v4i:", {"full_signature": b"<3f>@:<4i>"}
+    b"OC_VectorCall", b"clsv3fv4i:", {"full_signature": b"<3f>@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:Q:", {"full_signature": b"<3f>@:Q"}
+    b"OC_VectorCall", b"v3fQ:", {"full_signature": b"<3f>@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:Q:", {"full_signature": b"<3f>@:Q"}
+    b"OC_VectorCall", b"clsv3fQ:", {"full_signature": b"<3f>@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f:d:", {"full_signature": b"<3f>@:d"}
+    b"OC_VectorCall", b"v3fd:", {"full_signature": b"<3f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f:d:", {"full_signature": b"<3f>@:d"}
+    b"OC_VectorCall", b"clsv3fd:", {"full_signature": b"<3f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4d:d:", {"full_signature": b"<4d>@:d"}
+    b"OC_VectorCall", b"v4dd:", {"full_signature": b"<4d>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4d:d:", {"full_signature": b"<4d>@:d"}
+    b"OC_VectorCall", b"clsv4dd:", {"full_signature": b"<4d>@:d"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"v4f", {"full_signature": b"<4f>@:"}
@@ -129,642 +134,634 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsv4f", {"full_signature": b"<4f>@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4f:d:", {"full_signature": b"<4f>@:d"}
+    b"OC_VectorCall", b"v4fd:", {"full_signature": b"<4f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4f:d:", {"full_signature": b"<4f>@:d"}
+    b"OC_VectorCall", b"clsv4fd:", {"full_signature": b"<4f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4i:v3f:", {"full_signature": b"<4i>@:<3f>"}
+    b"OC_VectorCall", b"v4iv3f:", {"full_signature": b"<4i>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4i:v3f:", {"full_signature": b"<4i>@:<3f>"}
+    b"OC_VectorCall", b"clsv4iv3f:", {"full_signature": b"<4i>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2f:", {"full_signature": b"@@:<2f>"}
+    b"OC_VectorCall", b"idv2f:", {"full_signature": b"@@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2f:", {"full_signature": b"@@:<2f>"}
+    b"OC_VectorCall", b"clsidv2f:", {"full_signature": b"@@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
+    b"OC_VectorCall", b"idv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
+    b"OC_VectorCall", b"clsidv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
+    b"OC_VectorCall", b"idv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
+    b"OC_VectorCall", b"clsidv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2i:", {"full_signature": b"@@:<2i>"}
+    b"OC_VectorCall", b"idv2i:", {"full_signature": b"@@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2i:", {"full_signature": b"@@:<2i>"}
+    b"OC_VectorCall", b"clsidv2i:", {"full_signature": b"@@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
+    b"OC_VectorCall", b"idv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
+    b"OC_VectorCall", b"clsidv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
+    b"OC_VectorCall", b"idv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
+    b"OC_VectorCall", b"clsidv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:", {"full_signature": b"@@:<3f>"}
+    b"OC_VectorCall", b"idv3f:", {"full_signature": b"@@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:", {"full_signature": b"@@:<3f>"}
+    b"OC_VectorCall", b"clsidv3f:", {"full_signature": b"@@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v2I:Z:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZZq@"}
+    b"OC_VectorCall", b"idv3f:v2I:Z:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZZq@"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:v3f:v2I:Z:Z:Z:q:id:",
+    b"clsidv3f:v2I:Z:Z:Z:q:id:",
     {"full_signature": b"@@:<3f><2I>ZZZq@"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
+    b"OC_VectorCall", b"idv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
+    b"OC_VectorCall", b"clsidv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
+    b"OC_VectorCall", b"idv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
+    b"OC_VectorCall", b"clsidv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
+    b"OC_VectorCall", b"idv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
+    b"OC_VectorCall", b"clsidv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
+    b"OC_VectorCall", b"idv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
+    b"OC_VectorCall", b"clsidv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
+    b"OC_VectorCall", b"idv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
+    b"OC_VectorCall", b"clsidv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
+    b"OC_VectorCall", b"idv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
+    b"OC_VectorCall", b"clsidv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
+    b"OC_VectorCall", b"idv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
+    b"OC_VectorCall", b"clsidv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
+    b"OC_VectorCall", b"idv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
+    b"OC_VectorCall", b"clsidv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:v4f:", {"full_signature": b"@@:<4f>"}
+    b"OC_VectorCall", b"idv4f:", {"full_signature": b"@@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:v4f:", {"full_signature": b"@@:<4f>"}
+    b"OC_VectorCall", b"clsidv4f:", {"full_signature": b"@@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:v2d:v2d:v2i:Z:", {"full_signature": b"@@:@<2d><2d><2i>Z"}
+    b"OC_VectorCall", b"idid:v2d:v2d:v2i:Z:", {"full_signature": b"@@:@<2d><2d><2i>Z"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:v2d:v2d:v2i:Z:",
+    b"clsidid:v2d:v2d:v2i:Z:",
     {"full_signature": b"@@:@<2d><2d><2i>Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:v2f:", {"full_signature": b"@@:@<2f>"}
+    b"OC_VectorCall", b"idid:v2f:", {"full_signature": b"@@:@<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:v2f:", {"full_signature": b"@@:@<2f>"}
+    b"OC_VectorCall", b"clsidid:v2f:", {"full_signature": b"@@:@<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:v3f:", {"full_signature": b"@@:@<3f>"}
+    b"OC_VectorCall", b"idid:v3f:", {"full_signature": b"@@:@<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:v3f:", {"full_signature": b"@@:@<3f>"}
+    b"OC_VectorCall", b"clsidid:v3f:", {"full_signature": b"@@:@<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:v4f:", {"full_signature": b"@@:@<4f>"}
+    b"OC_VectorCall", b"idid:v4f:", {"full_signature": b"@@:@<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:v4f:", {"full_signature": b"@@:@<4f>"}
+    b"OC_VectorCall", b"clsidid:v4f:", {"full_signature": b"@@:@<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:id:v2i:", {"full_signature": b"@@:@@<2i>"}
+    b"OC_VectorCall", b"idid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:id:v2i:", {"full_signature": b"@@:@@<2i>"}
+    b"OC_VectorCall", b"clsidid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
+    b"OC_VectorCall", b"idid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
+    b"OC_VectorCall", b"clsidid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
+    b"OC_VectorCall", b"idid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
+    b"OC_VectorCall", b"clsidid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
+    b"OC_VectorCall", b"idid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
+    b"OC_VectorCall", b"clsidid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
+    b"OC_VectorCall", b"idid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
+    b"OC_VectorCall", b"clsidid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:id:Q:matrix_float4x4:",
+    b"idid:Q:matrixfloat4x4:",
     {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:Q:matrix_float4x4:",
+    b"clsidid:Q:matrixfloat4x4:",
     {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
+    b"OC_VectorCall", b"idid:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:Z:id:v2i:q:Q:q:Z:",
+    b"clsidid:Z:id:v2i:q:Q:q:Z:",
     {"full_signature": b"@@:@Z@<2i>qQqZ"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
+    b"OC_VectorCall", b"idid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
+    b"OC_VectorCall", b"clsidid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
+    b"OC_VectorCall", b"idid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"idid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"idid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:q:v2i:f:f:f:f:f:",
-    {"full_signature": b"@@:@q<2i>fffff"},
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:id:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:id:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"id:id:MDLAxisAlignedBoundingBox:f:",
+    b"idid:MDLAxisAlignedBoundingBox:f:",
     {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:MDLAxisAlignedBoundingBox:f:",
+    b"clsidid:MDLAxisAlignedBoundingBox:f:",
     {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:id:matrix_float2x2:",
+    b"idid:matrixfloat2x2:",
     {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:matrix_float2x2:",
+    b"clsidid:matrixfloat2x2:",
     {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:id:matrix_float3x3:",
+    b"idid:matrixfloat3x3:",
     {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:matrix_float3x3:",
+    b"clsidid:matrixfloat3x3:",
     {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:id:matrix_float4x4:",
+    b"idid:matrixfloat4x4:",
     {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:id:matrix_float4x4:",
+    b"clsidid:matrixfloat4x4:",
     {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:CGColor:CGColor:id:v2i:",
+    b"idCGColor:CGColor:id:v2i:",
     {"full_signature": b"@@:^{CGColor=}^{CGColor=}@<2i>"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:CGColor:CGColor:id:v2i:",
+    b"clsidCGColor:CGColor:id:v2i:",
     {"full_signature": b"@@:^{CGColor=}^{CGColor=}@<2i>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
+    b"OC_VectorCall", b"idf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
+    b"OC_VectorCall", b"clsidf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
+    b"OC_VectorCall", b"idf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
+    b"OC_VectorCall", b"clsidf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
+    b"OC_VectorCall", b"idf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"idf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"idf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsidf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:f:v2f:Q:Q:Q:q:Z:id:",
-    {"full_signature": b"@@:f<2f>QQQqZ@"},
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"id:f:id:v2i:i:q:CGColor:CGColor:",
+    b"idf:id:v2i:i:q:CGColor:CGColor:",
     {"full_signature": b"@@:f@<2i>iq^{CGColor=}^{CGColor=}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:f:id:v2i:i:q:CGColor:CGColor:",
+    b"clsidf:id:v2i:i:q:CGColor:CGColor:",
     {"full_signature": b"@@:f@<2i>iq^{CGColor=}^{CGColor=}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
+    b"OC_VectorCall", b"idf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
+    b"OC_VectorCall", b"clsidf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:f:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
+    b"OC_VectorCall", b"idf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:f:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
+    b"OC_VectorCall", b"clsidf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:GKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    b"OC_VectorCall", b"idGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:GKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    b"OC_VectorCall", b"clsidGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:GKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    b"OC_VectorCall", b"idGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:GKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    b"OC_VectorCall", b"clsidGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:GKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    b"OC_VectorCall", b"idGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:GKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    b"OC_VectorCall", b"clsidGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"id:GKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    b"OC_VectorCall", b"idGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsid:GKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    b"OC_VectorCall", b"clsidGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:MDLVoxelIndexExtent:",
+    b"idMDLVoxelIndexExtent:",
     {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:MDLVoxelIndexExtent:",
+    b"clsidMDLVoxelIndexExtent:",
     {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:matrix_float4x4:",
+    b"idmatrixfloat4x4:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:matrix_float4x4:",
+    b"clsidmatrixfloat4x4:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"id:matrix_float4x4:Z:",
+    b"idmatrixfloat4x4:Z:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsid:matrix_float4x4:Z:",
+    b"clsidmatrixfloat4x4:Z:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Z:v2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
+    b"OC_VectorCall", b"Zv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZ:v2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
+    b"OC_VectorCall", b"clsZv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Z:v2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
+    b"OC_VectorCall", b"Zv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZ:v2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
+    b"OC_VectorCall", b"clsZv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Z:v4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
+    b"OC_VectorCall", b"Zv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZ:v4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
+    b"OC_VectorCall", b"clsZv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"CGColor:v3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
+    b"OC_VectorCall", b"CGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsCGColor:v3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
+    b"OC_VectorCall", b"clsCGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"CGColor:v3f:CGColorSpace:",
+    b"CGColorv3f:CGColorSpace:",
     {"full_signature": b"^{CGColor=}@:<3f>^{CGColorSpace=}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsCGColor:v3f:CGColorSpace:",
+    b"clsCGColorv3f:CGColorSpace:",
     {"full_signature": b"^{CGColor=}@:<3f>^{CGColorSpace=}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"f:v2f:", {"full_signature": b"f@:<2f>"}
+    b"OC_VectorCall", b"fv2f:", {"full_signature": b"f@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsf:v2f:", {"full_signature": b"f@:<2f>"}
+    b"OC_VectorCall", b"clsfv2f:", {"full_signature": b"f@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"f:v2i:", {"full_signature": b"f@:<2i>"}
+    b"OC_VectorCall", b"fv2i:", {"full_signature": b"f@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsf:v2i:", {"full_signature": b"f@:<2i>"}
+    b"OC_VectorCall", b"clsfv2i:", {"full_signature": b"f@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v2d:d:", {"full_signature": b"v@:<2d>d"}
+    b"OC_VectorCall", b"vv2d:d:", {"full_signature": b"v@:<2d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v2d:d:", {"full_signature": b"v@:<2d>d"}
+    b"OC_VectorCall", b"clsvv2d:d:", {"full_signature": b"v@:<2d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v2f:", {"full_signature": b"v@:<2f>"}
+    b"OC_VectorCall", b"vv2f:", {"full_signature": b"v@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v2f:", {"full_signature": b"v@:<2f>"}
+    b"OC_VectorCall", b"clsvv2f:", {"full_signature": b"v@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v2f:d:", {"full_signature": b"v@:<2f>d"}
+    b"OC_VectorCall", b"vv2f:d:", {"full_signature": b"v@:<2f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v2f:d:", {"full_signature": b"v@:<2f>d"}
+    b"OC_VectorCall", b"clsvv2f:d:", {"full_signature": b"v@:<2f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3d:", {"full_signature": b"v@:<3d>"}
+    b"OC_VectorCall", b"vv3d:", {"full_signature": b"v@:<3d>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3d:", {"full_signature": b"v@:<3d>"}
+    b"OC_VectorCall", b"clsvv3d:", {"full_signature": b"v@:<3d>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3d:d:", {"full_signature": b"v@:<3d>d"}
+    b"OC_VectorCall", b"vv3d:d:", {"full_signature": b"v@:<3d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3d:d:", {"full_signature": b"v@:<3d>d"}
+    b"OC_VectorCall", b"clsvv3d:d:", {"full_signature": b"v@:<3d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3f:", {"full_signature": b"v@:<3f>"}
+    b"OC_VectorCall", b"vv3f:", {"full_signature": b"v@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3f:", {"full_signature": b"v@:<3f>"}
+    b"OC_VectorCall", b"clsvv3f:", {"full_signature": b"v@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
+    b"OC_VectorCall", b"vv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
+    b"OC_VectorCall", b"clsvv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
+    b"OC_VectorCall", b"vv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
+    b"OC_VectorCall", b"clsvv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v3f:d:", {"full_signature": b"v@:<3f>d"}
+    b"OC_VectorCall", b"vv3f:d:", {"full_signature": b"v@:<3f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v3f:d:", {"full_signature": b"v@:<3f>d"}
+    b"OC_VectorCall", b"clsvv3f:d:", {"full_signature": b"v@:<3f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v4d:d:", {"full_signature": b"v@:<4d>d"}
+    b"OC_VectorCall", b"vv4d:d:", {"full_signature": b"v@:<4d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v4d:d:", {"full_signature": b"v@:<4d>d"}
+    b"OC_VectorCall", b"clsvv4d:d:", {"full_signature": b"v@:<4d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v4f:", {"full_signature": b"v@:<4f>"}
+    b"OC_VectorCall", b"vv4f:", {"full_signature": b"v@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v4f:", {"full_signature": b"v@:<4f>"}
+    b"OC_VectorCall", b"clsvv4f:", {"full_signature": b"v@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v4f:d:", {"full_signature": b"v@:<4f>d"}
+    b"OC_VectorCall", b"vv4f:d:", {"full_signature": b"v@:<4f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v4f:d:", {"full_signature": b"v@:<4f>d"}
+    b"OC_VectorCall", b"clsvv4f:d:", {"full_signature": b"v@:<4f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:v4i:", {"full_signature": b"v@:<4i>"}
+    b"OC_VectorCall", b"vv4i:", {"full_signature": b"v@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:v4i:", {"full_signature": b"v@:<4i>"}
+    b"OC_VectorCall", b"clsvv4i:", {"full_signature": b"v@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:id:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
+    b"OC_VectorCall", b"vid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:id:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
+    b"OC_VectorCall", b"clsvid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:id:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
+    b"OC_VectorCall", b"vid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:id:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
+    b"OC_VectorCall", b"clsvid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:f:v2i:", {"full_signature": b"v@:f<2i>"}
+    b"OC_VectorCall", b"vf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:f:v2i:", {"full_signature": b"v@:f<2i>"}
+    b"OC_VectorCall", b"clsvf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:MDLAxisAlignedBoundingBox:",
+    b"vMDLAxisAlignedBoundingBox:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:MDLAxisAlignedBoundingBox:",
+    b"clsvMDLAxisAlignedBoundingBox:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:MDLAxisAlignedBoundingBox:Z:",
+    b"vMDLAxisAlignedBoundingBox:Z:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:MDLAxisAlignedBoundingBox:Z:",
+    b"clsvMDLAxisAlignedBoundingBox:Z:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_double4x4:",
+    b"vmatrixdouble4x4:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_double4x4:",
+    b"clsvmatrixdouble4x4:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_double4x4:d:",
+    b"vmatrixdouble4x4:d:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_double4x4:d:",
+    b"clsvmatrixdouble4x4:d:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_float2x2:",
+    b"vmatrixfloat2x2:",
     {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_float2x2:",
+    b"clsvmatrixfloat2x2:",
     {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_float3x3:",
+    b"vmatrixfloat3x3:",
     {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_float3x3:",
+    b"clsvmatrixfloat3x3:",
     {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_float4x4:",
+    b"vmatrixfloat4x4:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_float4x4:",
+    b"clsvmatrixfloat4x4:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:matrix_float4x4:d:",
+    b"vmatrixfloat4x4:d:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:matrix_float4x4:d:",
+    b"clsvmatrixfloat4x4:d:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"v:simd_float4x4:",
+    b"vsimdfloat4x4:",
     {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:simd_float4x4:",
+    b"clsvsimdfloat4x4:",
     {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:simd_quatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
+    b"OC_VectorCall", b"vsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsvsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"vsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"clsvsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:simd_quatd:d:",
-    {"full_signature": b"v@:{_simd_quatd=<4d>}d"},
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:simd_quatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv:simd_quatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"v:simd_quatf:v3f:",
+    b"vsimdquatf:v3f:",
     {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsv:simd_quatf:v3f:",
+    b"clsvsimdquatf:v3f:",
     {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v:simd_quatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
+    b"OC_VectorCall", b"vsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsv:simd_quatf:d:",
-    {"full_signature": b"v@:{_simd_quatf=<4f>}d"},
+    b"OC_VectorCall", b"clsvsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
@@ -779,12 +776,10 @@ objc.registerMetaDataForSelector(
     b"OC_VectorCall", b"clsGKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"GKTriangle:Q:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
+    b"OC_VectorCall", b"GKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsGKTriangle:Q:",
-    {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"},
+    b"OC_VectorCall", b"clsGKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
@@ -798,22 +793,22 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"MDLAxisAlignedBoundingBox:v4i:",
+    b"MDLAxisAlignedBoundingBoxv4i:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsMDLAxisAlignedBoundingBox:v4i:",
+    b"clsMDLAxisAlignedBoundingBoxv4i:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"MDLAxisAlignedBoundingBox:d:",
+    b"MDLAxisAlignedBoundingBoxd:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsMDLAxisAlignedBoundingBox:d:",
+    b"clsMDLAxisAlignedBoundingBoxd:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
@@ -848,111 +843,109 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_double4x4",
+    b"matrixdouble4x4",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_double4x4",
+    b"clsmatrixdouble4x4",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_double4x4:d:",
+    b"matrixdouble4x4d:",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_double4x4:d:",
+    b"clsmatrixdouble4x4d:",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_float2x2",
+    b"matrixfloat2x2",
     {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_float2x2",
+    b"clsmatrixfloat2x2",
     {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_float3x3",
+    b"matrixfloat3x3",
     {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_float3x3",
+    b"clsmatrixfloat3x3",
     {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_float4x4",
+    b"matrixfloat4x4",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_float4x4",
+    b"clsmatrixfloat4x4",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_float4x4:id:d:",
+    b"matrixfloat4x4id:d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_float4x4:id:d:",
+    b"clsmatrixfloat4x4id:d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"matrix_float4x4:d:",
+    b"matrixfloat4x4d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clsmatrix_float4x4:d:",
+    b"clsmatrixfloat4x4d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
 )
 objc.registerMetaDataForSelector(
+    b"OC_VectorCall", b"simdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
+)
+objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"simd_float4x4",
+    b"clssimdfloat4x4",
     {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clssimd_float4x4",
-    {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"simd_float4x4:simd_float4x4:id:",
+    b"simdfloat4x4simdfloat4x4:id:",
     {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
 )
 objc.registerMetaDataForSelector(
     b"OC_VectorCall",
-    b"clssimd_float4x4:simd_float4x4:id:",
+    b"clssimdfloat4x4simdfloat4x4:id:",
     {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simd_quatd:d:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
+    b"OC_VectorCall", b"simdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimd_quatd:d:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
+    b"OC_VectorCall", b"clssimdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simd_quatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
+    b"OC_VectorCall", b"simdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimd_quatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
+    b"OC_VectorCall", b"clssimdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simd_quatf:d:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
+    b"OC_VectorCall", b"simdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimd_quatf:d:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
+    b"OC_VectorCall", b"clssimdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
 )
 
 
@@ -979,12 +972,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v16C()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v16C()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v16C("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v16C("hello")
 
     def test_v2d(self):
         # Check that the signature is as expected
@@ -1003,24 +996,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2d()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2d()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2d("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2d("hello")
 
-    def test_v2d_d_(self):
+    def test_v2dd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v2d_d_, b"<2d>")
-        self.assertArgHasType(OC_VectorCall.v2d_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v2dd_, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.v2dd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v2d_d_(-557000000000.0)
+        rv = oc.v2dd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -1029,16 +1022,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2d_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2dd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2d_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2dd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v2d_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v2dd_(None)
 
     def test_v2f(self):
         # Check that the signature is as expected
@@ -1057,24 +1050,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2f()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2f("hello")
 
-    def test_v2f_Q_(self):
+    def test_v2fQ_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v2f_Q_, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v2f_Q_, 0, b"Q")
+        self.assertResultHasType(OC_VectorCall.v2fQ_, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.v2fQ_, 0, b"Q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v2f_Q_(35184372088832)
+        rv = oc.v2fQ_(35184372088832)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -1083,28 +1076,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], 35184372088832)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_Q_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fQ_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_Q_(35184372088832, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fQ_(35184372088832, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v2f_Q_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v2fQ_(None)
 
-    def test_v2f_d_(self):
+    def test_v2fd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v2f_d_, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v2f_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v2fd_, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.v2fd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v2f_d_(-557000000000.0)
+        rv = oc.v2fd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -1113,28 +1106,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v2f_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v2fd_(None)
 
-    def test_v2f_q_(self):
+    def test_v2fq_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v2f_q_, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v2f_q_, 0, b"q")
+        self.assertResultHasType(OC_VectorCall.v2fq_, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.v2fq_, 0, b"q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v2f_q_(-17592186044416)
+        rv = oc.v2fq_(-17592186044416)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -1143,16 +1136,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -17592186044416)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_q_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fq_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2f_q_(-17592186044416, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2fq_(-17592186044416, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v2f_q_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v2fq_(None)
 
     def test_v2i(self):
         # Check that the signature is as expected
@@ -1171,24 +1164,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2i()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2i()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v2i("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v2i("hello")
 
-    def test_v3d_d_(self):
+    def test_v3dd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3d_d_, b"<3d>")
-        self.assertArgHasType(OC_VectorCall.v3d_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v3dd_, b"<3d>")
+        self.assertArgHasType(OC_VectorCall.v3dd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3d_d_(-557000000000.0)
+        rv = oc.v3dd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1197,16 +1190,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3d_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3dd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3d_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3dd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3d_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3dd_(None)
 
     def test_v3f(self):
         # Check that the signature is as expected
@@ -1225,25 +1218,25 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3f()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3f("hello")
 
-    def test_v3f_v2i_v2i_(self):
+    def test_v3fv2i_v2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_v2i_v2i_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_v2i_v2i_, 0, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.v3f_v2i_v2i_, 1, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.v3fv2i_v2i_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fv2i_v2i_, 0, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.v3fv2i_v2i_, 1, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_v2i_v2i_(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
+        rv = oc.v3fv2i_v2i_(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1253,33 +1246,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v2i_v2i_(objc.simd.vector_int2(0, 1))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv2i_v2i_(objc.simd.vector_int2(0, 1))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v2i_v2i_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv2i_v2i_(
                 objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1), "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_v2i_v2i_(None, objc.simd.vector_int2(0, 1))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv2i_v2i_(None, objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.v3f_v2i_v2i_(objc.simd.vector_int2(0, 1), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv2i_v2i_(objc.simd.vector_int2(0, 1), None)
 
-    def test_v3f_v3f_(self):
+    def test_v3fv3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_v3f_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_v3f_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.v3fv3f_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fv3f_, 0, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.v3fv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1288,29 +1281,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v3f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv3f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_v3f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv3f_(None)
 
-    def test_v3f_v3f_id_(self):
+    def test_v3fv3f_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_v3f_id_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_v3f_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_v3f_id_, 1, b"@")
+        self.assertResultHasType(OC_VectorCall.v3fv3f_id_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fv3f_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fv3f_id_, 1, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_v3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        rv = oc.v3fv3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1320,31 +1313,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello", "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello", "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_v3f_id_(None, "hello")
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv3f_id_(None, "hello")
 
-        with self.assertRaises(TypeError):
-            self.v3f_v3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), NoObjCValueObject)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv3f_id_(objc.simd.vector_float3(0.0, 1.5, 3.0), NoObjCValueObject)
 
-    def test_v3f_v4i_(self):
+    def test_v3fv4i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_v4i_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_v4i_, 0, b"<4i>")
+        self.assertResultHasType(OC_VectorCall.v3fv4i_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fv4i_, 0, b"<4i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_v4i_(objc.simd.vector_int4(0, 1, 2, 3))
+        rv = oc.v3fv4i_(objc.simd.vector_int4(0, 1, 2, 3))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1353,28 +1346,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_int4(0, 1, 2, 3))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v4i_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv4i_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_v4i_(objc.simd.vector_int4(0, 1, 2, 3), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fv4i_(objc.simd.vector_int4(0, 1, 2, 3), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_v4i_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fv4i_(None)
 
-    def test_v3f_Q_(self):
+    def test_v3fQ_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_Q_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_Q_, 0, b"Q")
+        self.assertResultHasType(OC_VectorCall.v3fQ_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fQ_, 0, b"Q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_Q_(35184372088832)
+        rv = oc.v3fQ_(35184372088832)
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1383,28 +1376,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], 35184372088832)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_Q_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fQ_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_Q_(35184372088832, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fQ_(35184372088832, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_Q_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fQ_(None)
 
-    def test_v3f_d_(self):
+    def test_v3fd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v3f_d_, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v3f_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v3fd_, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.v3fd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v3f_d_(-557000000000.0)
+        rv = oc.v3fd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -1413,28 +1406,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v3f_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v3fd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v3f_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v3fd_(None)
 
-    def test_v4d_d_(self):
+    def test_v4dd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v4d_d_, b"<4d>")
-        self.assertArgHasType(OC_VectorCall.v4d_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v4dd_, b"<4d>")
+        self.assertArgHasType(OC_VectorCall.v4dd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v4d_d_(-557000000000.0)
+        rv = oc.v4dd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
         stored = oc.storedvalue()
@@ -1443,16 +1436,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4d_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4dd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4d_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4dd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v4d_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v4dd_(None)
 
     def test_v4f(self):
         # Check that the signature is as expected
@@ -1471,24 +1464,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4f()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4f()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4f("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4f("hello")
 
-    def test_v4f_d_(self):
+    def test_v4fd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v4f_d_, b"<4f>")
-        self.assertArgHasType(OC_VectorCall.v4f_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.v4fd_, b"<4f>")
+        self.assertArgHasType(OC_VectorCall.v4fd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v4f_d_(-557000000000.0)
+        rv = oc.v4fd_(-557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         stored = oc.storedvalue()
@@ -1497,28 +1490,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4f_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4fd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4f_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4fd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v4f_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v4fd_(None)
 
-    def test_v4i_v3f_(self):
+    def test_v4iv3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v4i_v3f_, b"<4i>")
-        self.assertArgHasType(OC_VectorCall.v4i_v3f_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.v4iv3f_, b"<4i>")
+        self.assertArgHasType(OC_VectorCall.v4iv3f_, 0, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v4i_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.v4iv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, objc.simd.vector_int4(0, 1, 2, 3))
 
         stored = oc.storedvalue()
@@ -1527,28 +1520,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4i_v3f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4iv3f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v4i_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.v4iv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v4i_v3f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.v4iv3f_(None)
 
-    def test_id_v2f_(self):
+    def test_idv2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2f_, 0, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.idv2f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2f_, 0, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2f_(objc.simd.vector_float2(0.0, 1.5))
+        rv = oc.idv2f_(objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -1557,31 +1550,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_(None)
 
-    def test_id_v2f_v2I_q_id_(self):
+    def test_idv2f_v2I_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2f_v2I_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2I_q_id_, 0, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2I_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2I_q_id_, 2, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2I_q_id_, 3, b"@")
+        self.assertResultHasType(OC_VectorCall.idv2f_v2I_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 0, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 2, b"q")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 3, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2f_v2I_q_id_(
+        rv = oc.idv2f_v2I_q_id_(
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_uint2(0, 1),
             -17592186044416,
@@ -1598,16 +1591,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_v2I_q_id_(
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_v2I_q_id_(
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
@@ -1616,44 +1609,44 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2I_q_id_(
                 None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2I_q_id_(
                 objc.simd.vector_float2(0.0, 1.5), None, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2I_q_id_(
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_uint2(0, 1),
                 None,
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2I_q_id_(
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
                 NoObjCValueObject,
             )
 
-    def test_id_v2f_v2f_(self):
+    def test_idv2f_v2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2f_v2f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2f_, 0, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_v2f_v2f_, 1, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.idv2f_v2f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2f_, 0, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idv2f_v2f_, 1, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2f_v2f_(
+        rv = oc.idv2f_v2f_(
             objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
         )
         self.assertEqual(rv, "hello")
@@ -1665,35 +1658,35 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_v2f_(objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_v2f_(objc.simd.vector_float2(0.0, 1.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2f_v2f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2f_v2f_(
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
                 "hello",
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2f_(None, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2f_(None, objc.simd.vector_float2(0.0, 1.5))
 
-        with self.assertRaises(TypeError):
-            self.id_v2f_v2f_(objc.simd.vector_float2(0.0, 1.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2f_v2f_(objc.simd.vector_float2(0.0, 1.5), None)
 
-    def test_id_v2i_(self):
+    def test_idv2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2i_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2i_, 0, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.idv2i_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2i_, 0, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2i_(objc.simd.vector_int2(0, 1))
+        rv = oc.idv2i_(objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -1702,31 +1695,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_(objc.simd.vector_int2(0, 1), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_(objc.simd.vector_int2(0, 1), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2i_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_(None)
 
-    def test_id_v2i_i_i_Z_(self):
+    def test_idv2i_i_i_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2i_i_i_Z_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_, 0, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_, 1, b"i")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_, 2, b"i")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_, 3, b"Z")
+        self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 0, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 1, b"i")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 2, b"i")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 3, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, False)
+        rv = oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, False)
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -1738,41 +1731,41 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, False, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, False, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_(None, -42, -42, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_(None, -42, -42, False)
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), None, -42, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), None, -42, False)
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, None, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, None, False)
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, None)
 
-    def test_id_v2i_i_i_Z_Class_(self):
+    def test_idv2i_i_i_Z_Class_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, 0, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, 1, b"i")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, 2, b"i")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v2i_i_i_Z_Class_, 4, b"#")
+        self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_Class_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 0, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 1, b"i")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 2, b"i")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 4, b"#")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v2i_i_i_Z_Class_(
+        rv = oc.idv2i_i_i_Z_Class_(
             objc.simd.vector_int2(0, 1), -42, -42, False, objc.lookUpClass("NSObject")
         )
         self.assertEqual(rv, "hello")
@@ -1787,12 +1780,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], objc.lookUpClass("NSObject"))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_i_i_Z_Class_(objc.simd.vector_int2(0, 1), -42, -42, False)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_i_i_Z_Class_(objc.simd.vector_int2(0, 1), -42, -42, False)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v2i_i_i_Z_Class_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv2i_i_i_Z_Class_(
                 objc.simd.vector_int2(0, 1),
                 -42,
                 -42,
@@ -1802,13 +1795,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_Class_(
-                None, -42, -42, False, objc.lookUpClass("NSObject")
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_Class_(None, -42, -42, False, objc.lookUpClass("NSObject"))
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_Class_(
                 objc.simd.vector_int2(0, 1),
                 None,
                 -42,
@@ -1816,8 +1807,8 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_Class_(
                 objc.simd.vector_int2(0, 1),
                 -42,
                 None,
@@ -1825,8 +1816,8 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_Class_(
                 objc.simd.vector_int2(0, 1),
                 -42,
                 -42,
@@ -1834,20 +1825,20 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v2i_i_i_Z_Class_(objc.simd.vector_int2(0, 1), -42, -42, False, 42)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv2i_i_i_Z_Class_(objc.simd.vector_int2(0, 1), -42, -42, False, 42)
 
-    def test_id_v3f_(self):
+    def test_idv3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.idv3f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_, 0, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.idv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -1856,34 +1847,34 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_(None)
 
-    def test_id_v3f_v2I_Z_Z_Z_q_id_(self):
+    def test_idv3f_v2I_Z_Z_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 2, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 4, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 5, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_Z_q_id_, 6, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 2, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 4, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 5, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 6, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v2I_Z_Z_Z_q_id_(
+        rv = oc.idv3f_v2I_Z_Z_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -1906,8 +1897,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[6], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1917,8 +1908,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1930,8 +1921,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 None,
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1941,8 +1932,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 False,
@@ -1952,8 +1943,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 None,
@@ -1963,8 +1954,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1974,8 +1965,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1985,8 +1976,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -1996,8 +1987,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2007,22 +1998,22 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v2I_Z_Z_q_id_(self):
+    def test_idv3f_v2I_Z_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 2, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 4, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_Z_q_id_, 5, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 2, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 4, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 5, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v2I_Z_Z_q_id_(
+        rv = oc.idv3f_v2I_Z_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -2043,8 +2034,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[5], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2053,8 +2044,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2065,8 +2056,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 None,
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2075,8 +2066,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 False,
@@ -2085,8 +2076,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 None,
@@ -2095,8 +2086,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2105,8 +2096,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2115,8 +2106,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2125,21 +2116,21 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v2I_Z_q_id_(self):
+    def test_idv3f_v2I_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, 2, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, 3, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_Z_q_id_, 4, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 2, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 3, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 4, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v2I_Z_q_id_(
+        rv = oc.idv3f_v2I_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -2158,8 +2149,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2167,8 +2158,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2178,13 +2169,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_q_id_(
                 None, objc.simd.vector_uint2(0, 1), False, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 False,
@@ -2192,8 +2183,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 None,
@@ -2201,8 +2192,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2210,8 +2201,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -2219,22 +2210,22 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v2I_i_Z_q_id_(self):
+    def test_idv3f_v2I_i_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 2, b"i")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 4, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_i_Z_q_id_, 5, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 2, b"i")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 4, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 5, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v2I_i_Z_q_id_(
+        rv = oc.idv3f_v2I_i_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             -42,
@@ -2255,8 +2246,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[5], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
@@ -2265,8 +2256,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
@@ -2277,13 +2268,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 None, objc.simd.vector_uint2(0, 1), -42, False, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 -42,
@@ -2292,8 +2283,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 None,
@@ -2302,8 +2293,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
@@ -2312,8 +2303,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
@@ -2322,8 +2313,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_i_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_i_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
@@ -2332,20 +2323,20 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v2I_q_id_(self):
+    def test_idv3f_v2I_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v2I_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_q_id_, 1, b"<2I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_q_id_, 2, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v2I_q_id_, 3, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v2I_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 1, b"<2I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 2, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 3, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v2I_q_id_(
+        rv = oc.idv3f_v2I_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             -17592186044416,
@@ -2362,16 +2353,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v2I_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
@@ -2380,47 +2371,47 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_q_id_(
                 None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 None,
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v2I_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v2I_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v3I_Z_q_id_(self):
+    def test_idv3f_v3I_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, 1, b"<3I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, 2, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, 3, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_Z_q_id_, 4, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 1, b"<3I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 2, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 3, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 4, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v3I_Z_q_id_(
+        rv = oc.idv3f_v3I_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint3(0, 1, 2),
             False,
@@ -2439,8 +2430,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 False,
@@ -2448,8 +2439,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 False,
@@ -2459,13 +2450,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_Z_q_id_(
                 None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 False,
@@ -2473,8 +2464,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 None,
@@ -2482,8 +2473,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 False,
@@ -2491,8 +2482,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 False,
@@ -2500,21 +2491,21 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_v3I_q_Z_id_(self):
+    def test_idv3f_v3I_q_Z_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, 1, b"<3I>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, 2, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_v3I_q_Z_id_, 4, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 1, b"<3I>")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 2, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 4, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_v3I_q_Z_id_(
+        rv = oc.idv3f_v3I_q_Z_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint3(0, 1, 2),
             -17592186044416,
@@ -2533,8 +2524,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
@@ -2542,8 +2533,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
@@ -2553,13 +2544,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_q_Z_id_(
                 None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 -17592186044416,
@@ -2567,8 +2558,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 None,
@@ -2576,8 +2567,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
@@ -2585,8 +2576,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_v3I_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_v3I_q_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
@@ -2594,23 +2585,23 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_Q_Q_q_Z_Z_id_(self):
+    def test_idv3f_Q_Q_q_Z_Z_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 1, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 2, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 3, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 4, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 5, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Q_Q_q_Z_Z_id_, 6, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 1, b"Q")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 2, b"Q")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 3, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 4, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 5, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 6, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_Q_Q_q_Z_Z_id_(
+        rv = oc.idv3f_Q_Q_q_Z_Z_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             35184372088832,
             35184372088832,
@@ -2633,8 +2624,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[6], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 35184372088832,
@@ -2644,8 +2635,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 35184372088832,
@@ -2657,8 +2648,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 None,
                 35184372088832,
                 35184372088832,
@@ -2668,8 +2659,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 35184372088832,
@@ -2679,8 +2670,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 None,
@@ -2690,8 +2681,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 35184372088832,
@@ -2701,30 +2692,30 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                None,
-                False,
-                "hello",
-            )
-
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 35184372088832,
                 -17592186044416,
+                "a",
+                False,
+                "hello",
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
                 False,
                 None,
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Q_Q_q_Z_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Q_Q_q_Z_Z_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 35184372088832,
                 35184372088832,
@@ -2734,20 +2725,20 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_v3f_Z_q_id_(self):
+    def test_idv3f_Z_q_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v3f_Z_q_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Z_q_id_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Z_q_id_, 1, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Z_q_id_, 2, b"q")
-        self.assertArgHasType(OC_VectorCall.id_v3f_Z_q_id_, 3, b"@")
+        self.assertResultHasType(OC_VectorCall.idv3f_Z_q_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 2, b"q")
+        self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 3, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v3f_Z_q_id_(
+        rv = oc.idv3f_Z_q_id_(
             objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416, "hello"
         )
         self.assertEqual(rv, "hello")
@@ -2761,14 +2752,14 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v3f_Z_q_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv3f_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 False,
                 -17592186044416,
@@ -2777,38 +2768,38 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v3f_Z_q_id_(None, False, -17592186044416, "hello")
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Z_q_id_(None, False, -17592186044416, "hello")
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), False, None, "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_v3f_Z_q_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv3f_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 False,
                 -17592186044416,
                 NoObjCValueObject,
             )
 
-    def test_id_v4f_(self):
+    def test_idv4f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_v4f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_v4f_, 0, b"<4f>")
+        self.assertResultHasType(OC_VectorCall.idv4f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv4f_, 0, b"<4f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_v4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        rv = oc.idv4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -2817,32 +2808,32 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v4f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv4f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_v4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idv4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_v4f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idv4f_(None)
 
-    def test_id_id_v2d_v2d_v2i_Z_(self):
+    def test_idid_v2d_v2d_v2i_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, 1, b"<2d>")
-        self.assertArgHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, 2, b"<2d>")
-        self.assertArgHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, 3, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_id_v2d_v2d_v2i_Z_, 4, b"Z")
+        self.assertResultHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 1, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 2, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 3, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 4, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_v2d_v2d_v2i_Z_(
+        rv = oc.idid_v2d_v2d_v2i_Z_(
             "hello",
             objc.simd.vector_double2(0.0, 1.5),
             objc.simd.vector_double2(0.0, 1.5),
@@ -2861,8 +2852,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2870,8 +2861,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2881,8 +2872,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2d_v2d_v2i_Z_(
                 NoObjCValueObject,
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2890,8 +2881,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 None,
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2899,8 +2890,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 objc.simd.vector_double2(0.0, 1.5),
                 None,
@@ -2908,8 +2899,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2917,8 +2908,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_v2d_v2d_v2i_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2d_v2d_v2i_Z_(
                 "hello",
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
@@ -2926,18 +2917,18 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_id_id_v2f_(self):
+    def test_idid_v2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_v2f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v2f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v2f_, 1, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.idid_v2f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v2f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v2f_, 1, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_v2f_("hello", objc.simd.vector_float2(0.0, 1.5))
+        rv = oc.idid_v2f_("hello", objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -2947,32 +2938,32 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v2f_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v2f_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v2f_("hello", objc.simd.vector_float2(0.0, 1.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v2f_("hello", objc.simd.vector_float2(0.0, 1.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_v2f_(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2f_(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5))
 
-        with self.assertRaises(TypeError):
-            self.id_id_v2f_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v2f_("hello", None)
 
-    def test_id_id_v3f_(self):
+    def test_idid_v3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_v3f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v3f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v3f_, 1, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.idid_v3f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v3f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v3f_, 1, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_v3f_("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.idid_v3f_("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -2982,32 +2973,32 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v3f_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v3f_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v3f_("hello", objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v3f_("hello", objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_v3f_(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v3f_(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        with self.assertRaises(TypeError):
-            self.id_id_v3f_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v3f_("hello", None)
 
-    def test_id_id_v4f_(self):
+    def test_idid_v4f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_v4f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v4f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_v4f_, 1, b"<4f>")
+        self.assertResultHasType(OC_VectorCall.idid_v4f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v4f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_v4f_, 1, b"<4f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_v4f_("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        rv = oc.idid_v4f_("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -3017,37 +3008,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v4f_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v4f_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_v4f_(
-                "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello"
-            )
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_v4f_("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_v4f_(
-                NoObjCValueObject, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v4f_(NoObjCValueObject, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        with self.assertRaises(TypeError):
-            self.id_id_v4f_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_v4f_("hello", None)
 
-    def test_id_id_id_v2i_(self):
+    def test_idid_id_v2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_id_v2i_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_, 1, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_, 2, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.idid_id_v2i_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_, 2, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_id_v2i_("hello", "hello", objc.simd.vector_int2(0, 1))
+        rv = oc.idid_id_v2i_("hello", "hello", objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -3058,37 +3045,37 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_id_v2i_("hello", "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_id_v2i_("hello", "hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_id_v2i_("hello", "hello", objc.simd.vector_int2(0, 1), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_id_v2i_("hello", "hello", objc.simd.vector_int2(0, 1), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_("hello", "hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_("hello", "hello", None)
 
-    def test_id_id_id_v2i_f_(self):
+    def test_idid_id_v2i_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_id_v2i_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_f_, 1, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_f_, 2, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_id_id_v2i_f_, 3, b"f")
+        self.assertResultHasType(OC_VectorCall.idid_id_v2i_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 3, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_id_v2i_f_(
+        rv = oc.idid_id_v2i_f_(
             "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0
         )
         self.assertEqual(rv, "hello")
@@ -3102,45 +3089,45 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_id_v2i_f_("hello", "hello", objc.simd.vector_int2(0, 1))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_id_v2i_f_("hello", "hello", objc.simd.vector_int2(0, 1))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_id_v2i_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_id_v2i_f_(
                 "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0, "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_f_(
                 NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_f_(
                 "hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_f_("hello", "hello", None, 2500000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_f_("hello", "hello", None, 2500000000.0)
 
-        with self.assertRaises(TypeError):
-            self.id_id_id_v2i_f_("hello", "hello", objc.simd.vector_int2(0, 1), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_id_v2i_f_("hello", "hello", objc.simd.vector_int2(0, 1), None)
 
-    def test_id_id_Q_v2f_(self):
+    def test_idid_Q_v2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_Q_v2f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v2f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v2f_, 1, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v2f_, 2, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.idid_Q_v2f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v2f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v2f_, 1, b"Q")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v2f_, 2, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_Q_v2f_("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
+        rv = oc.idid_Q_v2f_("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -3151,40 +3138,40 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v2f_("hello", 35184372088832)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v2f_("hello", 35184372088832)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v2f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v2f_(
                 "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5), "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v2f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v2f_(
                 NoObjCValueObject, 35184372088832, objc.simd.vector_float2(0.0, 1.5)
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v2f_("hello", None, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v2f_("hello", None, objc.simd.vector_float2(0.0, 1.5))
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v2f_("hello", 35184372088832, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v2f_("hello", 35184372088832, None)
 
-    def test_id_id_Q_v3f_(self):
+    def test_idid_Q_v3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_Q_v3f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v3f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v3f_, 1, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v3f_, 2, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.idid_Q_v3f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v3f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v3f_, 1, b"Q")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v3f_, 2, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_Q_v3f_(
+        rv = oc.idid_Q_v3f_(
             "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0)
         )
         self.assertEqual(rv, "hello")
@@ -3197,42 +3184,42 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v3f_("hello", 35184372088832)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v3f_("hello", 35184372088832)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v3f_(
                 "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v3f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v3f_(
                 NoObjCValueObject,
                 35184372088832,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v3f_("hello", None, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v3f_("hello", None, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v3f_("hello", 35184372088832, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v3f_("hello", 35184372088832, None)
 
-    def test_id_id_Q_v4f_(self):
+    def test_idid_Q_v4f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_Q_v4f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v4f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v4f_, 1, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_v4f_, 2, b"<4f>")
+        self.assertResultHasType(OC_VectorCall.idid_Q_v4f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v4f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v4f_, 1, b"Q")
+        self.assertArgHasType(OC_VectorCall.idid_Q_v4f_, 2, b"<4f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_Q_v4f_(
+        rv = oc.idid_Q_v4f_(
             "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
         )
         self.assertEqual(rv, "hello")
@@ -3245,12 +3232,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v4f_("hello", 35184372088832)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v4f_("hello", 35184372088832)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_v4f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_v4f_(
                 "hello",
                 35184372088832,
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3258,28 +3245,26 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v4f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v4f_(
                 NoObjCValueObject,
                 35184372088832,
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v4f_(
-                "hello", None, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v4f_("hello", None, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_v4f_("hello", 35184372088832, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_v4f_("hello", 35184372088832, None)
 
-    def test_id_id_Q_matrix_float4x4_(self):
+    def test_idid_Q_matrixfloat4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_Q_matrix_float4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_matrix_float4x4_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Q_matrix_float4x4_, 1, b"Q")
+        self.assertResultHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 1, b"Q")
         self.assertArgHasType(
-            OC_VectorCall.id_id_Q_matrix_float4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_Q_matrixfloat4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -3287,7 +3272,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_Q_matrix_float4x4_(
+        rv = oc.idid_Q_matrixfloat4x4_(
             "hello",
             35184372088832,
             simd.matrix_float4x4(
@@ -3319,12 +3304,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_matrix_float4x4_("hello", 35184372088832)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_matrixfloat4x4_("hello", 35184372088832)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Q_matrix_float4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Q_matrixfloat4x4_(
                 "hello",
                 35184372088832,
                 simd.matrix_float4x4(
@@ -3339,8 +3324,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_Q_matrix_float4x4_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_matrixfloat4x4_(
                 NoObjCValueObject,
                 35184372088832,
                 simd.matrix_float4x4(
@@ -3353,8 +3338,8 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_matrix_float4x4_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_matrixfloat4x4_(
                 "hello",
                 None,
                 simd.matrix_float4x4(
@@ -3367,27 +3352,27 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Q_matrix_float4x4_("hello", 35184372088832, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Q_matrixfloat4x4_("hello", 35184372088832, None)
 
-    def test_id_id_Z_id_v2i_q_Q_q_Z_(self):
+    def test_idid_Z_id_v2i_q_Q_q_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 1, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 2, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 3, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 4, b"q")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 5, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 6, b"q")
-        self.assertArgHasType(OC_VectorCall.id_id_Z_id_v2i_q_Q_q_Z_, 7, b"Z")
+        self.assertResultHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 2, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 3, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 4, b"q")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 5, b"Q")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 6, b"q")
+        self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 7, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_Z_id_v2i_q_Q_q_Z_(
+        rv = oc.idid_Z_id_v2i_q_Q_q_Z_(
             "hello",
             False,
             "hello",
@@ -3412,8 +3397,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[7], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
@@ -3424,8 +3409,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
@@ -3438,8 +3423,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 NoObjCValueObject,
                 False,
                 "hello",
@@ -3450,8 +3435,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 None,
                 "hello",
@@ -3462,8 +3447,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 NoObjCValueObject,
@@ -3474,8 +3459,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
@@ -3486,8 +3471,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
@@ -3498,8 +3483,8 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
@@ -3510,47 +3495,47 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
-                "hello",
-                False,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -17592186044416,
-                35184372088832,
-                None,
-                False,
-            )
-
-        with self.assertRaises(TypeError):
-            self.id_id_Z_id_v2i_q_Q_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
                 False,
                 "hello",
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 35184372088832,
+                None,
+                False,
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_Z_id_v2i_q_Q_q_Z_(
+                "hello",
+                False,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                35184372088832,
                 -17592186044416,
                 None,
             )
 
-    def test_id_id_q_v2i_f_f_f_f_(self):
+    def test_idid_q_v2i_f_f_f_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 1, b"q")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 2, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 3, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 4, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 5, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_, 6, b"f")
+        self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 1, b"q")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 3, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 4, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 5, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 6, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_q_v2i_f_f_f_f_(
+        rv = oc.idid_q_v2i_f_f_f_f_(
             "hello",
             -17592186044416,
             objc.simd.vector_int2(0, 1),
@@ -3573,8 +3558,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[6], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3584,8 +3569,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3597,8 +3582,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 NoObjCValueObject,
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3608,8 +3593,8 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 None,
                 objc.simd.vector_int2(0, 1),
@@ -3619,8 +3604,8 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 None,
@@ -3630,68 +3615,68 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                None,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
-                2500000000.0,
                 None,
+                2500000000.0,
                 2500000000.0,
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
                 2500000000.0,
-                2500000000.0,
                 None,
+                2500000000.0,
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
                 2500000000.0,
                 2500000000.0,
+                None,
+                2500000000.0,
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_(
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
                 2500000000.0,
                 None,
             )
 
-    def test_id_id_q_v2i_f_f_f_f_f_(self):
+    def test_idid_q_v2i_f_f_f_f_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 1, b"q")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 2, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 3, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 4, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 5, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 6, b"f")
-        self.assertArgHasType(OC_VectorCall.id_id_q_v2i_f_f_f_f_f_, 7, b"f")
+        self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 1, b"q")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 3, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 4, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 5, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 6, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 7, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_q_v2i_f_f_f_f_f_(
+        rv = oc.idid_q_v2i_f_f_f_f_f_(
             "hello",
             -17592186044416,
             objc.simd.vector_int2(0, 1),
@@ -3716,8 +3701,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[7], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3728,8 +3713,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3742,8 +3727,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 NoObjCValueObject,
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -3754,8 +3739,8 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 None,
                 objc.simd.vector_int2(0, 1),
@@ -3766,8 +3751,8 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 None,
@@ -3778,78 +3763,78 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                None,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
-                2500000000.0,
                 None,
+                2500000000.0,
                 2500000000.0,
                 2500000000.0,
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
                 2500000000.0,
-                2500000000.0,
                 None,
+                2500000000.0,
                 2500000000.0,
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
                 2500000000.0,
                 2500000000.0,
-                2500000000.0,
                 None,
+                2500000000.0,
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_q_v2i_f_f_f_f_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
                 2500000000.0,
                 2500000000.0,
                 2500000000.0,
+                None,
+                2500000000.0,
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_q_v2i_f_f_f_f_f_(
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
                 2500000000.0,
                 None,
             )
 
-    def test_id_id_GKBox_(self):
+    def test_idid_GKBox_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_GKBox_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_GKBox_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_GKBox_, 1, b"{GKBox=<3f><3f>}")
+        self.assertResultHasType(OC_VectorCall.idid_GKBox_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_GKBox_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_GKBox_, 1, b"{GKBox=<3f><3f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_GKBox_(
+        rv = oc.idid_GKBox_(
             "hello",
             (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
@@ -3871,12 +3856,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_GKBox_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_GKBox_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_GKBox_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_GKBox_(
                 "hello",
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
@@ -3886,8 +3871,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_GKBox_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_GKBox_(
                 NoObjCValueObject,
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
@@ -3895,21 +3880,21 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_GKBox_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_GKBox_("hello", None)
 
-    def test_id_id_GKQuad_(self):
+    def test_idid_GKQuad_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_GKQuad_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_GKQuad_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_GKQuad_, 1, b"{GKQuad=<2f><2f>}")
+        self.assertResultHasType(OC_VectorCall.idid_GKQuad_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_GKQuad_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_GKQuad_, 1, b"{GKQuad=<2f><2f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_GKQuad_(
+        rv = oc.idid_GKQuad_(
             "hello",
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
         )
@@ -3925,12 +3910,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_GKQuad_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_GKQuad_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_GKQuad_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_GKQuad_(
                 "hello",
                 (
                     objc.simd.vector_float2(9.0, 10.0),
@@ -3940,8 +3925,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_GKQuad_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_GKQuad_(
                 NoObjCValueObject,
                 (
                     objc.simd.vector_float2(9.0, 10.0),
@@ -3949,26 +3934,26 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_GKQuad_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_GKQuad_("hello", None)
 
-    def test_id_id_MDLAxisAlignedBoundingBox_f_(self):
+    def test_idid_MDLAxisAlignedBoundingBox_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_MDLAxisAlignedBoundingBox_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_MDLAxisAlignedBoundingBox_f_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_id_MDLAxisAlignedBoundingBox_f_,
+            OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_,
             1,
             b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(OC_VectorCall.id_id_MDLAxisAlignedBoundingBox_f_, 2, b"f")
+        self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 2, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_MDLAxisAlignedBoundingBox_f_(
+        rv = oc.idid_MDLAxisAlignedBoundingBox_f_(
             "hello",
             (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -3992,8 +3977,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_MDLAxisAlignedBoundingBox_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_MDLAxisAlignedBoundingBox_f_(
                 "hello",
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -4002,8 +3987,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_MDLAxisAlignedBoundingBox_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_MDLAxisAlignedBoundingBox_f_(
                 "hello",
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -4014,8 +3999,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_MDLAxisAlignedBoundingBox_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_MDLAxisAlignedBoundingBox_f_(
                 NoObjCValueObject,
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -4024,11 +4009,11 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_MDLAxisAlignedBoundingBox_f_("hello", None, 2500000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_MDLAxisAlignedBoundingBox_f_("hello", None, 2500000000.0)
 
-        with self.assertRaises(TypeError):
-            self.id_id_MDLAxisAlignedBoundingBox_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_MDLAxisAlignedBoundingBox_f_(
                 "hello",
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -4037,12 +4022,12 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_id_id_matrix_float2x2_(self):
+    def test_idid_matrixfloat2x2_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_matrix_float2x2_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_matrix_float2x2_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_matrixfloat2x2_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_matrixfloat2x2_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_id_matrix_float2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.idid_matrixfloat2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -4050,7 +4035,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_matrix_float2x2_(
+        rv = oc.idid_matrixfloat2x2_(
             "hello",
             simd.matrix_float2x2(
                 [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
@@ -4070,12 +4055,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float2x2_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat2x2_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float2x2_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat2x2_(
                 "hello",
                 simd.matrix_float2x2(
                     [
@@ -4087,8 +4072,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float2x2_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat2x2_(
                 NoObjCValueObject,
                 simd.matrix_float2x2(
                     [
@@ -4098,15 +4083,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float2x2_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat2x2_("hello", None)
 
-    def test_id_id_matrix_float3x3_(self):
+    def test_idid_matrixfloat3x3_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_matrix_float3x3_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_matrix_float3x3_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_matrixfloat3x3_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_matrixfloat3x3_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_id_matrix_float3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.idid_matrixfloat3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -4114,7 +4099,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_matrix_float3x3_(
+        rv = oc.idid_matrixfloat3x3_(
             "hello",
             simd.matrix_float3x3(
                 [
@@ -4142,12 +4127,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float3x3_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat3x3_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float3x3_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat3x3_(
                 "hello",
                 simd.matrix_float3x3(
                     [
@@ -4160,8 +4145,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float3x3_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat3x3_(
                 NoObjCValueObject,
                 simd.matrix_float3x3(
                     [
@@ -4172,15 +4157,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float3x3_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat3x3_("hello", None)
 
-    def test_id_id_matrix_float4x4_(self):
+    def test_idid_matrixfloat4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_id_matrix_float4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_id_matrix_float4x4_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_matrixfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_matrixfloat4x4_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_id_matrix_float4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_matrixfloat4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -4188,7 +4173,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_id_matrix_float4x4_(
+        rv = oc.idid_matrixfloat4x4_(
             "hello",
             simd.matrix_float4x4(
                 [
@@ -4218,12 +4203,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float4x4_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat4x4_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_id_matrix_float4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idid_matrixfloat4x4_(
                 "hello",
                 simd.matrix_float4x4(
                     [
@@ -4237,8 +4222,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float4x4_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat4x4_(
                 NoObjCValueObject,
                 simd.matrix_float4x4(
                     [
@@ -4250,27 +4235,27 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_id_matrix_float4x4_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idid_matrixfloat4x4_("hello", None)
 
-    def test_id_CGColor_CGColor_id_v2i_(self):
+    def test_idCGColor_CGColor_id_v2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_CGColor_CGColor_id_v2i_, b"@")
+        self.assertResultHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_CGColor_CGColor_id_v2i_, 0, b"^{CGColor=}"
+            OC_VectorCall.idCGColor_CGColor_id_v2i_, 0, b"^{CGColor=}"
         )
         self.assertArgHasType(
-            OC_VectorCall.id_CGColor_CGColor_id_v2i_, 1, b"^{CGColor=}"
+            OC_VectorCall.idCGColor_CGColor_id_v2i_, 1, b"^{CGColor=}"
         )
-        self.assertArgHasType(OC_VectorCall.id_CGColor_CGColor_id_v2i_, 2, b"@")
-        self.assertArgHasType(OC_VectorCall.id_CGColor_CGColor_id_v2i_, 3, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 2, b"@")
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 3, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_CGColor_CGColor_id_v2i_(
+        rv = oc.idCGColor_CGColor_id_v2i_(
             "color!", "color!", "hello", objc.simd.vector_int2(0, 1)
         )
         self.assertEqual(rv, "hello")
@@ -4284,47 +4269,47 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_CGColor_CGColor_id_v2i_("color!", "color!", "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idCGColor_CGColor_id_v2i_("color!", "color!", "hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_CGColor_CGColor_id_v2i_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idCGColor_CGColor_id_v2i_(
                 "color!", "color!", "hello", objc.simd.vector_int2(0, 1), "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_CGColor_CGColor_id_v2i_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idCGColor_CGColor_id_v2i_(
                 NoObjCValueObject, "color!", "hello", objc.simd.vector_int2(0, 1)
             )
 
-        with self.assertRaises(TypeError):
-            self.id_CGColor_CGColor_id_v2i_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idCGColor_CGColor_id_v2i_(
                 "color!", NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1)
             )
 
-        with self.assertRaises(TypeError):
-            self.id_CGColor_CGColor_id_v2i_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idCGColor_CGColor_id_v2i_(
                 "color!", "color!", NoObjCValueObject, objc.simd.vector_int2(0, 1)
             )
 
-        with self.assertRaises(TypeError):
-            self.id_CGColor_CGColor_id_v2i_("color!", "color!", "hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idCGColor_CGColor_id_v2i_("color!", "color!", "hello", None)
 
-    def test_id_f_v2f_v2f_(self):
+    def test_idf_v2f_v2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_v2f_v2f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_, 2, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_, 2, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_v2f_v2f_(
+        rv = oc.idf_v2f_v2f_(
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -4339,12 +4324,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_v2f_(2500000000.0, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_v2f_(2500000000.0, objc.simd.vector_float2(0.0, 1.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_v2f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_v2f_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -4352,33 +4337,33 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_(
                 None,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_(2500000000.0, None, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_(2500000000.0, None, objc.simd.vector_float2(0.0, 1.5))
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_(2500000000.0, objc.simd.vector_float2(0.0, 1.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_(2500000000.0, objc.simd.vector_float2(0.0, 1.5), None)
 
-    def test_id_f_v2f_v2f_Class_(self):
+    def test_idf_v2f_v2f_Class_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_v2f_v2f_Class_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_Class_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_Class_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_Class_, 2, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_v2f_Class_, 3, b"#")
+        self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_Class_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 2, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 3, b"#")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_v2f_v2f_Class_(
+        rv = oc.idf_v2f_v2f_Class_(
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -4395,16 +4380,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], objc.lookUpClass("NSObject"))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_v2f_Class_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_v2f_Class_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -4413,56 +4398,56 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_Class_(
                 None,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_Class_(
                 2500000000.0,
                 None,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_Class_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 None,
                 objc.lookUpClass("NSObject"),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_v2f_Class_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_v2f_Class_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
                 42,
             )
 
-    def test_id_f_v2f_Q_Q_Q_q_Z_id_(self):
+    def test_idf_v2f_Q_Q_Q_q_Z_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 2, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 3, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 4, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 5, b"q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 6, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_Q_q_Z_id_, 7, b"@")
+        self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 2, b"Q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 3, b"Q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 4, b"Q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 5, b"q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 6, b"Z")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 7, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_v2f_Q_Q_Q_q_Z_id_(
+        rv = oc.idf_v2f_Q_Q_Q_q_Z_id_(
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             35184372088832,
@@ -4487,8 +4472,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[7], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4499,8 +4484,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4513,8 +4498,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 None,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4525,8 +4510,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 None,
                 35184372088832,
@@ -4537,8 +4522,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 None,
@@ -4549,8 +4534,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4561,8 +4546,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4573,8 +4558,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4585,8 +4570,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4597,8 +4582,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4609,23 +4594,23 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_f_v2f_Q_Q_q_Z_id_(self):
+    def test_idf_v2f_Q_Q_q_Z_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 2, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 3, b"Q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 4, b"q")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 5, b"Z")
-        self.assertArgHasType(OC_VectorCall.id_f_v2f_Q_Q_q_Z_id_, 6, b"@")
+        self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 2, b"Q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 3, b"Q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 4, b"q")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 5, b"Z")
+        self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 6, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_v2f_Q_Q_q_Z_id_(
+        rv = oc.idf_v2f_Q_Q_q_Z_id_(
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             35184372088832,
@@ -4648,8 +4633,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[6], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4659,8 +4644,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4672,8 +4657,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 None,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4683,8 +4668,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 None,
                 35184372088832,
@@ -4694,8 +4679,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 None,
@@ -4705,8 +4690,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4716,8 +4701,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4727,8 +4712,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4738,8 +4723,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_v2f_Q_Q_q_Z_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_v2f_Q_Q_q_Z_id_(
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 35184372088832,
@@ -4749,22 +4734,22 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_f_id_v2i_i_q_Z_(self):
+    def test_idf_id_v2i_i_q_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 1, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 2, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 3, b"i")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 4, b"q")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_Z_, 5, b"Z")
+        self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 3, b"i")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 4, b"q")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 5, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_id_v2i_i_q_Z_(
+        rv = oc.idf_id_v2i_i_q_Z_(
             2500000000.0,
             "hello",
             objc.simd.vector_int2(0, 1),
@@ -4785,14 +4770,14 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[5], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -42, -17592186044416
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4803,13 +4788,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 None, "hello", objc.simd.vector_int2(0, 1), -42, -17592186044416, False
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0,
                 NoObjCValueObject,
                 objc.simd.vector_int2(0, 1),
@@ -4818,13 +4803,13 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0, "hello", None, -42, -17592186044416, False
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4833,13 +4818,13 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -42, None, False
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_Z_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4848,21 +4833,19 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_id_f_id_v2i_i_q_CGColor_CGColor_(self):
+    def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 1, b"@")
+        self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 3, b"i")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 4, b"q")
         self.assertArgHasType(
-            OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 2, b"<2i>"
-        )
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 3, b"i")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 4, b"q")
-        self.assertArgHasType(
-            OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 5, b"^{CGColor=}"
+            OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 5, b"^{CGColor=}"
         )
         self.assertArgHasType(
-            OC_VectorCall.id_f_id_v2i_i_q_CGColor_CGColor_, 6, b"^{CGColor=}"
+            OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 6, b"^{CGColor=}"
         )
 
         # Create test object
@@ -4870,7 +4853,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_id_v2i_i_q_CGColor_CGColor_(
+        rv = oc.idf_id_v2i_i_q_CGColor_CGColor_(
             2500000000.0,
             "hello",
             objc.simd.vector_int2(0, 1),
@@ -4893,8 +4876,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[6], "color!")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4904,8 +4887,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4917,8 +4900,8 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 None,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4928,8 +4911,8 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 NoObjCValueObject,
                 objc.simd.vector_int2(0, 1),
@@ -4939,13 +4922,13 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!"
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4955,8 +4938,8 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4966,8 +4949,8 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4977,8 +4960,8 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_i_q_CGColor_CGColor_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_i_q_CGColor_CGColor_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -4988,20 +4971,20 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_id_f_id_v2i_q_(self):
+    def test_idf_id_v2i_q_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_id_v2i_q_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_q_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_q_, 1, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_q_, 2, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.id_f_id_v2i_q_, 3, b"q")
+        self.assertResultHasType(OC_VectorCall.idf_id_v2i_q_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 2, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 3, b"q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_id_v2i_q_(
+        rv = oc.idf_id_v2i_q_(
             2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416
         )
         self.assertEqual(rv, "hello")
@@ -5015,12 +4998,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], -17592186044416)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_q_(2500000000.0, "hello", objc.simd.vector_int2(0, 1))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_q_(2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_id_v2i_q_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_id_v2i_q_(
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -5029,41 +5012,39 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_q_(
                 None, "hello", objc.simd.vector_int2(0, 1), -17592186044416
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_q_(
                 2500000000.0,
                 NoObjCValueObject,
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_q_(2500000000.0, "hello", None, -17592186044416)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_q_(2500000000.0, "hello", None, -17592186044416)
 
-        with self.assertRaises(TypeError):
-            self.id_f_id_v2i_q_(
-                2500000000.0, "hello", objc.simd.vector_int2(0, 1), None
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_id_v2i_q_(2500000000.0, "hello", objc.simd.vector_int2(0, 1), None)
 
-    def test_id_f_f_id_v2i_(self):
+    def test_idf_f_id_v2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_f_f_id_v2i_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_f_id_v2i_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_f_id_v2i_, 1, b"f")
-        self.assertArgHasType(OC_VectorCall.id_f_f_id_v2i_, 2, b"@")
-        self.assertArgHasType(OC_VectorCall.id_f_f_id_v2i_, 3, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.idf_f_id_v2i_, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 1, b"f")
+        self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 2, b"@")
+        self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 3, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_f_f_id_v2i_(
+        rv = oc.idf_f_id_v2i_(
             2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1)
         )
         self.assertEqual(rv, "hello")
@@ -5077,12 +5058,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_f_id_v2i_(2500000000.0, 2500000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_f_id_v2i_(2500000000.0, 2500000000.0, "hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_f_f_id_v2i_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idf_f_id_v2i_(
                 2500000000.0,
                 2500000000.0,
                 "hello",
@@ -5091,38 +5072,34 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_f_f_id_v2i_(
-                None, 2500000000.0, "hello", objc.simd.vector_int2(0, 1)
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_f_id_v2i_(None, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.id_f_f_id_v2i_(
-                2500000000.0, None, "hello", objc.simd.vector_int2(0, 1)
-            )
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_f_id_v2i_(2500000000.0, None, "hello", objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.id_f_f_id_v2i_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_f_id_v2i_(
                 2500000000.0,
                 2500000000.0,
                 NoObjCValueObject,
                 objc.simd.vector_int2(0, 1),
             )
 
-        with self.assertRaises(TypeError):
-            self.id_f_f_id_v2i_(2500000000.0, 2500000000.0, "hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idf_f_id_v2i_(2500000000.0, 2500000000.0, "hello", None)
 
-    def test_id_GKBox_(self):
+    def test_idGKBox_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_GKBox_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_GKBox_, 0, b"{GKBox=<3f><3f>}")
+        self.assertResultHasType(OC_VectorCall.idGKBox_, b"@")
+        self.assertArgHasType(OC_VectorCall.idGKBox_, 0, b"{GKBox=<3f><3f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_GKBox_(
+        rv = oc.idGKBox_(
             (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5142,12 +5119,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKBox_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKBox_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKBox_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKBox_(
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5156,21 +5133,21 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_GKBox_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKBox_(None)
 
-    def test_id_GKBox_f_(self):
+    def test_idGKBox_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_GKBox_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_GKBox_f_, 0, b"{GKBox=<3f><3f>}")
-        self.assertArgHasType(OC_VectorCall.id_GKBox_f_, 1, b"f")
+        self.assertResultHasType(OC_VectorCall.idGKBox_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idGKBox_f_, 0, b"{GKBox=<3f><3f>}")
+        self.assertArgHasType(OC_VectorCall.idGKBox_f_, 1, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_GKBox_f_(
+        rv = oc.idGKBox_f_(
             (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5192,8 +5169,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKBox_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKBox_f_(
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5201,8 +5178,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKBox_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKBox_f_(
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5212,11 +5189,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_GKBox_f_(None, 2500000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKBox_f_(None, 2500000000.0)
 
-        with self.assertRaises(TypeError):
-            self.id_GKBox_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKBox_f_(
                 (
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -5224,17 +5201,17 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_id_GKQuad_(self):
+    def test_idGKQuad_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_GKQuad_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_GKQuad_, 0, b"{GKQuad=<2f><2f>}")
+        self.assertResultHasType(OC_VectorCall.idGKQuad_, b"@")
+        self.assertArgHasType(OC_VectorCall.idGKQuad_, 0, b"{GKQuad=<2f><2f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_GKQuad_(
+        rv = oc.idGKQuad_(
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
         )
         self.assertEqual(rv, "hello")
@@ -5248,12 +5225,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKQuad_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKQuad_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKQuad_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKQuad_(
                 (
                     objc.simd.vector_float2(9.0, 10.0),
                     objc.simd.vector_float2(11.0, 12.0),
@@ -5262,21 +5239,21 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_GKQuad_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKQuad_(None)
 
-    def test_id_GKQuad_f_(self):
+    def test_idGKQuad_f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_GKQuad_f_, b"@")
-        self.assertArgHasType(OC_VectorCall.id_GKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
-        self.assertArgHasType(OC_VectorCall.id_GKQuad_f_, 1, b"f")
+        self.assertResultHasType(OC_VectorCall.idGKQuad_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.idGKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
+        self.assertArgHasType(OC_VectorCall.idGKQuad_f_, 1, b"f")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_GKQuad_f_(
+        rv = oc.idGKQuad_f_(
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
             2500000000.0,
         )
@@ -5292,8 +5269,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 2500000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKQuad_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKQuad_f_(
                 (
                     objc.simd.vector_float2(9.0, 10.0),
                     objc.simd.vector_float2(11.0, 12.0),
@@ -5301,8 +5278,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_GKQuad_f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idGKQuad_f_(
                 (
                     objc.simd.vector_float2(9.0, 10.0),
                     objc.simd.vector_float2(11.0, 12.0),
@@ -5312,11 +5289,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_GKQuad_f_(None, 2500000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKQuad_f_(None, 2500000000.0)
 
-        with self.assertRaises(TypeError):
-            self.id_GKQuad_f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idGKQuad_f_(
                 (
                     objc.simd.vector_float2(9.0, 10.0),
                     objc.simd.vector_float2(11.0, 12.0),
@@ -5324,11 +5301,11 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_id_MDLVoxelIndexExtent_(self):
+    def test_idMDLVoxelIndexExtent_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_MDLVoxelIndexExtent_, b"@")
+        self.assertResultHasType(OC_VectorCall.idMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_MDLVoxelIndexExtent_, 0, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.idMDLVoxelIndexExtent_, 0, b"{_MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -5336,7 +5313,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_MDLVoxelIndexExtent_(
+        rv = oc.idMDLVoxelIndexExtent_(
             (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
@@ -5356,12 +5333,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_MDLVoxelIndexExtent_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idMDLVoxelIndexExtent_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_MDLVoxelIndexExtent_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idMDLVoxelIndexExtent_(
                 (
                     objc.simd.vector_int4(100, 101, 102, 103),
                     objc.simd.vector_int4(-20, -21, -22, -23),
@@ -5370,14 +5347,14 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_MDLVoxelIndexExtent_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idMDLVoxelIndexExtent_(None)
 
-    def test_id_matrix_float4x4_(self):
+    def test_idmatrixfloat4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_matrix_float4x4_, b"@")
+        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_matrix_float4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -5385,7 +5362,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_matrix_float4x4_(
+        rv = oc.idmatrixfloat4x4_(
             simd.matrix_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5413,12 +5390,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_matrix_float4x4_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idmatrixfloat4x4_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_matrix_float4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idmatrixfloat4x4_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5431,23 +5408,23 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_matrix_float4x4_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idmatrixfloat4x4_(None)
 
-    def test_id_matrix_float4x4_Z_(self):
+    def test_idmatrixfloat4x4_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.id_matrix_float4x4_Z_, b"@")
+        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_Z_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.id_matrix_float4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idmatrixfloat4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.id_matrix_float4x4_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.idmatrixfloat4x4_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.id_matrix_float4x4_Z_(
+        rv = oc.idmatrixfloat4x4_Z_(
             simd.matrix_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5477,8 +5454,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_matrix_float4x4_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5490,8 +5467,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.id_matrix_float4x4_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5505,11 +5482,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.id_matrix_float4x4_Z_(None, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idmatrixfloat4x4_Z_(None, False)
 
-        with self.assertRaises(TypeError):
-            self.id_matrix_float4x4_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -5521,21 +5498,21 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_Z_v2i_id_id_id_id_(self):
+    def test_Zv2i_id_id_id_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.Z_v2i_id_id_id_id_, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_id_id_id_id_, 0, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_id_id_id_id_, 1, b"@")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_id_id_id_id_, 2, b"@")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_id_id_id_id_, 3, b"@")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_id_id_id_id_, 4, b"@")
+        self.assertResultHasType(OC_VectorCall.Zv2i_id_id_id_id_, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 0, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 2, b"@")
+        self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 3, b"@")
+        self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 4, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.Z_v2i_id_id_id_id_(
+        rv = oc.Zv2i_id_id_id_id_(
             objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello"
         )
         self.assertEqual(rv, False)
@@ -5550,23 +5527,21 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v2i_id_id_id_id_(
-                objc.simd.vector_int2(0, 1), "hello", "hello", "hello"
-            )
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv2i_id_id_id_id_(objc.simd.vector_int2(0, 1), "hello", "hello", "hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v2i_id_id_id_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv2i_id_id_id_id_(
                 objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello", "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.Z_v2i_id_id_id_id_(None, "hello", "hello", "hello", "hello")
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_id_id_id_id_(None, "hello", "hello", "hello", "hello")
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_id_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_id_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 NoObjCValueObject,
                 "hello",
@@ -5574,8 +5549,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_id_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_id_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 "hello",
                 NoObjCValueObject,
@@ -5583,8 +5558,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_id_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_id_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 "hello",
                 "hello",
@@ -5592,8 +5567,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_id_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_id_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 "hello",
                 "hello",
@@ -5601,22 +5576,22 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_Z_v2i_q_f_id_id_id_(self):
+    def test_Zv2i_q_f_id_id_id_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 0, b"<2i>")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 1, b"q")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 2, b"f")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 3, b"@")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 4, b"@")
-        self.assertArgHasType(OC_VectorCall.Z_v2i_q_f_id_id_id_, 5, b"@")
+        self.assertResultHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 0, b"<2i>")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 1, b"q")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 2, b"f")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 3, b"@")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 4, b"@")
+        self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 5, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.Z_v2i_q_f_id_id_id_(
+        rv = oc.Zv2i_q_f_id_id_id_(
             objc.simd.vector_int2(0, 1),
             -17592186044416,
             2500000000.0,
@@ -5637,8 +5612,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[5], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 2500000000.0,
@@ -5647,8 +5622,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 2500000000.0,
@@ -5659,13 +5634,13 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 None, -17592186044416, 2500000000.0, "hello", "hello", "hello"
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 None,
                 2500000000.0,
@@ -5674,8 +5649,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 None,
@@ -5684,8 +5659,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 2500000000.0,
@@ -5694,8 +5669,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 2500000000.0,
@@ -5704,8 +5679,8 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v2i_q_f_id_id_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv2i_q_f_id_id_id_(
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
                 2500000000.0,
@@ -5714,21 +5689,21 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_Z_v4i_Z_Z_Z_Z_(self):
+    def test_Zv4i_Z_Z_Z_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, 0, b"<4i>")
-        self.assertArgHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, 1, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, 2, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, 3, b"Z")
-        self.assertArgHasType(OC_VectorCall.Z_v4i_Z_Z_Z_Z_, 4, b"Z")
+        self.assertResultHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 0, b"<4i>")
+        self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 2, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 3, b"Z")
+        self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 4, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.Z_v4i_Z_Z_Z_Z_(
+        rv = oc.Zv4i_Z_Z_Z_Z_(
             objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False
         )
         self.assertEqual(rv, False)
@@ -5743,50 +5718,50 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[4], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v4i_Z_Z_Z_Z_(objc.simd.vector_int4(0, 1, 2, 3), False, False, False)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv4i_Z_Z_Z_Z_(objc.simd.vector_int4(0, 1, 2, 3), False, False, False)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.Z_v4i_Z_Z_Z_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.Zv4i_Z_Z_Z_Z_(
                 objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.Z_v4i_Z_Z_Z_Z_(None, False, False, False, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv4i_Z_Z_Z_Z_(None, False, False, False, False)
 
-        with self.assertRaises(TypeError):
-            self.Z_v4i_Z_Z_Z_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv4i_Z_Z_Z_Z_(
                 objc.simd.vector_int4(0, 1, 2, 3), None, False, False, False
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v4i_Z_Z_Z_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv4i_Z_Z_Z_Z_(
                 objc.simd.vector_int4(0, 1, 2, 3), False, None, False, False
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v4i_Z_Z_Z_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv4i_Z_Z_Z_Z_(
                 objc.simd.vector_int4(0, 1, 2, 3), False, False, None, False
             )
 
-        with self.assertRaises(TypeError):
-            self.Z_v4i_Z_Z_Z_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.Zv4i_Z_Z_Z_Z_(
                 objc.simd.vector_int4(0, 1, 2, 3), False, False, False, None
             )
 
-    def test_CGColor_v3f_(self):
+    def test_CGColorv3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.CGColor_v3f_, b"^{CGColor=}")
-        self.assertArgHasType(OC_VectorCall.CGColor_v3f_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.CGColorv3f_, b"^{CGColor=}")
+        self.assertArgHasType(OC_VectorCall.CGColorv3f_, 0, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.CGColor_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.CGColorv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "color!")
 
         stored = oc.storedvalue()
@@ -5795,25 +5770,23 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.CGColor_v3f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.CGColorv3f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.CGColor_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.CGColorv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.CGColor_v3f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.CGColorv3f_(None)
 
-    def test_CGColor_v3f_CGColorSpace_(self):
+    def test_CGColorv3f_CGColorSpace_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.CGColor_v3f_CGColorSpace_, b"^{CGColor=}"
-        )
-        self.assertArgHasType(OC_VectorCall.CGColor_v3f_CGColorSpace_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, b"^{CGColor=}")
+        self.assertArgHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, 0, b"<3f>")
         self.assertArgHasType(
-            OC_VectorCall.CGColor_v3f_CGColorSpace_, 1, b"^{CGColorSpace=}"
+            OC_VectorCall.CGColorv3f_CGColorSpace_, 1, b"^{CGColorSpace=}"
         )
 
         # Create test object
@@ -5821,7 +5794,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.CGColor_v3f_CGColorSpace_(
+        rv = oc.CGColorv3f_CGColorSpace_(
             objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!"
         )
         self.assertEqual(rv, "color!")
@@ -5833,35 +5806,35 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], "colorspace!")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.CGColor_v3f_CGColorSpace_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.CGColorv3f_CGColorSpace_(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.CGColor_v3f_CGColorSpace_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.CGColorv3f_CGColorSpace_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!", "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.CGColor_v3f_CGColorSpace_(None, "colorspace!")
+        with self.assertRaises((TypeError, ValueError)):
+            oc.CGColorv3f_CGColorSpace_(None, "colorspace!")
 
-        with self.assertRaises(TypeError):
-            self.CGColor_v3f_CGColorSpace_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.CGColorv3f_CGColorSpace_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0), NoObjCValueObject
             )
 
-    def test_f_v2f_(self):
+    def test_fv2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.f_v2f_, b"f")
-        self.assertArgHasType(OC_VectorCall.f_v2f_, 0, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.fv2f_, b"f")
+        self.assertArgHasType(OC_VectorCall.fv2f_, 0, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.f_v2f_(objc.simd.vector_float2(0.0, 1.5))
+        rv = oc.fv2f_(objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, 2500000000.0)
 
         stored = oc.storedvalue()
@@ -5870,28 +5843,28 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.f_v2f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.fv2f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.f_v2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.fv2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.f_v2f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.fv2f_(None)
 
-    def test_f_v2i_(self):
+    def test_fv2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.f_v2i_, b"f")
-        self.assertArgHasType(OC_VectorCall.f_v2i_, 0, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.fv2i_, b"f")
+        self.assertArgHasType(OC_VectorCall.fv2i_, 0, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.f_v2i_(objc.simd.vector_int2(0, 1))
+        rv = oc.fv2i_(objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, 2500000000.0)
 
         stored = oc.storedvalue()
@@ -5900,29 +5873,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.f_v2i_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.fv2i_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.f_v2i_(objc.simd.vector_int2(0, 1), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.fv2i_(objc.simd.vector_int2(0, 1), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.f_v2i_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.fv2i_(None)
 
-    def test_v_v2d_d_(self):
+    def test_vv2d_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v2d_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v2d_d_, 0, b"<2d>")
-        self.assertArgHasType(OC_VectorCall.v_v2d_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv2d_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv2d_d_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.vv2d_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v2d_d_(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
+        rv = oc.vv2d_d_(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -5932,31 +5905,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2d_d_(objc.simd.vector_double2(0.0, 1.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2d_d_(objc.simd.vector_double2(0.0, 1.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2d_d_(objc.simd.vector_double2(0.0, 1.5), -557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2d_d_(objc.simd.vector_double2(0.0, 1.5), -557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v2d_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv2d_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v2d_d_(objc.simd.vector_double2(0.0, 1.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv2d_d_(objc.simd.vector_double2(0.0, 1.5), None)
 
-    def test_v_v2f_(self):
+    def test_vv2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v2f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v2f_, 0, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.vv2f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv2f_, 0, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v2f_(objc.simd.vector_float2(0.0, 1.5))
+        rv = oc.vv2f_(objc.simd.vector_float2(0.0, 1.5))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -5965,29 +5938,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2f_(objc.simd.vector_float2(0.0, 1.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v2f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv2f_(None)
 
-    def test_v_v2f_d_(self):
+    def test_vv2f_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v2f_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v2f_d_, 0, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v_v2f_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv2f_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv2f_d_, 0, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.vv2f_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v2f_d_(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
+        rv = oc.vv2f_d_(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -5997,31 +5970,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2f_d_(objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2f_d_(objc.simd.vector_float2(0.0, 1.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v2f_d_(objc.simd.vector_float2(0.0, 1.5), -557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv2f_d_(objc.simd.vector_float2(0.0, 1.5), -557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v2f_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv2f_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v2f_d_(objc.simd.vector_float2(0.0, 1.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv2f_d_(objc.simd.vector_float2(0.0, 1.5), None)
 
-    def test_v_v3d_(self):
+    def test_vv3d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3d_, 0, b"<3d>")
+        self.assertResultHasType(OC_VectorCall.vv3d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3d_, 0, b"<3d>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3d_(objc.simd.vector_double3(0.0, 1.5, 3.0))
+        rv = oc.vv3d_(objc.simd.vector_double3(0.0, 1.5, 3.0))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6030,29 +6003,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_double3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3d_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3d_(objc.simd.vector_double3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3d_(objc.simd.vector_double3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3d_(None)
 
-    def test_v_v3d_d_(self):
+    def test_vv3d_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3d_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3d_d_, 0, b"<3d>")
-        self.assertArgHasType(OC_VectorCall.v_v3d_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv3d_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3d_d_, 0, b"<3d>")
+        self.assertArgHasType(OC_VectorCall.vv3d_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
+        rv = oc.vv3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6062,33 +6035,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3d_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3d_d_(
                 objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0, "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3d_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3d_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3d_d_(objc.simd.vector_double3(0.0, 1.5, 3.0), None)
 
-    def test_v_v3f_(self):
+    def test_vv3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3f_, 0, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.vv3f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3f_, 0, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        rv = oc.vv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6097,29 +6070,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_(None)
 
-    def test_v_v3f_v3f_(self):
+    def test_vv3f_v3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3f_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3f_v3f_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v_v3f_v3f_, 1, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.vv3f_v3f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3f_v3f_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.vv3f_v3f_, 1, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3f_v3f_(
+        rv = oc.vv3f_v3f_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
         )
@@ -6132,37 +6105,37 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_v3f_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 "hello",
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3f_v3f_(None, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_v3f_(None, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        with self.assertRaises(TypeError):
-            self.v_v3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_v3f_(objc.simd.vector_float3(0.0, 1.5, 3.0), None)
 
-    def test_v_v3f_v3f_v3f_(self):
+    def test_vv3f_v3f_v3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3f_v3f_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3f_v3f_v3f_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v_v3f_v3f_v3f_, 1, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v_v3f_v3f_v3f_, 2, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.vv3f_v3f_v3f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3f_v3f_v3f_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.vv3f_v3f_v3f_, 1, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.vv3f_v3f_v3f_, 2, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3f_v3f_v3f_(
+        rv = oc.vv3f_v3f_v3f_(
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -6177,15 +6150,15 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_v3f_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_v3f_v3f_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_v3f_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_v3f_v3f_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -6193,39 +6166,39 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3f_v3f_v3f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_v3f_v3f_(
                 None,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        with self.assertRaises(TypeError):
-            self.v_v3f_v3f_v3f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_v3f_v3f_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        with self.assertRaises(TypeError):
-            self.v_v3f_v3f_v3f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_v3f_v3f_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 None,
             )
 
-    def test_v_v3f_d_(self):
+    def test_vv3f_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v3f_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v3f_d_, 0, b"<3f>")
-        self.assertArgHasType(OC_VectorCall.v_v3f_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv3f_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv3f_d_, 0, b"<3f>")
+        self.assertArgHasType(OC_VectorCall.vv3f_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
+        rv = oc.vv3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6235,34 +6208,32 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v3f_d_(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0, "hello"
-            )
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v3f_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv3f_d_(objc.simd.vector_float3(0.0, 1.5, 3.0), None)
 
-    def test_v_v4d_d_(self):
+    def test_vv4d_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v4d_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v4d_d_, 0, b"<4d>")
-        self.assertArgHasType(OC_VectorCall.v_v4d_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv4d_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv4d_d_, 0, b"<4d>")
+        self.assertArgHasType(OC_VectorCall.vv4d_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        rv = oc.vv4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6272,33 +6243,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4d_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4d_d_(
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v4d_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4d_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4d_d_(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), None)
 
-    def test_v_v4f_(self):
+    def test_vv4f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v4f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v4f_, 0, b"<4f>")
+        self.assertResultHasType(OC_VectorCall.vv4f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv4f_, 0, b"<4f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        rv = oc.vv4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6307,29 +6278,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4f_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4f_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4f_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v4f_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4f_(None)
 
-    def test_v_v4f_d_(self):
+    def test_vv4f_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v4f_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v4f_d_, 0, b"<4f>")
-        self.assertArgHasType(OC_VectorCall.v_v4f_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vv4f_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv4f_d_, 0, b"<4f>")
+        self.assertArgHasType(OC_VectorCall.vv4f_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        rv = oc.vv4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6339,33 +6310,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4f_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4f_d_(
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v4f_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4f_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_v4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4f_d_(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), None)
 
-    def test_v_v4i_(self):
+    def test_vv4i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_v4i_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_v4i_, 0, b"<4i>")
+        self.assertResultHasType(OC_VectorCall.vv4i_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv4i_, 0, b"<4i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_v4i_(objc.simd.vector_int4(0, 1, 2, 3))
+        rv = oc.vv4i_(objc.simd.vector_int4(0, 1, 2, 3))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6374,30 +6345,30 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_int4(0, 1, 2, 3))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4i_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4i_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_v4i_(objc.simd.vector_int4(0, 1, 2, 3), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vv4i_(objc.simd.vector_int4(0, 1, 2, 3), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_v4i_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vv4i_(None)
 
-    def test_v_id_v2f_v2f_(self):
+    def test_vid_v2f_v2f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_id_v2f_v2f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_, 2, b"<2f>")
+        self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_, 2, b"<2f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_id_v2f_v2f_(
+        rv = oc.vid_v2f_v2f_(
             "hello",
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -6412,12 +6383,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[2], objc.simd.vector_float2(0.0, 1.5))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_id_v2f_v2f_("hello", objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vid_v2f_v2f_("hello", objc.simd.vector_float2(0.0, 1.5))
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_id_v2f_v2f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vid_v2f_v2f_(
                 "hello",
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -6425,33 +6396,33 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_(
                 NoObjCValueObject,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_("hello", None, objc.simd.vector_float2(0.0, 1.5))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_("hello", None, objc.simd.vector_float2(0.0, 1.5))
 
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_("hello", objc.simd.vector_float2(0.0, 1.5), None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_("hello", objc.simd.vector_float2(0.0, 1.5), None)
 
-    def test_v_id_v2f_v2f_q_(self):
+    def test_vid_v2f_v2f_q_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_id_v2f_v2f_q_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_q_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_q_, 1, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_q_, 2, b"<2f>")
-        self.assertArgHasType(OC_VectorCall.v_id_v2f_v2f_q_, 3, b"q")
+        self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_q_, b"v")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 1, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 2, b"<2f>")
+        self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 3, b"q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_id_v2f_v2f_q_(
+        rv = oc.vid_v2f_v2f_q_(
             "hello",
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -6468,16 +6439,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[3], -17592186044416)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vid_v2f_v2f_q_(
                 "hello",
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vid_v2f_v2f_q_(
                 "hello",
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -6486,44 +6457,44 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_q_(
                 NoObjCValueObject,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
                 -17592186044416,
             )
 
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_q_(
                 "hello", None, objc.simd.vector_float2(0.0, 1.5), -17592186044416
             )
 
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_q_(
                 "hello", objc.simd.vector_float2(0.0, 1.5), None, -17592186044416
             )
 
-        with self.assertRaises(TypeError):
-            self.v_id_v2f_v2f_q_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vid_v2f_v2f_q_(
                 "hello",
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
                 None,
             )
 
-    def test_v_f_v2i_(self):
+    def test_vf_v2i_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_f_v2i_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_f_v2i_, 0, b"f")
-        self.assertArgHasType(OC_VectorCall.v_f_v2i_, 1, b"<2i>")
+        self.assertResultHasType(OC_VectorCall.vf_v2i_, b"v")
+        self.assertArgHasType(OC_VectorCall.vf_v2i_, 0, b"f")
+        self.assertArgHasType(OC_VectorCall.vf_v2i_, 1, b"<2i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_f_v2i_(2500000000.0, objc.simd.vector_int2(0, 1))
+        rv = oc.vf_v2i_(2500000000.0, objc.simd.vector_int2(0, 1))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -6533,25 +6504,25 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_int2(0, 1))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_f_v2i_(2500000000.0)
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vf_v2i_(2500000000.0)
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_f_v2i_(2500000000.0, objc.simd.vector_int2(0, 1), "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vf_v2i_(2500000000.0, objc.simd.vector_int2(0, 1), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_f_v2i_(None, objc.simd.vector_int2(0, 1))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vf_v2i_(None, objc.simd.vector_int2(0, 1))
 
-        with self.assertRaises(TypeError):
-            self.v_f_v2i_(2500000000.0, None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vf_v2i_(2500000000.0, None)
 
-    def test_v_MDLAxisAlignedBoundingBox_(self):
+    def test_vMDLAxisAlignedBoundingBox_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_MDLAxisAlignedBoundingBox_, b"v")
+        self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_MDLAxisAlignedBoundingBox_,
+            OC_VectorCall.vMDLAxisAlignedBoundingBox_,
             0,
             b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
@@ -6561,7 +6532,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_MDLAxisAlignedBoundingBox_(
+        rv = oc.vMDLAxisAlignedBoundingBox_(
             (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6581,12 +6552,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_MDLAxisAlignedBoundingBox_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vMDLAxisAlignedBoundingBox_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_MDLAxisAlignedBoundingBox_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vMDLAxisAlignedBoundingBox_(
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6595,25 +6566,25 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_MDLAxisAlignedBoundingBox_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vMDLAxisAlignedBoundingBox_(None)
 
-    def test_v_MDLAxisAlignedBoundingBox_Z_(self):
+    def test_vMDLAxisAlignedBoundingBox_Z_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_MDLAxisAlignedBoundingBox_Z_, b"v")
+        self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_MDLAxisAlignedBoundingBox_Z_,
+            OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_,
             0,
             b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(OC_VectorCall.v_MDLAxisAlignedBoundingBox_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_MDLAxisAlignedBoundingBox_Z_(
+        rv = oc.vMDLAxisAlignedBoundingBox_Z_(
             (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6635,8 +6606,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], False)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_MDLAxisAlignedBoundingBox_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vMDLAxisAlignedBoundingBox_Z_(
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6644,8 +6615,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_MDLAxisAlignedBoundingBox_Z_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vMDLAxisAlignedBoundingBox_Z_(
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6655,11 +6626,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_MDLAxisAlignedBoundingBox_Z_(None, False)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vMDLAxisAlignedBoundingBox_Z_(None, False)
 
-        with self.assertRaises(TypeError):
-            self.v_MDLAxisAlignedBoundingBox_Z_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vMDLAxisAlignedBoundingBox_Z_(
                 (
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -6667,11 +6638,11 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_v_matrix_double4x4_(self):
+    def test_vmatrixdouble4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_double4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_double4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vmatrixdouble4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -6679,7 +6650,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_double4x4_(
+        rv = oc.vmatrixdouble4x4_(
             simd.matrix_double4x4(
                 [
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6707,12 +6678,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_double4x4_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixdouble4x4_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_double4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixdouble4x4_(
                 simd.matrix_double4x4(
                     [
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6725,23 +6696,23 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_double4x4_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixdouble4x4_(None)
 
-    def test_v_matrix_double4x4_d_(self):
+    def test_vmatrixdouble4x4_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_double4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_double4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vmatrixdouble4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.v_matrix_double4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.vmatrixdouble4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_double4x4_d_(
+        rv = oc.vmatrixdouble4x4_d_(
             simd.matrix_double4x4(
                 [
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6771,8 +6742,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_double4x4_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
                     [
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6784,8 +6755,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_double4x4_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
                     [
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6799,11 +6770,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_double4x4_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixdouble4x4_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_matrix_double4x4_d_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
                     [
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -6815,11 +6786,11 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_v_matrix_float2x2_(self):
+    def test_vmatrixfloat2x2_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_float2x2_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixfloat2x2_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_float2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.vmatrixfloat2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -6827,7 +6798,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_float2x2_(
+        rv = oc.vmatrixfloat2x2_(
             simd.matrix_float2x2(
                 [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
             )
@@ -6845,12 +6816,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float2x2_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat2x2_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float2x2_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat2x2_(
                 simd.matrix_float2x2(
                     [
                         objc.simd.vector_float2(0.0, 1.5),
@@ -6861,14 +6832,14 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_float2x2_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixfloat2x2_(None)
 
-    def test_v_matrix_float3x3_(self):
+    def test_vmatrixfloat3x3_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_float3x3_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixfloat3x3_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_float3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.vmatrixfloat3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -6876,7 +6847,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_float3x3_(
+        rv = oc.vmatrixfloat3x3_(
             simd.matrix_float3x3(
                 [
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -6902,12 +6873,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float3x3_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat3x3_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float3x3_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat3x3_(
                 simd.matrix_float3x3(
                     [
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -6919,14 +6890,14 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_float3x3_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixfloat3x3_(None)
 
-    def test_v_matrix_float4x4_(self):
+    def test_vmatrixfloat4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_float4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_float4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.vmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -6934,7 +6905,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_float4x4_(
+        rv = oc.vmatrixfloat4x4_(
             simd.matrix_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -6962,12 +6933,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float4x4_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat4x4_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat4x4_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -6980,23 +6951,23 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_float4x4_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixfloat4x4_(None)
 
-    def test_v_matrix_float4x4_d_(self):
+    def test_vmatrixfloat4x4_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_matrix_float4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_matrix_float4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.vmatrixfloat4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.v_matrix_float4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.vmatrixfloat4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_matrix_float4x4_d_(
+        rv = oc.vmatrixfloat4x4_d_(
             simd.matrix_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7026,8 +6997,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float4x4_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7039,8 +7010,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_matrix_float4x4_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7054,11 +7025,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_matrix_float4x4_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixfloat4x4_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_matrix_float4x4_d_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7070,11 +7041,11 @@ class TestVectorCall(TestCase):
                 None,
             )
 
-    def test_v_simd_float4x4_(self):
+    def test_vsimdfloat4x4_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_simd_float4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.v_simd_float4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.vsimdfloat4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -7082,7 +7053,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_simd_float4x4_(
+        rv = oc.vsimdfloat4x4_(
             simd.simd_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7110,12 +7081,12 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_float4x4_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdfloat4x4_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_float4x4_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdfloat4x4_(
                 simd.simd_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7128,21 +7099,21 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_simd_float4x4_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdfloat4x4_(None)
 
-    def test_v_simd_quatd_d_(self):
+    def test_vsimdquatd_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_simd_quatd_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatd_d_, 0, b"{_simd_quatd=<4d>}")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatd_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vsimdquatd_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_simd_quatd_d_(
+        rv = oc.vsimdquatd_d_(
             simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
             -557000000000.0,
         )
@@ -7157,39 +7128,39 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatd_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatd_d_(
                 simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatd_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatd_d_(
                 simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
                 -557000000000.0,
                 "hello",
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_simd_quatd_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatd_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_simd_quatd_d_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatd_d_(
                 simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)), None
             )
 
-    def test_v_simd_quatf_(self):
+    def test_vsimdquatf_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_simd_quatf_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatf_, 0, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.vsimdquatf_, b"v")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{_simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_simd_quatf_(
+        rv = oc.vsimdquatf_(
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
         self.assertIs(rv, None)
@@ -7202,31 +7173,31 @@ class TestVectorCall(TestCase):
         )
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello"
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_simd_quatf_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatf_(None)
 
-    def test_v_simd_quatf_v3f_(self):
+    def test_vsimdquatf_v3f_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_simd_quatf_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatf_v3f_, 0, b"{_simd_quatf=<4f>}")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatf_v3f_, 1, b"<3f>")
+        self.assertResultHasType(OC_VectorCall.vsimdquatf_v3f_, b"v")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 1, b"<3f>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_simd_quatf_v3f_(
+        rv = oc.vsimdquatf_v3f_(
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
         )
@@ -7241,40 +7212,40 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_v3f_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_v3f_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_v3f_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 "hello",
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_simd_quatf_v3f_(None, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatf_v3f_(None, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        with self.assertRaises(TypeError):
-            self.v_simd_quatf_v3f_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatf_v3f_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), None
             )
 
-    def test_v_simd_quatf_d_(self):
+    def test_vsimdquatf_d_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v_simd_quatf_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatf_d_, 0, b"{_simd_quatf=<4f>}")
-        self.assertArgHasType(OC_VectorCall.v_simd_quatf_d_, 1, b"d")
+        self.assertResultHasType(OC_VectorCall.vsimdquatf_d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.v_simd_quatf_d_(
+        rv = oc.vsimdquatf_d_(
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             -557000000000.0,
         )
@@ -7289,25 +7260,25 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_d_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.v_simd_quatf_d_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.vsimdquatf_d_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
                 -557000000000.0,
                 "hello",
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.v_simd_quatf_d_(None, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatf_d_(None, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.v_simd_quatf_d_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.vsimdquatf_d_(
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), None
             )
 
@@ -7334,12 +7305,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKBox()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKBox()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKBox("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKBox("hello")
 
     def test_GKQuad(self):
         # Check that the signature is as expected
@@ -7361,24 +7332,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKQuad()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKQuad()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKQuad("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKQuad("hello")
 
-    def test_GKTriangle_Q_(self):
+    def test_GKTriangleQ_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.GKTriangle_Q_, b"{GKTriangle=[3<3f>]}")
-        self.assertArgHasType(OC_VectorCall.GKTriangle_Q_, 0, b"Q")
+        self.assertResultHasType(OC_VectorCall.GKTriangleQ_, b"{GKTriangle=[3<3f>]}")
+        self.assertArgHasType(OC_VectorCall.GKTriangleQ_, 0, b"Q")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.GKTriangle_Q_(35184372088832)
+        rv = oc.GKTriangleQ_(35184372088832)
         self.assertEqual(
             rv,
             [
@@ -7394,16 +7365,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], 35184372088832)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKTriangle_Q_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKTriangleQ_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.GKTriangle_Q_(35184372088832, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.GKTriangleQ_(35184372088832, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.GKTriangle_Q_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.GKTriangleQ_(None)
 
     def test_MDLAxisAlignedBoundingBox(self):
         # Check that the signature is as expected
@@ -7431,27 +7402,27 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBox()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBox("hello")
 
-    def test_MDLAxisAlignedBoundingBox_v4i_(self):
+    def test_MDLAxisAlignedBoundingBoxv4i_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.MDLAxisAlignedBoundingBox_v4i_,
+            OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_,
             b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBox_v4i_, 0, b"<4i>")
+        self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.MDLAxisAlignedBoundingBox_v4i_(objc.simd.vector_int4(0, 1, 2, 3))
+        rv = oc.MDLAxisAlignedBoundingBoxv4i_(objc.simd.vector_int4(0, 1, 2, 3))
         self.assertEqual(
             rv,
             (
@@ -7466,33 +7437,31 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], objc.simd.vector_int4(0, 1, 2, 3))
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox_v4i_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBoxv4i_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox_v4i_(
-                objc.simd.vector_int4(0, 1, 2, 3), "hello"
-            )
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBoxv4i_(objc.simd.vector_int4(0, 1, 2, 3), "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.MDLAxisAlignedBoundingBox_v4i_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.MDLAxisAlignedBoundingBoxv4i_(None)
 
-    def test_MDLAxisAlignedBoundingBox_d_(self):
+    def test_MDLAxisAlignedBoundingBoxd_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.MDLAxisAlignedBoundingBox_d_,
+            OC_VectorCall.MDLAxisAlignedBoundingBoxd_,
             b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBox_d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.MDLAxisAlignedBoundingBox_d_(-557000000000.0)
+        rv = oc.MDLAxisAlignedBoundingBoxd_(-557000000000.0)
         self.assertEqual(
             rv,
             (
@@ -7507,16 +7476,16 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBoxd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLAxisAlignedBoundingBox_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLAxisAlignedBoundingBoxd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.MDLAxisAlignedBoundingBox_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.MDLAxisAlignedBoundingBoxd_(None)
 
     def test_MDLVoxelIndexExtent(self):
         # Check that the signature is as expected
@@ -7543,12 +7512,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLVoxelIndexExtent()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLVoxelIndexExtent()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MDLVoxelIndexExtent("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MDLVoxelIndexExtent("hello")
 
     def test_MPSAxisAlignedBoundingBox(self):
         # Check that the signature is as expected
@@ -7576,12 +7545,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MPSAxisAlignedBoundingBox()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MPSAxisAlignedBoundingBox()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MPSAxisAlignedBoundingBox("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MPSAxisAlignedBoundingBox("hello")
 
     def test_MPSImageHistogramInfo(self):
         # Check that the signature is as expected
@@ -7610,17 +7579,17 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MPSImageHistogramInfo()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MPSImageHistogramInfo()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.MPSImageHistogramInfo("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.MPSImageHistogramInfo("hello")
 
-    def test_matrix_double4x4(self):
+    def test_matrixdouble4x4(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_double4x4, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.matrixdouble4x4, b"{_matrix_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -7628,7 +7597,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_double4x4()
+        rv = oc.matrixdouble4x4()
         self.assertEqual(
             rv,
             simd.matrix_double4x4(
@@ -7646,26 +7615,26 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_double4x4()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixdouble4x4()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_double4x4("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixdouble4x4("hello")
 
-    def test_matrix_double4x4_d_(self):
+    def test_matrixdouble4x4d_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_double4x4_d_, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.matrixdouble4x4d_, b"{_matrix_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.matrix_double4x4_d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.matrixdouble4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_double4x4_d_(-557000000000.0)
+        rv = oc.matrixdouble4x4d_(-557000000000.0)
         self.assertEqual(
             rv,
             simd.matrix_double4x4(
@@ -7684,21 +7653,21 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_double4x4_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixdouble4x4d_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_double4x4_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixdouble4x4d_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.matrix_double4x4_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.matrixdouble4x4d_(None)
 
-    def test_matrix_float2x2(self):
+    def test_matrixfloat2x2(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_float2x2, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.matrixfloat2x2, b"{_matrix_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -7706,7 +7675,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_float2x2()
+        rv = oc.matrixfloat2x2()
         self.assertEqual(
             rv,
             simd.matrix_float2x2(
@@ -7719,17 +7688,17 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float2x2()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat2x2()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float2x2("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat2x2("hello")
 
-    def test_matrix_float3x3(self):
+    def test_matrixfloat3x3(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_float3x3, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.matrixfloat3x3, b"{_matrix_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -7737,7 +7706,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_float3x3()
+        rv = oc.matrixfloat3x3()
         self.assertEqual(
             rv,
             simd.matrix_float3x3(
@@ -7754,17 +7723,17 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float3x3()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat3x3()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float3x3("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat3x3("hello")
 
-    def test_matrix_float4x4(self):
+    def test_matrixfloat4x4(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_float4x4, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.matrixfloat4x4, b"{_matrix_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -7772,7 +7741,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_float4x4()
+        rv = oc.matrixfloat4x4()
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
@@ -7790,27 +7759,27 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4("hello")
 
-    def test_matrix_float4x4_id_d_(self):
+    def test_matrixfloat4x4id_d_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_float4x4_id_d_, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.matrixfloat4x4id_d_, b"{_matrix_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.matrix_float4x4_id_d_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.matrix_float4x4_id_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_float4x4_id_d_("hello", -557000000000.0)
+        rv = oc.matrixfloat4x4id_d_("hello", -557000000000.0)
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
@@ -7830,33 +7799,33 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4_id_d_("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4id_d_("hello")
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4_id_d_("hello", -557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4id_d_("hello", -557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.matrix_float4x4_id_d_(NoObjCValueObject, -557000000000.0)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.matrixfloat4x4id_d_(NoObjCValueObject, -557000000000.0)
 
-        with self.assertRaises(TypeError):
-            self.matrix_float4x4_id_d_("hello", None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.matrixfloat4x4id_d_("hello", None)
 
-    def test_matrix_float4x4_d_(self):
+    def test_matrixfloat4x4d_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrix_float4x4_d_, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.matrixfloat4x4d_, b"{_matrix_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.matrix_float4x4_d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.matrixfloat4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.matrix_float4x4_d_(-557000000000.0)
+        rv = oc.matrixfloat4x4d_(-557000000000.0)
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
@@ -7875,21 +7844,21 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4d_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.matrix_float4x4_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.matrixfloat4x4d_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.matrix_float4x4_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.matrixfloat4x4d_(None)
 
-    def test_simd_float4x4(self):
+    def test_simdfloat4x4(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.simd_float4x4, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4, b"{_simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -7897,7 +7866,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.simd_float4x4()
+        rv = oc.simdfloat4x4()
         self.assertEqual(
             rv,
             simd.simd_float4x4(
@@ -7915,31 +7884,29 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_float4x4()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdfloat4x4()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_float4x4("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdfloat4x4("hello")
 
-    def test_simd_float4x4_simd_float4x4_id_(self):
+    def test_simdfloat4x4simdfloat4x4_id_(self):
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.simd_float4x4_simd_float4x4_id_, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{_simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(
-            OC_VectorCall.simd_float4x4_simd_float4x4_id_,
-            0,
-            b"{_simd_float4x4=[4<4f>]}",
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 0, b"{_simd_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.simd_float4x4_simd_float4x4_id_, 1, b"@")
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 1, b"@")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.simd_float4x4_simd_float4x4_id_(
+        rv = oc.simdfloat4x4simdfloat4x4_id_(
             simd.simd_float4x4(
                 [
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7979,8 +7946,8 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], "hello")
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_float4x4_simd_float4x4_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -7992,8 +7959,8 @@ class TestVectorCall(TestCase):
             )
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_float4x4_simd_float4x4_id_(
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -8007,11 +7974,11 @@ class TestVectorCall(TestCase):
             )
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.simd_float4x4_simd_float4x4_id_(None, "hello")
+        with self.assertRaises((TypeError, ValueError)):
+            oc.simdfloat4x4simdfloat4x4_id_(None, "hello")
 
-        with self.assertRaises(TypeError):
-            self.simd_float4x4_simd_float4x4_id_(
+        with self.assertRaises((TypeError, ValueError)):
+            oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
                     [
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -8023,17 +7990,17 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_simd_quatd_d_(self):
+    def test_simdquatdd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simd_quatd_d_, b"{_simd_quatd=<4d>}")
-        self.assertArgHasType(OC_VectorCall.simd_quatd_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.simdquatdd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.simd_quatd_d_(-557000000000.0)
+        rv = oc.simdquatdd_(-557000000000.0)
         self.assertEqual(
             rv, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
         )
@@ -8044,27 +8011,27 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatd_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatdd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatd_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatdd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.simd_quatd_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.simdquatdd_(None)
 
-    def test_simd_quatf(self):
+    def test_simdquatf(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simd_quatf, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.simdquatf, b"{_simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.simd_quatf()
+        rv = oc.simdquatf()
         self.assertEqual(
             rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
@@ -8074,24 +8041,24 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatf()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatf()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatf("hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatf("hello")
 
-    def test_simd_quatf_d_(self):
+    def test_simdquatfd_(self):
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simd_quatf_d_, b"{_simd_quatf=<4f>}")
-        self.assertArgHasType(OC_VectorCall.simd_quatf_d_, 0, b"d")
+        self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.simdquatfd_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Valid call
-        rv = oc.simd_quatf_d_(-557000000000.0)
+        rv = oc.simdquatfd_(-557000000000.0)
         self.assertEqual(
             rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
@@ -8102,13 +8069,13 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], -557000000000.0)
 
         # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatf_d_()
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatfd_()
 
         # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "execpted.*arguments.*got"):
-            self.simd_quatf_d_(-557000000000.0, "hello")
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            oc.simdquatfd_(-557000000000.0, "hello")
 
         # Bad value for arguments
-        with self.assertRaises(TypeError):
-            self.simd_quatf_d_(None)
+        with self.assertRaises((TypeError, ValueError)):
+            oc.simdquatfd_(None)

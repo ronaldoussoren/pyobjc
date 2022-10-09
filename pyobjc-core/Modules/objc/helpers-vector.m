@@ -11474,7 +11474,7 @@ call_v_simd_quatd_d(PyObject* method, PyObject* self, PyObject* const* arguments
                     size_t nargs)
 {
     struct objc_super super;
-    quatf             arg0;
+    simd_quatd        arg0;
     double            arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
@@ -11492,7 +11492,7 @@ call_v_simd_quatd_d(PyObject* method, PyObject* self, PyObject* const* arguments
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, quatf, double))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_quatd, double))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0,
                     arg1);
 
@@ -11500,7 +11500,8 @@ call_v_simd_quatd_d(PyObject* method, PyObject* self, PyObject* const* arguments
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                ((void (*)(struct objc_super*, SEL, quatf, double))objc_msgSendSuper)(
+                ((void (*)(struct objc_super*, SEL, simd_quatd,
+                           double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -11522,53 +11523,54 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    void (^block)(id, quatf, double) = ^(id _Nullable self, quatf arg0, double arg1) {
-      PyGILState_STATE state = PyGILState_Ensure();
+    void (^block)(id, simd_quatd, double) =
+        ^(id _Nullable self, simd_quatd arg0, double arg1) {
+          PyGILState_STATE state = PyGILState_Ensure();
 
-      int       cookie;
-      PyObject* args[4] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+          int       cookie;
+          PyObject* args[4] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
 
-      args[1] = pyself;
-      args[2] = pythonify_c_value("{_simd_quatd=<4d>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
-      args[3] = pythonify_c_value("d", &arg1);
-      if (args[3] == NULL)
-          goto error;
+          args[1] = pyself;
+          args[2] = pythonify_c_value("{_simd_quatd=<4d>}", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("d", &arg1);
+          if (args[3] == NULL)
+              goto error;
 
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      if (result != Py_None) {
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          if (result != Py_None) {
+              Py_DECREF(result);
+              PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
+                           callable);
+              goto error;
+          }
           Py_DECREF(result);
-          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
-                       callable);
-          goto error;
-      }
-      Py_DECREF(result);
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
 
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return;
-
-  error:
-      if (pyself) {
           PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
+          PyGILState_Release(state);
+          return;
 
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
 
     return imp_implementationWithBlock(block);
 }
@@ -11578,7 +11580,7 @@ call_v_simd_quatf(PyObject* method, PyObject* self, PyObject* const* arguments,
                   size_t nargs)
 {
     struct objc_super super;
-    quatf             arg0;
+    simd_quatf        arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
@@ -11592,14 +11594,14 @@ call_v_simd_quatf(PyObject* method, PyObject* self, PyObject* const* arguments,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, quatf))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_quatf))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                ((void (*)(struct objc_super*, SEL, quatf))objc_msgSendSuper)(
+                ((void (*)(struct objc_super*, SEL, simd_quatf))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -11621,7 +11623,7 @@ mkimp_v_simd_quatf(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    void (^block)(id, quatf) = ^(id _Nullable self, quatf arg0) {
+    void (^block)(id, simd_quatf) = ^(id _Nullable self, simd_quatf arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -11674,7 +11676,7 @@ call_v_simd_quatf_v3f(PyObject* method, PyObject* self, PyObject* const* argumen
                       size_t nargs)
 {
     struct objc_super super;
-    quatf             arg0;
+    simd_quatf        arg0;
     simd_float3       arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
@@ -11692,7 +11694,7 @@ call_v_simd_quatf_v3f(PyObject* method, PyObject* self, PyObject* const* argumen
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, quatf, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_quatf, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0,
                     arg1);
 
@@ -11700,7 +11702,7 @@ call_v_simd_quatf_v3f(PyObject* method, PyObject* self, PyObject* const* argumen
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                ((void (*)(struct objc_super*, SEL, quatf,
+                ((void (*)(struct objc_super*, SEL, simd_quatf,
                            simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
@@ -11723,8 +11725,8 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    void (^block)(id, quatf, simd_float3) =
-        ^(id _Nullable self, quatf arg0, simd_float3 arg1) {
+    void (^block)(id, simd_quatf, simd_float3) =
+        ^(id _Nullable self, simd_quatf arg0, simd_float3 arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -11780,7 +11782,7 @@ call_v_simd_quatf_d(PyObject* method, PyObject* self, PyObject* const* arguments
                     size_t nargs)
 {
     struct objc_super super;
-    quatf             arg0;
+    simd_quatf        arg0;
     double            arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
@@ -11798,7 +11800,7 @@ call_v_simd_quatf_d(PyObject* method, PyObject* self, PyObject* const* arguments
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, quatf, double))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_quatf, double))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0,
                     arg1);
 
@@ -11806,7 +11808,8 @@ call_v_simd_quatf_d(PyObject* method, PyObject* self, PyObject* const* arguments
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                ((void (*)(struct objc_super*, SEL, quatf, double))objc_msgSendSuper)(
+                ((void (*)(struct objc_super*, SEL, simd_quatf,
+                           double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -11828,53 +11831,54 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    void (^block)(id, quatf, double) = ^(id _Nullable self, quatf arg0, double arg1) {
-      PyGILState_STATE state = PyGILState_Ensure();
+    void (^block)(id, simd_quatf, double) =
+        ^(id _Nullable self, simd_quatf arg0, double arg1) {
+          PyGILState_STATE state = PyGILState_Ensure();
 
-      int       cookie;
-      PyObject* args[4] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+          int       cookie;
+          PyObject* args[4] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
 
-      args[1] = pyself;
-      args[2] = pythonify_c_value("{_simd_quatf=<4f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
-      args[3] = pythonify_c_value("d", &arg1);
-      if (args[3] == NULL)
-          goto error;
+          args[1] = pyself;
+          args[2] = pythonify_c_value("{_simd_quatf=<4f>}", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("d", &arg1);
+          if (args[3] == NULL)
+              goto error;
 
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      if (result != Py_None) {
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          if (result != Py_None) {
+              Py_DECREF(result);
+              PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
+                           callable);
+              goto error;
+          }
           Py_DECREF(result);
-          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
-                       callable);
-          goto error;
-      }
-      Py_DECREF(result);
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
 
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return;
-
-  error:
-      if (pyself) {
           PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
+          PyGILState_Release(state);
+          return;
 
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
 
     return imp_implementationWithBlock(block);
 }
@@ -13583,7 +13587,7 @@ call_simd_quatd_d(PyObject* method, PyObject* self, PyObject* const* arguments,
                   size_t nargs)
 {
     struct objc_super super;
-    quatf             rv;
+    simd_quatd        rv;
     double            arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
@@ -13598,14 +13602,14 @@ call_simd_quatd_d(PyObject* method, PyObject* self, PyObject* const* arguments,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                rv = ((simd_quatd(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                rv = ((quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -13627,7 +13631,7 @@ mkimp_simd_quatd_d(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    quatf (^block)(id, double) = ^(id _Nullable self, double arg0) {
+    simd_quatd (^block)(id, double) = ^(id _Nullable self, double arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -13646,7 +13650,7 @@ mkimp_simd_quatd_d(PyObject*              callable,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       if (result == NULL)
           goto error;
-      quatf oc_result;
+      simd_quatd oc_result;
       if (depythonify_c_value("{_simd_quatd=<4d>}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
@@ -13680,7 +13684,7 @@ call_simd_quatf(PyObject* method, PyObject* self,
                 PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super super;
-    quatf             rv;
+    simd_quatf        rv;
 
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
@@ -13690,14 +13694,14 @@ call_simd_quatf(PyObject* method, PyObject* self,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                rv = ((simd_quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
 
             } else {
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                rv = ((quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv = ((simd_quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -13719,7 +13723,7 @@ mkimp_simd_quatf(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    quatf (^block)(id) = ^(id _Nullable self) {
+    simd_quatf (^block)(id) = ^(id _Nullable self) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -13735,7 +13739,7 @@ mkimp_simd_quatf(PyObject*              callable,
                                              1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       if (result == NULL)
           goto error;
-      quatf oc_result;
+      simd_quatf oc_result;
       if (depythonify_c_value("{_simd_quatf=<4f>}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
@@ -13769,7 +13773,7 @@ call_simd_quatf_d(PyObject* method, PyObject* self, PyObject* const* arguments,
                   size_t nargs)
 {
     struct objc_super super;
-    quatf             rv;
+    simd_quatf        rv;
     double            arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
@@ -13784,14 +13788,14 @@ call_simd_quatf_d(PyObject* method, PyObject* self, PyObject* const* arguments,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                rv = ((simd_quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = PyObjCObject_GetObject(self);
                 super.super_class = PyObjCSelector_GetClass(method);
 
-                rv = ((quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                rv = ((simd_quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -13813,7 +13817,7 @@ mkimp_simd_quatf_d(PyObject*              callable,
 {
     Py_INCREF(callable);
 
-    quatf (^block)(id, double) = ^(id _Nullable self, double arg0) {
+    simd_quatf (^block)(id, double) = ^(id _Nullable self, double arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -13832,7 +13836,7 @@ mkimp_simd_quatf_d(PyObject*              callable,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       if (result == NULL)
           goto error;
-      quatf oc_result;
+      simd_quatf oc_result;
       if (depythonify_c_value("{_simd_quatf=<4f>}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
