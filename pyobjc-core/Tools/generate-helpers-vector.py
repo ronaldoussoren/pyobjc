@@ -24,6 +24,8 @@ XXX: Also use this for simple basic methods '-(id)method',
      needs the 'imp' variants.
 
 XXX: Use subtests
+
+XXX: Use jinja2 in code generation
 """
 
 import objc
@@ -192,6 +194,121 @@ HELPER_PREFIX = """\
 #import <GameplayKit/GameplayKit.h>
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+static inline int
+extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
+      Class* super_class, int* flags, PyObjCMethodSignature** methinfo)
+{
+    *isIMP = !!PyObjCIMP_Check(method);
+
+    if (*isIMP) {
+        *flags = PyObjCIMP_GetFlags(method);
+        *methinfo = PyObjCIMP_GetSignature(method);
+    } else {
+        *flags = PyObjCSelector_GetFlags(method);
+        *methinfo = PyObjCSelector_GetMetadata(method);
+    }
+
+    if (*flags & PyObjCSelector_kCLASS_METHOD) {
+        if (PyObjCObject_Check(self)) {
+            *self_obj = PyObjCObject_GetObject(self);
+            if (*self_obj == nil && PyErr_Occurred()) {
+                return -1;
+            }
+            if (*self_obj != NULL) {
+                *self_obj = object_getClass(*self_obj);
+                if (*self_obj == nil && PyErr_Occurred()) {
+                    return -1;
+                }
+            }
+
+        } else if (PyObjCClass_Check(self)) {
+            *self_obj = PyObjCClass_GetClass(self);
+            if (*self_obj == nil && PyErr_Occurred()) {
+                return -1;
+            }
+
+        } else if (PyType_Check(self)
+                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
+            PyObject* c = PyObjCClass_ClassForMetaClass(self);
+            if (c == NULL) {
+                *self_obj = nil;
+
+            } else {
+                *self_obj = PyObjCClass_GetClass(c);
+                if (*self_obj == nil && PyErr_Occurred()) {
+                    return -1;
+                }
+            }
+
+        } else {
+            PyErr_Format(
+                PyExc_TypeError,
+                "Need objective-C object or class as self, not an instance of '%s'",
+                Py_TYPE(self)->tp_name);
+            return -1;
+        }
+
+    } else {
+        int err;
+        if (PyObjCObject_Check(self)) {
+            *self_obj = PyObjCObject_GetObject(self);
+            if (*self_obj == nil && PyErr_Occurred()) {
+                return -1;
+            }
+
+        } else {
+            err = depythonify_c_value(@encode(id), self, self_obj);
+            if (err == -1) return -1;
+        }
+    }
+
+    if (*isIMP) {
+        *super_class = nil;
+    } else {
+        if (*flags & PyObjCSelector_kCLASS_METHOD) {
+            *super_class = object_getClass(PyObjCSelector_GetClass(method));
+        } else {
+            *super_class = PyObjCSelector_GetClass(method);
+        }
+    }
+
+    return 0;
+}
+
+static PyObject* adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags, PyObject* result)
+{
+    if (methinfo->rettype->alreadyRetained) {
+        if (PyObjCObject_Check(result)) {
+            /* pythonify_c_return_value has retained the object, but we already
+             * own a reference, therefore give the ref away again
+             */
+            [PyObjCObject_GetObject(result) release];
+        }
+    }
+
+    if (methinfo->rettype->alreadyCFRetained) {
+        if (PyObjCObject_Check(result)) {
+            /* pythonify_c_return_value has retained the object, but we already
+             * own a reference, therefore give the ref away again
+             */
+            CFRelease(PyObjCObject_GetObject(result));
+        }
+    }
+
+    if (self != NULL && result != self && PyObjCObject_Check(self)
+        && PyObjCObject_Check(result)
+        && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
+        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
+
+        [PyObjCObject_GetObject(result) release]; /* XXX??? */
+        PyObjCObject_ClearObject(self);
+    }
+    return result;
+}
+
 
 """
 
@@ -389,7 +506,7 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     arg_types = signature_parts[3:]
 
     print("", file=stream)
-    print("static PyObject*", file=stream)
+    print("static PyObject* _Nullable", file=stream)
     print(f"{function_name(CALL_PREFIX, signature)}(", file=stream)
     if arg_types:
         print(
@@ -425,8 +542,6 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         print("    }", file=stream)
 
     print("", file=stream)
-    print("    int isIMP = PyObjCIMP_Check(method);", file=stream)
-    print("", file=stream)
 
     if arg_types:
         arg_type_names = ", " + ", ".join([describe_type(arg) for arg in arg_types])
@@ -435,6 +550,18 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         arg_type_names = ""
         arg_names = ""
 
+    print("    bool isIMP;", file=stream)
+    print("    id self_obj;", file=stream)
+    print("    Class super_class;", file=stream)
+    print("    int flags;", file=stream)
+    print("    PyObjCMethodSignature* methinfo;", file=stream)
+    print("", file=stream)
+    print(
+        "    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags, &methinfo) == -1) {",
+        file=stream,
+    )
+    print("         return NULL;", file=stream)
+    print("    }", file=stream)
     print("    Py_BEGIN_ALLOW_THREADS", file=stream)
     print("    @try {", file=stream)
     print("        if (isIMP) {", file=stream)
@@ -443,15 +570,13 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         file=stream,
     )
     print(
-        f"                PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method){arg_names});",
+        f"                self_obj, PyObjCIMP_GetSelector(method){arg_names});",
         file=stream,
     )
     print("", file=stream)
     print("        } else {", file=stream)
-    print("            super.receiver    = PyObjCObject_GetObject(self);", file=stream)
-    print(
-        "            super.super_class = PyObjCSelector_GetClass(method);", file=stream
-    )
+    print("            super.receiver    = self_obj;", file=stream)
+    print("            super.super_class = super_class;", file=stream)
     print("", file=stream)
     print(
         f"            {'rv = ' if rv_type != objc._C_VOID else ''}(({describe_type(rv_type)}(*)(struct objc_super*, SEL{arg_type_names}))objc_msgSendSuper)(",  # noqa: B950
@@ -477,7 +602,13 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     print("        }", file=stream)
     print("", file=stream)
 
-    if rv_type != objc._C_VOID:
+    if rv_type == objc._C_ID:
+        print(
+            f'    return adjust_retval(methinfo, self, flags, pythonify_c_value("{rv_type.decode()}", &rv));',
+            file=stream,
+        )
+
+    elif rv_type != objc._C_VOID:
         print(f'    return pythonify_c_value("{rv_type.decode()}", &rv);', file=stream)
     else:
         print("    Py_RETURN_NONE;", file=stream)
@@ -1056,6 +1187,7 @@ def main():
             generate_call(stream, signature)
             generate_mkimp(stream, signature)
         generate_setup_function(stream)
+        print("NS_ASSUME_NONNULL_END", file=stream)
 
     # Test extension for testing calling
     with open(TESTEXT_FILE, "w") as stream:
@@ -1081,7 +1213,7 @@ def main():
         print(TESTCASE, file=stream)
         for signature in ALL_SIGNATURES:
             generate_call_testcase(stream, signature)
-            # generate_call_testcase(stream, signature, instance=False)
+            generate_call_testcase(stream, signature, instance=False)
 
             # generate_call_testcase(stream, signature, imp=True)
             # generate_call_testcase(stream, signature, instance=False, imp=True)
