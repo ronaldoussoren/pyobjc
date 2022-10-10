@@ -300,8 +300,6 @@ class oc_test(test.test):
         try:
             suite = makeTestSuite()
 
-            print(self.verbose)
-            print(self.verbosity)
             if self.verbose and self.verbosity < 3:
                 runner = unittest.TextTestRunner(verbosity=3)
             else:
