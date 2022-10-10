@@ -2728,7 +2728,11 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
     case _C_BOOL:
     case _C_NSBOOL:
-        *(bool*)datum = PyObject_IsTrue(argument);
+        r = PyObject_IsTrue(argument);
+        if (r == -1) {
+            return -1;
+        }
+        *(bool*)datum = (bool)r;
         return 0;
 
     case _C_UNICHAR:
