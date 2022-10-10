@@ -950,6 +950,24 @@ objc.registerMetaDataForSelector(
 
 
 class TestVectorCall(TestCase):
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+        self.addTypeEqualityFunc(simd.matrix_float2x2, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float3x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float4x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_double4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_quatf, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_quatd, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+
+    def assertMatrixEqual(self, first, second, msg=None):
+        self.assertEqual(type(first), type(second))
+        if hasattr(first, "vector"):
+            self.assertSequenceEqual(first.vector, second.vector, msg)
+        else:
+            self.assertSequenceEqual(first.columns, second.columns, msg)
+
     def test_v16C(self):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
@@ -971,10 +989,6 @@ class TestVectorCall(TestCase):
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
 
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v16C()
-
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.v16C("hello")
@@ -994,10 +1008,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v2d()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -1048,10 +1058,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v2f()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -1163,10 +1169,6 @@ class TestVectorCall(TestCase):
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
 
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v2i()
-
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.v2i("hello")
@@ -1216,10 +1218,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v3f()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -1462,10 +1460,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.v4f()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -2698,7 +2692,7 @@ class TestVectorCall(TestCase):
                 35184372088832,
                 35184372088832,
                 -17592186044416,
-                "a",
+                None,
                 False,
                 "hello",
             )
@@ -7304,10 +7298,6 @@ class TestVectorCall(TestCase):
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
 
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.GKBox()
-
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.GKBox("hello")
@@ -7330,10 +7320,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.GKQuad()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7400,10 +7386,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.MDLAxisAlignedBoundingBox()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7511,10 +7493,6 @@ class TestVectorCall(TestCase):
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
 
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.MDLVoxelIndexExtent()
-
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.MDLVoxelIndexExtent("hello")
@@ -7543,10 +7521,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.MPSAxisAlignedBoundingBox()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7577,10 +7551,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.MPSImageHistogramInfo()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7613,10 +7583,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.matrixdouble4x4()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7687,10 +7653,6 @@ class TestVectorCall(TestCase):
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
 
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.matrixfloat2x2()
-
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.matrixfloat2x2("hello")
@@ -7721,10 +7683,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.matrixfloat3x3()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7757,10 +7715,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.matrixfloat4x4()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -7882,10 +7836,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.simdfloat4x4()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -8039,10 +7989,6 @@ class TestVectorCall(TestCase):
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
         self.assertEqual(len(stored), 0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            oc.simdquatf()
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):

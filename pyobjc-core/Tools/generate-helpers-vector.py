@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-Helper script for generating Modules/objc/helpers-vector.m
+Helper script for generating support code for vector types,
+including testcases and the supporting extension for that.
+
+The code currently is fairly gross, but works.
 
 XXX: There should be "imp" variants for signatures
      used in protocols that are intended to be implemented
@@ -19,6 +22,8 @@ XXX: Use the Parse helpers to simplify the generated
 XXX: Also use this for simple basic methods '-(id)method',
      '-(void)method:arg', and '(void)method', but this also
      needs the 'imp' variants.
+
+XXX: Use subtests
 """
 
 import objc
@@ -40,6 +45,12 @@ TEST_FILE = (
 
 CALL_PREFIX = "call"
 MKIMP_PREFIX = "mkimp"
+
+
+class NoBool:
+    def __bool__(self):
+        raise TypeError("no valid in boolean context")
+
 
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 ALL_SIGNATURES = [
@@ -303,9 +314,32 @@ class Fake:
     def __pyobjc_object__(self):
         raise TypeError("Cannot proxy")
 
+
 NoObjCValueObject = Fake()
 
 # Register full signatures for the helper methods
+"""
+
+TESTCASE = """\
+
+class TestVectorCall(TestCase):
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+        self.addTypeEqualityFunc(simd.matrix_float2x2, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float3x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float4x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.matrix_double4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_quatf, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_quatd, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+
+    def assertMatrixEqual(self, first, second, msg=None):
+        self.assertEqual(type(first), type(second))
+        if hasattr(first, "vector"):
+            self.assertSequenceEqual(first.vector, second.vector, msg)
+        else:
+            self.assertSequenceEqual(first.columns, second.columns, msg)
 """
 
 
@@ -814,7 +848,7 @@ VALUES = {
     objc._C_ULNGLNG: (2**45, None),
     objc._C_FLT: (2.5e9, None),
     objc._C_DBL: (-55.7e10, None),
-    objc._C_BOOL: (True, None),
+    objc._C_BOOL: (True, NoBool()),
     objc._C_NSBOOL: (False, None),
     objc._C_CLASS: (
         LiteralRepr('objc.lookUpClass("NSObject")', "[NSObject class]"),
@@ -976,15 +1010,17 @@ def generate_call_testcase(stream, signature, instance=True):
     for i, s in enumerate(sigparts[3:]):
         print(f"        self.assertEqual(stored[{i}], {valid_value(s)!r})", file=stream)
     print("", file=stream)
-    print("        # Too few arguments call", file=stream)
-    print(
-        "        with self.assertRaisesRegex(TypeError, 'expected.*arguments.*got'):",
-        file=stream,
-    )
-    print(
-        f"            oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
-        file=stream,
-    )
+
+    if len(sigparts) > 3:
+        print("        # Too few arguments call", file=stream)
+        print(
+            "        with self.assertRaisesRegex(TypeError, 'expected.*arguments.*got'):",
+            file=stream,
+        )
+        print(
+            f"            oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
+            file=stream,
+        )
     print("", file=stream)
     print("        # Too many arguments call", file=stream)
     print(
@@ -1044,7 +1080,7 @@ def main():
             generate_register(stream, signature)
 
         print("\n", file=stream)
-        print("class TestVectorCall(TestCase):", file=stream)
+        print(TESTCASE, file=stream)
         for signature in ALL_SIGNATURES:
             generate_call_testcase(stream, signature)
             # generate_call_testcase(stream, signature, instance=False)
