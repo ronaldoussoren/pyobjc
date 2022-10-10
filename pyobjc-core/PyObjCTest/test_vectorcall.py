@@ -15,13 +15,18 @@ import Quartz  # noqa: F401
 from .vectorcall import OC_VectorCall
 
 
-class Fake:
+class NoObjCClass:
     @property
     def __pyobjc_object__(self):
         raise TypeError("Cannot proxy")
 
 
-NoObjCValueObject = Fake()
+class NoBool:
+    def __bool__(self):
+        raise TypeError("no valid in boolean context")
+
+
+NoObjCValueObject = NoObjCClass()
 
 # Register full signatures for the helper methods
 
@@ -1743,7 +1748,7 @@ class TestVectorCall(TestCase):
             oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, None, False)
 
         with self.assertRaises((TypeError, ValueError)):
-            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, None)
+            oc.idv2i_i_i_Z_(objc.simd.vector_int2(0, 1), -42, -42, NoBool())
 
     def test_idv2i_i_i_Z_Class_(self):
         # Check that the signature is as expected
@@ -1815,7 +1820,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
                 -42,
                 -42,
-                None,
+                NoBool(),
                 objc.lookUpClass("NSObject"),
             )
 
@@ -1941,7 +1946,7 @@ class TestVectorCall(TestCase):
             oc.idv3f_v2I_Z_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
-                None,
+                NoBool(),
                 False,
                 False,
                 -17592186044416,
@@ -1953,7 +1958,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
-                None,
+                NoBool(),
                 False,
                 -17592186044416,
                 "hello",
@@ -1965,7 +1970,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_uint2(0, 1),
                 False,
                 False,
-                None,
+                NoBool(),
                 -17592186044416,
                 "hello",
             )
@@ -2074,7 +2079,7 @@ class TestVectorCall(TestCase):
             oc.idv3f_v2I_Z_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
-                None,
+                NoBool(),
                 False,
                 -17592186044416,
                 "hello",
@@ -2085,7 +2090,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
-                None,
+                NoBool(),
                 -17592186044416,
                 "hello",
             )
@@ -2181,7 +2186,7 @@ class TestVectorCall(TestCase):
             oc.idv3f_v2I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
-                None,
+                NoBool(),
                 -17592186044416,
                 "hello",
             )
@@ -2292,7 +2297,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -42,
-                None,
+                NoBool(),
                 -17592186044416,
                 "hello",
             )
@@ -2462,7 +2467,7 @@ class TestVectorCall(TestCase):
             oc.idv3f_v3I_Z_q_id_(
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
-                None,
+                NoBool(),
                 -17592186044416,
                 "hello",
             )
@@ -2566,7 +2571,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
-                None,
+                NoBool(),
                 "hello",
             )
 
@@ -2692,7 +2697,7 @@ class TestVectorCall(TestCase):
                 35184372088832,
                 35184372088832,
                 -17592186044416,
-                None,
+                NoBool(),
                 False,
                 "hello",
             )
@@ -2704,7 +2709,7 @@ class TestVectorCall(TestCase):
                 35184372088832,
                 -17592186044416,
                 False,
-                None,
+                NoBool(),
                 "hello",
             )
 
@@ -2767,7 +2772,10 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             oc.idv3f_Z_q_id_(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                NoBool(),
+                -17592186044416,
+                "hello",
             )
 
         with self.assertRaises((TypeError, ValueError)):
@@ -2908,7 +2916,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_double2(0.0, 1.5),
                 objc.simd.vector_int2(0, 1),
-                None,
+                NoBool(),
             )
 
     def test_idid_v2f_(self):
@@ -3270,12 +3278,12 @@ class TestVectorCall(TestCase):
             "hello",
             35184372088832,
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(rv, "hello")
@@ -3288,12 +3296,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[2],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -3307,12 +3315,12 @@ class TestVectorCall(TestCase):
                 "hello",
                 35184372088832,
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -3323,12 +3331,12 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
                 35184372088832,
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
             )
 
@@ -3337,12 +3345,12 @@ class TestVectorCall(TestCase):
                 "hello",
                 None,
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
             )
 
@@ -3432,7 +3440,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             oc.idid_Z_id_v2i_q_Q_q_Z_(
                 "hello",
-                None,
+                NoBool(),
                 "hello",
                 objc.simd.vector_int2(0, 1),
                 -17592186044416,
@@ -3510,7 +3518,7 @@ class TestVectorCall(TestCase):
                 -17592186044416,
                 35184372088832,
                 -17592186044416,
-                None,
+                NoBool(),
             )
 
     def test_idid_q_v2i_f_f_f_f_(self):
@@ -4032,7 +4040,7 @@ class TestVectorCall(TestCase):
         rv = oc.idid_matrixfloat2x2_(
             "hello",
             simd.matrix_float2x2(
-                [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
         self.assertEqual(rv, "hello")
@@ -4044,7 +4052,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[1],
             simd.matrix_float2x2(
-                [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
 
@@ -4057,10 +4065,10 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat2x2_(
                 "hello",
                 simd.matrix_float2x2(
-                    [
+                    (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -4070,10 +4078,10 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat2x2_(
                 NoObjCValueObject,
                 simd.matrix_float2x2(
-                    [
+                    (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
-                    ]
+                    )
                 ),
             )
 
@@ -4096,11 +4104,11 @@ class TestVectorCall(TestCase):
         rv = oc.idid_matrixfloat3x3_(
             "hello",
             simd.matrix_float3x3(
-                [
+                (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
-                ]
+                )
             ),
         )
         self.assertEqual(rv, "hello")
@@ -4112,11 +4120,11 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[1],
             simd.matrix_float3x3(
-                [
+                (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
-                ]
+                )
             ),
         )
 
@@ -4129,11 +4137,11 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat3x3_(
                 "hello",
                 simd.matrix_float3x3(
-                    [
+                    (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -4143,11 +4151,11 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat3x3_(
                 NoObjCValueObject,
                 simd.matrix_float3x3(
-                    [
+                    (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    ]
+                    )
                 ),
             )
 
@@ -4170,12 +4178,12 @@ class TestVectorCall(TestCase):
         rv = oc.idid_matrixfloat4x4_(
             "hello",
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(rv, "hello")
@@ -4187,12 +4195,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[1],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -4205,12 +4213,12 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat4x4_(
                 "hello",
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -4220,12 +4228,12 @@ class TestVectorCall(TestCase):
             oc.idid_matrixfloat4x4_(
                 NoObjCValueObject,
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
             )
 
@@ -4572,7 +4580,7 @@ class TestVectorCall(TestCase):
                 35184372088832,
                 35184372088832,
                 -17592186044416,
-                None,
+                NoBool(),
                 "hello",
             )
 
@@ -4713,7 +4721,7 @@ class TestVectorCall(TestCase):
                 35184372088832,
                 35184372088832,
                 -17592186044416,
-                None,
+                NoBool(),
                 "hello",
             )
 
@@ -4824,7 +4832,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
                 -42,
                 -17592186044416,
-                None,
+                NoBool(),
             )
 
     def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
@@ -5358,12 +5366,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.idmatrixfloat4x4_(
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             )
         )
         self.assertEqual(rv, "hello")
@@ -5374,12 +5382,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -5391,12 +5399,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.idmatrixfloat4x4_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -5420,12 +5428,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.idmatrixfloat4x4_Z_(
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
             False,
         )
@@ -5437,12 +5445,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(stored[1], False)
@@ -5451,12 +5459,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 )
             )
 
@@ -5464,12 +5472,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 False,
                 "hello",
@@ -5482,14 +5490,14 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             oc.idmatrixfloat4x4_Z_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
-                None,
+                NoBool(),
             )
 
     def test_Zv2i_id_id_id_id_(self):
@@ -5727,22 +5735,22 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             oc.Zv4i_Z_Z_Z_Z_(
-                objc.simd.vector_int4(0, 1, 2, 3), None, False, False, False
+                objc.simd.vector_int4(0, 1, 2, 3), NoBool(), False, False, False
             )
 
         with self.assertRaises((TypeError, ValueError)):
             oc.Zv4i_Z_Z_Z_Z_(
-                objc.simd.vector_int4(0, 1, 2, 3), False, None, False, False
+                objc.simd.vector_int4(0, 1, 2, 3), False, NoBool(), False, False
             )
 
         with self.assertRaises((TypeError, ValueError)):
             oc.Zv4i_Z_Z_Z_Z_(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, None, False
+                objc.simd.vector_int4(0, 1, 2, 3), False, False, NoBool(), False
             )
 
         with self.assertRaises((TypeError, ValueError)):
             oc.Zv4i_Z_Z_Z_Z_(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, None
+                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, NoBool()
             )
 
     def test_CGColorv3f_(self):
@@ -6629,7 +6637,7 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
                 ),
-                None,
+                NoBool(),
             )
 
     def test_vmatrixdouble4x4_(self):
@@ -6646,12 +6654,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixdouble4x4_(
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             )
         )
         self.assertIs(rv, None)
@@ -6662,12 +6670,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -6679,12 +6687,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixdouble4x4_(
                 simd.matrix_double4x4(
-                    [
+                    (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -6708,12 +6716,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixdouble4x4_d_(
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
             -557000000000.0,
         )
@@ -6725,12 +6733,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(stored[1], -557000000000.0)
@@ -6739,12 +6747,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
-                    [
+                    (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 )
             )
 
@@ -6752,12 +6760,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
-                    [
+                    (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 -557000000000.0,
                 "hello",
@@ -6770,12 +6778,12 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             oc.vmatrixdouble4x4_d_(
                 simd.matrix_double4x4(
-                    [
+                    (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 None,
             )
@@ -6794,7 +6802,7 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixfloat2x2_(
             simd.matrix_float2x2(
-                [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
         )
         self.assertIs(rv, None)
@@ -6805,7 +6813,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float2x2(
-                [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
 
@@ -6817,10 +6825,10 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixfloat2x2_(
                 simd.matrix_float2x2(
-                    [
+                    (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -6843,11 +6851,11 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixfloat3x3_(
             simd.matrix_float3x3(
-                [
+                (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
-                ]
+                )
             )
         )
         self.assertIs(rv, None)
@@ -6858,11 +6866,11 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float3x3(
-                [
+                (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
-                ]
+                )
             ),
         )
 
@@ -6874,11 +6882,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixfloat3x3_(
                 simd.matrix_float3x3(
-                    [
+                    (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -6901,12 +6909,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixfloat4x4_(
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             )
         )
         self.assertIs(rv, None)
@@ -6917,12 +6925,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -6934,12 +6942,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixfloat4x4_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -6963,12 +6971,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vmatrixfloat4x4_d_(
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
             -557000000000.0,
         )
@@ -6980,12 +6988,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(stored[1], -557000000000.0)
@@ -6994,12 +7002,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 )
             )
 
@@ -7007,12 +7015,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 -557000000000.0,
                 "hello",
@@ -7025,12 +7033,12 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             oc.vmatrixfloat4x4_d_(
                 simd.matrix_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 None,
             )
@@ -7049,12 +7057,12 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.vsimdfloat4x4_(
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             )
         )
         self.assertIs(rv, None)
@@ -7065,12 +7073,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7082,12 +7090,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.vsimdfloat4x4_(
                 simd.simd_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
             )
@@ -7338,11 +7346,13 @@ class TestVectorCall(TestCase):
         rv = oc.GKTriangleQ_(35184372088832)
         self.assertEqual(
             rv,
-            [
-                objc.simd.vector_float3(-8.5, -9.5, -10.5),
-                objc.simd.vector_float3(-11.5, -12.5, -13.5),
-                objc.simd.vector_float3(-7.5, 1.5, 22.5),
-            ],
+            (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            ),
         )
 
         stored = oc.storedvalue()
@@ -7571,12 +7581,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7604,12 +7614,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_double4x4(
-                [
+                (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7645,7 +7655,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_float2x2(
-                [objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)]
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
 
@@ -7672,11 +7682,11 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_float3x3(
-                [
+                (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
-                ]
+                )
             ),
         )
 
@@ -7703,12 +7713,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7737,12 +7747,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7783,12 +7793,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.matrix_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7824,12 +7834,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             rv,
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7858,24 +7868,24 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = oc.simdfloat4x4simdfloat4x4_id_(
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
             "hello",
         )
         self.assertEqual(
             rv,
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
 
@@ -7885,12 +7895,12 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             stored[0],
             simd.simd_float4x4(
-                [
+                (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                ]
+                )
             ),
         )
         self.assertEqual(stored[1], "hello")
@@ -7899,12 +7909,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 )
             )
 
@@ -7912,12 +7922,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 "hello",
                 "hello",
@@ -7930,12 +7940,12 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             oc.simdfloat4x4simdfloat4x4_id_(
                 simd.simd_float4x4(
-                    [
+                    (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    ]
+                    )
                 ),
                 NoObjCValueObject,
             )

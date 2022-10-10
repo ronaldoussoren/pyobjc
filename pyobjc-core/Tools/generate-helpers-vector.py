@@ -47,11 +47,6 @@ CALL_PREFIX = "call"
 MKIMP_PREFIX = "mkimp"
 
 
-class NoBool:
-    def __bool__(self):
-        raise TypeError("no valid in boolean context")
-
-
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 ALL_SIGNATURES = [
     b"<16C>@:",
@@ -309,13 +304,16 @@ import Quartz # noqa: F401
 
 from .vectorcall import OC_VectorCall
 
-class Fake:
+class NoObjCClass:
     @property
     def __pyobjc_object__(self):
         raise TypeError("Cannot proxy")
 
+class NoBool:
+    def __bool__(self):
+        raise TypeError("no valid in boolean context")
 
-NoObjCValueObject = Fake()
+NoObjCValueObject = NoObjCClass()
 
 # Register full signatures for the helper methods
 """
@@ -848,8 +846,8 @@ VALUES = {
     objc._C_ULNGLNG: (2**45, None),
     objc._C_FLT: (2.5e9, None),
     objc._C_DBL: (-55.7e10, None),
-    objc._C_BOOL: (True, NoBool()),
-    objc._C_NSBOOL: (False, None),
+    objc._C_BOOL: (True, LiteralRepr("NoBool()")),
+    objc._C_NSBOOL: (False, LiteralRepr("NoBool()")),
     objc._C_CLASS: (
         LiteralRepr('objc.lookUpClass("NSObject")', "[NSObject class]"),
         42,
@@ -884,11 +882,11 @@ VALUES = {
     ),
     b"{GKTriangle=[3<3f>]}": (
         (
-            [
-                simd.vector_float3(-8.5, -9.5, -10.5),
-                simd.vector_float3(-11.5, -12.5, -13.5),
-                simd.vector_float3(-7.5, 1.5, 22.5),
-            ]
+            (
+                simd.vector_float3(-18.5, -19.5, -110.5),
+                simd.vector_float3(-111.5, -112.5, -113.5),
+                simd.vector_float3(-17.5, 11.5, 122.5),
+            ),
         ),
         None,
     ),
@@ -938,7 +936,7 @@ def valid_value(typestr):
                     cnt = cnt + elemtp[:1]
                     elemtp = elemtp[1:]
 
-                value = [valid_value(elemtp)] * int(cnt)
+                value = (valid_value(elemtp),) * int(cnt)
                 return LiteralRepr(
                     f"simd.{name[1:]}({value!r})",
                     f"({name[1:]}){{{{{', '.join(as_objc_literal(elemtp, v) for v in value)}}}}}",

@@ -5584,7 +5584,9 @@ static PyObject* clsvalues = NULL;
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (GKTriangle){(vector_float3){-8.5, -9.5, -10.5}};
+    return (GKTriangle){{(vector_float3){-18.5, -19.5, -110.5},
+                         (vector_float3){-111.5, -112.5, -113.5},
+                         (vector_float3){-17.5, 11.5, 122.5}}};
 }
 
 + (GKTriangle)clsGKTriangleQ:(unsigned long long)arg0
@@ -5601,7 +5603,9 @@ static PyObject* clsvalues = NULL;
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (GKTriangle){(vector_float3){-8.5, -9.5, -10.5}};
+    return (GKTriangle){{(vector_float3){-18.5, -19.5, -110.5},
+                         (vector_float3){-111.5, -112.5, -113.5},
+                         (vector_float3){-17.5, 11.5, 122.5}}};
 }
 
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
