@@ -32,17 +32,17 @@ class TestGCDevicePhysicalInput(TestCase):
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(
-            TestGCDevicePhysicalInputHelper.elementValueDidChangeHandler, b"v@"
+            TestGCDevicePhysicalInputHelper.elementValueDidChangeHandler, b"v@@"
         )
         self.assertArgIsBlock(
-            TestGCDevicePhysicalInputHelper.setElementValueDidChangeHandler_, 0, b"v@"
+            TestGCDevicePhysicalInputHelper.setElementValueDidChangeHandler_, 0, b"v@@"
         )
 
         self.assertResultIsBlock(
-            TestGCDevicePhysicalInputHelper.inputStateAvailableHandler, b"v"
+            TestGCDevicePhysicalInputHelper.inputStateAvailableHandler, b"v@"
         )
         self.assertArgIsBlock(
-            TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v"
+            TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v@"
         )
 
         self.assertResultIsBlock(

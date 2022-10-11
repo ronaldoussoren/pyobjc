@@ -36,6 +36,9 @@ class TestCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithm, str)
         self.assertIsInstance(Security.kSecCodeInfoIdentifier, str)
         self.assertIsInstance(Security.kSecCodeInfoImplicitDesignatedRequirement, str)
+        self.assertIsInstance(
+            Security.kSecCodeInfoDefaultDesignatedLightweightCodeRequirement, str
+        )
         self.assertIsInstance(Security.kSecCodeInfoMainExecutable, str)
         self.assertIsInstance(Security.kSecCodeInfoPList, str)
         self.assertIsInstance(Security.kSecCodeInfoRequirements, str)

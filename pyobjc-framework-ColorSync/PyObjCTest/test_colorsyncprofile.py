@@ -201,6 +201,7 @@ class TestColorSyncProfile(TestCase):
     @min_os_level("13.0")
     def testConstants13_0(self):
         self.assertIsInstance(ColorSync.kColorSyncProfileIsValid, str)
+        self.assertIsInstance(ColorSync.kColorSyncWebSafeColorsProfile, str)
 
     def testStructs(self):
         v = ColorSync.ColorSyncMD5()

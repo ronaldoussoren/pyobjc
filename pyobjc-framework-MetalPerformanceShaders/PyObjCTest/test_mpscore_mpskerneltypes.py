@@ -31,6 +31,9 @@ class TestMPSCore_MPSKernelTypes(TestCase):
             MetalPerformanceShaders.MPSDeviceSupportsFloat16BicubicFiltering, 1 << 9
         )
         self.assertEqual(MetalPerformanceShaders.MPSDeviceIsAppleDevice, 1 << 10)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDeviceSupportsSimdShuffleAndFill, 1 << 11
+        )
 
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexDestIndex, 0)
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexSrc0Index, 0)

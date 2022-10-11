@@ -50,10 +50,10 @@ class TestBADownloadManager(TestCase):
             BackgroundAssets.BADownloadManager.scheduleDownload_error_, 1
         )
         self.assertArgIsBlock(
-            BackgroundAssets.BADownloadManager.performWithExclusiveControl_, 0, b"v@"
+            BackgroundAssets.BADownloadManager.performWithExclusiveControl_, 0, b"vZ@"
         )
         self.assertArgIsBlock(
-            BackgroundAssets.BADownloadManager.performWithExclusiveControlBeforeDate_completion_,
+            BackgroundAssets.BADownloadManager.performWithExclusiveControlBeforeDate_performHandler_,
             1,
             b"vZ@",
         )

@@ -435,6 +435,11 @@ class TestNSTextView(TestCase):
             AppKit.NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0
         )
 
+    @min_os_level("13.0")
+    def testMethods13_0(self):
+        self.assertArgIsBOOL(AppKit.NSTextView.initUsingTextLayoutManager_, 0)
+        self.assertArgIsBOOL(AppKit.NSTextView.textViewUsingTextLayoutManager_, 0)
+
     @min_os_level("10.6")
     def testProtocols10_6(self):
         self.assertArgHasType(

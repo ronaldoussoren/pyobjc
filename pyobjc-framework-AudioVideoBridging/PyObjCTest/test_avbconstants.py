@@ -522,7 +522,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AEMCommandTypeGetMaxTransitTime, 0x004D
         )
         self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetSampingRateRange, 0x004E
+            AudioVideoBridging.AVB17221AEMCommandTypeSetSamplingRateRange, 0x004E
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetSamplingRateRange, 0x004F

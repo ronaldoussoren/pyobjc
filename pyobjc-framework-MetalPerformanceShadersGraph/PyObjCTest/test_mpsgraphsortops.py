@@ -14,3 +14,12 @@ class TestMPSGraphSortOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraph.sortWithTensor_axisTensor_descending_name_,
             2,
         )
+
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.argSortWithTensor_axis_descending_name_,
+            2,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.argSortWithTensor_axisTensor_descending_name_,
+            2,
+        )

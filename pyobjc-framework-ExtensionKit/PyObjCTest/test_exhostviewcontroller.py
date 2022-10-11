@@ -16,8 +16,3 @@ class TestEXHostViewController(TestCase):
 
     def test_protocols(self):
         self.assertProtocolExists("EXHostViewControllerDelegate")
-
-    def test_protocol_methods(self):
-        self.assertResultIsBOOL(
-            TestEXHostViewControllerHelper.shouldAcceptXPCConnection_
-        )

@@ -11,10 +11,36 @@ class TestMPSGraphTensorShapeOps(TestCase):
             5,
         )
         self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.depthToSpace2DTensor_widthAxis_heightAxis_depthAxis_blockSize_usePixelShuffleOrder_name_,  # noqa: B950
+            5,
+        )
+
+        self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraph.spaceToDepth2DTensor_widthAxis_heightAxis_depthAxis_blockSize_usePixelShuffleOrder_name_,  # noqa: B950
             5,
+        )
+
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.depthToSpace2DTensor_widthAxis_heightAxis_depthAxis_blockSize_usePixelShuffleOrder_name_,  # noqa: B950
+            5,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950
+            4,
         )
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraph.depthToSpace2DTensor_widthAxis_heightAxis_depthAxis_blockSize_usePixelShuffleOrder_name_,  # noqa: B950
             5,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950
+            4,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950
+            4,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.batchToSpaceTensor_spatialAxesTensor_batchAxisTensor_blockDimensionsTensor_usePixelShuffleOrder_name_,  # noqa: B950
+            4,
         )

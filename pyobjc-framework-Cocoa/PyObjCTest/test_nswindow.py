@@ -239,6 +239,11 @@ class TestNSWindow(TestCase):
         self.assertEqual(
             AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
         )
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorPrimary, 1 << 16)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorAuxiliary, 1 << 17)
+        self.assertEqual(
+            AppKit.NSWindowCollectionBehaviorCanJoinAllApplications, 1 << 18
+        )
 
     @skipUnless(Quartz is not None, "test requires Quartz")
     def testMagicConstants(self):

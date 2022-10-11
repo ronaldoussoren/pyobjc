@@ -27,6 +27,9 @@ static PyObjC_function_map function_map[] = {
     {"MPSGetCustomKernelBroadcastSourceIndex",
      (PyObjC_Function_Pointer)&MPSGetCustomKernelBroadcastSourceIndex},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1300
+    {"MPSSizeofMPSDataType", (PyObjC_Function_Pointer)&MPSSizeofMPSDataType},
+#endif
     {0, 0}};
 
 #pragma clang diagnostic pop
