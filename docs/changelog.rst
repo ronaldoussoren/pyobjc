@@ -135,6 +135,22 @@ Version 9.0a1
 * Fix internal error when an object that cannot be used in a boolean context
   is used for an ObjC argument that expects a ``bool`` or ``BOOL`` value.
 
+* #502: Fix incompatibility with Nuitka.
+
+  Earlier version of PyObjC failed when compiled using Nuitka, this
+  version does work.
+
+  Limitations:
+  - The automatic calculation of the method signature in ``selector()``
+    assumes that methods return ``id`` for Nuitka compiled code.
+
+    That should not be a problem in practice.
+
+  FIXME: The code added for this needs tests separate from Nuitka
+  (i.e. have tests that emulate enough of Nuitka to trigger the
+  new code paths, including error paths; actually testing if PyObjC
+  works correctly with Nuitka will need a separate test run)
+
 Version 8.6
 -----------
 
