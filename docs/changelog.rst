@@ -92,6 +92,10 @@ Version 9.0a1
   the bridge only supports the method signatures found in system frameworks,
   other signatures will result in exceptions at runtime.
 
+  The relevant libffi issue for this is `#408 <https://github.com/libffi/libffi/issues/408>`_.
+  But note that even if that issue were to be fixed PyObjC likely won't use
+  SIMD support in libffi until that's merged in the system version on macOS.
+
 * Because of the previous change APIs that have a SIMD type are now callable
   from Python.
 
