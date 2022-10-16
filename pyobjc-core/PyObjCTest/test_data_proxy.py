@@ -217,7 +217,7 @@ class TestMisc(TestCase):
 
     def test_proxy_class(self):
         with self.subTest(bytes):
-            self.assertIs(OC_TestSet.classOf_(bytes()), OC_BuiltinPythonData)
+            self.assertIs(OC_TestSet.classOf_(b""), OC_BuiltinPythonData)
         with self.subTest(bytearray):
             self.assertIs(OC_TestSet.classOf_(bytearray()), OC_BuiltinPythonData)
         with self.subTest(SomeBytes):

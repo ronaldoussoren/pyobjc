@@ -225,7 +225,7 @@ class MyWindowController(Cocoa.NSWindowController):
         if event.type() == Cocoa.NSKeyDown:
             characters = event.characters()
             if len(characters) > 0 and characters[0] == "\r":
-                # get the predicat, which is the object value of our view
+                # get the predicate, which is the object value of our view
                 predicate = self.predicateEditor.objectValue()
 
                 # make it Spotlight friendly

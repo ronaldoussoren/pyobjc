@@ -96,7 +96,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 
     memset((void*)addr_ret, '\0', sizeof(*addr_ret));
     if (name[0] == '\0') {
-        int siz;
+        int size;
         memset(&hints, 0, sizeof(hints));
         hints.ai_family   = af;
         hints.ai_socktype = SOCK_DGRAM; /*dummy*/
@@ -110,11 +110,11 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         }
         switch (res->ai_family) {
         case AF_INET:
-            siz = 4;
+            size = 4;
             break;
 
         case AF_INET6:
-            siz = 16;
+            size = 16;
             break;
 
         default:
@@ -135,7 +135,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
             addr_ret_size = res->ai_addrlen; // LCOV_EXCL_LINE
         memcpy(addr_ret, res->ai_addr, addr_ret_size);
         freeaddrinfo(res);
-        return siz;
+        return size;
     }
     if (name[0] == '<' && strcmp(name, "<broadcast>") == 0) {
         struct sockaddr_in* sinaddr;

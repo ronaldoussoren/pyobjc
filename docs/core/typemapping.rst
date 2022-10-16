@@ -20,7 +20,7 @@ corresponding Python type.
 The C type 'char' does not have a unambiguous meaning in C, it is used for
 a number of tasks. In the table below the various tasks have been represented
 separately: booleans (*BOOL*), representing characters in text
-(*char*) and represeting small integers (*int8_t*).  PyObjC
+(*char*) and representing small integers (*int8_t*).  PyObjC
 uses metadata in the framework wrappers to know when to use which
 representation.
 

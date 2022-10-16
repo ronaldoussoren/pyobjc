@@ -96,7 +96,7 @@ determines the value to use for the array.
 For :data:`_C_INOUT` argument the value to use for converting to C and back from C is calculated both before and
 after the function call, which means that the length of the array passed to the function can have a different length
 than the array returned from the function.  This is used for function where a buffer is passed into the function and
-the function indicates the usable size of that buffer by modifiying a pass-by-reference argument.
+the function indicates the usable size of that buffer by modifying a pass-by-reference argument.
 
 How the size of the C array is calculated depends on the *type* of the argument:
 

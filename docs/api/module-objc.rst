@@ -1194,7 +1194,7 @@ Constants
    .. sourcecode:: python
 
       if objc.MAC_OS_X_VERSION_CURRENT >= objc.MAC_OS_X_VERSION_10_14:
-         # Use API introducted in macOS 10.14
+         # Use API introduced in macOS 10.14
          ...
 
       else:

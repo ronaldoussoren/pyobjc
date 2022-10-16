@@ -41,7 +41,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
     # __slots__ = (
     #    'environ',  # The actual environment, as a NSMutableDictionary
     #    'keys',     # The list of keys, in the right order for the tableView
-    #    'changed',  # True if we should save before exitting
+    #    'changed',  # True if we should save before exiting
     # )
 
     def initWithBundle_(self, bundle):

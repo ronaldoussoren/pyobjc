@@ -356,7 +356,7 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
                                             PyObject* _Nullable kwds)
 {
     static char*         keywords[] = {"function_list", "module_globals", "functionInfo",
-                               "skip_undefined", NULL};
+                                       "skip_undefined", NULL};
     PyObject*            pyFunctionsList;
     PyObject*            module_globals;
     PyObject*            functionInfo;

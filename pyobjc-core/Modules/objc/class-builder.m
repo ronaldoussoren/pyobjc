@@ -315,7 +315,7 @@ error_cleanup:
 static int
 tc2tc(char* buf)
 {
-    /* Skip pointer declarations and anotations */
+    /* Skip pointer declarations and annotations */
     for (;;) {
         switch (*buf) {
         case _C_PTR:

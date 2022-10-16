@@ -25,7 +25,7 @@ Pickling support for Cocoa objects
 
 It is currently not possible to serialize a arbitrary Cocoa
 object into a :mod:`pickle` archive due to slight
-incompatibilities in the overal serialization mechanism when
+incompatibilities in the overall serialization mechanism when
 dealing with possibly circular data structures.
 
 It is possible to pickle a Python subclass of a Cocoa

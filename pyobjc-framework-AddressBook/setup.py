@@ -1,6 +1,6 @@
 """
 Wrappers for the "AddressBook" framework on macOS. The Address Book is
-a centralized database for contact and other information for people. Appliations
+a centralized database for contact and other information for people. Applications
 that make use of the AddressBook framework all use the same database.
 
 These wrappers don't include documentation, please check Apple's documentation

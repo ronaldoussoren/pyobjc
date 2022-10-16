@@ -2733,9 +2733,9 @@ p.Animation = p.extend(cW, {
     p.speed =
         function(a, b, c) {
         var d      = a && typeof a == "object" ? p.extend({}, a) : {
-            complete : c || !c && b || p.isFunction(a) && a,
-            duration : a,
-            easing : c && b || b && !p.isFunction(b) && b
+                 complete : c || !c && b || p.isFunction(a) && a,
+                 duration : a,
+                 easing : c && b || b && !p.isFunction(b) && b
         };
         d.duration = p.fx.off                            ? 0
                      : typeof     d.duration == "number" ? d.duration

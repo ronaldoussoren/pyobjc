@@ -159,7 +159,7 @@ is_builtin_datetime(PyObject* object)
      * 3. other (uses PyObjC_encodeWithCoder)
      *
      * As with other classes: non-keyed archives will roundtrip to
-     * Cocoa clases for the exact types datetime.date and datetime.datetime.
+     * Cocoa classes for the exact types datetime.date and datetime.datetime.
      *
      * XXX: Add code to encode the timezone as well.
      */

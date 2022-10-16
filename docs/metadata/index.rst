@@ -7,7 +7,7 @@ automatic bindings of all APIs.  Because of
 this PyObjC needs a way to load additional
 information about APIs.
 
-The additianal information is loaded through
+The additional information is loaded through
 a metadata system, the documents below describe
 the methods by which the metadata can be loaded.
 

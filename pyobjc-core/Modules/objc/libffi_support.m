@@ -4185,7 +4185,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     ffi_type*              arglist[MAX_ARGCOUNT];
     void*                  values[MAX_ARGCOUNT];
     struct byref_attr      byref_attr[MAX_ARGCOUNT] = {
-        {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}};
+             {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}};
     void*      byref[MAX_ARGCOUNT] = {0};
     Py_ssize_t r;
     void*      msgResult;

@@ -133,12 +133,12 @@ m_CMVideoFormatDescriptionCreateFromH264ParameterSets(PyObject* mod
                                                       PyObject* args, PyObject* kwds)
 {
     static char*           keywords[] = {"allocator",
-                               "parameterSetCount",
-                               "parameterSetPointers",
-                               "parameterSetSizes",
-                               "NALUnitHeaderLength",
-                               "formatDescriptionOut",
-                               NULL};
+                                         "parameterSetCount",
+                                         "parameterSetPointers",
+                                         "parameterSetSizes",
+                                         "NALUnitHeaderLength",
+                                         "formatDescriptionOut",
+                                         NULL};
     CFAllocatorRef         allocator;
     PyObject*              py_allocator;
     Py_ssize_t             parameterSetCount;
@@ -203,13 +203,13 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
                                                       PyObject* args, PyObject* kwds)
 {
     static char*           keywords[] = {"allocator",
-                               "parameterSetCount",
-                               "parameterSetPointers",
-                               "parameterSetSizes",
-                               "NALUnitHeaderLength",
-                               "extensions",
-                               "formatDescriptionOut",
-                               NULL};
+                                         "parameterSetCount",
+                                         "parameterSetPointers",
+                                         "parameterSetSizes",
+                                         "NALUnitHeaderLength",
+                                         "extensions",
+                                         "formatDescriptionOut",
+                                         NULL};
     CFAllocatorRef         allocator;
     PyObject*              py_allocator;
     Py_ssize_t             parameterSetCount;

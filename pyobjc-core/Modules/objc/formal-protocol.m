@@ -417,8 +417,8 @@ static PyMethodDef proto_methods[] = {
     {.ml_name  = "conformsTo_",
      .ml_meth  = (PyCFunction)proto_conformsTo_,
      .ml_flags = METH_VARARGS,
-     .ml_doc   = "conformsTo_(other)\n" CLINIC_SEP
-               "\nDoes this protocol conform to another protocol"},
+     .ml_doc   = "conformsTo_(other)\n" CLINIC_SEP "\n"
+                 "Does this protocol conform to another protocol"},
     {.ml_name  = "descriptionForInstanceMethod_",
      .ml_meth  = (PyCFunction)descriptionForInstanceMethod_,
      .ml_flags = METH_O,
