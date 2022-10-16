@@ -47,13 +47,13 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     return unittest.TestSuite(suites)
 
 
-def makeTestSuite():
-    import __main__
+gTopdir = dirname(dirname(__file__))
 
-    topdir = dirname(__main__.__file__)
+
+def makeTestSuite():
 
     plain_suite = importExternalTestCases(
-        "test_*.py", join(topdir, "PyObjCTest"), package="PyObjCTest"
+        "test_*.py", join(gTopdir, "PyObjCTest"), package="PyObjCTest"
     )
 
     return plain_suite
