@@ -725,6 +725,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         py_super_class = PyObjCClass_New(super_class);
         if (py_super_class == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
+            PyObjC_Assert(objc_class != Nil, NULL);
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
@@ -737,6 +738,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         } else {
             if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
+                PyObjC_Assert(objc_class != Nil, NULL);
                 (void)PyObjCClass_UnbuildClass(objc_class);
                 Py_XDECREF(orig_slots);
                 Py_DECREF(protocols);
@@ -790,7 +792,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 Py_DECREF(metadict);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
-                (void)PyObjCClass_UnbuildClass(objc_class);
+                if (objc_class != Nil) {
+                    (void)PyObjCClass_UnbuildClass(objc_class);
+                }
                 return NULL;
             }
 
@@ -803,7 +807,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 Py_DECREF(metadict);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
-                (void)PyObjCClass_UnbuildClass(objc_class);
+                if (objc_class != Nil) {
+                    (void)PyObjCClass_UnbuildClass(objc_class);
+                }
                 return NULL;
             }
         }
@@ -821,7 +827,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(metadict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
-        (void)PyObjCClass_UnbuildClass(objc_class);
+        if (objc_class != Nil) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+        }
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -837,7 +845,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(metadict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
-        (void)PyObjCClass_UnbuildClass(objc_class);
+        if (objc_class != Nil) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+        }
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -912,7 +922,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         PyObject* m = PyObject_Vectorcall(PyObjC_MakeBundleForClass, args + 1,
                                           0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (m == NULL) {
-            (void)PyObjCClass_UnbuildClass(objc_class);
+            if (objc_class != Nil) {
+                (void)PyObjCClass_UnbuildClass(objc_class);
+            }
             Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
@@ -929,7 +941,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         r = PyDict_SetItemString(dict, "bundleForClass", m);
         Py_DECREF(m);
         if (r == -1) {
-            (void)PyObjCClass_UnbuildClass(objc_class);
+            if (objc_class != Nil) {
+                (void)PyObjCClass_UnbuildClass(objc_class);
+            }
             Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
             Py_DECREF(protocols);
@@ -1006,7 +1020,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(old_dict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
-        (void)PyObjCClass_UnbuildClass(objc_class);
+        if (objc_class != Nil) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+        }
         return NULL;
     }
     Py_DECREF(args);
@@ -1030,7 +1046,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(old_dict);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
-            (void)PyObjCClass_UnbuildClass(objc_class);
+            if (objc_class != Nil) {
+                (void)PyObjCClass_UnbuildClass(objc_class);
+            }
             return NULL;
             // LCOV_EXCL_STOP
         }
@@ -1051,6 +1069,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(old_dict);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
+            PyObjC_Assert(objc_class != Nil, NULL);
             (void)PyObjCClass_UnbuildClass(objc_class);
             return NULL;
             // LCOV_EXCL_STOP
