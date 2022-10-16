@@ -73,6 +73,8 @@ def describe_type(typestr):
             if not nm:
                 return "struct <?>"
             nm = nm.decode("utf-8").lstrip("_")
+            if "." in nm:
+                return nm.rsplit(".", 1)[-1]
             return nm
 
     if typestr.startswith(objc._C_VECTOR_B):
