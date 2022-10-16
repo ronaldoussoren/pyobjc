@@ -20,9 +20,11 @@ Version 9.0a1
   - BackgroundAssets
   - ExtensionKit
   - HealthKit
+  - Matter
   - MetalFX
   - SharedWithYou
   - SharedWithYouCore
+  - ThreadNetwork
 
 * The definition of a number of basic structs has moved in the SDK for
   macOS 13 and PyObjC conforms to this change on all platforms.
@@ -130,6 +132,8 @@ Version 9.0a1
   These assert that the type of an argument or return value is
   a Objective-C or CoreFoundation object, or a pointer to one.
 
+* Fix internal error when an object that cannot be used in a boolean context
+  is used for an ObjC argument that expects a ``bool`` or ``BOOL`` value.
 
 Version 8.6
 -----------
@@ -720,7 +724,7 @@ for edge cases that don't happen in normal programs.
   method have been removed because they have a better alternative in the
   :mod:`unittest` library.
 
-* #404: Instances of the Python represention of C structs can now be pickled.
+* #404: Instances of the Python representation of C structs can now be pickled.
 
   That is, instances of ``AppKit.NSPoint``, ``Foundation.NSRange``, etc. can
   be pickled. The exception are a number of types in the CoreAudio bindings
@@ -2129,9 +2133,9 @@ explicitly.
 
   Note: Building PyObjC on macOS 10.12 requires Xcode 8.1 (or a later version)
 
-* Added bindings for the SafariServices and Intents frameworks, both introducted in macOS 10.12.
+* Added bindings for the SafariServices and Intents frameworks, both introduced in macOS 10.12.
 
-* Added bindings for the MediaPlayer framework, introducted in macOS 10.12.1.
+* Added bindings for the MediaPlayer framework, introduced in macOS 10.12.1.
 
 * Add bindings for the ModelIO framework, introduced in OSX 10.11.
 
