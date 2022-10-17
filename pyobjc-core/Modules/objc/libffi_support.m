@@ -2044,36 +2044,31 @@ static Py_ssize_t
 _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKwOnly,
           Py_ssize_t* defaultCount)
 {
-    PyCodeObject*     func_code;
-    PyFunctionObject* func;
+    PyCodeObject* func_code;
 
-    if (PyFunction_Check(callable) || PyMethod_Check(callable)) {
-        if (PyFunction_Check(callable)) {
-            func = (PyFunctionObject*)callable;
-        } else {
-            func = (PyFunctionObject*)PyMethod_Function(callable);
+    if (PyObjC_is_pyfunction(callable) || PyObjC_is_pymethod(callable)) {
+        func_code = PyObjC_get_code(callable);
+        if (func_code == NULL) {
+            return -2;
         }
-
-        func_code    = (PyCodeObject*)PyFunction_GetCode((PyObject*)func);
-        *haveVarArgs = (func_code->co_flags & CO_VARARGS) != 0;
-        *haveVarKwds = (func_code->co_flags & CO_VARKEYWORDS) != 0;
-        *haveKwOnly  = NO;
-        if (func->func_kwdefaults == NULL) {
-            *haveKwOnly = (func_code->co_kwonlyargcount != 0);
-        } else {
-            *haveKwOnly =
-                (func_code->co_kwonlyargcount != PyDict_Size(func->func_kwdefaults));
-        }
+        *haveVarArgs  = (func_code->co_flags & CO_VARARGS) != 0;
+        *haveVarKwds  = (func_code->co_flags & CO_VARKEYWORDS) != 0;
+        *haveKwOnly   = NO;
+        *haveKwOnly   = (func_code->co_kwonlyargcount != PyObjC_num_kwdefaults(callable));
         *defaultCount = 0;
 
-        if (func->func_defaults != NULL) {
-            *defaultCount = PyTuple_Size(func->func_defaults);
+        *defaultCount = PyObjC_num_defaults(callable);
+        if (*defaultCount == -1) {
+            Py_DECREF(func_code);
+            return -2;
         }
 
-        if (!PyMethod_Check(callable) || PyMethod_Self(callable) == NULL) {
-            return func_code->co_argcount;
-        } else {
-            if (func_code->co_argcount == 0) {
+        Py_ssize_t argcount = func_code->co_argcount;
+        Py_DECREF(func_code);
+
+        if (PyObjC_is_pymethod(callable)) {
+            /* Methods are always 'bound' */
+            if (argcount == 0) {
                 if (!*haveVarArgs) {
                     PyErr_SetString(PyExc_TypeError,
                                     "Method without possitional arguments");
@@ -2081,7 +2076,9 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
                 }
                 return 0;
             }
-            return func_code->co_argcount - 1;
+            return argcount - 1;
+        } else {
+            return argcount;
         }
 
     } else if (PyObjCPythonSelector_Check(callable)) {
@@ -3554,8 +3551,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                           PyObject* _Nullable self, int flags,
                                           void** argvalues)
 {
-    PyObject*  objc_result = NULL;
     PyObject*  result      = NULL;
+    PyObject*  objc_result = NULL;
     int        py_arg;
     void*      arg;
     Py_ssize_t i;
@@ -3799,6 +3796,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
         return objc_result;
 
     } else {
+        PyObjC_Assert(byref_out_count > 0, NULL);
 
         if (*methinfo->rettype->type == _C_VOID) {
             if (byref_out_count > 1) {
@@ -3993,15 +3991,16 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                      * up with a tuple where once of the entries
                      * is a C NULL pointer)
                      */
-                    PyTuple_SET_ITEM(result, py_arg++, Py_None);
-                    Py_INCREF(Py_None);
+                    if (result != NULL) {
+                        PyTuple_SET_ITEM(result, py_arg++, Py_None);
+                        Py_INCREF(Py_None);
+                    }
                 }
                 break;
             }
         }
+        return result;
     }
-
-    return result;
 
 error_cleanup:
     Py_XDECREF(result);

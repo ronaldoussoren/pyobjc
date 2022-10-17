@@ -155,6 +155,8 @@ Version 9.0a1
   new code paths, including error paths; actually testing if PyObjC
   works correctly with Nuitka will need a separate test run)
 
+* Fixed crash in objc.selector due to uninitialized memory.
+
 Version 8.6
 -----------
 

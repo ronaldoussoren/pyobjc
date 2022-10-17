@@ -1936,8 +1936,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
          * ones).
          */
 
-    } else if (PyObjCSelector_Check(value) || PyFunction_Check(value)
-               || PyMethod_Check(value)
+    } else if (PyObjCSelector_Check(value) || PyObjC_is_pyfunction(value)
+               || PyObjC_is_pymethod(value)
                || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
         /*
          * Assignment of a function: create a new method in the ObjC

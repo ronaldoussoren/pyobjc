@@ -174,17 +174,27 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 {
     PyCodeObject* func_code;
 
-    if (PyFunction_Check(pymethod)) {
-        func_code = (PyCodeObject*)PyFunction_GetCode(pymethod);
+    if (PyObjC_is_pyfunction(pymethod)) {
+        func_code = (PyCodeObject*)PyObjC_get_code(pymethod);
+        if (func_code == NULL) {
+            return -1;
+        }
         if (argcount == func_code->co_argcount) {
+            Py_DECREF(func_code);
             return 0;
         }
+        Py_DECREF(func_code);
 
-    } else if (PyMethod_Check(pymethod)) {
-        func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(pymethod));
+    } else if (PyObjC_is_pymethod(pymethod)) {
+        func_code = PyObjC_get_code(pymethod);
+        if (func_code == NULL) {
+            return -1;
+        }
         if (argcount == func_code->co_argcount - 1) {
+            Py_DECREF(func_code);
             return 0;
         }
+        Py_DECREF(func_code);
     }
 
     return -1;
@@ -284,12 +294,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
      * an exception.
      */
 
-    char*         encoding;
-    PyObject*     pymethod;
-    PyCodeObject* func_code;
-    Py_ssize_t    argcount;
-    Class         cls;
-    Method        m;
+    char*      encoding;
+    PyObject*  pymethod;
+    Py_ssize_t argcount;
+    Class      cls;
+    Method     m;
 
     cls = object_getClass(self);
     m   = class_getInstanceMethod(cls, sel);
@@ -310,15 +319,16 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             PyObjC_GIL_RETURN(nil);
         }
 
-        if (PyMethod_Check(pymethod)) {
-            func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(pymethod));
-            argcount  = func_code->co_argcount - 1;
+        if (PyObjC_is_pymethod(pymethod)) {
+            argcount = PyObjC_num_arguments(pymethod) - 1;
 
         } else {
-            func_code = (PyCodeObject*)PyFunction_GetCode(pymethod);
-            argcount  = func_code->co_argcount;
+            argcount = PyObjC_num_arguments(pymethod);
         }
         Py_DECREF(pymethod);
+        if (argcount == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
         encoding = alloca(argcount + 4);
         memset(encoding, '@', argcount + 3);

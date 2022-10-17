@@ -800,7 +800,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 }
             }
 
-        } else if (PyMethod_Check(value) || PyFunction_Check(value)
+        } else if (PyObjC_is_pymethod(value) || PyObjC_is_pyfunction(value)
                    || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
 
             const char* ocname;

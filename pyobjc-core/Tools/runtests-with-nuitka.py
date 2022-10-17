@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 import subprocess
-import os.path
 import sys
+import pathlib
+
+MYDIR = pathlib.Path(__file__).parent
+ROOT = MYDIR.parent
 
 try:
     import nuitka  # noqa: F401
 except ImportError:
     raise SystemExit("This script requires installing 'nuitka' first")
 
-
+print(sys.executable)
 subprocess.check_call(
     [
         sys.executable,
@@ -17,10 +20,8 @@ subprocess.check_call(
         "--standalone",
         "--include-package=PyObjCTest",
         "--include-package-data=PyObjCTest",
-        os.path.join(os.path.dirname(__file__), "runtests.py"),
+        MYDIR / "runtests.py",
     ],
-    cwd=os.path.dirname(os.path.dirname(__file__)),
-    env={
-        "PYTHONPATH": os.path.dirname(os.path.dirname(__file__)),
-    },
+    cwd=ROOT,
+    env={"PYTHONPATH": str(ROOT)},
 )

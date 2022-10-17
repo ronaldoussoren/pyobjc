@@ -2191,6 +2191,9 @@ pythonify_c_value(const char* type, const void* datum)
             return NULL;
         }
         PyObject* args = info->as_tuple(datum);
+        if (args == NULL) {
+            return NULL;
+        }
         if (info->pytype == NULL) {
             return args;
         } else {

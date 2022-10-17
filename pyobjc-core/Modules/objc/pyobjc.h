@@ -139,6 +139,7 @@
 #import "instance-var.h"
 #import "ivar-accessor.h"
 #import "memview.h"
+#import "meth-func.h"
 #import "method-accessor.h"
 #import "method-imp.h"
 #import "objc-NULL.h"

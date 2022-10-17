@@ -77,13 +77,20 @@ class MethodAccessTest(TestCase):
     def testDict(self):
         o = NSObject.new()
 
-        d = o.pyobjc_instanceMethods.__dict__.keys()
-        self.assertGreater(len(d), 10)
-        self.assertIn("init", d)
+        with self.subTest("instance"):
+            d = o.pyobjc_instanceMethods.__dict__.keys()
+            self.assertGreater(len(d), 10)
+            self.assertIn("init", d)
 
-        d = NSObject.pyobjc_classMethods.__dict__.keys()
-        self.assertGreater(len(d), 10)
-        self.assertIn("alloc", d)
+        with self.subTest("class"):
+            d = NSObject.pyobjc_classMethods.__dict__.keys()
+            self.assertGreater(len(d), 10)
+            self.assertIn("alloc", d)
+
+        with self.subTest("instance through class"):
+            d = NSObject.pyobjc_instanceMethods.__dict__.keys()
+            self.assertGreater(len(d), 10)
+            self.assertIn("init", d)
 
         # d = o.pyobjc_classMethods.__dict__.keys()
         # self.assertGreater(len(d), 10)

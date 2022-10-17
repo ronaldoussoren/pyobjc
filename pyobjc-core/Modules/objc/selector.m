@@ -3,9 +3,6 @@
  */
 #include "pyobjc.h"
 
-#include "compile.h" /* from Python */
-#include "opcode.h"
-
 #include <objc/Object.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -330,7 +327,10 @@ static void
 sel_dealloc(PyObject* object)
 {
     PyObjCSelector* self = (PyObjCSelector*)object;
-    Py_CLEAR(self->sel_methinfo);
+    Py_XDECREF(self->sel_self);
+    self->sel_self = NULL;
+    Py_XDECREF(self->sel_methinfo);
+    self->sel_methinfo = NULL;
 
     PyMem_Free((char*)self->sel_python_signature);
 
@@ -338,7 +338,6 @@ sel_dealloc(PyObject* object)
         PyMem_Free((char*)self->sel_native_signature);
         self->sel_native_signature = NULL;
     }
-    Py_CLEAR(self->sel_self);
     Py_TYPE(object)->tp_free(object);
 }
 
@@ -764,8 +763,21 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
-    result->base.sel_selector = meth->base.sel_selector;
-    const char* tmp           = PyObjCUtil_Strdup(meth->base.sel_python_signature);
+    result->base.sel_selector         = meth->base.sel_selector;
+    result->base.sel_flags            = meth->base.sel_flags;
+    result->base.sel_class            = meth->base.sel_class;
+    result->base.sel_methinfo         = NULL;
+    result->base.sel_python_signature = NULL;
+    result->base.sel_native_signature = NULL;
+    result->base.sel_mappingcount     = meth->base.sel_mappingcount;
+    result->base.sel_self             = NULL;
+    result->sel_cif                   = NULL;
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.sel_vectorcall = objcsel_vectorcall;
+#endif
+    result->sel_call_func = meth->sel_call_func;
+
+    const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
@@ -782,11 +794,6 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         // LCOV_EXCL_STOP
     }
     result->base.sel_native_signature = tmp;
-
-    result->base.sel_flags    = meth->base.sel_flags;
-    result->base.sel_class    = meth->base.sel_class;
-    result->base.sel_methinfo = NULL;
-    result->sel_cif           = NULL;
 
     if (meth->sel_call_func == NULL) {
         if (class_isMetaClass(meth->base.sel_class)) {
@@ -822,7 +829,6 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
             return NULL;
         }
     }
-    result->sel_call_func = meth->sel_call_func;
 
     if (meth->base.sel_methinfo != NULL) {
         result->base.sel_methinfo = meth->base.sel_methinfo;
@@ -1040,6 +1046,20 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
+    result->base.sel_self         = NULL;
+    result->base.sel_class        = class;
+    result->base.sel_flags        = 0;
+    result->base.sel_mappingcount = 0;
+    result->base.sel_methinfo     = NULL;
+    result->base.sel_methinfo     = NULL;
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.sel_vectorcall = objcsel_vectorcall;
+#endif
+    result->sel_call_func             = NULL;
+    result->sel_cif                   = NULL;
+    result->base.sel_python_signature = NULL;
+    result->base.sel_native_signature = NULL;
+
     result->base.sel_selector = selector;
     const char* tmp           = PyObjCUtil_Strdup(signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
@@ -1058,15 +1078,6 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
         // LCOV_EXCL_STOP
     }
 
-    result->base.sel_self     = NULL;
-    result->base.sel_class    = class;
-    result->base.sel_flags    = 0;
-    result->base.sel_methinfo = NULL;
-#if PY_VERSION_HEX >= 0x03090000
-    result->base.sel_vectorcall = objcsel_vectorcall;
-#endif
-    result->sel_call_func = NULL;
-    result->sel_cif       = NULL;
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
@@ -1152,20 +1163,36 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
         callable = ((PyObjCPythonSelector*)callable)->callable;
     }
 
-    if (PyFunction_Check(callable)) {
-        result->argcount = ((PyCodeObject*)PyFunction_GetCode(callable))->co_argcount;
+    if (PyObjC_is_pyfunction(callable)) {
+        result->argcount = PyObjC_num_arguments(callable);
+        if (result->argcount == -1) {
+            Py_DECREF(result);
+            return NULL;
+        }
 
     } else if (PyMethod_Check(callable)) {
+        /* XXX: Can PyMethod_Self ever be NULL? */
+        /*      if it cannot: Drop this case */
         if (PyMethod_Self(callable) == NULL) {
-            result->argcount =
-                ((PyCodeObject*)PyFunction_GetCode(PyMethod_Function(callable)))
-                    ->co_argcount;
+            result->argcount = PyObjC_num_arguments(callable);
+            if (result->argcount == -1) {
+                Py_DECREF(result);
+                return NULL;
+            }
 
         } else {
-            result->argcount =
-                ((PyCodeObject*)PyFunction_GetCode(PyMethod_Function(callable)))
-                    ->co_argcount
-                - 1;
+            result->argcount = PyObjC_num_arguments(callable) - 1;
+            if (result->argcount == -2) {
+                Py_DECREF(result);
+                return NULL;
+            }
+        }
+
+    } else if (PyObjC_is_pymethod(callable)) {
+        result->argcount = PyObjC_num_arguments(callable) - 1;
+        if (result->argcount == -2) {
+            Py_DECREF(result);
+            return NULL;
         }
 
     } else if (callable == Py_None) {
@@ -1332,7 +1359,7 @@ static PyObject* _Nullable
         return NULL;
     }
 
-    if (!PyMethod_Check(self->callable)) {
+    if (!PyObjC_is_pymethod(self->callable)) {
         if (self->base.sel_self == NULL) {
             PyObject* self_arg;
 #if PY_VERSION_HEX < 0x03090000
@@ -1436,85 +1463,18 @@ static PyObject* _Nullable
     return result;
 }
 
-/* Returns NULL without setting an error for Nuitka compiled code */
-static PyCodeObject* _Nullable get_code(PyObject* callable, int recurse)
-{
-    PyCodeObject* func_code;
-
-    if (PyFunction_Check(callable)) {
-        func_code = (PyCodeObject*)PyFunction_GetCode(callable);
-        if (func_code == NULL) {
-            return NULL;
-        }
-        Py_INCREF(func_code);
-
-    } else if (PyMethod_Check(callable)) {
-        func_code = (PyCodeObject*)PyFunction_GetCode(PyMethod_Function(callable));
-        if (func_code == NULL) {
-            return NULL;
-        }
-        Py_INCREF(func_code);
-
-    } else { // LCOV_BR_EXCL_LINE
-        /*
-         * Handle function-like callables like those generated by Nuitka,
-         * those have a ``__code__`` attribute but don't pass the
-         * PyFunction_Check guard.
-         *
-         * FIXME: Said code object is effectively empty and will be useless
-         * for scanning for return values.
-         *
-         * See #502
-         */
-        func_code = (PyCodeObject*)PyObject_GetAttrString(callable, "__code__");
-        if (func_code == NULL) {
-            PyErr_Clear();
-        } else if (!PyCode_Check(func_code)) {
-            Py_DECREF(func_code);
-            func_code = NULL;
-        } else {
-            Py_DECREF(func_code);
-            return NULL;
-        }
-
-        if (recurse) {
-            PyObject* call = PyObject_GetAttrString(callable, "__call__");
-            if (call == NULL || !PyMethod_Check(call)) {
-                PyErr_SetString(PyExc_TypeError,
-                                "Cannot calculate default method signature");
-                return NULL;
-            }
-            func_code = get_code(call, 0);
-            Py_DECREF(call);
-        } else {
-            PyErr_SetString(PyExc_TypeError, "Cannot calculate default method signature");
-            return NULL;
-        }
-    }
-    return func_code;
-}
-
 static char*
 pysel_default_signature(SEL selector, PyObject* callable)
 {
-    PyCodeObject* func_code;
-    Py_ssize_t    arg_count;
-    char*         result;
-    Py_ssize_t    i;
-    int           was_none;
-    Py_buffer     buf;
-    const char*   selname = sel_getName(selector);
+    Py_ssize_t  arg_count;
+    char*       result;
+    const char* selname = sel_getName(selector);
 
     if (selname == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "Cannot extract string from selector");
         return NULL;
         // LCOV_EXCL_STOP
-    }
-
-    func_code = get_code(callable, 1);
-    if (func_code == NULL && PyErr_Occurred()) {
-        return NULL;
     }
 
     arg_count = 0;
@@ -1529,7 +1489,6 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result = PyMem_Malloc(arg_count + 4);
     if (result == 0) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_XDECREF(func_code);
         PyErr_NoMemory();
         return NULL;
         // LCOV_EXCL_STOP
@@ -1537,93 +1496,17 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     /* We want: v@:@... (final sequence of arg_count-1 @-chars) */
     memset(result, _C_ID, arg_count + 3);
-    if (func_code != NULL) {
-        result[0] = _C_VOID;
-    }
     result[2]             = _C_SEL;
     result[arg_count + 3] = '\0';
 
-    if (func_code != NULL) {
-#if PY_VERSION_HEX >= 0x030b0000
-        PyObject* co = PyCode_GetCode(func_code);
-        if (co == NULL) {
-            Py_DECREF(func_code);
+    if (!PyObjC_returns_value(callable)) {
+        result[0] = _C_VOID;
+        if (PyErr_Occurred()) {
+            PyMem_Free(result);
             return NULL;
         }
-        if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
-                co, &buf, PyBUF_CONTIG_RO)
-            == -1) {
-            /* This should not happened: A function where co_code does not implement
-             * the buffer protocol.
-             */
-            Py_DECREF(func_code);
-            Py_DECREF(co);
-            return NULL; // LCOV_EXCL_LINE
-        }
-
-        /* The buffer owns a strong reference */
-        Py_DECREF(co);
-
-#else
-        if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
-                func_code->co_code, &buf, PyBUF_CONTIG_RO)
-            == -1) {
-            /* This should not happened: A function where co_code does not implement
-             * the buffer protocol.
-             */
-            Py_DECREF(func_code);
-            return NULL; // LCOV_EXCL_LINE
-        }
-#endif
-
-        /*
-           Scan bytecode to find return statements. If any non-bare return
-           statement exists, then set the return type to @ (id).
-
-           In Python 3.6 the interpreter switched to a 16-bit word-code instead
-           of 8-bit bytecode, hence the two code paths
-        */
-        was_none = 0;
-
-#if PY_VERSION_HEX >= 0x03060000
-        PyObjC_Assert(buf.len % 2 == 0, NULL);
-
-        for (i = 0; i < buf.len; i += 2) {
-            int op = ((unsigned char*)buf.buf)[i];
-            if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0) {
-                was_none = 1;
-            } else {
-                if (op == RETURN_VALUE && !was_none) {
-                    result[0] = _C_ID;
-                    break;
-                }
-                was_none = 0;
-            }
-        }
-
-#else  /* PY_VERSION_HEX < 0x03060000 */
-        for (i = 0; i < buf.len; ++i) {
-            int op = ((unsigned char*)buf.buf)[i];
-            if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0
-                && ((unsigned char*)buf.buf)[i + 2] == 0) {
-                was_none = 1;
-            } else {
-                if (op == RETURN_VALUE) {
-                    if (!was_none) {
-                        result[0] = _C_ID;
-                        break;
-                    }
-                }
-                was_none = 0;
-            }
-            if (op >= HAVE_ARGUMENT) {
-                i += 2;
-            }
-        }
-#endif /* PY_VERSION_HEX < 0x03060000 */
-        PyBuffer_Release(&buf);
-        Py_DECREF(func_code);
     }
+
     return result;
 }
 
@@ -1787,7 +1670,7 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
         }
 
-        if (PyFunction_Check(tmp)) {
+        if (PyObjC_is_pyfunction(tmp)) {
             /* A 'staticmethod' instance, cannot convert */
             Py_DECREF(tmp);
             PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
@@ -1917,7 +1800,7 @@ static void
 pysel_dealloc(PyObject* obj)
 {
     /* XXX: Can this ever be NULL */
-    Py_XDECREF(((PyObjCPythonSelector*)obj)->callable);
+    Py_CLEAR(((PyObjCPythonSelector*)obj)->callable);
     sel_dealloc(obj);
 }
 
@@ -2158,7 +2041,7 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
         return (PyObject*)result;
     }
 
-    if (!PyFunction_Check(callable) && !PyMethod_Check(callable)
+    if (!PyObjC_is_pyfunction(callable) && !PyObjC_is_pymethod(callable)
         && (Py_TYPE(callable) != &PyClassMethod_Type)) { /* XXX: Cleaner API ? */
 
         PyErr_SetString(PyExc_TypeError, "expecting function, method or classmethod");
@@ -2183,7 +2066,7 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
             return NULL;
         }
 
-        if (PyFunction_Check(tmp)) {
+        if (PyObjC_is_pyfunction(tmp)) {
             /* A 'staticmethod', don't convert to a selector */
             Py_DECREF(tmp);
             Py_INCREF(callable);

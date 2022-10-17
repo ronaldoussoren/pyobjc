@@ -91,8 +91,9 @@ CFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto=thin",
+    "-O1",
+    # "-O3",
+    # "-flto=thin",
 ]
 
 # CFLAGS for other (test) extensions:
