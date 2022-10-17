@@ -1,3 +1,5 @@
+#include "pyobjc.h"
+
 static PyObject*
 call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
                                        PyObject* const* arguments, size_t nargs)
@@ -14,7 +16,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
         return NULL;
     }
     py_value = arguments[0];
-    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &index) == -1) {
+    if (depythonify_c_value(@encode(NSUInteger), arguments[1], &index) == -1) {
         return NULL;
     }
 
@@ -46,7 +48,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(tp, py_value, buf) == -1) {
+    if (depythonify_c_value(tp, py_value, buf) == -1) {
         PyMem_Free(buf);
         return NULL;
     }
@@ -123,7 +125,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(tp, py_value, buf) == -1) {
+    if (depythonify_c_value(tp, py_value, buf) == -1) {
         PyMem_Free(buf);
         return NULL;
     }
@@ -171,7 +173,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
         return NULL;
     }
     py_value = arguments[0];
-    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &index) == -1) {
+    if (depythonify_c_value(@encode(NSUInteger), arguments[1], &index) == -1) {
         return NULL;
     }
     if (py_value != Py_None) {
@@ -230,7 +232,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    py_value = PyObjC_ObjCToPython(tp, buf);
+    py_value = pythonify_c_value(tp, buf);
     PyMem_Free(buf);
     if (py_value == NULL) {
         return NULL;
@@ -310,7 +312,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    py_value = PyObjC_ObjCToPython(tp, buf);
+    py_value = pythonify_c_value(tp, buf);
     PyMem_Free(buf);
     if (py_value == NULL) {
         return NULL;
@@ -319,8 +321,8 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
     return py_value;
 }
 
-static int
-setup_nsinvocation(PyObject* m __attribute__((__unused__)))
+int
+PyObjC_setup_nsinvocation(void)
 {
     Class classNSInvocation = objc_lookUpClass("NSInvocation");
 

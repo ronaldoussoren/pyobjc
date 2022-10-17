@@ -732,6 +732,19 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
 
+    def testSimpleSetSubclass(self):
+        o = set_subclass({1, 2, 3})
+        o.a = 1
+
+        self.assertIn(1, o)
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, set_subclass)
+        self.assertEqual(v, o)
+        self.assertEqual(v.a, o.a)
+
     def testNestedDicts(self):
         o = {"hello": {1: 2}, "world": "foobar"}
         buf = self.archiverClass.archivedDataWithRootObject_(o)

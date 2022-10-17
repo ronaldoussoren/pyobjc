@@ -1133,6 +1133,12 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
+    result->base.sel_self     = NULL;
+    result->base.sel_class    = cls;
+    result->base.sel_flags    = 0;
+    result->base.sel_methinfo = NULL; /* We might not know the class right now */
+    result->callable          = NULL;
+    result->argcount          = 0;
 
     result->base.sel_selector         = selector;
     result->base.sel_python_signature = signature;
@@ -1152,11 +1158,6 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
         Py_DECREF(result);
         return NULL;
     }
-
-    result->base.sel_self     = NULL;
-    result->base.sel_class    = cls;
-    result->base.sel_flags    = 0;
-    result->base.sel_methinfo = NULL; /* We might not know the class right now */
 
     if (PyObjCPythonSelector_Check(callable)) {
         /* XXX: Should this be supported at all? */

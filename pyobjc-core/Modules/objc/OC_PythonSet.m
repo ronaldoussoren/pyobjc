@@ -21,11 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    if (value == NULL) {
-        /* XXX: Why is this needed */
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    PyObjC_Assert(value != NULL, NULL);
     Py_INCREF(value);
     return value;
 }

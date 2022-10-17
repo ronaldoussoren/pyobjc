@@ -160,6 +160,9 @@ Version 9.0a1
 
 * Fixed crash in objc.selector due to uninitialized memory.
 
+* Move helpers for NSInvocation from pyobjc-framework-Cocoa to
+  pyobjc-core.
+
 Version 8.6
 -----------
 

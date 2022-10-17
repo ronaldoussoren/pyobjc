@@ -2264,6 +2264,9 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyObjC_setup_simd() < 0) { // LCOV_BR_EXCL_LINE
         return NULL;               // LCOV_EXCL_LINE
     }
+    if (PyObjC_setup_nsinvocation() < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                       // LCOV_EXCL_LINE
+    }
 
     if (PyObjCCFType_Setup() == -1) { // LCOV_BR_EXCL_LINE
         return NULL;                  // LCOV_EXCL_LINE

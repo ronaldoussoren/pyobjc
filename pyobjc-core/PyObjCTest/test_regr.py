@@ -13,6 +13,8 @@ from PyObjCTools.TestSupport import TestCase
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
+NSInvocation = objc.lookUpClass("NSInvocation")
+
 
 class OCTestRegrWithGetItem(NSObject):
     def objectForKey_(self, k):
@@ -387,3 +389,177 @@ class TestReboundMethod(TestCase):
 
         f = Foo()
         f.alloc().init()
+
+
+# This probably needs to be a seperate file:
+
+
+class PythonFunction:
+    @property
+    def __class__(self):
+        return type(self._callable)
+
+    def __init__(self, func):
+        self._callable = func
+
+    def __call__(self, *args, **kwds):
+        return self._callable(*args, **kwds)
+
+    def __get__(self, *args):
+        return PythonFunction(self._callable.__get__(*args))
+
+    def __getattr__(self, name):
+        return getattr(self._callable, name)
+
+
+class TestFunctionLikeObjects(TestCase):
+    def test_helper(self):
+        def func():
+            return 42
+
+        pfunc = PythonFunction(func)
+        self.assertEqual(pfunc(), func())
+        self.assertEqual(pfunc.__code__, func.__code__)
+
+    def test_custom_func_in_class(self):
+        values = []
+
+        class Helper:
+            @PythonFunction
+            def bound1(self, oc_self):
+                values.append("bound1")
+                return 99
+
+            @PythonFunction
+            def bound2(self, oc_self):
+                values.append("bound2")
+
+        helper = Helper()
+
+        class OC_ClassWithCustomFunc(NSObject):
+            @PythonFunction
+            def method1(self):
+                values.append("method1")
+                return 42
+
+            @PythonFunction
+            def method2(self):
+                values.append("method2")
+
+            def method3(self):
+                values.append("method3")
+                return 21
+
+            def method4(self):
+                values.append("method4")
+
+            bound1 = helper.bound1
+            bound2 = helper.bound2
+
+        o = OC_ClassWithCustomFunc.alloc().init()
+        self.assertEqual(o.method1.signature, b"@@:")
+        self.assertEqual(o.method2.signature, b"@@:")
+        self.assertEqual(o.method3.signature, b"@@:")
+        self.assertEqual(o.method4.signature, b"v@:")
+        self.assertEqual(o.bound1.signature, b"@@:")
+        self.assertEqual(o.bound2.signature, b"@@:")
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("method1")
+        )
+        inv.setSelector_("method1")
+        inv.setTarget_(o)
+        inv.invoke()
+        v = inv.getReturnValue_(None)
+        self.assertEqual(v, 42)
+        self.assertEqual(values, ["method1"])
+        del values[:]
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("method2")
+        )
+        inv.setSelector_("method2")
+        inv.setTarget_(o)
+        inv.invoke()
+        v = inv.getReturnValue_(None)
+        self.assertEqual(v, None)
+        self.assertEqual(values, ["method2"])
+        del values[:]
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("method3")
+        )
+        inv.setSelector_("method3")
+        inv.setTarget_(o)
+        inv.invoke()
+        v = inv.getReturnValue_(None)
+        self.assertEqual(v, 21)
+        self.assertEqual(values, ["method3"])
+        del values[:]
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("method4")
+        )
+        inv.setSelector_("method4")
+        inv.setTarget_(o)
+        inv.invoke()
+
+        # Cannot get return value, return 'void'
+        # Trying to get the return value will crash Cocoa
+        self.assertEqual(values, ["method4"])
+        del values[:]
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("bound1")
+        )
+        inv.setSelector_("bound1")
+        inv.setTarget_(o)
+        inv.invoke()
+        v = inv.getReturnValue_(None)
+        self.assertEqual(v, 99)
+        self.assertEqual(values, ["bound1"])
+        del values[:]
+
+        self.assertEqual(values, [])
+        inv = NSInvocation.invocationWithMethodSignature_(
+            o.methodSignatureForSelector_("bound2")
+        )
+        inv.setSelector_("bound2")
+        inv.setTarget_(o)
+        inv.invoke()
+        v = inv.getReturnValue_(None)
+        self.assertEqual(v, None)
+        self.assertEqual(values, ["bound2"])
+        del values[:]
+
+    def test_custom_func_with_no_code(self):
+        with self.assertRaisesRegex(
+            ValueError, " does not have a valid '__code__' attribute"
+        ):
+
+            class OC_ClassWithCustomFunc2(NSObject):
+                @PythonFunction
+                def methodx(self):
+                    return 42
+
+                methodx.__code__ = 42
+
+        class Helper:
+            @PythonFunction
+            def bound1(self, oc_self):
+                pass
+
+            bound1.__code__ = 99
+
+        helper = Helper()
+
+        with self.assertRaisesRegex(TypeError, " is not a python function or method"):
+
+            class OC_ClassWithCustomFunc3(NSObject):
+                bound1 = helper.bound1
+                bound1.__func__ = 42

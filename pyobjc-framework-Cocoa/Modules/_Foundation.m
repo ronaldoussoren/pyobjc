@@ -9,7 +9,6 @@
  * using the linker due to limitations in pyobjc-api.h
  */
 
-#include "_Foundation_NSInvocation.m"
 #include "_Foundation_netservice.m"
 #include "_Foundation_protocols.m"
 #include "_Foundation_string.m"
@@ -36,8 +35,6 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Foundation(void)
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;
 
-    if (setup_nsinvocation(m) == -1)
-        return NULL;
     if (setup_nsnetservice(m) == -1)
         return NULL;
     if (setup_nssstring(m) == -1)
