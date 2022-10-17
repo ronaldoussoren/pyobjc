@@ -150,6 +150,9 @@ Version 9.0a1
 
     That should not be a problem in practice.
 
+  - Invocations of 0-argument super will result in errors. That's
+    due to a limitation in Nuitka that the developer is lookin into.
+
   FIXME: The code added for this needs tests separate from Nuitka
   (i.e. have tests that emulate enough of Nuitka to trigger the
   new code paths, including error paths; actually testing if PyObjC

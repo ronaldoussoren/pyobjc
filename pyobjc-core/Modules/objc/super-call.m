@@ -410,11 +410,6 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
         if (methinfo == NULL) {
             return NULL;
         }
-        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel), sel_signature, imp,
-                                      methinfo);
-        if (retval != NULL) {
-            return retval;
-        }
         retval =
             PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), imp);
         Py_DECREF(methinfo);

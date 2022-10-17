@@ -119,7 +119,6 @@
 
 #import "selector.h"
 
-#import "block-as-imp.h"
 #import "libffi_extra.h"
 #import "libffi_support.h"
 
