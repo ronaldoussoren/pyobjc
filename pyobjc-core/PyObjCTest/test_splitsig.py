@@ -35,6 +35,8 @@ except ImportError:
     pass
 """
 
+IGNORED_CLASSES = {"UINSServiceViewController"}
+
 
 class SplitSignatureTest(TestCase):
     def testSplitSignature(self):
@@ -43,7 +45,7 @@ class SplitSignatureTest(TestCase):
         # valid.
         for cls in objc.getClassList():
             with self.subTest(cls.__name__):
-                if cls.__name__ == "UINSServiceViewController":
+                if cls.__name__ in IGNORED_CLASSES:
                     continue
 
                 for selName in list(cls.__dict__.keys()):
@@ -100,6 +102,8 @@ class SplitSignatureTest(TestCase):
         ]
 
         for cls in objc.getClassList():
+            if cls.__name__ in IGNORED_CLASSES:
+                continue
             if cls.__name__.startswith("OC"):
                 continue
             for selName in cls.__dict__.keys():
