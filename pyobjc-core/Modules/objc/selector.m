@@ -26,8 +26,7 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
     if (self->sel_methinfo != NULL && self->sel_mappingcount != PyObjC_MappingCount) {
-        Py_DECREF(self->sel_methinfo);
-        self->sel_methinfo = NULL;
+        Py_CLEAR(self->sel_methinfo);
     }
 
     if (self->sel_methinfo == NULL) {
@@ -1744,10 +1743,19 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
-    result->base.sel_methinfo = NULL;
-    result->base.sel_selector = meth->base.sel_selector;
-    result->base.sel_class    = meth->base.sel_class;
-    const char* tmp           = PyObjCUtil_Strdup(meth->base.sel_python_signature);
+    result->base.sel_self             = NULL;
+    result->base.sel_methinfo         = NULL;
+    result->base.sel_selector         = meth->base.sel_selector;
+    result->base.sel_class            = meth->base.sel_class;
+    result->base.sel_python_signature = NULL;
+    result->base.sel_native_signature = NULL;
+    result->argcount                  = 0;
+    result->numoutput                 = 0;
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.sel_vectorcall = pysel_vectorcall;
+#endif
+
+    const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
@@ -1755,9 +1763,6 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
         // LCOV_EXCL_STOP
     }
     result->base.sel_python_signature = tmp;
-#if PY_VERSION_HEX >= 0x03090000
-    result->base.sel_vectorcall = pysel_vectorcall;
-#endif
 
     if (meth->base.sel_native_signature) {
         result->base.sel_native_signature =

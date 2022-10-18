@@ -294,6 +294,7 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
         return NULL;
         // LCOV_EXCL_STOP
     }
+    memset(retval, 0, sizeof(*retval)); /* XXX */
     /* XXX: Try to refactor this to ensure the type value can be _Nonnull */
     retval->type              = tmpl ? tmpl->type : NULL;
     retval->typeOverride      = NO;
@@ -437,14 +438,17 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     }
 
     Py_SET_SIZE(retval, nargs);
+    retval->signature             = signature_copy;
     retval->suggestion            = NULL;
     retval->variadic              = NO;
-    retval->deprecated            = 0;
+    retval->null_terminated_array = NO;
     retval->free_result           = NO;
     retval->shortcut_signature    = NO;
     retval->shortcut_argbuf_size  = 0;
-    retval->null_terminated_array = NO;
-    retval->signature             = signature_copy;
+    retval->shortcut_result_size  = 0;
+    retval->arrayArg              = 0;
+    retval->deprecated            = 0;
+    retval->rettype               = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
 
     cur = PyObjCRT_SkipTypeQualifiers(retval->signature);
     PyObjC_Assert(cur != NULL, NULL);
@@ -1262,16 +1266,18 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         return NULL;      // LCOV_EXCL_LINE
     }
     Py_SET_SIZE(result, max_idx);
+    result->signature             = NULL;
     result->suggestion            = NULL;
     result->variadic              = NO;
-    result->deprecated            = 0;
+    result->null_terminated_array = NO;
     result->free_result           = NO;
     result->shortcut_signature    = NO;
     result->shortcut_argbuf_size  = 0;
-    result->null_terminated_array = NO;
+    result->shortcut_result_size  = 0;
+    result->arrayArg              = 0;
+    result->deprecated            = 0;
     /* XXX: This will be set to a non-null value in all non-error paths */
-    result->rettype   = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
-    result->signature = NULL;
+    result->rettype = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
     for (i = 0; i < max_idx; i++) {
         result->argtype[i] = NULL;
     }

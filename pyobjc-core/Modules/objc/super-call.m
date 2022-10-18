@@ -342,9 +342,12 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
 /*
  * XXX: Ideally there'd be a function to clean up the IMP, that requires
  *      additional state though.
+ *
+ * XXX: Remove class argument
  */
 extern IMP
-PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject* imp)
+PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_class,
+               PyObject* sel, PyObject* imp)
 {
     struct registry*        generic;
     struct registry*        special;
@@ -352,6 +355,11 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     PyObjC_MakeIMPBlockFunc func      = NULL;
     IMP                     retval;
     PyObjCMethodSignature*  methinfo;
+
+    methinfo = PyObjCSelector_GetMetadata(sel);
+    if (methinfo == NULL) {
+        return NULL;
+    }
 
     if (super_class != nil) {
         special = search_special(super_class, aSelector);
@@ -363,11 +371,7 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     }
 
     if (func == NULL) {
-        const char* sel_signature = PyObjCSelector_Signature(sel);
-        if (sel_signature == NULL) {
-            return NULL;
-        }
-        generic = find_signature(sel_signature);
+        generic = find_signature(methinfo->signature);
         if (generic != NULL) {
             func = generic->make_call_to_python_block;
         } else if (PyErr_Occurred()) {
@@ -382,37 +386,14 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     }
 
     if (func != NULL) {
-        const char* sel_signature = PyObjCSelector_Signature(sel);
-        if (sel_signature == NULL) {
-            return NULL;
-        }
-        methinfo = PyObjCMethodSignature_ForSelector(
-            class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
-            PyObjCSelector_GetSelector(sel), sel_signature,
-            PyObjCNativeSelector_Check(sel));
-        if (methinfo == NULL) {
-            return NULL;
-        }
         retval = func(imp, methinfo);
-        Py_DECREF(methinfo);
         return retval;
     } else {
         PyErr_Clear();
 
-        const char* sel_signature = PyObjCSelector_Signature(sel);
-        if (sel_signature == NULL) {
-            return NULL;
-        }
-        methinfo = PyObjCMethodSignature_ForSelector(
-            class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
-            PyObjCSelector_GetSelector(sel), sel_signature,
-            PyObjCNativeSelector_Check(sel));
-        if (methinfo == NULL) {
-            return NULL;
-        }
         retval =
             PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), imp);
-        Py_DECREF(methinfo);
+
         return retval;
     }
 }

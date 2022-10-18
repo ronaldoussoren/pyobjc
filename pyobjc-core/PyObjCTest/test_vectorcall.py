@@ -13,7 +13,7 @@ from objc import simd
 # CGColor and CGColorSpace
 import Quartz  # noqa: F401
 
-from .vectorcall import OC_VectorCall
+from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
 
 class NoObjCClass:
@@ -31,928 +31,3277 @@ NoObjCValueObject = NoObjCClass()
 
 # Register full signatures for the helper methods
 
+objc.registerMetaDataForSelector(b"NSObject", b"v16C", {"full_signature": b"<16C>@:"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v16C", {"full_signature": b"<16C>@:"}
+    b"NSObject", b"clsv16C", {"full_signature": b"<16C>@:"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v2d", {"full_signature": b"<2d>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2d", {"full_signature": b"<2d>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"v2dd:", {"full_signature": b"<2d>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv16C", {"full_signature": b"<16C>@:"}
+    b"NSObject", b"clsv2dd:", {"full_signature": b"<2d>@:d"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v2f", {"full_signature": b"<2f>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2f", {"full_signature": b"<2f>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"v2fQ:", {"full_signature": b"<2f>@:Q"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2d", {"full_signature": b"<2d>@:"}
+    b"NSObject", b"clsv2fQ:", {"full_signature": b"<2f>@:Q"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v2fd:", {"full_signature": b"<2f>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2d", {"full_signature": b"<2d>@:"}
+    b"NSObject", b"clsv2fd:", {"full_signature": b"<2f>@:d"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v2fq:", {"full_signature": b"<2f>@:q"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2dd:", {"full_signature": b"<2d>@:d"}
+    b"NSObject", b"clsv2fq:", {"full_signature": b"<2f>@:q"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v2i", {"full_signature": b"<2i>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2i", {"full_signature": b"<2i>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"v3dd:", {"full_signature": b"<3d>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2dd:", {"full_signature": b"<2d>@:d"}
+    b"NSObject", b"clsv3dd:", {"full_signature": b"<3d>@:d"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v3f", {"full_signature": b"<3f>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"clsv3f", {"full_signature": b"<3f>@:"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2f", {"full_signature": b"<2f>@:"}
+    b"NSObject", b"v3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2f", {"full_signature": b"<2f>@:"}
+    b"NSObject", b"clsv3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2fQ:", {"full_signature": b"<2f>@:Q"}
+    b"NSObject", b"v3fv3f:", {"full_signature": b"<3f>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2fQ:", {"full_signature": b"<2f>@:Q"}
+    b"NSObject", b"clsv3fv3f:", {"full_signature": b"<3f>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2fd:", {"full_signature": b"<2f>@:d"}
+    b"NSObject", b"v3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2fd:", {"full_signature": b"<2f>@:d"}
+    b"NSObject", b"clsv3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2fq:", {"full_signature": b"<2f>@:q"}
+    b"NSObject", b"v3fv4i:", {"full_signature": b"<3f>@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2fq:", {"full_signature": b"<2f>@:q"}
+    b"NSObject", b"clsv3fv4i:", {"full_signature": b"<3f>@:<4i>"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v3fQ:", {"full_signature": b"<3f>@:Q"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v2i", {"full_signature": b"<2i>@:"}
+    b"NSObject", b"clsv3fQ:", {"full_signature": b"<3f>@:Q"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v3fd:", {"full_signature": b"<3f>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv2i", {"full_signature": b"<2i>@:"}
+    b"NSObject", b"clsv3fd:", {"full_signature": b"<3f>@:d"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v4dd:", {"full_signature": b"<4d>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3dd:", {"full_signature": b"<3d>@:d"}
+    b"NSObject", b"clsv4dd:", {"full_signature": b"<4d>@:d"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"v4f", {"full_signature": b"<4f>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"clsv4f", {"full_signature": b"<4f>@:"})
+objc.registerMetaDataForSelector(b"NSObject", b"v4fd:", {"full_signature": b"<4f>@:d"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3dd:", {"full_signature": b"<3d>@:d"}
+    b"NSObject", b"clsv4fd:", {"full_signature": b"<4f>@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3f", {"full_signature": b"<3f>@:"}
+    b"NSObject", b"v4iv3f:", {"full_signature": b"<4i>@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3f", {"full_signature": b"<3f>@:"}
+    b"NSObject", b"clsv4iv3f:", {"full_signature": b"<4i>@:<3f>"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"idv2f:", {"full_signature": b"@@:<2f>"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
+    b"NSObject", b"clsidv2f:", {"full_signature": b"@@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fv2i:v2i:", {"full_signature": b"<3f>@:<2i><2i>"}
+    b"NSObject", b"idv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fv3f:", {"full_signature": b"<3f>@:<3f>"}
+    b"NSObject", b"clsidv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fv3f:", {"full_signature": b"<3f>@:<3f>"}
+    b"NSObject", b"idv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
+    b"NSObject", b"clsidv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"idv2i:", {"full_signature": b"@@:<2i>"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fv3f:id:", {"full_signature": b"<3f>@:<3f>@"}
+    b"NSObject", b"clsidv2i:", {"full_signature": b"@@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fv4i:", {"full_signature": b"<3f>@:<4i>"}
+    b"NSObject", b"idv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fv4i:", {"full_signature": b"<3f>@:<4i>"}
+    b"NSObject", b"clsidv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fQ:", {"full_signature": b"<3f>@:Q"}
+    b"NSObject", b"idv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fQ:", {"full_signature": b"<3f>@:Q"}
+    b"NSObject", b"clsidv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"idv3f:", {"full_signature": b"@@:<3f>"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v3fd:", {"full_signature": b"<3f>@:d"}
+    b"NSObject", b"clsidv3f:", {"full_signature": b"@@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv3fd:", {"full_signature": b"<3f>@:d"}
+    b"NSObject", b"idv3f:v2I:Z:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4dd:", {"full_signature": b"<4d>@:d"}
+    b"NSObject", b"clsidv3f:v2I:Z:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4dd:", {"full_signature": b"<4d>@:d"}
+    b"NSObject", b"idv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4f", {"full_signature": b"<4f>@:"}
+    b"NSObject", b"clsidv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4f", {"full_signature": b"<4f>@:"}
+    b"NSObject", b"idv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4fd:", {"full_signature": b"<4f>@:d"}
+    b"NSObject", b"clsidv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4fd:", {"full_signature": b"<4f>@:d"}
+    b"NSObject", b"idv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"v4iv3f:", {"full_signature": b"<4i>@:<3f>"}
+    b"NSObject", b"clsidv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsv4iv3f:", {"full_signature": b"<4i>@:<3f>"}
+    b"NSObject", b"idv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2f:", {"full_signature": b"@@:<2f>"}
+    b"NSObject", b"clsidv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2f:", {"full_signature": b"@@:<2f>"}
+    b"NSObject", b"idv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
+    b"NSObject", b"clsidv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2f:v2I:q:id:", {"full_signature": b"@@:<2f><2I>q@"}
+    b"NSObject", b"idv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
+    b"NSObject", b"clsidv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2f:v2f:", {"full_signature": b"@@:<2f><2f>"}
+    b"NSObject", b"idv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2i:", {"full_signature": b"@@:<2i>"}
+    b"NSObject", b"clsidv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2i:", {"full_signature": b"@@:<2i>"}
+    b"NSObject", b"idv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
+    b"NSObject", b"clsidv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
 )
+objc.registerMetaDataForSelector(b"NSObject", b"idv4f:", {"full_signature": b"@@:<4f>"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2i:i:i:Z:", {"full_signature": b"@@:<2i>iiZ"}
+    b"NSObject", b"clsidv4f:", {"full_signature": b"@@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
+    b"NSObject", b"idid:v2d:v2d:v2i:Z:", {"full_signature": b"@@:@<2d><2d><2i>Z"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv2i:i:i:Z:Class:", {"full_signature": b"@@:<2i>iiZ#"}
+    b"NSObject", b"clsidid:v2d:v2d:v2i:Z:", {"full_signature": b"@@:@<2d><2d><2i>Z"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:", {"full_signature": b"@@:<3f>"}
+    b"NSObject", b"idid:v2f:", {"full_signature": b"@@:@<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:", {"full_signature": b"@@:<3f>"}
+    b"NSObject", b"clsidid:v2f:", {"full_signature": b"@@:@<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v2I:Z:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZZq@"}
+    b"NSObject", b"idid:v3f:", {"full_signature": b"@@:@<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsidv3f:v2I:Z:Z:Z:q:id:",
-    {"full_signature": b"@@:<3f><2I>ZZZq@"},
+    b"NSObject", b"clsidid:v3f:", {"full_signature": b"@@:@<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
+    b"NSObject", b"idid:v4f:", {"full_signature": b"@@:@<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v2I:Z:Z:q:id:", {"full_signature": b"@@:<3f><2I>ZZq@"}
+    b"NSObject", b"clsidid:v4f:", {"full_signature": b"@@:@<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
+    b"NSObject", b"idid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v2I:Z:q:id:", {"full_signature": b"@@:<3f><2I>Zq@"}
+    b"NSObject", b"clsidid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
+    b"NSObject", b"idid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v2I:i:Z:q:id:", {"full_signature": b"@@:<3f><2I>iZq@"}
+    b"NSObject", b"clsidid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
+    b"NSObject", b"idid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v2I:q:id:", {"full_signature": b"@@:<3f><2I>q@"}
+    b"NSObject", b"clsidid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
+    b"NSObject", b"idid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v3I:Z:q:id:", {"full_signature": b"@@:<3f><3I>Zq@"}
+    b"NSObject", b"clsidid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
+    b"NSObject", b"idid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:v3I:q:Z:id:", {"full_signature": b"@@:<3f><3I>qZ@"}
+    b"NSObject", b"clsidid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:Q:Q:q:Z:Z:id:", {"full_signature": b"@@:<3f>QQqZZ@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv3f:Z:q:id:", {"full_signature": b"@@:<3f>Zq@"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idv4f:", {"full_signature": b"@@:<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidv4f:", {"full_signature": b"@@:<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:v2d:v2d:v2i:Z:", {"full_signature": b"@@:@<2d><2d><2i>Z"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsidid:v2d:v2d:v2i:Z:",
-    {"full_signature": b"@@:@<2d><2d><2i>Z"},
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:v2f:", {"full_signature": b"@@:@<2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:v2f:", {"full_signature": b"@@:@<2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:v3f:", {"full_signature": b"@@:@<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:v3f:", {"full_signature": b"@@:@<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:v4f:", {"full_signature": b"@@:@<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:v4f:", {"full_signature": b"@@:@<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:id:v2i:", {"full_signature": b"@@:@@<2i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:id:v2i:f:", {"full_signature": b"@@:@@<2i>f"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:Q:v2f:", {"full_signature": b"@@:@Q<2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:Q:v3f:", {"full_signature": b"@@:@Q<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:Q:v4f:", {"full_signature": b"@@:@Q<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idid:Q:matrixfloat4x4:",
     {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidid:Q:matrixfloat4x4:",
     {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
+    b"NSObject", b"idid:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsidid:Z:id:v2i:q:Q:q:Z:",
-    {"full_signature": b"@@:@Z@<2i>qQqZ"},
+    b"NSObject", b"clsidid:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
+    b"NSObject", b"idid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
+    b"NSObject", b"clsidid:q:v2i:f:f:f:f:", {"full_signature": b"@@:@q<2i>ffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
+    b"NSObject", b"idid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
+    b"NSObject", b"clsidid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+    b"NSObject", b"idid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+    b"NSObject", b"clsidid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
+    b"NSObject", b"idid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
+    b"NSObject", b"clsidid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idid:MDLAxisAlignedBoundingBox:f:",
     {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidid:MDLAxisAlignedBoundingBox:f:",
     {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idid:matrixfloat2x2:",
     {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidid:matrixfloat2x2:",
     {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idid:matrixfloat3x3:",
     {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidid:matrixfloat3x3:",
     {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idid:matrixfloat4x4:",
     {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidid:matrixfloat4x4:",
     {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idCGColor:CGColor:id:v2i:",
     {"full_signature": b"@@:^{CGColor=}^{CGColor=}@<2i>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidCGColor:CGColor:id:v2i:",
     {"full_signature": b"@@:^{CGColor=}^{CGColor=}@<2i>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
+    b"NSObject", b"idf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
+    b"NSObject", b"clsidf:v2f:v2f:", {"full_signature": b"@@:f<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
+    b"NSObject", b"idf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
+    b"NSObject", b"clsidf:v2f:v2f:Class:", {"full_signature": b"@@:f<2f><2f>#"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
+    b"NSObject", b"idf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
+    b"NSObject", b"clsidf:v2f:Q:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQQqZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
+    b"NSObject", b"idf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
+    b"NSObject", b"clsidf:v2f:Q:Q:q:Z:id:", {"full_signature": b"@@:f<2f>QQqZ@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
+    b"NSObject", b"idf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
+    b"NSObject", b"clsidf:id:v2i:i:q:Z:", {"full_signature": b"@@:f@<2i>iqZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idf:id:v2i:i:q:CGColor:CGColor:",
     {"full_signature": b"@@:f@<2i>iq^{CGColor=}^{CGColor=}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidf:id:v2i:i:q:CGColor:CGColor:",
     {"full_signature": b"@@:f@<2i>iq^{CGColor=}^{CGColor=}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
+    b"NSObject", b"idf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
+    b"NSObject", b"clsidf:id:v2i:q:", {"full_signature": b"@@:f@<2i>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
+    b"NSObject", b"idf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
+    b"NSObject", b"clsidf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    b"NSObject", b"idGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    b"NSObject", b"clsidGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    b"NSObject", b"idGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    b"NSObject", b"clsidGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    b"NSObject", b"idGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    b"NSObject", b"clsidGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"idGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    b"NSObject", b"idGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsidGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    b"NSObject", b"clsidGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idMDLVoxelIndexExtent:",
     {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidMDLVoxelIndexExtent:",
     {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idmatrixfloat4x4:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidmatrixfloat4x4:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"idmatrixfloat4x4:Z:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsidmatrixfloat4x4:Z:",
     {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Zv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
+    b"NSObject", b"Zv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
+    b"NSObject", b"clsZv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Zv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
+    b"NSObject", b"Zv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
+    b"NSObject", b"clsZv2i:q:f:id:id:id:", {"full_signature": b"Z@:<2i>qf@@@"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"Zv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
+    b"NSObject", b"Zv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsZv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
+    b"NSObject", b"clsZv4i:Z:Z:Z:Z:", {"full_signature": b"Z@:<4i>ZZZZ"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"CGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
+    b"NSObject", b"CGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsCGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
+    b"NSObject", b"clsCGColorv3f:", {"full_signature": b"^{CGColor=}@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"CGColorv3f:CGColorSpace:",
     {"full_signature": b"^{CGColor=}@:<3f>^{CGColorSpace=}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsCGColorv3f:CGColorSpace:",
     {"full_signature": b"^{CGColor=}@:<3f>^{CGColorSpace=}"},
 )
+objc.registerMetaDataForSelector(b"NSObject", b"fv2f:", {"full_signature": b"f@:<2f>"})
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"fv2f:", {"full_signature": b"f@:<2f>"}
+    b"NSObject", b"clsfv2f:", {"full_signature": b"f@:<2f>"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"fv2i:", {"full_signature": b"f@:<2i>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsfv2i:", {"full_signature": b"f@:<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsfv2f:", {"full_signature": b"f@:<2f>"}
+    b"NSObject", b"vv2d:d:", {"full_signature": b"v@:<2d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"fv2i:", {"full_signature": b"f@:<2i>"}
+    b"NSObject", b"clsvv2d:d:", {"full_signature": b"v@:<2d>d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv2f:", {"full_signature": b"v@:<2f>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv2f:", {"full_signature": b"v@:<2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsfv2i:", {"full_signature": b"f@:<2i>"}
+    b"NSObject", b"vv2f:d:", {"full_signature": b"v@:<2f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv2d:d:", {"full_signature": b"v@:<2d>d"}
+    b"NSObject", b"clsvv2f:d:", {"full_signature": b"v@:<2f>d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv3d:", {"full_signature": b"v@:<3d>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv3d:", {"full_signature": b"v@:<3d>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv2d:d:", {"full_signature": b"v@:<2d>d"}
+    b"NSObject", b"vv3d:d:", {"full_signature": b"v@:<3d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv2f:", {"full_signature": b"v@:<2f>"}
+    b"NSObject", b"clsvv3d:d:", {"full_signature": b"v@:<3d>d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv3f:", {"full_signature": b"v@:<3f>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv3f:", {"full_signature": b"v@:<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv2f:", {"full_signature": b"v@:<2f>"}
+    b"NSObject", b"vv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv2f:d:", {"full_signature": b"v@:<2f>d"}
+    b"NSObject", b"clsvv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv2f:d:", {"full_signature": b"v@:<2f>d"}
+    b"NSObject", b"vv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3d:", {"full_signature": b"v@:<3d>"}
+    b"NSObject", b"clsvv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3d:", {"full_signature": b"v@:<3d>"}
+    b"NSObject", b"vv3f:d:", {"full_signature": b"v@:<3f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3d:d:", {"full_signature": b"v@:<3d>d"}
+    b"NSObject", b"clsvv3f:d:", {"full_signature": b"v@:<3f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3d:d:", {"full_signature": b"v@:<3d>d"}
+    b"NSObject", b"vv4d:d:", {"full_signature": b"v@:<4d>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3f:", {"full_signature": b"v@:<3f>"}
+    b"NSObject", b"clsvv4d:d:", {"full_signature": b"v@:<4d>d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv4f:", {"full_signature": b"v@:<4f>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv4f:", {"full_signature": b"v@:<4f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3f:", {"full_signature": b"v@:<3f>"}
+    b"NSObject", b"vv4f:d:", {"full_signature": b"v@:<4f>d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
+    b"NSObject", b"clsvv4f:d:", {"full_signature": b"v@:<4f>d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv4i:", {"full_signature": b"v@:<4i>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv4i:", {"full_signature": b"v@:<4i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
+    b"NSObject", b"vid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
+    b"NSObject", b"clsvid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
+    b"NSObject", b"vid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv3f:d:", {"full_signature": b"v@:<3f>d"}
+    b"NSObject", b"clsvid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv3f:d:", {"full_signature": b"v@:<3f>d"}
+    b"NSObject", b"vf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv4d:d:", {"full_signature": b"v@:<4d>d"}
+    b"NSObject", b"clsvf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv4d:d:", {"full_signature": b"v@:<4d>d"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv4f:", {"full_signature": b"v@:<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv4f:", {"full_signature": b"v@:<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv4f:d:", {"full_signature": b"v@:<4f>d"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv4f:d:", {"full_signature": b"v@:<4f>d"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vv4i:", {"full_signature": b"v@:<4i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvv4i:", {"full_signature": b"v@:<4i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vf:v2i:", {"full_signature": b"v@:f<2i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvf:v2i:", {"full_signature": b"v@:f<2i>"}
-)
-objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vMDLAxisAlignedBoundingBox:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvMDLAxisAlignedBoundingBox:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vMDLAxisAlignedBoundingBox:Z:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvMDLAxisAlignedBoundingBox:Z:",
     {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixdouble4x4:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixdouble4x4:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixdouble4x4:d:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixdouble4x4:d:",
     {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixfloat2x2:",
     {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixfloat2x2:",
     {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixfloat3x3:",
     {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixfloat3x3:",
     {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixfloat4x4:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixfloat4x4:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"vmatrixfloat4x4:d:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvmatrixfloat4x4:d:",
     {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"vsimdfloat4x4:",
-    {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"},
+    b"NSObject", b"vsimdfloat4x4:", {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsvsimdfloat4x4:",
     {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
+    b"NSObject", b"vsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
+    b"NSObject", b"clsvsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
+    b"NSObject", b"vsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
+    b"NSObject", b"clsvsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"vsimdquatf:v3f:",
-    {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"},
+    b"NSObject", b"vsimdquatf:v3f:", {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clsvsimdquatf:v3f:",
-    {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"},
+    b"NSObject", b"clsvsimdquatf:v3f:", {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"vsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
+    b"NSObject", b"vsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsvsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
+    b"NSObject", b"clsvsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
+    b"NSObject", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsGKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
+    b"NSObject", b"clsGKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"GKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
+    b"NSObject", b"GKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsGKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
+    b"NSObject", b"clsGKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"GKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
+    b"NSObject", b"GKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clsGKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
+    b"NSObject", b"clsGKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MDLAxisAlignedBoundingBox",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMDLAxisAlignedBoundingBox",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MDLAxisAlignedBoundingBoxv4i:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMDLAxisAlignedBoundingBoxv4i:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MDLAxisAlignedBoundingBoxd:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMDLAxisAlignedBoundingBoxd:",
     {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MDLVoxelIndexExtent",
     {"full_signature": b"{_MDLVoxelIndexExtent=<4i><4i>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMDLVoxelIndexExtent",
     {"full_signature": b"{_MDLVoxelIndexExtent=<4i><4i>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MPSAxisAlignedBoundingBox",
     {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMPSAxisAlignedBoundingBox",
     {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"MPSImageHistogramInfo",
     {"full_signature": b"{_MPSImageHistogramInfo=QZ<4f><4f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsMPSImageHistogramInfo",
     {"full_signature": b"{_MPSImageHistogramInfo=QZ<4f><4f>}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"matrixdouble4x4",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixdouble4x4",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"matrixdouble4x4d:",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixdouble4x4d:",
     {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"matrixfloat2x2",
-    {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"},
+    b"NSObject", b"matrixfloat2x2", {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixfloat2x2",
     {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"matrixfloat3x3",
-    {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"},
+    b"NSObject", b"matrixfloat3x3", {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixfloat3x3",
     {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"matrixfloat4x4",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"},
+    b"NSObject", b"matrixfloat4x4", {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixfloat4x4",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"matrixfloat4x4id:d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixfloat4x4id:d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"matrixfloat4x4d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clsmatrixfloat4x4d:",
     {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
+    b"NSObject", b"simdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
-    b"clssimdfloat4x4",
-    {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"},
+    b"NSObject", b"clssimdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"simdfloat4x4simdfloat4x4:id:",
     {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall",
+    b"NSObject",
     b"clssimdfloat4x4simdfloat4x4:id:",
     {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
+    b"NSObject", b"simdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
+    b"NSObject", b"clssimdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
+    b"NSObject", b"simdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
+    b"NSObject", b"clssimdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"simdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
+    b"NSObject", b"simdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
 )
 objc.registerMetaDataForSelector(
-    b"OC_VectorCall", b"clssimdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
+    b"NSObject", b"clssimdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
 )
+
+
+class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
+    def v16C(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_uchar16(
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        )
+
+    def v2d(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double2(0.0, 1.5)
+
+    def v2dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double2(0.0, 1.5)
+
+    def v2f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    def v2fQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    def v2fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    def v2fq_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    def v2i(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_int2(0, 1)
+
+    def v3dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double3(0.0, 1.5, 3.0)
+
+    def v3f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fv2i_v2i_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fv3f_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v3fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    def v4dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
+
+    def v4f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+
+    def v4fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+
+    def v4iv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_int4(0, 1, 2, 3)
+
+    def idv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2f_v2f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2i_i_i_Z_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2i_i_i_Z_Class_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v2I_Z_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v2I_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v2I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v2I_i_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v3I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_v3I_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_Q_Q_q_Z_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv3f_Z_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv4f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_v2d_v2d_v2i_Z_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_v2f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_v4f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_id_v2i_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_id_v2i_f_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_Q_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_Q_v3f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_Q_v4f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_Q_matrixfloat4x4_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_Z_id_v2i_q_Q_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_q_v2i_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_q_v2i_f_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_GKBox_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_GKQuad_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_matrixfloat2x2_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_matrixfloat3x3_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_matrixfloat4x4_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idCGColor_CGColor_id_v2i_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_v2f_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_v2f_v2f_Class_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_v2f_Q_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_v2f_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_id_v2i_i_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_id_v2i_i_q_CGColor_CGColor_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_id_v2i_q_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idf_f_id_v2i_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idGKBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idGKBox_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idGKQuad_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idGKQuad_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idMDLVoxelIndexExtent_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idmatrixfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idmatrixfloat4x4_Z_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def Zv2i_id_id_id_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    def Zv2i_q_f_id_id_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    def Zv4i_Z_Z_Z_Z_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    def CGColorv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "color!"
+
+    def CGColorv3f_CGColorSpace_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "color!"
+
+    def fv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return 2500000000.0
+
+    def fv2i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return 2500000000.0
+
+    def vv2d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv2f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3f_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3f_v3f_v3f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv3f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv4d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv4f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv4f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vid_v2f_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vid_v2f_v2f_q_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vf_v2i_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vMDLAxisAlignedBoundingBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vMDLAxisAlignedBoundingBox_Z_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixdouble4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixdouble4x4_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixfloat2x2_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixfloat3x3_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vmatrixfloat4x4_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vsimdfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vsimdquatd_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vsimdquatf_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vsimdquatf_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def vsimdquatf_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    def GKBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.0, 2.0, 3.0),
+            objc.simd.vector_float3(4.0, 5.0, 6.0),
+        )
+
+    def GKQuad(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+
+    def GKTriangleQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            (
+                objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                objc.simd.vector_float3(-17.5, 11.5, 122.5),
+            ),
+        )
+
+    def MDLAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    def MDLAxisAlignedBoundingBoxv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    def MDLAxisAlignedBoundingBoxd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    def MDLVoxelIndexExtent(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_int4(100, 101, 102, 103),
+            objc.simd.vector_int4(-20, -21, -22, -23),
+        )
+
+    def MPSAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.5, 2.5, 3.5),
+            objc.simd.vector_float3(4.5, 5.5, 6.5),
+        )
+
+    def MPSImageHistogramInfo(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            4398046511104,
+            True,
+            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+        )
+
+    def matrixdouble4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_double4x4(
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def matrixdouble4x4d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_double4x4(
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def matrixfloat2x2(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float2x2(
+            (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+        )
+
+    def matrixfloat3x3(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float3x3(
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            )
+        )
+
+    def matrixfloat4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def matrixfloat4x4id_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def matrixfloat4x4d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def simdfloat4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    def simdquatdd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+
+    def simdquatf(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+    def simdquatfd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+
+class OC_VectorCallClass(objc.lookUpClass("NSObject")):
+    @classmethod
+    def v16C(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_uchar16(
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        )
+
+    @classmethod
+    def v2d(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double2(0.0, 1.5)
+
+    @classmethod
+    def v2dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double2(0.0, 1.5)
+
+    @classmethod
+    def v2f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    @classmethod
+    def v2fQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    @classmethod
+    def v2fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    @classmethod
+    def v2fq_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float2(0.0, 1.5)
+
+    @classmethod
+    def v2i(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_int2(0, 1)
+
+    @classmethod
+    def v3dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fv2i_v2i_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fv3f_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v3fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float3(0.0, 1.5, 3.0)
+
+    @classmethod
+    def v4dd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
+
+    @classmethod
+    def v4f(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+
+    @classmethod
+    def v4fd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+
+    @classmethod
+    def v4iv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_int4(0, 1, 2, 3)
+
+    @classmethod
+    def idv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2f_v2f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2i_i_i_Z_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2i_i_i_Z_Class_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v2I_Z_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v2I_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v2I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v2I_i_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v3I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_v3I_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_Q_Q_q_Z_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv3f_Z_q_id_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv4f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_v2d_v2d_v2i_Z_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_v2f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_v4f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_id_v2i_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_id_v2i_f_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_Q_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_Q_v3f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_Q_v4f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_Q_matrixfloat4x4_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_Z_id_v2i_q_Q_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_q_v2i_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_q_v2i_f_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_GKBox_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_GKQuad_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_matrixfloat2x2_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_matrixfloat3x3_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_matrixfloat4x4_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idCGColor_CGColor_id_v2i_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_v2f_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_v2f_v2f_Class_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_v2f_Q_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+            arg7,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_v2f_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_id_v2i_i_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_id_v2i_i_q_CGColor_CGColor_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+            arg6,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_id_v2i_q_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idf_f_id_v2i_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idGKBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idGKBox_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idGKQuad_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idGKQuad_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idMDLVoxelIndexExtent_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idmatrixfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idmatrixfloat4x4_Z_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def Zv2i_id_id_id_id_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    @classmethod
+    def Zv2i_q_f_id_id_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+            arg5,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    @classmethod
+    def Zv4i_Z_Z_Z_Z_(self, arg0, arg1, arg2, arg3, arg4):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+            arg4,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return False
+
+    @classmethod
+    def CGColorv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "color!"
+
+    @classmethod
+    def CGColorv3f_CGColorSpace_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "color!"
+
+    @classmethod
+    def fv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return 2500000000.0
+
+    @classmethod
+    def fv2i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return 2500000000.0
+
+    @classmethod
+    def vv2d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv2f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv2f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3f_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3f_v3f_v3f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv3f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv4d_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv4f_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv4f_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vid_v2f_v2f_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vid_v2f_v2f_q_(self, arg0, arg1, arg2, arg3):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
+            arg3,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vf_v2i_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vMDLAxisAlignedBoundingBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vMDLAxisAlignedBoundingBox_Z_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixdouble4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixdouble4x4_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixfloat2x2_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixfloat3x3_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vmatrixfloat4x4_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vsimdfloat4x4_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vsimdquatd_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vsimdquatf_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vsimdquatf_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def vsimdquatf_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+
+    @classmethod
+    def GKBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.0, 2.0, 3.0),
+            objc.simd.vector_float3(4.0, 5.0, 6.0),
+        )
+
+    @classmethod
+    def GKQuad(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+
+    @classmethod
+    def GKTriangleQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            (
+                objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                objc.simd.vector_float3(-17.5, 11.5, 122.5),
+            ),
+        )
+
+    @classmethod
+    def MDLAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    @classmethod
+    def MDLAxisAlignedBoundingBoxv4i_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    @classmethod
+    def MDLAxisAlignedBoundingBoxd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(-8.0, -9.0, -10.0),
+            objc.simd.vector_float3(-11.0, -12.0, -13.0),
+        )
+
+    @classmethod
+    def MDLVoxelIndexExtent(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_int4(100, 101, 102, 103),
+            objc.simd.vector_int4(-20, -21, -22, -23),
+        )
+
+    @classmethod
+    def MPSAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.5, 2.5, 3.5),
+            objc.simd.vector_float3(4.5, 5.5, 6.5),
+        )
+
+    @classmethod
+    def MPSImageHistogramInfo(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            4398046511104,
+            True,
+            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+        )
+
+    @classmethod
+    def matrixdouble4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_double4x4(
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def matrixdouble4x4d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_double4x4(
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def matrixfloat2x2(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float2x2(
+            (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+        )
+
+    @classmethod
+    def matrixfloat3x3(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float3x3(
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            )
+        )
+
+    @classmethod
+    def matrixfloat4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def matrixfloat4x4id_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def matrixfloat4x4d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.matrix_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def simdfloat4x4(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            )
+        )
+
+    @classmethod
+    def simdquatdd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+
+    @classmethod
+    def simdquatf(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+    @classmethod
+    def simdquatfd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
 
 class TestVectorCall(TestCase):
@@ -1141,6 +3490,46 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    def test_imp_v16C(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v16COn_(value)
+        self.assertEqual(
+            result,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v16C_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v16COn_(value)
+        self.assertEqual(
+            result,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v2d(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -1287,6 +3676,36 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_v2d(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2dOn_(value)
+        self.assertEqual(result, objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2d_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2dOn_(value)
+        self.assertEqual(result, objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2dOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v2dd_(self):
         OC_VectorCall.clearRaise()
@@ -1469,6 +3888,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_v2dd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2dd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v2f(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -1615,6 +4064,36 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_v2f(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2f_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v2fQ_(self):
         OC_VectorCall.clearRaise()
@@ -1797,6 +4276,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
+    def test_imp_v2fQ_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fQOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fQOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2fQ__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fQOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fQOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v2fd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -1977,6 +4486,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, -557000000000.0)
+
+    def test_imp_v2fd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2fd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fdOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v2fq_(self):
         OC_VectorCall.clearRaise()
@@ -2159,6 +4698,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -17592186044416)
 
+    def test_imp_v2fq_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fqOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-17592186044416,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fqOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2fq__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2fqOn_(value)
+        self.assertEqual(result, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(value.argvalues, (-17592186044416,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2fqOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v2i(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -2305,6 +4874,36 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_v2i(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2iOn_(value)
+        self.assertEqual(result, objc.simd.vector_int2(0, 1))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v2i_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v2iOn_(value)
+        self.assertEqual(result, objc.simd.vector_int2(0, 1))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v3dd_(self):
         OC_VectorCall.clearRaise()
@@ -2487,6 +5086,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_v3dd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3dd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v3f(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -2633,6 +5262,36 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_v3f(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3f_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v3fv2i_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -2839,6 +5498,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
+    def test_imp_v3fv2i_v2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fv2i_v2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v3fv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -3019,6 +5720,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+    def test_imp_v3fv3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fv3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v3fv3f_id_(self):
         OC_VectorCall.clearRaise()
@@ -3221,6 +5952,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
+    def test_imp_v3fv3f_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv3fidOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv3fidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fv3f_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv3fidOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv3fidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v3fv4i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -3401,6 +6174,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int4(0, 1, 2, 3))
+
+    def test_imp_v3fv4i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv4iOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv4iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fv4i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fv4iOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fv4iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v3fQ_(self):
         OC_VectorCall.clearRaise()
@@ -3583,6 +6386,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
+    def test_imp_v3fQ_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fQOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fQOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fQ__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fQOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fQOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v3fd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -3763,6 +6596,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, -557000000000.0)
+
+    def test_imp_v3fd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v3fd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v3fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v3fdOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v4dd_(self):
         OC_VectorCall.clearRaise()
@@ -3945,6 +6808,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_v4dd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v4dd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4ddOn_(value)
+        self.assertEqual(result, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v4f(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -4091,6 +6984,36 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_v4f(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v4f_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4fOn_(value)
+        self.assertEqual(result, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_v4fd_(self):
         OC_VectorCall.clearRaise()
@@ -4273,6 +7196,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_v4fd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v4fd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4fdOn_(value)
+        self.assertEqual(result, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4fdOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_v4iv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -4454,6 +7407,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    def test_imp_v4iv3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4iv3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4iv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v4iv3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v4iv3fOn_(value)
+        self.assertEqual(result, objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v4iv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -4634,6 +7617,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float2(0.0, 1.5))
+
+    def test_imp_idv2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv2f_v2I_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -5014,6 +8027,52 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv2f_v2I_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2f_v2I_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv2f_v2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -5247,6 +8306,48 @@ class TestVectorCall(TestCase):
                 42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
             )
 
+    def test_imp_idv2f_v2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2f_v2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2fv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -5427,6 +8528,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int2(0, 1))
+
+    def test_imp_idv2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv2i_i_i_Z_(self):
         OC_VectorCall.clearRaise()
@@ -5668,6 +8799,52 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int2(0, 1), -42, -42, False)
+
+    def test_imp_idv2i_i_i_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iiiZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -42,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iiiZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2i_i_i_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iiiZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -42,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iiiZOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv2i_i_i_Z_Class_(self):
         OC_VectorCall.clearRaise()
@@ -6083,6 +9260,54 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
+    def test_imp_idv2i_i_i_Z_Class_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -42,
+                False,
+                objc.lookUpClass("NSObject"),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2i_i_i_Z_Class__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -42,
+                False,
+                objc.lookUpClass("NSObject"),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -6263,6 +9488,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+    def test_imp_idv3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv3f_v2I_Z_Z_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -6944,6 +10199,58 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_v2I_Z_Z_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v2I_Z_Z_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_v2I_Z_Z_q_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -7529,6 +10836,56 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_v2I_Z_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v2I_Z_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_v2I_Z_q_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -8002,6 +11359,54 @@ class TestVectorCall(TestCase):
                 -17592186044416,
                 "hello",
             )
+
+    def test_imp_idv3f_v2I_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v2I_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv3f_v2I_i_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -8568,6 +11973,56 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_v2I_i_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -42,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v2I_i_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -42,
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_v2I_q_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -8954,6 +12409,52 @@ class TestVectorCall(TestCase):
                 -17592186044416,
                 "hello",
             )
+
+    def test_imp_idv3f_v2I_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v2I_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv3f_v3I_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -9437,6 +12938,54 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_v3I_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v3I_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_v3I_q_Z_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -9918,6 +13467,54 @@ class TestVectorCall(TestCase):
                 False,
                 "hello",
             )
+
+    def test_imp_idv3f_v3I_q_Z_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_v3I_q_Z_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idv3f_Q_Q_q_Z_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -10599,6 +14196,58 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_Q_Q_q_Z_Z_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_Q_Q_q_Z_Z_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv3f_Z_q_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -10938,6 +14587,52 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idv3f_Z_q_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv3f_Z_q_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv3fZqidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                False,
+                -17592186044416,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv3fZqidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idv4f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -11118,6 +14813,40 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+    def test_imp_idv4f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv4fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv4f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv4fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_v2d_v2d_v2i_Z_(self):
         OC_VectorCall.clearRaise()
@@ -11617,6 +15346,54 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+    def test_imp_idid_v2d_v2d_v2i_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_int2(0, 1),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_v2d_v2d_v2i_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_int2(0, 1),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_v2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -11817,6 +15594,48 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "hello", objc.simd.vector_float2(0.0, 1.5))
+
+    def test_imp_idid_v2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_v2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -12019,6 +15838,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    def test_imp_idid_v3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_v3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_v4f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -12219,6 +16080,48 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+    def test_imp_idid_v4f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv4fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_v4f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididv4fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_id_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -12440,6 +16343,50 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "hello", "hello", objc.simd.vector_int2(0, 1))
+
+    def test_imp_idid_id_v2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idididv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idididv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_id_v2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idididv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idididv2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_id_v2i_f_(self):
         OC_VectorCall.clearRaise()
@@ -12704,6 +16651,52 @@ class TestVectorCall(TestCase):
         ):
             imp(42, "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
+    def test_imp_idid_id_v2i_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idididv2ifOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idididv2ifOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_id_v2i_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idididv2ifOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idididv2ifOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_Q_v2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -12929,6 +16922,50 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
+
+    def test_imp_idid_Q_v2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_Q_v2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_Q_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -13179,6 +17216,50 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+    def test_imp_idid_Q_v3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_Q_v3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv3fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_Q_v4f_(self):
         OC_VectorCall.clearRaise()
@@ -13453,6 +17534,50 @@ class TestVectorCall(TestCase):
             imp(
                 42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
             )
+
+    def test_imp_idid_Q_v4f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv4fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_Q_v4f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQv4fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQv4fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_Q_matrixfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -13982,6 +18107,64 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_idid_Q_matrixfloat4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_Q_matrixfloat4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                35184372088832,
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_Z_id_v2i_q_Q_q_Z_(self):
         OC_VectorCall.clearRaise()
@@ -14766,6 +18949,60 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+    def test_imp_idid_Z_id_v2i_q_Q_q_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                False,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                35184372088832,
+                -17592186044416,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_Z_id_v2i_q_Q_q_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                False,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                35184372088832,
+                -17592186044416,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_q_v2i_f_f_f_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -15445,6 +19682,58 @@ class TestVectorCall(TestCase):
                 2500000000.0,
                 2500000000.0,
             )
+
+    def test_imp_idid_q_v2i_f_f_f_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_q_v2i_f_f_f_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_q_v2i_f_f_f_f_f_(self):
         OC_VectorCall.clearRaise()
@@ -16229,6 +20518,60 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    def test_imp_idid_q_v2i_f_f_f_f_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_q_v2i_f_f_f_f_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -16575,6 +20918,54 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    def test_imp_idid_GKBox_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididGKBoxOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididGKBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_GKBox__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididGKBoxOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididGKBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -16896,6 +21287,54 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float2(11.0, 12.0),
                 ),
             )
+
+    def test_imp_idid_GKQuad_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididGKQuadOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididGKQuadOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_GKQuad__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididGKQuadOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididGKQuadOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_MDLAxisAlignedBoundingBox_f_(self):
         OC_VectorCall.clearRaise()
@@ -17366,6 +21805,56 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    def test_imp_idid_MDLAxisAlignedBoundingBox_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_MDLAxisAlignedBoundingBox_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idid_matrixfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -17741,6 +22230,58 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_idid_matrixfloat2x2_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_matrixfloat2x2__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_matrixfloat3x3_(self):
         OC_VectorCall.clearRaise()
@@ -18164,6 +22705,60 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_idid_matrixfloat3x3_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_matrixfloat3x3__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idid_matrixfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -18611,6 +23206,62 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    def test_imp_idid_matrixfloat4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_matrixfloat4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idCGColor_CGColor_id_v2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -18873,6 +23524,52 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
+
+    def test_imp_idCGColor_CGColor_id_v2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "color!",
+                "color!",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idCGColor_CGColor_id_v2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "color!",
+                "color!",
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idf_v2f_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -19177,6 +23874,50 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
+
+    def test_imp_idf_v2f_v2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_v2f_v2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idf_v2f_v2f_Class_(self):
         OC_VectorCall.clearRaise()
@@ -19596,6 +24337,52 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.lookUpClass("NSObject"),
             )
+
+    def test_imp_idf_v2f_v2f_Class_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.lookUpClass("NSObject"),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_v2f_v2f_Class__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.lookUpClass("NSObject"),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idf_v2f_Q_Q_Q_q_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -20380,6 +25167,60 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idf_v2f_Q_Q_Q_q_Z_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_v2f_Q_Q_Q_q_Z_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idf_v2f_Q_Q_q_Z_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21060,6 +25901,58 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_idf_v2f_Q_Q_q_Z_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_v2f_Q_Q_q_Z_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idf_id_v2i_i_q_Z_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21552,6 +26445,56 @@ class TestVectorCall(TestCase):
                 -17592186044416,
                 False,
             )
+
+    def test_imp_idf_id_v2i_i_q_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_id_v2i_i_q_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
         OC_VectorCall.clearRaise()
@@ -22229,6 +27172,58 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+    def test_imp_idf_id_v2i_i_q_CGColor_CGColor_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                "color!",
+                "color!",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_id_v2i_i_q_CGColor_CGColor__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                "color!",
+                "color!",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idf_id_v2i_q_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -22519,6 +27514,52 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
+
+    def test_imp_idf_id_v2i_q_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iqOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iqOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_id_v2i_q__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idfidv2iqOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idfidv2iqOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idf_f_id_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -22811,6 +27852,52 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
+    def test_imp_idf_f_id_v2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idffidv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idffidv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idf_f_id_v2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idffidv2iOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idffidv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23097,6 +28184,52 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
                 ),
             )
+
+    def test_imp_idGKBox_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKBoxOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idGKBox__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKBoxOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKBoxOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idGKBox_f_(self):
         OC_VectorCall.clearRaise()
@@ -23464,6 +28597,54 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    def test_imp_idGKBox_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKBoxfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKBoxfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idGKBox_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKBoxfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKBoxfOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23726,6 +28907,52 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float2(11.0, 12.0),
                 ),
             )
+
+    def test_imp_idGKQuad_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKQuadOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKQuadOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idGKQuad__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKQuadOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKQuadOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idGKQuad_f_(self):
         OC_VectorCall.clearRaise()
@@ -24069,6 +29296,54 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    def test_imp_idGKQuad_f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKQuadfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKQuadfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idGKQuad_f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idGKQuadfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+                2500000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idGKQuadfOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_idMDLVoxelIndexExtent_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -24367,6 +29642,52 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_int4(-20, -21, -22, -23),
                 ),
             )
+
+    def test_imp_idMDLVoxelIndexExtent_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_int4(100, 101, 102, 103),
+                    objc.simd.vector_int4(-20, -21, -22, -23),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idMDLVoxelIndexExtent__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_int4(100, 101, 102, 103),
+                    objc.simd.vector_int4(-20, -21, -22, -23),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idmatrixfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -24738,6 +30059,60 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_idmatrixfloat4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idmatrixfloat4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_idmatrixfloat4x4_Z_(self):
         OC_VectorCall.clearRaise()
@@ -25221,6 +30596,62 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+    def test_imp_idmatrixfloat4x4_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idmatrixfloat4x4_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_Zv2i_id_id_id_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -25592,6 +31023,54 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
+
+    def test_imp_Zv2i_id_id_id_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv2iididididOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                "hello",
+                "hello",
+                "hello",
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv2iididididOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_Zv2i_id_id_id_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv2iididididOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                "hello",
+                "hello",
+                "hello",
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv2iididididOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_Zv2i_q_f_id_id_id_(self):
         OC_VectorCall.clearRaise()
@@ -26150,6 +31629,56 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_Zv2i_q_f_id_id_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv2iqfidididOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                2500000000.0,
+                "hello",
+                "hello",
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv2iqfidididOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_Zv2i_q_f_id_id_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv2iqfidididOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                2500000000.0,
+                "hello",
+                "hello",
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv2iqfidididOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_Zv4i_Z_Z_Z_Z_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -26426,6 +31955,54 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
+    def test_imp_Zv4i_Z_Z_Z_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv4iZZZZOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int4(0, 1, 2, 3),
+                False,
+                False,
+                False,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv4iZZZZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_Zv4i_Z_Z_Z_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.Zv4iZZZZOn_(value)
+        self.assertEqual(result, False)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_int4(0, 1, 2, 3),
+                False,
+                False,
+                False,
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.Zv4iZZZZOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_CGColorv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -26606,6 +32183,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+    def test_imp_CGColorv3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.CGColorv3fOn_(value)
+        self.assertEqual(result, "color!")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.CGColorv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_CGColorv3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.CGColorv3fOn_(value)
+        self.assertEqual(result, "color!")
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.CGColorv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_CGColorv3f_CGColorSpace_(self):
         OC_VectorCall.clearRaise()
@@ -26822,6 +32429,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
+    def test_imp_CGColorv3f_CGColorSpace_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.CGColorv3fCGColorSpaceOn_(value)
+        self.assertEqual(result, "color!")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                "colorspace!",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.CGColorv3fCGColorSpaceOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_CGColorv3f_CGColorSpace__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.CGColorv3fCGColorSpaceOn_(value)
+        self.assertEqual(result, "color!")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                "colorspace!",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.CGColorv3fCGColorSpaceOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_fv2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27003,6 +32652,36 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float2(0.0, 1.5))
 
+    def test_imp_fv2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.fv2fOn_(value)
+        self.assertEqual(result, 2500000000.0)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_fv2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.fv2fOn_(value)
+        self.assertEqual(result, 2500000000.0)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_fv2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27183,6 +32862,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int2(0, 1))
+
+    def test_imp_fv2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.fv2iOn_(value)
+        self.assertEqual(result, 2500000000.0)
+        self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.fv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_fv2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.fv2iOn_(value)
+        self.assertEqual(result, 2500000000.0)
+        self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.fv2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv2d_d_(self):
         OC_VectorCall.clearRaise()
@@ -27385,6 +33094,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
+    def test_imp_vv2d_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv2d_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv2f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27565,6 +33316,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float2(0.0, 1.5))
+
+    def test_imp_vv2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv2f_d_(self):
         OC_VectorCall.clearRaise()
@@ -27767,6 +33548,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
+    def test_imp_vv2f_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv2f_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float2(0.0, 1.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2fdOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv3d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27947,6 +33770,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0))
+
+    def test_imp_vv3d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_double3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_double3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3dOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv3d_d_(self):
         OC_VectorCall.clearRaise()
@@ -28153,6 +34006,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
+    def test_imp_vv3d_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double3(0.0, 1.5, 3.0),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3d_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double3(0.0, 1.5, 3.0),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28333,6 +34228,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+    def test_imp_vv3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv3f_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -28586,6 +34511,48 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
+
+    def test_imp_vv3f_v3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3f_v3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv3f_v3f_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -28935,6 +34902,50 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    def test_imp_vv3f_v3f_v3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3f_v3f_v3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv3f_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29139,6 +35150,48 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
+
+    def test_imp_vv3f_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv3f_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv3fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv3fdOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv4d_d_(self):
         OC_VectorCall.clearRaise()
@@ -29353,6 +35406,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
+    def test_imp_vv4d_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4ddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv4d_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4ddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4ddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv4f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29533,6 +35628,40 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+    def test_imp_vv4f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv4f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vv4f_d_(self):
         OC_VectorCall.clearRaise()
@@ -29747,6 +35876,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
+    def test_imp_vv4f_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4fdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv4f_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4fdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4fdOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vv4i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29927,6 +36098,36 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, objc.simd.vector_int4(0, 1, 2, 3))
+
+    def test_imp_vv4i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4iOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv4i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv4iOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv4iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vid_v2f_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -30231,6 +36432,50 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
             )
+
+    def test_imp_vid_v2f_v2f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vid_v2f_v2f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vid_v2f_v2f_q_(self):
         OC_VectorCall.clearRaise()
@@ -30611,6 +36856,52 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             )
 
+    def test_imp_vid_v2f_v2f_q_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vid_v2f_v2f_q__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vf_v2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30811,6 +37102,48 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, 2500000000.0, objc.simd.vector_int2(0, 1))
+
+    def test_imp_vf_v2i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vfv2iOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vfv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vf_v2i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vfv2iOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                2500000000.0,
+                objc.simd.vector_int2(0, 1),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vfv2iOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vMDLAxisAlignedBoundingBox_(self):
         OC_VectorCall.clearRaise()
@@ -31114,6 +37447,52 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
                 ),
             )
+
+    def test_imp_vMDLAxisAlignedBoundingBox_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vMDLAxisAlignedBoundingBox__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vMDLAxisAlignedBoundingBox_Z_(self):
         OC_VectorCall.clearRaise()
@@ -31497,6 +37876,54 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+    def test_imp_vMDLAxisAlignedBoundingBox_Z_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vMDLAxisAlignedBoundingBox_Z__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                False,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vmatrixdouble4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -31867,6 +38294,60 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_vmatrixdouble4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixdouble4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vmatrixdouble4x4_d_(self):
         OC_VectorCall.clearRaise()
@@ -32350,6 +38831,62 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    def test_imp_vmatrixdouble4x4_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixdouble4x4_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vmatrixfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32658,6 +39195,56 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_vmatrixfloat2x2_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixfloat2x2__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vmatrixfloat3x3_(self):
         OC_VectorCall.clearRaise()
@@ -33010,6 +39597,58 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_vmatrixfloat3x3_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixfloat3x3__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vmatrixfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -33381,6 +40020,60 @@ class TestVectorCall(TestCase):
                     )
                 ),
             )
+
+    def test_imp_vmatrixfloat4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixfloat4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vmatrixfloat4x4_d_(self):
         OC_VectorCall.clearRaise()
@@ -33864,6 +40557,62 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    def test_imp_vmatrixfloat4x4_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vmatrixfloat4x4_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.matrix_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -34235,6 +40984,60 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    def test_imp_vsimdfloat4x4_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdfloat4x4__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vsimdquatd_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -34496,6 +41299,48 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    def test_imp_vsimdquatd_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdquatd_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatddOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vsimdquatf_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -34695,6 +41540,42 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
+
+    def test_imp_vsimdquatf_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdquatf__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_vsimdquatf_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -34961,6 +41842,48 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    def test_imp_vsimdquatf_v3f_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdquatf_v3f__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vsimdquatf_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -35222,6 +42145,48 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    def test_imp_vsimdquatf_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdquatf_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_GKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -35393,6 +42358,48 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    def test_imp_GKBox(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_GKBox_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_GKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -35551,6 +42558,42 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_GKQuad(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKQuadOn_(value)
+        self.assertEqual(
+            result,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKQuadOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_GKQuad_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKQuadOn_(value)
+        self.assertEqual(
+            result,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKQuadOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_GKTriangleQ_(self):
         OC_VectorCall.clearRaise()
@@ -35769,6 +42812,54 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
+    def test_imp_GKTriangleQ_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKTriangleQOn_(value)
+        self.assertEqual(
+            result,
+            (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            ),
+        )
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKTriangleQOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_GKTriangleQ__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.GKTriangleQOn_(value)
+        self.assertEqual(
+            result,
+            (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            ),
+        )
+        self.assertEqual(value.argvalues, (35184372088832,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.GKTriangleQOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_MDLAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -35951,6 +43042,48 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_MDLAxisAlignedBoundingBox(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MDLAxisAlignedBoundingBox_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_MDLAxisAlignedBoundingBoxv4i_(self):
         OC_VectorCall.clearRaise()
@@ -36173,6 +43306,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_int4(0, 1, 2, 3))
 
+    def test_imp_MDLAxisAlignedBoundingBoxv4i_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MDLAxisAlignedBoundingBoxv4i__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_MDLAxisAlignedBoundingBoxd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -36390,6 +43565,48 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_MDLAxisAlignedBoundingBoxd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MDLAxisAlignedBoundingBoxd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_MDLVoxelIndexExtent(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -36568,6 +43785,48 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_MDLVoxelIndexExtent(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MDLVoxelIndexExtent_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_MPSAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
@@ -36751,6 +44010,48 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_MPSAxisAlignedBoundingBox(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MPSAxisAlignedBoundingBox_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_MPSImageHistogramInfo(self):
         OC_VectorCall.clearRaise()
@@ -36940,6 +44241,52 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_MPSImageHistogramInfo(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        self.assertEqual(
+            result,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MPSImageHistogramInfo_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        self.assertEqual(
+            result,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_matrixdouble4x4(self):
         OC_VectorCall.clearRaise()
@@ -37135,6 +44482,56 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_matrixdouble4x4(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixdouble4x4_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_matrixdouble4x4d_(self):
         OC_VectorCall.clearRaise()
@@ -37365,6 +44762,56 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_matrixdouble4x4d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixdouble4x4d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_matrixfloat2x2(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -37539,6 +44986,46 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_matrixfloat2x2(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixfloat2x2_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_matrixfloat3x3(self):
         OC_VectorCall.clearRaise()
@@ -37730,6 +45217,54 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_matrixfloat3x3(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixfloat3x3_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_matrixfloat4x4(self):
         OC_VectorCall.clearRaise()
@@ -37925,6 +45460,56 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_matrixfloat4x4(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixfloat4x4_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_matrixfloat4x4id_d_(self):
         OC_VectorCall.clearRaise()
@@ -38175,6 +45760,68 @@ class TestVectorCall(TestCase):
         ):
             imp(42, "hello", -557000000000.0)
 
+    def test_imp_matrixfloat4x4id_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixfloat4x4id_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_matrixfloat4x4d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -38404,6 +46051,56 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_matrixfloat4x4d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_matrixfloat4x4d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.matrix_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_simdfloat4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -38598,6 +46295,56 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_simdfloat4x4(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdfloat4x4_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4On_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
 
     def test_simdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
@@ -39133,6 +46880,82 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    def test_imp_simdfloat4x4simdfloat4x4_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdfloat4x4simdfloat4x4_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_simdquatdd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -39322,6 +47145,40 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    def test_imp_simdquatdd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatddOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdquatdd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatddOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatddOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_simdquatf(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -39476,6 +47333,40 @@ class TestVectorCall(TestCase):
             imp(
                 42,
             )
+
+    def test_imp_simdquatf(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatfOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdquatf_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatfOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatfOn_(value)
+        finally:
+            del value.shouldRaise
 
     def test_simdquatfd_(self):
         OC_VectorCall.clearRaise()
@@ -39665,3 +47556,37 @@ class TestVectorCall(TestCase):
             TypeError, "Need Objective-C object or class as self"
         ):
             imp(42, -557000000000.0)
+
+    def test_imp_simdquatfd_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatfdOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatfdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdquatfd__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdquatfdOn_(value)
+        self.assertEqual(
+            result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdquatfdOn_(value)
+        finally:
+            del value.shouldRaise

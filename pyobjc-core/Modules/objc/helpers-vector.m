@@ -26,7 +26,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         *methinfo = PyObjCSelector_GetMetadata(method);
     }
 
-    if (*flags & PyObjCSelector_kCLASS_METHOD) {
+    if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) {
@@ -84,7 +84,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     if (*isIMP) {
         *super_class = nil;
     } else {
-        if (*flags & PyObjCSelector_kCLASS_METHOD) {
+        if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
             *super_class = object_getClass(PyObjCSelector_GetClass(method));
         } else {
             *super_class = PyObjCSelector_GetClass(method);

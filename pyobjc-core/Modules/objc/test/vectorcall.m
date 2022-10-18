@@ -7681,6 +7681,1685 @@ static BOOL      shouldRaise = NO;
 
 @end
 
+@interface OC_VectorCallInvoke : NSObject {
+}
+@end
+
+@implementation OC_VectorCallInvoke
+
++ (id)v16COn:(OC_VectorCall*)value
+{
+    id           cinter;
+    simd_uchar16 result = [value v16C];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<16C>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2dOn:(OC_VectorCall*)value
+{
+    id           cinter;
+    simd_double2 result = [value v2d];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2d>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2ddOn:(OC_VectorCall*)value
+{
+    simd_double2 result = [value v2dd:-557000000000.0];
+    id           cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2d>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2fOn:(OC_VectorCall*)value
+{
+    id          cinter;
+    simd_float2 result = [value v2f];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2fQOn:(OC_VectorCall*)value
+{
+    simd_float2 result = [value v2fQ:35184372088832];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2fdOn:(OC_VectorCall*)value
+{
+    simd_float2 result = [value v2fd:-557000000000.0];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2fqOn:(OC_VectorCall*)value
+{
+    simd_float2 result = [value v2fq:-17592186044416];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v2iOn:(OC_VectorCall*)value
+{
+    id        cinter;
+    simd_int2 result = [value v2i];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<2i>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3ddOn:(OC_VectorCall*)value
+{
+    simd_double3 result = [value v3dd:-557000000000.0];
+    id           cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3d>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fOn:(OC_VectorCall*)value
+{
+    id          cinter;
+    simd_float3 result = [value v3f];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fv2iv2iOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fv2i:(vector_int2){0, 1} v2i:(vector_int2){0, 1}];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fv3fOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fv3f:(vector_float3){0.0, 1.5, 3.0}];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fv3fidOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fv3f:(vector_float3){0.0, 1.5, 3.0} id:@"hello"];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fv4iOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fv4i:(vector_int4){0, 1, 2, 3}];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fQOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fQ:35184372088832];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v3fdOn:(OC_VectorCall*)value
+{
+    simd_float3 result = [value v3fd:-557000000000.0];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<3f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v4ddOn:(OC_VectorCall*)value
+{
+    simd_double4 result = [value v4dd:-557000000000.0];
+    id           cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<4d>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v4fOn:(OC_VectorCall*)value
+{
+    id          cinter;
+    simd_float4 result = [value v4f];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<4f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v4fdOn:(OC_VectorCall*)value
+{
+    simd_float4 result = [value v4fd:-557000000000.0];
+    id          cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<4f>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)v4iv3fOn:(OC_VectorCall*)value
+{
+    simd_int4 result = [value v4iv3f:(vector_float3){0.0, 1.5, 3.0}];
+    id        cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<4i>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2fOn:(OC_VectorCall*)value
+{
+    id result = [value idv2f:(vector_float2){0.0, 1.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2fv2IqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv2f:(vector_float2){0.0, 1.5}
+                         v2I:(vector_uint2){0, 1}
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2fv2fOn:(OC_VectorCall*)value
+{
+    id result = [value idv2f:(vector_float2){0.0, 1.5} v2f:(vector_float2){0.0, 1.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2iOn:(OC_VectorCall*)value
+{
+    id result = [value idv2i:(vector_int2){0, 1}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2iiiZOn:(OC_VectorCall*)value
+{
+    id result = [value idv2i:(vector_int2){0, 1} i:-42 i:-42 Z:NO];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2iiiZClassOn:(OC_VectorCall*)value
+{
+    id result = [value idv2i:(vector_int2){0, 1} i:-42 i:-42 Z:NO Class:[NSObject class]];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv2IZZZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v2I:(vector_uint2){0, 1}
+                           Z:NO
+                           Z:NO
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv2IZZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v2I:(vector_uint2){0, 1}
+                           Z:NO
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv2IZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v2I:(vector_uint2){0, 1}
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv2IiZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v2I:(vector_uint2){0, 1}
+                           i:-42
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv2IqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v2I:(vector_uint2){0, 1}
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv3IZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v3I:(vector_uint3){0, 1, 2}
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fv3IqZidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                         v3I:(vector_uint3){0, 1, 2}
+                           q:-17592186044416
+                           Z:NO
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fQQqZZidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                           Q:35184372088832
+                           Q:35184372088832
+                           q:-17592186044416
+                           Z:NO
+                           Z:NO
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv3fZqidOn:(OC_VectorCall*)value
+{
+    id result = [value idv3f:(vector_float3){0.0, 1.5, 3.0}
+                           Z:NO
+                           q:-17592186044416
+                          id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv4fOn:(OC_VectorCall*)value
+{
+    id result = [value idv4f:(vector_float4){0.0, 1.5, 3.0, 4.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididv2dv2dv2iZOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                        v2d:(vector_double2){0.0, 1.5}
+                        v2d:(vector_double2){0.0, 1.5}
+                        v2i:(vector_int2){0, 1}
+                          Z:NO];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididv2fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" v2f:(vector_float2){0.0, 1.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididv3fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" v3f:(vector_float3){0.0, 1.5, 3.0}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididv4fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" v4f:(vector_float4){0.0, 1.5, 3.0, 4.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idididv2iOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" id:@"hello" v2i:(vector_int2){0, 1}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idididv2ifOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" id:@"hello" v2i:(vector_int2){0, 1} f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididQv2fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" Q:35184372088832 v2f:(vector_float2){0.0, 1.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididQv3fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello" Q:35184372088832 v3f:(vector_float3){0.0, 1.5, 3.0}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididQv4fOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                          Q:35184372088832
+                        v4f:(vector_float4){0.0, 1.5, 3.0, 4.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididQmatrixfloat4x4On:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                          Q:35184372088832
+             matrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididZidv2iqQqZOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                          Z:NO
+                         id:@"hello"
+                        v2i:(vector_int2){0, 1}
+                          q:-17592186044416
+                          Q:35184372088832
+                          q:-17592186044416
+                          Z:NO];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididqv2iffffOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                          q:-17592186044416
+                        v2i:(vector_int2){0, 1}
+                          f:2500000000.0
+                          f:2500000000.0
+                          f:2500000000.0
+                          f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididqv2ifffffOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                          q:-17592186044416
+                        v2i:(vector_int2){0, 1}
+                          f:2500000000.0
+                          f:2500000000.0
+                          f:2500000000.0
+                          f:2500000000.0
+                          f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididGKBoxOn:(OC_VectorCall*)value
+{
+    id result = [value
+         idid:@"hello"
+        GKBox:(GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididGKQuadOn:(OC_VectorCall*)value
+{
+    id result =
+        [value idid:@"hello"
+             GKQuad:(GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididMDLAxisAlignedBoundingBoxfOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+        MDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox) {
+            (vector_float3){-8.0, -9.0, -10.0}, (vector_float3) { -11.0, -12.0, -13.0 }
+        }
+                                f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididmatrixfloat2x2On:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+             matrixfloat2x2:(matrix_float2x2){
+                                {(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididmatrixfloat3x3On:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+             matrixfloat3x3:(matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                                               (vector_float3){0.0, 1.5, 3.0},
+                                               (vector_float3){0.0, 1.5, 3.0}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididmatrixfloat4x4On:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+             matrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idCGColorCGColoridv2iOn:(OC_VectorCall*)value
+{
+    id result = [value idCGColor:(CGColorRef) @"color!"
+                         CGColor:(CGColorRef) @"color!"
+                              id:@"hello"
+                             v2i:(vector_int2){0, 1}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfv2fv2fOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                       v2f:(vector_float2){0.0, 1.5}
+                       v2f:(vector_float2){0.0, 1.5}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfv2fv2fClassOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                       v2f:(vector_float2){0.0, 1.5}
+                       v2f:(vector_float2){0.0, 1.5}
+                     Class:[NSObject class]];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfv2fQQQqZidOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                       v2f:(vector_float2){0.0, 1.5}
+                         Q:35184372088832
+                         Q:35184372088832
+                         Q:35184372088832
+                         q:-17592186044416
+                         Z:NO
+                        id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfv2fQQqZidOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                       v2f:(vector_float2){0.0, 1.5}
+                         Q:35184372088832
+                         Q:35184372088832
+                         q:-17592186044416
+                         Z:NO
+                        id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfidv2iiqZOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                        id:@"hello"
+                       v2i:(vector_int2){0, 1}
+                         i:-42
+                         q:-17592186044416
+                         Z:NO];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfidv2iiqCGColorCGColorOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                        id:@"hello"
+                       v2i:(vector_int2){0, 1}
+                         i:-42
+                         q:-17592186044416
+                   CGColor:(CGColorRef) @"color!"
+                   CGColor:(CGColorRef) @"color!"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idfidv2iqOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                        id:@"hello"
+                       v2i:(vector_int2){0, 1}
+                         q:-17592186044416];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idffidv2iOn:(OC_VectorCall*)value
+{
+    id result = [value idf:2500000000.0
+                         f:2500000000.0
+                        id:@"hello"
+                       v2i:(vector_int2){0, 1}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idGKBoxOn:(OC_VectorCall*)value
+{
+    id result = [value
+        idGKBox:(GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idGKBoxfOn:(OC_VectorCall*)value
+{
+    id result = [value idGKBox:(GKBox) {
+        (vector_float3){1.0, 2.0, 3.0}, (vector_float3) { 4.0, 5.0, 6.0 }
+    }
+                             f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idGKQuadOn:(OC_VectorCall*)value
+{
+    id result = [value
+        idGKQuad:(GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idGKQuadfOn:(OC_VectorCall*)value
+{
+    id result = [value idGKQuad:(GKQuad) {
+        (vector_float2){9.0, 10.0}, (vector_float2) { 11.0, 12.0 }
+    }
+                              f:2500000000.0];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idMDLVoxelIndexExtentOn:(OC_VectorCall*)value
+{
+    id result = [value
+        idMDLVoxelIndexExtent:(MDLVoxelIndexExtent){(vector_int4){100, 101, 102, 103},
+                                                    (vector_int4){-20, -21, -22, -23}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idmatrixfloat4x4On:(OC_VectorCall*)value
+{
+    id result =
+        [value idmatrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                                   (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                                   (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                                   (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idmatrixfloat4x4ZOn:(OC_VectorCall*)value
+{
+    id result = [value idmatrixfloat4x4:(matrix_float4x4) {
+        {
+            (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
+            {
+                0.0, 1.5, 3.0, 4.5
+            }
+        }
+    }
+                                      Z:NO];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)Zv2iididididOn:(OC_VectorCall*)value
+{
+    BOOL result = [value Zv2i:(vector_int2){0, 1}
+                           id:@"hello"
+                           id:@"hello"
+                           id:@"hello"
+                           id:@"hello"];
+    id   cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("Z", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)Zv2iqfidididOn:(OC_VectorCall*)value
+{
+    BOOL result = [value Zv2i:(vector_int2){0, 1}
+                            q:-17592186044416
+                            f:2500000000.0
+                           id:@"hello"
+                           id:@"hello"
+                           id:@"hello"];
+    id   cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("Z", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)Zv4iZZZZOn:(OC_VectorCall*)value
+{
+    BOOL result = [value Zv4i:(vector_int4){0, 1, 2, 3} Z:NO Z:NO Z:NO Z:NO];
+    id   cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("Z", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)CGColorv3fOn:(OC_VectorCall*)value
+{
+    CGColorRef result = [value CGColorv3f:(vector_float3){0.0, 1.5, 3.0}];
+    id         cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("^{CGColor=}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)CGColorv3fCGColorSpaceOn:(OC_VectorCall*)value
+{
+    CGColorRef result = [value CGColorv3f:(vector_float3){0.0, 1.5, 3.0}
+                             CGColorSpace:(CGColorSpaceRef) @"colorspace!"];
+    id         cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("^{CGColor=}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)fv2fOn:(OC_VectorCall*)value
+{
+    float result = [value fv2f:(vector_float2){0.0, 1.5}];
+    id    cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("f", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)fv2iOn:(OC_VectorCall*)value
+{
+    float result = [value fv2i:(vector_int2){0, 1}];
+    id    cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("f", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (void)vv2ddOn:(OC_VectorCall*)value
+{
+    [value vv2d:(vector_double2){0.0, 1.5} d:-557000000000.0];
+}
+
++ (void)vv2fOn:(OC_VectorCall*)value
+{
+    [value vv2f:(vector_float2){0.0, 1.5}];
+}
+
++ (void)vv2fdOn:(OC_VectorCall*)value
+{
+    [value vv2f:(vector_float2){0.0, 1.5} d:-557000000000.0];
+}
+
++ (void)vv3dOn:(OC_VectorCall*)value
+{
+    [value vv3d:(vector_double3){0.0, 1.5, 3.0}];
+}
+
++ (void)vv3ddOn:(OC_VectorCall*)value
+{
+    [value vv3d:(vector_double3){0.0, 1.5, 3.0} d:-557000000000.0];
+}
+
++ (void)vv3fOn:(OC_VectorCall*)value
+{
+    [value vv3f:(vector_float3){0.0, 1.5, 3.0}];
+}
+
++ (void)vv3fv3fOn:(OC_VectorCall*)value
+{
+    [value vv3f:(vector_float3){0.0, 1.5, 3.0} v3f:(vector_float3){0.0, 1.5, 3.0}];
+}
+
++ (void)vv3fv3fv3fOn:(OC_VectorCall*)value
+{
+    [value vv3f:(vector_float3){0.0, 1.5, 3.0}
+            v3f:(vector_float3){0.0, 1.5, 3.0}
+            v3f:(vector_float3){0.0, 1.5, 3.0}];
+}
+
++ (void)vv3fdOn:(OC_VectorCall*)value
+{
+    [value vv3f:(vector_float3){0.0, 1.5, 3.0} d:-557000000000.0];
+}
+
++ (void)vv4ddOn:(OC_VectorCall*)value
+{
+    [value vv4d:(vector_double4){0.0, 1.5, 3.0, 4.5} d:-557000000000.0];
+}
+
++ (void)vv4fOn:(OC_VectorCall*)value
+{
+    [value vv4f:(vector_float4){0.0, 1.5, 3.0, 4.5}];
+}
+
++ (void)vv4fdOn:(OC_VectorCall*)value
+{
+    [value vv4f:(vector_float4){0.0, 1.5, 3.0, 4.5} d:-557000000000.0];
+}
+
++ (void)vv4iOn:(OC_VectorCall*)value
+{
+    [value vv4i:(vector_int4){0, 1, 2, 3}];
+}
+
++ (void)vidv2fv2fOn:(OC_VectorCall*)value
+{
+    [value vid:@"hello" v2f:(vector_float2){0.0, 1.5} v2f:(vector_float2){0.0, 1.5}];
+}
+
++ (void)vidv2fv2fqOn:(OC_VectorCall*)value
+{
+    [value vid:@"hello"
+           v2f:(vector_float2){0.0, 1.5}
+           v2f:(vector_float2){0.0, 1.5}
+             q:-17592186044416];
+}
+
++ (void)vfv2iOn:(OC_VectorCall*)value
+{
+    [value vf:2500000000.0 v2i:(vector_int2){0, 1}];
+}
+
++ (void)vMDLAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+    [value vMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox){
+                                          (vector_float3){-8.0, -9.0, -10.0},
+                                          (vector_float3){-11.0, -12.0, -13.0}}];
+}
+
++ (void)vMDLAxisAlignedBoundingBoxZOn:(OC_VectorCall*)value
+{
+    [value vMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox) {
+        (vector_float3){-8.0, -9.0, -10.0}, (vector_float3) { -11.0, -12.0, -13.0 }
+    }
+                                    Z:NO];
+}
+
++ (void)vmatrixdouble4x4On:(OC_VectorCall*)value
+{
+    [value vmatrixdouble4x4:(matrix_double4x4){{(vector_double4){0.0, 1.5, 3.0, 4.5},
+                                                (vector_double4){0.0, 1.5, 3.0, 4.5},
+                                                (vector_double4){0.0, 1.5, 3.0, 4.5},
+                                                (vector_double4){0.0, 1.5, 3.0, 4.5}}}];
+}
+
++ (void)vmatrixdouble4x4dOn:(OC_VectorCall*)value
+{
+    [value vmatrixdouble4x4:(matrix_double4x4) {
+        {
+            (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
+                (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4)
+            {
+                0.0, 1.5, 3.0, 4.5
+            }
+        }
+    }
+                          d:-557000000000.0];
+}
+
++ (void)vmatrixfloat2x2On:(OC_VectorCall*)value
+{
+    [value vmatrixfloat2x2:(matrix_float2x2){
+                               {(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}}];
+}
+
++ (void)vmatrixfloat3x3On:(OC_VectorCall*)value
+{
+    [value vmatrixfloat3x3:(matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                                              (vector_float3){0.0, 1.5, 3.0},
+                                              (vector_float3){0.0, 1.5, 3.0}}}];
+}
+
++ (void)vmatrixfloat4x4On:(OC_VectorCall*)value
+{
+    [value vmatrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                              (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                              (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                              (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+}
+
++ (void)vmatrixfloat4x4dOn:(OC_VectorCall*)value
+{
+    [value vmatrixfloat4x4:(matrix_float4x4) {
+        {
+            (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
+            {
+                0.0, 1.5, 3.0, 4.5
+            }
+        }
+    }
+                         d:-557000000000.0];
+}
+
++ (void)vsimdfloat4x4On:(OC_VectorCall*)value
+{
+    [value vsimdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+}
+
++ (void)vsimdquatddOn:(OC_VectorCall*)value
+{
+    [value vsimdquatd:(simd_quatd) {
+        (vector_double4) { 0.0, 1.5, 3.0, 4.5 }
+    }
+                    d:-557000000000.0];
+}
+
++ (void)vsimdquatfOn:(OC_VectorCall*)value
+{
+    [value vsimdquatf:(simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}}];
+}
+
++ (void)vsimdquatfv3fOn:(OC_VectorCall*)value
+{
+    [value vsimdquatf:(simd_quatf) {
+        (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
+    }
+                  v3f:(vector_float3){0.0, 1.5, 3.0}];
+}
+
++ (void)vsimdquatfdOn:(OC_VectorCall*)value
+{
+    [value vsimdquatf:(simd_quatf) {
+        (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
+    }
+                    d:-557000000000.0];
+}
+
++ (id)GKBoxOn:(OC_VectorCall*)value
+{
+    id    cinter;
+    GKBox result = [value GKBox];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{GKBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)GKQuadOn:(OC_VectorCall*)value
+{
+    id     cinter;
+    GKQuad result = [value GKQuad];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{GKQuad=<2f><2f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)GKTriangleQOn:(OC_VectorCall*)value
+{
+    GKTriangle result = [value GKTriangleQ:35184372088832];
+    id         cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{GKTriangle=[3<3f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MDLAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+    id                        cinter;
+    MDLAxisAlignedBoundingBox result = [value MDLAxisAlignedBoundingBox];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MDLAxisAlignedBoundingBoxv4iOn:(OC_VectorCall*)value
+{
+    MDLAxisAlignedBoundingBox result =
+        [value MDLAxisAlignedBoundingBoxv4i:(vector_int4){0, 1, 2, 3}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MDLAxisAlignedBoundingBoxdOn:(OC_VectorCall*)value
+{
+    MDLAxisAlignedBoundingBox result = [value MDLAxisAlignedBoundingBoxd:-557000000000.0];
+    id                        cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MDLVoxelIndexExtentOn:(OC_VectorCall*)value
+{
+    id                  cinter;
+    MDLVoxelIndexExtent result = [value MDLVoxelIndexExtent];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_MDLVoxelIndexExtent=<4i><4i>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+    id                        cinter;
+    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
+{
+    id                    cinter;
+    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MPSImageHistogramInfo=QZ<4f><4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixdouble4x4On:(OC_VectorCall*)value
+{
+    id               cinter;
+    matrix_double4x4 result = [value matrixdouble4x4];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixdouble4x4dOn:(OC_VectorCall*)value
+{
+    matrix_double4x4 result = [value matrixdouble4x4d:-557000000000.0];
+    id               cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixfloat2x2On:(OC_VectorCall*)value
+{
+    id              cinter;
+    matrix_float2x2 result = [value matrixfloat2x2];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixfloat3x3On:(OC_VectorCall*)value
+{
+    id              cinter;
+    matrix_float3x3 result = [value matrixfloat3x3];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixfloat4x4On:(OC_VectorCall*)value
+{
+    id              cinter;
+    matrix_float4x4 result = [value matrixfloat4x4];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixfloat4x4iddOn:(OC_VectorCall*)value
+{
+    matrix_float4x4 result = [value matrixfloat4x4id:@"hello" d:-557000000000.0];
+    id              cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)matrixfloat4x4dOn:(OC_VectorCall*)value
+{
+    matrix_float4x4 result = [value matrixfloat4x4d:-557000000000.0];
+    id              cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdfloat4x4On:(OC_VectorCall*)value
+{
+    id            cinter;
+    simd_float4x4 result = [value simdfloat4x4];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdfloat4x4simdfloat4x4idOn:(OC_VectorCall*)value
+{
+    simd_float4x4 result = [value simdfloat4x4simdfloat4x4:(simd_float4x4) {
+        {
+            (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
+            {
+                0.0, 1.5, 3.0, 4.5
+            }
+        }
+    }
+                                                        id:@"hello"];
+    id            cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdquatddOn:(OC_VectorCall*)value
+{
+    simd_quatd result = [value simdquatdd:-557000000000.0];
+    id         cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatd=<4d>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdquatfOn:(OC_VectorCall*)value
+{
+    id         cinter;
+    simd_quatf result = [value simdquatf];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdquatfdOn:(OC_VectorCall*)value
+{
+    simd_quatf result = [value simdquatfd:-557000000000.0];
+    id         cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
@@ -7700,6 +9379,11 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_vectorcall(void)
     PyObjC_ImportAPI(m);
 
     if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
+        < 0) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "OC_VectorCallInvoke",
+                           PyObjC_IdToPython([OC_VectorCallInvoke class]))
         < 0) {
         return NULL;
     }

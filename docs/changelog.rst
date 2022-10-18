@@ -153,6 +153,10 @@ Version 9.0a1
   - Invocations of 0-argument super will result in errors. That's
     due to a limitation in Nuitka that the developer is lookin into.
 
+  As a side effect of this builtin functions are accepted as
+  the callable for a selector, even when not specifying a
+  signature (e.g. ``objc.selector(dir)`` now works).
+
 * Fixed crash in objc.selector due to uninitialized memory.
 
 * Move helpers for NSInvocation from pyobjc-framework-Cocoa to

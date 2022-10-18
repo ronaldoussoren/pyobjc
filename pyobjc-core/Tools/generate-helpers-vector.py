@@ -211,7 +211,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         *methinfo = PyObjCSelector_GetMetadata(method);
     }
 
-    if (*flags & PyObjCSelector_kCLASS_METHOD) {
+    if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) {
@@ -268,7 +268,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     if (*isIMP) {
         *super_class = nil;
     } else {
-        if (*flags & PyObjCSelector_kCLASS_METHOD) {
+        if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
             *super_class = object_getClass(PyObjCSelector_GetClass(method));
         } else {
             *super_class = PyObjCSelector_GetClass(method);
@@ -397,6 +397,17 @@ static BOOL shouldRaise = NO;
 }
 """
 
+TESTEXT_MID = """\
+@end
+
+@interface OC_VectorCallInvoke: NSObject {
+}
+@end
+
+@implementation OC_VectorCallInvoke
+
+"""
+
 TESTEXT_SUFFIX = """\
 @end
 
@@ -421,6 +432,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_vectorcall(void)
     if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class])) < 0) {
         return NULL;
     }
+    if (PyModule_AddObject(m, "OC_VectorCallInvoke", PyObjC_IdToPython([OC_VectorCallInvoke class])) < 0) {
+        return NULL;
+    }
 
     return m;
 }
@@ -442,7 +456,7 @@ from objc import simd
 # CGColor and CGColorSpace
 import Quartz # noqa: F401
 
-from .vectorcall import OC_VectorCall
+from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
 class NoObjCClass:
     @property
@@ -885,7 +899,7 @@ def as_objc_literal(typestr, value):
     return repr(value)
 
 
-def generate_callimp(stream, signature, instance=True):
+def generate_testext_callimp(stream, signature, instance=True):
     # XXX: Add some kind of hook to raise an exception when the method is called.
     parts = objc.splitSignature(signature)
     sel = sel_for_signature(signature)
@@ -974,15 +988,84 @@ def generate_callimp(stream, signature, instance=True):
     print("", file=stream)
 
 
+def generate_testext_callfromobjc(stream, signature):
+    parts = objc.splitSignature(signature)
+    sel = sel_for_signature(signature)
+
+    if ":" not in sel:
+        if parts[0] == objc._C_VOID:
+            print(f"+(void){sel}On:(OC_VectorCall*)value", file=stream)
+            print("{", file=stream)
+            print("    [value {sel}];", file=stream)
+            print("}", file=stream)
+        else:
+            print(f"+(id){sel}On:(OC_VectorCall*)value", file=stream)
+            print("{", file=stream)
+            print("     id cinter;", file=stream)
+            print(f"    {describe_type(parts[0])} result = [value {sel}];", file=stream)
+            print("     PyObjC_BEGIN_WITH_GIL", file=stream)
+            print(
+                f'    PyObject* inter =  PyObjC_ObjCToPython("{parts[0].decode()}", &result);',
+                file=stream,
+            )
+            print(
+                '     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {',
+                file=stream,
+            )
+            print("         PyObjC_GIL_FORWARD_EXC();", file=stream)
+            print("     }", file=stream)
+            print("     PyObjC_END_WITH_GIL", file=stream)
+            print("     return cinter;", file=stream)
+            print("}", file=stream)
+        print("", file=stream)
+        return
+
+    rtype = "void" if parts[0] == objc._C_VOID else "id"
+    print(f"+({rtype}){sel.replace(':', '')}On:(OC_VectorCall*)value", file=stream)
+    print("{", file=stream)
+    print("    ", end="", file=stream)
+    if parts[0] != objc._C_VOID:
+        print(f"{describe_type(parts[0])} result = ", end="", file=stream)
+    print("[value ", end="", file=stream)
+    for idx, selpart in enumerate(sel.split(":")[:-1]):
+        print(
+            f"{selpart}:{as_objc_literal(parts[idx+3], valid_value(parts[idx+3]))} ",
+            end=" ",
+            file=stream,
+        )
+
+    print("];", file=stream)
+    if parts[0] != objc._C_VOID:
+        print("     id cinter;", file=stream)
+        print("     PyObjC_BEGIN_WITH_GIL", file=stream)
+        print(
+            f'    PyObject* inter =  PyObjC_ObjCToPython("{parts[0].decode()}", &result);',
+            file=stream,
+        )
+        print('     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {', file=stream)
+        print("         PyObjC_GIL_FORWARD_EXC();", file=stream)
+        print("     }", file=stream)
+        print("     PyObjC_END_WITH_GIL", file=stream)
+        print("     return cinter;", file=stream)
+    print("}", file=stream)
+    print("", file=stream)
+
+
 def generate_register(stream, signature):
+    # This registers the custom metadata on NSObject because
+    # this allows reusing the registration for both the C extension
+    # as the Python implementation.
+    #
+    # The selector names are specializedenough to not cause problems here.
+
     print(
-        f'objc.registerMetaDataForSelector(b"OC_VectorCall", '
+        f'objc.registerMetaDataForSelector(b"NSObject", '
         f'b"{sel_for_signature(signature)}", '
         f'{{"full_signature": b"{signature.decode()}"}})',
         file=stream,
     )
     print(
-        f'objc.registerMetaDataForSelector(b"OC_VectorCall", '
+        f'objc.registerMetaDataForSelector(b"NSObject", '
         f'b"cls{sel_for_signature(signature)}", '
         f'{{"full_signature": b"{signature.decode()}"}})',
         file=stream,
@@ -1132,7 +1215,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
     oc_sel = sel_for_signature(signature)
     if not instance:
         oc_sel = "cls" + oc_sel
-    sel = oc_sel.replace(":", "_")  # XXX: "kind" argument (instance, class, IMP)
+    sel = oc_sel.replace(":", "_")
 
     print(f"    def test_{sel}{'_imp' if imp else ''}(self):", file=stream)
     sigparts = objc.splitSignature(signature)
@@ -1274,6 +1357,83 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
     # - Third/fourth test: Call through IMP for instance/class method
 
 
+def generate_imp_testhelper(stream, signature, instance=True):
+    signature_parts = objc.splitSignature(signature)
+    oc_sel = sel_for_signature(signature)
+    sel = oc_sel.replace(":", "_")
+
+    arg_names = tuple(f"arg{idx}" for idx in range(len(signature_parts) - 3))
+
+    if not instance:
+        print("    @classmethod", file=stream)
+
+    if arg_names:
+        print(f"    def {sel}(self, {', '.join(arg_names)}):", file=stream)
+        print(f"        self.argvalues = ({', '.join(arg_names)},)", file=stream)
+    else:
+        print(f"    def {sel}(self):", file=stream)
+        print("        self.argvalues = None", file=stream)
+
+    print("        if getattr(self, 'shouldRaise', False):", file=stream)
+    print("            raise RuntimeError('failure!')", file=stream)
+
+    if signature_parts[0] != objc._C_VOID:
+        print(f"        return {repr(valid_value(signature_parts[0]))}", file=stream)
+
+    print("", file=stream)
+
+
+def generate_imp_testcase(stream, signature, instance=True):
+    signature_parts = objc.splitSignature(signature)
+    oc_sel = sel_for_signature(signature)
+    sel = oc_sel.replace(":", "_")
+
+    print(
+        f"    def test_imp_{sel}{'' if instance else '_cls'}(self):",
+        file=stream,
+    )
+    if instance:
+        print("        value = OC_VectorCallInstance.alloc().init()", file=stream)
+    else:
+        print("        value = OC_VectorCallClass", file=stream)
+
+    print("        value.argvalues = 1", file=stream)
+    print(
+        f"        result = OC_VectorCallInvoke.{oc_sel.replace(':', '')}On_(value)",
+        file=stream,
+    )
+    if signature_parts[0] == objc._C_VOID:
+        print("        self.assertIs(result, None)", file=stream)
+    else:
+        print(
+            f"        self.assertEqual(result, {repr(valid_value(signature_parts[0]))})",
+            file=stream,
+        )
+
+    if len(signature_parts) == 3:
+        print("        self.assertIs(value.argvalues, None)", file=stream)
+    else:
+        print(
+            f"        self.assertEqual(value.argvalues, ({', '.join(repr(valid_value(tp)) for tp in signature_parts[3:])},))",
+            file=stream,
+        )
+    print("", file=stream)
+    print("        # Test raising an exception", file=stream)
+    print("        value.shouldRaise = True", file=stream)
+    print("        try:", file=stream)
+    print(
+        "            with self.assertRaisesRegex(RuntimeError, 'failure'):", file=stream
+    )
+    print(
+        f"                OC_VectorCallInvoke.{oc_sel.replace(':', '')}On_(value)",
+        file=stream,
+    )
+    print("        finally:", file=stream)
+    print("            del value.shouldRaise", file=stream)
+
+    print("", file=stream)
+
+
 def main():
     # Helper in objc._objc
     with open(HELPER_FILE, "w") as stream:
@@ -1289,8 +1449,13 @@ def main():
         print(TESTEXT_PREFIX, file=stream)
 
         for signature in ALL_SIGNATURES:
-            generate_callimp(stream, signature)
-            generate_callimp(stream, signature, instance=False)
+            generate_testext_callimp(stream, signature)
+            generate_testext_callimp(stream, signature, instance=False)
+
+        print(TESTEXT_MID, file=stream)
+
+        for signature in ALL_SIGNATURES:
+            generate_testext_callfromobjc(stream, signature)
 
         print(TESTEXT_SUFFIX, file=stream)
 
@@ -1304,7 +1469,17 @@ def main():
         for signature in ALL_SIGNATURES:
             generate_register(stream, signature)
 
-        print("\n", file=stream)
+        print("", file=stream)
+        print("class OC_VectorCallInstance(objc.lookUpClass('NSObject')):", file=stream)
+        for signature in ALL_SIGNATURES:
+            generate_imp_testhelper(stream, signature)
+
+        print("", file=stream)
+        print("class OC_VectorCallClass(objc.lookUpClass('NSObject')):", file=stream)
+        for signature in ALL_SIGNATURES:
+            generate_imp_testhelper(stream, signature, instance=False)
+
+        print("", file=stream)
         print(TESTCASE, file=stream)
         for signature in ALL_SIGNATURES:
             generate_call_testcase(stream, signature)
@@ -1313,8 +1488,8 @@ def main():
             generate_call_testcase(stream, signature, imp=True)
             generate_call_testcase(stream, signature, instance=False, imp=True)
 
-            # generate_imp_testcase_inst(stream, signature)
-            # generate_imp_testcase_cls(stream, signature)
+            generate_imp_testcase(stream, signature)
+            generate_imp_testcase(stream, signature, instance=False)
 
 
 if __name__ == "__main__":

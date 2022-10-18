@@ -326,7 +326,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             argcount = PyObjC_num_arguments(pymethod);
         }
         Py_DECREF(pymethod);
-        if (argcount == -1) {
+        if (argcount < 0) {
             PyObjC_GIL_FORWARD_EXC();
         }
 
