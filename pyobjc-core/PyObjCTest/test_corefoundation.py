@@ -3,6 +3,7 @@ Testcases for the CoreFoundation wrappers introduced in 1.5
 """
 import re
 import datetime
+import sys
 
 import objc
 from PyObjCTest.corefoundation import OC_TestCoreFoundation
@@ -110,7 +111,13 @@ class TestCoreFoundation(TestCase):
     def test_default_bridged(self):
         value = OC_TestCoreFoundation.runloop()
         self.assertIsInstance(value, objc.lookUpClass("NSObject"))
-        self.assertIn("CFType", str(type(value)))
+
+        # XXX: A full test run currently loads CoreFoundation through
+        # using Quartz...
+        if "CoreFoundation" in sys.modules:
+            self.assertIn("<core-foundation class CFRunLoop", str(type(value)))
+        else:
+            self.assertIn("CFType", str(type(value)))
         self.assertIn("<CFRunLoop ", str(value))
 
     # TODO: testcases that check that

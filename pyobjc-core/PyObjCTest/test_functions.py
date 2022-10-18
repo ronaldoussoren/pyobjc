@@ -2,6 +2,7 @@ import objc
 import inspect
 import textwrap
 import warnings
+import sys
 from PyObjCTools.TestSupport import TestCase
 
 from PyObjCTest.test_metadata_function import (
@@ -88,11 +89,16 @@ class TestFunctions(TestCase):
             ),
         )
 
+        if "Foundation" in sys.modules:
+            recttype = "Foundation.NSRect"
+        else:
+            recttype = "CGRect"
+
         self.assertEqual(
             NSRectClipList.__doc__,  # noqa: F821
             textwrap.dedent(
-                """\
-            void NSRectClipList(in CGRect* arg0, long long arg1);
+                f"""\
+            void NSRectClipList(in {recttype}* arg0, long long arg1);
 
             arg0: array with length in arg1"""
             ),

@@ -988,15 +988,15 @@ class TestSelectorEdgeCases(TestCase):
         )
 
     def test_selector_from_c_func(self):
-        with self.assertRaisesRegex(
-            TypeError, "Cannot calculate default method signature"
-        ):
+        class ClassWithDirAsSelectorFail(NSObject):
+            method = objc.selector(dir, selector=b"method")
 
-            class ClassWithDirAsSelectorFail(NSObject):
-                method = objc.selector(dir, selector=b"method")
+        self.assertEqual(ClassWithDirAsSelectorFail.method.signature, b"@@:")
 
         class ClassWithDirAsSelector(NSObject):
             method = objc.selector(dir, selector=b"method", signature=b"@@:")
+
+        self.assertEqual(ClassWithDirAsSelector.method.signature, b"@@:")
 
         obj = ClassWithDirAsSelector.alloc().init()
         self.assertEqual(obj.method(), dir(obj))

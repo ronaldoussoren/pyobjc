@@ -193,11 +193,18 @@ class TestLazyImport(TestCase):
             "__loader__": object(),
         }
         metadict = {
-            "constants": "$ABAddressBookErrorDomain$",
-            "constants_dict": {"ABMultiValueIdentifiersErrorKey": "@"},
+            "constants": "$AEAssessmentErrorDomain$",
+            "constants_dict": {"ITLibMediaEntityPropertyPersistentID": "@"},
             "enums": "$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$",
             "functions": {
-                "ABPersonSetImageData": (objc._C_BOOL + objc._C_ID + objc._C_ID, "", {})
+                "ABPersonSetImageData": (
+                    objc._C_BOOL + objc._C_ID + objc._C_ID,
+                    "",
+                    {},
+                ),
+                "MTLTextureSwizzleChannelsMake": (
+                    b"{_MTLTextureSwizzleChannels=CCCC}CCCC",
+                ),
             },
             "aliases": {"doc_string": "__doc__"},
             "expressions": {"mysum": "NSAWTEventType + NSAboveBottom + 3"},
@@ -213,12 +220,14 @@ class TestLazyImport(TestCase):
         self.assertIs(mod.__loader__, initial_dict["__loader__"])
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
-        with self.assertRaisesRegex(AttributeError, "ABPersonSetImageData"):
-            mod.ABPersonSetImageData
-        with self.assertRaisesRegex(AttributeError, "ABAddressBookErrorDomain"):
-            mod.ABAddressBookErrorDomain
-        with self.assertRaisesRegex(AttributeError, "ABMultiValueIdentifiersErrorKey"):
-            mod.ABMultiValueIdentifiersErrorKey
+        with self.assertRaisesRegex(AttributeError, "MTLTextureSwizzleChannelsMake"):
+            mod.MTLTextureSwizzleChannelsMake
+        with self.assertRaisesRegex(AttributeError, "AEAssessmentErrorDomain"):
+            mod.AEAssessmentErrorDomain
+        with self.assertRaisesRegex(
+            AttributeError, "ITLibMediaEntityPropertyPersistentID"
+        ):
+            mod.ITLibMediaEntityPropertyPersistentID
 
     def test_with_parents(self):
         mod = objc.ObjCLazyModule("RootLess", None, None, None, None, None, (sys, os))
