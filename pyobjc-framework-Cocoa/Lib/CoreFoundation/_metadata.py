@@ -3405,7 +3405,7 @@ cftypes = [
         "NSMutableDictionary",
     ),
     ("CFMutableSetRef", b"^{__CFSet=}", "CFSetGetTypeID", "NSMutableSet"),
-    ("CFMutableStringRef", b"@", "CFStringGetTypeID", None),
+    ("CFMutableStringRef", b"@", "CFStringGetTypeID", "NSMutableString"),
     (
         "CFNotificationCenterRef",
         b"^{__CFNotificationCenter=}",

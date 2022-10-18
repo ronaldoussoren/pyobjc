@@ -2,6 +2,7 @@ import functools
 import sys
 import gc
 import warnings
+import types
 
 import objc
 from PyObjCTest import copying, structargs
@@ -394,6 +395,9 @@ class TestReboundMethod(TestCase):
 # This probably needs to be a seperate file:
 
 
+NO_ATTR = object()
+
+
 class PythonFunction:
     @property
     def __class__(self):
@@ -409,7 +413,10 @@ class PythonFunction:
         return PythonFunction(self._callable.__get__(*args))
 
     def __getattr__(self, name):
-        return getattr(self._callable, name)
+        value = getattr(self._callable, name)
+        if value is NO_ATTR:
+            raise AttributeError(name)
+        return value
 
 
 class TestFunctionLikeObjects(TestCase):
@@ -542,24 +549,40 @@ class TestFunctionLikeObjects(TestCase):
             ValueError, " does not have a valid '__code__' attribute"
         ):
 
-            class OC_ClassWithCustomFunc2(NSObject):
+            class OC_ClassWithCustomFunc2a(NSObject):
                 @PythonFunction
                 def methodx(self):
                     return 42
 
                 methodx.__code__ = 42
 
-        class Helper:
-            @PythonFunction
-            def bound1(self, oc_self):
-                pass
+        with self.assertRaisesRegex(
+            ValueError, " does not have a valid '__code__' attribute"
+        ):
 
-            bound1.__code__ = 99
+            class OC_ClassWithCustomFunc2b(NSObject):
+                @PythonFunction
+                def methodx(self):
+                    return 42
 
-        helper = Helper()
+                methodx.__code__ = NO_ATTR
 
-        with self.assertRaisesRegex(TypeError, " is not a python function or method"):
+    def no_test_callable_edge_cases(self):
+        @PythonFunction
+        def func1(a, b=4):
+            pass
 
-            class OC_ClassWithCustomFunc3(NSObject):
-                bound1 = helper.bound1
-                bound1.__func__ = 42
+        @PythonFunction
+        def func2(a, *, b=4):
+            pass
+
+        s = objc.selector(func1)
+        self.assertEqual(s.signature, b"@@:")
+
+        objc.selector(func2)
+        self.assertEqual(s.signature, b"@@:")
+
+        func1.__code__ = None
+        bound = func1.__get__(NSObject, 42)
+        self.assertIsInstance(bound, types.MethodType)
+        objc.selector(bound)

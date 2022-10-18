@@ -198,7 +198,8 @@
     "tollfree": "NSMutableSet"
    },
    "CFMutableStringRef": {
-    "gettypeid_func": "CFStringGetTypeID"
+    "gettypeid_func": "CFStringGetTypeID",
+    "tollfree": "NSMutableString"
    },
    "CFNotificationCenterRef": {
     "gettypeid_func": "CFNotificationCenterGetTypeID"

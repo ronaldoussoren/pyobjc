@@ -91,9 +91,10 @@ CFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O1",
     # "-O3",
     # "-flto=thin",
+    "-O1",
+    # XXX: Use object_path_lto (during linking?)
 ]
 
 # CFLAGS for other (test) extensions:
