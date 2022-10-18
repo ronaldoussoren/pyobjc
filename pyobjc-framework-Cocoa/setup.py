@@ -17,7 +17,6 @@ setup(
     name="pyobjc-framework-Cocoa",
     description="Wrappers for the Cocoa frameworks on macOS",
     packages=["Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools"],
-    namespace_packages=["PyObjCTools"],
     ext_modules=[
         # CoreFoundation
         Extension(

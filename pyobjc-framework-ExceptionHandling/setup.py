@@ -19,7 +19,6 @@ setup(
     name="pyobjc-framework-ExceptionHandling",
     description="Wrappers for the framework ExceptionHandling on macOS",
     packages=["PyObjCTools", "ExceptionHandling"],
-    namespace_packages=["PyObjCTools"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
