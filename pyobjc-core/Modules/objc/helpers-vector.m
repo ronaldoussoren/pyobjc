@@ -61,7 +61,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         } else {
             PyErr_Format(
                 PyExc_TypeError,
-                "Need objective-C object or class as self, not an instance of '%s'",
+                "Need Objective-C object or class as self, not an instance of '%s'",
                 Py_TYPE(self)->tp_name);
             return -1;
         }
@@ -70,8 +70,8 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         int err;
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
+            if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1;                              // LCOV_EXCL_LINE
             }
 
         } else {
@@ -162,13 +162,13 @@ static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<16C>", &rv);
@@ -261,13 +261,13 @@ static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2d>", &rv);
@@ -363,13 +363,13 @@ static PyObject* _Nullable call_v2d_d(PyObject* method, PyObject* self,
                         &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2d>", &rv);
@@ -465,13 +465,13 @@ static PyObject* _Nullable call_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2f>", &rv);
@@ -567,13 +567,13 @@ static PyObject* _Nullable call_v2f_Q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2f>", &rv);
@@ -673,13 +673,13 @@ static PyObject* _Nullable call_v2f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2f>", &rv);
@@ -779,13 +779,13 @@ static PyObject* _Nullable call_v2f_q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2f>", &rv);
@@ -881,13 +881,13 @@ static PyObject* _Nullable call_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<2i>", &rv);
@@ -983,13 +983,13 @@ static PyObject* _Nullable call_v3d_d(PyObject* method, PyObject* self,
                         &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3d>", &rv);
@@ -1085,13 +1085,13 @@ static PyObject* _Nullable call_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1191,13 +1191,13 @@ static PyObject* _Nullable call_v3f_v2i_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1301,13 +1301,13 @@ static PyObject* _Nullable call_v3f_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1411,13 +1411,13 @@ static PyObject* _Nullable call_v3f_v3f_id(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1521,13 +1521,13 @@ static PyObject* _Nullable call_v3f_v4i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1627,13 +1627,13 @@ static PyObject* _Nullable call_v3f_Q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1733,13 +1733,13 @@ static PyObject* _Nullable call_v3f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<3f>", &rv);
@@ -1839,13 +1839,13 @@ static PyObject* _Nullable call_v4d_d(PyObject* method, PyObject* self,
                         &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<4d>", &rv);
@@ -1941,13 +1941,13 @@ static PyObject* _Nullable call_v4f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<4f>", &rv);
@@ -2042,13 +2042,13 @@ static PyObject* _Nullable call_v4f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<4f>", &rv);
@@ -2148,13 +2148,13 @@ static PyObject* _Nullable call_v4i_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("<4i>", &rv);
@@ -2253,13 +2253,13 @@ static PyObject* _Nullable call_id_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2372,13 +2372,13 @@ static PyObject* _Nullable call_id_v2f_v2I_q_id(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2492,13 +2492,13 @@ static PyObject* _Nullable call_id_v2f_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2601,13 +2601,13 @@ static PyObject* _Nullable call_id_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2720,13 +2720,13 @@ static PyObject* _Nullable call_id_v2i_i_i_Z(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2855,13 +2855,13 @@ static PyObject* _Nullable call_id_v2i_i_i_Z_Class(PyObject* method, PyObject* s
                                                        arg0, arg1, arg2, arg3, arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -2973,13 +2973,13 @@ static PyObject* _Nullable call_id_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3107,13 +3107,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_Z_q_id(PyObject* method, PyObject
                     arg4, arg5, arg6);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3257,13 +3257,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_q_id(PyObject* method, PyObject* 
                     arg4, arg5);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3399,13 +3399,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_q_id(PyObject* method, PyObject* se
                     arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3542,13 +3542,13 @@ static PyObject* _Nullable call_id_v3f_v2I_i_Z_q_id(PyObject* method, PyObject* 
                     arg4, arg5);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3678,13 +3678,13 @@ static PyObject* _Nullable call_id_v3f_v2I_q_id(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3813,13 +3813,13 @@ static PyObject* _Nullable call_id_v3f_v3I_Z_q_id(PyObject* method, PyObject* se
                     arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -3952,13 +3952,13 @@ static PyObject* _Nullable call_id_v3f_v3I_q_Z_id(PyObject* method, PyObject* se
                     arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4101,13 +4101,13 @@ static PyObject* _Nullable call_id_v3f_Q_Q_q_Z_Z_id(PyObject* method, PyObject* 
                     arg4, arg5, arg6);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4241,13 +4241,13 @@ static PyObject* _Nullable call_id_v3f_Z_q_id(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4356,13 +4356,13 @@ static PyObject* _Nullable call_id_v4f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4481,13 +4481,13 @@ static PyObject* _Nullable call_id_id_v2d_v2d_v2i_Z(PyObject* method, PyObject* 
                     arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4604,13 +4604,13 @@ static PyObject* _Nullable call_id_id_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4716,13 +4716,13 @@ static PyObject* _Nullable call_id_id_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4828,13 +4828,13 @@ static PyObject* _Nullable call_id_id_v4f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -4945,13 +4945,13 @@ static PyObject* _Nullable call_id_id_id_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5071,13 +5071,13 @@ static PyObject* _Nullable call_id_id_id_v2i_f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5196,13 +5196,13 @@ static PyObject* _Nullable call_id_id_Q_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5318,13 +5318,13 @@ static PyObject* _Nullable call_id_id_Q_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5440,13 +5440,13 @@ static PyObject* _Nullable call_id_id_Q_v4f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5563,13 +5563,13 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5709,13 +5709,13 @@ static PyObject* _Nullable call_id_id_Z_id_v2i_q_Q_q_Z(PyObject* method, PyObjec
                     arg4, arg5, arg6, arg7);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -5867,13 +5867,13 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f(PyObject* method, PyObject* 
                     arg4, arg5, arg6);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6025,13 +6025,13 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f_f(PyObject* method, PyObject
                     arg4, arg5, arg6, arg7);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6157,13 +6157,13 @@ static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6269,13 +6269,13 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6388,13 +6388,13 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6507,13 +6507,13 @@ static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6622,13 +6622,13 @@ static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6737,13 +6737,13 @@ static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6862,13 +6862,13 @@ static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        metho
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -6986,13 +6986,13 @@ static PyObject* _Nullable call_id_f_v2f_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7113,13 +7113,13 @@ static PyObject* _Nullable call_id_f_v2f_v2f_Class(PyObject* method, PyObject* s
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7263,13 +7263,13 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_Q_q_Z_id(PyObject* method, PyObject
                     arg4, arg5, arg6, arg7);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7423,13 +7423,13 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_q_Z_id(PyObject* method, PyObject* 
                     arg4, arg5, arg6);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7573,13 +7573,13 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_Z(PyObject* method, PyObject* se
                     arg4, arg5);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7723,13 +7723,13 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_CGColor_CGColor(
                     arg4, arg5, arg6);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7862,13 +7862,13 @@ static PyObject* _Nullable call_id_f_id_v2i_q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -7991,13 +7991,13 @@ static PyObject* _Nullable call_id_f_f_id_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8106,13 +8106,13 @@ static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8215,13 +8215,13 @@ static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8323,13 +8323,13 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8432,13 +8432,13 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8543,13 +8543,13 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8650,13 +8650,13 @@ static PyObject* _Nullable call_id_matrix_float4x4(PyObject* method, PyObject* s
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8761,13 +8761,13 @@ static PyObject* _Nullable call_id_matrix_float4x4_Z(PyObject* method, PyObject*
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
@@ -8890,13 +8890,13 @@ static PyObject* _Nullable call_Z_v2i_id_id_id_id(PyObject* method, PyObject* se
                                                       arg0, arg1, arg2, arg3, arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("Z", &rv);
@@ -9032,13 +9032,13 @@ static PyObject* _Nullable call_Z_v2i_q_f_id_id_id(PyObject* method, PyObject* s
                     arg4, arg5);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("Z", &rv);
@@ -9173,13 +9173,13 @@ static PyObject* _Nullable call_Z_v4i_Z_Z_Z_Z(PyObject* method, PyObject* self,
                     arg4);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("Z", &rv);
@@ -9292,13 +9292,13 @@ static PyObject* _Nullable call_CGColor_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("^{CGColor=}", &rv);
@@ -9404,13 +9404,13 @@ static PyObject* _Nullable call_CGColor_v3f_CGColorSpace(PyObject* method, PyObj
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("^{CGColor=}", &rv);
@@ -9513,13 +9513,13 @@ static PyObject* _Nullable call_f_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("f", &rv);
@@ -9618,13 +9618,13 @@ static PyObject* _Nullable call_f_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("f", &rv);
@@ -9727,13 +9727,13 @@ static PyObject* _Nullable call_v_v2d_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -9835,13 +9835,13 @@ static PyObject* _Nullable call_v_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -9944,13 +9944,13 @@ static PyObject* _Nullable call_v_v2f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10052,13 +10052,13 @@ static PyObject* _Nullable call_v_v3d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10161,13 +10161,13 @@ static PyObject* _Nullable call_v_v3d_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10269,13 +10269,13 @@ static PyObject* _Nullable call_v_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10378,13 +10378,13 @@ static PyObject* _Nullable call_v_v3f_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10496,13 +10496,13 @@ static PyObject* _Nullable call_v_v3f_v3f_v3f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10612,13 +10612,13 @@ static PyObject* _Nullable call_v_v3f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10725,13 +10725,13 @@ static PyObject* _Nullable call_v_v4d_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10833,13 +10833,13 @@ static PyObject* _Nullable call_v_v4f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -10942,13 +10942,13 @@ static PyObject* _Nullable call_v_v4f_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11050,13 +11050,13 @@ static PyObject* _Nullable call_v_v4i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11163,13 +11163,13 @@ static PyObject* _Nullable call_v_id_v2f_v2f(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11288,13 +11288,13 @@ static PyObject* _Nullable call_v_id_v2f_v2f_q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11406,13 +11406,13 @@ static PyObject* _Nullable call_v_f_v2i(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11517,13 +11517,13 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
                      objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11630,13 +11630,13 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11739,13 +11739,13 @@ static PyObject* _Nullable call_v_matrix_double4x4(PyObject* method, PyObject* s
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11849,13 +11849,13 @@ static PyObject* _Nullable call_v_matrix_double4x4_d(PyObject* method, PyObject*
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -11958,13 +11958,13 @@ static PyObject* _Nullable call_v_matrix_float2x2(PyObject* method, PyObject* se
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12063,13 +12063,13 @@ static PyObject* _Nullable call_v_matrix_float3x3(PyObject* method, PyObject* se
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12168,13 +12168,13 @@ static PyObject* _Nullable call_v_matrix_float4x4(PyObject* method, PyObject* se
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12278,13 +12278,13 @@ static PyObject* _Nullable call_v_matrix_float4x4_d(PyObject* method, PyObject* 
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12386,13 +12386,13 @@ static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12495,13 +12495,13 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12603,13 +12603,13 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12712,13 +12712,13 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12825,13 +12825,13 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     Py_RETURN_NONE;
@@ -12931,13 +12931,13 @@ static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{GKBox=<3f><3f>}", &rv);
@@ -13030,13 +13030,13 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{GKQuad=<2f><2f>}", &rv);
@@ -13133,13 +13133,13 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{GKTriangle=[3<3f>]}", &rv);
@@ -13237,13 +13237,13 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
@@ -13343,13 +13343,13 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
@@ -13453,13 +13453,13 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
@@ -13556,13 +13556,13 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MDLVoxelIndexExtent=<4i><4i>}", &rv);
@@ -13657,13 +13657,13 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
@@ -13757,13 +13757,13 @@ static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject
                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
@@ -13857,13 +13857,13 @@ static PyObject* _Nullable call_matrix_double4x4(PyObject* method, PyObject* sel
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
@@ -13961,13 +13961,13 @@ static PyObject* _Nullable call_matrix_double4x4_d(PyObject* method, PyObject* s
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
@@ -14063,13 +14063,13 @@ static PyObject* _Nullable call_matrix_float2x2(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &rv);
@@ -14162,13 +14162,13 @@ static PyObject* _Nullable call_matrix_float3x3(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &rv);
@@ -14261,13 +14261,13 @@ static PyObject* _Nullable call_matrix_float4x4(PyObject* method, PyObject* self
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
@@ -14370,13 +14370,13 @@ static PyObject* _Nullable call_matrix_float4x4_id_d(PyObject* method, PyObject*
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
@@ -14481,13 +14481,13 @@ static PyObject* _Nullable call_matrix_float4x4_d(PyObject* method, PyObject* se
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
@@ -14583,13 +14583,13 @@ static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_simd_float4x4=[4<4f>]}", &rv);
@@ -14692,13 +14692,13 @@ static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_simd_float4x4=[4<4f>]}", &rv);
@@ -14801,13 +14801,13 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_simd_quatd=<4d>}", &rv);
@@ -14903,13 +14903,13 @@ static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method));
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_simd_quatf=<4f>}", &rv);
@@ -15005,13 +15005,13 @@ static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
-        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-        }                                       // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (PyErr_Occurred()) {
+        return NULL;
     }
 
     return pythonify_c_value("{_simd_quatf=<4f>}", &rv);

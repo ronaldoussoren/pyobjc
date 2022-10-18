@@ -246,7 +246,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         } else {
             PyErr_Format(
                 PyExc_TypeError,
-                "Need objective-C object or class as self, not an instance of '%s'",
+                "Need Objective-C object or class as self, not an instance of '%s'",
                 Py_TYPE(self)->tp_name);
             return -1;
         }
@@ -255,8 +255,8 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
         int err;
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
+            if (*self_obj == nil && PyErr_Occurred()) {  // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
             }
 
         } else {
@@ -334,7 +334,10 @@ TESTEXT_PREFIX = """\
 }
 @end
 
+
 static PyObject* clsvalues = NULL;
+static BOOL shouldRaise = NO;
+
 @implementation OC_VectorCall
 - (instancetype)init
 {
@@ -344,6 +347,25 @@ static PyObject* clsvalues = NULL;
     }
     values = NULL;
     return self;
+}
+
+-(BOOL)shouldRaise
+{
+   return shouldRaise;
+}
++(BOOL)shouldRaise
+{
+   return shouldRaise;
+}
+
++ (void)clearRaise
+{
+    shouldRaise = NO;
+}
+
++ (void)setRaise
+{
+    shouldRaise = YES;
 }
 
 -(id _Nullable)storedvalue
@@ -412,6 +434,7 @@ TEST_PREFIX = """\
 #
 from PyObjCTools.TestSupport import TestCase
 import objc
+from functools import partial
 from objc import simd
 
 
@@ -591,14 +614,12 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     print(
         "        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE", file=stream
     )
-    print(
-        "            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE", file=stream
-    )
+    print("            PyObjCErr_FromObjC(localException);", file=stream)
     print("        } // LCOV_EXCL_LINE", file=stream)
     print("        Py_END_ALLOW_THREADS", file=stream)
     print("", file=stream)
-    print("        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE", file=stream)
-    print("            return NULL;        // LCOV_EXCL_LINE", file=stream)
+    print("        if (PyErr_Occurred()) {", file=stream)
+    print("            return NULL;", file=stream)
     print("        }", file=stream)
     print("", file=stream)
 
@@ -876,6 +897,14 @@ def generate_callimp(stream, signature, instance=True):
             f"{'-' if instance else '+'} ({describe_type(parts[0])}){sel}", file=stream
         )
         print("{", file=stream)
+        print("    if ([self shouldRaise]) {", file=stream)
+        print("        shouldRaise = NO;", file=stream)
+        print(
+            '        [NSException raise:@"SimpleException" format:@"hello world"];',
+            file=stream,
+        )
+        print("    }", file=stream)
+        print("", file=stream)
         print("    PyObjC_BEGIN_WITH_GIL", file=stream)
         if instance:
             print("         values = PyList_New(0);", file=stream)
@@ -905,6 +934,15 @@ def generate_callimp(stream, signature, instance=True):
     print("\n{", file=stream)
     print("    PyObject* items;", file=stream)
     print("    PyObject* tmp;", file=stream)
+    print("", file=stream)
+    print("    if ([self shouldRaise]) {", file=stream)
+    print("        shouldRaise = NO;", file=stream)
+    print(
+        '        [NSException raise:@"SimpleException" format:@"hello world"];',
+        file=stream,
+    )
+    print("    }", file=stream)
+    print("", file=stream)
     print("    PyObjC_BEGIN_WITH_GIL", file=stream)
     if instance:
         print("        items = values = PyList_New(0);", file=stream)
@@ -1090,15 +1128,20 @@ def invalid_value(typestr):
     return VALUES[typestr][1]
 
 
-def generate_call_testcase(stream, signature, instance=True):
-    sel = sel_for_signature(signature).replace(
-        ":", "_"
-    )  # XXX: "kind" argument (instance, class, IMP)
+def generate_call_testcase(stream, signature, *, instance=True, imp=False):
+    oc_sel = sel_for_signature(signature)
     if not instance:
-        sel = "cls" + sel
+        oc_sel = "cls" + oc_sel
+    sel = oc_sel.replace(":", "_")  # XXX: "kind" argument (instance, class, IMP)
 
-    print(f"    def test_{sel}(self):", file=stream)
+    print(f"    def test_{sel}{'_imp' if imp else ''}(self):", file=stream)
     sigparts = objc.splitSignature(signature)
+    print("        OC_VectorCall.clearRaise()", file=stream)
+    print("        # Verify method type", file=stream)
+    print(
+        f"        self.assert{not instance}(OC_VectorCall.{sel}.isClassMethod)",
+        file=stream,
+    )
 
     print("        # Check that the signature is as expected", file=stream)
     print(
@@ -1119,9 +1162,21 @@ def generate_call_testcase(stream, signature, instance=True):
     print("        self.assertIsNot(oc, None)", file=stream)
     print("", file=stream)
 
+    print(
+        "        # Set caller to the selector/IMP to call (With bound self)",
+        file=stream,
+    )
+    if imp:
+        print(f"        imp = oc.methodForSelector_(b'{oc_sel}')", file=stream)
+        print("        self.assertIsInstance(imp, objc.IMP)", file=stream)
+        print("        caller = partial(imp, oc)", file=stream)
+
+    else:
+        print(f"        caller = oc.{sel}", file=stream)
+    print("", file=stream)
     print("        # Valid call", file=stream)
     print(
-        f"        rv = oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        f"        rv = caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
         file=stream,
     )
     if sigparts[0] == objc._C_VOID:
@@ -1147,7 +1202,7 @@ def generate_call_testcase(stream, signature, instance=True):
             file=stream,
         )
         print(
-            f"            oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
+            f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
             file=stream,
         )
     print("", file=stream)
@@ -1157,7 +1212,7 @@ def generate_call_testcase(stream, signature, instance=True):
         file=stream,
     )
     print(
-        f"            oc.{sel}({', '.join(repr(valid_value(s))  for s in sigparts[3:] + (sigparts[1],))})",
+        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:] + (sigparts[1],))})",
         file=stream,
     )
     print("", file=stream)
@@ -1166,11 +1221,51 @@ def generate_call_testcase(stream, signature, instance=True):
     for idx in range(len(sigparts) - 3):
         print("        with self.assertRaises((TypeError, ValueError)):", file=stream)
         print(
-            f"            oc.{sel}("
+            f"            caller("
             f"{', '.join(repr(invalid_value(s) if i == idx else valid_value(s)) for i, s in enumerate(sigparts[3:]))})",
             file=stream,
         )
         print("", file=stream)
+
+    print("        # Exception handling", file=stream)
+    print("        OC_VectorCall.setRaise()", file=stream)
+    print(
+        "        with self.assertRaisesRegex(objc.error, 'SimpleException'):",
+        file=stream,
+    )
+    print(
+        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        file=stream,
+    )
+
+    if imp:
+        print("", file=stream)
+        print("        # Call with invalid type for self", file=stream)
+        if instance:
+            print(
+                "        with self.assertRaisesRegex(ValueError, 'unrecognized selector'):",
+                file=stream,
+            )
+        else:
+            print(
+                "        with self.assertRaisesRegex(TypeError, 'Need Objective-C object or class as self'):",
+                file=stream,
+            )
+        print(
+            f"            imp(42, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            file=stream,
+        )
+        if instance:
+            print("", file=stream)
+            print(
+                "        with self.assertRaisesRegex(TypeError, 'Cannot proxy'):",
+                file=stream,
+            )
+            print(
+                f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+                file=stream,
+            )
+
     print("", file=stream)
 
     # XXX: Actually test
@@ -1215,8 +1310,8 @@ def main():
             generate_call_testcase(stream, signature)
             generate_call_testcase(stream, signature, instance=False)
 
-            # generate_call_testcase(stream, signature, imp=True)
-            # generate_call_testcase(stream, signature, instance=False, imp=True)
+            generate_call_testcase(stream, signature, imp=True)
+            generate_call_testcase(stream, signature, instance=False, imp=True)
 
             # generate_imp_testcase_inst(stream, signature)
             # generate_imp_testcase_cls(stream, signature)

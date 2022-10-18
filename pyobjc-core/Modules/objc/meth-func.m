@@ -154,88 +154,63 @@ PyObjC_returns_value(PyObject* value)
 Py_ssize_t
 PyObjC_num_defaults(PyObject* value)
 {
-    if (PyFunction_Check(value)) {
-        PyObject* defaults = ((PyFunctionObject*)value)->func_defaults;
-        if (defaults && PyTuple_Check(defaults)) {
-            return PyTuple_Size(defaults);
-        }
-        return 0;
-    }
+    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
 
-    if (PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value)) {
-        PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
-        if (defaults == NULL) {
-            return -1;
-        }
-        if (PyTuple_Check(defaults)) {
-            Py_ssize_t num = PyTuple_Size(defaults);
-            Py_DECREF(defaults);
-            return num;
-        } else if (defaults != Py_None) {
-            Py_DECREF(defaults);
-            PyErr_Format(PyExc_ValueError, "%R has an invalid '__defaults__' attribute",
-                         value);
-            return -1;
-        } else {
-            Py_DECREF(defaults);
-            return 0;
-        }
-    } else {
-        PyErr_Format(PyExc_TypeError, "%R is not a python function or method", value);
+    PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
+    if (defaults == NULL) {
         return -1;
+    }
+    if (PyTuple_Check(defaults)) {
+        Py_ssize_t num = PyTuple_Size(defaults);
+        Py_DECREF(defaults);
+        return num;
+    } else if (defaults != Py_None) {
+        Py_DECREF(defaults);
+        PyErr_Format(PyExc_ValueError, "%R has an invalid '__defaults__' attribute",
+                     value);
+        return -1;
+    } else {
+        Py_DECREF(defaults);
+        return 0;
     }
 }
 
 Py_ssize_t
 PyObjC_num_kwdefaults(PyObject* value)
 {
-    if (PyFunction_Check(value)) {
-        PyObject* defaults = ((PyFunctionObject*)value)->func_kwdefaults;
-        if (defaults && PyDict_Check(defaults)) {
-            return PyDict_Size(defaults);
-        }
-        return 0;
-    }
+    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
 
-    if (PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value)) {
-        PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
-        if (defaults == NULL) {
-            return -1;
-        }
-        if (PyDict_Check(defaults)) {
-            Py_ssize_t num = PyDict_Size(defaults);
-            Py_DECREF(defaults);
-            return num;
-        } else if (defaults != Py_None) {
-            Py_DECREF(defaults);
-            PyErr_Format(PyExc_ValueError, "%R has an invalid '__kwdefaults__' attribute",
-                         value);
-            return -1;
-        } else {
-            Py_DECREF(defaults);
-            return 0;
-        }
-    } else {
-        PyErr_Format(PyExc_TypeError, "%R is not a python function or method", value);
+    PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
+    if (defaults == NULL) {
         return -1;
+    }
+    if (PyDict_Check(defaults)) {
+        Py_ssize_t num = PyDict_Size(defaults);
+        Py_DECREF(defaults);
+        return num;
+    } else if (defaults != Py_None) {
+        Py_DECREF(defaults);
+        PyErr_Format(PyExc_ValueError, "%R has an invalid '__kwdefaults__' attribute",
+                     value);
+        return -1;
+    } else {
+        Py_DECREF(defaults);
+        return 0;
     }
 }
 
 Py_ssize_t
 PyObjC_num_arguments(PyObject* value)
 {
-    if (PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value)) {
-        PyCodeObject* func_code = PyObjC_get_code(value);
-        if (func_code == NULL) {
-            return -1;
-        }
-        Py_ssize_t num = func_code->co_argcount;
-        Py_DECREF(func_code);
-        return num;
-    } else {
-        PyErr_Format(PyExc_TypeError, "%R is not a python function or method", value);
+    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+
+    PyCodeObject* func_code = PyObjC_get_code(value);
+    if (func_code == NULL) {
         return -1;
     }
+    Py_ssize_t num = func_code->co_argcount;
+    Py_DECREF(func_code);
+    return num;
 }
 
 NS_ASSUME_NONNULL_END

@@ -19,8 +19,10 @@
 }
 @end
 
-static PyObject* clsvalues = NULL;
-@implementation  OC_VectorCall
+static PyObject* clsvalues   = NULL;
+static BOOL      shouldRaise = NO;
+
+@implementation OC_VectorCall
 - (instancetype)init
 {
     self = [super init];
@@ -29,6 +31,25 @@ static PyObject* clsvalues = NULL;
     }
     values = NULL;
     return self;
+}
+
+- (BOOL)shouldRaise
+{
+    return shouldRaise;
+}
++ (BOOL)shouldRaise
+{
+    return shouldRaise;
+}
+
++ (void)clearRaise
+{
+    shouldRaise = NO;
+}
+
++ (void)setRaise
+{
+    shouldRaise = YES;
 }
 
 - (id _Nullable)storedvalue
@@ -61,6 +82,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_uchar16)v16C
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -71,6 +97,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_uchar16)clsv16C
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -81,6 +112,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_double2)v2d
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -91,6 +127,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_double2)clsv2d
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -103,6 +144,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -120,6 +167,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -135,6 +188,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_float2)v2f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -145,6 +203,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_float2)clsv2f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -157,6 +220,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -174,6 +243,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -191,6 +266,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -208,6 +289,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -225,6 +312,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -242,6 +335,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -257,6 +356,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_int2)v2i
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -267,6 +371,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_int2)clsv2i
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -279,6 +388,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -296,6 +411,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -311,6 +432,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_float3)v3f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -321,6 +447,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_float3)clsv3f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -333,6 +464,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -355,6 +492,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -377,6 +520,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -394,6 +543,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -411,6 +566,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -433,6 +594,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -455,6 +622,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -472,6 +645,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -489,6 +668,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -506,6 +691,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -523,6 +714,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -540,6 +737,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -557,6 +760,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -574,6 +783,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -589,6 +804,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_float4)v4f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -599,6 +819,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_float4)clsv4f
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -611,6 +836,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -628,6 +859,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -645,6 +882,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -662,6 +905,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -679,6 +928,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -696,6 +951,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -713,6 +974,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -745,6 +1012,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -777,6 +1050,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -799,6 +1078,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -821,6 +1106,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -838,6 +1129,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -855,6 +1152,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -887,6 +1190,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -919,6 +1228,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -956,6 +1271,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -993,6 +1314,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1010,6 +1337,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1033,6 +1366,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1086,6 +1425,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1138,6 +1483,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1185,6 +1536,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1231,6 +1588,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1272,6 +1635,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1314,6 +1683,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1361,6 +1736,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1403,6 +1784,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1435,6 +1822,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1471,6 +1864,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1512,6 +1911,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1553,6 +1958,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1594,6 +2005,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1637,6 +2054,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1690,6 +2113,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1737,6 +2166,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1769,6 +2204,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1801,6 +2242,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1818,6 +2265,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1839,6 +2292,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1880,6 +2339,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1917,6 +2382,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1939,6 +2410,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -1961,6 +2438,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -1983,6 +2466,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2005,6 +2494,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2027,6 +2522,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2049,6 +2550,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2076,6 +2583,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2103,6 +2616,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2135,6 +2654,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2167,6 +2692,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2194,6 +2725,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2221,6 +2758,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2248,6 +2791,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2275,6 +2824,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2302,6 +2857,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2329,6 +2890,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2356,6 +2923,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2390,6 +2963,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2449,6 +3028,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2507,6 +3092,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2560,6 +3151,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2614,6 +3211,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2673,6 +3276,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2725,6 +3334,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2747,6 +3362,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2769,6 +3390,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2791,6 +3418,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2815,6 +3448,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2844,6 +3483,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2871,6 +3516,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2893,6 +3544,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2915,6 +3572,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2937,6 +3600,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -2959,6 +3628,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -2981,6 +3656,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3003,6 +3684,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3038,6 +3725,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3070,6 +3763,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3097,6 +3796,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3124,6 +3829,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3156,6 +3867,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3195,6 +3912,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3254,6 +3977,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3312,6 +4041,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3365,6 +4100,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3417,6 +4158,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3464,6 +4211,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3512,6 +4265,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3565,6 +4324,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3612,6 +4377,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3644,6 +4415,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3676,6 +4453,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3708,6 +4491,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3740,6 +4529,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3757,6 +4552,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3774,6 +4575,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3796,6 +4603,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3818,6 +4631,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3835,6 +4654,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3852,6 +4677,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3874,6 +4705,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3896,6 +4733,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3913,6 +4756,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3930,6 +4779,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3947,6 +4802,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -3964,6 +4825,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -3986,6 +4853,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4008,6 +4881,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4045,6 +4924,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4087,6 +4972,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4134,6 +5025,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4176,6 +5073,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4213,6 +5116,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4250,6 +5159,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4267,6 +5182,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4284,6 +5205,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4306,6 +5233,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4328,6 +5261,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4345,6 +5284,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4362,6 +5307,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4379,6 +5330,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4396,6 +5353,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4417,6 +5380,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4438,6 +5407,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4454,6 +5429,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4470,6 +5451,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4491,6 +5478,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4512,6 +5505,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4528,6 +5527,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4544,6 +5549,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4565,6 +5576,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4586,6 +5603,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4602,6 +5625,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4618,6 +5647,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4639,6 +5674,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4660,6 +5701,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4686,6 +5733,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4712,6 +5765,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4733,6 +5792,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4754,6 +5819,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4775,6 +5846,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4796,6 +5873,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4812,6 +5895,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4828,6 +5917,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4849,6 +5944,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4870,6 +5971,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4886,6 +5993,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4902,6 +6015,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4928,6 +6047,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -4954,6 +6079,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -4985,6 +6116,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5016,6 +6153,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5037,6 +6180,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5058,6 +6207,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5074,6 +6229,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5090,6 +6251,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5111,6 +6278,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5132,6 +6305,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5148,6 +6327,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5164,6 +6349,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5185,6 +6376,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5206,6 +6403,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5222,6 +6425,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5238,6 +6447,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5254,6 +6469,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5270,6 +6491,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5286,6 +6513,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5302,6 +6535,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5323,6 +6562,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5344,6 +6589,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5360,6 +6611,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5376,6 +6633,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5397,6 +6660,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5418,6 +6687,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5434,6 +6709,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5450,6 +6731,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5471,6 +6758,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5492,6 +6785,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5513,6 +6812,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5532,6 +6837,11 @@ static PyObject* clsvalues = NULL;
 
 - (GKBox)GKBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5542,6 +6852,11 @@ static PyObject* clsvalues = NULL;
 
 + (GKBox)clsGKBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5552,6 +6867,11 @@ static PyObject* clsvalues = NULL;
 
 - (GKQuad)GKQuad
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5562,6 +6882,11 @@ static PyObject* clsvalues = NULL;
 
 + (GKQuad)clsGKQuad
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5574,6 +6899,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5593,6 +6924,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5610,6 +6947,11 @@ static PyObject* clsvalues = NULL;
 
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5621,6 +6963,11 @@ static PyObject* clsvalues = NULL;
 
 + (MDLAxisAlignedBoundingBox)clsMDLAxisAlignedBoundingBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5634,6 +6981,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5652,6 +7005,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5670,6 +7029,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5688,6 +7053,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5704,6 +7075,11 @@ static PyObject* clsvalues = NULL;
 
 - (MDLVoxelIndexExtent)MDLVoxelIndexExtent
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5715,6 +7091,11 @@ static PyObject* clsvalues = NULL;
 
 + (MDLVoxelIndexExtent)clsMDLVoxelIndexExtent
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5726,6 +7107,11 @@ static PyObject* clsvalues = NULL;
 
 - (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5737,6 +7123,11 @@ static PyObject* clsvalues = NULL;
 
 + (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5748,6 +7139,11 @@ static PyObject* clsvalues = NULL;
 
 - (MPSImageHistogramInfo)MPSImageHistogramInfo
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5760,6 +7156,11 @@ static PyObject* clsvalues = NULL;
 
 + (MPSImageHistogramInfo)clsMPSImageHistogramInfo
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5772,6 +7173,11 @@ static PyObject* clsvalues = NULL;
 
 - (matrix_double4x4)matrixdouble4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5784,6 +7190,11 @@ static PyObject* clsvalues = NULL;
 
 + (matrix_double4x4)clsmatrixdouble4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5798,6 +7209,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5817,6 +7234,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5834,6 +7257,11 @@ static PyObject* clsvalues = NULL;
 
 - (matrix_float2x2)matrixfloat2x2
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5844,6 +7272,11 @@ static PyObject* clsvalues = NULL;
 
 + (matrix_float2x2)clsmatrixfloat2x2
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5854,6 +7287,11 @@ static PyObject* clsvalues = NULL;
 
 - (matrix_float3x3)matrixfloat3x3
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5866,6 +7304,11 @@ static PyObject* clsvalues = NULL;
 
 + (matrix_float3x3)clsmatrixfloat3x3
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5878,6 +7321,11 @@ static PyObject* clsvalues = NULL;
 
 - (matrix_float4x4)matrixfloat4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -5890,6 +7338,11 @@ static PyObject* clsvalues = NULL;
 
 + (matrix_float4x4)clsmatrixfloat4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -5904,6 +7357,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5928,6 +7387,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5952,6 +7417,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -5971,6 +7442,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -5988,6 +7465,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_float4x4)simdfloat4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -6000,6 +7482,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_float4x4)clssimdfloat4x4
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -6014,6 +7501,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -6038,6 +7531,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -6062,6 +7561,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -6079,6 +7584,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
@@ -6094,6 +7605,11 @@ static PyObject* clsvalues = NULL;
 
 - (simd_quatf)simdquatf
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         values = PyList_New(0);
         if (values == NULL)
@@ -6104,6 +7620,11 @@ static PyObject* clsvalues = NULL;
 
 + (simd_quatf)clssimdquatf
 {
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         clsvalues = PyList_New(0);
         if (clsvalues == NULL)
@@ -6116,6 +7637,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = values = PyList_New(0);
         if (items == NULL)
@@ -6133,6 +7660,12 @@ static PyObject* clsvalues = NULL;
 {
     PyObject* items;
     PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
     PyObjC_BEGIN_WITH_GIL
         items = clsvalues = PyList_New(0);
         if (items == NULL)
