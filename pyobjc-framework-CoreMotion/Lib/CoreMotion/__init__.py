@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from CoreMotion import _metadata
+from CoreMotion import _CoreMotion
 
 sys.modules["CoreMotion"] = mod = objc.ObjCLazyModule(
     "CoreMotion",
@@ -23,7 +24,10 @@ sys.modules["CoreMotion"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (
+        _CoreMotion,
+        Foundation,
+    ),
 )
 
 

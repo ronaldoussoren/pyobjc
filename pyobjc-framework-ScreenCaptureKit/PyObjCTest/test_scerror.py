@@ -32,7 +32,5 @@ class TestSCError(TestCase):
         self.assertEqual(ScreenCaptureKit.SCStreamErrorNoCaptureSource, -3815)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorRemovingStream, -3816)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorUserStopped, -3817)
-        self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStartAudio, -3818)
-        self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStopAudio, -3819)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStartAudioCapture, -3818)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStopAudioCapture, -3819)

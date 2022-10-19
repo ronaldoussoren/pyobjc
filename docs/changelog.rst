@@ -20,8 +20,8 @@ Version 9.0a1
   - BackgroundAssets
   - ExtensionKit
   - HealthKit
-  - Matter
   - MetalFX
+  - SafetyKit
   - SharedWithYou
   - SharedWithYouCore
   - ThreadNetwork

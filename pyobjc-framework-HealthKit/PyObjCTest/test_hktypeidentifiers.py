@@ -12,6 +12,9 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierBodyMass, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierLeanBodyMass, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierWaistCircumference, str)
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierAppleSleepingWristTemperature, str
+        )
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierStepCount, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierDistanceWalkingRunning, str
@@ -172,6 +175,8 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierAtrialFibrillationBurden, str
         )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierUnderwaterDepth, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierWaterTemperature, str)
 
         self.assertIsTypedEnum(HealthKit.HKCategoryTypeIdentifier, str)
 
@@ -192,6 +197,18 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierMenstrualFlow, str)
         self.assertIsInstance(
             HealthKit.HKCategoryTypeIdentifierIntermenstrualBleeding, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierPersistentIntermenstrualBleeding, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierProlongedMenstrualPeriods, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierIrregularMenstrualCycles, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierInfrequentMenstrualCycles, str
         )
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierSexualActivity, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierMindfulSession, str)

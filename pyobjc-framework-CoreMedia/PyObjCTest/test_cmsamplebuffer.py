@@ -179,6 +179,13 @@ class TestCMSampleBuffer(TestCase):
             str,
         )
 
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMSampleAttachmentKey_HDR10PlusPerFrameData,
+            str,
+        )
+
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMSampleBufferRef)
 

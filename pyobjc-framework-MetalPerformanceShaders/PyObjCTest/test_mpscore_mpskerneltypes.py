@@ -34,6 +34,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSDeviceSupportsSimdShuffleAndFill, 1 << 11
         )
+        self.assertNotHasattr(MetalPerformanceShaders, "MPSDeviceCapsLast")
 
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexDestIndex, 0)
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexSrc0Index, 0)
