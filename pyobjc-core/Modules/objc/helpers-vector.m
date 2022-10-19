@@ -12927,7 +12927,11 @@ static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -13128,8 +13132,13 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((GKTriangle(*)(struct objc_super*, SEL,
+                                     unsigned long long))objc_msgSendSuper_stret)(
+#else
                 rv = ((GKTriangle(*)(struct objc_super*, SEL,
                                      unsigned long long))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -13233,8 +13242,14 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL))
-                          objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+#ifdef __x86_64__
+                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*,
+                                                    SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*,
+                                                    SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -13338,8 +13353,13 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
+                                                    simd_int4))objc_msgSendSuper_stret)(
+#else
                 rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
                                                     simd_int4))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -13448,8 +13468,13 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
+                                                    double))objc_msgSendSuper_stret)(
+#else
                 rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
                                                     double))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -13552,7 +13577,12 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((MDLVoxelIndexExtent(*)(struct objc_super*,
+                                              SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((MDLVoxelIndexExtent(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -13653,8 +13683,14 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))
-                          objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+#ifdef __x86_64__
+                rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*,
+                                                    SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*,
+                                                    SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -13753,8 +13789,14 @@ static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))
-                          objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+#ifdef __x86_64__
+                rv = ((MPSImageHistogramInfo(*)(struct objc_super*,
+                                                SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((
+                    MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -13853,7 +13895,12 @@ static PyObject* _Nullable call_matrix_double4x4(PyObject* method, PyObject* sel
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((
+                    matrix_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -13956,8 +14003,13 @@ static PyObject* _Nullable call_matrix_double4x4_d(PyObject* method, PyObject* s
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((matrix_double4x4(*)(struct objc_super*, SEL,
+                                           double))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_double4x4(*)(struct objc_super*, SEL,
                                            double))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -14158,7 +14210,12 @@ static PyObject* _Nullable call_matrix_float3x3(PyObject* method, PyObject* self
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((
+                    matrix_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -14257,7 +14314,12 @@ static PyObject* _Nullable call_matrix_float4x4(PyObject* method, PyObject* self
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((
+                    matrix_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -14365,8 +14427,13 @@ static PyObject* _Nullable call_matrix_float4x4_id_d(PyObject* method, PyObject*
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((matrix_float4x4(*)(struct objc_super*, SEL, id,
+                                          double))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_float4x4(*)(struct objc_super*, SEL, id,
                                           double))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -14476,8 +14543,13 @@ static PyObject* _Nullable call_matrix_float4x4_d(PyObject* method, PyObject* se
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((matrix_float4x4(*)(struct objc_super*, SEL,
+                                          double))objc_msgSendSuper_stret)(
+#else
                 rv = ((matrix_float4x4(*)(struct objc_super*, SEL,
                                           double))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -14579,7 +14651,11 @@ static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
                 rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method));
             }
 
@@ -14687,8 +14763,13 @@ static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
+                                        id))objc_msgSendSuper_stret)(
+#else
                 rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
                                         id))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -14797,7 +14878,12 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+#ifdef __x86_64__
+                rv = ((simd_quatd(*)(struct objc_super*, SEL,
+                                     double))objc_msgSendSuper_stret)(
+#else
                 rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+#endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 

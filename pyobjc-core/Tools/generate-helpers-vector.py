@@ -532,6 +532,17 @@ def function_name(prefix: str, signature: bytes) -> str:
     return "_".join(name)
 
 
+def use_stret(typestr):
+    if not typestr.startswith(objc._C_STRUCT_B):
+        return False
+
+    size = objc._sizeOfType(typestr)
+    if size > 16 or size not in (1, 2, 4, 8, 16):
+        return True
+
+    return False
+
+
 def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     """
     Generate the function to call a selector with the specified signature
@@ -615,10 +626,20 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     print("            super.receiver    = self_obj;", file=stream)
     print("            super.super_class = super_class;", file=stream)
     print("", file=stream)
+    if use_stret(rv_type):
+        print("#ifdef __x86_64__", file=stream)
+        print(
+            f"            {'rv = ' if rv_type != objc._C_VOID else ''}(({describe_type(rv_type)}(*)(struct objc_super*, SEL{arg_type_names}))objc_msgSendSuper_stret)(",  # noqa: B950
+            file=stream,
+        )
+        print("#else", file=stream)
+
     print(
         f"            {'rv = ' if rv_type != objc._C_VOID else ''}(({describe_type(rv_type)}(*)(struct objc_super*, SEL{arg_type_names}))objc_msgSendSuper)(",  # noqa: B950
         file=stream,
     )
+    if use_stret(rv_type):
+        print("#endif", file=stream)
     print(
         f"                      &super, PyObjCSelector_GetSelector(method){arg_names});",
         file=stream,

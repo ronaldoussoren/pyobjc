@@ -202,6 +202,22 @@ static PyObject* _Nullable repythonify(PyObject* self __attribute__((__unused__)
     return rval;
 }
 
+static PyObject* _Nullable m_sizeoftype(PyObject* self __attribute__((__unused__)),
+                                        PyObject* value)
+{
+    if (!PyBytes_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "value must be a byte string");
+        return NULL;
+    }
+
+    Py_ssize_t size = PyObjCRT_SizeOfType(PyBytes_AsString(value));
+    if (size == -1) {
+        return NULL;
+    }
+
+    return PyLong_FromSsize_t(size);
+}
+
 PyDoc_STRVAR(macos_available_doc,
              "macos_available(major, minor, patch=0)\n" CLINIC_SEP "\n"
              "Return true if the current macOS release is "
@@ -1758,6 +1774,13 @@ static PyMethodDef mod_methods[] = {
         .ml_meth  = (PyCFunction)objc_splitStructSignature,
         .ml_flags = METH_VARARGS | METH_KEYWORDS,
         .ml_doc   = objc_splitStructSignature_doc,
+    },
+    {
+        .ml_name  = "_sizeOfType",
+        .ml_meth  = m_sizeoftype,
+        .ml_flags = METH_O,
+        .ml_doc   = "_sizeOfType(typestr, /)\n" CLINIC_SEP "\n"
+                    "Return the size of the type described by 'typestr'",
     },
     {.ml_name  = "macos_available",
      .ml_meth  = (PyCFunction)macos_available,
