@@ -371,6 +371,9 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
                          * fetch the actual result
                          */
                         v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
+                        if (v == NULL) {
+                            return NULL;
+                        }
                         result = v;
                         Py_INCREF(result);
                     }
