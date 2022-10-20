@@ -162,7 +162,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 {
     struct registry* v;
     PyObject*        entry;
-    char             signature_buf[1024];
+    char             signature_buf[3000];
     int              r;
 
     r = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
@@ -288,7 +288,7 @@ error:
 static struct registry* _Nullable find_signature(const char* signature)
 {
     PyObject* o;
-    char      signature_buf[1024];
+    char      signature_buf[3000];
     int       res;
 
     res = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
