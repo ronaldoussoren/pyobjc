@@ -425,16 +425,24 @@ class TestCase(_unittest.TestCase):
             return
         elif b"^" + tp in _idlike_cache:
             return
+        elif b"o^" + tp in _idlike_cache:
+            return
+        elif b"n^" + tp in _idlike_cache:
+            return
 
         # Assume that tests are supposed to pass,
         # our cache may be out of date
-        _idlike_cache = set(objc._idSignatures())
+        tmp = set(objc._idSignatures())
+        _idlike_cache = set(tmp)
+        _idlike_cache.update({b"o^" + x for x in tmp})
+        _idlike_cache.update({b"n^" + x for x in tmp})
+
         if tp in _idlike_cache:
             return
-        elif b"^" + tp in _idlike_cache:
-            return
 
-        self.fail(message or "argument %d of %r is not IDLike" % (argno, method))
+        self.fail(
+            message or "argument %d of %r is not IDLike (%r)" % (argno, method, tp)
+        )
 
     def assertResultIsIDLike(self, method, message=None):
         global _idlike_cache
@@ -447,18 +455,18 @@ class TestCase(_unittest.TestCase):
 
         if tp in _idlike_cache:
             return
-        elif b"^" + tp in _idlike_cache:
-            return
 
         # Assume that tests are supposed to pass,
         # our cache may be out of date
-        _idlike_cache = set(objc._idSignatures())
+        tmp = set(objc._idSignatures())
+        _idlike_cache = set(tmp)
+        _idlike_cache.update({b"o^" + x for x in tmp})
+        _idlike_cache.update({b"n^" + x for x in tmp})
+
         if tp in _idlike_cache:
             return
-        elif b"^" + tp in _idlike_cache:
-            return
 
-        self.fail(message or f"result of {method!r} is not IDLike")
+        self.fail(message or f"result of {method!r} is not IDLike ({tp!r})")
 
     def assertArgIsNullTerminated(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -1164,6 +1172,12 @@ class TestCase(_unittest.TestCase):
         )
         exclude_attrs.add(("SCNColor", "scn_C3DColorIgnoringColorSpace_success_"))
         exclude_attrs.add(("SKColor", "scn_C3DColorIgnoringColorSpace_success_"))
+        exclude_attrs.add(
+            (
+                "NSObject",
+                "copyRenderedTextureForCGLContext_pixelFormat_bounds_isFlipped_",
+            )
+        )
 
         for nm in dir(module):
             if nm in exclude_names:
