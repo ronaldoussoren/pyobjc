@@ -162,16 +162,23 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 {
     struct registry* v;
     PyObject*        entry;
-    char             signature_buf[3000];
     int              r;
 
-    r = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
+    PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
+    if (key == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
+    }
+
+    r = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
+                                   PyBytes_GET_SIZE(key));
     if (r == -1) {
+        Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         return -1;
     }
 
     if (!call_to_objc || !make_call_to_python_block) {
+        Py_DECREF(key);
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterSignatureMapping: all functions required");
         return -1;
@@ -179,6 +186,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     v = PyMem_Malloc(sizeof(*v));
     if (v == NULL) {
+        Py_DECREF(key);
         PyErr_NoMemory();
         return -1;
     }
@@ -187,13 +195,16 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
     if (entry == NULL) {
+        Py_DECREF(key);
         PyMem_Free(v);
         return -1;
     }
 
-    PyObject* key = PyBytes_FromString(signature_buf);
-    if (key == NULL) {
+    if (_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(entry);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     if (PyDict_SetItem(signature_registry, key, entry) < 0) {
@@ -288,21 +299,28 @@ error:
 static struct registry* _Nullable find_signature(const char* signature)
 {
     PyObject* o;
-    char      signature_buf[3000];
     int       res;
 
-    res = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
+    if (signature_registry == NULL) {
+        return NULL;
+    }
+
+    PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
+    if (key == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
+    }
+
+    res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
+                                     PyBytes_GET_SIZE(key));
     if (res == -1) {
+        Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         return NULL;
     }
 
-    if (signature_registry == NULL)
-        return NULL;
-
-    PyObject* key = PyBytes_FromString(signature_buf);
-    if (key == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
+    if (_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1)
+        == -1) {     // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     o = PyDict_GetItemWithError(signature_registry, key);
     Py_DECREF(key);
