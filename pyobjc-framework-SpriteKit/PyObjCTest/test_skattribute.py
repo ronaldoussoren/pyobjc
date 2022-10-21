@@ -65,15 +65,15 @@ class TestSKAttribute(TestCase):
 
         value = SpriteKit.SKAttributeValue.valueWithVectorFloat2_((1, 2))
         self.assertEqual(value.vectorFloat2Value(), simd.vector_float2(1, 2))
-        value.setVectorFloat2Value_(4, 5)
+        value.setVectorFloat2Value_((4, 5))
         self.assertEqual(value.vectorFloat2Value(), simd.vector_float2(4, 5))
 
         value = SpriteKit.SKAttributeValue.valueWithVectorFloat3_((1, 2, 3))
         self.assertEqual(value.vectorFloat3Value(), simd.vector_float3(1, 2, 3))
-        value.setVectorFloat3Value_(4, 5, 6)
+        value.setVectorFloat3Value_((4, 5, 6))
         self.assertEqual(value.vectorFloat3Value(), simd.vector_float3(4, 5, 6))
 
         value = SpriteKit.SKAttributeValue.valueWithVectorFloat4_((1, 2, 3, 4))
         self.assertEqual(value.vectorFloat4Value(), simd.vector_float4(1, 2, 3, 4))
-        value.setVectorFloat4Value_(4, 5, 6, 7)
+        value.setVectorFloat4Value_((4, 5, 6, 7))
         self.assertEqual(value.vectorFloat4Value(), simd.vector_float4(4, 5, 6, 7))

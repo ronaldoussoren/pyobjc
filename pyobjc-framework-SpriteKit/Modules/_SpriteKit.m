@@ -93,18 +93,23 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositi
         }
     }
 
+    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver) == -1) {
+        PyMem_Free(srcPos);
+        PyMem_Free(dstPos);
+        return NULL;
+    }
+    super.super_class = object_getClass(super.receiver);
+
+    SEL sel = PyObjCSelector_GetSelector(method);
+
     Py_BEGIN_ALLOW_THREADS
         @try {
-            /* XXX: Does this work for class methods? */
-            /* XXX: Add support for IMP */
-            super.super_class = PyObjCSelector_GetClass(method);
-            super.receiver    = PyObjCObject_GetObject(self);
             rv = ((id(*)(struct objc_super*, SEL, NSInteger, NSInteger, vector_float2*,
-                         vector_float2*))objc_msgSendSuper)(
-                &super, PyObjCSelector_GetSelector(method), rows, columns, srcPos,
-                dstPos);
+                         vector_float2*))objc_msgSendSuper)(&super, sel, rows, columns,
+                                                            srcPos, dstPos);
 
         } @catch (NSException* localException) {
+            NSLog(@"failed with %@", localException);
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
@@ -148,18 +153,23 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_gridByReplacingPositions_(
     }
 
     /* Not Nullable */
-    pos = parse_v2f_array(vertexCount, arguments[3]);
+    pos = parse_v2f_array(vertexCount, arguments[0]);
     if (pos == NULL) {
         return NULL;
     }
 
+    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver) == -1) {
+        PyMem_Free(pos);
+        return NULL;
+    }
+    super.super_class = object_getClass(super.receiver);
+
+    SEL sel = PyObjCSelector_GetSelector(method);
+
     Py_BEGIN_ALLOW_THREADS
-        /* XXX: Support IMP */
         @try {
-            super.super_class = PyObjCSelector_GetClass(method);
-            super.receiver    = PyObjCObject_GetObject(self);
             rv = ((id(*)(struct objc_super*, SEL, vector_float2*))objc_msgSendSuper)(
-                &super, PyObjCSelector_GetSelector(method), pos);
+                &super, sel, pos);
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);

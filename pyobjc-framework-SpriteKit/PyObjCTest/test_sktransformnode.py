@@ -24,8 +24,8 @@ class TestSKTransformNode(TestCase):
         )
 
         self.assertResultHasType(
-            SpriteKit.SKTransformNode.quaternion, simd.simd_quadf.__typestr__
+            SpriteKit.SKTransformNode.quaternion, simd.simd_quatf.__typestr__
         )
         self.assertArgHasType(
-            SpriteKit.SKTransformNode.setQuaternion_, 0, simd.simd_quadf.__typestr__
+            SpriteKit.SKTransformNode.setQuaternion_, 0, simd.simd_quatf.__typestr__
         )
