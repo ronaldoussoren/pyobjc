@@ -38,17 +38,17 @@ class TestSKAction(TestCase):
             simd.vector_float4.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.uniformWithName_matrixFloat2x2,
+            SpriteKit.SKUniform.uniformWithName_matrixFloat2x2_,
             1,
             simd.matrix_float2x2.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.uniformWithName_matrixFloat3x3,
+            SpriteKit.SKUniform.uniformWithName_matrixFloat3x3_,
             1,
             simd.matrix_float3x3.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.uniformWithName_matrixFloat4x4,
+            SpriteKit.SKUniform.uniformWithName_matrixFloat4x4_,
             1,
             simd.matrix_float4x4.__typestr__,
         )
@@ -88,17 +88,17 @@ class TestSKAction(TestCase):
             simd.vector_float4.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.initWithName_matrixFloat2x2,
+            SpriteKit.SKUniform.initWithName_matrixFloat2x2_,
             1,
             simd.matrix_float2x2.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.initWithName_matrixFloat3x3,
+            SpriteKit.SKUniform.initWithName_matrixFloat3x3_,
             1,
             simd.matrix_float3x3.__typestr__,
         )
         self.assertArgHasType(
-            SpriteKit.SKUniform.initWithName_matrixFloat4x4,
+            SpriteKit.SKUniform.initWithName_matrixFloat4x4_,
             1,
             simd.matrix_float4x4.__typestr__,
         )

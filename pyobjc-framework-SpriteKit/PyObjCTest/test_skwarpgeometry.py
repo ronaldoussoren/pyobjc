@@ -22,17 +22,17 @@ class TestSKWarpGeometry(TestCase):
         )
         self.assertIsInstance(value, SpriteKit.SKWarpGeometryGrid)
 
-        value = SpriteKit.SKWarpGeometryGrid.alloc().iniWithColumns_rows_sourcePositions_destPositions_(
+        value = SpriteKit.SKWarpGeometryGrid.alloc().initWithColumns_rows_sourcePositions_destPositions_(
             5, 10, None, None
         )
         self.assertIsInstance(value, SpriteKit.SKWarpGeometryGrid)
 
-        value = SpriteKit.SKWarpGeometryGrid.alloc().iniWithColumns_rows_sourcePositions_destPositions_(
+        value = SpriteKit.SKWarpGeometryGrid.alloc().initWithColumns_rows_sourcePositions_destPositions_(
             2, 2, [(n, n) for n in range(9)], None
         )
         self.assertIsInstance(value, SpriteKit.SKWarpGeometryGrid)
 
-        value = SpriteKit.SKWarpGeometryGrid.alloc().iniWithColumns_rows_sourcePositions_destPositions_(
+        value = SpriteKit.SKWarpGeometryGrid.alloc().initWithColumns_rows_sourcePositions_destPositions_(
             2, 2, None, [(n, n) for n in range(9)]
         )
         self.assertIsInstance(value, SpriteKit.SKWarpGeometryGrid)
