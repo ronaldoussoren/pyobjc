@@ -47,12 +47,12 @@ class TestAVPlayerInterstitialEventController(TestCase):
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVPlayerItem.alignsStartWithPrimarySegmentBoundary
+            AVFoundation.AVPlayerInterstitialEvent.alignsStartWithPrimarySegmentBoundary
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVPlayerItem.alignsResumptionWithPrimarySegmentBoundary
+            AVFoundation.AVPlayerInterstitialEvent.alignsResumptionWithPrimarySegmentBoundary
         )
-        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.willPlayOnce)
+        self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.willPlayOnce)
 
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerInterstitialEvent.alignsStartWithPrimarySegmentBoundary

@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MetalPerformanceShaders
-from objc import simd
 
 
 class TestMPSImage_MPSImageHistogram(TestCase):
@@ -13,10 +12,10 @@ class TestMPSImage_MPSImageHistogram(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSImageKeypointData.__typestr__,
-            b"{_.MPSImageKeypointData=<2S>f}",
+            b"{_MPSImageKeypointData=<2S>f}",
         )
         v = MetalPerformanceShaders.MPSImageKeypointData()
-        self.assertIsInstance(v.keypointCoordinate, simd.vector_ushort2)
+        self.assertIs(v.keypointCoordinate, None)
         self.assertIsInstance(v.keypointColorValue, float)
 
     @min_os_level("10.13")

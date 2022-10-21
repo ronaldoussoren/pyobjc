@@ -1,6 +1,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "NSFontWidth": { "type": "d" },
    "NSControlStateValue": { "type": "q" },
    "NSToolbarUserInfoKey": { "type": "@", "type_name": "NSString" },
    "NSTextEffectStyle": { "type": "@", "type_name": "NSString" },

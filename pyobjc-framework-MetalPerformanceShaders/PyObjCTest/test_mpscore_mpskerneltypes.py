@@ -34,7 +34,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSDeviceSupportsSimdShuffleAndFill, 1 << 11
         )
-        self.assertNotHasattr(MetalPerformanceShaders, "MPSDeviceCapsLast")
+        self.assertNotHasAttr(MetalPerformanceShaders, "MPSDeviceCapsLast")
 
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexDestIndex, 0)
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexSrc0Index, 0)
@@ -131,7 +131,9 @@ class TestMPSCore_MPSKernelTypes(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSCustomKernelInfo.__typestr__,
-            b"{_MPSCustomKernelInfo=<4S><4S>SSSSSSQ}",
+            b"{_MPSCustomKernelInfo=<4S><4S>SSSSSS"
+            + MetalPerformanceShaders.MPSIntegerDivisionParams.__typestr__
+            + b"}",
         )
         v = MetalPerformanceShaders.MPSCustomKernelInfo()
         self.assertIs(v.clipOrigin, None)
@@ -142,7 +144,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertIsInstance(v.threadgroupSize, int)
         self.assertIsInstance(v.subbatchIndex, int)
         self.assertIsInstance(v.subbatchStride, int)
-        self.assertIsInstance(v.idiv, int)
+        self.assertIsInstance(v.idiv, MetalPerformanceShaders.MPSIntegerDivisionParams)
 
         v = MetalPerformanceShaders.MPSCustomKernelArgumentCount()
         self.assertIsInstance(v.destinationTextureCount, int)

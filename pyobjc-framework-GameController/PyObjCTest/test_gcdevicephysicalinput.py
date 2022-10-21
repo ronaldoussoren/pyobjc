@@ -44,10 +44,3 @@ class TestGCDevicePhysicalInput(TestCase):
         self.assertArgIsBlock(
             TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v@"
         )
-
-        self.assertResultIsBlock(
-            TestGCDevicePhysicalInputHelper.inputStateAvailableHandler, b"v"
-        )
-        self.assertArgIsBlock(
-            TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v"
-        )

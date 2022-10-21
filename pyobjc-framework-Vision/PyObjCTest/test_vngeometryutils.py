@@ -12,7 +12,7 @@ class TestVNGeometryUtils(TestCase):
         self.assertArgHasType(
             Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_,
             0,
-            simd.simd_float2.__typestr__,
+            b"n^" + simd.simd_float2.__typestr__,
         )
         self.assertArgIsIn(
             Vision.VNGeometryUtils.boundingCircleForSIMDPoints_pointCount_error_, 0

@@ -42,6 +42,9 @@
    "NSAppleEventSendDefaultOptions": { "value": "NSAppleEventSendWaitForReply | NSAppleEventSendCanInteract" }
   },
   "aliases": {
+    "NSRect": { "alias": "CGRect" },
+    "NSSize": { "alias": "CGSize" },
+    "NSPoint": { "alias": "CGPoint" },
     "NSISO8601DateFormatWithFractionalSeconds": { "alias": "kCFISO8601DateFormatWithFractionalSeconds" },
     "NSISO8601DateFormatWithYear": { "alias": "kCFISO8601DateFormatWithYear" },
     "NSISO8601DateFormatWithMonth": { "alias": "kCFISO8601DateFormatWithMonth" },
@@ -302,7 +305,10 @@
     },
     "NSFastEnumerationState": {
       "ignore": true
-    }
+    },
+    "NSRect": { "ignore": true },
+    "NSSize": { "ignore": true },
+    "NSPoint": { "ignore": true }
   },
   "opaque": {
     "NSZonePtr": {
@@ -12107,6 +12113,14 @@
    "NSString": {
     "methods": [
      {
+      "selector": "initWithValidatedFormat:validFormatSpecifiers:error:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true },
+       "2": { "type_override": "o" }
+      }
+     },
+     {
       "selector": "initWithValidatedFormat:validatedFormatSpecifiers:error:",
       "class_method": false,
       "args": {
@@ -12114,6 +12128,13 @@
        "2": { "type_override": "o" }
       }
      },
+     {
+      "selector": "initWithValidatedFormat:validFormatSpecifiers:locale:error:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true },
+       "3": { "type_override": "o" }
+      }
      {
       "selector": "initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
       "class_method": false,
@@ -12136,6 +12157,21 @@
       "suggestion": "use -initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
       "args": {
        "4": { "type_override": "o" }
+      }
+     },
+      "selector": "stringWithValidatedFormat:validFormatSpecifiers:error:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true },
+       "2": { "type_override": "o" }
+      }
+     },
+     {
+      "selector": "stringWithValidatedFormat:validFormatSpecifiers:locale:error:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true },
+       "3": { "type_override": "o" }
       }
      },
      {

@@ -1857,8 +1857,7 @@ functions = {
         {
             "retval": {"already_cfretained": True},
             "arguments": {
-                1: {"printf_format": True},
-                3: {"print_format": True},
+                3: {"printf_format": True},
                 4: {
                     "null_accepted": True,
                     "already_cfretained": True,
@@ -3448,7 +3447,7 @@ cftypes = [
     ),
     ("CFSetRef", b"^{__CFSet=}", "CFSetGetTypeID", "NSSet"),
     ("CFSocketRef", b"^{__CFSocket=}", "CFSocketGetTypeID", None),
-    ("CFStringRef", b"@", "CFStringGetTypeID", "NSString"),
+    ("CFStringRef", b"^{__CFString=}", "CFStringGetTypeID", "NSString"),
     (
         "CFStringTokenizerRef",
         b"^{__CFStringTokenizer=}",

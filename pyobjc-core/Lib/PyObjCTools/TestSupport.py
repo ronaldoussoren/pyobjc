@@ -1197,11 +1197,13 @@ class TestCase(_unittest.TestCase):
                     if attr_name.startswith("_"):
                         # Skip private names
                         continue
-                    attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
-                    if isinstance(attr, objc.selector):
-                        self._validateCallableMetadata(
-                            attr, nm, skip_simple_charptr_check=not exclude_cocoa
-                        )
+
+                    with self.subTest(classname=nm, instance_method=attr_name):
+                        attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
+                        if isinstance(attr, objc.selector):
+                            self._validateCallableMetadata(
+                                attr, nm, skip_simple_charptr_check=not exclude_cocoa
+                            )
 
                 for attr_name in dir(value.pyobjc_classMethods):
                     if (nm, attr_name) in exclude_attrs:
@@ -1209,14 +1211,16 @@ class TestCase(_unittest.TestCase):
                     if attr_name.startswith("_"):
                         # Skip private names
                         continue
-                    attr = getattr(value.pyobjc_classMethods, attr_name, None)
-                    if isinstance(attr, objc.selector):
-                        self._validateCallableMetadata(
-                            attr, nm, skip_simple_charptr_check=not exclude_cocoa
-                        )
+                    with self.subTest(classname=nm, instance_method=attr_name):
+                        attr = getattr(value.pyobjc_classMethods, attr_name, None)
+                        if isinstance(attr, objc.selector):
+                            self._validateCallableMetadata(
+                                attr, nm, skip_simple_charptr_check=not exclude_cocoa
+                            )
 
             elif isinstance(value, objc.function):
-                self._validateCallableMetadata(value)
+                with self.subTest(function=nm):
+                    self._validateCallableMetadata(value)
 
             else:
                 continue

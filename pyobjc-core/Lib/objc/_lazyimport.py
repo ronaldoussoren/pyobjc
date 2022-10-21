@@ -447,6 +447,8 @@ class ObjCLazyModule(ModuleType):
                     result = sys.float_info.max
                 elif alias == "DBL_MIN":
                     result = sys.float_info.min
+                elif alias == "DBL_EPSILON":
+                    result = sys.float_info.epsilon
                 elif alias == "FLT_MAX":
                     result = objc._FLT_MAX
                 elif alias == "FLT_MIN":

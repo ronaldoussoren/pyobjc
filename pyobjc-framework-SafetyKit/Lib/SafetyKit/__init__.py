@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from . import _metadata
+from . import _SafetyKit
 
 sys.modules["SafetyKit"] = mod = objc.ObjCLazyModule(
     "SafetyKit",
@@ -23,7 +24,10 @@ sys.modules["SafetyKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (
+        _SafetyKit,
+        Foundation,
+    ),
 )
 
 del sys.modules["SafetyKit._metadata"]

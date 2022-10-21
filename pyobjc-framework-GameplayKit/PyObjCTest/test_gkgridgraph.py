@@ -14,7 +14,7 @@ class TestGKGridGraph(TestCase):
         )
 
         # SIMD types
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
             0,
             simd.vector_int2.__typestr__,
@@ -23,7 +23,7 @@ class TestGKGridGraph(TestCase):
             GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
             3,
         )
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
             0,
             simd.vector_int2.__typestr__,
@@ -33,7 +33,7 @@ class TestGKGridGraph(TestCase):
             3,
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
             0,
             simd.vector_int2.__typestr__,
@@ -42,7 +42,7 @@ class TestGKGridGraph(TestCase):
             GameplayKit.GKGridGraph.graphFromGridStartingAt_width_height_diagonalsAllowed_,
             3,
         )
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKGridGraph.initFromGridStartingAt_width_height_diagonalsAllowed_,
             0,
             simd.vector_int2.__typestr__,
@@ -52,6 +52,6 @@ class TestGKGridGraph(TestCase):
             3,
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKGridGraph.nodeAtGridPosition_, 0, simd.vector_int2.__typestr__
         )

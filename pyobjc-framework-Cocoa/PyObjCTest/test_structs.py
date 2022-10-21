@@ -89,26 +89,26 @@ class TestNSPoint(TestCase):
 
     def testRepr(self):
         p = Foundation.NSPoint()
-        self.assertEqual(repr(p), "<Foundation.NSPoint x=0.0 y=0.0>")
+        self.assertEqual(repr(p), "<CoreFoundation.CGPoint x=0.0 y=0.0>")
 
         p = Foundation.NSPoint(42, 98)
-        self.assertEqual(repr(p), "<Foundation.NSPoint x=42 y=98>")
+        self.assertEqual(repr(p), "<CoreFoundation.CGPoint x=42 y=98>")
 
         p.x = p
         self.assertEqual(
-            repr(p), "<Foundation.NSPoint x=<Foundation.NSPoint ...> y=98>"
+            repr(p), "<CoreFoundation.CGPoint x=<CoreFoundation.CGPoint ...> y=98>"
         )
 
     def testStr(self):
         p = Foundation.NSPoint()
-        self.assertEqual(str(p), "<Foundation.NSPoint x=0.0 y=0.0>")
+        self.assertEqual(str(p), "<CoreFoundation.CGPoint x=0.0 y=0.0>")
 
         p = Foundation.NSPoint(42, 98)
-        self.assertEqual(str(p), "<Foundation.NSPoint x=42 y=98>")
+        self.assertEqual(str(p), "<CoreFoundation.CGPoint x=42 y=98>")
 
         p.x = p
         self.assertEqual(
-            repr(p), "<Foundation.NSPoint x=<Foundation.NSPoint ...> y=98>"
+            repr(p), "<CoreFoundation.CGPoint x=<CoreFoundation.CGPoint ...> y=98>"
         )
 
     def testSlice(self):
@@ -258,3 +258,10 @@ class TestNSRect(TestCase):
         self.assertEqual(v.left, 0.0)
         self.assertEqual(v.bottom, 0.0)
         self.assertEqual(v.right, 0.0)
+
+
+class TestStructAliases(TestCase):
+    def test_structs_are_aliases(self):
+        self.assertIs(Foundation.NSRect, Foundation.CGRect)
+        self.assertIs(Foundation.NSSize, Foundation.CGSize)
+        self.assertIs(Foundation.NSPoint, Foundation.CGPoint)

@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import ModelIO
-import simd
+from objc import simd
 
 
 class TestMDLCamera(TestCase):

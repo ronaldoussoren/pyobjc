@@ -9,17 +9,17 @@ class TestGKNoiseMap(TestCase):
         self.assertResultIsBOOL(GameplayKit.GKNoiseMap.isSeamless)
         # self.assertArgIsBOOL(GameplayKit.GKNoiseMap.setSeamless_, 0)
 
-        self.assertResultIsHasType(
+        self.assertResultHasType(
             GameplayKit.GKNoiseMap.size, simd.vector_double2.__typestr__
         )
-        self.assertResultIsHasType(
+        self.assertResultHasType(
             GameplayKit.GKNoiseMap.origin, simd.vector_double2.__typestr__
         )
-        self.assertResultIsHasType(
+        self.assertResultHasType(
             GameplayKit.GKNoiseMap.sampleCount, simd.vector_int2.__typestr__
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKNoiseMap.noiseMapWithNoise_size_origin_sampleCount_seamless_,
             1,
             simd.vector_double2.__typestr__,
@@ -29,7 +29,7 @@ class TestGKNoiseMap(TestCase):
             4,
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKNoiseMap.initWithNoise_size_origin_sampleCount_seamless_,
             1,
             simd.vector_double2.__typestr__,
@@ -38,14 +38,14 @@ class TestGKNoiseMap(TestCase):
             GameplayKit.GKNoiseMap.initWithNoise_size_origin_sampleCount_seamless_, 4
         )
 
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKNoiseMap.valueAtPosition_, 0, simd.vector_int2.__typestr__
         )
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKNoiseMap.interpolatedValueAtPosition_,
             0,
             simd.vector_float2.__typestr__,
         )
-        self.assertArgIsHasType(
+        self.assertArgHasType(
             GameplayKit.GKNoiseMap.setValue_atPosition_, 1, simd.vector_int2.__typestr__
         )

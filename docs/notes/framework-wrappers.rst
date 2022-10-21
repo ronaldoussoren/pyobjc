@@ -380,6 +380,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MailKit </apinotes/MailKit>`                                                   | `pyobjc-framework-MailKit`_                          |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| Matter                                                                               | -                                                    | Not wrapped yet.                        |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaAccessibility </apinotes/MediaAccessibility>`                             | `pyobjc-framework-MediaAccessibility`_               |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaLibrary </apinotes/MediaLibrary>`                                         | `pyobjc-framework-MediaLibrary`_                     |                                         |
@@ -504,6 +506,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | RubyCocoa                                                                            | -                                                    | Will not be wrapped, use Python         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`SafetyKit </apinotes/SafetyKit>`                                               | `pyobjc-framework-SafetyKit`_                        |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SafariServices </apinotes/SafariServices>`                                     | `pyobjc-framework-SafariServices`_                   |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SceneKit </apinotes/SceneKit>`                                                 | `pyobjc-framework-SceneKit`_                         |                                         |
@@ -564,6 +568,8 @@ The framework name links to API notes for that framework, the python packages li
 | Tcl                                                                                  | -                                                    | Will not be wrapped, use Python         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | Tk                                                                                   | -                                                    | Will not be wrapped, use :mod:`tkinter`.|
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`ThreadNetwork </apinotes/ThreadNetwork>`                                       | `pyobjc-framework-ThreadNetwork`_                    |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | TWAIN                                                                                | -                                                    | Will not be wrapped. Use the            |
 |                                                                                      |                                                      | "ImageCaptureCore" framework instead.   |
@@ -779,3 +785,5 @@ prioritizing work.
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
+.. _`pyobjc-framework-SafetyKit`: https://pypi.org/project/pyobjc-framework-SafetyKit/
+.. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/

@@ -30,9 +30,6 @@ class TestGKAgent(TestCase):
         self.assertResultHasType(
             GameplayKit.GKAgent3D.velocity, simd.vector_float3.__typestr__
         )
-        self.assertArgHasType(
-            GameplayKit.GKAgent3D.setVelocity_, 0, simd.vector_float3.__typestr__
-        )
 
         self.assertResultHasType(
             GameplayKit.GKAgent2D.position, simd.vector_float2.__typestr__
@@ -43,7 +40,4 @@ class TestGKAgent(TestCase):
 
         self.assertResultHasType(
             GameplayKit.GKAgent2D.velocity, simd.vector_float2.__typestr__
-        )
-        self.assertArgHasType(
-            GameplayKit.GKAgent2D.setVelocity_, 0, simd.vector_float2.__typestr__
         )

@@ -62,7 +62,7 @@ class TestSCNMaterialProperty(TestCase):
             SceneKit.SCNNode.simdRotation, simd.simd_float4.__typestr__
         )
         self.assertResultHasType(
-            SceneKit.SCNNode.simdOrientation, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.simdOrientation, simd.simd_quatf.__typestr__
         )
         self.assertResultHasType(
             SceneKit.SCNNode.simdEulerAngles, simd.simd_float3.__typestr__
@@ -77,7 +77,7 @@ class TestSCNMaterialProperty(TestCase):
             SceneKit.SCNNode.simdWorldPosition, simd.simd_float3.__typestr__
         )
         self.assertResultHasType(
-            SceneKit.SCNNode.simdWorldOrientation, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.simdWorldOrientation, simd.simd_quatf.__typestr__
         )
         self.assertResultHasType(
             SceneKit.SCNNode.simdWorldTransform, simd.simd_float4x4.__typestr__
@@ -93,7 +93,7 @@ class TestSCNMaterialProperty(TestCase):
             SceneKit.SCNNode.setSimdRotation_, 0, simd.simd_float4.__typestr__
         )
         self.assertArgHasType(
-            SceneKit.SCNNode.setSimdOrientation_, 0, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.setSimdOrientation_, 0, simd.simd_quatf.__typestr__
         )
         self.assertArgHasType(
             SceneKit.SCNNode.setSimdEulerAngles_, 0, simd.simd_float3.__typestr__
@@ -108,7 +108,7 @@ class TestSCNMaterialProperty(TestCase):
             SceneKit.SCNNode.setSimdWorldPosition_, 0, simd.simd_float3.__typestr__
         )
         self.assertArgHasType(
-            SceneKit.SCNNode.setSimdWorldOrientation_, 0, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.setSimdWorldOrientation_, 0, simd.simd_quatf.__typestr__
         )
         self.assertArgHasType(
             SceneKit.SCNNode.setSimdWorldTransform_, 0, simd.simd_float4x4.__typestr__
@@ -197,10 +197,10 @@ class TestSCNMaterialProperty(TestCase):
         )
 
         self.assertArgHasType(
-            SceneKit.SCNNode.simdLocalRotateBy_, 0, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.simdLocalRotateBy_, 0, simd.simd_quatf.__typestr__
         )
         self.assertArgHasType(
-            SceneKit.SCNNode.simdRotateBy_aroundTarget_, 0, simd.simd_quadf.__typestr__
+            SceneKit.SCNNode.simdRotateBy_aroundTarget_, 0, simd.simd_quatf.__typestr__
         )
         self.assertArgHasType(
             SceneKit.SCNNode.simdRotateBy_aroundTarget_, 1, simd.simd_float3.__typestr__

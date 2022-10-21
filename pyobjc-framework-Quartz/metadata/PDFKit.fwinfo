@@ -3,6 +3,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "PDFPageImageInitializationOption": { "type": "@", "type_name": "NSString" },
    "PDFAnnotationSubtype": { "type": "@", "type_name": "NSString" },
    "PDFAnnotationKey": { "type": "@", "type_name": "NSString" },
    "PDFAppearanceCharacteristicsKey": { "type": "@", "type_name": "NSString" },

@@ -6,9 +6,6 @@ from objc import simd
 
 class TestGKOctree(TestCase):
     def testMethods(self):
-        self.assertResultHasType(
-            GameplayKit.GKOctree.box, GameplayKit.GKBox.__typestr__
-        )
         self.assertArgHasType(
             GameplayKit.GKOctree.octreeWithBoundingBox_minimumCellSize_,
             0,
@@ -24,7 +21,7 @@ class TestGKOctree(TestCase):
             GameplayKit.GKOctree.addElement_withBox_, 1, GameplayKit.GKBox.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKOctree.elementInBox_, 0, GameplayKit.GKBox.__typestr__
+            GameplayKit.GKOctree.elementsInBox_, 0, GameplayKit.GKBox.__typestr__
         )
 
         self.assertResultIsBOOL(GameplayKit.GKOctree.removeElement_)

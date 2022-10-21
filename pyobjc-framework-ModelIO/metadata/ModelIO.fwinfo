@@ -494,22 +494,21 @@
     ]
    },
    "MDLAnimatedVector2": {
-    "comment": "vector_... types!",
     "methods": [
      {
-      "selector": "resetWithFloat2Array:count:atTimes:count:",
+      "selector": "resetWithFloat2Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
-      "selector": "resetWithDouble2Array:count:atTimes:count:",
+      "selector": "resetWithDouble2Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
@@ -543,22 +542,21 @@
     ]
    },
    "MDLAnimatedVector3": {
-    "comment": "vector_... types!",
     "methods": [
      {
-      "selector": "resetWithFloat3Array:count:atTimes:count:",
+      "selector": "resetWithFloat3Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
-      "selector": "resetWithDouble3Array:count:atTimes:count:",
+      "selector": "resetWithDouble3Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
@@ -592,99 +590,97 @@
     ]
    },
    "MDLAnimatedVector4": {
-    "comment": "vector_... types!",
     "methods": [
      {
-      "selector": "resetWithFloat4Array:count:atTimes:count:",
+      "selector": "resetWithFloat4Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
-      "selector": "resetWithDouble4Array:count:atTimes:count:",
+      "selector": "resetWithDouble4Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
       "selector": "copyFloat4ArrayInto:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "copyDouble4ArrayInto:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "getFloat4Array:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "getDouble4Array:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      }
     ]
    },
    "MDLAnimatedMatrix4x4": {
-    "comment": "vector_... types!",
     "methods": [
      {
-      "selector": "resetWithFloat4x4Array:count:atTimes:count:",
+      "selector": "resetWithFloat4x4Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
-      "selector": "resetWithDouble4x4Array:count:atTimes:count:",
+      "selector": "resetWithDouble4x4Array:atTimes:count:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
       "selector": "copyFloat4x4ArrayInto:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "copyDouble4x4ArrayInto:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "getFloat4x4Array:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      },
      {
       "selector": "getDouble4x4Array:maxCount:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_lengt_in_result": true }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       }
      }
     ]

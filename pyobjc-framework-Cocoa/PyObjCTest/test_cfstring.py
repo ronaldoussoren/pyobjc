@@ -736,6 +736,6 @@ class TestStringEncodingExt(TestCase):
 
     def test_functions13_0(self):
         self.assertArgIsPrintf(
-            CoreFoundation.CFStringCreateStringWithValidatedFormat, 2
+            CoreFoundation.CFStringCreateStringWithValidatedFormat, 3
         )
-        self.assertArgIsOut(CoreFoundation.CFStringCreateStringWithValidatedFormat, 3)
+        self.assertArgIsOut(CoreFoundation.CFStringCreateStringWithValidatedFormat, 4)

@@ -69,23 +69,23 @@ class TestMDLCamera(TestCase):
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.initWithName_float2_,
-            1,
+            ModelIO.MDLMaterialProperty.initWithName_semantic_float2_,
+            2,
             simd.vector_float2.__typestr__,
         )
         self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.initWithName_float3_,
-            1,
-            simd.vector_float2.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.initWithName_float4_,
-            1,
+            ModelIO.MDLMaterialProperty.initWithName_semantic_float3_,
+            2,
             simd.vector_float3.__typestr__,
         )
         self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.initWithName_matrix4x4_,
-            1,
+            ModelIO.MDLMaterialProperty.initWithName_semantic_float4_,
+            2,
+            simd.vector_float4.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLMaterialProperty.initWithName_semantic_matrix4x4_,
+            2,
             simd.matrix_float4x4.__typestr__,
         )
 
@@ -96,7 +96,10 @@ class TestMDLCamera(TestCase):
             ModelIO.MDLMaterialProperty.float2Value, simd.vector_float2.__typestr__
         )
         self.assertResultHasType(
-            ModelIO.MDLMaterialProperty.float2Value, simd.vector_float3.__typestr__
+            ModelIO.MDLMaterialProperty.float3Value, simd.vector_float3.__typestr__
+        )
+        self.assertResultHasType(
+            ModelIO.MDLMaterialProperty.float4Value, simd.vector_float4.__typestr__
         )
         self.assertResultHasType(
             ModelIO.MDLMaterialProperty.matrix4x4, simd.matrix_float4x4.__typestr__
@@ -107,14 +110,14 @@ class TestMDLCamera(TestCase):
             simd.vector_float2.__typestr__,
         )
         self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.setFloat2Value_,
-            0,
-            simd.vector_float2.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.MDLMaterialProperty.setFloat2Value_,
+            ModelIO.MDLMaterialProperty.setFloat3Value_,
             0,
             simd.vector_float3.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLMaterialProperty.setFloat4Value_,
+            0,
+            simd.vector_float4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.setMatrix4x4_,

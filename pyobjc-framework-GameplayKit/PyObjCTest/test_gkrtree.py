@@ -15,34 +15,34 @@ class TestGKAgent(TestCase):
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyReduceOverlap, 3)
 
     def test_methods(self):
-        self.assertArgHasTree(
+        self.assertArgHasType(
+            GameplayKit.GKRTree.addElement_boundingRectMin_boundingRectMax_splitStrategy_,
+            1,
+            simd.vector_float2.__typestr__,
+        )
+        self.assertArgHasType(
             GameplayKit.GKRTree.addElement_boundingRectMin_boundingRectMax_splitStrategy_,
             2,
             simd.vector_float2.__typestr__,
         )
-        self.assertArgHasTree(
-            GameplayKit.GKRTree.addElement_boundingRectMin_boundingRectMax_splitStrategy_,
-            3,
+
+        self.assertArgHasType(
+            GameplayKit.GKRTree.removeElement_boundingRectMin_boundingRectMax_,
+            1,
             simd.vector_float2.__typestr__,
         )
-
-        self.assertArgHasTree(
+        self.assertArgHasType(
             GameplayKit.GKRTree.removeElement_boundingRectMin_boundingRectMax_,
             2,
             simd.vector_float2.__typestr__,
         )
-        self.assertArgHasTree(
-            GameplayKit.GKRTree.removeElement_boundingRectMin_boundingRectMax_,
-            3,
-            simd.vector_float2.__typestr__,
-        )
 
-        self.assertArgHasTree(
+        self.assertArgHasType(
             GameplayKit.GKRTree.elementsInBoundingRectMin_rectMax_,
             0,
             simd.vector_float2.__typestr__,
         )
-        self.assertArgHasTree(
+        self.assertArgHasType(
             GameplayKit.GKRTree.elementsInBoundingRectMin_rectMax_,
             1,
             simd.vector_float2.__typestr__,

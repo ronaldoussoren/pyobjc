@@ -30,7 +30,7 @@ class TestGKQuadtree(TestCase):
             simd.vector_float2.__typestr__,
         )
         self.assertArgHasType(
-            GameplayKit.GKQuadtree.addElement_withQuad,
+            GameplayKit.GKQuadtree.addElement_withQuad_,
             1,
             GameplayKit.GKQuad.__typestr__,
         )

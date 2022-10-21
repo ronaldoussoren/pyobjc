@@ -29,16 +29,28 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def setInputContentHeight_(self, a):
         pass
 
-    def jitterOffset(self):
+    def jitterOffsetX(self):
         return 1
 
-    def setJitterOffset_(self, a):
+    def jitterOffsetY(self):
+        return 1
+
+    def setJitterOffsetX_(self, a):
         pass
 
-    def motionVectorScale(self):
+    def setJitterOffsetY_(self, a):
+        pass
+
+    def motionVectorScaleX(self):
         return 1
 
-    def setMotionVectorScale_(self, a):
+    def setMotionVectorScaleX_(self, a):
+        pass
+
+    def motionVectorScaleY(self):
+        return 1
+
+    def setMotionVectorScaleY_(self, a):
         pass
 
     def reset(self):
@@ -109,20 +121,33 @@ class TestMTLFXTemporalScaler(TestCase):
         )
 
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.jitterOffset, MetalFX.NSPoint.__typestr__
-        )
-        self.assertArgHasType(
-            TestMTLFXTemporalScalerHelper.setJitterOffset_,
-            0,
-            MetalFX.NSPoint.__typestr__,
+            TestMTLFXTemporalScalerHelper.jitterOffsetX, objc._C_FLT
         )
         self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.motionVectorScale, MetalFX.NSPoint.__typestr__
+            TestMTLFXTemporalScalerHelper.jitterOffsetY, objc._C_FLT
         )
         self.assertArgHasType(
-            TestMTLFXTemporalScalerHelper.setMotionVectorScale_,
+            TestMTLFXTemporalScalerHelper.setJitterOffsetX_, 0, objc._C_FLT
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setJitterOffsetY_, 0, objc._C_FLT
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.motionVectorScaleX, objc._C_FLT
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setMotionVectorScaleX_,
             0,
-            MetalFX.NSPoint.__typestr__,
+            objc._C_FLT,
+        )
+
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.motionVectorScaleY, objc._C_FLT
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setMotionVectorScaleY_,
+            0,
+            objc._C_FLT,
         )
 
         self.assertResultIsBOOL(TestMTLFXTemporalScalerHelper.reset)
@@ -163,8 +188,8 @@ class TestMTLFXTemporalScaler(TestCase):
 
     def test_methods(self):
         self.assertResultIsBOOL(
-            MetalFX.MTLFXTemporalScalerDescriptor.enableInputContentProperties
+            MetalFX.MTLFXTemporalScalerDescriptor.isInputContentPropertiesEnabled
         )
         self.assertArgIsBOOL(
-            MetalFX.MTLFXTemporalScalerDescriptor.setEnableInputContentProperties_, 0
+            MetalFX.MTLFXTemporalScalerDescriptor.setInputContentPropertiesEnabled_, 0
         )

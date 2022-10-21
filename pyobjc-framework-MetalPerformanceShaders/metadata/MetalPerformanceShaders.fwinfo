@@ -2,6 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
+ "structs": {
+   "MPSPackedFloat3": {
+    "fieldnames" : [ "x", "y", "z" ],
+    "typestr": "{_MPSPackedFloat3=fff}"
+   }
+  },
   "classes": {
    "MPSAccelerationStructure": {
     "methods": [
@@ -1317,6 +1323,13 @@
       "retval": {
        "c_array_of_variable_length": true
       },
+      "selector": "rangesForUInt8Kernel"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      },
       "selector": "variance"
      },
      {
@@ -1532,8 +1545,6 @@
     }
    }
   },
-  "informal_protocols": {},
-  "structs": {
-  }
+  "informal_protocols": {}
  }
 }

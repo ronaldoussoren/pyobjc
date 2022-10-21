@@ -6,6 +6,7 @@ from PyObjCTools.TestSupport import (
     expectedFailureIf,
     expectedFailure,
 )
+from objc import simd
 
 import SceneKit
 
@@ -100,12 +101,23 @@ class TestSceneKitTypes(TestCase):
         SceneKit.SCNVector4ToGLKVector4
 
     def test_inlineFunctions(self):
-        SceneKit.SCNVector3ToFloat3
-        SceneKit.SCNVector4ToFloat4
-        SceneKit.SCNMatrix4ToMat4
-        SceneKit.SCNVector3FromFloat3
-        SceneKit.SCNVector4FromFloat4
-        SceneKit.SCNMatrix4FromMat4
+        v = SceneKit.SCNVector3ToFloat3(SceneKit.SCNVector3())
+        self.assertIsInstance(v, simd.vector_float3)
+
+        v = SceneKit.SCNVector4ToFloat4(SceneKit.SCNVector4())
+        self.assertIsInstance(v, simd.vector_float4)
+
+        v = SceneKit.SCNMatrix4ToMat4(SceneKit.SCNMatrix4())
+        self.assertIsInstance(v, simd.simd_float4x4)
+
+        v = SceneKit.SCNVector3FromFloat3(simd.vector_float3())
+        self.assertIsInstance(v, SceneKit.SCNVector3)
+
+        v = SceneKit.SCNVector4FromFloat4(simd.vector_float4())
+        self.assertIsInstance(v, SceneKit.SCNVector4)
+
+        v = SceneKit.SCNMatrix4FromMat4(simd.simd_float4x4([simd.vector_float4()] * 4))
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
     @min_os_level("10.10")
     def testFunctions10_10(self):

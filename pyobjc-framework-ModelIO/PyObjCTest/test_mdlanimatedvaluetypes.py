@@ -312,7 +312,7 @@ class TestMDLAnimatedValue(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_count_atTime_,
+            ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_atTime_,
             0,
             b"o^" + simd.simd_quatf.__typestr__,
         )
@@ -331,7 +331,7 @@ class TestMDLAnimatedValue(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_count_atTime_,
+            ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_atTime_,
             0,
             b"o^" + simd.simd_quatd.__typestr__,
         )
@@ -415,7 +415,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgHasType(
             ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_,
             0,
-            b"o^" + simd.simd_quatf.__typestr__,
+            b"o^" + simd.simd_quatd.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedQuaternionArray.getDoubleQuaternionArray_maxCount_, 0, 1
@@ -428,9 +428,9 @@ class TestMDLAnimatedValue(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count,
+            ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count_,
             0,
-            b"o^" + simd.vector_float2.__typestr__,
+            b"n^" + simd.vector_float2.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.resetWithFloat2Array_atTimes_count_, 0, 2
@@ -443,9 +443,9 @@ class TestMDLAnimatedValue(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count,
+            ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count_,
             0,
-            b"o^" + simd.vector_double2.__typestr__,
+            b"n^" + simd.vector_double2.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedVector2.resetWithDouble2Array_atTimes_count_, 0, 2
@@ -484,7 +484,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsOut(ModelIO.MDLAnimatedVector2.getDouble2Array_maxCount_, 0)
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedVector3.resetWithFloat3Array_,
+            ModelIO.MDLAnimatedVector3.resetWithFloat3Array_atTimes_count_,
             0,
             b"n^" + simd.vector_float3.__typestr__,
         )
@@ -499,7 +499,7 @@ class TestMDLAnimatedValue(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLAnimatedVector3.resetWithDouble3Array_,
+            ModelIO.MDLAnimatedVector3.resetWithDouble3Array_atTimes_count_,
             0,
             b"n^" + simd.vector_double3.__typestr__,
         )
@@ -594,62 +594,6 @@ class TestMDLAnimatedValue(TestCase):
             ModelIO.MDLAnimatedVector4.getDouble4Array_maxCount_, 0
         )
         self.assertArgIsOut(ModelIO.MDLAnimatedVector4.getDouble4Array_maxCount_, 0)
-
-        self.assertArgHasType(
-            ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_,
-            0,
-            b"n^" + simd.matrix_float4x4.__typestr__,
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_, 0, 2
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_, 1, 2
-        )
-        self.assertArgIsIn(
-            ModelIO.MDLAnimatedVector4x4.resetWithFloat4x4Array_atTimes_count_, 0
-        )
-
-        self.assertArgHasType(
-            ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_,
-            0,
-            b"n^" + simd.matrix_double4x4.__typestr__,
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0, 2
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 1, 2
-        )
-        self.assertArgIsIn(
-            ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0
-        )
-
-        self.assertArgHasType(
-            ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_,
-            0,
-            b"o^" + simd.matrix_float4x4.__typestr__,
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_, 0, 1
-        )
-        self.assertArgSizeInResult(
-            ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_, 0
-        )
-        self.assertArgIsOut(ModelIO.MDLAnimatedVector4x4.getFloat4x4Array_maxCount_, 0)
-
-        self.assertArgHasType(
-            ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_,
-            0,
-            b"o^" + simd.matrix_double4x4.__typestr__,
-        )
-        self.assertArgSizeInArg(
-            ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_, 0, 1
-        )
-        self.assertArgSizeInResult(
-            ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_, 0
-        )
-        self.assertArgIsOut(ModelIO.MDLAnimatedVector4x4.getDouble4x4Array_maxCount_, 0)
 
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.setFloat4x4_atTime_,

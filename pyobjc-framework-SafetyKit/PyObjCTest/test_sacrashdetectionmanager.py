@@ -13,5 +13,5 @@ class TestSACrashDetectionManager(TestCase):
         self.assertArgIsBlock(
             SafetyKit.SACrashDetectionManager.requestAuthorizationWithCompletionHandler_,
             0,
-            b"v" + objc._C_NSUInteger + b"@",
+            b"v" + objc._C_NSInteger + b"@",
         )

@@ -2476,12 +2476,6 @@
     "retval": {
      "typestr": "v"
     }
-   },
-   "SCNVector3FromFloat3": {
-    "ignore": true
-   },
-   "SCNVector3ToFloat3": {
-    "ignore": true
    }
   },
   "informal_protocols": {},

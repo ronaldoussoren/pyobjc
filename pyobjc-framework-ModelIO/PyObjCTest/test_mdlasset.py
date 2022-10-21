@@ -11,6 +11,15 @@ class TestMDLAssetHelper(ModelIO.NSObject):
     def setSphericalHarmonicsLevel_(self, v):
         pass
 
+    def boundingBox(self):
+        return 1
+
+    def setBoundingBox_(self, v):
+        pass
+
+    def sphericalHarmonicsCoefficientsAtPosition_(self, v):
+        return 1
+
 
 class TestMDLAsset(TestCase):
     def testMethods(self):
@@ -44,7 +53,7 @@ class TestMDLAsset(TestCase):
         self.assertArgHasType(
             TestMDLAssetHelper.sphericalHarmonicsCoefficientsAtPosition_,
             0,
-            simd.vector_float3.__typstr__,
+            simd.vector_float3.__typestr__,
         )
 
         self.assertResultHasType(
@@ -64,10 +73,10 @@ class TestMDLAsset(TestCase):
         )
 
         self.assertResultHasType(
-            ModelIO.MDLAssset.upAxis, simd.vector_float3.__typestr__
+            ModelIO.MDLAsset.upAxis, simd.vector_float3.__typestr__
         )
         self.assertArgHasType(
-            ModelIO.MDLAssset.setUpAxis_, 0, simd.vector_float3.__typestr__
+            ModelIO.MDLAsset.setUpAxis_, 0, simd.vector_float3.__typestr__
         )
 
     def testProtocolObjects(self):

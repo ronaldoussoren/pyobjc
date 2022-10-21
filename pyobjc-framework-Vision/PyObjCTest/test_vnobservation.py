@@ -10,7 +10,7 @@ class TestVNObservation(TestCase):
 
     @min_os_level("10.13")
     def test_methods10_13(self):
-        self.assertArgHasType(
+        self.assertResultHasType(
             Vision.VNImageHomographicAlignmentObservation.warpTransform,
             simd.matrix_float3x3.__typestr__,
         )

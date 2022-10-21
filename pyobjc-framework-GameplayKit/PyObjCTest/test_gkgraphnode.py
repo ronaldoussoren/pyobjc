@@ -17,7 +17,7 @@ class TestGKGraphNode(TestCase):
             GameplayKit.GKGraphNode2D.position, simd.vector_float2.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKGraphNode2D.setPosition, 0, simd.vector_float2.__typestr__
+            GameplayKit.GKGraphNode2D.setPosition_, 0, simd.vector_float2.__typestr__
         )
         self.assertArgHasType(
             GameplayKit.GKGraphNode2D.nodeWithPoint_, 0, simd.vector_float2.__typestr__
@@ -30,7 +30,7 @@ class TestGKGraphNode(TestCase):
             GameplayKit.GKGraphNode3D.position, simd.vector_float3.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKGraphNode3D.setPosition, 0, simd.vector_float3.__typestr__
+            GameplayKit.GKGraphNode3D.setPosition_, 0, simd.vector_float3.__typestr__
         )
         self.assertArgHasType(
             GameplayKit.GKGraphNode3D.nodeWithPoint_, 0, simd.vector_float3.__typestr__
@@ -43,10 +43,7 @@ class TestGKGraphNode(TestCase):
             GameplayKit.GKGridGraphNode.gridPosition, simd.vector_int2.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKGridGraphNode.setGridPosition, 0, simd.vector_int2.__typestr__
-        )
-        self.assertArgHasType(
-            GameplayKit.GKGridGraphNode.nodeWithGridPosition,
+            GameplayKit.GKGridGraphNode.nodeWithGridPosition_,
             0,
             simd.vector_int2.__typestr__,
         )

@@ -37,28 +37,28 @@
      },
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "pathWithPoints:count:radius:cyclical:"
      },
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "initWithPoints:count:radius:cyclical:"
      },
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "pathWithFloat3Points:count:radius:cyclical:"
      },
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "initWithFloat3Points:count:radius:cyclical:"
@@ -97,14 +97,14 @@
     "methods": [
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "obstacleWithPoints:count:"
      },
      {
       "args": {
-       "0": { "type_override": "n", "arg_size_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "initWithPoints:count:"

@@ -568,11 +568,11 @@ class TestPickle(TestCase):
             2,
         )
 
-        self.assertArgIsPrintf(
-            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
-            0,
-        )
-        self.assertArgIsOut(
-            Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
-            3,
-        )
+        # self.assertArgIsPrintf(
+        # Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
+        # 0,
+        # )
+        # self.assertArgIsOut(
+        # Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
+        # 3,
+        # )

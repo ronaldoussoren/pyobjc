@@ -19,7 +19,8 @@
       "retval": {
        "callable": {
         "arguments": {
-	 "0": { "type": "^v" }
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" }
 	},
 	"retval": { "type": "v" }
        }
@@ -32,7 +33,8 @@
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "type": "^v" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
 	  "retval": { "type": "v" }
         }
@@ -78,7 +80,8 @@
        "callable": {
         "arguments": {
 	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" }
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" }
 	},
 	"retval": { "typestr": "v" }
        }
@@ -92,7 +95,8 @@
         "callable": {
          "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
 	 },
 	  "retval": { "typestr": "v" }
         }

@@ -35,13 +35,13 @@ class TestMDLCamera(TestCase):
         )
 
         self.assertResultHasType(
-            ModelIO.MDLCamera.rayTo_forViewPoint_, simd.vector_float3.__typestr__
+            ModelIO.MDLCamera.rayTo_forViewPort_, simd.vector_float3.__typestr__
         )
         self.assertArgHasType(
-            ModelIO.MDLCamera.rayTo_forViewPoint_, 0, simd.vector_int2.__typestr__
+            ModelIO.MDLCamera.rayTo_forViewPort_, 0, simd.vector_int2.__typestr__
         )
         self.assertArgHasType(
-            ModelIO.MDLCamera.rayTo_forViewPoint_, 1, simd.vector_int2.__typestr__
+            ModelIO.MDLCamera.rayTo_forViewPort_, 1, simd.vector_int2.__typestr__
         )
 
         self.assertArgHasType(

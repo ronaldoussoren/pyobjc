@@ -47,7 +47,7 @@ class TestMDLTransform(TestCase):
         self.assertResultHasType(
             ModelIO.TestMDLTransformHelper.matrix, simd.matrix_float4x4.__typestr__
         )
-        self.assertResultHasType(
+        self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setMatrix_,
             0,
             simd.matrix_float4x4.__typestr__,

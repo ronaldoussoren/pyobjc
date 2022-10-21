@@ -14,8 +14,8 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         v = MetalPerformanceShaders.MPSImageHistogramInfo()
         self.assertIsInstance(v.numberOfHistogramEntries, int)
         self.assertIsInstance(v.histogramForAlpha, bool)
-        self.assertIsInstance(v.minPixelValue, simd.vector_float4)
-        self.assertIsInstance(v.maxPixelValue, simd.vector_float4)
+        self.assertIs(v.minPixelValue, None)
+        self.assertIs(v.maxPixelValue, None)
 
     @min_os_level("10.13")
     def test_methods(self):
@@ -33,16 +33,16 @@ class TestMPSImage_MPSImageHistogram(TestCase):
             b"n^" + MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )
 
-        self.assertResultHastype(
+        self.assertResultHasType(
             MetalPerformanceShaders.MPSImageHistogram.histogramInfo,
             MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )
 
-        self.assertResultHastype(
+        self.assertResultHasType(
             MetalPerformanceShaders.MPSImageHistogram.minPixelThresholdValue,
             simd.vector_float4.__typestr__,
         )
-        self.assertArgHastype(
+        self.assertArgHasType(
             MetalPerformanceShaders.MPSImageHistogram.setMinPixelThresholdValue_,
             0,
             simd.vector_float4.__typestr__,
@@ -50,15 +50,15 @@ class TestMPSImage_MPSImageHistogram(TestCase):
 
     @min_os_level("10.14")
     def test_methods10_14(self):
-        self.assertResultHastype(
+        self.assertResultHasType(
             MetalPerformanceShaders.MPSImageNormalizedHistogram.histogramInfo,
             MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )
-        self.assertResultHastype(
+        self.assertResultHasType(
             MetalPerformanceShaders.MPSImageHistogramEqualization.histogramInfo,
             MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )
-        self.assertResultHastype(
+        self.assertResultHasType(
             MetalPerformanceShaders.MPSImageHistogramSpecification.histogramInfo,
             MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
         )

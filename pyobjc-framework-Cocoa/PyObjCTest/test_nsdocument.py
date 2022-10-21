@@ -276,16 +276,16 @@ class TestNSDocument(TestCase):
             b"v@",
         )
 
-        self.assertResultIsBOOL(
+        self.assertArgIsBlock(
             AppKit.NSDocument.relinquishPresentedItemToReader_, 0, b"v@?"
         )
-        self.assertResultIsBOOL(
+        self.assertArgIsBlock(
             AppKit.NSDocument.relinquishPresentedItemToWriter_, 0, b"v@?"
         )
-        self.assertResultIsBOOL(
+        self.assertArgIsBlock(
             AppKit.NSDocument.savePresentedItemChangesWithCompletionHandler_, 0, b"v@"
         )
-        self.assertResultIsBOOL(
+        self.assertArgIsBlock(
             AppKit.NSDocument.accommodatePresentedItemDeletionWithCompletionHandler_,
             0,
             b"v@",

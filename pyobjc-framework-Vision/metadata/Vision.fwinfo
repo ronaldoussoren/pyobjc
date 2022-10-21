@@ -113,6 +113,17 @@
    "VNErrorUnsupportedRevision": { "value": 16 }
   },
   "classes": {
+    "VNContour": {
+     "methods": [
+     {
+      "selector": "normalizedPoints",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     }
+     ]
+   },
    "VNRecognizedPointsObservation": {
     "methods": [
      {
@@ -126,6 +137,13 @@
    },
    "VNGeometryUtils": {
     "methods": [
+     {
+      "selector": "normalizedPoints",
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true
+      }
+     },
      {
       "selector": "calculateArea:forContour:orientedArea:error:",
       "class_method": true,

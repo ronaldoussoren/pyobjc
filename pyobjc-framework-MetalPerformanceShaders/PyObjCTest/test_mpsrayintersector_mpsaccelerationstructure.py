@@ -9,7 +9,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
     def test_structs(self):
         self.assertEqual(
             MetalPerformanceShaders.MPSAxisAlignedBoundingBox.__typestr__,
-            b"{_MPSAxisAlignedBoundingBox=<3f><3f>",
+            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
         )
         v = MetalPerformanceShaders.MPSAxisAlignedBoundingBox()
         self.assertIs(v.min, None)
@@ -17,7 +17,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSRayOriginDirection.__typestr__,
-            b"{_MPSRayOriginDirection=<3f><3f>",
+            b"{_MPSRayOriginDirection=<3f><3f>}",
         )
         v = MetalPerformanceShaders.MPSRayOriginDirection()
         self.assertIs(v.origin, None)
@@ -25,7 +25,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexCoordinates.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>",
+            b"{_MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>}",
         )
         v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexCoordinates()
         self.assertIsInstance(v.distance, float)
@@ -34,7 +34,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>",
+            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}",
         )
         v = (
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates()
@@ -46,7 +46,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>",
+            b"{_MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}",
         )
         v = (
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates()
@@ -58,7 +58,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>",
+            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}",
         )
         v = (
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates()

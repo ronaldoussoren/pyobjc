@@ -3453,11 +3453,6 @@
      "already_cfretained": true
     }
    },
-   "CGColorSpaceCreateCalibratedGray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceCreateCalibratedRGB": {
     "args": {
      "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },

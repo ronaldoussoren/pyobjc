@@ -22,7 +22,7 @@ class TestSWHighlightCenter(TestCase):
         )
 
         self.assertArgIsBlock(
-            SharedWithYou.SWHighlightCenter.getHighlightForURL_completionHanlder_,
+            SharedWithYou.SWHighlightCenter.getHighlightForURL_completionHandler_,
             1,
             b"v@@",
         )

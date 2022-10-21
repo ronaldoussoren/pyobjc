@@ -8,12 +8,12 @@ class TestMDLMesh(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_,
             0,
-            simd.vector_float3.__typstr__,
+            simd.vector_float3.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_,
             1,
-            simd.vector_uint3.__typstr__,
+            simd.vector_uint3.__typestr__,
         )
         self.assertArgIsBOOL(
             ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_,
@@ -23,7 +23,7 @@ class TestMDLMesh(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_,
             0,
-            simd.vector_float3.__typstr__,
+            simd.vector_float3.__typestr__,
         )
         self.assertArgIsBOOL(
             ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_,
@@ -128,7 +128,7 @@ class TestMDLMesh(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMesh.initSphereWithExtent_segments_inwardNormals_geometryType_allocator_,
             1,
-            simd.vector_uiint2.__typestr__,
+            simd.vector_uint2.__typestr__,
         )
         self.assertArgIsBOOL(
             ModelIO.MDLMesh.initSphereWithExtent_segments_inwardNormals_geometryType_allocator_,
@@ -170,7 +170,7 @@ class TestMDLMesh(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMesh.initCapsuleWithExtent_cylinderSegments_hemisphereSegments_inwardNormals_geometryType_allocator_,
             0,
-            simd.vector_float2.__typestr__,
+            simd.vector_float3.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.MDLMesh.initCapsuleWithExtent_cylinderSegments_hemisphereSegments_inwardNormals_geometryType_allocator_,
@@ -187,7 +187,7 @@ class TestMDLMesh(TestCase):
             0,
             simd.vector_float3.__typestr__,
         )
-        self.assertArgIsBOOL(
+        self.assertArgHasType(
             ModelIO.MDLMesh.initConeWithExtent_segments_inwardNormals_cap_geometryType_allocator_,
             1,
             simd.vector_uint2.__typestr__,
@@ -202,7 +202,7 @@ class TestMDLMesh(TestCase):
             0,
             simd.vector_float3.__typestr__,
         )
-        self.assertArgIsBOOL(
+        self.assertArgHasType(
             ModelIO.MDLMesh.initPlaneWithExtent_segments_geometryType_allocator_,
             1,
             simd.vector_uint2.__typestr__,
@@ -225,7 +225,7 @@ class TestMDLMesh(TestCase):
         )  # noqa: B950
         self.assertArgIsBOOL(
             ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_,
-            5,
+            6,
         )  # noqa: B950
 
         pass
@@ -233,12 +233,3 @@ class TestMDLMesh(TestCase):
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsOut(ModelIO.MDLMesh.makeVerticesUniqueAndReturnError_, 0)
-
-        self.assertArgIsBOOL(
-            ModelIO.MDLMesh.initMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_,
-            2,
-        )
-        self.assertArgIsBOOL(
-            ModelIO.MDLMesh.newMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_,
-            2,
-        )

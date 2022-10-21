@@ -44,7 +44,7 @@ class TestMDLVoxelArray(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLVoxelArray.initWithData_boundingBox_,
+            ModelIO.MDLVoxelArray.initWithData_boundingBox_voxelExtent_,
             1,
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
         )
@@ -59,7 +59,7 @@ class TestMDLVoxelArray(TestCase):
         self.assertArgHasType(
             ModelIO.MDLVoxelArray.voxelBoundingBoxAtIndex_,
             0,
-            simd.vector_float4.__typestr__,
+            simd.vector_int4.__typestr__,
         )
 
         self.assertResultHasType(
@@ -67,6 +67,7 @@ class TestMDLVoxelArray(TestCase):
         )
         self.assertArgHasType(
             ModelIO.MDLVoxelArray.indexOfSpatialLocation_,
+            0,
             simd.vector_float3.__typestr__,
         )
 
@@ -75,16 +76,13 @@ class TestMDLVoxelArray(TestCase):
             simd.vector_float3.__typestr__,
         )
         self.assertArgHasType(
-            ModelIO.MDLVoxelArray.spatialLocationOfIndex_, simd.vector_int4.__typestr__
+            ModelIO.MDLVoxelArray.spatialLocationOfIndex_,
+            0,
+            simd.vector_int4.__typestr__,
         )
 
         self.assertResultHasType(
             ModelIO.MDLVoxelArray.voxelIndexExtent,
-            ModelIO.MDLVoxelIndexExtent.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.MDLVoxelArray.setVoxelIndexExtent_,
-            0,
             ModelIO.MDLVoxelIndexExtent.__typestr__,
         )
         self.assertArgHasType(

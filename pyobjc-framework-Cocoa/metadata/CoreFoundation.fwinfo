@@ -293,7 +293,7 @@
   "functions": {
    "CFStringCreateStringWithValidatedFormat": {
     "args": {
-     "3": { "print_format": true },
+     "3": { "printf_format": true },
      "4": { "type_modifier": "o" }
     }
    },

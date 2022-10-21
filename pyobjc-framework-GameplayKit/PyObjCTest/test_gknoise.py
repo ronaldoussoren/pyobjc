@@ -12,14 +12,14 @@ class TestGKNoise(TestCase):
         )
 
         self.assertArgHasType(
-            GameplayKit.GKNoise.valueAtPosition_, 0, simd.vector_float2.__tyepstr__
+            GameplayKit.GKNoise.valueAtPosition_, 0, simd.vector_float2.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKNoise.moveBy_, 0, simd.vector_double3.__tyepstr__
+            GameplayKit.GKNoise.moveBy_, 0, simd.vector_double3.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKNoise.scaleBy_, 0, simd.vector_double3.__tyepstr__
+            GameplayKit.GKNoise.scaleBy_, 0, simd.vector_double3.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKNoise.rotateBy_, 0, simd.vector_double3.__tyepstr__
+            GameplayKit.GKNoise.rotateBy_, 0, simd.vector_double3.__typestr__
         )

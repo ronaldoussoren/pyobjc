@@ -97,7 +97,7 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
 
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.rangesForUInt8Kernel,
-            b"^" + simd.vector_float2,
+            b"^" + simd.vector_float2.__typestr__,
         )
         self.assertResultIsVariableSize(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.rangesForUInt8Kernel
