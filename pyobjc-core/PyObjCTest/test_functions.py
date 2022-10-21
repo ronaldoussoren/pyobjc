@@ -90,7 +90,7 @@ class TestFunctions(TestCase):
         )
 
         if "Foundation" in sys.modules:
-            recttype = "Foundation.NSRect"
+            recttype = "CoreFoundation.CGRect"
         else:
             recttype = "CGRect"
 
