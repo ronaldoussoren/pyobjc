@@ -1274,6 +1274,7 @@ id _Nullable(PyObjCObject_GetObject)(PyObject* object)
     if (!PyObjCObject_Check(object)) {
         PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
                      Py_TYPE(object)->tp_name);
+        return nil;
     }
 
     return PyObjCObject_GetObject(object);
