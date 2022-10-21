@@ -318,8 +318,8 @@ static struct registry* _Nullable find_signature(const char* signature)
         return NULL;
     }
 
-    if (_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1)
-        == -1) {     // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1) == -1) {
         return NULL; // LCOV_EXCL_LINE
     }
     o = PyDict_GetItemWithError(signature_registry, key);
