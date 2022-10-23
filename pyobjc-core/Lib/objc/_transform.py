@@ -46,11 +46,11 @@ def transformCallable(name, value, class_object):
 
     # DWIM: Copy classmethod-ness and signature from
     # a pre-existing method on the class.
-    if selname is not None:
-        current = getattr(class_object, selname.decode(), None)
-        if isinstance(current, objc.selector):
-            isclass = current.isClassMethod
-            signature = current.signature
+    current = getattr(class_object, name, None)
+    if isinstance(current, objc.selector):
+        isclass = current.isClassMethod
+        signature = current.signature
+        selname = current.selector
 
     if isinstance(value, classmethod):
         # Unwrap "classmethod" instances.

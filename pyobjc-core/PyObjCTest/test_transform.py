@@ -7,6 +7,8 @@ import inspect
 import functools
 import sys
 
+from .test_vector_proxy import OC_Vector
+
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 
@@ -83,6 +85,14 @@ class TestObjCMethod(TestCase):
         self.assertEqual(my_method.signature, b"bar")
         self.assertIs(my_method.isclass, False)
 
+    def test_is_callable(self):
+        @_transform.objc_method(selector=b"foo", signature=b"bar", isclass=False)
+        def my_method(self):
+            return 42
+
+        o = my_method(4)
+        self.assertEqual(o, 42)
+
 
 class TestPythonMethod(TestCase):
     def test_exposed(self):
@@ -103,12 +113,23 @@ class TestPythonMethod(TestCase):
             _transform.python_method(42)
 
     def test_parens_no_args(self):
-        @_transform.python_method
+        @_transform.python_method()
         def my_method(self):
             pass
 
         self.assertIsInstance(my_method, _transform.python_method)
         self.assertIsInstance(my_method.__wrapped__, types.FunctionType)
+        self.assertNotHasAttr(my_method, "selector")
+        self.assertNotHasAttr(my_method, "signature")
+        self.assertNotHasAttr(my_method, "isclass")
+
+        @_transform.python_method()
+        @classmethod
+        def my_method(self):
+            pass
+
+        self.assertIsInstance(my_method, _transform.python_method)
+        self.assertIsInstance(my_method.__wrapped__, classmethod)
         self.assertNotHasAttr(my_method, "selector")
         self.assertNotHasAttr(my_method, "signature")
         self.assertNotHasAttr(my_method, "isclass")
@@ -130,6 +151,14 @@ class TestPythonMethod(TestCase):
 
         self.assertIsInstance(my_method, _transform.python_method)
         self.assertIsInstance(my_method.__wrapped__, classmethod)
+
+    def test_is_callable(self):
+        @_transform.python_method()
+        def my_method(self):
+            return 42
+
+        o = my_method(4)
+        self.assertEqual(o, 42)
 
 
 class TestTransformer(TestCase):
@@ -198,6 +227,13 @@ class TestTransformer(TestCase):
             self.assertIsInstance(out, classmethod)
             self.assertIs(out.__wrapped__, value.__wrapped__.callable)
 
+    def test_dont_transform_dunder_method(self):
+        def __dir__(self):
+            return []
+
+        out = self.transformer("__dir__", __dir__, NSObject)
+        self.assertIs(out, __dir__)
+
     def test_dont_transform_selector(self):
         with self.subTest("python selector"):
             value = objc.selector(lambda x: None, b"value", b"@@:")
@@ -264,6 +300,18 @@ class TestTransformer(TestCase):
         out = self.transformer("method_name", classmethod(method_name), NSObject)
         self.assertIsInstance(out, classmethod)
         self.assertIs(out.__wrapped__, method_name)
+
+        def other__method__name(self, a):
+            pass
+
+        out = self.transformer("other__method__name", other__method__name, NSObject)
+        self.assertIs(out, other__method__name)
+
+        out = self.transformer(
+            "other__method__name", classmethod(other__method__name), NSObject
+        )
+        self.assertIsInstance(out, classmethod)
+        self.assertIs(out.__wrapped__, other__method__name)
 
     def check_function_conversion(
         self, *, wrap_classmethod, inner_wrap=lambda x: x, outer_wrap=lambda x: x
@@ -499,6 +547,34 @@ class TestTransformer(TestCase):
             self.assertEqual(out.signature, b"@@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
+        with self.subTest("method with varargs"):
+
+            @outer_wrap
+            @wrap
+            @inner_wrap
+            def value(self, *args):
+                pass
+
+            out = self.transformer("aSelector:", value, NSObject)
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.selector, b"aSelector:")
+            self.assertEqual(out.signature, b"v@:@")
+            self.assertEqual(out.isClassMethod, wrap_classmethod)
+
+        with self.subTest("method with kwargs"):
+
+            @outer_wrap
+            @wrap
+            @inner_wrap
+            def value(self, **kwds):
+                pass
+
+            out = self.transformer("aSelector", value, NSObject)
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.selector, b"aSelector")
+            self.assertEqual(out.signature, b"v@:")
+            self.assertEqual(out.isClassMethod, wrap_classmethod)
+
     def test_function_to_selector(self):
         self.check_function_conversion(wrap_classmethod=False)
 
@@ -618,7 +694,7 @@ class TestTransformer(TestCase):
 
         with self.assertRaisesRegex(
             ValueError,
-            "'method_name' is an objc_method instance, but cannont determine Objective-C selector",
+            "'method_name' is an objc_method instance, but cannot determine Objective-C selector",
         ):
             _transform.transformCallable("method_name", method_name, NSObject)
 
@@ -707,6 +783,58 @@ class TestTransformer(TestCase):
         self.assertEqual(out.selector, b"value:")
         self.assertEqual(out.signature, b"@@:@")
         self.assertIs(out.isClassMethod, False)
+
+    def test_inherit_signature(self):
+        def method(self):
+            return 1
+
+        out = _transform.transformCallable("count", method, NSMutableArray)
+        self.assertIsInstance(out, objc.selector)
+        self.assertEqual(out.signature, objc._C_NSUInteger + b"@:")
+
+        out = _transform.transformCallable("alloc", method, NSMutableArray)
+        self.assertIsInstance(out, objc.selector)
+        self.assertTrue(out.isClassMethod)
+        self.assertEqual(out.signature, b"@@:")
+
+    def test_inherit_selector(self):
+        class Fake:
+            def method(self, a):
+                return 1
+
+            method = objc.selector(method, selector=b"other:", signature=b"d@:@")
+
+        def method(self, a):
+            return 1
+
+        out = _transform.transformCallable("method", method, Fake)
+        self.assertIsInstance(out, objc.selector)
+        self.assertEqual(out.signature, b"d@:@")
+        self.assertEqual(out.selector, b"other:")
+
+    def test_overridden_full_signature(self):
+        # Use OC_Vector... method to check that
+        # an override signature gets used.
+        def getVectorFloat3(self):
+            return 1
+
+        out = _transform.transformCallable(
+            "getVectorFloat3", getVectorFloat3, OC_Vector
+        )
+        self.assertIsInstance(out, objc.selector)
+        self.assertEqual(out.signature, b"<3f>@:")
+
+    def test_overriden_metadata(self):
+        # Check that defing a method that has custom
+        # metadata though objc.register* but isn't
+        # in the parent class gets the updated signature
+        self.fail()
+
+    def test_protocol_method(self):
+        self.fail()
+
+    def test_informal_protocol_method(self):
+        self.fail()
 
 
 class TestCTransformer(TestCase):
