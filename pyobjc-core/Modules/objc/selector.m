@@ -132,11 +132,15 @@ base_self(PyObject* _self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(base_signature_doc, "Objective-C signature for the method");
 
-static PyObject*
-base_signature(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable base_signature(PyObject* self,
+                                          void*     closure __attribute__((__unused__)))
 {
-    PyObjCSelector* self = (PyObjCSelector*)_self;
-    return PyBytes_FromString(self->sel_python_signature);
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(self);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    return PyBytes_FromString(methinfo->signature);
 }
 
 PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
@@ -181,6 +185,11 @@ base_signature_setter(PyObject* _self, PyObject* newVal,
 
     PyMem_Free((char*)self->base.sel_python_signature);
     self->base.sel_python_signature = t;
+
+    if (self->base.sel_methinfo != NULL) {
+        /* Native selector was changed, ensure the metadata gets updated */
+        Py_CLEAR(self->base.sel_methinfo);
+    }
     return 0;
 }
 
@@ -1060,13 +1069,24 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_native_signature = NULL;
 
     result->base.sel_selector = selector;
-    const char* tmp           = PyObjCUtil_Strdup(signature);
+
+    Py_ssize_t len = strlen(signature) + 1;
+    char*      tmp = PyMem_Malloc(len);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
+        PyErr_NoMemory();
         return NULL;
         // LCOV_EXCL_STOP
     }
+    if (PyObjCRT_SimplifySignature(signature, tmp, len) == -1) {
+        /* In some cases the runtime contains signatures that
+         * PyObjC cannot parse. Copy those as-is for easier introspection.
+         */
+        PyErr_Clear();
+        strcpy(tmp, signature);
+    }
+
     result->base.sel_python_signature = tmp;
     result->base.sel_native_signature = PyObjCUtil_Strdup(native_signature);
     if ( // LCOV_BR_EXCL_LINE
