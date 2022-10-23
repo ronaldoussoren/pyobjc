@@ -59,11 +59,12 @@ class PyOCTestTypeStr(TestCase):
             s.native_signature = b"v@:ii"
 
         # We know that the description signature isn't changed by default
-        self.assertEqual(s.signature, s.native_signature)
+        signature = b"".join(objc.splitSignature(s.native_signature))
+        self.assertEqual(s.signature, signature)
 
         # Check that changing s.signature doesn't affect s.native_signature
         try:
-            x = s.signature
+            x = s.native_signature
             s.signature = b"v@:ii"
             self.assertEqual(s.native_signature, x)
             self.assertEqual(s.signature, b"v@:ii")
