@@ -159,6 +159,7 @@ OBJECT_PROP(_getKey, PyObjC_getKey, NULL)
 OBJECT_PROP(_setKey, PyObjC_setKey, NULL)
 OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath, NULL)
 OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
+OBJECT_PROP(_transformCallable, PyObjC_transformCallable, NULL)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -202,6 +203,8 @@ static PyGetSetDef object_getset[] = {
     GETSET(_setKey, "Private helper used for KeyValueCoding support"),
     GETSET(_getKeyPath, "Private helper used for KeyValueCoding support"),
     GETSET(_setKeyPath, "Private helper used for KeyValueCoding support"),
+    GETSET(_transformCallable,
+           "Private helper used for transforming callables to selectors"),
     {
         .name = "_bundle_hack_used",
         .get  = bundle_hack_get,
