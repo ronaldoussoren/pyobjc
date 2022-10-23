@@ -1757,6 +1757,26 @@ static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
     }
 }
 
+static PyObject* _Nullable mod_informalProtocolForSelector(PyObject* _Nullable mod
+                                                           __attribute__((__unused__)),
+                                                           PyObject* value)
+{
+    SEL sel;
+    if (!PyBytes_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "value should be byte string");
+        return NULL;
+    }
+
+    sel              = sel_registerName(PyBytes_AS_STRING(value));
+    PyObject* result = PyObjCInformalProtocol_FindProtocol(sel);
+    if (result == NULL && !PyErr_Occurred()) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    Py_INCREF(result);
+    return result;
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -1973,6 +1993,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_O,
         .ml_doc   = "_registerVectorType(type)\n" CLINIC_SEP
                   "\nRegister SIMD type with the bridge.",
+    },
+    {
+        .ml_name  = "_informalProtocolForSelector",
+        .ml_meth  = (PyCFunction)mod_informalProtocolForSelector,
+        .ml_flags = METH_O,
+        .ml_doc   = "_informalProtocolForSelector(selname)\n" CLINIC_SEP
+                  "\nLook up informal protocol info for a selector.",
     },
     {
         .ml_name = NULL /* SENTINEL */

@@ -16,7 +16,7 @@ import dis
 __all__ = ("objc_method", "python_method")
 
 
-def transformCallable(name, value, class_object):
+def transformCallable(name, value, class_object, protocols):
     """
     Transform 'value' before it will be added to a class
 
@@ -38,11 +38,11 @@ def transformCallable(name, value, class_object):
     elif isinstance(value, python_method):
         return value.__wrapped__
 
-    isclass = False
+    isclass = None
     selname = default_selector(name)
     signature = None
 
-    # XXX: Deal with formal and informal protocols
+    # XXX: Deal with formal protocols (both directly specified and inherited)
 
     # DWIM: Copy classmethod-ness and signature from
     # a pre-existing method on the class.
@@ -112,6 +112,25 @@ def transformCallable(name, value, class_object):
     argcount = selname.count(b":")
 
     if signature is None:
+        # Look for the signature in an informal protocol when it
+        # isn't set by some other means.
+        informal = objc._informalProtocolForSelector(selname)
+        if informal is not None:
+            for meth in informal.selectors:
+                if meth.selector == selname:
+                    if isclass is not None and meth.isClassMethod != isclass:
+                        # "classmethod"-ness was explicitly set (inherit,
+                        # classmethod, or objc_method), ignore the informal
+                        # protocol if it doesn't match.
+                        continue
+
+                    signature = meth.signature
+                    isclass = meth.isClassMethod
+
+    if isclass is None:
+        isclass = False
+
+    if signature is None:
         # Calculate a default signature based on the selector shape
         if isinstance(value, (types.FunctionType, types.MethodType)):
             returns_object = returns_value(value)
@@ -125,6 +144,8 @@ def transformCallable(name, value, class_object):
             + (objc._C_ID * argcount)
         )
 
+    # All information for creating a selector is available, do a
+    # last consistency check.
     try:
         pysig = inspect.signature(value)
     except (ValueError, TypeError):

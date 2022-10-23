@@ -8,6 +8,7 @@ import functools
 import sys
 
 from .test_vector_proxy import OC_Vector
+from . import test_protocol  # noqa: F401
 
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -167,20 +168,20 @@ class TestTransformer(TestCase):
     def test_dont_transform_values(self):
         for value in ([], (), {}, set(), 0, 54.5, True):
             with self.subTest(value=value):
-                out = self.transformer("value", value, NSObject)
+                out = self.transformer("value", value, NSObject, [])
                 self.assertIs(out, value)
 
     def test_dont_transform_types(self):
         for value in (int, NSObject):
             with self.subTest(value=value):
-                out = self.transformer("value", value, NSObject)
+                out = self.transformer("value", value, NSObject, [])
                 self.assertIs(out, value)
 
     def test_dont_transform_staticmethod(self):
         value = staticmethod(lambda x: None)
         self.assertIsInstance(value, staticmethod)
 
-        out = self.transformer("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
     def test_dont_transform_python_method(self):
@@ -188,20 +189,20 @@ class TestTransformer(TestCase):
             value = _transform.python_method(lambda x: None)
             self.assertIsInstance(value, _transform.python_method)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value.__wrapped__)
 
         with self.subTest("@python_method(classmethod())"):
             value = _transform.python_method(classmethod(lambda x: None))
             self.assertIsInstance(value, _transform.python_method)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value.__wrapped__)
 
         with self.subTest("@classmethod(python_method())"):
             value = classmethod(_transform.python_method(lambda x: None))
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, classmethod)
             self.assertIs(out.__wrapped__, value.__wrapped__.__wrapped__)
 
@@ -210,20 +211,20 @@ class TestTransformer(TestCase):
             value = objc.python_method(lambda x: None)
             self.assertIsInstance(value, objc.python_method)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value.callable)
 
         with self.subTest("@python_method(classmethod())"):
             value = objc.python_method(classmethod(lambda x: None))
             self.assertIsInstance(value, objc.python_method)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value.callable)
 
         with self.subTest("@classmethod(python_method())"):
             value = classmethod(objc.python_method(lambda x: None))
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, classmethod)
             self.assertIs(out.__wrapped__, value.__wrapped__.callable)
 
@@ -231,7 +232,7 @@ class TestTransformer(TestCase):
         def __dir__(self):
             return []
 
-        out = self.transformer("__dir__", __dir__, NSObject)
+        out = self.transformer("__dir__", __dir__, NSObject, [])
         self.assertIs(out, __dir__)
 
     def test_dont_transform_selector(self):
@@ -239,14 +240,14 @@ class TestTransformer(TestCase):
             value = objc.selector(lambda x: None, b"value", b"@@:")
             self.assertIsInstance(value, objc.selector)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value)
 
         with self.subTest("native class selector"):
             value = NSObject.description
             self.assertIsInstance(value, objc.selector)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value)
 
         o = NSObject.alloc().init()
@@ -254,38 +255,38 @@ class TestTransformer(TestCase):
             value = o.description
             self.assertIsInstance(value, objc.selector)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value)
 
         with self.subTest("native unbound instance selector"):
             value = o.pyobjc_instanceMethods.description
             self.assertIsInstance(value, objc.selector)
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIs(out, value)
 
     def test_dont_convert_generators(self):
         def value(self):
             yield 1
 
-        out = self.transformer("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
         value = value(1)
-        out = self.transformer("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
     def test_dont_convert_async_function(self):
         async def value(self):
             pass
 
-        out = self.transformer("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
         # XXX: Should arange to "await" value(1) to avoid
         # runtime error in tests
         value = value(1)
-        out = self.transformer("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
     def test_dont_convert_if_methodname_does_not_match(self):
@@ -294,21 +295,21 @@ class TestTransformer(TestCase):
         def method_name(self, a, b):
             pass
 
-        out = self.transformer("method_name", method_name, NSObject)
+        out = self.transformer("method_name", method_name, NSObject, [])
         self.assertIs(out, method_name)
 
-        out = self.transformer("method_name", classmethod(method_name), NSObject)
+        out = self.transformer("method_name", classmethod(method_name), NSObject, [])
         self.assertIsInstance(out, classmethod)
         self.assertIs(out.__wrapped__, method_name)
 
         def other__method__name(self, a):
             pass
 
-        out = self.transformer("other__method__name", other__method__name, NSObject)
+        out = self.transformer("other__method__name", other__method__name, NSObject, [])
         self.assertIs(out, other__method__name)
 
         out = self.transformer(
-            "other__method__name", classmethod(other__method__name), NSObject
+            "other__method__name", classmethod(other__method__name), NSObject, []
         )
         self.assertIsInstance(out, classmethod)
         self.assertIs(out.__wrapped__, other__method__name)
@@ -331,7 +332,7 @@ class TestTransformer(TestCase):
             def value(self):
                 return 1
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"@@:")
@@ -347,7 +348,7 @@ class TestTransformer(TestCase):
                     return
                 return 1
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"@@:")
@@ -361,7 +362,7 @@ class TestTransformer(TestCase):
             def value(self, a):
                 return 1
 
-            out = self.transformer("value:", value, NSObject)
+            out = self.transformer("value:", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value:")
             self.assertEqual(out.signature, b"@@:@")
@@ -375,7 +376,7 @@ class TestTransformer(TestCase):
             def value(self):
                 return
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"v@:")
@@ -389,7 +390,7 @@ class TestTransformer(TestCase):
             def value(self):
                 pass
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"v@:")
@@ -406,7 +407,7 @@ class TestTransformer(TestCase):
             with self.assertRaisesRegex(
                 ValueError, "'value' expects 0 arguments, .* has 1 positional arguments"
             ):
-                self.transformer("value", value, NSObject)
+                self.transformer("value", value, NSObject, [])
 
         with self.subTest("too many positional arguments [2]"):
 
@@ -420,7 +421,7 @@ class TestTransformer(TestCase):
                 ValueError,
                 "'value:' expects 1 arguments, .* has 2 positional arguments",
             ):
-                self.transformer("value:", value, NSObject)
+                self.transformer("value:", value, NSObject, [])
 
         with self.subTest("too many positional arguments [3]"):
 
@@ -434,7 +435,7 @@ class TestTransformer(TestCase):
                 ValueError,
                 "'value:' expects 1 arguments, .* has between 2 and 4 positional arguments",
             ):
-                self.transformer("value:", value, NSObject)
+                self.transformer("value:", value, NSObject, [])
 
         with self.subTest("positional optional arguments [1]"):
 
@@ -444,7 +445,7 @@ class TestTransformer(TestCase):
             def value(self, a=1):
                 pass
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"v@:")
@@ -458,7 +459,7 @@ class TestTransformer(TestCase):
             def value(self, a=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject)
+            out = self.transformer("value:", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value:")
             self.assertEqual(out.signature, b"v@:@")
@@ -472,7 +473,7 @@ class TestTransformer(TestCase):
             def value(self, a, b=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject)
+            out = self.transformer("value:", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value:")
             self.assertEqual(out.signature, b"v@:@")
@@ -486,7 +487,7 @@ class TestTransformer(TestCase):
             def value(self, a=1, b=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject)
+            out = self.transformer("value:", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value:")
             self.assertEqual(out.signature, b"v@:@")
@@ -504,7 +505,7 @@ class TestTransformer(TestCase):
                 ValueError,
                 "'value:' expects 1 arguments, .* has 0 positional arguments",
             ):
-                self.transformer("value_", value, NSObject)
+                self.transformer("value_", value, NSObject, [])
 
         with self.subTest("keyword only"):
 
@@ -517,7 +518,7 @@ class TestTransformer(TestCase):
             with self.assertRaisesRegex(
                 ValueError, "has 1 keyword-only arguments without a default"
             ):
-                self.transformer("value", value, NSObject)
+                self.transformer("value", value, NSObject, [])
 
         with self.subTest("keyword only with default"):
 
@@ -527,7 +528,7 @@ class TestTransformer(TestCase):
             def value(self, *, kw=1):
                 return 1
 
-            out = self.transformer("value", value, NSObject)
+            out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"value")
             self.assertEqual(out.signature, b"@@:")
@@ -541,7 +542,7 @@ class TestTransformer(TestCase):
             def value(self):
                 return 1
 
-            out = self.transformer("aSelector", value, NSObject)
+            out = self.transformer("aSelector", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector")
             self.assertEqual(out.signature, b"@@:")
@@ -555,7 +556,7 @@ class TestTransformer(TestCase):
             def value(self, *args):
                 pass
 
-            out = self.transformer("aSelector:", value, NSObject)
+            out = self.transformer("aSelector:", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector:")
             self.assertEqual(out.signature, b"v@:@")
@@ -569,7 +570,7 @@ class TestTransformer(TestCase):
             def value(self, **kwds):
                 pass
 
-            out = self.transformer("aSelector", value, NSObject)
+            out = self.transformer("aSelector", value, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector")
             self.assertEqual(out.signature, b"v@:")
@@ -599,7 +600,7 @@ class TestTransformer(TestCase):
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for Helper")
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"v@:")
@@ -608,17 +609,17 @@ class TestTransformer(TestCase):
         with self.assertRaisesRegex(
             ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            _transform.transformCallable("value:", value, NSObject)
+            self.transformer("value:", value, NSObject, [])
 
         value = Helper().method2
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
         value = Helper.classhelper
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"v@:")
@@ -639,7 +640,7 @@ class TestTransformer(TestCase):
         def value(self):
             pass
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"v@:")
@@ -649,7 +650,7 @@ class TestTransformer(TestCase):
         def value(self):
             return 1
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"f@:")
@@ -659,7 +660,7 @@ class TestTransformer(TestCase):
         def value(self):
             return 1
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"other")
         self.assertEqual(out.signature, b"@@:")
@@ -674,7 +675,7 @@ class TestTransformer(TestCase):
             ValueError,
             "'value' is objc_method with isclass specified wraps classmethod",
         ):
-            _transform.transformCallable("value", value, NSObject)
+            self.transformer("value", value, NSObject, [])
 
         @_transform.objc_method(isclass=False)
         @classmethod
@@ -685,7 +686,7 @@ class TestTransformer(TestCase):
             ValueError,
             "'value' is objc_method with isclass specified wraps classmethod",
         ):
-            _transform.transformCallable("value", value, NSObject)
+            self.transformer("value", value, NSObject, [])
 
         @_transform.objc_method(isclass=False)
         @classmethod
@@ -696,7 +697,7 @@ class TestTransformer(TestCase):
             ValueError,
             "'method_name' is an objc_method instance, but cannot determine Objective-C selector",
         ):
-            _transform.transformCallable("method_name", method_name, NSObject)
+            self.transformer("method_name", method_name, NSObject, [])
 
     def test_partial_to_selector(self):
         def base(a, b):
@@ -709,7 +710,7 @@ class TestTransformer(TestCase):
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for partial")
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"@@:")
@@ -718,7 +719,7 @@ class TestTransformer(TestCase):
         with self.assertRaisesRegex(
             ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            _transform.transformCallable("value:", value, NSObject)
+            self.transformer("value:", value, NSObject, [])
 
     def test_callable_with_signature_to_selector(self):
         class Callable:
@@ -731,7 +732,7 @@ class TestTransformer(TestCase):
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for Callable")
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"@@:")
@@ -740,7 +741,7 @@ class TestTransformer(TestCase):
         with self.assertRaisesRegex(
             ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            _transform.transformCallable("value:", value, NSObject)
+            self.transformer("value:", value, NSObject, [])
 
     def test_callable_without_signature_to_selector(self):
         class Callable:
@@ -755,13 +756,13 @@ class TestTransformer(TestCase):
         with self.assertRaises((ValueError, TypeError)):
             inspect.signature(value)
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
-        out = _transform.transformCallable("value:", value, NSObject)
+        out = self.transformer("value:", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value:")
         self.assertEqual(out.signature, b"@@:@")
@@ -772,13 +773,13 @@ class TestTransformer(TestCase):
         with self.assertRaises((ValueError, TypeError)):
             inspect.signature(value)
 
-        out = _transform.transformCallable("value", value, NSObject)
+        out = self.transformer("value", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
-        out = _transform.transformCallable("value:", value, NSObject)
+        out = self.transformer("value:", value, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"value:")
         self.assertEqual(out.signature, b"@@:@")
@@ -788,11 +789,11 @@ class TestTransformer(TestCase):
         def method(self):
             return 1
 
-        out = _transform.transformCallable("count", method, NSMutableArray)
+        out = self.transformer("count", method, NSMutableArray, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.signature, objc._C_NSUInteger + b"@:")
 
-        out = _transform.transformCallable("alloc", method, NSMutableArray)
+        out = self.transformer("alloc", method, NSMutableArray, [])
         self.assertIsInstance(out, objc.selector)
         self.assertTrue(out.isClassMethod)
         self.assertEqual(out.signature, b"@@:")
@@ -807,7 +808,7 @@ class TestTransformer(TestCase):
         def method(self, a):
             return 1
 
-        out = _transform.transformCallable("method", method, Fake)
+        out = self.transformer("method", method, Fake, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.signature, b"d@:@")
         self.assertEqual(out.selector, b"other:")
@@ -818,9 +819,7 @@ class TestTransformer(TestCase):
         def getVectorFloat3(self):
             return 1
 
-        out = _transform.transformCallable(
-            "getVectorFloat3", getVectorFloat3, OC_Vector
-        )
+        out = self.transformer("getVectorFloat3", getVectorFloat3, OC_Vector, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.signature, b"<3f>@:")
 
@@ -834,7 +833,54 @@ class TestTransformer(TestCase):
         self.fail()
 
     def test_informal_protocol_method(self):
-        self.fail()
+        # Defined MyProto3 from test_protocols
+        def testMethod(self):
+            return 1
+
+        with self.subTest("basic case"):
+            out = self.transformer("testMethod", testMethod, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"I@:")
+
+        #
+        # Informal protocol should only affect methods that have
+        # better information (inherited, classmethod or objc_method)
+        #
+
+        with self.subTest("objc_method sets sigature"):
+            m = _transform.objc_method(signature=b"d@:")(testMethod)
+            out = self.transformer("testMethod", m, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"d@:")
+
+        with self.subTest("objc_method sets isclass to True"):
+            m = _transform.objc_method(isclass=True)(testMethod)
+            out = self.transformer("testMethod", m, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertEqual(out.signature, b"@@:")
+
+        with self.subTest("explicit class method"):
+            m = classmethod(testMethod)
+            out = self.transformer("testMethod", m, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertEqual(out.signature, b"@@:")
+
+        class Fake:
+            def testMethod(self):
+                return 1
+
+            testMethod = objc.selector(
+                testMethod, selector=b"testMethod", signature=b"f@:"
+            )
+
+        with self.subTest("inherited method"):
+            self.assertIsInstance(testMethod, types.FunctionType)
+            out = self.transformer("testMethod", testMethod, Fake, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.signature, b"f@:")
 
 
 class TestCTransformer(TestCase):
