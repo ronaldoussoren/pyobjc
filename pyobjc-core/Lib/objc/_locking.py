@@ -15,6 +15,11 @@ class object_lock:
 
     The mutex for object ``anObject`` is represented by
     ``objc.object_lock(anObject)``.
+
+    Usage:
+
+        with object_lock(anObject):
+            ...
     """
 
     def __init__(self, value):
