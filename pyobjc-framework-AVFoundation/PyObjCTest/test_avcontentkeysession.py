@@ -1,6 +1,5 @@
 import AVFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
-from PyObjCTools.TestSupport import expectedFailure
 
 
 class TestAVContentKeySessionHelper(AVFoundation.NSObject):
@@ -94,7 +93,6 @@ class TestAVContentKeySession(TestCase):
             b"v@@",
         )
 
-    @expectedFailure
     @min_os_level("10.14")
     def testMethods10_14(self):
         # Documented as available...

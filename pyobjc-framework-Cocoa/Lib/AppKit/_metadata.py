@@ -1276,7 +1276,7 @@ try:
             "arguments": {
                 2: {
                     "callable": {
-                        "retval": {"type": b"v"},
+                        "retval": {"type": b"Z"},
                         "arguments": {0: {"type": b"^v"}},
                     }
                 }

@@ -22,7 +22,6 @@ class TestCFFileSecurity(TestCase):
         self.fail("kCFFileSecurityRemoveACL")
 
     @min_os_level("10.8")
-    @expectedFailure
     def testConstants10_8(self):
         self.assertEqual(CoreFoundation.kCFFileSecurityClearOwner, 1 << 0)
         self.assertEqual(CoreFoundation.kCFFileSecurityClearGroup, 1 << 1)

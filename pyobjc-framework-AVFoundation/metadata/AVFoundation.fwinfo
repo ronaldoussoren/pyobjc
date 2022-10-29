@@ -14,6 +14,7 @@
    }
   },
   "typed_enum": {
+   "AVAudioSequencerInfoDictionaryKey": { "type": "@", "type_name": "NSString" },
    "AVPlayerInterstitialEventCue": { "type": "@", "type_name": "NSString" },
    "AVAssetWriterInputMediaDataLocation": { "type": "@", "type_name": "NSString" },
    "AVAssetImageGeneratorApertureMode": { "type": "@", "type_name": "NSString" },
@@ -44,6 +45,15 @@
    "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" }
   },
   "enum_type": {
+   "AVMIDIMetaEventType": {
+    "type": "q"
+   },
+   "AVMIDIControlChangeMessageType": {
+    "type": "q"
+   },
+   "AVSpeechSynthesisMarkerMark": {
+    "type": "q"
+   },
    "AVAudioStereoOrientation": {
     "type": "q"
    },
@@ -157,6 +167,61 @@
    }
   },
   "enum": {
+   "AVMIDIControlChangeMessageTypeBankSelect": { "value": 0 },
+   "AVMIDIControlChangeMessageTypeModWheel": { "value": 1 },
+   "AVMIDIControlChangeMessageTypeBreath": { "value": 2 },
+   "AVMIDIControlChangeMessageTypeFoot": { "value": 4 },
+   "AVMIDIControlChangeMessageTypePortamentoTime": { "value": 5 },
+   "AVMIDIControlChangeMessageTypeDataEntry": { "value": 6 },
+   "AVMIDIControlChangeMessageTypeVolume": { "value": 7 },
+   "AVMIDIControlChangeMessageTypeBalance": { "value": 8 },
+   "AVMIDIControlChangeMessageTypePan": { "value": 10 },
+   "AVMIDIControlChangeMessageTypeExpression": { "value": 11 },
+   "AVMIDIControlChangeMessageTypeSustain": { "value": 64 },
+   "AVMIDIControlChangeMessageTypePortamento": { "value": 65 },
+   "AVMIDIControlChangeMessageTypeSostenuto": { "value": 66 },
+   "AVMIDIControlChangeMessageTypeSoft": { "value": 67 },
+   "AVMIDIControlChangeMessageTypeLegatoPedal": { "value": 68 },
+   "AVMIDIControlChangeMessageTypeHold2Pedal": { "value": 69 },
+   "AVMIDIControlChangeMessageTypeFilterResonance": { "value": 71 },
+   "AVMIDIControlChangeMessageTypeReleaseTime": { "value": 72 },
+   "AVMIDIControlChangeMessageTypeAttackTime": { "value": 73 },
+   "AVMIDIControlChangeMessageTypeBrightness": { "value": 74 },
+   "AVMIDIControlChangeMessageTypeDecayTime": { "value": 75 },
+   "AVMIDIControlChangeMessageTypeVibratoRate": { "value": 76 },
+   "AVMIDIControlChangeMessageTypeVibratoDepth": { "value": 77 },
+   "AVMIDIControlChangeMessageTypeVibratoDelay": { "value": 78 },
+   "AVMIDIControlChangeMessageTypeReverbLevel": { "value": 91 },
+   "AVMIDIControlChangeMessageTypeChorusLevel": { "value": 93 },
+   "AVMIDIControlChangeMessageTypeRPN_LSB": { "value": 100 },
+   "AVMIDIControlChangeMessageTypeRPN_MSB": { "value": 101 },
+   "AVMIDIControlChangeMessageTypeAllSoundOff": { "value": 120 },
+   "AVMIDIControlChangeMessageTypeResetAllControllers": { "value": 121 },
+   "AVMIDIControlChangeMessageTypeAllNotesOff": { "value": 123},
+   "AVMIDIControlChangeMessageTypeOmniModeOff": { "value": 124},
+   "AVMIDIControlChangeMessageTypeOmniModeOn": { "value": 125},
+   "AVMIDIControlChangeMessageTypeMonoModeOn": { "value": 126},
+   "AVMIDIControlChangeMessageTypeMonoModeOff": { "value": 127},
+   "AVMIDIMetaEventTypeSequenceNumber": { "value": 0},
+   "AVMIDIMetaEventTypeText": { "value": 1},
+   "AVMIDIMetaEventTypeCopyright": { "value": 2},
+   "AVMIDIMetaEventTypeTrackName": { "value": 3},
+   "AVMIDIMetaEventTypeInstrument": { "value": 4},
+   "AVMIDIMetaEventTypeLyric": { "value": 5},
+   "AVMIDIMetaEventTypeMarker": { "value": 6},
+   "AVMIDIMetaEventTypeCuePoint": { "value": 7},
+   "AVMIDIMetaEventTypeMidiChannel": { "value": 32},
+   "AVMIDIMetaEventTypeMidiPort": { "value": 33},
+   "AVMIDIMetaEventTypeEndOfTrack": { "value": 47},
+   "AVMIDIMetaEventTypeTempo": { "value": 81},
+   "AVMIDIMetaEventTypeSmpteOffset": { "value": 84},
+   "AVMIDIMetaEventTypeTimeSignature": { "value": 88},
+   "AVMIDIMetaEventTypeKeySignature": { "value": 89},
+   "AVMIDIMetaEventTypeProprietaryEvent": { "value": 127},
+   "AVSpeechSynthesisMarkerMarkPhoneme": { "value": 0 },
+   "AVSpeechSynthesisMarkerMarkWord": { "value": 1 },
+   "AVSpeechSynthesisMarkerMarkSentence": { "value": 2 },
+   "AVSpeechSynthesisMarkerMarkParagraph": { "value": 3 },
    "AVVariantPreferenceNone": { "value": 0 },
    "AVVariantPreferenceScalabilityToLosslessAudio": { "value": 1 },
    "AVPlayerInterstitialEventRestrictionNone": { "value": 0 },
@@ -195,6 +260,29 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVExtendedNoteOnEventDefaultInstrument": { "typestr": "I" },
+   "AVAudioSequencerInfoDictionaryKeyAlbum": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyApproximateDurationInSeconds": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyArtist": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyChannelLayout": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyComments": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyComposer": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyCopyright": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyEncodingApplication": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyGenre": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyISRC": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyKeySignature": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyLyricist": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyNominalBitRate": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyRecordedDate": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeySourceBitDepth": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeySourceEncoder": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeySubTitle": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyTempo": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyTimeSignature": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyTitle": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyTrackNumber": { "typestr": "@" },
+   "AVAudioSequencerInfoDictionaryKeyYear": { "typestr": "@" },
    "AVSampleBufferAudioRendererOutputConfigurationDidChangeNotification": { "typestr": "@" },
    "AVAssetDownloadTaskPrefersLosslessAudioKey": { "typestr": "@" },
    "AVPlayerWaitingDuringInterstitialEventReason": { "typestr": "@" },
@@ -268,6 +356,7 @@
    "AVFileType3GPP2": { "typestr": "@" }
   },
   "aliases": {
+   "AVMusicTimeStampEndOfTrack": { "alias": "DBL_MAX" },
    "AVLinearPCMIsNonInterleavedKey": { "alias": "AVLinearPCMIsNonInterleaved" },
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
@@ -327,6 +416,7 @@
    },
    "AVAudioSession":  {
     "methods": [
+
      {
       "selector": "setMode:error:",
       "class_method": false,
@@ -465,8 +555,66 @@
      }
     ]
    },
+   "AVSpeechSynthesisProviderAudioUnit": {
+    "methods": [
+     {
+      "selector": "speechSynthesisOutputMetadataBlock",
+      "class_method": false,
+      "retval": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+      }
+     },
+     {
+      "selector": "setSpeechSynthesisOutputMetadataBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     }
+    ]
+   },
    "AVSpeechSynthesizer": {
     "methods": [
+     {
+      "selector": "writeUtterance:toBufferCallback:toMarkerCallback:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 }
+        }
+       },
+       "2": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
      {
       "selector": "writeUtterance:toBufferCallback:",
       "class_method": false,
@@ -776,7 +924,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "{_CMTime=qiIq}" },
-	  "2": { "typestr": "^{__CGImage}" },
+	  "2": { "typestr": "^{CGImage=}" },
 	  "3": { "typestr": "{_CMTime=qiIq}" },
 	  "4": { "typestr": ["i", "q"] }
 	 },
@@ -1158,6 +1306,40 @@
    },
    "AVAudioEngine": {
     "methods": [
+     {
+      "selector": "connectMIDI:toNodes:format:eventListBlock:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "retval": { "typestr": "i" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Q" },
+	  "2": { "typestr": "z" },
+	  "3": { "typestr": "^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"}
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "connectMIDI:to:format:eventListBlock:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "retval": { "typestr": "i" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Q" },
+	  "2": { "typestr": "z" },
+	  "3": { "typestr": "^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"}
+	 }
+	}
+       }
+      }
+     },
      {
       "selector": "connectMIDI:toNodes:format:block:",
       "class_method": false,
@@ -2191,6 +2373,35 @@
    "AVMusicTrack": {
     "methods": [
      {
+      "selector": "enumerateEventsInRange:usingBlock:",
+      "class_method": false,
+      "args": {
+       "1": {
+       "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "N^d" },
+	  "3": { "typestr": "N^Z" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "usesAutomatedParameters"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setUsesAutomatedParameters:"
+     },
+     {
       "class_method": false,
       "retval": { "type_override": "Z" },
       "selector": "isLoopingEnabled"
@@ -2724,6 +2935,22 @@
       "selector": "createSampleBufferForRequest:"
      },
      {
+      "class_method": false,
+      "retval": {},
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "selector": "createSampleBufferForRequest:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "selector": "createSampleBufferForRequest:addingToBatch:error:"
+     },
+     {
       "args": {
        "1": {
         "callable": {
@@ -2907,6 +3134,30 @@
    },
    "AVAudioSequencer": {
     "methods": [
+     {
+      "selector": "setUserCallback:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "d" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeTrack:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "retval": { "type_override": "Z" },
       "args": {

@@ -19,16 +19,16 @@ class TestAVCapturePhotoOutput(TestCase):
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.preservesLivePhotoCaptureSuspendedOnSessionStop
+            AVFoundation.AVCapturePhotoOutput.preservesLivePhotoCaptureSuspendedOnSessionStop
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
+            AVFoundation.AVCapturePhotoOutput.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
             0,
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings_Tundra.preservesLivePhotoCaptureSuspendedOnSessionStop
+            AVFoundation.AVCapturePhotoOutput.preservesLivePhotoCaptureSuspendedOnSessionStop
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCapturePhotoSettings_Tundra.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
+            AVFoundation.AVCapturePhotoOutput.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
             0,
         )
