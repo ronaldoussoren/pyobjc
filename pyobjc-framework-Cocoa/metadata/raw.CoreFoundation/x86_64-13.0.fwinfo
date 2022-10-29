@@ -11810,7 +11810,6 @@
      },
      {
       "name": "formatOptions",
-      "printf_format": true,
       "typestr": "^{__CFDictionary=}"
      },
      {

@@ -162,6 +162,11 @@ Version 9.0a1
 * Move helpers for NSInvocation from pyobjc-framework-Cocoa to
   pyobjc-core.
 
+* #505: Don't use static buffer during creation of "native" selector objects
+
+  This can avoid an ``objc.error`` exception when introspecting existing
+  Cocoa classes.
+
 Version 8.6
 -----------
 

@@ -1352,11 +1352,13 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
      */
     r = PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
     if (r == -1) {
+        PyErr_Clear();
         return 0;
     }
 
     r = PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
     if (r == -1) {
+        PyErr_Clear();
         return 0;
     }
     return strcmp(buf1, buf2) == 0;
