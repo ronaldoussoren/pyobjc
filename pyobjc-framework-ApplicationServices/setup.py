@@ -12,7 +12,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "9.0a1"
+VERSION = "9.0"
 
 setup(
     name="pyobjc-framework-ApplicationServices",

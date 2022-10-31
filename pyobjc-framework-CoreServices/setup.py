@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "9.0a1"
+VERSION = "9.0"
 
 subpackages = [
     f"CoreServices.{fn}"

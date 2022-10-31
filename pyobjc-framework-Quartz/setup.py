@@ -53,7 +53,7 @@ subpackages = [
     if os.path.exists(os.path.join("Lib/Quartz", fn, "__init__.py"))
 ]
 
-VERSION = "9.0a1"
+VERSION = "9.0"
 
 setup(
     name="pyobjc-framework-Quartz",

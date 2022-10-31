@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 9.0a1
--------------
+Version 9.0
+-----------
 
 * Support for macOS 13 (Xcode 14 beta 4)
 
