@@ -167,6 +167,9 @@ Version 9.0a1
   This can avoid an ``objc.error`` exception when introspecting existing
   Cocoa classes.
 
+* #479: Revert change that made it impossible to replace a method
+  with a property.
+
 Version 8.6
 -----------
 

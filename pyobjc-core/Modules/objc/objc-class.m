@@ -2036,6 +2036,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
         return 0;
     }
 
+#if 0 /* XXX: Disabled check due to #479 */
     /* Check if there is a current attribute with the same name that
      * is an unbound selector.
      */
@@ -2052,6 +2053,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 
         return -1;
     }
+#endif
 
     res = PyType_Type.tp_setattro(self, name, value);
     return res;
