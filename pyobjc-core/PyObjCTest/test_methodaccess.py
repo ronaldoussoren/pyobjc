@@ -293,7 +293,8 @@ class TestReplacingMethods(TestCase):
         ):
             o.description = 42
 
-    def test_replace_through_class(self):
+    def no_test_replace_through_class(self):
+        # XXX: #479
         with self.assertRaisesRegex(
             AttributeError,
             "Cannot replace selector 'alloc' in 'NSObject' by non-selector",
