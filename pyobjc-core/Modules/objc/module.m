@@ -1777,6 +1777,34 @@ static PyObject* _Nullable mod_informalProtocolForSelector(PyObject* _Nullable m
     return result;
 }
 
+static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable mod
+                                                             __attribute__((__unused__)),
+                                                             PyObject* args)
+{
+    PyObject* class;
+    char* pysel;
+    SEL   sel;
+
+    if (!PyArg_ParseTuple(args, "Oy", &class, &pysel)) {
+        return NULL;
+    }
+    if (!PyObjCClass_Check(class)) {
+        PyErr_SetString(PyExc_TypeError, "Expecting a class");
+        return NULL;
+    }
+
+    sel = sel_registerName(pysel);
+
+    PyObjCMethodSignature* sig =
+        PyObjCMethodSignature_GetRegistered(PyObjCClass_GetClass(class), sel);
+    if (sig == NULL) {
+        PyErr_Clear();
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    return PyObjCMethodSignature_AsDict(sig);
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -2000,6 +2028,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_O,
         .ml_doc   = "_informalProtocolForSelector(selname)\n" CLINIC_SEP
                   "\nLook up informal protocol info for a selector.",
+    },
+    {
+        .ml_name  = "_registeredMetadataForSelector",
+        .ml_meth  = (PyCFunction)mod_registeredMetadataForSelector,
+        .ml_flags = METH_VARARGS,
+        .ml_doc   = "_registeredMetadataForSelector(cls, selname)\n" CLINIC_SEP
+                  "\nLook up registered metadata info for a selector.",
     },
     {
         .ml_name = NULL /* SENTINEL */

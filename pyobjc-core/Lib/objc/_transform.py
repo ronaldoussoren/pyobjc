@@ -44,6 +44,11 @@ def transformCallable(name, value, class_object, protocols):
     selname = default_selector(name)
     signature = None
 
+    if selname is not None and isinstance(class_object, objc.objc_class):
+        registered = objc._registeredMetadataForSelector(class_object, selname)
+    else:
+        registered = None
+
     # XXX: Deal with formal protocols (both directly specified and inherited)
 
     # DWIM: Copy classmethod-ness and signature from
@@ -78,9 +83,12 @@ def transformCallable(name, value, class_object, protocols):
 
         if value.selector is not None:
             selname = value.selector
+            if isinstance(class_object, objc.objc_class):
+                registered = objc._registeredMetadataForSelector(class_object, selname)
 
         if value.signature is not None:
             signature = value.signature
+            registered = None
 
         if selname is None:
             raise ValueError(
@@ -101,6 +109,9 @@ def transformCallable(name, value, class_object, protocols):
             value = value.__wrapped__.__wrapped__
         else:
             value = value.__wrapped__
+
+    if registered and "full_signature" in registered:
+        signature = registered["full_signature"]
 
     if selname is None:
         # The 'name' does not fit into the selector naming
@@ -145,6 +156,22 @@ def transformCallable(name, value, class_object, protocols):
             + objc._C_SEL
             + (objc._C_ID * argcount)
         )
+
+        if registered:
+            overridden_rval = registered["retval"].get("type", None)
+            overridden_args = {}
+            for idx, a in enumerate(registered["arguments"]):
+                if a and "type" in a:
+                    overridden_args[idx] = a["type"]
+
+            if overridden_rval or overridden_args:
+                signature_parts = list(objc.splitSignature(signature))
+                if overridden_rval:
+                    signature_parts[0] = overridden_rval
+
+                for idx in overridden_args:
+                    signature_parts[idx + 1] = overridden_args[idx]
+                signature = b"".join(signature_parts)
 
     # All information for creating a selector is available, do a
     # last consistency check.

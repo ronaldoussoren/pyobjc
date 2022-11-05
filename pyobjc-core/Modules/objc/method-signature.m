@@ -1574,6 +1574,12 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     return determine_if_shortcut(methinfo);
 }
 
+PyObjCMethodSignature*
+PyObjCMethodSignature_GetRegistered(Class cls, SEL sel)
+{
+    return (PyObjCMethodSignature*)PyObjC_FindInRegistry(registry, cls, sel);
+}
+
 PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
     Class cls, BOOL isClassMethod, SEL sel, const char* signature,
     BOOL is_native __attribute__((__unused__)))
@@ -1798,6 +1804,13 @@ PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo
     result = PyDict_New();
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
+    }
+    if (methinfo->signature) {
+        v = PyBytes_FromString(methinfo->signature);
+        r = PyDict_SetItemString(result, "full_signature", v);
+        Py_DECREF(v);
+        if (r == -1)    // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
     }
     if (methinfo->variadic) {
         v = PyBool_FromLong(methinfo->variadic);

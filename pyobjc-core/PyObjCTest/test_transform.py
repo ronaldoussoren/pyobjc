@@ -845,7 +845,26 @@ class TestTransformer(TestCase):
             # Make sure the return value has a different size
             # than 'id' to ensure that this is not determined
             # post-constuction.
-            self.fail()
+            objc.registerMetaDataForSelector(
+                b"NSObject",
+                b"octransformreturningshort:withFloat:",
+                {
+                    "retval": {"type": objc._C_SHT},
+                    "arguments": {2 + 1: {"type": objc._C_FLT}},
+                },
+            )
+
+            def octransformreturningshort_(self, a, b):
+                return 1
+
+            out = self.transformer(
+                "octransformreturningshort:withFloat:",
+                octransformreturningshort_,
+                NSObject,
+                [],
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"s@:@f")
 
     def test_protocol_method(self):
         self.fail()
