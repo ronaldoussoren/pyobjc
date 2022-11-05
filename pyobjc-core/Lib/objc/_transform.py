@@ -8,6 +8,8 @@ The primary usecase is to transform callables to Objective-C selectors.
 # XXX: Needs to be verified against current C implementation.
 # XXX: Should the exception be ValueError or objc.error?
 #      the latter is more consistent with the rest of the bridge
+# XXX: Update the reference documentation as well to ensure
+#      that it is clear and up-to-date.
 import objc
 import types
 import inspect
@@ -212,7 +214,6 @@ def returns_value(func):
     # returns are of the form "return" or "return None". The
     # latter is a false negative, but cannot be avoided with
     # bytecode inspection.
-
     prev = None
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":

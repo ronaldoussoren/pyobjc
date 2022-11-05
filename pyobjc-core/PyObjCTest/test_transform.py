@@ -9,6 +9,7 @@ import sys
 
 from .test_vector_proxy import OC_Vector
 from . import test_protocol  # noqa: F401
+from . import test_vectorcall  # noqa: F401
 
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -329,12 +330,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 return 1
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"@@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -343,14 +344,14 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 if sys.version_info[0] == 0:
                     return
                 return 1
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"@@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -359,12 +360,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a):
+            def pyvalue(self, a):
                 return 1
 
-            out = self.transformer("value:", value, NSObject, [])
+            out = self.transformer("pyvalue:", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value:")
+            self.assertEqual(out.selector, b"pyvalue:")
             self.assertEqual(out.signature, b"@@:@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -373,12 +374,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 return
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"v@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -387,12 +388,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 pass
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"v@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -401,53 +402,54 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a):
+            def pyvalue(self, a):
                 pass
 
             with self.assertRaisesRegex(
-                ValueError, "'value' expects 0 arguments, .* has 1 positional arguments"
+                ValueError,
+                "'pyvalue' expects 0 arguments, .* has 1 positional arguments",
             ):
-                self.transformer("value", value, NSObject, [])
+                self.transformer("pyvalue", pyvalue, NSObject, [])
 
         with self.subTest("too many positional arguments [2]"):
 
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a, b):
+            def pyvalue(self, a, b):
                 pass
 
             with self.assertRaisesRegex(
                 ValueError,
-                "'value:' expects 1 arguments, .* has 2 positional arguments",
+                "'pyvalue:' expects 1 arguments, .* has 2 positional arguments",
             ):
-                self.transformer("value:", value, NSObject, [])
+                self.transformer("pyvalue:", pyvalue, NSObject, [])
 
         with self.subTest("too many positional arguments [3]"):
 
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a, b, c=4, d=5):
+            def pyvalue(self, a, b, c=4, d=5):
                 pass
 
             with self.assertRaisesRegex(
                 ValueError,
-                "'value:' expects 1 arguments, .* has between 2 and 4 positional arguments",
+                "'pyvalue:' expects 1 arguments, .* has between 2 and 4 positional arguments",
             ):
-                self.transformer("value:", value, NSObject, [])
+                self.transformer("pyvalue:", pyvalue, NSObject, [])
 
         with self.subTest("positional optional arguments [1]"):
 
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a=1):
+            def pyvalue(self, a=1):
                 pass
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"v@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -456,12 +458,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a=1):
+            def pyvalue(self, a=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject, [])
+            out = self.transformer("pyvalue:", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value:")
+            self.assertEqual(out.selector, b"pyvalue:")
             self.assertEqual(out.signature, b"v@:@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -470,12 +472,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a, b=1):
+            def pyvalue(self, a, b=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject, [])
+            out = self.transformer("pyvalue:", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value:")
+            self.assertEqual(out.selector, b"pyvalue:")
             self.assertEqual(out.signature, b"v@:@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -484,12 +486,12 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, a=1, b=1):
+            def pyvalue(self, a=1, b=1):
                 pass
 
-            out = self.transformer("value:", value, NSObject, [])
+            out = self.transformer("pyvalue:", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value:")
+            self.assertEqual(out.selector, b"pyvalue:")
             self.assertEqual(out.signature, b"v@:@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -498,39 +500,39 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 pass
 
             with self.assertRaisesRegex(
                 ValueError,
-                "'value:' expects 1 arguments, .* has 0 positional arguments",
+                "'pyvalue:' expects 1 arguments, .* has 0 positional arguments",
             ):
-                self.transformer("value_", value, NSObject, [])
+                self.transformer("pyvalue:", pyvalue, NSObject, [])
 
         with self.subTest("keyword only"):
 
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, *, kw):
+            def pyvalue(self, *, kw):
                 pass
 
             with self.assertRaisesRegex(
                 ValueError, "has 1 keyword-only arguments without a default"
             ):
-                self.transformer("value", value, NSObject, [])
+                self.transformer("pyvalue", pyvalue, NSObject, [])
 
         with self.subTest("keyword only with default"):
 
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, *, kw=1):
+            def pyvalue(self, *, kw=1):
                 return 1
 
-            out = self.transformer("value", value, NSObject, [])
+            out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
-            self.assertEqual(out.selector, b"value")
+            self.assertEqual(out.selector, b"pyvalue")
             self.assertEqual(out.signature, b"@@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
@@ -539,10 +541,10 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self):
+            def pyvalue(self):
                 return 1
 
-            out = self.transformer("aSelector", value, NSObject, [])
+            out = self.transformer("aSelector", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector")
             self.assertEqual(out.signature, b"@@:")
@@ -553,10 +555,10 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, *args):
+            def pyvalue(self, *args):
                 pass
 
-            out = self.transformer("aSelector:", value, NSObject, [])
+            out = self.transformer("aSelector:", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector:")
             self.assertEqual(out.signature, b"v@:@")
@@ -567,10 +569,10 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def value(self, **kwds):
+            def pyvalue(self, **kwds):
                 pass
 
-            out = self.transformer("aSelector", value, NSObject, [])
+            out = self.transformer("aSelector", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"aSelector")
             self.assertEqual(out.signature, b"v@:")
@@ -594,34 +596,34 @@ class TestTransformer(TestCase):
             def classhelper(self, a):
                 pass
 
-        value = Helper().method
+        pyvalue = Helper().method
         try:
-            inspect.signature(value)
+            inspect.signature(pyvalue)
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for Helper")
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"v@:")
         self.assertIs(out.isClassMethod, False)
 
         with self.assertRaisesRegex(
-            ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
+            ValueError, "'pyvalue:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            self.transformer("value:", value, NSObject, [])
+            self.transformer("pyvalue:", pyvalue, NSObject, [])
 
-        value = Helper().method2
-        out = self.transformer("value", value, NSObject, [])
+        pyvalue = Helper().method2
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
-        value = Helper.classhelper
-        out = self.transformer("value", value, NSObject, [])
+        pyvalue = Helper.classhelper
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"v@:")
         self.assertIs(out.isClassMethod, False)
 
@@ -637,30 +639,30 @@ class TestTransformer(TestCase):
         )
 
         @_transform.objc_method(isclass=True)
-        def value(self):
+        def pyvalue(self):
             pass
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"v@:")
         self.assertIs(out.isClassMethod, True)
 
         @_transform.objc_method(signature=b"f@:")
-        def value(self):
+        def pyvalue(self):
             return 1
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"f@:")
         self.assertIs(out.isClassMethod, False)
 
         @_transform.objc_method(selector=b"other")
-        def value(self):
+        def pyvalue(self):
             return 1
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertEqual(out.selector, b"other")
         self.assertEqual(out.signature, b"@@:")
@@ -668,25 +670,25 @@ class TestTransformer(TestCase):
 
         @_transform.objc_method(isclass=True)
         @classmethod
-        def value(self):
+        def pyvalue(self):
             return 1
 
         with self.assertRaisesRegex(
             ValueError,
-            "'value' is objc_method with isclass specified wraps classmethod",
+            "'pyvalue' is objc_method with isclass specified wraps classmethod",
         ):
-            self.transformer("value", value, NSObject, [])
+            self.transformer("pyvalue", pyvalue, NSObject, [])
 
         @_transform.objc_method(isclass=False)
         @classmethod
-        def value(self):
+        def pyvalue(self):
             return 1
 
         with self.assertRaisesRegex(
             ValueError,
-            "'value' is objc_method with isclass specified wraps classmethod",
+            "'pyvalue' is objc_method with isclass specified wraps classmethod",
         ):
-            self.transformer("value", value, NSObject, [])
+            self.transformer("pyvalue", pyvalue, NSObject, [])
 
         @_transform.objc_method(isclass=False)
         @classmethod
@@ -703,45 +705,45 @@ class TestTransformer(TestCase):
         def base(a, b):
             pass
 
-        value = functools.partial(base, 42)
+        pyvalue = functools.partial(base, 42)
 
         try:
-            inspect.signature(value)
+            inspect.signature(pyvalue)
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for partial")
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
         with self.assertRaisesRegex(
-            ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
+            ValueError, "'pyvalue:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            self.transformer("value:", value, NSObject, [])
+            self.transformer("pyvalue:", pyvalue, NSObject, [])
 
     def test_callable_with_signature_to_selector(self):
         class Callable:
             def __call__(self, a):
                 pass
 
-        value = Callable()
+        pyvalue = Callable()
         try:
-            inspect.signature(value)
+            inspect.signature(pyvalue)
         except (ValueError, TypeError):
             self.fail("Cannot create inspect.Signature for Callable")
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
         with self.assertRaisesRegex(
-            ValueError, "'value:' expects 1 arguments, .* has 0 positional arguments"
+            ValueError, "'pyvalue:' expects 1 arguments, .* has 0 positional arguments"
         ):
-            self.transformer("value:", value, NSObject, [])
+            self.transformer("pyvalue:", pyvalue, NSObject, [])
 
     def test_callable_without_signature_to_selector(self):
         class Callable:
@@ -752,36 +754,36 @@ class TestTransformer(TestCase):
             def __signature__(self):
                 raise TypeError("no signature")
 
-        value = Callable()
+        pyvalue = Callable()
         with self.assertRaises((ValueError, TypeError)):
-            inspect.signature(value)
+            inspect.signature(pyvalue)
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
-        out = self.transformer("value:", value, NSObject, [])
+        out = self.transformer("pyvalue:", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value:")
+        self.assertEqual(out.selector, b"pyvalue:")
         self.assertEqual(out.signature, b"@@:@")
         self.assertIs(out.isClassMethod, False)
 
     def test_builtin_to_selector(self):
-        value = dir
+        pyvalue = dir
         with self.assertRaises((ValueError, TypeError)):
-            inspect.signature(value)
+            inspect.signature(pyvalue)
 
-        out = self.transformer("value", value, NSObject, [])
+        out = self.transformer("pyvalue", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value")
+        self.assertEqual(out.selector, b"pyvalue")
         self.assertEqual(out.signature, b"@@:")
         self.assertIs(out.isClassMethod, False)
 
-        out = self.transformer("value:", value, NSObject, [])
+        out = self.transformer("pyvalue:", pyvalue, NSObject, [])
         self.assertIsInstance(out, objc.selector)
-        self.assertEqual(out.selector, b"value:")
+        self.assertEqual(out.selector, b"pyvalue:")
         self.assertEqual(out.signature, b"@@:@")
         self.assertIs(out.isClassMethod, False)
 
@@ -827,7 +829,23 @@ class TestTransformer(TestCase):
         # Check that defing a method that has custom
         # metadata though objc.register* but isn't
         # in the parent class gets the updated signature
-        self.fail()
+
+        # This method has custom metadata in test_vectorcall
+
+        with self.subTest("full_signature override"):
+
+            def v2d(self):
+                pass
+
+            out = self.transformer("v2d", v2d, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"<2d>@:")
+
+        with self.subTest("return value override in metadata"):
+            # Make sure the return value has a different size
+            # than 'id' to ensure that this is not determined
+            # post-constuction.
+            self.fail()
 
     def test_protocol_method(self):
         self.fail()
