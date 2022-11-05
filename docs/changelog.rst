@@ -142,16 +142,13 @@ Version 9.0
 * #502: Fix incompatibility with Nuitka.
 
   Earlier version of PyObjC failed when compiled using Nuitka, this
-  version does work.
+  version does work when using Nuitka 1.1.6 or later.
 
   Limitations:
   - The automatic calculation of the method signature in ``selector()``
     assumes that methods return ``id`` for Nuitka compiled code.
 
     That should not be a problem in practice.
-
-  - Invocations of 0-argument super will result in errors. That's
-    due to a limitation in Nuitka that the developer is lookin into.
 
   As a side effect of this builtin functions are accepted as
   the callable for a selector, even when not specifying a
