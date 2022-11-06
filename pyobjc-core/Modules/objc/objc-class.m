@@ -1924,117 +1924,130 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 
             return -1;
         }
-    } else if (PyObjCNativeSelector_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "Assigning native selectors is not supported");
-        return -1;
-
-    } else if (((PyObjCClassObject*)self)->isCFWrapper) {
-        /* This is a wrapper class for a CoreFoundation type
-         * that isn't tollfree bridged. Don't update the
-         * Objective-C class because all CF types share the
-         * same ObjC class (except for the toll-free bridged
-         * ones).
-         */
-
-    } else if (!PyObjC_is_ascii_prefix(name, "__", 2)
-               && (PyObjCSelector_Check(value) || PyObjC_is_pyfunction(value)
-                   || PyObjC_is_pymethod(value)
-                   || PyObject_TypeCheck(value, &PyClassMethod_Type))) {
-        /*
-         * Assignment of a function: create a new method in the ObjC
-         * runtime.
-         */
-        PyObject* newVal;
-        Method    curMethod;
-        Class     curClass;
-        int       r;
-        BOOL      b;
-
-        newVal = PyObjCSelector_FromFunction(name, value, self, NULL);
-        if (newVal == NULL) {
-            return -1;
+    } else {
+        /* XXX: Should store the protocols on the class object instead */
+        PyObject* protocols = PyObject_GetAttrString(self, "__pyobjc_protocols__");
+        if (protocols == NULL) {
+            if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
+                PyErr_Clear();
+                protocols = PyList_New(0);
+                if (protocols == NULL) {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
         }
-        if (!PyObjCSelector_Check(newVal)) {
-            Py_DECREF(newVal);
-            PyErr_SetString(PyExc_ValueError, "cannot convert callable to selector");
+        value = PyObjC_TransformAttribute(name, value, self, protocols);
+        Py_DECREF(protocols);
+        if (value == NULL) {
             return -1;
         }
 
-        if (PyObjCSelector_IsClassMethod(newVal)) {
-            curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
-                                             PyObjCSelector_GetSelector(newVal));
-            curClass  = object_getClass(PyObjCClass_GetClass(self));
-        } else {
-            curMethod = class_getInstanceMethod(PyObjCClass_GetClass(self),
-                                                PyObjCSelector_GetSelector(newVal));
-            curClass  = PyObjCClass_GetClass(self);
-        }
-
-        if (curMethod) {
-            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
-            if (newIMP == NULL) {
-                Py_DECREF(newVal);
-                return -1;
-            }
-
-            method_setImplementation(curMethod, newIMP);
-
-        } else {
-            /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
-            char* types = strdup(PyObjCSelector_Signature(newVal));
-
-            if (types == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(newVal);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-
-            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
-            if (newIMP == NULL) {
-                free(types);
-                Py_DECREF(newVal);
-                return -1;
-            }
-            b = class_addMethod(curClass, PyObjCSelector_GetSelector(newVal), newIMP,
-                                types);
-
-            if (!b) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                free(types);
-                Py_DECREF(newVal);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-        }
-
-        PyObject* hidden =
-            PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
-                                       PyObjCSelector_IsClassMethod(newVal));
-        if (hidden == NULL && PyErr_Occurred()) {
-            Py_DECREF(newVal);
+        if (PyObjCNativeSelector_Check(value)) {
+            Py_DECREF(value);
+            PyErr_SetString(PyExc_TypeError,
+                            "Assigning native selectors is not supported");
             return -1;
 
-        } else if (hidden) {
-            Py_DECREF(newVal);
+        } else if (((PyObjCClassObject*)self)->isCFWrapper) {
+            /* This is a wrapper class for a CoreFoundation type
+             * that isn't tollfree bridged. Don't update the
+             * Objective-C class because all CF types share the
+             * same ObjC class (except for the toll-free bridged
+             * ones).
+             */
 
-        } else {
-            if (PyObjCSelector_IsClassMethod(newVal)) {
-                r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, newVal);
+            /* XXX: Shouldn't this raise an exception instead of silently doing nothing
+             *      when setting a selector?
+             */
+
+        } else if (PyObjCSelector_Check(value)) {
+            /*
+             * Assignment of a function: create a new method in the ObjC
+             * runtime.
+             */
+            Method curMethod;
+            Class  curClass;
+            int    r;
+            BOOL   b;
+
+            if (PyObjCSelector_IsClassMethod(value)) {
+                curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
+                                                 PyObjCSelector_GetSelector(value));
+                curClass  = object_getClass(PyObjCClass_GetClass(self));
+            } else {
+                curMethod = class_getInstanceMethod(PyObjCClass_GetClass(self),
+                                                    PyObjCSelector_GetSelector(value));
+                curClass  = PyObjCClass_GetClass(self);
+            }
+
+            if (curMethod) {
+                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
+                if (newIMP == NULL) {
+                    Py_DECREF(value);
+                    return -1;
+                }
+
+                method_setImplementation(curMethod, newIMP);
 
             } else {
-                r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
+                /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
+                char* types = strdup(PyObjCSelector_Signature(value));
+
+                if (types == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(value);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
+
+                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
+                if (newIMP == NULL) {
+                    free(types);
+                    Py_DECREF(value);
+                    return -1;
+                }
+                b = class_addMethod(curClass, PyObjCSelector_GetSelector(value), newIMP,
+                                    types);
+
+                if (!b) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    free(types);
+                    Py_DECREF(value);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
             }
 
-            Py_DECREF(newVal);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_NoMemory();
+            PyObject* hidden =
+                PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(value),
+                                           PyObjCSelector_IsClassMethod(value));
+            if (hidden == NULL && PyErr_Occurred()) {
+                Py_DECREF(value);
                 return -1;
-                // LCOV_EXCL_STOP
+
+            } else if (hidden) {
+                Py_DECREF(value);
+
+            } else {
+                if (PyObjCSelector_IsClassMethod(value)) {
+                    r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, value);
+
+                } else {
+                    r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, value);
+                }
+
+                Py_DECREF(value);
+                if (r == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    PyErr_NoMemory();
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
             }
+            return 0;
         }
-        return 0;
     }
 
     /* Check if there is a current attribute with the same name that
@@ -2043,7 +2056,9 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
     PyObject* old_value = class_getattro(self, name);
     if (old_value == NULL) {
         PyErr_Clear();
-        return PyType_Type.tp_setattro(self, name, value);
+        res = PyType_Type.tp_setattro(self, name, value);
+        Py_XDECREF(value);
+        return res;
 
     } else if (PyObjCSelector_Check(old_value)) {
         Py_DECREF(old_value);
@@ -2055,6 +2070,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
     }
 
     res = PyType_Type.tp_setattro(self, name, value);
+    Py_XDECREF(value);
     return res;
 }
 

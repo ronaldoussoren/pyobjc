@@ -162,6 +162,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
+    /* XXX: This leaks the new tuple */
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             dict, "__slots__", PyTuple_New(0))
         == -1) {

@@ -1511,6 +1511,19 @@ PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
+PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
+                                              PyObject* class_object, PyObject* protocols)
+{
+    if (PyObjC_transformAttribute == NULL || PyObjC_transformAttribute == Py_None) {
+        PyErr_SetString(PyObjCExc_InternalError,
+                        "objc.options._transformAttribute is not set");
+        return NULL;
+    }
+    PyObject* args[5] = {NULL, name, value, class_object, protocols};
+    return PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                               4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}
+
 bool
 version_is_deprecated(int version)
 {

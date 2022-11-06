@@ -91,8 +91,9 @@ CFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto=thin",
+    "-O0",
+    # "-O3",
+    # "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
 ]
 

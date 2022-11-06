@@ -1336,13 +1336,15 @@ pysel_repr(PyObject* _self)
 
     if (sel->base.sel_self == NULL) {
         if (sel->base.sel_class) {
-            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p>",
+            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p> %s",
                                         sel_getName(sel->base.sel_selector),
-                                        class_getName(sel->base.sel_class), sel);
+                                        class_getName(sel->base.sel_class), sel,
+                                        sel->base.sel_python_signature);
 
         } else {
-            rval = PyUnicode_FromFormat("<unbound selector %s at %p>",
-                                        sel_getName(sel->base.sel_selector), sel);
+            rval = PyUnicode_FromFormat("<unbound selector %s at %p> %s",
+                                        sel_getName(sel->base.sel_selector), sel,
+                                        sel->base.sel_python_signature);
         }
 
     } else {

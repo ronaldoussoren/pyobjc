@@ -166,7 +166,7 @@ class TestPythonMethod(TestCase):
 
 
 class TestTransformer(TestCase):
-    transformer = staticmethod(_transform.transformCallable)
+    transformer = staticmethod(_transform.transformAttribute)
 
     def assertSignaturesEqual(self, a, b):
         # This assertion ignores numeric junk in signatures, currently
@@ -275,6 +275,13 @@ class TestTransformer(TestCase):
         self.assertEqual(out.signature, value.signature)
         self.assertEqual(out.isClassMethod, value.isClassMethod)
         self.assertEqual(out.isRequired, value.isRequired)
+
+        value = objc.selector(None, b"value", b"@@:")
+        self.assertIsInstance(value, objc.selector)
+        self.assertIs(value.callable, None)
+
+        with self.assertRaisesRegex(ValueError, "selector object without callable"):
+            out = self.transformer("value", value, NSObject, [])
 
     def test_dont_transform_selector(self):
 
@@ -399,7 +406,7 @@ class TestTransformer(TestCase):
             def pyvalue(self):
                 if sys.version_info[0] == 0:
                     return
-                return 1
+                return sys.modules
 
             out = self.transformer("pyvalue", pyvalue, NSObject, [])
             self.assertIsInstance(out, objc.selector)

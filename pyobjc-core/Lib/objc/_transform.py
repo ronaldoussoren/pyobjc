@@ -20,7 +20,22 @@ import dis
 __all__ = ("objc_method",)  # XXX "python_method")
 
 
-def transformCallable(name, value, class_object, protocols):
+def trace(func):
+    def tracer(*args, **kwds):
+        print(func.__name__, args, kwds)
+        try:
+            rval = func(*args, **kwds)
+            print("->", rval)
+            return rval
+        except Exception as exc:
+            print("!!", exc)
+            raise
+
+    return tracer
+
+
+# @trace
+def transformAttribute(name, value, class_object, protocols):
     """
     Transform 'value' before it will be added to a class
 
@@ -36,6 +51,8 @@ def transformCallable(name, value, class_object, protocols):
         # XXX: The C code copies objc.selector instances instead of
         # returning them as is.  Need to check when this
         # is necessary and add tests for this.
+        if value.callable is None:
+            raise ValueError(f"{name!r}: selector object without callable")
         return objc.selector(
             value.callable,
             value.selector,
@@ -267,6 +284,8 @@ def returns_value(func):
             assert prev is not None
             if prev.opname == "LOAD_CONST" and prev.arg != 0:
                 return True
+            elif prev.opname != "LOAD_CONST":
+                return True
 
         prev = inst
 
@@ -392,4 +411,4 @@ class python_method:
         return self.__wrapped__(*args, **kwds)
 
 
-objc.options._transformCallable = transformCallable
+objc.options._transformAttribute = transformAttribute

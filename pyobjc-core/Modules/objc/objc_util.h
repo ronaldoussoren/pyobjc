@@ -126,6 +126,8 @@ extern PyObject* PyObjCNM_objc_NULL;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
+extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
+                                                     PyObject*);
 
 NS_ASSUME_NONNULL_END
 
