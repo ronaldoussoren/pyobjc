@@ -38,6 +38,30 @@ class TestPythonMethod(TestCase):
 
         self.assertEqual(MyClass.my_class(), str(MyClass))
 
+    def test_usage_wrapped_in_class_method(self):
+        class OC_PythonMethod_WrappedInClass(NSObject):
+            @objc.python_method
+            @classmethod
+            def my_method(self, a):
+                return a * 2
+
+        self.assertEqual(OC_PythonMethod_WrappedInClass.my_method(4), 8)
+        self.assertNotIsInstance(
+            OC_PythonMethod_WrappedInClass.__dict__["my_method"], objc.selector
+        )
+
+    def test_usage_wrapped_in_class_method_2(self):
+        class OC_PythonMethod_WrappedInClass2(NSObject):
+            @classmethod
+            @objc.python_method
+            def my_method(self, a):
+                return a * 2
+
+        self.assertEqual(OC_PythonMethod_WrappedInClass2.my_method(4), 8)
+        self.assertNotIsInstance(
+            OC_PythonMethod_WrappedInClass2.__dict__["my_method"], objc.selector
+        )
+
     def test_usage_objc(self):
         class OC_PythonMethod_Class(NSObject):
             @objc.python_method

@@ -2099,11 +2099,19 @@ PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
             return callable;
         }
 
-        callable = PyObject_GetAttrString(tmp, "__func__");
         Py_DECREF(tmp);
-        if (callable == NULL) {
+        PyObject* new_callable = PyObject_GetAttrString(callable, "__func__");
+        if (new_callable == NULL) {
             return NULL;
         }
+        if (PyObjCPythonMethod_Check(new_callable)) {
+            /* @classmethod(python_method(foo)), */
+            Py_DECREF(new_callable);
+            Py_INCREF(callable);
+            return callable;
+        }
+        /* XXX: This leaks ``callable``! */
+        callable = new_callable;
     }
 
     if (pyname == NULL) {
