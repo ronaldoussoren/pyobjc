@@ -603,3 +603,27 @@ class TestReplacingDir(TestCase):
 
         self.assertEqual(value.__dir__(), ["hello"])
         self.assertIsInstance(value.__dir__, types.MethodType)
+
+
+class TestMethodsWithVarargs(TestCase):
+    def test_method_with_varargs(self):
+        class OC_MethodWithVarargs1(NSObject):
+            def method_(self, *args):
+                pass
+
+    def test_method_with_varargs_2(self):
+        class OC_MethodWithVarargs2(NSObject):
+            def method_(self, value, *args):
+                pass
+
+    def test_method_with_varargs_3(self):
+        with self.assertRaises(objc.BadPrototypeError):
+
+            class OC_MethodWithVarargs3(NSObject):
+                def method_(self, value, value2, *args):
+                    pass
+
+    def test_method_with_varargs_4(self):
+        class OC_MethodWithVarargs4(NSObject):
+            def method_(self, value, other=9, *args):
+                pass

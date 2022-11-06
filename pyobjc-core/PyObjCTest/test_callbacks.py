@@ -123,7 +123,7 @@ class TestClosure(TestCase):
 
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "Objective-C expects 2 arguments, Python argument has 1 arguments for .*",
+            "Objective-C expects 2 arguments, .* has 1 positional arguments",
         ):
             objc._makeClosure(
                 lambda a: None,
@@ -133,7 +133,7 @@ class TestClosure(TestCase):
         objc._makeClosure(lambda a, b: None, OC_CallbackTest.selWithCallback_, -1)
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "Objective-C expects 2 arguments, Python argument has 3 arguments for .*",
+            "Objective-C expects 2 arguments, .* has 3 positional arguments",
         ):
             objc._makeClosure(
                 lambda a, b, c: None,
@@ -215,14 +215,14 @@ class TestCallbackFor(TestCase):
 
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "Objective-C expects 2 arguments, Python argument has 1 arguments for .*",
+            "Objective-C expects 2 arguments, .* has 1 positional arguments",
         ):
             objc.callbackFor(OC_CallbackTest.selWithCallback_)(
                 lambda a: None,
             )
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "Objective-C expects 2 arguments, Python argument has 3 arguments for .*",
+            "Objective-C expects 2 arguments, .* has 3 positional arguments",
         ):
             objc.callbackFor(OC_CallbackTest.selWithCallback_)(
                 lambda a, b, c: None,
