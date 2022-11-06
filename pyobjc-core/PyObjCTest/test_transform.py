@@ -1016,4 +1016,4 @@ class TestCTransformer(TestTransformer):
 
         except TypeError as exc:
             if str(exc) == "expecting function, method or classmethod":
-                return callable
+                return value
