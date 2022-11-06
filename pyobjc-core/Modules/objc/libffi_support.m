@@ -2240,13 +2240,14 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
                          "Objective-C expects %" PY_FORMAT_SIZE_T
                          "d arguments, %R has between %" PY_FORMAT_SIZE_T
                          "d and %" PY_FORMAT_SIZE_T "d positional arguments",
-                         Py_SIZE(methinfo) - 1, callable, nargs - defaultCount, nargs);
+                         Py_SIZE(methinfo) - 2, callable, nargs - defaultCount - 1,
+                         nargs - 1);
         } else {
             PyErr_Format(PyObjCExc_BadPrototypeError,
                          "Objective-C expects %" PY_FORMAT_SIZE_T
                          "d arguments, %R has %" PY_FORMAT_SIZE_T
                          "d positional arguments",
-                         Py_SIZE(methinfo) - 1, callable, nargs);
+                         Py_SIZE(methinfo) - 2, callable, nargs - 1);
         }
         return -1;
     }

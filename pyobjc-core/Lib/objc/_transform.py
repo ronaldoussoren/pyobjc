@@ -30,8 +30,19 @@ def transformCallable(name, value, class_object, protocols):
     """
     if not callable(value) and not isinstance(value, classmethod):
         return value
-    elif isinstance(value, (objc.selector, staticmethod, type)):
+    elif isinstance(value, (objc.native_selector, staticmethod, type)):
         return value
+    elif isinstance(value, objc.selector):
+        # XXX: The C code copies objc.selector instances instead of
+        # returning them as is.  Need to check when this
+        # is necessary and add tests for this.
+        return objc.selector(
+            value.callable,
+            value.selector,
+            value.signature,
+            value.isClassMethod,
+            value.isRequired,
+        )
     elif inspect.iscoroutine(value) or inspect.iscoroutinefunction(value):
         return value
     elif inspect.isgenerator(value) or inspect.isgeneratorfunction(value):
@@ -215,7 +226,7 @@ def transformCallable(name, value, class_object, protocols):
         if kwonly - kwonly_default:
             # Calls from Obejctive-C to Python will never have keyword arguments,
             # therefore this callable is not compatible with use as a selector.
-            raise ValueError(
+            raise objc.BadPrototypeError(
                 f"{value!r} has {kwonly - kwonly_default} keyword-only arguments without a default"
             )
 
@@ -228,12 +239,12 @@ def transformCallable(name, value, class_object, protocols):
             #
             # 'argcount' does not count the implicit self argument
             if pos_default:
-                raise ValueError(
+                raise objc.BadPrototypeError(
                     f"{selname.decode()!r} expects {argcount} arguments, "
                     f"{value!r} has between {pos-pos_default-1} and {pos-1} positional arguments"
                 )
             else:
-                raise ValueError(
+                raise objc.BadPrototypeError(
                     f"{selname.decode()!r} expects {argcount} arguments, "
                     f"{value!r} has {pos-1} positional arguments"
                 )

@@ -2436,6 +2436,11 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL; // LCOV_EXCL_LINE
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
+            d, "native_selector", (PyObject*)&PyObjCNativeSelector_Type)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
+    }
+    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "FSRef", (PyObject*)&PyObjC_FSRefType)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
