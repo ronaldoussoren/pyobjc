@@ -585,6 +585,7 @@ class TestArraysOut(TestCase):
         self.assertEqual(
             fillArray_uptoCount_.__metadata__(),  # noqa: F821
             {
+                "full_signature": b"i^ii",
                 "retval": {"type": b"i", "_template": True},
                 "arguments": (
                     {

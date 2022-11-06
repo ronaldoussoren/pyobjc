@@ -1805,6 +1805,23 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
     return PyObjCMethodSignature_AsDict(sig);
 }
 
+static PyObject* _Nullable mod_callableToSelector(PyObject* _Nullable mod
+                                                  __attribute__((__unused__)),
+                                                  PyObject* args)
+{
+    PyObject* pyname;
+    PyObject* callable;
+    PyObject* template_class;
+    PyObject* protocols;
+
+    if (!PyArg_ParseTuple(args, "OOOO", &pyname, &callable, &template_class,
+                          &protocols)) {
+        return NULL;
+    }
+
+    return PyObjCSelector_FromFunction(pyname, callable, template_class, protocols);
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -2035,6 +2052,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_VARARGS,
         .ml_doc   = "_registeredMetadataForSelector(cls, selname)\n" CLINIC_SEP
                   "\nLook up registered metadata info for a selector.",
+    },
+    {
+        .ml_name  = "_callableToSelector",
+        .ml_meth  = (PyCFunction)mod_callableToSelector,
+        .ml_flags = METH_VARARGS,
+        .ml_doc   = "_callableToSelector(pyname, callable, template_class, "
+                    "protocols)\n" CLINIC_SEP "\nTransform a callable to an objc.selector",
     },
     {
         .ml_name = NULL /* SENTINEL */
