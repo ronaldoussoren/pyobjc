@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, SkipTest
 
 import objc
 from objc import _transform
@@ -641,6 +641,9 @@ class TestTransformer(TestCase):
         self.assertIs(out.isClassMethod, False)
 
     def test_objc_method_to_selector(self):
+        if self.__name__ == "TestCTransformer":
+            raise SkipTest("not relevant for C implementation")
+
         self.check_function_conversion(
             wrap_classmethod=False, inner_wrap=_transform.objc_method
         )
