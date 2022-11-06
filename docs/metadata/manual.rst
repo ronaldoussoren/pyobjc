@@ -13,9 +13,6 @@ to actually load the metadata.
 
 .. seealso::
 
-   :doc:`bridgesupport`
-     Loading metadata from XML files
-
    :doc:`compiled`
      Loading metadata using compiled files
 
@@ -39,6 +36,8 @@ The metadata is a Python dictionary with a particular structure (all keys are op
   Use this when one of the has a empty type encoding in the compiler, in particular to specify the type encoding for
   types with a SIMD type (such as ``vector_float3``). An example value is ``"<2f>@:q"``, for a selector that
   returns a ``vector_float2`` and has an ``NSInteger`` argument (the other two characters are the implicit arguments).
+
+  .. versionadded: 9.0
 
 * *arguments*: A dictionary containing more information on arguments. The keys of this dictionary are integers
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is

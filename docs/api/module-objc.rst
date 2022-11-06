@@ -732,6 +732,34 @@ Types
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
 
+.. class:: objc_method(callable, \*, selector=None, signature=None, isclass=None)
+
+   Use this as a decorator in a Cococa class definition to signal that the
+   method should definitely be converted to on Objective-C selector, and optional
+   set a non-default selector or signature, or signal that the method should or
+   should-not be a class method.
+
+   :param selector:  The Objective-C selector name (byte string)
+   :param signature: The Obejctive-C method signature
+   :param isclass:   If true the method is a class method, if false the
+                     method is an instance method, if ``None`` use the
+                     default algorithm.
+
+
+   Usage:
+
+   .. sourcecode:: python
+
+      class MyClass(NSObject):
+          @objc_method()
+          def myAction_(self, sender):
+              pass
+
+          @objc_method(selector="buttonClicked:")
+          def button_clicked(self, sender):
+              pass
+
+
 .. class:: python_method(callable)
 
 
@@ -743,7 +771,10 @@ Types
    the part of the class that does not have to interact with the Objective-C
    world.
 
-   For example::
+   For example:
+
+
+   .. sourcecode:: python
 
        class MyClass (NSObject):
 
@@ -764,6 +795,20 @@ Types
    callable, but are themselves not callable.
 
    .. versionadded:: 3.0
+
+
+   .. versionadded: 9.1
+
+      The decorator can now also be used with parenthesis while decorating:
+
+      .. sourcecode:: python
+
+           class MyClass (NSObject):
+
+              @python_method()
+              @classmethod
+              def fromkeys(self, keys):
+                  pass
 
    .. note::
 

@@ -145,6 +145,7 @@ Version 9.0a1
   version does work.
 
   Limitations:
+
   - The automatic calculation of the method signature in ``selector()``
     assumes that methods return ``id`` for Nuitka compiled code.
 
@@ -171,8 +172,8 @@ Version 8.6
 -----------
 
 * #468: Fix setup.py for framework bindings to ensure that
- ``python setup.py build_ext`` works for bindings that don't
- contain a C extension.
+  ``python setup.py build_ext`` works for bindings that don't
+  contain a C extension.
 
 * Fix incompatibilities with Python 3.11 (beta 1)
 
@@ -256,8 +257,8 @@ resulting in a number of minor bug fixes.
   now raise an exception as intended, instead of breaking
   the interpreter.
 
-* Trying to delete an attribute from :data:`objc.options`
-  now raises :type:`AttributeError` instead of :type:`TypeError`.
+* Trying to delete an attribute from ``objc.options``
+  now raises ``AttributeError`` instead of ``TypeError``.
 
 * :class:`objc.selector` now copies the default signature
   from its argument when that argument is another :class:`objc.selector`.
@@ -410,7 +411,7 @@ Version 8.4.1
 Version 8.4
 -----------
 
-* .. note::
+.. note::
 
   The bindings for the Message and ServerNotification frameworks,
   which were removed in macOS 10.9, will be removed in PyObjC 9.
@@ -500,7 +501,7 @@ Version 8.4
 
 * #445: Workaround for Python 3.11 support
 
-  Workaround for `BPO-46891 <https://bugs.python.org/issue46891 >`_, which causes
+  Workaround for `BPO-46891 <https://bugs.python.org/issue46891>`_, which causes
   a hard crash in the PyObjC testsuite. With this workaround the tests for
   pyobjc-core pass with python 3.11a5, but this does result into adding some
   implementation internals to the ``__dict__`` of framework wrappers when using
