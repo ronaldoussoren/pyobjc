@@ -10,6 +10,8 @@ import sys
 from .test_vector_proxy import OC_Vector
 from . import test_protocol  # noqa: F401
 from . import test_vectorcall  # noqa: F401
+from .protocol import OC_TestProtocol, OC_TestProtocolT1
+from .test_protocol import MyProtocol
 
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -287,6 +289,14 @@ class TestTransformer(TestCase):
         # XXX: Should arange to "await" value(1) to avoid
         # runtime error in tests
         value = value(1)
+
+        def await_value():
+            try:
+                value.send(None)
+            except StopIteration:
+                pass
+
+        self.addCleanup(await_value)
         out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
@@ -867,7 +877,79 @@ class TestTransformer(TestCase):
             self.assertEqual(out.signature, b"s@:@f")
 
     def test_protocol_method(self):
-        self.fail()
+        with self.subTest("ObjC protocol, instance method match"):
+
+            def method1(self):
+                return 4
+
+            out = self.transformer("method1", method1, NSObject, [OC_TestProtocol])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.signature, b"i@:")
+
+        with self.subTest(
+            "ObjC protocol, class method where protocl defines instance method"
+        ):
+
+            @classmethod
+            def method1(self):
+                return 4
+
+            out = self.transformer("method1", method1, NSObject, [OC_TestProtocol])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertEqual(out.signature, b"@@:")
+
+        with self.subTest(
+            "ObjC protocol, instance method where protocol defines class method"
+        ):
+
+            def classMethod1(self):
+                return 4
+
+            out = self.transformer(
+                "classMethod1", classMethod1, NSObject, [OC_TestProtocolT1]
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.signature, b"@@:")
+
+        with self.subTest("ObjC protocol, class method match"):
+
+            @classmethod
+            def classMethod1(self):
+                return 4
+
+            out = self.transformer(
+                "classMethod1", classMethod1, NSObject, [OC_TestProtocolT1]
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertEqual(out.signature, b"i@:")
+
+        with self.subTest("Python protocol, instance method match"):
+
+            def protoMethod(self):
+                return 4
+
+            out = self.transformer(
+                "protoMethod", protoMethod, NSObject, [OC_TestProtocolT1, MyProtocol]
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.signature, b"I@:")
+
+        with self.subTest("No protocol match, default signature"):
+
+            def foomethod(self):
+                return 4
+
+            out = self.transformer(
+                "foomethod", foomethod, NSObject, [OC_TestProtocolT1, MyProtocol]
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.signature, b"@@:")
 
     def test_informal_protocol_method(self):
         # Defined MyProto3 from test_protocols
@@ -922,4 +1004,6 @@ class TestTransformer(TestCase):
 
 class TestCTransformer(TestCase):
     # Subclass from TestTransformer and repace the transformer argument
+    # XXX: TestTransformer needs some tweaks to deal with differences
+    #      between the ObjC and Python implementation!
     pass

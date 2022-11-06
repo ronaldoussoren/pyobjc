@@ -23,6 +23,10 @@
 + (id)classMethod;
 @end
 
+@protocol OC_TestProtocolT1
++ (int)classMethod1;
+@end
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wprotocol"
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
@@ -70,6 +74,15 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_protocol(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "OC_NSObjectBased", prot) < 0) {
+        return NULL;
+    }
+
+    p    = @protocol(OC_TestProtocolT1);
+    prot = PyObjC_ObjCToPython("@", &p);
+    if (!prot) {
+        return NULL;
+    }
+    if (PyModule_AddObject(m, "OC_TestProtocolT1", prot) < 0) {
         return NULL;
     }
 

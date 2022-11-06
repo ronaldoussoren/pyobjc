@@ -15,7 +15,9 @@ import types
 import inspect
 import dis
 
-__all__ = ("objc_method", "python_method")
+# only public objc_method until the python_method implementation
+# in C is gone
+__all__ = ("objc_method",)  # XXX "python_method")
 
 
 def transformCallable(name, value, class_object, protocols):
@@ -48,8 +50,6 @@ def transformCallable(name, value, class_object, protocols):
         registered = objc._registeredMetadataForSelector(class_object, selname)
     else:
         registered = None
-
-    # XXX: Deal with formal protocols (both directly specified and inherited)
 
     # DWIM: Copy classmethod-ness and signature from
     # a pre-existing method on the class.
@@ -142,6 +142,15 @@ def transformCallable(name, value, class_object, protocols):
 
     if isclass is None:
         isclass = False
+
+    if signature is None and protocols:
+        for prot in protocols:
+            if isclass:
+                info = prot.descriptionForClassMethod_(selname)
+            else:
+                info = prot.descriptionForInstanceMethod_(selname)
+        if info is not None:
+            signature = info[1]
 
     if signature is None:
         # Calculate a default signature based on the selector shape

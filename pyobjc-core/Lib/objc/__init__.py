@@ -16,7 +16,7 @@ _update(globals())
 del _update
 
 
-from . import _transform  # noqa: F401, E402
+from ._transform import *  # noqa: F401, F403, E402
 from ._convenience import *  # noqa: F401, F403, E402
 from ._convenience_nsobject import *  # noqa: F401, F403, E402
 from ._convenience_nsdecimal import *  # noqa: F401, F403, E402
