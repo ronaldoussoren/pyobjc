@@ -610,7 +610,7 @@ Types
    The *cobject* and *c_void_p* arguments should always be passed as keyword arguments,
    and at most one of them should be provided. This will construct a proxy object of the
    right subclass of :class:`objc_object` for the Cocoa object that the passed in value
-   refers to. *Cobject* should be a Pytho capsule created using the :meth:`__cobject__`
+   refers to. *Cobject* should be a Python capsule created using the :meth:`__cobject__`
    method, *c_void_p* should be a :class:`ctypes.c_void_p`.
 
    .. note::
@@ -631,7 +631,7 @@ Types
       Read-only property that provides explicit access to just the instance methods
       of an object.
 
-   .. data:: \__block_signature__
+   .. data:: __block_signature__
 
       Property with the type signature for calling a block, or :data:`None`.
 
