@@ -586,3 +586,20 @@ class TestFunctionLikeObjects(TestCase):
         bound = func1.__get__(NSObject, 42)
         self.assertIsInstance(bound, types.MethodType)
         objc.selector(bound)
+
+
+class TestReplacingDir(TestCase):
+    def test_replace_dir(self):
+        class OC_TestReplacingDir(NSObject):
+            pass
+
+        value = OC_TestReplacingDir.new()
+        self.assertIsInstance(value.__dir__, types.BuiltinFunctionType)
+
+        def __dir__(self):
+            return ["hello"]
+
+        OC_TestReplacingDir.__dir__ = __dir__
+
+        self.assertEqual(value.__dir__(), ["hello"])
+        self.assertIsInstance(value.__dir__, types.MethodType)
