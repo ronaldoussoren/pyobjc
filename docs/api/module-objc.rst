@@ -635,6 +635,10 @@ Types
 
       Property with the type signature for calling a block, or :data:`None`.
 
+   .. data:: __hasdict__
+
+      True if instances of this class have a ``__dict__`` and False otherwise.
+
    .. method:: __cobject__()
 
       Returns a capsule object with identifier "objc.__object__" and the a reference

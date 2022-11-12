@@ -774,6 +774,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     /* Verify that the class conforms to all protocols it claims to
      * conform to.
+     *
+     * XXX: Move this into the refactored "class-builder" code and
+     *      move into python
      */
     len = PyList_Size(protocols);
     for (i = 0; i < len; i++) {
@@ -817,6 +820,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     /*
      * add __pyobjc_protocols__ to the class-dict.
+     *
+     * XXX: Move into python
      */
     v = PyList_AsTuple(protocols);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
@@ -2287,6 +2292,14 @@ cls_set_final(PyObject* self, PyObject* _Nullable newVal,
     return 0;
 }
 
+static PyObject* _Nullable cls_get_hasdict(PyObject* self, void* _Nullable closure
+                                           __attribute__((__unused__)))
+{
+    PyObject* result = (((PyObjCClassObject*)self)->dictoffset != 0) ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
+}
+
 static PyGetSetDef class_getset[] = {
     {
         .name = "pyobjc_classMethods",
@@ -2315,6 +2328,11 @@ static PyGetSetDef class_getset[] = {
         .get  = cls_get_final,
         .set  = cls_set_final,
         .doc  = "True if the class cannot be subclassed",
+    },
+    {
+        .name = "__hasdict__",
+        .get  = cls_get_hasdict,
+        .doc  = "True if the class has an __dict__",
     },
     {
         /* Access __name__ through a property: Objective-C name

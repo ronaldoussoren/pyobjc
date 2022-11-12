@@ -881,7 +881,7 @@ static initproc _Nullable make_init(const char* _typestr)
     return (initproc)codeloc;
 }
 
-static long
+static Py_hash_t
 struct_hash(PyObject* self)
 {
     PyErr_Format(PyExc_TypeError, "%.100s objects are unhashable",

@@ -128,6 +128,7 @@ extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
 extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
                                                      PyObject*);
+extern PyObject* _Nullable PyObjC_UnravelClassDict(PyObject*, PyObject*, PyObject*);
 
 NS_ASSUME_NONNULL_END
 

@@ -420,9 +420,9 @@ mkimp_NSCoder_decodeValueOfObjCType_at_(PyObject*              callable,
           if (v == NULL)
               goto error;
 
-          PyObject* arglist[3] = {NULL, pyself, v};
+          PyObject* arglist[4] = {NULL, pyself, v, Py_None};
           result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                                     3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_DECREF(v);
           v = NULL;
           PyObjCObject_ReleaseTransient(pyself, cookie);
@@ -553,10 +553,10 @@ mkimp_NSCoder_decodeValueOfObjCType_at_size_(PyObject*              callable,
           if (v2 == NULL)
               goto error;
 
-          PyObject* arglist[4] = {NULL, pyself, v1, v2};
+          PyObject* arglist[5] = {NULL, pyself, v1, Py_None, v2};
 
           result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                       4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_DECREF(v1);
           v1 = NULL;
           Py_DECREF(v2);
@@ -717,10 +717,10 @@ mkimp_NSCoder_decodeArrayOfObjCType_count_at_(PyObject*              callable,
           if (v2 == NULL)
               goto error;
 
-          PyObject* arglist[4] = {NULL, pyself, v1, v2};
+          PyObject* arglist[5] = {NULL, pyself, v1, v2, Py_None};
 
           result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                       4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_DECREF(v1);
           v1 = NULL;
           Py_DECREF(v2);
@@ -984,9 +984,9 @@ mkimp_NSCoder_decodeBytesWithReturnedLength_(PyObject*              callable,
       if (pyself == NULL)
           goto error;
 
-      PyObject* arglist[2] = {NULL, pyself};
+      PyObject* arglist[3] = {NULL, pyself, Py_None};
       result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                                 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       PyObjCObject_ReleaseTransient(pyself, cookie);
       pyself = NULL;
       if (result == NULL)

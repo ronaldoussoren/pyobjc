@@ -1524,6 +1524,19 @@ PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
                                4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
+PyObject* _Nullable PyObjC_UnravelClassDict(PyObject* class_dict, PyObject* class_object,
+                                            PyObject* protocols)
+{
+    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
+        PyErr_SetString(PyObjCExc_InternalError,
+                        "objc.options._unravelClassDict is not set");
+        return NULL;
+    }
+    PyObject* args[4] = {NULL, class_dict, class_object, protocols};
+    return PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                               3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}
+
 bool
 version_is_deprecated(int version)
 {

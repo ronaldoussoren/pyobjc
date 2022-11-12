@@ -4,10 +4,6 @@ to transform class attributes.
 
 The primary usecase is to transform callables to Objective-C selectors.
 """
-# XXX: Needs more tests
-# XXX: Needs to be verified against current C implementation.
-# XXX: Should the exception be ValueError or objc.error?
-#      the latter is more consistent with the rest of the bridge
 # XXX: Update the reference documentation as well to ensure
 #      that it is clear and up-to-date.
 import objc
@@ -32,6 +28,122 @@ def trace(func):
             raise
 
     return tracer
+
+
+NO_VALUE = object()
+
+# This needs to be kept in sync with class-builder.m:gMethods
+HELPER_METHODS = {
+    b"dealloc",
+    b"storedValueForKey:",
+    b"valueForKey:",
+    b"takeStoredValue:forKey:",
+    b"takeValue:forKey:",
+    b"setValue:forKey:",
+    b"forwardInvocation:",
+    b"methodSignatureForSelector:",
+    b"respondsToSelector:",
+    b"copyWithZone:",
+    b"mutableCopyWithZone:",
+}
+
+
+def processClassDict(class_dict, class_object, protocols):
+    """
+    First step into creating a subclass for a Cocoa class:
+
+    - Transform attributes
+    - Return (needs_intermediate, instance_variablees, instanstance_methods, class_methods)
+    """
+    needs_intermediate = False
+    instance_variables = {}
+    instance_methods = set()
+    class_methods = set()
+
+    class_dict["__objc_python_subclass__"] = True
+    process_slots(class_dict, instance_variables, class_object)
+
+    # Find all protocols in the class_dict, needed
+    # later on to transform values.
+    # XXX: to be written
+
+    # Call class setup hooks if present
+    # XXX: The multiple looks are copied from the C version,
+    #      need to check if those can be combined
+    for key, value in list(class_dict.items()):
+        setup = getattr(value, "__pyobjc_class_setup__", NO_VALUE)
+        if setup is not NO_VALUE:
+            setup(key, class_dict, instance_methods, class_methods)
+
+    for key, value in list(class_dict.items()):
+        new_value = transformAttribute(key, value, class_object, protocols)
+        if new_value is not value:
+            class_dict[key] = new_value
+            value = new_value
+
+        if isinstance(value, objc.selector):
+            if value.isClassMethod:
+                class_methods.add(value)
+            else:
+                instance_methods.add(value)
+                if value.selector in HELPER_METHODS:
+                    needs_intermediate = True
+
+            # nm = value.selector.decode().replace(":", "_")
+            # XXX: shouldCopy logic when nm != key?
+            # XXX: Logic for "hidden" selectors
+
+        elif isinstance(value, objc.ivar):
+            if value.__name__ in instance_variables:
+                if value != instance_variables[value.__name__]:
+                    raise objc.error(
+                        f"Mismatched definition for duplicate objc.ivar '{key}'"
+                    )
+                class_dict[key] = instance_variables[value.__name__]
+                continue
+            instance_variables[value.__name__] = value
+
+    # Convert the collections to tuples for easier
+    # post-processing in the C code.
+    #
+    # XXX: The results are sorted for easier testing
+    instance_variables = tuple(
+        sorted(instance_variables.values(), key=lambda x: x.__name__)
+    )
+    instance_methods = tuple(sorted(instance_methods, key=lambda x: x.selector))
+    class_methods = tuple(sorted(class_methods, key=lambda x: x.selector))
+
+    return (
+        bool(needs_intermediate),
+        instance_variables,
+        instance_methods,
+        class_methods,
+    )
+
+
+def process_slots(class_dict, instance_variables, class_object):
+    """
+    Process the ``__slots__`` attribute, if any.
+    """
+    slots = class_dict.get("__slots__", NO_VALUE)
+    if slots is NO_VALUE:
+        if not class_object.__hasdict__:
+            instance_variables["__dict__"] = objc.ivar(
+                "__dict__", objc._C_PythonObject, isSlot=True
+            )
+    else:
+        if isinstance(slots, str):
+            class_dict[slots] = ivar = objc.ivar(
+                slots, objc._C_PythonObject, isSlot=True
+            )
+            instance_variables[ivar.__name__] = ivar
+
+        else:
+            for nm in slots:
+                class_dict[nm] = ivar = objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                instance_variables[ivar.__name__] = ivar
+
+    class_dict["__slots__"] = ()
 
 
 # @trace
@@ -60,9 +172,7 @@ def transformAttribute(name, value, class_object, protocols):
             value.isClassMethod,
             value.isRequired,
         )
-    elif inspect.iscoroutine(value) or inspect.iscoroutinefunction(value):
-        return value
-    elif inspect.isgenerator(value) or inspect.isgeneratorfunction(value):
+    elif isgenerator_or_async(value):
         return value
     elif isinstance(value, objc.python_method):
         # XXX: objc.python_method will be python_method in the next step
@@ -195,7 +305,11 @@ def transformAttribute(name, value, class_object, protocols):
         )
 
         if registered:
-            overridden_rval = registered["retval"].get("type", None)
+            overridden_rval = (
+                registered["retval"].get("type", None)
+                if registered["retval"] is not None
+                else None
+            )
             overridden_args = {}
             for idx, a in enumerate(registered["arguments"]):
                 if a and "type" in a:
@@ -214,7 +328,7 @@ def transformAttribute(name, value, class_object, protocols):
     # last consistency check.
     try:
         pysig = inspect.signature(value)
-    except (ValueError, TypeError):
+    except (AttributeError, ValueError, TypeError):
         pass
     else:
         pos = 0
@@ -269,6 +383,24 @@ def transformAttribute(name, value, class_object, protocols):
     return objc.selector(value, selname, signature, isclass)
 
 
+def isgenerator_or_async(value):
+    """
+    Returns true for generators and async functions
+    """
+    # This guard is there to deal with some edge-case testing the
+    # PyObjC test suite, should never trigger in production code.
+    if not isinstance(value, types.FunctionType):
+        return False
+    if not isinstance(value.__code__, types.CodeType):
+        return False
+
+    if inspect.iscoroutine(value) or inspect.iscoroutinefunction(value):
+        return True
+    elif inspect.isgenerator(value) or inspect.isgeneratorfunction(value):
+        return True
+    return False
+
+
 def returns_value(func):
     """
     Return True if 'func' explicitly returns a value
@@ -279,6 +411,9 @@ def returns_value(func):
     # latter is a false negative, but cannot be avoided with
     # bytecode inspection.
     prev = None
+    if not isinstance(func.__code__, types.CodeType):
+        # Invalid code object, assume it returns a value
+        return True
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":
             assert prev is not None
@@ -412,3 +547,4 @@ class python_method:
 
 
 objc.options._transformAttribute = transformAttribute
+objc.options._unravelClassDict = processClassDict

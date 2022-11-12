@@ -1126,3 +1126,310 @@ class TestCTransformer(TestTransformer):
         except TypeError as exc:
             if str(exc) == "expecting function, method or classmethod":
                 return value
+
+
+class OC_TransformWithoutDict(NSObject):
+    __slots__ = ()
+
+
+class OC_TransformWithDict(NSObject):
+    pass
+
+
+class TestClassDictProcessor(TestCase):
+    # XXX: To be determined if/how this can be verified against
+    # the C implementation (e.g. TestCTransformer)
+    processor = staticmethod(_transform.processClassDict)
+
+    def assertValidResult(self, rval):
+        # Sanity check of the return value of the processor
+        self.assertIsInstance(rval, tuple)
+        self.assertEqual(len(rval), 4)
+        self.assertIsInstance(rval[0], bool)
+        self.assertIsInstance(rval[1], tuple)
+        self.assertIsInstance(rval[2], tuple)
+        self.assertIsInstance(rval[3], tuple)
+
+        for item in rval[1]:
+            self.assertIsInstance(item, objc.ivar)
+
+        for item in rval[2]:
+            self.assertIsInstance(item, objc.selector)
+            self.assertNotIsInstance(item, objc.native_selector)
+            self.assertFalse(item.isClassMethod)
+
+        for item in rval[3]:
+            self.assertIsInstance(item, objc.selector)
+            self.assertNotIsInstance(item, objc.native_selector)
+            self.assertTrue(item.isClassMethod)
+
+    def test_empty_dict(self):
+        class_dict = {}
+        rval = self.processor(class_dict, NSObject, [])
+        self.assertValidResult(rval)
+        self.assertEqual(
+            rval,
+            (
+                False,
+                (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
+                (),
+                (),
+            ),
+        )
+        self.assertTrue(class_dict["__objc_python_subclass__"])
+
+    def test_slots(self):
+        with self.subTest("no __slots__"):
+            class_dict = {}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("empty __slots__"):
+            class_dict = {"__slots__": ()}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (), (), ()))
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("some __slots__ in a tuple"):
+            class_dict = {"__slots__": ("a", "b")}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    tuple(
+                        objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                        for nm in ("a", "b")
+                    ),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("some __slots__ in a list"):
+            class_dict = {"__slots__": ["a", "b"]}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    tuple(
+                        objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                        for nm in ("a", "b")
+                    ),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("one __slots__ as astring"):
+            class_dict = {"__slots__": "ab"}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (False, (objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), ()),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("some __slots__ in a dict"):
+            class_dict = {"__slots__": {"a": "doc a", "b": "doc b"}}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    tuple(
+                        objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                        for nm in ("a", "b")
+                    ),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("invalid __slots__ as int"):
+            class_dict = {"__slots__": 42}
+            with self.assertRaisesRegex(TypeError, "not iterable"):
+                self.processor(class_dict, NSObject, [])
+
+            self.assertEqual(class_dict["__slots__"], 42)
+
+        with self.subTest("invalid __slots__ as tuple of string and int"):
+            class_dict = {"__slots__": ("a", 42)}
+            with self.assertRaisesRegex(
+                TypeError, r"objc_ivar\(\) argument 1 must be str, not int"
+            ):
+                self.processor(class_dict, NSObject, [])
+
+            self.assertIn("a", class_dict)
+            self.assertEqual(class_dict["__slots__"], ("a", 42))
+
+        with self.subTest("inherit from __dict__, without slots"):
+            class_dict = {}
+            rval = self.processor(class_dict, OC_TransformWithDict, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (), (), ()))
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("inherit from __dict__, with slots"):
+            class_dict = {"__slots__": ["a", "b"]}
+            rval = self.processor(class_dict, OC_TransformWithDict, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    tuple(
+                        objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                        for nm in ("a", "b")
+                    ),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("inherit from dict-less, without slots"):
+            class_dict = {}
+            rval = self.processor(class_dict, OC_TransformWithoutDict, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+        with self.subTest("inherit from dict-less, with slots"):
+            class_dict = {"__slots__": ["a", "b"]}
+            rval = self.processor(class_dict, OC_TransformWithoutDict, [])
+            self.assertValidResult(rval)
+            self.assertEqual(
+                rval,
+                (
+                    False,
+                    tuple(
+                        objc.ivar(nm, objc._C_PythonObject, isSlot=True)
+                        for nm in ("a", "b")
+                    ),
+                    (),
+                    (),
+                ),
+            )
+            self.assertEqual(class_dict["__slots__"], ())
+
+    def test_ivars(self):
+        with self.subTest("unnamed ivar"):
+            ivar = objc.ivar(type=objc._C_FLT)
+            class_dict = {"var": ivar, "__slots__": ()}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(ivar.__name__, "var")
+            self.assertIs(ivar, class_dict["var"])
+            self.assertIs(ivar, rval[1][0])
+
+        with self.subTest("named ivar, name matches"):
+            ivar = objc.ivar(name="var", type=objc._C_FLT)
+            class_dict = {"var": ivar, "__slots__": ()}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(ivar.__name__, "var")
+            self.assertIs(ivar, class_dict["var"])
+            self.assertIs(ivar, rval[1][0])
+
+        with self.subTest("named ivar, name does not match"):
+            ivar = objc.ivar(name="varname", type=objc._C_FLT)
+            class_dict = {"var": ivar, "__slots__": ()}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(ivar.__name__, "varname")
+            self.assertIs(ivar, class_dict["var"])
+            self.assertIs(ivar, rval[1][0])
+
+        with self.subTest("two ivars with same C name"):
+            ivar_a = objc.ivar()
+            ivar_b = objc.ivar(name="a")
+            class_dict = {"a": ivar_a, "b": ivar_b}
+            rval = self.processor(class_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertEqual(rval, (False, (ivar_a,), (), ()))
+            self.assertIs(class_dict["a"], ivar_a)
+            self.assertIs(class_dict["b"], ivar_a)
+
+        with self.subTest("two ivars with the same C name, mismatch type"):
+            ivar_a = objc.ivar()
+            ivar_b = objc.ivar(name="a", type=objc._C_FLT)
+            class_dict = {"a": ivar_a, "b": ivar_b}
+            with self.assertRaisesRegex(
+                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
+            ):
+                self.processor(class_dict, NSObject, [])
+
+        with self.subTest("two ivars with the same C name, mismatch isSlot"):
+            ivar_a = objc.ivar()
+            ivar_b = objc.ivar(name="a", isSlot=True)
+            class_dict = {"a": ivar_a, "b": ivar_b}
+            with self.assertRaisesRegex(
+                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
+            ):
+                self.processor(class_dict, NSObject, [])
+
+        with self.subTest("two ivars with the same C name, mismatch isOutlet"):
+            ivar_a = objc.ivar()
+            ivar_b = objc.ivar(name="a", isOutlet=True)
+            class_dict = {"a": ivar_a, "b": ivar_b}
+            with self.assertRaisesRegex(
+                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
+            ):
+                self.processor(class_dict, NSObject, [])
+
+        with self.subTest("ivar mismatch with slot"):
+            ivar_a = objc.ivar()
+            class_dict = {"a": ivar_a, "__slots__": ("a",)}
+            with self.assertRaisesRegex(
+                objc.error, "Mismatched definition for duplicate objc.ivar 'a'"
+            ):
+                self.processor(class_dict, NSObject, [])
+                print(class_dict)
+
+        # Add various objc.ivars to dict, check result
+        # - named (matching dict key)
+        # - named (not matching dict key)
+        # - unnamed
+        # XXX: should this check if ivars are correct?
+        # XXX: should having multiple ivars with the same name be
+        #      an error?
+        pass
+
+    # - class methods
+    # - instance methods
+    # - Mock 'transformAttribute' to check it is called correctly
+    # - Check class_dict is updated when values are transformed
+    #
+    # - "hidden" selectors (possibly needs new API)
+    # - Protocol validation

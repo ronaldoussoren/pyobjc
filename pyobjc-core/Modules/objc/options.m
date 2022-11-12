@@ -160,6 +160,7 @@ OBJECT_PROP(_setKey, PyObjC_setKey, NULL)
 OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath, NULL)
 OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
 OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute, NULL)
+OBJECT_PROP(_unravelClassDict, PyObjC_unravelClassDict, NULL)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -205,6 +206,8 @@ static PyGetSetDef object_getset[] = {
     GETSET(_setKeyPath, "Private helper used for KeyValueCoding support"),
     GETSET(_transformAttribute,
            "Private helper used for transforming attributes for Objective-C classes"),
+    GETSET(_unravelClassDict,
+           "Private helper used for splitting a class dict into parts"),
     {
         .name = "_bundle_hack_used",
         .get  = bundle_hack_get,

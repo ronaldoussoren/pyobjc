@@ -37,6 +37,7 @@ struct method_info {
     BOOL use_intermediate;
 
 } gMethods[] = {
+    /* Keep in sync with Lib/objc/_transform.py:HELPER_METHODS */
 
     {0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES},
     {0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_,
@@ -446,6 +447,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                                        PyObject* hiddenSelectors,
                                        PyObject* hiddenClassSelectors)
 {
+    /* XXX: Refactor into a function that must be in C and the bit that's
+     * reimplemented in Python and expose the latter to Python for testing.
+     */
     PyObject*  seq;
     PyObject*  key_list = NULL;
     PyObject*  key      = NULL;

@@ -2131,6 +2131,7 @@ struct objc_typestr_long_values {
                                 {"_C_FSRef", @encode(FSRef)},
                                 {"_C_NSRange", @encode(NSRange)},
                                 {"_C_CFRange", @encode(CFRange)},
+                                {"_C_PythonObject", @encode(PyObject*)},
                                 {"_sockaddr_type", @encode(struct sockaddr)},
                                 {NULL, 0}};
 

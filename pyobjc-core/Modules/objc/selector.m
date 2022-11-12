@@ -1248,11 +1248,11 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
  * This one can be allocated from python code.
  */
 
-static long
+static Py_hash_t
 pysel_hash(PyObject* o)
 {
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)o;
-    long                  h    = 0;
+    Py_hash_t             h    = 0;
 
     if (self->base.sel_self) {
         h ^= PyObject_Hash(self->base.sel_self);
