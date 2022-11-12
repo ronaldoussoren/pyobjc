@@ -50,13 +50,14 @@ HELPER_METHODS = {
 }
 
 
-def processClassDict(class_dict, class_object, protocols):
+def processClassDict(class_dict, meta_dict, class_object, protocols):
     """
     First step into creating a subclass for a Cocoa class:
 
     - Transform attributes
     - Return (needs_intermediate, instance_variablees, instanstance_methods, class_methods)
     """
+    # XXX: Need meta_dict!
     needs_intermediate = False
     instance_variables = {}
     instance_methods = set()
@@ -89,9 +90,17 @@ def processClassDict(class_dict, class_object, protocols):
             value = new_value
 
         if isinstance(value, objc.selector):
+
             if value.isClassMethod:
+                del class_dict[key]
+                if not value.isHidden:
+                    meta_dict[key] = value
+
                 class_methods.add(value)
             else:
+                if value.isHidden:
+                    del class_dict[key]
+
                 instance_methods.add(value)
                 if value.selector in HELPER_METHODS:
                     needs_intermediate = True

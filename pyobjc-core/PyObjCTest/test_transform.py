@@ -1165,7 +1165,8 @@ class TestClassDictProcessor(TestCase):
 
     def test_empty_dict(self):
         class_dict = {}
-        rval = self.processor(class_dict, NSObject, [])
+        meta_dict = {}
+        rval = self.processor(class_dict, meta_dict, NSObject, [])
         self.assertValidResult(rval)
         self.assertEqual(
             rval,
@@ -1177,11 +1178,13 @@ class TestClassDictProcessor(TestCase):
             ),
         )
         self.assertTrue(class_dict["__objc_python_subclass__"])
+        self.assertEqual(meta_dict, {})
 
     def test_slots(self):
         with self.subTest("no __slots__"):
             class_dict = {}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1193,17 +1196,21 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("empty __slots__"):
             class_dict = {"__slots__": ()}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(rval, (False, (), (), ()))
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("some __slots__ in a tuple"):
             class_dict = {"__slots__": ("a", "b")}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1218,10 +1225,12 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("some __slots__ in a list"):
             class_dict = {"__slots__": ["a", "b"]}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1236,20 +1245,24 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("one __slots__ as astring"):
             class_dict = {"__slots__": "ab"}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
                 (False, (objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), ()),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("some __slots__ in a dict"):
             class_dict = {"__slots__": {"a": "doc a", "b": "doc b"}}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1264,34 +1277,42 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("invalid __slots__ as int"):
             class_dict = {"__slots__": 42}
+            meta_dict = {}
             with self.assertRaisesRegex(TypeError, "not iterable"):
-                self.processor(class_dict, NSObject, [])
+                self.processor(class_dict, meta_dict, NSObject, [])
 
             self.assertEqual(class_dict["__slots__"], 42)
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("invalid __slots__ as tuple of string and int"):
             class_dict = {"__slots__": ("a", 42)}
+            meta_dict = {}
             with self.assertRaisesRegex(
                 TypeError, r"objc_ivar\(\) argument 1 must be str, not int"
             ):
-                self.processor(class_dict, NSObject, [])
+                self.processor(class_dict, meta_dict, NSObject, [])
 
             self.assertIn("a", class_dict)
             self.assertEqual(class_dict["__slots__"], ("a", 42))
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("inherit from __dict__, without slots"):
             class_dict = {}
-            rval = self.processor(class_dict, OC_TransformWithDict, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, OC_TransformWithDict, [])
             self.assertValidResult(rval)
             self.assertEqual(rval, (False, (), (), ()))
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("inherit from __dict__, with slots"):
             class_dict = {"__slots__": ["a", "b"]}
-            rval = self.processor(class_dict, OC_TransformWithDict, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, OC_TransformWithDict, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1306,10 +1327,12 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("inherit from dict-less, without slots"):
             class_dict = {}
-            rval = self.processor(class_dict, OC_TransformWithoutDict, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, OC_TransformWithoutDict, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1321,10 +1344,12 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("inherit from dict-less, with slots"):
             class_dict = {"__slots__": ["a", "b"]}
-            rval = self.processor(class_dict, OC_TransformWithoutDict, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, OC_TransformWithoutDict, [])
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
@@ -1339,6 +1364,7 @@ class TestClassDictProcessor(TestCase):
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("slot overrides parent class"):
 
@@ -1347,54 +1373,66 @@ class TestClassDictProcessor(TestCase):
                 a = objc.ivar()
 
             class_dict = {"__slots__": ("a",)}
+            meta_dict = {}
             with self.assertRaisesRegex(
                 objc.error, "objc.ivar 'a' overrides instance variable in super class"
             ):
-                self.processor(class_dict, OC_TransformWitIvarA, [])
+                self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
+            self.assertEqual(meta_dict, {})
 
     def test_ivars(self):
         with self.subTest("unnamed ivar"):
             ivar = objc.ivar(type=objc._C_FLT)
             class_dict = {"var": ivar, "__slots__": ()}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(rval, (False, (ivar,), (), ()))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[1][0])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("named ivar, name matches"):
             ivar = objc.ivar(name="var", type=objc._C_FLT)
             class_dict = {"var": ivar, "__slots__": ()}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(rval, (False, (ivar,), (), ()))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[1][0])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("named ivar, name does not match"):
             ivar = objc.ivar(name="varname", type=objc._C_FLT)
             class_dict = {"var": ivar, "__slots__": ()}
-            rval = self.processor(class_dict, NSObject, [])
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
             self.assertValidResult(rval)
             self.assertEqual(rval, (False, (ivar,), (), ()))
             self.assertEqual(ivar.__name__, "varname")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[1][0])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("two ivars with same C name"):
             ivar_a = objc.ivar()
             ivar_b = objc.ivar(name="a")
             class_dict = {"a": ivar_a, "b": ivar_b}
+            meta_dict = {}
             with self.assertRaisesRegex(objc.error, "'b' reimplements objc.ivar 'a'"):
-                self.processor(class_dict, NSObject, [])
+                self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("ivar mismatch with slot"):
             ivar_a = objc.ivar()
             class_dict = {"a": ivar_a, "__slots__": ("a",)}
+            meta_dict = {}
             with self.assertRaisesRegex(objc.error, "'a' redefines <"):
-                self.processor(class_dict, NSObject, [])
+                self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("ivar overrides parent class"):
 
@@ -1404,10 +1442,12 @@ class TestClassDictProcessor(TestCase):
 
             ivar = objc.ivar()
             class_dict = {"iv": ivar, "__slots__": ()}
+            meta_dict = {}
             with self.assertRaisesRegex(
                 objc.error, "objc.ivar 'iv' overrides instance variable in super class"
             ):
-                self.processor(class_dict, OC_TransformWithIvar, [])
+                self.processor(class_dict, meta_dict, OC_TransformWithIvar, [])
+            self.assertEqual(meta_dict, {})
 
         with self.subTest("ivar overrides parent class"):
 
@@ -1416,10 +1456,12 @@ class TestClassDictProcessor(TestCase):
 
             ivar = objc.ivar()
             class_dict = {"iv": ivar, "__slots__": ()}
+            meta_dict = {}
             with self.assertRaisesRegex(
                 objc.error, "objc.ivar 'iv' overrides instance variable in super class"
             ):
-                self.processor(class_dict, OC_TransformWithSlot, [])
+                self.processor(class_dict, meta_dict, OC_TransformWithSlot, [])
+            self.assertEqual(meta_dict, {})
 
     # - class methods
     # - instance methods
