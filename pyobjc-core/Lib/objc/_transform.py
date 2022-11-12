@@ -71,13 +71,9 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
     class_dict["__objc_python_subclass__"] = True
     process_slots(class_dict, instance_variables, class_object)
 
-    # Find all protocols in the class_dict, needed
-    # later on to transform values.
-    # XXX: to be written
-
-    # Call class setup hooks if present
-    # XXX: The multiple looks are copied from the C version,
-    #      need to check if those can be combined
+    # First call all class setup hooks. Those can
+    # update the class dictiory, which is why this
+    # loop# cannot be merged into the next one.
     for key, value in list(class_dict.items()):
         setup = getattr(value, "__pyobjc_class_setup__", NO_VALUE)
         if setup is not NO_VALUE:
@@ -90,24 +86,28 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
             value = new_value
 
         if isinstance(value, objc.selector):
+            canonical = value.selector.decode().replace(":", "_")
 
             if value.isClassMethod:
                 del class_dict[key]
                 if not value.isHidden:
                     meta_dict[key] = value
+                    if canonical != key:
+                        meta_dict[canonical] = value
 
                 class_methods.add(value)
             else:
                 if value.isHidden:
                     del class_dict[key]
+                elif canonical != key:
+                    class_dict[canonical] = value
 
                 instance_methods.add(value)
-                if value.selector in HELPER_METHODS:
+                if (
+                    not getattr(class_object, "__objc_python_subclass__", False)
+                    and value.selector in HELPER_METHODS
+                ):
                     needs_intermediate = True
-
-            # nm = value.selector.decode().replace(":", "_")
-            # XXX: shouldCopy logic when nm != key?
-            # XXX: Logic for "hidden" selectors
 
         elif isinstance(value, objc.ivar):
             if value.__name__ in instance_variables:
@@ -121,7 +121,8 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
     # Convert the collections to tuples for easier
     # post-processing in the C code.
     #
-    # XXX: The results are sorted for easier testing
+    # The results are sorted for easier testing, this should
+    # be harmless because classes tend to be fairly simple.
     instance_variables = tuple(
         sorted(instance_variables.values(), key=lambda x: x.__name__)
     )
@@ -180,14 +181,17 @@ def transformAttribute(name, value, class_object, protocols):
         # XXX: The C code copies objc.selector instances instead of
         # returning them as is.  Need to check when this
         # is necessary and add tests for this.
+        # XXX: Might be needed when the same selector is added to
+        # two different classes, need explicit tests for this.
         if value.callable is None:
             raise ValueError(f"{name!r}: selector object without callable")
         return objc.selector(
             value.callable,
             value.selector,
             value.signature,
-            value.isClassMethod,
-            value.isRequired,
+            isClassMethod=value.isClassMethod,
+            isRequired=value.isRequired,
+            isHidden=value.isHidden,
         )
     elif isgenerator_or_async(value):
         return value
@@ -207,8 +211,13 @@ def transformAttribute(name, value, class_object, protocols):
         registered = None
 
     # DWIM: Copy classmethod-ness and signature from
-    # a pre-existing method on the class.
-    current = getattr(class_object, name, None)
+    # a pre-existing method on the class, but prefer
+    # using an instance method over a class method, as
+    # this makes it a lot easier to implement methods from
+    # the NSObject protocol (amongst others)
+    current = lookup_mro_dict(class_object, name)
+    if current is NO_VALUE:
+        current = lookup_mro_dict(type(class_object), name)
     if isinstance(current, objc.selector):
         isclass = current.isClassMethod
         signature = current.signature
@@ -398,6 +407,21 @@ def transformAttribute(name, value, class_object, protocols):
                 )
 
     return objc.selector(value, selname, signature, isclass)
+
+
+def lookup_mro_dict(class_object, name):
+    # XXX: I'd like to use class_object.mro() here,
+    #      but that won't work for the meta class...
+    #      Luckily Objective-C classes only support
+    #      single inheritance.
+    # XXX: Test current behaviour w.r.t. multiple inheritance!
+    cls = class_object
+    while cls is not object:
+        value = cls.__dict__.get(name, NO_VALUE)
+        if value is not NO_VALUE:
+            return value
+        cls = cls.__bases__[0]
+    return NO_VALUE
 
 
 def isgenerator_or_async(value):

@@ -865,14 +865,17 @@ class TestTransformer(TestCase):
         def method(self):
             return 1
 
-        out = self.transformer("count", method, NSMutableArray, [])
-        self.assertIsInstance(out, objc.selector)
-        self.assertSignaturesEqual(out.signature, objc._C_NSUInteger + b"@:")
+        with self.subTest("count"):
+            out = self.transformer("count", method, NSMutableArray, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertSignaturesEqual(out.signature, objc._C_NSUInteger + b"@:")
+            self.assertFalse(out.isClassMethod)
 
-        out = self.transformer("alloc", method, NSMutableArray, [])
-        self.assertIsInstance(out, objc.selector)
-        self.assertTrue(out.isClassMethod)
-        self.assertSignaturesEqual(out.signature, b"@@:")
+        with self.subTest("alloc"):
+            out = self.transformer("alloc", method, NSMutableArray, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
 
     def test_inherit_selector(self):
         if type(self).__name__ == "TestCTransformer":
@@ -893,6 +896,20 @@ class TestTransformer(TestCase):
         self.assertIsInstance(out, objc.selector)
         self.assertSignaturesEqual(out.signature, b"d@:@")
         self.assertEqual(out.selector, b"other:")
+
+    def test_prefer_inherit_instance(self):
+        # Check that if a method name can refer to a class
+        # and instance method in the parent (e.g. the NSObject
+        # protocol methods) the transformer uses the instance
+        # method when transforming.
+        def description(self):
+            return "x"
+
+        out = self.transformer("description", description, NSObject, [])
+        self.assertIsInstance(out, objc.selector)
+        self.assertSignaturesEqual(out.signature, b"@@:")
+        self.assertEqual(out.selector, b"description")
+        self.assertFalse(out.isClassMethod)
 
     def test_overridden_full_signature(self):
         # Use OC_Vector... method to check that
@@ -1463,10 +1480,233 @@ class TestClassDictProcessor(TestCase):
                 self.processor(class_dict, meta_dict, OC_TransformWithSlot, [])
             self.assertEqual(meta_dict, {})
 
-    # - class methods
-    # - instance methods
-    # - Mock 'transformAttribute' to check it is called correctly
+    def check_selectors(self, *, wrap_classmethod):
+        if wrap_classmethod:
+            wrap = classmethod
+        else:
+
+            def wrap(func):
+                return func
+
+        with self.subTest("basic method"):
+
+            @wrap
+            def method_(self, arg):
+                pass
+
+            class_dict = {"method_": method_, "__slots__": ()}
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertFalse(rval[0])
+            self.assertEqual(rval[1], ())
+            if wrap_classmethod:
+                self.assertEqual(rval[2], ())
+                check = rval[3]
+                self.assertIn("method_", meta_dict)
+                self.assertNotIn("method_", class_dict)
+
+            else:
+                self.assertEqual(rval[3], ())
+                check = rval[2]
+                self.assertNotIn("method_", meta_dict)
+                self.assertIn("method_", class_dict)
+
+            self.assertEqual(len(check), 1)
+            self.assertEqual(check[0].selector, b"method:")
+            self.assertEqual(check[0].isClassMethod, wrap_classmethod)
+
+        with self.subTest("hidden method"):
+
+            def method_(self, value):
+                pass
+
+            method_ = objc.selector(
+                method_,
+                selector=b"method:",
+                isHidden=True,
+                isClassMethod=wrap_classmethod,
+            )
+
+            class_dict = {"method_": method_, "__slots__": ()}
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertFalse(rval[0])
+            self.assertEqual(rval[1], ())
+
+            if wrap_classmethod:
+                self.assertEqual(rval[2], ())
+                check = rval[3]
+
+            else:
+                self.assertEqual(rval[3], ())
+                check = rval[2]
+
+            self.assertNotIn("method_", meta_dict)
+            self.assertNotIn("method_", class_dict)
+
+            self.assertEqual(len(check), 1)
+            self.assertEqual(check[0].selector, method_.selector)
+            self.assertEqual(check[0].signature, method_.signature)
+            self.assertEqual(check[0].callable, method_.callable)
+
+        with self.subTest("method name doesn't match selector"):
+
+            @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
+            def method(self, a):
+                pass
+
+            class_dict = {"method": method, "__slots__": ()}
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertFalse(rval[0])
+            self.assertEqual(rval[1], ())
+
+            if wrap_classmethod:
+                self.assertEqual(rval[2], ())
+                check = rval[3]
+                check_dict = meta_dict
+
+            else:
+                self.assertEqual(rval[3], ())
+                check = rval[2]
+                check_dict = class_dict
+
+            self.assertEqual(len(check), 1)
+            self.assertEqual(check[0].selector, b"sendValue:")
+
+            self.assertIn("method", check_dict)
+            self.assertIn("sendValue_", check_dict)
+            self.assertIs(check_dict["method"], check_dict["sendValue_"])
+
+        # XXX: Test there key in dict does not match selector
+
+    def test_instance_methods(self):
+        self.check_selectors(wrap_classmethod=False)
+
+    def test_class_methods(self):
+        self.check_selectors(wrap_classmethod=False)
+
+    def test_methods_needing_intermediate(self):
+        # XXX: Might need to keep this logic in C for two reasons:
+        #  1. DRY w.r.t. method names
+        #  2. This directly affects correctness of the bridge itself.
+
+        for selector in (b"dealloc",):
+            with self.subTest(selector=selector):
+
+                @objc.objc_method(selector=selector)
+                def method(self):
+                    pass
+
+                class_dict = {selector.decode(): method}
+                meta_dict = {}
+                rval = self.processor(class_dict, meta_dict, NSObject, [])
+                self.assertValidResult(rval)
+                self.assertTrue(rval[0])
+
+            with self.subTest(selector=selector, second_gen=True):
+
+                @objc.objc_method(selector=selector)
+                def method(self):
+                    pass
+
+                class_dict = {selector.decode(): method}
+                meta_dict = {}
+                rval = self.processor(
+                    class_dict, meta_dict, OC_TransformWithoutDict, []
+                )
+                self.assertValidResult(rval)
+                self.assertFalse(rval[0])
+
+        for selector in (
+            b"storedValueForKey:",
+            b"valueForKey:",
+            b"forwardInvocation:",
+            b"methodSignatureForSelector:",
+            b"respondsToSelector:",
+            b"copyWithZone:",
+            b"mutableCopyWithZone:",
+        ):
+            with self.subTest(selector=selector):
+
+                @objc.objc_method(selector=selector)
+                def method(self, arg):
+                    pass
+
+                class_dict = {selector.decode().replace(":", "_"): method}
+                meta_dict = {}
+                rval = self.processor(class_dict, meta_dict, NSObject, [])
+                self.assertValidResult(rval)
+                self.assertTrue(rval[0])
+
+        for selector in (
+            b"takeStoredValue:forKey:",
+            b"takeValue:forKey:",
+            b"setValue:forKey:",
+        ):
+            with self.subTest(selector=selector, match_name=True):
+
+                @objc.objc_method(selector=selector)
+                def method(self, arg1, arg2):
+                    pass
+
+                class_dict = {selector.decode().replace(":", "_"): method}
+                meta_dict = {}
+                rval = self.processor(class_dict, meta_dict, NSObject, [])
+                self.assertValidResult(rval)
+                self.assertTrue(rval[0])
+
+            with self.subTest(selector=selector, match_name=False):
+
+                @objc.objc_method(selector=selector)
+                def method(self, arg1, arg2):
+                    pass
+
+                class_dict = {"method": method}
+                meta_dict = {}
+                rval = self.processor(class_dict, meta_dict, NSObject, [])
+                self.assertValidResult(rval)
+                self.assertTrue(rval[0])
+
+    def test_python_methods(self):
+        def method(self):
+            pass
+
+        class_dict = {"method": objc.python_method(method), "__slots__": ()}
+        meta_dict = {}
+        rval = self.processor(class_dict, meta_dict, NSObject, [])
+        self.assertValidResult(rval)
+        self.assertEqual(rval, (False, (), (), ()))
+        self.assertIs(class_dict["method"], method)
+        self.assertEqual(meta_dict, {})
+
+    def test_mocked_transformer(self):
+        # Check that the transformer is called as expected for all attributes,
+        # mostly to avoid complicating the method tests.
+        self.fail()
+
+    def test_class_setup_changes_dict(self):
+        class SideEffectingSetup:
+            def __pyobjc_class_setup__(
+                self, name, class_dict, instance_methods, class_methods
+            ):
+                class_dict[name + "getter"] = lambda self: 42
+
+        class_dict = {"attr": SideEffectingSetup()}
+        meta_dict = {}
+        rval = self.processor(class_dict, meta_dict, NSObject, [])
+        self.assertValidResult(rval)
+        self.assertIn("attrgetter", class_dict)
+        self.assertIsInstance(class_dict["attrgetter"], objc.selector)
+        self.assertEqual(len(rval[2]), 1)
+        self.assertIs(rval[2][0], class_dict["attrgetter"])
+
     # - Check class_dict is updated when values are transformed
+    #   (Done implicitly in selector tests)
     #
-    # - "hidden" selectors (possibly needs new API)
+    # - "hidden" selectors (possibly needs new API), in particular inheriting them
     # - Protocol validation
+    # - test using objc.object_property because that has a non-trivial class_setup method
