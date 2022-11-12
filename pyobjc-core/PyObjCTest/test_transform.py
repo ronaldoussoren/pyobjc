@@ -1340,6 +1340,18 @@ class TestClassDictProcessor(TestCase):
             )
             self.assertEqual(class_dict["__slots__"], ())
 
+        with self.subTest("slot overrides parent class"):
+
+            class OC_TransformWitIvarA(NSObject):
+                __slots__ = ()
+                a = objc.ivar()
+
+            class_dict = {"__slots__": ("a",)}
+            with self.assertRaisesRegex(
+                objc.error, "objc.ivar 'a' overrides instance variable in super class"
+            ):
+                self.processor(class_dict, OC_TransformWitIvarA, [])
+
     def test_ivars(self):
         with self.subTest("unnamed ivar"):
             ivar = objc.ivar(type=objc._C_FLT)
@@ -1375,56 +1387,39 @@ class TestClassDictProcessor(TestCase):
             ivar_a = objc.ivar()
             ivar_b = objc.ivar(name="a")
             class_dict = {"a": ivar_a, "b": ivar_b}
-            rval = self.processor(class_dict, NSObject, [])
-            self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (ivar_a,), (), ()))
-            self.assertIs(class_dict["a"], ivar_a)
-            self.assertIs(class_dict["b"], ivar_a)
-
-        with self.subTest("two ivars with the same C name, mismatch type"):
-            ivar_a = objc.ivar()
-            ivar_b = objc.ivar(name="a", type=objc._C_FLT)
-            class_dict = {"a": ivar_a, "b": ivar_b}
-            with self.assertRaisesRegex(
-                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
-            ):
-                self.processor(class_dict, NSObject, [])
-
-        with self.subTest("two ivars with the same C name, mismatch isSlot"):
-            ivar_a = objc.ivar()
-            ivar_b = objc.ivar(name="a", isSlot=True)
-            class_dict = {"a": ivar_a, "b": ivar_b}
-            with self.assertRaisesRegex(
-                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
-            ):
-                self.processor(class_dict, NSObject, [])
-
-        with self.subTest("two ivars with the same C name, mismatch isOutlet"):
-            ivar_a = objc.ivar()
-            ivar_b = objc.ivar(name="a", isOutlet=True)
-            class_dict = {"a": ivar_a, "b": ivar_b}
-            with self.assertRaisesRegex(
-                objc.error, "Mismatched definition for duplicate objc.ivar 'b'"
-            ):
+            with self.assertRaisesRegex(objc.error, "'b' reimplements objc.ivar 'a'"):
                 self.processor(class_dict, NSObject, [])
 
         with self.subTest("ivar mismatch with slot"):
             ivar_a = objc.ivar()
             class_dict = {"a": ivar_a, "__slots__": ("a",)}
-            with self.assertRaisesRegex(
-                objc.error, "Mismatched definition for duplicate objc.ivar 'a'"
-            ):
+            with self.assertRaisesRegex(objc.error, "'a' redefines <"):
                 self.processor(class_dict, NSObject, [])
-                print(class_dict)
 
-        # Add various objc.ivars to dict, check result
-        # - named (matching dict key)
-        # - named (not matching dict key)
-        # - unnamed
-        # XXX: should this check if ivars are correct?
-        # XXX: should having multiple ivars with the same name be
-        #      an error?
-        pass
+        with self.subTest("ivar overrides parent class"):
+
+            class OC_TransformWithIvar(NSObject):
+                __slots__ = ()
+                iv = objc.ivar()
+
+            ivar = objc.ivar()
+            class_dict = {"iv": ivar, "__slots__": ()}
+            with self.assertRaisesRegex(
+                objc.error, "objc.ivar 'iv' overrides instance variable in super class"
+            ):
+                self.processor(class_dict, OC_TransformWithIvar, [])
+
+        with self.subTest("ivar overrides parent class"):
+
+            class OC_TransformWithSlot(NSObject):
+                __slots__ = ("iv",)
+
+            ivar = objc.ivar()
+            class_dict = {"iv": ivar, "__slots__": ()}
+            with self.assertRaisesRegex(
+                objc.error, "objc.ivar 'iv' overrides instance variable in super class"
+            ):
+                self.processor(class_dict, OC_TransformWithSlot, [])
 
     # - class methods
     # - instance methods

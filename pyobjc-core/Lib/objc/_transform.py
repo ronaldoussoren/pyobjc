@@ -1,8 +1,10 @@
 """
 Helper module that is used by objc_class.setattr and objc_class.__new__
-to transform class attributes.
+to transform class attributes and process the class dictionary (for the
+latter).
 
-The primary usecase is to transform callables to Objective-C selectors.
+The C code relies on this code to do most semantic checks, and only
+performs checks that are needed to avoid crashes.
 """
 # XXX: Update the reference documentation as well to ensure
 #      that it is clear and up-to-date.
@@ -60,6 +62,11 @@ def processClassDict(class_dict, class_object, protocols):
     instance_methods = set()
     class_methods = set()
 
+    super_ivars = set()
+    for v in class_object.__dict__.values():
+        if isinstance(v, objc.ivar):
+            super_ivars.add(v.__name__)
+
     class_dict["__objc_python_subclass__"] = True
     process_slots(class_dict, instance_variables, class_object)
 
@@ -95,12 +102,11 @@ def processClassDict(class_dict, class_object, protocols):
 
         elif isinstance(value, objc.ivar):
             if value.__name__ in instance_variables:
-                if value != instance_variables[value.__name__]:
-                    raise objc.error(
-                        f"Mismatched definition for duplicate objc.ivar '{key}'"
-                    )
-                class_dict[key] = instance_variables[value.__name__]
-                continue
+                raise objc.error(f"{key!r} reimplements objc.ivar {value.__name__!r}")
+            if value.__name__ in super_ivars:
+                raise objc.error(
+                    f"objc.ivar {key!r} overrides instance variable in super class"
+                )
             instance_variables[value.__name__] = value
 
     # Convert the collections to tuples for easier
@@ -133,15 +139,17 @@ def process_slots(class_dict, instance_variables, class_object):
             )
     else:
         if isinstance(slots, str):
-            class_dict[slots] = ivar = objc.ivar(
-                slots, objc._C_PythonObject, isSlot=True
-            )
-            instance_variables[ivar.__name__] = ivar
+            if slots in class_dict:
+                raise objc.error(f"slot {slots!r} redefines {class_dict[slots]!r}")
+
+            class_dict[slots] = objc.ivar(slots, objc._C_PythonObject, isSlot=True)
 
         else:
             for nm in slots:
-                class_dict[nm] = ivar = objc.ivar(nm, objc._C_PythonObject, isSlot=True)
-                instance_variables[ivar.__name__] = ivar
+                if nm in class_dict:
+                    raise objc.error(f"slot {nm!r} redefines {class_dict[nm]!r}")
+
+                class_dict[nm] = objc.ivar(nm, objc._C_PythonObject, isSlot=True)
 
     class_dict["__slots__"] = ()
 
