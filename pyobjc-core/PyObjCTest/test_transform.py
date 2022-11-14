@@ -637,6 +637,9 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"v@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
+        # XXX: Hidden selectors in the super-class should automaticly be hidden
+        # in subclasses.
+
     def test_function_to_selector(self):
         self.check_function_conversion(wrap_classmethod=False)
 
@@ -898,18 +901,23 @@ class TestTransformer(TestCase):
         self.assertEqual(out.selector, b"other:")
 
     def test_prefer_inherit_instance(self):
+        if type(self).__name__ == "TestCTransformer":
+            raise SkipTest("triggers unwanted side-effect")
+
         # Check that if a method name can refer to a class
         # and instance method in the parent (e.g. the NSObject
         # protocol methods) the transformer uses the instance
         # method when transforming.
         def description(self):
-            return "x"
+            return "x-y-z"
 
         out = self.transformer("description", description, NSObject, [])
         self.assertIsInstance(out, objc.selector)
         self.assertSignaturesEqual(out.signature, b"@@:")
         self.assertEqual(out.selector, b"description")
         self.assertFalse(out.isClassMethod)
+
+        print("\nNSObject +description", NSObject.new().description())
 
     def test_overridden_full_signature(self):
         # Use OC_Vector... method to check that
@@ -1590,6 +1598,42 @@ class TestClassDictProcessor(TestCase):
             self.assertIn("sendValue_", check_dict)
             self.assertIs(check_dict["method"], check_dict["sendValue_"])
 
+        with self.subTest("method name doesn't match selector for hidden method"):
+
+            # @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
+            def method(self, a):
+                pass
+
+            method = objc.selector(
+                method,
+                selector=b"sendValue:",
+                isClassMethod=wrap_classmethod,
+                isHidden=True,
+            )
+
+            class_dict = {"method": method, "__slots__": ()}
+            meta_dict = {}
+            rval = self.processor(class_dict, meta_dict, NSObject, [])
+            self.assertValidResult(rval)
+            self.assertFalse(rval[0])
+            self.assertEqual(rval[1], ())
+
+            if wrap_classmethod:
+                self.assertEqual(rval[2], ())
+                check = rval[3]
+                check_dict = meta_dict
+
+            else:
+                self.assertEqual(rval[3], ())
+                check = rval[2]
+                check_dict = class_dict
+
+            self.assertEqual(len(check), 1)
+            self.assertEqual(check[0].selector, b"sendValue:")
+
+            self.assertNotIn("method", check_dict)
+            self.assertNotIn("sendValue_", check_dict)
+
         # XXX: Test there key in dict does not match selector
 
     def test_instance_methods(self):
@@ -1606,9 +1650,11 @@ class TestClassDictProcessor(TestCase):
         for selector in (b"dealloc",):
             with self.subTest(selector=selector):
 
-                @objc.objc_method(selector=selector)
+                # @objc.objc_method(selector=selector)
                 def method(self):
                     pass
+
+                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode(): method}
                 meta_dict = {}
@@ -1618,9 +1664,11 @@ class TestClassDictProcessor(TestCase):
 
             with self.subTest(selector=selector, second_gen=True):
 
-                @objc.objc_method(selector=selector)
+                # @objc.objc_method(selector=selector)
                 def method(self):
                     pass
+
+                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode(): method}
                 meta_dict = {}
@@ -1641,9 +1689,11 @@ class TestClassDictProcessor(TestCase):
         ):
             with self.subTest(selector=selector):
 
-                @objc.objc_method(selector=selector)
+                # @objc.objc_method(selector=selector)
                 def method(self, arg):
                     pass
+
+                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode().replace(":", "_"): method}
                 meta_dict = {}
@@ -1658,9 +1708,11 @@ class TestClassDictProcessor(TestCase):
         ):
             with self.subTest(selector=selector, match_name=True):
 
-                @objc.objc_method(selector=selector)
+                # @objc.objc_method(selector=selector)
                 def method(self, arg1, arg2):
                     pass
+
+                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode().replace(":", "_"): method}
                 meta_dict = {}
@@ -1671,9 +1723,11 @@ class TestClassDictProcessor(TestCase):
             if type(self).__name__ != "TestCClassDictProcessor":
                 with self.subTest(selector=selector, match_name=False):
 
-                    @objc.objc_method(selector=selector)
+                    # @objc.objc_method(selector=selector)
                     def method(self, arg1, arg2):
                         pass
+
+                    method = objc.selector(method, selector=selector)
 
                     class_dict = {"method": method}
                     meta_dict = {}

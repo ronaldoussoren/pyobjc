@@ -460,13 +460,13 @@ class TestOverridingSpecials(TestCase):
         self.assertEqual(values, {"key": 42})
 
     def test_invalid_slots(self):
-        with self.assertRaisesRegex(TypeError, "__slots__ must be a sequence"):
+        with self.assertRaisesRegex(TypeError, "__slots__ is not iterable"):
 
             class ClassWithIntegerSlots(NSObject):
                 __slots__ = 42
 
         with self.assertRaisesRegex(
-            TypeError, "__slots__ entry 42 is not a string, but int"
+            TypeError, "__slots__ entry 42 must be str, not int"
         ):
 
             class ClassWithIntegerInSlots(NSObject):

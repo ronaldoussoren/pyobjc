@@ -92,6 +92,7 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
                 del class_dict[key]
                 if not value.isHidden:
                     meta_dict[key] = value
+                else:
                     if canonical != key:
                         meta_dict[canonical] = value
 

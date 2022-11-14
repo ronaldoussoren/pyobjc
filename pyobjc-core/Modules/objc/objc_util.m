@@ -1361,6 +1361,14 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
         PyErr_Clear();
         return 0;
     }
+    if (PyObjC_RemoveInternalTypeCodes(buf1) == -1) {
+        PyErr_Clear();
+        return 0;
+    }
+    if (PyObjC_RemoveInternalTypeCodes(buf2) == -1) {
+        PyErr_Clear();
+        return 0;
+    }
     return strcmp(buf1, buf2) == 0;
 }
 

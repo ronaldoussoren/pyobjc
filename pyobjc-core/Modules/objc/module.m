@@ -2092,7 +2092,7 @@ static PyMethodDef mod_methods[] = {
         .ml_name  = "_transformClassDict",
         .ml_meth  = (PyCFunction)mod_transformClassDict,
         .ml_flags = METH_VARARGS,
-        .ml_doc   = "_transformClassDict((class_dict, meta_dict, class_object, "
+        .ml_doc   = "_transformClassDict(class_dict, meta_dict, class_object, "
                     "protocols)\n" CLINIC_SEP "\nTransform a class dictionary",
     },
     {
