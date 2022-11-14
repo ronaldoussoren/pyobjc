@@ -1153,6 +1153,20 @@ class OC_TransformWithDict(NSObject):
     pass
 
 
+class OC_TransformWithIvar(NSObject):
+    __slots__ = ()
+    iv = objc.ivar()
+
+
+class OC_TransformWitIvarA(NSObject):
+    __slots__ = ()
+    a = objc.ivar()
+
+
+class OC_TransformWithSlot(NSObject):
+    __slots__ = ("iv",)
+
+
 class TestClassDictProcessor(TestCase):
     # XXX: To be determined if/how this can be verified against
     # the C implementation (e.g. TestCTransformer)
@@ -1308,9 +1322,7 @@ class TestClassDictProcessor(TestCase):
         with self.subTest("invalid __slots__ as tuple of string and int"):
             class_dict = {"__slots__": ("a", 42)}
             meta_dict = {}
-            with self.assertRaisesRegex(
-                TypeError, r"objc_ivar\(\) argument 1 must be str, not int"
-            ):
+            with self.assertRaisesRegex(TypeError, r"must be str, not int"):
                 self.processor(class_dict, meta_dict, NSObject, [])
 
             self.assertIn("a", class_dict)
@@ -1383,19 +1395,17 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
 
-        with self.subTest("slot overrides parent class"):
+        if type(self).__name__ != "TestCClassDictProcessor":
+            with self.subTest("slot overrides parent class"):
 
-            class OC_TransformWitIvarA(NSObject):
-                __slots__ = ()
-                a = objc.ivar()
-
-            class_dict = {"__slots__": ("a",)}
-            meta_dict = {}
-            with self.assertRaisesRegex(
-                objc.error, "objc.ivar 'a' overrides instance variable in super class"
-            ):
-                self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
-            self.assertEqual(meta_dict, {})
+                class_dict = {"__slots__": ("a",)}
+                meta_dict = {}
+                with self.assertRaisesRegex(
+                    objc.error,
+                    "objc.ivar 'a' overrides instance variable in super class",
+                ):
+                    self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
+                self.assertEqual(meta_dict, {})
 
     def test_ivars(self):
         with self.subTest("unnamed ivar"):
@@ -1434,6 +1444,9 @@ class TestClassDictProcessor(TestCase):
             self.assertIs(ivar, rval[1][0])
             self.assertEqual(meta_dict, {})
 
+        if type(self).__name__ == "TestCClassDictProcessor":
+            return
+
         with self.subTest("two ivars with same C name"):
             ivar_a = objc.ivar()
             ivar_b = objc.ivar(name="a")
@@ -1453,10 +1466,6 @@ class TestClassDictProcessor(TestCase):
 
         with self.subTest("ivar overrides parent class"):
 
-            class OC_TransformWithIvar(NSObject):
-                __slots__ = ()
-                iv = objc.ivar()
-
             ivar = objc.ivar()
             class_dict = {"iv": ivar, "__slots__": ()}
             meta_dict = {}
@@ -1467,10 +1476,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(meta_dict, {})
 
         with self.subTest("ivar overrides parent class"):
-
-            class OC_TransformWithSlot(NSObject):
-                __slots__ = ("iv",)
-
             ivar = objc.ivar()
             class_dict = {"iv": ivar, "__slots__": ()}
             meta_dict = {}
@@ -1553,9 +1558,13 @@ class TestClassDictProcessor(TestCase):
 
         with self.subTest("method name doesn't match selector"):
 
-            @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
+            # @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
             def method(self, a):
                 pass
+
+            method = objc.selector(
+                method, selector=b"sendValue:", isClassMethod=wrap_classmethod
+            )
 
             class_dict = {"method": method, "__slots__": ()}
             meta_dict = {}
@@ -1659,19 +1668,23 @@ class TestClassDictProcessor(TestCase):
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
 
-            with self.subTest(selector=selector, match_name=False):
+            if type(self).__name__ != "TestCClassDictProcessor":
+                with self.subTest(selector=selector, match_name=False):
 
-                @objc.objc_method(selector=selector)
-                def method(self, arg1, arg2):
-                    pass
+                    @objc.objc_method(selector=selector)
+                    def method(self, arg1, arg2):
+                        pass
 
-                class_dict = {"method": method}
-                meta_dict = {}
-                rval = self.processor(class_dict, meta_dict, NSObject, [])
-                self.assertValidResult(rval)
-                self.assertTrue(rval[0])
+                    class_dict = {"method": method}
+                    meta_dict = {}
+                    rval = self.processor(class_dict, meta_dict, NSObject, [])
+                    self.assertValidResult(rval)
+                    self.assertTrue(rval[0])
 
     def test_python_methods(self):
+        if type(self).__name__ == "TestCClassDictProcessor":
+            raise SkipTest("Known difference between C and Python implementation")
+
         def method(self):
             pass
 
@@ -1686,6 +1699,9 @@ class TestClassDictProcessor(TestCase):
     def test_mocked_transformer(self):
         # Check that the transformer is called as expected for all attributes,
         # mostly to avoid complicating the method tests.
+        if type(self).__name__ == "TestCClassDictProcessor":
+            raise SkipTest("Not relevant for C implementation")
+
         self.fail()
 
     def test_class_setup_changes_dict(self):
@@ -1710,3 +1726,20 @@ class TestClassDictProcessor(TestCase):
     # - "hidden" selectors (possibly needs new API), in particular inheriting them
     # - Protocol validation
     # - test using objc.object_property because that has a non-trivial class_setup method
+
+
+class TestCClassDictProcessor(TestClassDictProcessor):
+    @staticmethod
+    def processor(class_dict, meta_dict, class_object, protocols):
+        (
+            needs_intermediate,
+            instance_variables,
+            instance_methods,
+            class_methods,
+        ) = objc._transformClassDict(class_dict, meta_dict, class_object, protocols)
+
+        instance_variables = tuple(sorted(instance_variables, key=lambda x: x.__name__))
+        instance_methods = tuple(sorted(instance_methods, key=lambda x: x.selector))
+        class_methods = tuple(sorted(class_methods, key=lambda x: x.selector))
+
+        return (needs_intermediate, instance_variables, instance_methods, class_methods)

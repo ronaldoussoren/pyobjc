@@ -1822,6 +1822,34 @@ static PyObject* _Nullable mod_callableToSelector(PyObject* _Nullable mod
     return PyObjCSelector_FromFunction(pyname, callable, template_class, protocols);
 }
 
+static PyObject* _Nullable mod_transformClassDict(PyObject* _Nullable mod
+                                                  __attribute__((__unused__)),
+                                                  PyObject* args)
+{
+    PyObject* py_class;
+    PyObject* class_dict;
+    PyObject* meta_dict;
+    PyObject* protocols;
+    PyObject* instance_variables = NULL;
+    PyObject* instance_methods   = NULL;
+    PyObject* class_methods      = NULL;
+    int       needs_intermediate = 0;
+
+    if (!PyArg_ParseTuple(args, "OOOO", &class_dict, &meta_dict, &py_class, &protocols)) {
+        return NULL;
+    }
+
+    if (transform_class_dict(py_class, class_dict, meta_dict, protocols,
+                             &needs_intermediate, &instance_variables, &instance_methods,
+                             &class_methods)
+        == -1) {
+        return NULL;
+    }
+
+    return Py_BuildValue("ONNN", needs_intermediate ? Py_True : Py_False,
+                         instance_variables, instance_methods, class_methods);
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -2059,6 +2087,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_VARARGS,
         .ml_doc   = "_callableToSelector(pyname, callable, template_class, "
                     "protocols)\n" CLINIC_SEP "\nTransform a callable to an objc.selector",
+    },
+    {
+        .ml_name  = "_transformClassDict",
+        .ml_meth  = (PyCFunction)mod_transformClassDict,
+        .ml_flags = METH_VARARGS,
+        .ml_doc   = "_transformClassDict((class_dict, meta_dict, class_object, "
+                    "protocols)\n" CLINIC_SEP "\nTransform a class dictionary",
     },
     {
         .ml_name = NULL /* SENTINEL */

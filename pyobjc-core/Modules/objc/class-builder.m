@@ -171,38 +171,20 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         return 0;
     }
 
-    slots = PySequence_Fast(slot_value, "__slots__ must be a sequence");
-    if (slots == NULL) {
-        return -1;
-    }
-
-    len = PySequence_Fast_GET_SIZE(slots);
-    for (i = 0; i < len; i++) {
-        PyObjCInstanceVariable* var;
-
-        slot_value = PySequence_Fast_GET_ITEM(slots, i);
-
-        if (PyUnicode_Check(slot_value)) {
-            const char* slot_name = PyUnicode_AsUTF8(slot_value);
-            if (slot_name == NULL) {
-                return -1;
-            }
-
-            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
-            if (var == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(slots);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-
-        } else {
-            PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string, but %s",
-                         slot_value, Py_TYPE(slot_value)->tp_name);
-            Py_DECREF(slots);
+    if (PyUnicode_Check(slot_value)) {
+        /* __slots__ = "slot" */
+        const char* slot_name = PyUnicode_AsUTF8(slot_value);
+        if (slot_name == NULL) {
             return -1;
         }
 
+        PyObjCInstanceVariable* var =
+            (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
+        if (var == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            return -1;
+            // LCOV_EXCL_STOP
+        }
         ((PyObjCInstanceVariable*)var)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
         ((PyObjCInstanceVariable*)var)->isSlot = 1;
 
@@ -210,14 +192,60 @@ do_slots(PyObject* super_class, PyObject* clsdict)
                 clsdict, slot_value, (PyObject*)var)
             < 0) {
             // LCOV_EXCL_START
-            Py_DECREF(slots);
             Py_DECREF(var);
             return -1;
             // LCOV_EXCL_STOP
         }
         Py_DECREF(var);
+    } else {
+        slots = PySequence_Fast(slot_value, "__slots__ is not iterable");
+        if (slots == NULL) {
+            return -1;
+        }
+
+        len = PySequence_Fast_GET_SIZE(slots);
+        for (i = 0; i < len; i++) {
+            PyObjCInstanceVariable* var;
+
+            slot_value = PySequence_Fast_GET_ITEM(slots, i);
+
+            if (PyUnicode_Check(slot_value)) {
+                const char* slot_name = PyUnicode_AsUTF8(slot_value);
+                if (slot_name == NULL) {
+                    return -1;
+                }
+
+                var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
+                if (var == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(slots);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
+
+            } else {
+                PyErr_Format(PyExc_TypeError, "__slots__ entry %R must be str, not int",
+                             slot_value, Py_TYPE(slot_value)->tp_name);
+                Py_DECREF(slots);
+                return -1;
+            }
+
+            ((PyObjCInstanceVariable*)var)->type = PyObjCUtil_Strdup(@encode(PyObject*));
+            ((PyObjCInstanceVariable*)var)->isSlot = 1;
+
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    clsdict, slot_value, (PyObject*)var)
+                < 0) {
+                // LCOV_EXCL_START
+                Py_DECREF(slots);
+                Py_DECREF(var);
+                return -1;
+                // LCOV_EXCL_STOP
+            }
+            Py_DECREF(var);
+        }
+        Py_DECREF(slots);
     }
-    Py_DECREF(slots);
 
     slot_value = PyTuple_New(0);
     if (slot_value == NULL) { // LCOV_BR_EXCL_LINE
@@ -442,133 +470,52 @@ need_intermediate(PyObject* class_dict)
     return NO;
 }
 
-Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
-                                       PyObject* class_dict, PyObject* meta_dict,
-                                       PyObject* hiddenSelectors,
-                                       PyObject* hiddenClassSelectors)
+int
+transform_class_dict(PyObject* py_superclass, PyObject* class_dict, PyObject* meta_dict,
+                     PyObject* protocols, int* _Nonnull needs_intermediate,
+                     PyObject* _Nullable* _Nullable instance_variables,
+                     PyObject* _Nullable* _Nullable instance_methods,
+                     PyObject* _Nullable* _Nullable class_methods)
 {
-    /* XXX: Refactor into a function that must be in C and the bit that's
-     * reimplemented in Python and expose the latter to Python for testing.
-     */
-    PyObject*  seq;
     PyObject*  key_list = NULL;
     PyObject*  key      = NULL;
     PyObject*  value    = NULL;
     Py_ssize_t i;
     Py_ssize_t key_count;
-    Py_ssize_t protocol_count     = 0;
-    int        first_python_gen   = 0;
-    Class      new_class          = NULL;
-    Class      new_meta_class     = NULL;
-    PyObject*  py_superclass      = NULL;
-    int        have_intermediate  = 0;
-    PyObject*  instance_variables = NULL;
-    PyObject*  instance_methods   = NULL;
-    PyObject*  class_methods      = NULL;
 
-    PyObjC_Assert(super_class != Nil, Nil);
-    PyObjC_Assert(PyList_Check(protocols), Nil);
-    PyObjC_Assert(PyDict_Check(class_dict), Nil);
-
-    if (objc_lookUpClass(name) != NULL) {
-        PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
-                     name);
-        return Nil;
-    }
-
-    if (strspn(name, IDENT_CHARS) != strlen(name)) {
-        PyErr_Format(PyObjCExc_Error, "'%s' not a valid Objective-C class name", name);
-        return Nil;
-    }
+    *needs_intermediate = 0;
+    *instance_variables = NULL;
+    *instance_methods   = NULL;
+    *class_methods      = NULL;
 
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             class_dict, "__objc_python_subclass__", Py_True)
         == -1) {
-        return Nil; // LCOV_EXCL_LINE
+        goto error_cleanup; // LCOV_EXCL_LINE
     }
 
-    py_superclass = PyObjCClass_New(super_class);
-    if (py_superclass == NULL) { // LCOV_BR_EXCL_LINE
-        return Nil;              // LCOV_EXCL_LINE
+    *instance_variables = PySet_New(NULL);
+    if (*instance_variables == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;            // LCOV_EXCL_LINE
     }
 
-    instance_variables = PySet_New(NULL);
-    if (instance_variables == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;           // LCOV_EXCL_LINE
+    *instance_methods = PySet_New(NULL);
+    if (*instance_methods == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;          // LCOV_EXCL_LINE
     }
 
-    instance_methods = PySet_New(NULL);
-    if (instance_methods == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;         // LCOV_EXCL_LINE
+    *class_methods = PySet_New(NULL);
+    if (*class_methods == NULL) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;       // LCOV_EXCL_LINE
     }
-
-    class_methods = PySet_New(NULL);
-    if (class_methods == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;      // LCOV_EXCL_LINE
-    }
-
-    /* We must override copyWithZone: for python classes because the
-     * refcounts of python slots might be off otherwise. Yet it should
-     * be possible to override copyWithZone: in those classes.
-     *
-     * The solution: introduce an intermediate class that contains our
-     * implementation of copyWithZone:. This intermediate class is only
-     * needed when (1) the superclass implements copyWithZone: and (2)
-     * the python subclass overrides that method.
-     *
-     * The same issue is present with a number of other methods.
-     */
 
     if (!PyObjCClass_HasPythonImplementation(py_superclass)
         && need_intermediate(class_dict)) {
-        Class intermediate_class;
-        char  buf[256];
-        int   r;
-
-        have_intermediate = 1;
-
-        r = snprintf(buf, sizeof(buf), "_PyObjCCopying_%s", class_getName(super_class));
-        if (r < 0 || r >= (int)sizeof(buf)) { // LCOV_BR_EXCL_LINE
-            /* Formatting the name failed, which is unlikely to happen */
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_InternalError,
-                            "Cannot calculate name of intermediate class");
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
-        }
-
-        intermediate_class = objc_lookUpClass(buf);
-        if (intermediate_class == NULL) {
-            intermediate_class = build_intermediate_class(super_class, buf);
-            if (intermediate_class == Nil) { // LCOV_BR_EXCL_LINE
-                /* build_intermediate_class can only fail when
-                 * running out of resources.
-                 */
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
-        }
-        Py_DECREF(py_superclass);
-
-        super_class   = intermediate_class;
-        py_superclass = PyObjCClass_New(super_class);
-        if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
-            goto error_cleanup;     // LCOV_EXCL_LINE
-        }
+        *needs_intermediate = 1;
     }
 
     if (do_slots(py_superclass, class_dict) < 0) {
         goto error_cleanup;
-    }
-
-    if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
-        /*
-         * This class has a super_class that is pure objective-C
-         * We'll add some instance variables and methods that are
-         * needed for the correct functioning of the class.
-         *
-         * See the code below the next loop.
-         */
-        first_python_gen = 1;
     }
 
     /* The code uses PyDict_Keys instead of PyDict_Next because
@@ -584,39 +531,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     key_count = PyList_Size(key_list);
     if (key_count == -1) {  // LCOV_BR_EXCL_LINE
         goto error_cleanup; // LCOV_EXCL_LINE
-    }
-
-    /* Allocate the class as soon as possible, for new selector objects */
-    new_class = objc_allocateClassPair(super_class, name, 0);
-    if (new_class == Nil) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        PyErr_Format(PyObjCExc_Error, "Cannot allocateClassPair for %s", name);
-        goto error_cleanup;
-        // LCOV_EXCL_STOP
-    }
-
-    /* Class is only Nil if new_class is nil */
-    new_meta_class = (Class _Nonnull)object_getClass(new_class);
-
-    /* 0th round: protocols */
-    protocol_count = PyList_Size(protocols);
-    if (protocol_count == -1) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;     // LCOV_EXCL_LINE
-    }
-    for (i = 0; i < protocol_count; i++) {
-        PyObject* wrapped_protocol;
-        wrapped_protocol = PyList_GET_ITEM(protocols, i);
-        if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
-            continue;
-        }
-
-        /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
-         * checked */
-        if (!class_addProtocol( // LCOV_BR_EXCL_LINE
-                new_class,
-                (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
-            goto error_cleanup; // LCOV_EXCL_LINE
-        }
     }
 
     /* First step: call class setup hooks of entries in the class dict */
@@ -643,7 +557,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             PyErr_Clear();
 
         } else {
-            PyObject* args[5] = {NULL, key, class_dict, instance_methods, class_methods};
+            PyObject* args[5] = {NULL, key, class_dict, *instance_methods,
+                                 *class_methods};
             PyObject* rv      = PyObject_Vectorcall(m, args + 1,
                                                     4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(m);
@@ -695,7 +610,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
 
         if (PyObjCInstanceVariable_Check(value)) {
-            if (PySet_Add(instance_variables, value) == -1) {
+            if (PySet_Add(*instance_variables, value) == -1) {
                 goto error_cleanup;
             }
 
@@ -755,7 +670,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             }
 
             if (PyObjCSelector_IsClassMethod(value)) {
-                r = PySet_Add(class_methods, value);
+                r = PySet_Add(*class_methods, value);
                 if (r == -1) {          // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE
                 }
@@ -783,7 +698,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 }
 
             } else {
-                r = PySet_Add(instance_methods, value);
+                r = PySet_Add(*instance_methods, value);
                 if (r == -1) {          // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE
                 }
@@ -850,7 +765,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                             goto error_cleanup;                      // LCOV_EXCL_LINE
                         }
 
-                        r = PySet_Add(class_methods, value);
+                        r = PySet_Add(*class_methods, value);
                         if (r == -1) {          // LCOV_BR_EXCL_LINE
                             goto error_cleanup; // LCOV_EXCL_LINE
                         }
@@ -874,7 +789,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                             }
                         }
 
-                        r = PySet_Add(instance_methods, value);
+                        r = PySet_Add(*instance_methods, value);
                         if (r == -1) {          // LCOV_BR_EXCL_LINE
                             goto error_cleanup; // LCOV_EXCL_LINE
                         }
@@ -886,6 +801,176 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     /* Keylist is not needed anymore */
     Py_CLEAR(key_list);
+
+    /* Convert the collections to tuples for easier processing */
+    value = PySequence_Tuple(*instance_variables);
+    if (value == NULL)
+        goto error_cleanup;
+    Py_CLEAR(*instance_variables);
+    *instance_variables = value;
+
+    value = PySequence_Tuple(*instance_methods);
+    if (value == NULL)
+        goto error_cleanup;
+    Py_CLEAR(*instance_methods);
+    *instance_methods = value;
+
+    value = PySequence_Tuple(*class_methods);
+    if (value == NULL)
+        goto error_cleanup;
+    Py_CLEAR(*class_methods);
+    *class_methods = value;
+
+    return 0;
+
+error_cleanup:
+    Py_CLEAR(*instance_variables);
+    Py_CLEAR(*instance_methods);
+    Py_CLEAR(*class_methods);
+    Py_CLEAR(key_list);
+    return -1;
+}
+
+Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
+                                       PyObject* class_dict, PyObject* meta_dict,
+                                       PyObject* hiddenSelectors,
+                                       PyObject* hiddenClassSelectors)
+{
+    /* XXX: Refactor into a function that must be in C and the bit that's
+     * reimplemented in Python and expose the latter to Python for testing.
+     */
+    PyObject*  seq;
+    PyObject*  key_list = NULL;
+    PyObject*  value    = NULL;
+    Py_ssize_t i;
+    Py_ssize_t protocol_count     = 0;
+    int        first_python_gen   = 0;
+    Class      new_class          = NULL;
+    Class      new_meta_class     = NULL;
+    PyObject*  py_superclass      = NULL;
+    int        have_intermediate  = 0;
+    PyObject*  instance_variables = NULL;
+    PyObject*  instance_methods   = NULL;
+    PyObject*  class_methods      = NULL;
+    int        needs_intermediate = 0;
+
+    PyObjC_Assert(super_class != Nil, Nil);
+    PyObjC_Assert(PyList_Check(protocols), Nil);
+    PyObjC_Assert(PyDict_Check(class_dict), Nil);
+
+    if (objc_lookUpClass(name) != NULL) {
+        PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
+                     name);
+        return Nil;
+    }
+
+    if (strspn(name, IDENT_CHARS) != strlen(name)) {
+        PyErr_Format(PyObjCExc_Error, "'%s' not a valid Objective-C class name", name);
+        return Nil;
+    }
+
+    py_superclass = PyObjCClass_New(super_class);
+    if (py_superclass == NULL) { // LCOV_BR_EXCL_LINE
+        return Nil;              // LCOV_EXCL_LINE
+    }
+
+    if (transform_class_dict(py_superclass, class_dict, meta_dict, protocols,
+                             &needs_intermediate, &instance_variables, &instance_methods,
+                             &class_methods)
+        == -1) {
+        goto error_cleanup;
+    }
+
+    if (needs_intermediate) {
+        /* We must override copyWithZone: for python classes because the
+         * refcounts of python slots might be off otherwise. Yet it should
+         * be possible to override copyWithZone: in those classes.
+         *
+         * The solution: introduce an intermediate class that contains our
+         * implementation of copyWithZone:. This intermediate class is only
+         * needed when (1) the superclass implements copyWithZone: and (2)
+         * the python subclass overrides that method.
+         *
+         * The same issue is present with a number of other methods.
+         */
+        Class intermediate_class;
+        char  buf[256];
+        int   r;
+
+        have_intermediate = 1;
+
+        r = snprintf(buf, sizeof(buf), "_PyObjCCopying_%s", class_getName(super_class));
+        if (r < 0 || r >= (int)sizeof(buf)) { // LCOV_BR_EXCL_LINE
+            /* Formatting the name failed, which is unlikely to happen */
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_InternalError,
+                            "Cannot calculate name of intermediate class");
+            goto error_cleanup;
+            // LCOV_EXCL_STOP
+        }
+
+        intermediate_class = objc_lookUpClass(buf);
+        if (intermediate_class == NULL) {
+            intermediate_class = build_intermediate_class(super_class, buf);
+            if (intermediate_class == Nil) { // LCOV_BR_EXCL_LINE
+                /* build_intermediate_class can only fail when
+                 * running out of resources.
+                 */
+                goto error_cleanup; // LCOV_EXCL_LINE
+            }
+        }
+        Py_DECREF(py_superclass);
+
+        super_class   = intermediate_class;
+        py_superclass = PyObjCClass_New(super_class);
+        if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
+            goto error_cleanup;     // LCOV_EXCL_LINE
+        }
+    }
+
+    if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
+        /*
+         * This class has a super_class that is pure objective-C
+         * We'll add some instance variables and methods that are
+         * needed for the correct functioning of the class.
+         *
+         * See the code below the next loop.
+         */
+        first_python_gen = 1;
+    }
+
+    /* Allocate the class as soon as possible, for new selector objects */
+    new_class = objc_allocateClassPair(super_class, name, 0);
+    if (new_class == Nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_Format(PyObjCExc_Error, "Cannot allocateClassPair for %s", name);
+        goto error_cleanup;
+        // LCOV_EXCL_STOP
+    }
+
+    /* Class is only Nil if new_class is nil */
+    new_meta_class = (Class _Nonnull)object_getClass(new_class);
+
+    /* 0th round: protocols */
+    protocol_count = PyList_Size(protocols);
+    if (protocol_count == -1) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;     // LCOV_EXCL_LINE
+    }
+    for (i = 0; i < protocol_count; i++) {
+        PyObject* wrapped_protocol;
+        wrapped_protocol = PyList_GET_ITEM(protocols, i);
+        if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
+            continue;
+        }
+
+        /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
+         * checked */
+        if (!class_addProtocol( // LCOV_BR_EXCL_LINE
+                new_class,
+                (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            goto error_cleanup; // LCOV_EXCL_LINE
+        }
+    }
 
     /* Step 3: Check instance variables */
 
