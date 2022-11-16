@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.0.1
+-------------
+
+* #512: Fix metadata for ``webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:`` and
+  ``webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:`` in the WebKit
+  bindings.
+
 Version 9.0
 -----------
 
