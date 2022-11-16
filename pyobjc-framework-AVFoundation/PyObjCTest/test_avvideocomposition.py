@@ -140,35 +140,35 @@ class TestAVVideoComposition(TestCase):
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHanlder_,
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHandler_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHanlder_,
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHandler_,
             2,
             b"v@@",
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVVideoComposition.videoCompositionWithPropertiesOfAsset_prototypeInstruction_completionHandler_,
+            AVFoundation.AVMutableVideoComposition.videoCompositionWithPropertiesOfAsset_prototypeInstruction_completionHandler_,
             2,
             b"v@@",
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVMutableVideoComposition.videoCompositionWithAsset_applyingCIFiltetsWithHanlder_completionHandler_,
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHandler_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            AVFoundation.AVMutableVideoComposition.videoCompositionWithAsset_applyingCIFiltetsWithHanlder_completionHandler_,
+            AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_completionHandler_,
             2,
             b"v@@",
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVMutableVideoComposition.determineValidityForAsset_timeRange_validateDelegate_completionHandler_,
+            AVFoundation.AVMutableVideoComposition.determineValidityForAsset_timeRange_validationDelegate_completionHandler_,
             3,
             b"vZ@",
         )

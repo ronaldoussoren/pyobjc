@@ -76,10 +76,18 @@ class TestConversion(TestCase):
             (datetime.date.today(), Cocoa.NSDate),
         ):
 
-            with self.subTest(value):
+            with self.subTest(value=value, type=type(value).__name__):
                 v = Conversion.propertyListFromPythonCollection(value)
                 self.assertIsInstance(v, result_type)
-                self.assertEqual(v, value)
+
+                if isinstance(value, datetime.datetime):
+                    # XXX: This is a bit of a hack and avoids a test problem during
+                    # summer time
+                    self.assertEqual(
+                        int(v.timeIntervalSince1970()), int(value.timestamp())
+                    )
+                else:
+                    self.assertEqual(v, value)
 
         with self.subTest("decimal"):
             v = Conversion.propertyListFromPythonCollection(decimal.Decimal(1))

@@ -39,7 +39,7 @@ Underscores, and lots of them
 
 Objective-C objects communicate with each other by sending messages.
 The syntax for messages is somewhere in-between Python's positional and
-keyword arguments.  Specificlaly, Objective-C message dispatch uses
+keyword arguments.  Specifically, Objective-C message dispatch uses
 positional arguments, but parts of the message name (called "selector"
 in Objective-C terminology) are interleaved with the arguments.
 

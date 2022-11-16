@@ -12,5 +12,5 @@ class TestAVCameraCalibrationData(TestCase):
         )
         self.assertResultHasType(
             AVFoundation.AVCameraCalibrationData.extrinsicMatrix,
-            simd.matrix_float3x3.__typestr__,
+            simd.matrix_float4x3.__typestr__,
         )

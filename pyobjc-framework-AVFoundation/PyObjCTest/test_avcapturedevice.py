@@ -317,24 +317,18 @@ class TestAVCaptureDevice(TestCase):
 
     @min_os_level("13.0")
     def testMethods13_0(self):
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isContinuityCamera)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isContinuityCamera)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isContinuityCamera)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightEnabled)
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat_Tundra.isContinuityCamera
+            AVFoundation.AVCaptureDevice_Tundra.isStudioLightEnabled
         )
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightEnabled)
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightEnabled
-        )
+        self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setStudioLightEnabled_, 0)
         self.assertArgIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat.setStudioLightEnabled_, 0
+            AVFoundation.AVCaptureDevice_Tundra.setStudioLightEnabled_, 0
         )
-        self.assertArgIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat_Tundra.setStudioLightEnabled_, 0
-        )
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isStudioLightActive)
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightActive
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightActive)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isStudioLightActive)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isStudioLightSupported
         )

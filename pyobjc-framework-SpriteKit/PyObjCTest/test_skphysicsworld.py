@@ -30,6 +30,8 @@ class TestSKPhysicsWorld(TestCase):
         )
 
         o = SpriteKit.SKPhysicsWorld.alloc().init()
+        print(type(o))
+        self.assertArgHasType(o.sampleFieldsAt_, 0, simd.vector_float3.__typestr__)
         v = o.sampleFieldsAt_((9, 10, 11))
         self.assertIsInstance(v, simd.vector_float3)
 

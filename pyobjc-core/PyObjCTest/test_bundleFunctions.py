@@ -105,7 +105,8 @@ class TestBundleFunctions(TestCase):
             objc.loadBundleFunctions(self.bundle, {}, 42)
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.loadBundleFunctions(self.bundle, {}, [], "hello")
 
@@ -143,7 +144,8 @@ class TestFunctionList(TestCase):
             objc.loadFunctionList(function_list, {}, 42)
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.loadFunctionList(function_list, {}, [], "hello")
 
