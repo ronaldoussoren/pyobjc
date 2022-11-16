@@ -1686,6 +1686,9 @@
          "arguments": {
           "0": {
            "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
           }
          },
          "retval": {
@@ -1707,7 +1710,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": "@"
+           "typestr": "q"
           }
          },
          "retval": {
