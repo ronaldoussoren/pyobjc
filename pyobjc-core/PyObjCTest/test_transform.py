@@ -6,6 +6,7 @@ import types
 import inspect
 import functools
 import sys
+from unittest import mock
 
 from .test_vector_proxy import OC_Vector
 from . import test_protocol  # noqa: F401
@@ -163,6 +164,17 @@ class TestPythonMethod(TestCase):
 
         o = my_method(4)
         self.assertEqual(o, 42)
+
+
+class TransformerHelper(NSObject):
+    def hiddenMethod(self):
+        return "Boo!"
+
+    hiddenMethod = objc.selector(hiddenMethod, isHidden=True)
+
+
+class TransformerHelper2(TransformerHelper):
+    pass
 
 
 class TestTransformer(TestCase):
@@ -917,8 +929,6 @@ class TestTransformer(TestCase):
         self.assertEqual(out.selector, b"description")
         self.assertFalse(out.isClassMethod)
 
-        print("\nNSObject +description", NSObject.new().description())
-
     def test_overridden_full_signature(self):
         # Use OC_Vector... method to check that
         # an override signature gets used.
@@ -1104,6 +1114,40 @@ class TestTransformer(TestCase):
             self.assertIsInstance(out, objc.selector)
             self.assertFalse(out.isClassMethod)
             self.assertSignaturesEqual(out.signature, b"f@:")
+
+    def test_inherit_hidden_method(self):
+        # First check that the method is actually hidden:
+        o = TransformerHelper.new()
+        with self.assertRaisesRegex(AttributeError, "hiddenMethod"):
+            o.hiddenMethod()
+
+        self.assertEqual(o.pyobjc_instanceMethods.hiddenMethod(), "Boo!")
+
+        def hiddenMethod(self):
+            return "bar"
+
+        # Check that the "hidden" bit is inherited for selectors that are created
+        # by the transformer:
+        with self.subTest("parent class"):
+            out = self.transformer("hiddenMethod", hiddenMethod, TransformerHelper, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertTrue(out.isHidden)
+
+        with self.subTest("child class"):
+            out = self.transformer("hiddenMethod", hiddenMethod, TransformerHelper2, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertTrue(out.isHidden)
+
+        with self.subTest("NSObjet"):
+            out = self.transformer("hiddenMethod", hiddenMethod, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertFalse(out.isHidden)
 
 
 class OC_TestTransformerHelper(NSObject):
@@ -1750,14 +1794,6 @@ class TestClassDictProcessor(TestCase):
         self.assertIs(class_dict["method"], method)
         self.assertEqual(meta_dict, {})
 
-    def test_mocked_transformer(self):
-        # Check that the transformer is called as expected for all attributes,
-        # mostly to avoid complicating the method tests.
-        if type(self).__name__ == "TestCClassDictProcessor":
-            raise SkipTest("Not relevant for C implementation")
-
-        self.fail()
-
     def test_class_setup_changes_dict(self):
         class SideEffectingSetup:
             def __pyobjc_class_setup__(
@@ -1774,12 +1810,43 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(len(rval[2]), 1)
         self.assertIs(rval[2][0], class_dict["attrgetter"])
 
-    # - Check class_dict is updated when values are transformed
-    #   (Done implicitly in selector tests)
-    #
-    # - "hidden" selectors (possibly needs new API), in particular inheriting them
+    def test_class_dict_is_transformed(self):
+        # This test just makes sure that the attribute transformer is actually used,
+        # that way this testcase doesn't have to test the transformer indirectly.
+        #
+        # Note that the test is not really necessary, a number of other cases rely
+        # on the transformer being used.
+
+        if type(self).__name__ == "TestCClassDictProcessor":
+            raise SkipTest("Not relevant for C implementation")
+
+        class_dict = {"a": 42, "b": 90}
+        meta_dict = {}
+        protocols = []
+
+        with mock.patch(
+            "objc._transform.transformAttribute",
+            spec=True,
+            side_effect=_transform.transformAttribute,
+        ) as mck:
+            rval = self.processor(class_dict, meta_dict, NSObject, protocols)
+            self.assertValidResult(rval)
+
+        self.assertEqual(mck.call_count, 4)
+        self.assertEqual(
+            {a.args[0] for a in mck.call_args_list},
+            {"a", "b", "__slots__", "__objc_python_subclass__"},
+        )
+
+        for call in mck.call_args_list:
+            self.assertIs(call.args[-2], NSObject)
+            self.assertIs(call.args[-1], protocols)
+            if call.args[0] in class_dict:
+                self.assertEqual(call.args[1], class_dict[call.args[0]])
+
+    # XXX: Protocol validation is currently in a different part of the code, first replace the code
+    #      in class-builder and then grow the functionality.
     # - Protocol validation
-    # - test using objc.object_property because that has a non-trivial class_setup method
 
 
 class TestCClassDictProcessor(TestClassDictProcessor):

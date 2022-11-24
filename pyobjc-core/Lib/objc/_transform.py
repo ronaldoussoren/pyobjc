@@ -18,20 +18,6 @@ import dis
 __all__ = ("objc_method",)  # XXX "python_method")
 
 
-def trace(func):
-    def tracer(*args, **kwds):
-        print(func.__name__, args, kwds)
-        try:
-            rval = func(*args, **kwds)
-            print("->", rval)
-            return rval
-        except Exception as exc:
-            print("!!", exc)
-            raise
-
-    return tracer
-
-
 NO_VALUE = object()
 
 # This needs to be kept in sync with class-builder.m:gMethods
@@ -165,7 +151,6 @@ def process_slots(class_dict, instance_variables, class_object):
     class_dict["__slots__"] = ()
 
 
-# @trace
 def transformAttribute(name, value, class_object, protocols):
     """
     Transform 'value' before it will be added to a class
@@ -203,6 +188,9 @@ def transformAttribute(name, value, class_object, protocols):
         return value.__wrapped__
 
     isclass = None
+
+    # XXX: Introspecting hidden methods through the method accessors doesn't work
+    # ishidden =False
     selname = default_selector(name)
     signature = None
 
@@ -216,11 +204,14 @@ def transformAttribute(name, value, class_object, protocols):
     # using an instance method over a class method, as
     # this makes it a lot easier to implement methods from
     # the NSObject protocol (amongst others)
-    current = lookup_mro_dict(class_object, name)
+    current = getattr(class_object.pyobjc_instanceMethods, name, NO_VALUE)
+    # current = lookup_mro_dict(class_object, name)
     if current is NO_VALUE:
-        current = lookup_mro_dict(type(class_object), name)
+        current = getattr(class_object.pyobjc_classMethods, name, NO_VALUE)
+        # current = lookup_mro_dict(type(class_object), name)
     if isinstance(current, objc.selector):
         isclass = current.isClassMethod
+        # ishidden = current.isHidden
         signature = current.signature
         selname = current.selector
 
@@ -407,7 +398,19 @@ def transformAttribute(name, value, class_object, protocols):
                     f"{value!r} has {pos-1} positional arguments"
                 )
 
-    return objc.selector(value, selname, signature, isclass)
+    # XXX: This is needed because SomeClass.pyobjc_instanceMethods.hiddenSelector.isHidden
+    #      is false :-(
+    ishidden = False
+    for cls in class_object.mro():
+        if cls is object:
+            break
+        if selname in cls.pyobjc_hiddenSelectors(isclass):
+            ishidden = True
+            break
+
+    return objc.selector(
+        value, selname, signature, isClassMethod=isclass, isHidden=ishidden
+    )
 
 
 def lookup_mro_dict(class_object, name):

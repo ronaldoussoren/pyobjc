@@ -2423,11 +2423,15 @@ static PyObject* _Nullable class_get_hidden(PyObject* _self, PyObject* classMeth
 
     if (PyObject_IsTrue(classMethod)) {
         hidden = self->hiddenClassSelectors;
-        PyObjC_Assert(hidden != NULL, NULL);
+        if (hidden == NULL) {
+            return PyDict_New();
+        }
 
     } else {
         hidden = self->hiddenSelectors;
-        PyObjC_Assert(hidden != NULL, NULL);
+        if (hidden == NULL) {
+            return PyDict_New();
+        }
     }
 
     PyObjC_Assert(PyDict_Check(hidden), NULL);
