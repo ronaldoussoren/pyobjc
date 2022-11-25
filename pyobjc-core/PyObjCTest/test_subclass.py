@@ -400,7 +400,8 @@ class TestOverridingSpecials(TestCase):
             MethodNamesClass._someName_andArg_.selector, b"_someName:andArg:"
         )
         self.assertEqual(MethodNamesClass.raise__.selector, b"raise")
-        self.assertEqual(MethodNamesClass.froobnicate__.selector, b"froobnicate::")
+
+        self.assertNotIsInstance(MethodNamesClass.froobnicate__, objc.selector)
 
     def testOverrideRespondsToSelector(self):
         class OC_RespondsClass(NSObject):
@@ -460,14 +461,12 @@ class TestOverridingSpecials(TestCase):
         self.assertEqual(values, {"key": 42})
 
     def test_invalid_slots(self):
-        with self.assertRaisesRegex(TypeError, "__slots__ is not iterable"):
+        with self.assertRaisesRegex(TypeError, "not iterable"):
 
             class ClassWithIntegerSlots(NSObject):
                 __slots__ = 42
 
-        with self.assertRaisesRegex(
-            TypeError, "__slots__ entry 42 must be str, not int"
-        ):
+        with self.assertRaisesRegex(TypeError, "be str, not int"):
 
             class ClassWithIntegerInSlots(NSObject):
                 __slots__ = (
@@ -516,14 +515,6 @@ class TestOverridingSpecials(TestCase):
                         del class_dict[k]
                     except KeyError:
                         pass
-
-        with self.assertRaisesRegex(
-            objc.internal_error, "PyObjCClass_BuildClass: Cannot fetch item in keylist"
-        ):
-
-            class ClassWhereSetupChangesDict(NSObject):
-                attr1 = Helper()
-                attr2 = Helper()
 
     def test_class_dict_contains_int(self):
         class NoCompare:

@@ -465,11 +465,16 @@ class TestFunctionLikeObjects(TestCase):
 
         o = OC_ClassWithCustomFunc.alloc().init()
         self.assertEqual(o.method1.signature, b"@@:")
-        self.assertEqual(o.method2.signature, b"@@:")
+        self.assertEqual(o.method2.signature, b"v@:")
         self.assertEqual(o.method3.signature, b"@@:")
         self.assertEqual(o.method4.signature, b"v@:")
         self.assertEqual(o.bound1.signature, b"@@:")
-        self.assertEqual(o.bound2.signature, b"@@:")
+        self.assertEqual(o.bound2.signature, b"v@:")
+
+        # NOTE: Cannot try to access the return value
+        # of methods whose signature says the return
+        # value is ``void``, Cocoa will cause a crash
+        # when calling ``getReturnValue`` for those.
 
         self.assertEqual(values, [])
         inv = NSInvocation.invocationWithMethodSignature_(
@@ -490,8 +495,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setSelector_("method2")
         inv.setTarget_(o)
         inv.invoke()
-        v = inv.getReturnValue_(None)
-        self.assertEqual(v, None)
         self.assertEqual(values, ["method2"])
         del values[:]
 
@@ -515,8 +518,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setTarget_(o)
         inv.invoke()
 
-        # Cannot get return value, return 'void'
-        # Trying to get the return value will crash Cocoa
         self.assertEqual(values, ["method4"])
         del values[:]
 
@@ -539,9 +540,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setSelector_("bound2")
         inv.setTarget_(o)
         inv.invoke()
-        v = inv.getReturnValue_(None)
-        self.assertEqual(v, None)
-        self.assertEqual(values, ["bound2"])
         del values[:]
 
     def test_custom_func_with_no_code(self):

@@ -78,18 +78,11 @@ class TestInstanceVariables(TestCase):
         self.assertEqual(hash(ivar_a), hash(ivar_a2))
 
     def test_ivars_with_same_name(self):
-        class WithSameName(NSObject):
-            a = objc.ivar("a")
-            b = objc.ivar("a")
+        with self.assertRaises(objc.error):
 
-        self.assertEqual(WithSameName.a, WithSameName.b)
-
-        # XXX: Is would be nicer if both are the same object:
-        # self.assertIs(WithSameName.a, WithSameName.b)
-
-        o = WithSameName.alloc().init()
-        o.a = 4
-        self.assertEqual(o.b, 4)
+            class WithSameName(NSObject):
+                a = objc.ivar("a")
+                b = objc.ivar("a")
 
     def test_repr(self):
         self.assertEqual(repr(TestClass.idVar), "<instance-variable idVar>")

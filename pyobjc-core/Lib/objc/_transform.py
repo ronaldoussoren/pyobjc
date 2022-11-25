@@ -22,18 +22,21 @@ __all__ = ("objc_method",)  # XXX "python_method")
 NO_VALUE = object()
 
 # This needs to be kept in sync with class-builder.m:gMethods
+#
+# XXX: Consider always introducing the intermediate class, which
+#      would take away the need for this dict.
 HELPER_METHODS = {
-    b"dealloc",
-    b"storedValueForKey:",
-    b"valueForKey:",
-    b"takeStoredValue:forKey:",
-    b"takeValue:forKey:",
-    b"setValue:forKey:",
-    b"forwardInvocation:",
-    b"methodSignatureForSelector:",
-    b"respondsToSelector:",
-    b"copyWithZone:",
-    b"mutableCopyWithZone:",
+    b"dealloc": b"v@:",
+    b"storedValueForKey:": b"@@:@",
+    b"valueForKey:": b"@@:@",
+    b"takeStoredValue:forKey:": b"v@:@@",
+    b"takeValue:forKey:": b"v@:@@",
+    b"setValue:forKey:": b"v@:@@",
+    b"forwardInvocation:": b"v@:@",
+    b"methodSignatureForSelector:": b"@@::",
+    b"respondsToSelector:": b"Z@::",
+    b"copyWithZone:": b"@@:^{_NSZone=}",
+    b"mutableCopyWithZone:": b"@@:^{_NSZone=}",
 }
 
 
@@ -114,8 +117,18 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
     instance_variables = tuple(
         sorted(instance_variables.values(), key=lambda x: x.__name__)
     )
-    instance_methods = tuple(sorted(instance_methods, key=lambda x: x.selector))
-    class_methods = tuple(sorted(class_methods, key=lambda x: x.selector))
+    instance_methods = tuple(
+        sorted(
+            instance_methods,
+            key=lambda x: x.selector if isinstance(x, objc.selector) else x,
+        )
+    )
+    class_methods = tuple(
+        sorted(
+            class_methods,
+            key=lambda x: x.selector if isinstance(x, objc.selector) else x,
+        )
+    )
 
     return (
         bool(needs_intermediate),
@@ -203,12 +216,26 @@ def transformAttribute(name, value, class_object, protocols):
     else:
         registered = None
 
+    if selname is not None:
+        # Look up the selector in HELPER_METHODS and use that signature
+        # instead of the default. All methods in HELPER_METHODS are
+        # instance methods.
+        #
+        # This is needed to do the right thing for a number of optional
+        # methods in the NSObject protocol, such as ``copyWithZone:``.
+        helper_signature = HELPER_METHODS.get(selname, NO_VALUE)
+        if helper_signature is not NO_VALUE:
+            signature = helper_signature
+            isclass = False
+    else:
+        helper_signature = NO_VALUE
+
     # DWIM: Copy classmethod-ness and signature from
     # a pre-existing method on the class, but prefer
     # using an instance method over a class method, as
     # this makes it a lot easier to implement methods from
     # the NSObject protocol (amongst others)
-    if isinstance(name, str):
+    if isinstance(name, str) and helper_signature is NO_VALUE:
         current = getattr(class_object.pyobjc_instanceMethods, name, NO_VALUE)
         # current = lookup_mro_dict(class_object, name)
         if current is NO_VALUE:
@@ -488,7 +515,7 @@ def default_selector(name):
     """
     if name.endswith("__") and keyword.iskeyword(name[:-2]):
         name = name[:-2]
-    if "_" in name and not name.endswith("_"):
+    if "_" in name[1:] and not name.endswith("_"):
         return None
     if "__" in name:
         return None

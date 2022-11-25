@@ -17,6 +17,20 @@ from .test_protocol import MyProtocol
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 
+IMPLIED_SELECTORS = {
+    b"dealloc": b"v@:",
+    b"storedValueForKey:": b"@@:@",
+    b"valueForKey:": b"@@:@",
+    b"takeStoredValue:forKey:": b"v@:@@",
+    b"takeValue:forKey:": b"v@:@@",
+    b"setValue:forKey:": b"v@:@@",
+    b"forwardInvocation:": b"v@:@",
+    b"methodSignatureForSelector:": b"@@::",
+    b"respondsToSelector:": b"Z@::",
+    b"copyWithZone:": b"@@:^{_NSZone=}",
+    b"mutableCopyWithZone:": b"@@:^{_NSZone=}",
+}
+
 
 class TestObjCMethod(TestCase):
     def test_exposed(self):
@@ -677,6 +691,20 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"v@:@@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
+        with self.subTest("private selector without arguments"):
+
+            @outer_wrap
+            @wrap
+            @inner_wrap
+            def _doit(self):
+                pass
+
+            out = self.transformer("_doit", _doit, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.selector, b"_doit")
+            self.assertSignaturesEqual(out.signature, b"v@:")
+            self.assertEqual(out.isClassMethod, wrap_classmethod)
+
         if outer_wrap is inner_wrap is None:
             with self.subTest("integer method name"):
 
@@ -1189,6 +1217,29 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"@@:")
             self.assertFalse(out.isHidden)
 
+    def test_copyMethod(self):
+        if type(self).__name__ == "TestCTransformer":
+            raise SkipTest("handled differently in the C version")
+
+        def copyWithZone_(self, zone):
+            return self
+
+        with self.subTest("copyWithZone:"):
+            out = self.transformer("copyWithZone_", copyWithZone_, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.selector, b"copyWithZone:")
+            self.assertSignaturesEqual(out.signature, b"@@:^{_NSZone=}")
+            self.assertFalse(out.isHidden)
+
+        with self.subTest("mutableCopyWithZone:"):
+            out = self.transformer("mutableCopyWithZone_", copyWithZone_, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.selector, b"mutableCopyWithZone:")
+            self.assertSignaturesEqual(out.signature, b"@@:^{_NSZone=}")
+            self.assertFalse(out.isHidden)
+
 
 class OC_TestTransformerHelper(NSObject):
     pass
@@ -1277,14 +1328,16 @@ class TestClassDictProcessor(TestCase):
             self.assertIsInstance(item, objc.ivar)
 
         for item in rval[2]:
-            self.assertIsInstance(item, objc.selector)
+            self.assertIsInstance(item, (objc.selector, bytes))
             self.assertNotIsInstance(item, objc.native_selector)
-            self.assertFalse(item.isClassMethod)
+            if isinstance(item, objc.selector):
+                self.assertFalse(item.isClassMethod)
 
         for item in rval[3]:
-            self.assertIsInstance(item, objc.selector)
+            self.assertIsInstance(item, (objc.selector, bytes))
             self.assertNotIsInstance(item, objc.native_selector)
-            self.assertTrue(item.isClassMethod)
+            if isinstance(item, objc.selector):
+                self.assertTrue(item.isClassMethod)
 
     def test_empty_dict(self):
         class_dict = {}
@@ -1734,25 +1787,23 @@ class TestClassDictProcessor(TestCase):
         for selector in (b"dealloc",):
             with self.subTest(selector=selector):
 
-                # @objc.objc_method(selector=selector)
                 def method(self):
                     pass
-
-                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode(): method}
                 meta_dict = {}
                 rval = self.processor(class_dict, meta_dict, NSObject, [])
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
+                m = class_dict[selector.decode()]
+                self.assertFalse(m.isClassMethod)
+                self.assertEqual(m.selector, selector)
+                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
             with self.subTest(selector=selector, second_gen=True):
 
-                # @objc.objc_method(selector=selector)
                 def method(self):
                     pass
-
-                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode(): method}
                 meta_dict = {}
@@ -1761,6 +1812,11 @@ class TestClassDictProcessor(TestCase):
                 )
                 self.assertValidResult(rval)
                 self.assertFalse(rval[0])
+
+                m = class_dict[selector.decode()]
+                self.assertFalse(m.isClassMethod)
+                self.assertEqual(m.selector, selector)
+                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
         for selector in (
             b"storedValueForKey:",
@@ -1773,17 +1829,20 @@ class TestClassDictProcessor(TestCase):
         ):
             with self.subTest(selector=selector):
 
-                # @objc.objc_method(selector=selector)
                 def method(self, arg):
                     pass
-
-                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode().replace(":", "_"): method}
                 meta_dict = {}
                 rval = self.processor(class_dict, meta_dict, NSObject, [])
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
+
+                if type(self).__name__ != "TestCClassDictProcessor":
+                    m = class_dict[selector.decode().replace(":", "_")]
+                    self.assertFalse(m.isClassMethod)
+                    self.assertEqual(m.selector, selector)
+                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
         for selector in (
             b"takeStoredValue:forKey:",
@@ -1792,17 +1851,20 @@ class TestClassDictProcessor(TestCase):
         ):
             with self.subTest(selector=selector, match_name=True):
 
-                # @objc.objc_method(selector=selector)
                 def method(self, arg1, arg2):
                     pass
-
-                method = objc.selector(method, selector=selector)
 
                 class_dict = {selector.decode().replace(":", "_"): method}
                 meta_dict = {}
                 rval = self.processor(class_dict, meta_dict, NSObject, [])
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
+
+                if type(self).__name__ != "TestCClassDictProcessor":
+                    m = class_dict[selector.decode().replace(":", "_")]
+                    self.assertFalse(m.isClassMethod)
+                    self.assertEqual(m.selector, selector)
+                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
             if type(self).__name__ != "TestCClassDictProcessor":
                 with self.subTest(selector=selector, match_name=False):
@@ -1818,6 +1880,11 @@ class TestClassDictProcessor(TestCase):
                     rval = self.processor(class_dict, meta_dict, NSObject, [])
                     self.assertValidResult(rval)
                     self.assertTrue(rval[0])
+
+                    m = class_dict[selector.decode().replace(":", "_")]
+                    self.assertFalse(m.isClassMethod)
+                    self.assertEqual(m.selector, selector)
+                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
     def test_python_methods(self):
         if type(self).__name__ == "TestCClassDictProcessor":
@@ -1849,6 +1916,24 @@ class TestClassDictProcessor(TestCase):
         self.assertIsInstance(class_dict["attrgetter"], objc.selector)
         self.assertEqual(len(rval[2]), 1)
         self.assertIs(rval[2][0], class_dict["attrgetter"])
+
+    def test_class_setup_hidden(self):
+        class HiddenMethodSetup:
+            def __pyobjc_class_setup__(
+                self, name, class_dict, instance_methods, class_methods
+            ):
+
+                instance_methods.add(b"instancevalue")
+                class_methods.add(b"classvalue")
+
+        class_dict = {"attr": HiddenMethodSetup()}
+        meta_dict = {}
+        rval = self.processor(class_dict, meta_dict, NSObject, [])
+        self.assertValidResult(rval)
+        self.assertEqual(len(rval[2]), 1)
+        self.assertEqual(rval[2][0], b"instancevalue")
+        self.assertEqual(len(rval[3]), 1)
+        self.assertEqual(rval[3][0], b"classvalue")
 
     def test_class_dict_is_transformed(self):
         # This test just makes sure that the attribute transformer is actually used,
@@ -1900,7 +1985,17 @@ class TestCClassDictProcessor(TestClassDictProcessor):
         ) = objc._transformClassDict(class_dict, meta_dict, class_object, protocols)
 
         instance_variables = tuple(sorted(instance_variables, key=lambda x: x.__name__))
-        instance_methods = tuple(sorted(instance_methods, key=lambda x: x.selector))
-        class_methods = tuple(sorted(class_methods, key=lambda x: x.selector))
+        instance_methods = tuple(
+            sorted(
+                instance_methods,
+                key=lambda x: x.selector if isinstance(x, objc.selector) else x,
+            )
+        )
+        class_methods = tuple(
+            sorted(
+                class_methods,
+                key=lambda x: x.selector if isinstance(x, objc.selector) else x,
+            )
+        )
 
         return (needs_intermediate, instance_variables, instance_methods, class_methods)

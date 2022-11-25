@@ -934,12 +934,42 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
+#if 0
     if (transform_class_dict(py_superclass, class_dict, meta_dict, protocols,
                              &needs_intermediate, &instance_variables, &instance_methods,
                              &class_methods)
         == -1) {
         goto error_cleanup;
     }
+#else
+    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
+        PyErr_SetString(
+            PyObjCExc_InternalError,
+            "Cannot create class because 'objc.options._unravelClassDict' is not set");
+        goto error_cleanup;
+    }
+    PyObject* args[] = {NULL, class_dict, meta_dict, py_superclass, protocols};
+    PyObject* rv     = PyObject_Vectorcall(PyObjC_unravelClassDict, args + 1,
+                                           4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    if (rv == NULL) {
+        goto error_cleanup;
+    }
+    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 4) {
+        Py_DECREF(rv);
+        PyErr_SetString(
+            PyObjCExc_InternalError,
+            "'objc.options._unravelClassDict' did not return a tuple of 4 items");
+        goto error_cleanup;
+    }
+    needs_intermediate = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 0));
+    instance_variables = PyTuple_GET_ITEM(rv, 1);
+    Py_INCREF(instance_variables);
+    instance_methods = PyTuple_GET_ITEM(rv, 2);
+    Py_INCREF(instance_methods);
+    class_methods = PyTuple_GET_ITEM(rv, 3);
+    Py_INCREF(class_methods);
+    Py_DECREF(rv);
+#endif
     PyObjC_Assert(instance_variables != NULL, Nil);
     PyObjC_Assert(instance_methods != NULL, Nil);
     PyObjC_Assert(class_methods != NULL, Nil);
