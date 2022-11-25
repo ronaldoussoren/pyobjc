@@ -12,6 +12,7 @@ import objc
 import types
 import inspect
 import dis
+import keyword
 
 # only public objc_method until the python_method implementation
 # in C is gone
@@ -477,6 +478,8 @@ def default_selector(name):
     Returns a byte string with the selector for 'name',
     or None if there is no default selector
     """
+    if name.endswith("__") and keyword.iskeyword(name[:-2]):
+        name = name[:-2]
     if "_" in name and not name.endswith("_"):
         return None
     if "__" in name:

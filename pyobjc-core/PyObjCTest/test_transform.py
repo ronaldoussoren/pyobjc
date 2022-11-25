@@ -649,6 +649,20 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"v@:")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
+        with self.subTest("method with keyword as name"):
+
+            @outer_wrap
+            @wrap
+            @inner_wrap
+            def raise__(self, **kwds):
+                pass
+
+            out = self.transformer("raise__", raise__, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.selector, b"raise")
+            self.assertSignaturesEqual(out.signature, b"v@:")
+            self.assertEqual(out.isClassMethod, wrap_classmethod)
+
         # XXX: Hidden selectors in the super-class should automaticly be hidden
         # in subclasses.
 
