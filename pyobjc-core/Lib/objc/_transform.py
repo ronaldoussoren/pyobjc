@@ -192,7 +192,10 @@ def transformAttribute(name, value, class_object, protocols):
 
     # XXX: Introspecting hidden methods through the method accessors doesn't work
     # ishidden =False
-    selname = default_selector(name)
+    if not isinstance(name, str):
+        selname = None
+    else:
+        selname = default_selector(name)
     signature = None
 
     if selname is not None and isinstance(class_object, objc.objc_class):
@@ -205,16 +208,17 @@ def transformAttribute(name, value, class_object, protocols):
     # using an instance method over a class method, as
     # this makes it a lot easier to implement methods from
     # the NSObject protocol (amongst others)
-    current = getattr(class_object.pyobjc_instanceMethods, name, NO_VALUE)
-    # current = lookup_mro_dict(class_object, name)
-    if current is NO_VALUE:
-        current = getattr(class_object.pyobjc_classMethods, name, NO_VALUE)
-        # current = lookup_mro_dict(type(class_object), name)
-    if isinstance(current, objc.selector):
-        isclass = current.isClassMethod
-        # ishidden = current.isHidden
-        signature = current.signature
-        selname = current.selector
+    if isinstance(name, str):
+        current = getattr(class_object.pyobjc_instanceMethods, name, NO_VALUE)
+        # current = lookup_mro_dict(class_object, name)
+        if current is NO_VALUE:
+            current = getattr(class_object.pyobjc_classMethods, name, NO_VALUE)
+            # current = lookup_mro_dict(type(class_object), name)
+        if isinstance(current, objc.selector):
+            isclass = current.isClassMethod
+            # ishidden = current.isHidden
+            signature = current.signature
+            selname = current.selector
 
     if isinstance(value, classmethod):
         # Unwrap "classmethod" instances.
@@ -275,6 +279,10 @@ def transformAttribute(name, value, class_object, protocols):
         # convention, and nothing provided a better name.
         #
         # Assume this is meant to be a regular python method.
+        if not isinstance(name, str):
+            raise TypeError(
+                f"method name is of type {type(name).__name__}, not a string"
+            )
         if isclass:
             return classmethod(value)
         return value

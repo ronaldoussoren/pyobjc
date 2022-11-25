@@ -677,6 +677,18 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"v@:@@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
+        if outer_wrap is inner_wrap is None:
+            with self.subTest("integer method name"):
+
+                @wrap
+                def method(self):
+                    pass
+
+                with self.assertRaisesRegex(
+                    TypeError, "method name is of type int, not a string"
+                ):
+                    self.transformer(42, method, NSObject, [])
+
         # XXX: Hidden selectors in the super-class should automaticly be hidden
         # in subclasses.
 
