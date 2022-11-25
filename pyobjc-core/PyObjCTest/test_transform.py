@@ -654,13 +654,27 @@ class TestTransformer(TestCase):
             @outer_wrap
             @wrap
             @inner_wrap
-            def raise__(self, **kwds):
+            def raise__(self):
                 pass
 
             out = self.transformer("raise__", raise__, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.selector, b"raise")
             self.assertSignaturesEqual(out.signature, b"v@:")
+            self.assertEqual(out.isClassMethod, wrap_classmethod)
+
+        with self.subTest("private selector"):
+
+            @outer_wrap
+            @wrap
+            @inner_wrap
+            def _addX_toY_(self, x, y):
+                pass
+
+            out = self.transformer("_addX_toY_", _addX_toY_, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.selector, b"_addX:toY:")
+            self.assertSignaturesEqual(out.signature, b"v@:@@")
             self.assertEqual(out.isClassMethod, wrap_classmethod)
 
         # XXX: Hidden selectors in the super-class should automaticly be hidden

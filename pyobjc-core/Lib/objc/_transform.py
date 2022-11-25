@@ -485,7 +485,10 @@ def default_selector(name):
     if "__" in name:
         return None
 
-    return name.replace("_", ":").encode()
+    value = name.replace("_", ":").encode()
+    if value.startswith(b":"):
+        value = b"_" + value[1:]
+    return value
 
 
 class objc_method:
