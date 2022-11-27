@@ -1805,51 +1805,6 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
     return PyObjCMethodSignature_AsDict(sig);
 }
 
-static PyObject* _Nullable mod_callableToSelector(PyObject* _Nullable mod
-                                                  __attribute__((__unused__)),
-                                                  PyObject* args)
-{
-    PyObject* pyname;
-    PyObject* callable;
-    PyObject* template_class;
-    PyObject* protocols;
-
-    if (!PyArg_ParseTuple(args, "OOOO", &pyname, &callable, &template_class,
-                          &protocols)) {
-        return NULL;
-    }
-
-    return PyObjCSelector_FromFunction(pyname, callable, template_class, protocols);
-}
-
-static PyObject* _Nullable mod_transformClassDict(PyObject* _Nullable mod
-                                                  __attribute__((__unused__)),
-                                                  PyObject* args)
-{
-    PyObject* py_class;
-    PyObject* class_dict;
-    PyObject* meta_dict;
-    PyObject* protocols;
-    PyObject* instance_variables = NULL;
-    PyObject* instance_methods   = NULL;
-    PyObject* class_methods      = NULL;
-    int       needs_intermediate = 0;
-
-    if (!PyArg_ParseTuple(args, "OOOO", &class_dict, &meta_dict, &py_class, &protocols)) {
-        return NULL;
-    }
-
-    if (transform_class_dict(py_class, class_dict, meta_dict, protocols,
-                             &needs_intermediate, &instance_variables, &instance_methods,
-                             &class_methods)
-        == -1) {
-        return NULL;
-    }
-
-    return Py_BuildValue("ONNN", needs_intermediate ? Py_True : Py_False,
-                         instance_variables, instance_methods, class_methods);
-}
-
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -2080,20 +2035,6 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_VARARGS,
         .ml_doc   = "_registeredMetadataForSelector(cls, selname)\n" CLINIC_SEP
                   "\nLook up registered metadata info for a selector.",
-    },
-    {
-        .ml_name  = "_callableToSelector",
-        .ml_meth  = (PyCFunction)mod_callableToSelector,
-        .ml_flags = METH_VARARGS,
-        .ml_doc   = "_callableToSelector(pyname, callable, template_class, "
-                    "protocols)\n" CLINIC_SEP "\nTransform a callable to an objc.selector",
-    },
-    {
-        .ml_name  = "_transformClassDict",
-        .ml_meth  = (PyCFunction)mod_transformClassDict,
-        .ml_flags = METH_VARARGS,
-        .ml_doc   = "_transformClassDict(class_dict, meta_dict, class_object, "
-                    "protocols)\n" CLINIC_SEP "\nTransform a class dictionary",
     },
     {
         .ml_name = NULL /* SENTINEL */
@@ -2370,9 +2311,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyType_Ready(&PyObjC_FSRefType) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                           // LCOV_EXCL_LINE
     }
-    if (PyType_Ready(&PyObjCPythonMethod_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                  // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     }
@@ -2508,11 +2446,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "IMP", (PyObject*)&PyObjCIMP_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "python_method", (PyObject*)&PyObjCPythonMethod_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }

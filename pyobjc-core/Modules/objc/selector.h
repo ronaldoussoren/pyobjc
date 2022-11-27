@@ -89,10 +89,6 @@ extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
                                               const char* _Nullable signature,
                                               int class_method, Class _Nullable class);
 extern SEL PyObjCSelector_DefaultSelector(const char* methname);
-extern PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
-                                                       PyObject* callable,
-                                                       PyObject* template_class,
-                                                       PyObject* _Nullable protocols);
 
 NS_ASSUME_NONNULL_END
 

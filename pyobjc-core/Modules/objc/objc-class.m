@@ -3259,6 +3259,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     size_t                curClassMethodIndex;
     PyObject*             extraDict = NULL;
     PyObject*             metaDict  = NULL;
+    PyObject*             protocols = NULL;
 
     targetClass = PyObjCClass_GetClass(classObject);
     if (targetClass == NULL) {
@@ -3269,14 +3270,27 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         return 0;
     }
 
+    protocols = PyObject_GetAttrString(classObject, "__pyobjc_protocols__");
+    if (protocols == NULL) {
+        PyErr_Clear();
+        protocols = PyList_New(0);
+        if (protocols == NULL) {
+            return -1;
+        }
+    }
+
     extraDict = PyDict_New();
     if (extraDict == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;           // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(protocols);
+        return -1;
+        // LCOV_EXCL_STOP
     }
 
     metaDict = PyDict_New();
     if (metaDict == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         return -1;
         // LCOV_EXCL_STOP
@@ -3285,6 +3299,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     methodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
     if (methodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyErr_NoMemory();
@@ -3295,6 +3310,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     classMethodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
     if (classMethodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyMem_Free(methodsToAdd);
@@ -3317,7 +3333,14 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error;
         }
 
-        aMethod = PyObjCSelector_FromFunction(NULL, aMethod, classObject, NULL);
+        name = PyObject_GetAttrString(aMethod, "__name__");
+        if (name == NULL) {
+            goto cleanup_and_return_error;
+        }
+
+        aMethod = PyObjC_TransformAttribute(name, aMethod, classObject, protocols);
+        Py_CLEAR(name);
+        Py_INCREF(aMethod);
         if (aMethod == NULL) {
             PyErr_Format(PyExc_TypeError, "All objects in methodArray must be of "
                                           "type <objc.selector>, <function>, "
@@ -3422,6 +3445,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     if (r == -1)                       // LCOV_BR_EXCL_LINE
         goto cleanup_and_return_error; // LCOV_EXCL_LINE
 
+    Py_DECREF(protocols);
     Py_DECREF(extraDict);
     extraDict = NULL;
     Py_DECREF(metaDict);
@@ -3430,6 +3454,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     return 0;
 
 cleanup_and_return_error:
+    Py_XDECREF(protocols);
     Py_XDECREF(metaDict);
     Py_XDECREF(extraDict);
     if (methodsToAdd) {

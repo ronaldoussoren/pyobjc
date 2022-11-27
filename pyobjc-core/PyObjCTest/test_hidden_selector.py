@@ -97,7 +97,6 @@ class TestHiddenSelector(TestCase):
     def testHiddenCanBeIntrospected(self):
         o = OCTestHidden.alloc().init()
         m = o.pyobjc_instanceMethods.body
-        print(OCTestHidden.pyobjc_hiddenSelectors(False))
         self.assertIsInstance(m, objc.selector)
         self.assertNotIsInstance(m, objc.native_selector)
         self.assertTrue(m.isHidden)

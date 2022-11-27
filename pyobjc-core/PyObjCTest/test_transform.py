@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, SkipTest
+from PyObjCTools.TestSupport import TestCase
 
 import objc
 from objc import _transform
@@ -179,6 +179,29 @@ class TestPythonMethod(TestCase):
         o = my_method(4)
         self.assertEqual(o, 42)
 
+    def test_descr_get(self):
+        class MyClass:
+            @_transform.python_method
+            def my_method(self):
+                return "ni!"
+
+            @_transform.python_method
+            @classmethod
+            def my_class(self):
+                return "NI!"
+
+            @classmethod
+            @_transform.python_method
+            def my_class2(self):
+                return "Spam"
+
+        o = MyClass()
+        self.assertEqual(o.my_method(), "ni!")
+        self.assertEqual(o.my_class(), "NI!")
+        self.assertEqual(MyClass.my_class(), "NI!")
+        self.assertEqual(o.my_class2(), "Spam")
+        self.assertEqual(MyClass.my_class2(), "Spam")
+
 
 class TransformerHelper(NSObject):
     def hiddenMethod(self):
@@ -221,9 +244,6 @@ class TestTransformer(TestCase):
         self.assertIs(out, value)
 
     def test_dont_transform_python_method(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         with self.subTest("@python_method(func)"):
             value = _transform.python_method(lambda x: None)
             self.assertIsInstance(value, _transform.python_method)
@@ -244,44 +264,6 @@ class TestTransformer(TestCase):
             out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, classmethod)
             self.assertIs(out.__wrapped__, value.__wrapped__.__wrapped__)
-
-    def test_dont_transform_legacy_python_method(self):
-        with self.subTest("@python_method(func)"):
-            value = objc.python_method(lambda x: None)
-            self.assertIsInstance(value, objc.python_method)
-
-            out = self.transformer("value", value, NSObject, [])
-            if type(self).__name__ == "TestCTransformer":
-                # The C implementation unwraps python_method
-                # later in the process.
-                self.assertIs(out, value)
-            else:
-                self.assertIs(out, value.callable)
-
-        with self.subTest("@python_method(classmethod())"):
-            value = objc.python_method(classmethod(lambda x: None))
-            self.assertIsInstance(value, objc.python_method)
-
-            out = self.transformer("value", value, NSObject, [])
-
-            if type(self).__name__ == "TestCTransformer":
-                # The C implementation unwraps python_method
-                # later in the process.
-                self.assertIs(out, value)
-            else:
-                self.assertIs(out, value.callable)
-
-        with self.subTest("@classmethod(python_method())"):
-            value = classmethod(objc.python_method(lambda x: None))
-
-            out = self.transformer("value", value, NSObject, [])
-            self.assertIsInstance(out, classmethod)
-            if type(self).__name__ == "TestCTransformer":
-                # The C implementation unwraps python_method
-                # later in the process.
-                self.assertIs(out.__wrapped__, value.__wrapped__)
-            else:
-                self.assertIs(out.__wrapped__, value.__wrapped__.callable)
 
     def test_dont_transform_dunder_method(self):
         def __dir__(self):
@@ -334,9 +316,6 @@ class TestTransformer(TestCase):
             self.assertIs(out, value)
 
     def test_dont_convert_generators(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         def value(self):
             yield 1
 
@@ -348,9 +327,6 @@ class TestTransformer(TestCase):
         self.assertIs(out, value)
 
     def test_dont_convert_async_function(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         async def value(self):
             pass
 
@@ -372,9 +348,6 @@ class TestTransformer(TestCase):
         self.assertIs(out, value)
 
     def test_dont_convert_if_methodname_does_not_match(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         # When the method name does not match the pattern
         # of a selector name don't convert to a selector.
 
@@ -770,9 +743,6 @@ class TestTransformer(TestCase):
         self.assertIs(out.isClassMethod, False)
 
     def test_objc_method_to_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         self.check_function_conversion(
             wrap_classmethod=False, inner_wrap=_transform.objc_method
         )
@@ -847,9 +817,6 @@ class TestTransformer(TestCase):
             self.transformer("method_name", method_name, NSObject, [])
 
     def test_partial_to_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         def base(a, b):
             pass
 
@@ -872,9 +839,6 @@ class TestTransformer(TestCase):
             self.transformer("pyvalue:", pyvalue, NSObject, [])
 
     def test_callable_with_signature_to_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         class Callable:
             def __call__(self, a):
                 pass
@@ -897,9 +861,6 @@ class TestTransformer(TestCase):
             self.transformer("pyvalue:", pyvalue, NSObject, [])
 
     def test_callable_without_signature_to_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         class Callable:
             def __call__(self, a):
                 pass
@@ -925,9 +886,6 @@ class TestTransformer(TestCase):
         self.assertIs(out.isClassMethod, False)
 
     def test_builtin_to_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         pyvalue = dir
         with self.assertRaises((ValueError, TypeError)):
             inspect.signature(pyvalue)
@@ -961,9 +919,6 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"@@:")
 
     def test_inherit_selector(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("new functionality in the Python version")
-
         def method(self, a):
             return 1
 
@@ -981,9 +936,6 @@ class TestTransformer(TestCase):
         self.assertEqual(out.selector, b"other:")
 
     def test_prefer_inherit_instance(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("triggers unwanted side-effect")
-
         # Check that if a method name can refer to a class
         # and instance method in the parent (e.g. the NSObject
         # protocol methods) the transformer uses the instance
@@ -1000,9 +952,6 @@ class TestTransformer(TestCase):
     def test_overridden_full_signature(self):
         # Use OC_Vector... method to check that
         # an override signature gets used.
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("handled differently in the C version")
-
         def getVectorFloat3(self):
             return 1
 
@@ -1016,9 +965,6 @@ class TestTransformer(TestCase):
         # in the parent class gets the updated signature
 
         # This method has custom metadata in test_vectorcall
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("handled differently in the C version")
-
         with self.subTest("full_signature override"):
 
             def v2d(self):
@@ -1143,20 +1089,18 @@ class TestTransformer(TestCase):
         # better information (inherited, classmethod or objc_method)
         #
 
-        if type(self).__name__ != "TestCTransformer":
-            with self.subTest("objc_method sets sigature"):
-                m = _transform.objc_method(signature=b"d@:")(testMethod)
-                out = self.transformer("testMethod", m, NSObject, [])
-                self.assertIsInstance(out, objc.selector)
-                self.assertSignaturesEqual(out.signature, b"d@:")
+        with self.subTest("objc_method sets sigature"):
+            m = _transform.objc_method(signature=b"d@:")(testMethod)
+            out = self.transformer("testMethod", m, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertSignaturesEqual(out.signature, b"d@:")
 
-            if type(self).__name__ != "TestCTransformer":
-                with self.subTest("objc_method sets isclass to True"):
-                    m = _transform.objc_method(isclass=True)(testMethod)
-                    out = self.transformer("testMethod", m, NSObject, [])
-                    self.assertIsInstance(out, objc.selector)
-                    self.assertTrue(out.isClassMethod)
-                    self.assertSignaturesEqual(out.signature, b"@@:")
+        with self.subTest("objc_method sets isclass to True"):
+            m = _transform.objc_method(isclass=True)(testMethod)
+            out = self.transformer("testMethod", m, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
 
         with self.subTest("explicit class method"):
             m = classmethod(testMethod)
@@ -1218,9 +1162,6 @@ class TestTransformer(TestCase):
             self.assertFalse(out.isHidden)
 
     def test_copyMethod(self):
-        if type(self).__name__ == "TestCTransformer":
-            raise SkipTest("handled differently in the C version")
-
         def copyWithZone_(self, zone):
             return self
 
@@ -1239,53 +1180,6 @@ class TestTransformer(TestCase):
             self.assertEqual(out.selector, b"mutableCopyWithZone:")
             self.assertSignaturesEqual(out.signature, b"@@:^{_NSZone=}")
             self.assertFalse(out.isHidden)
-
-
-class OC_TestTransformerHelper(NSObject):
-    pass
-
-
-class TestCTransformer(TestTransformer):
-    # Subclass from TestTransformer and repace the transformer argument
-    # XXX: TestTransformer needs some tweaks to deal with differences
-    #      between the ObjC and Python implementation!
-    @staticmethod
-    def transformer(name, value, class_object, protocols):
-        if name.startswith("__"):
-            # XXX: This is implemented in class-method.m/objc-class.m, not in PyObjCSelector_FromFunction
-            return value
-
-        try:
-            result = objc._callableToSelector(name, value, class_object, protocols)
-            if isinstance(result, objc.selector):
-                # A number of checks performed by the Python implementation are
-                # performed at a different point in the C implementation, adjust for
-                # that
-                #
-                # XXX: Still need to check that the two implementations match!
-                assert isinstance(result.selector, bytes)
-                assert isinstance(result.signature, bytes)
-                assert isinstance(result.isClassMethod, bool)
-                if result.selector != b"alloc":
-                    # XXX: The 'alloc' case in test_inherit_signature causes
-                    # a hard crash here, in a way that confuses LLDB
-                    setattr(
-                        OC_TestTransformerHelper,
-                        name,
-                        objc.selector(
-                            result.callable,
-                            selector=result.selector,
-                            signature=result.signature,
-                            isClassMethod=result.isClassMethod,
-                        ),
-                    )
-                pass
-
-            return result
-
-        except TypeError as exc:
-            if str(exc) == "expecting function, method or classmethod":
-                return value
 
 
 class OC_TransformWithoutDict(NSObject):
@@ -1311,8 +1205,6 @@ class OC_TransformWithSlot(NSObject):
 
 
 class TestClassDictProcessor(TestCase):
-    # XXX: To be determined if/how this can be verified against
-    # the C implementation (e.g. TestCTransformer)
     processor = staticmethod(_transform.processClassDict)
 
     def assertValidResult(self, rval):
@@ -1540,17 +1432,16 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
 
-        if type(self).__name__ != "TestCClassDictProcessor":
-            with self.subTest("slot overrides parent class"):
+        with self.subTest("slot overrides parent class"):
 
-                class_dict = {"__slots__": ("a",)}
-                meta_dict = {}
-                with self.assertRaisesRegex(
-                    objc.error,
-                    "objc.ivar 'a' overrides instance variable in super class",
-                ):
-                    self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
-                self.assertEqual(meta_dict, {})
+            class_dict = {"__slots__": ("a",)}
+            meta_dict = {}
+            with self.assertRaisesRegex(
+                objc.error,
+                "objc.ivar 'a' overrides instance variable in super class",
+            ):
+                self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
+            self.assertEqual(meta_dict, {})
 
     def test_ivars(self):
         with self.subTest("unnamed ivar"):
@@ -1588,9 +1479,6 @@ class TestClassDictProcessor(TestCase):
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[1][0])
             self.assertEqual(meta_dict, {})
-
-        if type(self).__name__ == "TestCClassDictProcessor":
-            return
 
         with self.subTest("two ivars with same C name"):
             ivar_a = objc.ivar()
@@ -1838,11 +1726,10 @@ class TestClassDictProcessor(TestCase):
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
 
-                if type(self).__name__ != "TestCClassDictProcessor":
-                    m = class_dict[selector.decode().replace(":", "_")]
-                    self.assertFalse(m.isClassMethod)
-                    self.assertEqual(m.selector, selector)
-                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
+                m = class_dict[selector.decode().replace(":", "_")]
+                self.assertFalse(m.isClassMethod)
+                self.assertEqual(m.selector, selector)
+                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
         for selector in (
             b"takeStoredValue:forKey:",
@@ -1860,36 +1747,31 @@ class TestClassDictProcessor(TestCase):
                 self.assertValidResult(rval)
                 self.assertTrue(rval[0])
 
-                if type(self).__name__ != "TestCClassDictProcessor":
-                    m = class_dict[selector.decode().replace(":", "_")]
-                    self.assertFalse(m.isClassMethod)
-                    self.assertEqual(m.selector, selector)
-                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
+                m = class_dict[selector.decode().replace(":", "_")]
+                self.assertFalse(m.isClassMethod)
+                self.assertEqual(m.selector, selector)
+                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
-            if type(self).__name__ != "TestCClassDictProcessor":
-                with self.subTest(selector=selector, match_name=False):
+            with self.subTest(selector=selector, match_name=False):
 
-                    # @objc.objc_method(selector=selector)
-                    def method(self, arg1, arg2):
-                        pass
+                # @objc.objc_method(selector=selector)
+                def method(self, arg1, arg2):
+                    pass
 
-                    method = objc.selector(method, selector=selector)
+                method = objc.selector(method, selector=selector)
 
-                    class_dict = {"method": method}
-                    meta_dict = {}
-                    rval = self.processor(class_dict, meta_dict, NSObject, [])
-                    self.assertValidResult(rval)
-                    self.assertTrue(rval[0])
+                class_dict = {"method": method}
+                meta_dict = {}
+                rval = self.processor(class_dict, meta_dict, NSObject, [])
+                self.assertValidResult(rval)
+                self.assertTrue(rval[0])
 
-                    m = class_dict[selector.decode().replace(":", "_")]
-                    self.assertFalse(m.isClassMethod)
-                    self.assertEqual(m.selector, selector)
-                    self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
+                m = class_dict[selector.decode().replace(":", "_")]
+                self.assertFalse(m.isClassMethod)
+                self.assertEqual(m.selector, selector)
+                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
 
     def test_python_methods(self):
-        if type(self).__name__ == "TestCClassDictProcessor":
-            raise SkipTest("Known difference between C and Python implementation")
-
         def method(self):
             pass
 
@@ -1941,10 +1823,6 @@ class TestClassDictProcessor(TestCase):
         #
         # Note that the test is not really necessary, a number of other cases rely
         # on the transformer being used.
-
-        if type(self).__name__ == "TestCClassDictProcessor":
-            raise SkipTest("Not relevant for C implementation")
-
         class_dict = {"a": 42, "b": 90}
         meta_dict = {}
         protocols = []
@@ -1972,30 +1850,3 @@ class TestClassDictProcessor(TestCase):
     # XXX: Protocol validation is currently in a different part of the code, first replace the code
     #      in class-builder and then grow the functionality.
     # - Protocol validation
-
-
-class TestCClassDictProcessor(TestClassDictProcessor):
-    @staticmethod
-    def processor(class_dict, meta_dict, class_object, protocols):
-        (
-            needs_intermediate,
-            instance_variables,
-            instance_methods,
-            class_methods,
-        ) = objc._transformClassDict(class_dict, meta_dict, class_object, protocols)
-
-        instance_variables = tuple(sorted(instance_variables, key=lambda x: x.__name__))
-        instance_methods = tuple(
-            sorted(
-                instance_methods,
-                key=lambda x: x.selector if isinstance(x, objc.selector) else x,
-            )
-        )
-        class_methods = tuple(
-            sorted(
-                class_methods,
-                key=lambda x: x.selector if isinstance(x, objc.selector) else x,
-            )
-        )
-
-        return (needs_intermediate, instance_variables, instance_methods, class_methods)

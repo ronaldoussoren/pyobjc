@@ -13,10 +13,11 @@ import types
 import inspect
 import dis
 import keyword
+import warnings
 
 # only public objc_method until the python_method implementation
 # in C is gone
-__all__ = ("objc_method",)  # XXX "python_method")
+__all__ = ("objc_method", "python_method")
 
 
 NO_VALUE = object()
@@ -195,9 +196,6 @@ def transformAttribute(name, value, class_object, protocols):
         )
     elif isgenerator_or_async(value):
         return value
-    elif isinstance(value, objc.python_method):
-        # XXX: objc.python_method will be python_method in the next step
-        return value.callable
     elif isinstance(value, python_method):
         return value.__wrapped__
 
@@ -614,7 +612,10 @@ class python_method:
             if not callable(self.__wrapped__) and not isinstance(
                 self.__wrapped__, classmethod
             ):
-                raise TypeError("'value' is not a callable")
+                raise TypeError(f"{value!r} is not a callable")
+
+    def __get__(self, instance, owner):
+        return self.__wrapped__.__get__(instance, owner)
 
     def __call__(self, *args, **kwds):
         if self.__wrapped__ is None:
@@ -630,6 +631,15 @@ class python_method:
             return self
 
         return self.__wrapped__(*args, **kwds)
+
+    @property
+    def callable(self):  # noqa: A003
+        # Compatibility with older version of PyObjC
+        warnings.warn(
+            "python_method.callable is deprecated, use __wrapped__ instead",
+            DeprecationWarning,
+        )
+        return self.__wrapped__
 
 
 objc.options._transformAttribute = transformAttribute

@@ -6,26 +6,13 @@ NSObject = objc.lookUpClass("NSObject")
 
 
 class TestPythonMethod(TestCase):
-    def test_creation(self):
-        with self.assertRaisesRegex(
-            TypeError,
-            r"(function missing required argument 'callable' \(pos 1\))|(Required argument 'callable' \(pos 1\) not found)",
-        ):
-            objc.python_method()
-        with self.assertRaisesRegex(
-            TypeError, r"function takes at most 1 argument \(2 given\)"
-        ):
-            objc.python_method(1, 2)
-        o = objc.python_method(1)
-        self.assertEqual(o.callable, 1)
-
     def test_usage_basic(self):
         class MyClass:
             @objc.python_method
             def my_method(self, a):
                 return a * 2
 
-            b = objc.python_method(1)
+            # b = objc.python_method(1)
 
             @objc.python_method
             @classmethod
@@ -34,7 +21,6 @@ class TestPythonMethod(TestCase):
 
         o = MyClass()
         self.assertEqual(o.my_method(4), 8)
-        self.assertEqual(o.b, 1)
 
         self.assertEqual(MyClass.my_class(), str(MyClass))
 
@@ -71,14 +57,11 @@ class TestPythonMethod(TestCase):
             def someSelector(self):
                 pass
 
-            b = objc.python_method(2)
-
         o = OC_PythonMethod_Class.alloc().init()
         self.assertNotIsInstance(o.my_method, objc.selector)
         self.assertIsInstance(o.someSelector, objc.selector)
 
         self.assertEqual(o.my_method(4), 8)
-        self.assertEqual(o.b, 2)
 
     def test_python_method_in_regular_class(self):
         class Foo:
@@ -99,6 +82,9 @@ class TestPythonMethod(TestCase):
             def __del__(self):
                 nonlocal deallocated
                 deallocated = True
+
+            def __call__(self):
+                pass
 
         c = Cleanup()
 
