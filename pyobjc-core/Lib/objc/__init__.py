@@ -37,6 +37,7 @@ from ._context import *  # noqa: F401, F403, E402
 from ._properties import *  # noqa: F401, F403, E402
 from ._lazyimport import *  # noqa: F401, F403, E402
 from ._compat import *  # noqa: F401, F403, E402
+from ._bridgesupport import *  # noqa: F401, F403, E402
 from . import _structtype  # noqa: F401, F403, E402
 from . import _callable_docstr  # noqa: F401, F403, E402
 from . import _pycoder  # noqa: F401, F403, E402

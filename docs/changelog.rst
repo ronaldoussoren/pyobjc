@@ -10,6 +10,11 @@ Version 9.0.1
   ``webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:`` in the WebKit
   bindings.
 
+* #508: Reintroduce support for bridgesupport files that was dropped in 9.0.
+
+  There are external users for this interface and the replacement used by PyObjC itself
+  is not yet in a state where it can be used by other projects.
+
 Version 9.0
 -----------
 
