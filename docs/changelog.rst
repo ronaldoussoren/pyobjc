@@ -15,6 +15,8 @@ Version 9.0.1
   There are external users for this interface and the replacement used by PyObjC itself
   is not yet in a state where it can be used by other projects.
 
+* Framework bindings were updated for the SDK included in Xcode 14.1
+
 Version 9.0
 -----------
 
