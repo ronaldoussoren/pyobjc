@@ -251,17 +251,23 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     ascii   = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
 
-    ascii->hash   = -1;
-    ascii->wstr   = NULL;
+    ascii->hash = -1;
+#if PY_VERSION_HEX < 0x030C0000
+    ascii->wstr = NULL;
+#endif
     ascii->length = length;
 
-    ascii->state.compact  = 0;
-    ascii->state.ready    = 1;
+    ascii->state.compact = 0;
+#if PY_VERSION_HEX < 0x030C0000
+    ascii->state.ready = 1;
+#endif
     ascii->state.interned = SSTATE_NOT_INTERNED;
 
     compact->utf8_length = 0;
     compact->utf8        = NULL;
+#if PY_VERSION_HEX < 0x030C0000
     compact->wstr_length = 0;
+#endif
 
     result->base.data.any = NULL;
 
@@ -416,11 +422,15 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         *ucs4_cur     = 0;
         ascii->length = length - nr_surrogates;
 
+#if PY_VERSION_HEX < 0x030C0000
+
 #if SIZEOF_WCHAR_T != 4
 #error "Code assumes sizeof(wchar_t) == 4
 #endif
+
         ascii->wstr          = (wchar_t*)result->base.data.ucs4;
         compact->wstr_length = ascii->length;
+#endif
     }
 
     if (characters != NULL) {

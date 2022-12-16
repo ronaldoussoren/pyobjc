@@ -19,6 +19,8 @@ Version 9.0.1
 
 * #517: Fix bad markup in overview of wrapped frameworks
 
+* #519: Fix compile error with Python 3.12
+
 Version 9.0
 -----------
 

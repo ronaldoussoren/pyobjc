@@ -143,10 +143,12 @@ NS_ASSUME_NONNULL_BEGIN
                             freeWhenDone:NO];
             break;
 
+#if PY_VERSION_HEX < 0x030C0000
         case PyUnicode_WCHAR_KIND:
             /* wchar_t representation, treat same
              * as UCS4 strings
              */
+#endif
         case PyUnicode_4BYTE_KIND:
             PyObjC_BEGIN_WITH_GIL
                 PyObject* utf8 = PyUnicode_AsUTF8String(value);
