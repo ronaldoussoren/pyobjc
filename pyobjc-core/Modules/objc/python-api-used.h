@@ -386,5 +386,11 @@ PyAPI_FUNC(const Py_buffer*) PyPickleBuffer_GetBuffer(PyObject*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(Py_buffer* info)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PySlice_Unpack(PyObject* slice, Py_ssize_t* start, Py_ssize_t* stop,
+                               Py_ssize_t* step) __attribute__((warn_unused_result));
+PyAPI_FUNC(Py_ssize_t) PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t* start,
+                                             Py_ssize_t* stop, Py_ssize_t step)
+    __attribute__((warn_unused_result));
+
 NS_ASSUME_NONNULL_END
 #endif /* USE_STATIC_ANALYZER */
