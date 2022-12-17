@@ -855,7 +855,7 @@
           }
          },
          "retval": {
-          "type": "v"
+          "type": "Z"
          }
         },
         "typestr": "@?",

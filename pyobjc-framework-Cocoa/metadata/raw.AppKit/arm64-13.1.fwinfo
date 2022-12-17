@@ -839,6 +839,16 @@
       "args": [],
       "class_method": false,
       "retval": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "Z"
+         }
+        },
        "typestr": "@?",
        "typestr_special": false
       },
@@ -855,7 +865,7 @@
           }
          },
          "retval": {
-          "type": "v"
+          "type": "Z"
          }
         },
         "typestr": "@?",
