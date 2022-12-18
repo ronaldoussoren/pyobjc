@@ -457,16 +457,26 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    os_level = get_sdk_level()
-    if os_level is None:
-        os_level = get_os_level()
+    if sys.platform != "darwin":
+        # Use a fake OS level on non-macOS platforms,
+        # otherwise the error path in setup() is not triggered.
+        os_level = "10.0"
+    else:
+        os_level = get_sdk_level()
+        if os_level is None:
+            os_level = get_os_level()
 
     cflags = []
     ldflags = []
     if "clang" in get_config_var("CC"):
         cflags.append("-Wno-deprecated-declarations")
 
-    sdk = get_sdk()
+    if sys.platform != "darwin":
+        # See above
+        sdk = "/"
+    else:
+        sdk = get_sdk()
+
     if not sdk:
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
