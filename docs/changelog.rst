@@ -3,6 +3,232 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.1
+-----------
+
+This is a fairly large larger update due to rewriting part of the core
+logic in Python (where the previous version used C). This does result in
+some minor semantic changes, but those should only affect edge cases and
+not normal user code.
+
+* #306: The code that converts a Python callable into an ``objc.selector``
+  when creating an Objective-C class is now written in Python instead of
+  Objective-C. This will make it easier to evolve that code in future
+  releases.
+
+  Note that the interface that the C extension uses to invoke Python
+  code is not a public API and can change in minor releases.
+
+  The rewrite found a number of edge cases where the older implementation
+  in C was incorrect or inconsistent. Those problems have been fixed as
+  part of this effort (see below for details).
+
+* The BadPrototypeError raised when a method is not compatible with number
+  of arguments expected by Objective-C now mentions the number of
+  arguments excluding the "self" argument, instead of including it.
+
+* The new code will accept callables other than functions and bound
+  method as a possible source of ``objc.selector`` objects, this
+  can affect code storing a callable object (other than types) as
+  a class attribute.
+
+  Wrap these in an ``objc.python_method`` to avoid conversion.
+
+* Added ``objc_objc_method`` that can be used to decorate functions
+  that must be converted to an ``objc.selector``. The decorator has
+  optional keyword arguments to affect the conversion.
+
+* ``objc.python_method`` is now implemented in Python.
+
+  The ``callable`` attribute is deprecated, use ``__wrapped__`` instead
+  to access the wrapped callable.
+
+  The new implementation requires that the wrapped value is either
+  a callable or a classmethod and won't work with arbitrary values.
+
+* Coroutines (generators, async method) are no longer wrapped in
+  an ``objc.selector`` by default.
+
+* Using a callable that's not compatible with use a selector due
+  to having the wrong number of positional arguments or having
+  keyword-only arguments will now raise consistently during
+  class construction.
+
+* objc.python_method is now implemewnted in Python. Due to the
+  reimplementation the ``callable`` attribute has been renamed
+  to the more standard ``__wrapped__`` attribute.
+
+* For native selectors the ``signature`` attribute no longer
+  contains the raw signature, but a cleaned up copy.
+
+* Added private function to look for an informal protocol related
+  to a selector name.
+
+* Added private function to look registered metadata for a
+  selector name.
+
+* PEP-8 compatible multi-word method names are no longer converted
+  to selectors, e.g.::
+
+    class MyObject(NSObject):
+       def some_method(self, a, b):
+           pass
+
+  In previous versions this required using the ``@objc.python_method``
+  decorator.
+
+* Method names containing double underscores are no longer converted
+  to selectors, e.g::
+
+
+    class MyObject(NSObject):
+      def spam__(self, a, b):
+          pass
+
+      def spam__ham_(self, a, b, c):
+          pass
+
+  In previous versions these were converted to, nonsensical,
+  selectors: ``spam::`` and ``spam::ham:``.
+
+* Introduce a new optional subkey in ``__metadata__()``: ``full_signature``
+  contains the complete signature for a method.
+
+* Setting dunder names in a class will no longer create a selector::
+
+     def __dir__(self):
+         return []
+
+     NSObject.__dir__ = __dir__
+
+  In PyObjC 9.0 or earlier this resulted in a new selector on
+  ``NSObject``, in PyObjC 9.1 this results a new Python-only method.
+
+  This matches the behaviour of defining dunder methods in a class
+  definition.
+
+* Wrapping a python_method in a classmethod now works::
+
+      class MyClass(NSObject):
+          @classmethod
+          @python_method
+          def spam_spam(self):
+              pass
+
+* Method definitions with varargs are now accepted for selectors
+  when the number of arguments expected in Objective-C "fits"::
+
+      class MyClass(NSObject):
+         def correctMethod_(self, *args):
+             # Args will be a 1-tuple when called
+             # from Objective-C
+             pass
+
+         def correctMethod2_(self, value, *args):
+             # 'args' will always be empty when
+             # called from Objective-C
+             pass
+
+
+         def incorrectMethod2_(self, value, value2, *args):
+             # Objective-C will pass exactly one argument,
+             # this method needs at least 2.
+             pass
+
+* If a python class overrides a method in the superclass it will
+  now use the selector of the superclass method instead of
+  defaulting to a transformation of the method name.
+
+  ::
+
+       class SuperClass(NSObject):
+            @objc.selector(selector=b"buttonPressed:")
+            def pressed(self):
+                ...
+
+
+       class SubClass(SuperClass):
+           def pressed(self):
+               ...
+
+   In previous versions of PyObjC ``SubClass.pressed`` would have
+   been a selector with name ``b"pressed"``, in PyObjC 9.1 the
+   selector name is inherited from the super class (``b"buttonPressed:"``).
+
+* Subclassing an ``NSCoder`` has an incompatible change. In previous
+  version of PyObjC the "at" argument for, for example ``-[NSCoder decodeValueOfObjCType:at:]``
+  was not passed to Python, e.g.::
+
+     class MyCoder(NSCoder):
+         def decodeValueOfObjCType_at_(self, encoding):
+             ...
+
+  As of PyObjC 9.1 the "at" argument must be present in the
+  the python argument list, and will always be passed None::
+
+     class MyCoder(NSCoder):
+         def decodeValueOfObjCType_at_(self, encoding, at):
+            ...
+
+  The same is also true for ``-[NSCoder decodeBytesWithReturnedLength:]``.
+
+  This makes these methods consistent with the general convention
+  for implementing Objective-C method. This change was missed
+  at earlier cleanups because implementing these NSCoder methods
+  uses custom logic in C.
+
+* Added ``objc._C_PythonObject`` with the encoding for ``PyObject*``.
+
+  This is primarily for internal use by PyObjC, using PyObjC
+  as an FFI tool for callin CPython APIs is not supported.
+
+* Added ``isSlot`` argument to ``objc.ivar`` to define Python variable
+  slots.
+
+  This is primairly here for internal use of the bridge, use
+  ``__slots__`` to define slots.
+
+* ``objc.ivar`` instances can now be compared for equality. Two
+  instances are considered equal if the tuple ``(name, type, isOutlet, isSlot)``
+  for the two values are equal.
+
+* When ``__slots__`` is a string the class will have a single slot
+  with that name. In previous versions the class would have a number
+  of slots with single-character names.
+
+  The new behaviour matches that of regular Python classes.
+
+* The ``objc.objc_class`` type now has a ``__hasdict__`` attribute that is
+  True if instances of the class have a ``__dict__`` attribute and is
+  False otherwise.
+
+* It is now an error when two instance variables (``objc.ivar``, including those
+  defined through ``__slots__``) have the same Objective-C name, and that includes
+  redefining a slot in a superclass.
+
+* Fix longstanding bug in class construction::
+
+     class MyClass:
+        @objc.objc_method(selector="foobar")
+        def method(self):
+           pass
+
+  In previous versions only ``MyClass.method`` is defined, whereas the
+  code in the bridge intended to define ``MyClass.foobar`` as well.
+
+* Fix type encoding for ``respondsToSelector:`` method that's implicitly defined
+  by the bridge.
+
+* In previous versions accessing a hidden selector showed an ``objc.native_selector``
+  instead of an ``objc.selector`` for hidden selectors implemented in Python, and those
+  objects did not have the ``isHidden`` attribute set to true.
+
+* #506: Code no longer uses ``PySlice_GetIndicesEx``, which was deprecated
+  by CPython in 3.6.
+
+* Tweak pyobjc_setup.py to re-enable the error message when trying to install
+  framework bindings on systems other than macOS.
+
 Version 9.0.1
 -------------
 
