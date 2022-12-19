@@ -1262,9 +1262,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     case PyObjC_kFixedLengthArray:
                         count = methinfo->argtype[i]->arrayArg;
                         v     = PyObjC_CArrayToPython2(
-                                resttype, *(void**)args[i], count,
-                                methinfo->argtype[i]->alreadyRetained,
-                                methinfo->argtype[i]->alreadyCFRetained);
+                            resttype, *(void**)args[i], count,
+                            methinfo->argtype[i]->alreadyRetained,
+                            methinfo->argtype[i]->alreadyCFRetained);
                         break;
 
                     case PyObjC_kVariableLengthArray:
@@ -1440,8 +1440,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     case PyObjC_kFixedLengthArray:
                         count = methinfo->rettype->arrayArg;
                         err   = depythonify_c_return_array_count(
-                              rest, count, res, resp, methinfo->rettype->alreadyRetained,
-                              methinfo->rettype->alreadyCFRetained);
+                            rest, count, res, resp, methinfo->rettype->alreadyRetained,
+                            methinfo->rettype->alreadyCFRetained);
                         if (err == -1) {
                             Py_DECREF(res);
                             goto error;
@@ -1641,9 +1641,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 case PyObjC_kFixedLengthArray:
                     count = methinfo->argtype[i]->arrayArg;
                     err   = depythonify_c_array_count(
-                          argtype, count, YES, res, *(void**)args[i],
-                          methinfo->argtype[i]->alreadyRetained,
-                          methinfo->argtype[i]->alreadyCFRetained);
+                        argtype, count, YES, res, *(void**)args[i],
+                        methinfo->argtype[i]->alreadyRetained,
+                        methinfo->argtype[i]->alreadyCFRetained);
                     if (err == -1) {
                         goto error;
                     }
@@ -1704,9 +1704,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     case PyObjC_kFixedLengthArray:
                         count = methinfo->rettype->arrayArg;
                         err   = depythonify_c_return_array_count(
-                              resttype, count, real_res, resp,
-                              methinfo->rettype->alreadyRetained,
-                              methinfo->argtype[i]->alreadyCFRetained);
+                            resttype, count, real_res, resp,
+                            methinfo->rettype->alreadyRetained,
+                            methinfo->argtype[i]->alreadyCFRetained);
 
                         if (err == -1) {
                             Py_DECREF(res);
@@ -2357,10 +2357,10 @@ IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
 
         PyObjCPythonSelector*  pythonSelector = (PyObjCPythonSelector*)aSelector;
         PyObjCMethodSignature* methinfo       = PyObjCMethodSignature_ForSelector(
-                  pythonSelector->base.sel_class,
-                  (pythonSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
-                  pythonSelector->base.sel_selector, pythonSelector->base.sel_python_signature,
-                  PyObjCNativeSelector_Check((PyObject*)pythonSelector));
+            pythonSelector->base.sel_class,
+            (pythonSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
+            pythonSelector->base.sel_selector, pythonSelector->base.sel_python_signature,
+            PyObjCNativeSelector_Check((PyObject*)pythonSelector));
         if (methinfo == NULL) {
             return NULL;
         }
@@ -4189,7 +4189,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     ffi_type*              arglist[MAX_ARGCOUNT];
     void*                  values[MAX_ARGCOUNT];
     struct byref_attr      byref_attr[MAX_ARGCOUNT] = {
-             {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}};
+        {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}};
     void*      byref[MAX_ARGCOUNT] = {0};
     Py_ssize_t r;
     void*      msgResult;

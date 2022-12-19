@@ -95,6 +95,9 @@ class TestHiddenSelector(TestCase):
         self.assertIs(v, True)
 
     def testHiddenCanBeIntrospected(self):
+        # XXX: This test fails, and will also fail in versions
+        #      before 9.1. It would be better if the test didn't
+        #      fail though...
         o = OCTestHidden.alloc().init()
         m = o.pyobjc_instanceMethods.body
         self.assertIsInstance(m, objc.selector)

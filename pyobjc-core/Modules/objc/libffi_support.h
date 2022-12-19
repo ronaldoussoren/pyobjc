@@ -19,7 +19,10 @@ struct byref_attr {
 
 #define BYREF_ATTR_INT                                                                   \
     {                                                                                    \
-        0, 0, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }                                        \
+        0, 0,                                                                            \
+        {                                                                                \
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0                                              \
+        }                                                                                \
     }
 
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void* _Nullable* _Nonnull, void*);

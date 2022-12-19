@@ -1003,7 +1003,7 @@ p
                           g.style.marginRight = g.style.width = "0",
                           d.style.width                       = "1px", d.appendChild(g),
                           b.reliableMarginRight               = !parseFloat(
-                                            (a.getComputedStyle(g, null) || {}).marginRight)),
+                              (a.getComputedStyle(g, null) || {}).marginRight)),
                   typeof d.style.zoom != "undefined"
                       && (d.innerHTML = "",
                           d.style.cssText =
@@ -1484,7 +1484,7 @@ p.fn.extend({
                   }),
     p.support.style || (p.attrHooks.style = {
         get : function(a) { return a.style.cssText.toLowerCase() || b },
-        set : function(a, b) { return a.style.cssText= b + "" }
+        set : function(a, b) { return a.style.cssText = b + "" }
     }),
     p.support.optSelected || (p.propHooks.selected = p.extend(p.propHooks.selected, {
         get : function(a) {
@@ -2661,7 +2661,7 @@ p.Animation = p.extend(cW, {
                            : a.elem[a.prop]
             },
             set : function(a) {
-                p.fx.step[a.prop]? p.fx.step[a.prop](a)
+                p.fx.step[a.prop] ? p.fx.step[a.prop](a)
                 : a.elem.style
                         && (a.elem.style[p.cssProps[a.prop]] != null
                             || p.cssHooks[a.prop])
@@ -2733,9 +2733,9 @@ p.Animation = p.extend(cW, {
     p.speed =
         function(a, b, c) {
         var d      = a && typeof a == "object" ? p.extend({}, a) : {
-                 complete : c || !c && b || p.isFunction(a) && a,
-                 duration : a,
-                 easing : c && b || b && !p.isFunction(b) && b
+            complete : c || !c && b || p.isFunction(a) && a,
+            duration : a,
+            easing : c && b || b && !p.isFunction(b) && b
         };
         d.duration = p.fx.off                            ? 0
                      : typeof     d.duration == "number" ? d.duration

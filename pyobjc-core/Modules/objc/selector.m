@@ -973,9 +973,9 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                 [cls respondsToSelector:sel]) {
                 methsig = [cls methodSignatureForSelector:sel];
                 retval  = PyObjCSelector_NewNative(
-                     cls, sel,
-                     /* XXX: Check if VVV is NULL */
-                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
+                    cls, sel,
+                    /* XXX: Check if VVV is NULL */
+                    PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
             } else if ((class_getClassMethod(cls, @selector(methodSignatureForSelector:))
                         != NULL)
                        && nil

@@ -107,7 +107,7 @@
 {
     CFLocaleRef        currentLocale = CFLocaleCopyCurrent();
     CFDateFormatterRef formatter     = CFDateFormatterCreate(
-            NULL, currentLocale, kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
+        NULL, currentLocale, kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
 
     if (currentLocale != NULL) {
         CFRelease(currentLocale);

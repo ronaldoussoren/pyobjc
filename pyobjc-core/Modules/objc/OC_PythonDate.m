@@ -54,7 +54,7 @@ is_builtin_datetime(PyObject* object)
             PyErr_Clear();
             PyObject* fargs[3] = {NULL, v, PyObjCNM_date_format_string};
             PyObject* ts_str   = PyObject_VectorcallMethod(
-                  PyObjCNM_strftime, fargs + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                PyObjCNM_strftime, fargs + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
             if (ts_str == NULL) {
                 [self release];

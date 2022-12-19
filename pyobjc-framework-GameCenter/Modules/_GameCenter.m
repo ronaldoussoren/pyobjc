@@ -4,7 +4,7 @@
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
-//#import <GameCenter/GameCenter.h>
+// #import <GameCenter/GameCenter.h>
 #import <GameKit/GameKit.h>
 
 /* We include the source code here instead of

@@ -281,7 +281,7 @@ static PyObject* _Nullable struct_copy(PyObject* self)
             } else {
                 PyObject* args[1] = {NULL};
                 PyObject* c       = PyObject_Vectorcall(
-                          m, args + 1, 0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                    m, args + 1, 0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
                 Py_DECREF(m);
                 if (c == NULL) {
                     Py_DECREF(t);
