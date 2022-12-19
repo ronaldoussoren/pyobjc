@@ -9,7 +9,7 @@ repos:
         types: []
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 6.0.0
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
@@ -19,7 +19,6 @@ repos:
         - flake8-deprecated
         - flake8-comprehensions
         - flake8-isort
-        - flake8-quotes
         - flake8-mutable
         - flake8-todo
         - flake8-builtins
@@ -34,7 +33,7 @@ repos:
 
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v14.0.6'
+    rev: 'v15.0.6'
     hooks:
     - id: clang-format
 
