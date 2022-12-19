@@ -106,7 +106,7 @@ class TestNSCopyingHelper(NSObject):
 
 class TestNSCopying(TestCase):
     def testCopyingRegr20090327(self):
-        self.assertTrue(TestNSCopyingHelper.new().copyWithZone_.isClassMethod)
+        self.assertFalse(TestNSCopyingHelper.new().copyWithZone_.isClassMethod)
         o = TestNSCopyingHelper.alloc().init()
         v = o.copyWithZone_(None)
         self.assertEqual(v, 42)
