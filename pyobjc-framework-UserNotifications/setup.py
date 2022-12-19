@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "9.0.1"
+VERSION = "9.1"
 
 setup(
     name="pyobjc-framework-UserNotifications",
