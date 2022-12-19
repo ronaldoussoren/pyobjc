@@ -209,6 +209,13 @@ class TransformerHelper(NSObject):
 
     hiddenMethod = objc.selector(hiddenMethod, isHidden=True)
 
+    def hiddenClassMethod(self):
+        return "Hi there!"
+
+    hiddenClassMethod = objc.selector(
+        hiddenClassMethod, isHidden=True, isClassMethod=True
+    )
+
 
 class TransformerHelper2(TransformerHelper):
     pass
@@ -333,15 +340,13 @@ class TestTransformer(TestCase):
         out = self.transformer("value", value, NSObject, [])
         self.assertIs(out, value)
 
-        # XXX: Should arange to "await" value(1) to avoid
-        # runtime error in tests
-        value = value(1)
-
         def await_value():
             try:
                 value.send(None)
             except StopIteration:
                 pass
+
+        value = value(1)
 
         self.addCleanup(await_value)
         out = self.transformer("value", value, NSObject, [])
@@ -689,9 +694,6 @@ class TestTransformer(TestCase):
                     TypeError, "method name is of type int, not a string"
                 ):
                     self.transformer(42, method, NSObject, [])
-
-        # XXX: Hidden selectors in the super-class should automaticly be hidden
-        # in subclasses.
 
     def test_function_to_selector(self):
         self.check_function_conversion(wrap_classmethod=False)
@@ -1135,29 +1137,65 @@ class TestTransformer(TestCase):
 
         self.assertEqual(o.pyobjc_instanceMethods.hiddenMethod(), "Boo!")
 
+        with self.assertRaisesRegex(AttributeError, "hiddenClassMethod"):
+            TransformerHelper.hiddenClassMethod()
+
+        self.assertEqual(
+            TransformerHelper.pyobjc_classMethods.hiddenClassMethod(), "Hi there!"
+        )
+
         def hiddenMethod(self):
             return "bar"
 
+        @classmethod
+        def hiddenClassMethod(self):
+            return "foo"
+
         # Check that the "hidden" bit is inherited for selectors that are created
         # by the transformer:
-        with self.subTest("parent class"):
+        with self.subTest("parent class (instance method)"):
             out = self.transformer("hiddenMethod", hiddenMethod, TransformerHelper, [])
             self.assertIsInstance(out, objc.selector)
             self.assertFalse(out.isClassMethod)
             self.assertSignaturesEqual(out.signature, b"@@:")
             self.assertTrue(out.isHidden)
 
-        with self.subTest("child class"):
+        with self.subTest("child class (instance method)"):
             out = self.transformer("hiddenMethod", hiddenMethod, TransformerHelper2, [])
             self.assertIsInstance(out, objc.selector)
             self.assertFalse(out.isClassMethod)
             self.assertSignaturesEqual(out.signature, b"@@:")
             self.assertTrue(out.isHidden)
 
-        with self.subTest("NSObjet"):
+        with self.subTest("NSObject (instance method)"):
             out = self.transformer("hiddenMethod", hiddenMethod, NSObject, [])
             self.assertIsInstance(out, objc.selector)
             self.assertFalse(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertFalse(out.isHidden)
+
+        with self.subTest("parent class (class method)"):
+            out = self.transformer(
+                "hiddenClassMethod", hiddenClassMethod, TransformerHelper, []
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertTrue(out.isHidden)
+
+        with self.subTest("child class (class method)"):
+            out = self.transformer(
+                "hiddenClassMethod", hiddenClassMethod, TransformerHelper2, []
+            )
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertTrue(out.isHidden)
+
+        with self.subTest("NSObject (class method)"):
+            out = self.transformer("hiddenClassMethod", hiddenClassMethod, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertTrue(out.isClassMethod)
             self.assertSignaturesEqual(out.signature, b"@@:")
             self.assertFalse(out.isHidden)
 
@@ -1658,8 +1696,6 @@ class TestClassDictProcessor(TestCase):
 
             self.assertNotIn("method", check_dict)
             self.assertNotIn("sendValue_", check_dict)
-
-        # XXX: Test there key in dict does not match selector
 
     def test_instance_methods(self):
         self.check_selectors(wrap_classmethod=False)
