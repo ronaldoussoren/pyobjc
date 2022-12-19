@@ -235,14 +235,15 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
 static int
 ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
-    static char*            keywords[]  = {"name", "type", "isOutlet", NULL};
+    static char*            keywords[]  = {"name", "type", "isOutlet", "isSlot", NULL};
     PyObjCInstanceVariable* self        = (PyObjCInstanceVariable*)_self;
     char*                   name        = NULL;
     char*                   type        = @encode(id);
     PyObject*               isOutletObj = NULL;
+    PyObject*               isSlotObj   = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|syO:objc_ivar", keywords, &name, &type,
-                                     &isOutletObj)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|syOO:objc_ivar", keywords, &name,
+                                     &type, &isOutletObj, &isSlotObj)) {
         return -1;
     }
 
@@ -271,8 +272,14 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         self->isOutlet = 0;
     }
 
-    self->ivar   = NULL;
-    self->isSlot = 0;
+    if (isSlotObj) {
+        self->isSlot = PyObject_IsTrue(isSlotObj);
+
+    } else {
+        self->isSlot = 0;
+    }
+
+    self->ivar = NULL;
 
     return 0;
 }
@@ -325,6 +332,95 @@ static PyObject* _Nullable ivar_add_attribute(PyObject* self, PyObject* _Nullabl
     return Py_None;
 }
 
+static Py_hash_t
+ivar_hash(PyObject* o)
+{
+    Py_hash_t result = 0;
+
+    if (PyObjCInstanceVariable_GetName(o)) {
+        result = PyHash_GetFuncDef()->hash(PyObjCInstanceVariable_GetName(o),
+                                           strlen(PyObjCInstanceVariable_GetName(o)));
+    }
+
+    if (PyObjCInstanceVariable_GetType(o)) {
+        result ^= PyHash_GetFuncDef()->hash(PyObjCInstanceVariable_GetType(o),
+                                            strlen(PyObjCInstanceVariable_GetType(o)));
+    }
+
+    if (PyObjCInstanceVariable_IsOutlet(o)) {
+        result ^= 0x10;
+    }
+
+    if (PyObjCInstanceVariable_IsSlot(o)) {
+        result ^= 0x20;
+    }
+
+    if (result == -1) {
+        result = -2;
+    }
+
+    return result;
+}
+
+static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
+{
+    if (op == Py_EQ || op == Py_NE) {
+        if (PyObjCInstanceVariable_Check(a) && PyObjCInstanceVariable_Check(b)) {
+            int same = 1;
+
+            if (PyObjCInstanceVariable_GetName(a) == NULL) {
+                if (PyObjCInstanceVariable_GetName(b) != NULL) {
+                    same = 0;
+                }
+            } else if (PyObjCInstanceVariable_GetName(b) != NULL) {
+                same = same
+                       && (strcmp(PyObjCInstanceVariable_GetName(a),
+                                  PyObjCInstanceVariable_GetName(b))
+                           == 0);
+            }
+
+            if (PyObjCInstanceVariable_GetType(a) == NULL) {
+                if (PyObjCInstanceVariable_GetType(b) != NULL) {
+                    same = 0;
+                }
+            } else if (PyObjCInstanceVariable_GetType(b) != NULL) {
+                same = same
+                       && (strcmp(PyObjCInstanceVariable_GetType(a),
+                                  PyObjCInstanceVariable_GetType(b))
+                           == 0);
+            }
+
+            if (PyObjCInstanceVariable_IsSlot(a) != PyObjCInstanceVariable_IsSlot(b)) {
+                same = 0;
+            }
+
+            if (PyObjCInstanceVariable_IsOutlet(a)
+                != PyObjCInstanceVariable_IsOutlet(b)) {
+                same = 0;
+            }
+
+            if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
+                Py_INCREF(Py_False);
+                return Py_False;
+            } else {
+                Py_INCREF(Py_False);
+                return Py_True;
+            }
+
+        } else {
+            if (op == Py_EQ) {
+                Py_INCREF(Py_False);
+                return Py_False;
+            } else {
+                Py_INCREF(Py_False);
+                return Py_True;
+            }
+        }
+    }
+    Py_INCREF(Py_NotImplemented);
+    return Py_NotImplemented;
+}
+
 static PyMethodDef ivar_methods[] = {
     {
         .ml_name  = "__pyobjc_class_setup__",
@@ -346,7 +442,8 @@ static PyMethodDef ivar_methods[] = {
 
 PyDoc_STRVAR(
     ivar_doc,
-    "ivar(name, type='@', isOutlet=False) -> instance-variable\n" CLINIC_SEP "\n"
+    "ivar(name, type='@', isOutlet=False, isSlot=False) -> instance-variable\n" CLINIC_SEP
+    "\n"
     "Creates a descriptor for accessing an Objective-C instance variable.\n\n"
     "This should only be used in the definition of Objective-C subclasses, and\n"
     "will then automatically define the instance variable in the objective-C side.\n"
@@ -431,6 +528,8 @@ PyTypeObject PyObjCInstanceVariable_Type = {
     .tp_repr                                       = ivar_repr,
     .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_richcompare                                = ivar_richcompare,
+    .tp_hash                                       = ivar_hash,
     .tp_doc                                        = ivar_doc,
     .tp_methods                                    = ivar_methods,
     .tp_getset                                     = ivar_getset,

@@ -774,6 +774,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     /* Verify that the class conforms to all protocols it claims to
      * conform to.
+     *
+     * XXX: Move this into the refactored "class-builder" code and
+     *      move into python
      */
     len = PyList_Size(protocols);
     for (i = 0; i < len; i++) {
@@ -817,6 +820,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     /*
      * add __pyobjc_protocols__ to the class-dict.
+     *
+     * XXX: Move into python
      */
     v = PyList_AsTuple(protocols);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
@@ -1929,116 +1934,130 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 
             return -1;
         }
-    } else if (PyObjCNativeSelector_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "Assigning native selectors is not supported");
-        return -1;
-
-    } else if (((PyObjCClassObject*)self)->isCFWrapper) {
-        /* This is a wrapper class for a CoreFoundation type
-         * that isn't tollfree bridged. Don't update the
-         * Objective-C class because all CF types share the
-         * same ObjC class (except for the toll-free bridged
-         * ones).
-         */
-
-    } else if (PyObjCSelector_Check(value) || PyObjC_is_pyfunction(value)
-               || PyObjC_is_pymethod(value)
-               || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
-        /*
-         * Assignment of a function: create a new method in the ObjC
-         * runtime.
-         */
-        PyObject* newVal;
-        Method    curMethod;
-        Class     curClass;
-        int       r;
-        BOOL      b;
-
-        newVal = PyObjCSelector_FromFunction(name, value, self, NULL);
-        if (newVal == NULL) {
-            return -1;
+    } else {
+        /* XXX: Should store the protocols on the class object instead */
+        PyObject* protocols = PyObject_GetAttrString(self, "__pyobjc_protocols__");
+        if (protocols == NULL) {
+            if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
+                PyErr_Clear();
+                protocols = PyList_New(0);
+                if (protocols == NULL) {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
         }
-        if (!PyObjCSelector_Check(newVal)) {
-            Py_DECREF(newVal);
-            PyErr_SetString(PyExc_ValueError, "cannot convert callable to selector");
+        value = PyObjC_TransformAttribute(name, value, self, protocols);
+        Py_DECREF(protocols);
+        if (value == NULL) {
             return -1;
         }
 
-        if (PyObjCSelector_IsClassMethod(newVal)) {
-            curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
-                                             PyObjCSelector_GetSelector(newVal));
-            curClass  = object_getClass(PyObjCClass_GetClass(self));
-        } else {
-            curMethod = class_getInstanceMethod(PyObjCClass_GetClass(self),
-                                                PyObjCSelector_GetSelector(newVal));
-            curClass  = PyObjCClass_GetClass(self);
-        }
-
-        if (curMethod) {
-            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
-            if (newIMP == NULL) {
-                Py_DECREF(newVal);
-                return -1;
-            }
-
-            method_setImplementation(curMethod, newIMP);
-
-        } else {
-            /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
-            char* types = strdup(PyObjCSelector_Signature(newVal));
-
-            if (types == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(newVal);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-
-            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
-            if (newIMP == NULL) {
-                free(types);
-                Py_DECREF(newVal);
-                return -1;
-            }
-            b = class_addMethod(curClass, PyObjCSelector_GetSelector(newVal), newIMP,
-                                types);
-
-            if (!b) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                free(types);
-                Py_DECREF(newVal);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-        }
-
-        PyObject* hidden =
-            PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
-                                       PyObjCSelector_IsClassMethod(newVal));
-        if (hidden == NULL && PyErr_Occurred()) {
-            Py_DECREF(newVal);
+        if (PyObjCNativeSelector_Check(value)) {
+            Py_DECREF(value);
+            PyErr_SetString(PyExc_TypeError,
+                            "Assigning native selectors is not supported");
             return -1;
 
-        } else if (hidden) {
-            Py_DECREF(newVal);
+        } else if (((PyObjCClassObject*)self)->isCFWrapper) {
+            /* This is a wrapper class for a CoreFoundation type
+             * that isn't tollfree bridged. Don't update the
+             * Objective-C class because all CF types share the
+             * same ObjC class (except for the toll-free bridged
+             * ones).
+             */
 
-        } else {
-            if (PyObjCSelector_IsClassMethod(newVal)) {
-                r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, newVal);
+            /* XXX: Shouldn't this raise an exception instead of silently doing nothing
+             *      when setting a selector?
+             */
+
+        } else if (PyObjCSelector_Check(value)) {
+            /*
+             * Assignment of a function: create a new method in the ObjC
+             * runtime.
+             */
+            Method curMethod;
+            Class  curClass;
+            int    r;
+            BOOL   b;
+
+            if (PyObjCSelector_IsClassMethod(value)) {
+                curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
+                                                 PyObjCSelector_GetSelector(value));
+                curClass  = object_getClass(PyObjCClass_GetClass(self));
+            } else {
+                curMethod = class_getInstanceMethod(PyObjCClass_GetClass(self),
+                                                    PyObjCSelector_GetSelector(value));
+                curClass  = PyObjCClass_GetClass(self);
+            }
+
+            if (curMethod) {
+                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
+                if (newIMP == NULL) {
+                    Py_DECREF(value);
+                    return -1;
+                }
+
+                method_setImplementation(curMethod, newIMP);
 
             } else {
-                r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
+                /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
+                char* types = strdup(PyObjCSelector_Signature(value));
+
+                if (types == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(value);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
+
+                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
+                if (newIMP == NULL) {
+                    free(types);
+                    Py_DECREF(value);
+                    return -1;
+                }
+                b = class_addMethod(curClass, PyObjCSelector_GetSelector(value), newIMP,
+                                    types);
+
+                if (!b) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    free(types);
+                    Py_DECREF(value);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
             }
 
-            Py_DECREF(newVal);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_NoMemory();
+            PyObject* hidden =
+                PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(value),
+                                           PyObjCSelector_IsClassMethod(value));
+            if (hidden == NULL && PyErr_Occurred()) {
+                Py_DECREF(value);
                 return -1;
-                // LCOV_EXCL_STOP
+
+            } else if (hidden) {
+                Py_DECREF(value);
+
+            } else {
+                if (PyObjCSelector_IsClassMethod(value)) {
+                    r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, value);
+
+                } else {
+                    r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, value);
+                }
+
+                Py_DECREF(value);
+                if (r == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    PyErr_NoMemory();
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
             }
+            return 0;
         }
-        return 0;
     }
 
 #if 0 /* XXX: Disabled check due to #479 */
@@ -2048,7 +2067,9 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
     PyObject* old_value = class_getattro(self, name);
     if (old_value == NULL) {
         PyErr_Clear();
-        return PyType_Type.tp_setattro(self, name, value);
+        res = PyType_Type.tp_setattro(self, name, value);
+        Py_XDECREF(value);
+        return res;
 
     } else if (PyObjCSelector_Check(old_value)) {
         Py_DECREF(old_value);
@@ -2061,6 +2082,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 #endif
 
     res = PyType_Type.tp_setattro(self, name, value);
+    Py_XDECREF(value);
     return res;
 }
 
@@ -2277,6 +2299,14 @@ cls_set_final(PyObject* self, PyObject* _Nullable newVal,
     return 0;
 }
 
+static PyObject* _Nullable cls_get_hasdict(PyObject* self, void* _Nullable closure
+                                           __attribute__((__unused__)))
+{
+    PyObject* result = (((PyObjCClassObject*)self)->dictoffset != 0) ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
+}
+
 static PyGetSetDef class_getset[] = {
     {
         .name = "pyobjc_classMethods",
@@ -2305,6 +2335,11 @@ static PyGetSetDef class_getset[] = {
         .get  = cls_get_final,
         .set  = cls_set_final,
         .doc  = "True if the class cannot be subclassed",
+    },
+    {
+        .name = "__hasdict__",
+        .get  = cls_get_hasdict,
+        .doc  = "True if the class has an __dict__",
     },
     {
         /* Access __name__ through a property: Objective-C name
@@ -2395,11 +2430,15 @@ static PyObject* _Nullable class_get_hidden(PyObject* _self, PyObject* classMeth
 
     if (PyObject_IsTrue(classMethod)) {
         hidden = self->hiddenClassSelectors;
-        PyObjC_Assert(hidden != NULL, NULL);
+        if (hidden == NULL) {
+            return PyDict_New();
+        }
 
     } else {
         hidden = self->hiddenSelectors;
-        PyObjC_Assert(hidden != NULL, NULL);
+        if (hidden == NULL) {
+            return PyDict_New();
+        }
     }
 
     PyObjC_Assert(PyDict_Check(hidden), NULL);
@@ -3227,6 +3266,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     size_t                curClassMethodIndex;
     PyObject*             extraDict = NULL;
     PyObject*             metaDict  = NULL;
+    PyObject*             protocols = NULL;
 
     targetClass = PyObjCClass_GetClass(classObject);
     if (targetClass == NULL) {
@@ -3237,14 +3277,27 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         return 0;
     }
 
+    protocols = PyObject_GetAttrString(classObject, "__pyobjc_protocols__");
+    if (protocols == NULL) {
+        PyErr_Clear();
+        protocols = PyList_New(0);
+        if (protocols == NULL) {
+            return -1;
+        }
+    }
+
     extraDict = PyDict_New();
     if (extraDict == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;           // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(protocols);
+        return -1;
+        // LCOV_EXCL_STOP
     }
 
     metaDict = PyDict_New();
     if (metaDict == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         return -1;
         // LCOV_EXCL_STOP
@@ -3253,6 +3306,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     methodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
     if (methodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyErr_NoMemory();
@@ -3263,6 +3317,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     classMethodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
     if (classMethodsToAdd == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(protocols);
         Py_DECREF(extraDict);
         Py_DECREF(metaDict);
         PyMem_Free(methodsToAdd);
@@ -3285,7 +3340,14 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error;
         }
 
-        aMethod = PyObjCSelector_FromFunction(NULL, aMethod, classObject, NULL);
+        name = PyObject_GetAttrString(aMethod, "__name__");
+        if (name == NULL) {
+            goto cleanup_and_return_error;
+        }
+
+        aMethod = PyObjC_TransformAttribute(name, aMethod, classObject, protocols);
+        Py_CLEAR(name);
+        Py_INCREF(aMethod);
         if (aMethod == NULL) {
             PyErr_Format(PyExc_TypeError, "All objects in methodArray must be of "
                                           "type <objc.selector>, <function>, "
@@ -3390,6 +3452,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     if (r == -1)                       // LCOV_BR_EXCL_LINE
         goto cleanup_and_return_error; // LCOV_EXCL_LINE
 
+    Py_DECREF(protocols);
     Py_DECREF(extraDict);
     extraDict = NULL;
     Py_DECREF(metaDict);
@@ -3398,6 +3461,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     return 0;
 
 cleanup_and_return_error:
+    Py_XDECREF(protocols);
     Py_XDECREF(metaDict);
     Py_XDECREF(extraDict);
     if (methodsToAdd) {

@@ -129,6 +129,7 @@ class TestCoreFoundation(TestCase):
     def testMutableTypes(self):
         cftype = objc.lookUpClass("NSCFType")
 
+        @objc.python_method
         def myMethod(self, arg):
             return f"{self.__class__.__name__} {arg}"
 

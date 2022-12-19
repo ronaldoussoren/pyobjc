@@ -487,11 +487,16 @@ class TestFunctionLikeObjects(TestCase):
 
         o = OC_ClassWithCustomFunc.alloc().init()
         self.assertEqual(o.method1.signature, b"@@:")
-        self.assertEqual(o.method2.signature, b"@@:")
+        self.assertEqual(o.method2.signature, b"v@:")
         self.assertEqual(o.method3.signature, b"@@:")
         self.assertEqual(o.method4.signature, b"v@:")
         self.assertEqual(o.bound1.signature, b"@@:")
-        self.assertEqual(o.bound2.signature, b"@@:")
+        self.assertEqual(o.bound2.signature, b"v@:")
+
+        # NOTE: Cannot try to access the return value
+        # of methods whose signature says the return
+        # value is ``void``, Cocoa will cause a crash
+        # when calling ``getReturnValue`` for those.
 
         self.assertEqual(values, [])
         inv = NSInvocation.invocationWithMethodSignature_(
@@ -512,8 +517,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setSelector_("method2")
         inv.setTarget_(o)
         inv.invoke()
-        v = inv.getReturnValue_(None)
-        self.assertEqual(v, None)
         self.assertEqual(values, ["method2"])
         del values[:]
 
@@ -537,8 +540,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setTarget_(o)
         inv.invoke()
 
-        # Cannot get return value, return 'void'
-        # Trying to get the return value will crash Cocoa
         self.assertEqual(values, ["method4"])
         del values[:]
 
@@ -561,9 +562,6 @@ class TestFunctionLikeObjects(TestCase):
         inv.setSelector_("bound2")
         inv.setTarget_(o)
         inv.invoke()
-        v = inv.getReturnValue_(None)
-        self.assertEqual(v, None)
-        self.assertEqual(values, ["bound2"])
         del values[:]
 
     def test_custom_func_with_no_code(self):
@@ -608,3 +606,44 @@ class TestFunctionLikeObjects(TestCase):
         bound = func1.__get__(NSObject, 42)
         self.assertIsInstance(bound, types.MethodType)
         objc.selector(bound)
+
+
+class TestReplacingDir(TestCase):
+    def test_replace_dir(self):
+        class OC_TestReplacingDir(NSObject):
+            pass
+
+        value = OC_TestReplacingDir.new()
+        self.assertIsInstance(value.__dir__, types.BuiltinFunctionType)
+
+        def __dir__(self):
+            return ["hello"]
+
+        OC_TestReplacingDir.__dir__ = __dir__
+
+        self.assertEqual(value.__dir__(), ["hello"])
+        self.assertIsInstance(value.__dir__, types.MethodType)
+
+
+class TestMethodsWithVarargs(TestCase):
+    def test_method_with_varargs(self):
+        class OC_MethodWithVarargs1(NSObject):
+            def method_(self, *args):
+                pass
+
+    def test_method_with_varargs_2(self):
+        class OC_MethodWithVarargs2(NSObject):
+            def method_(self, value, *args):
+                pass
+
+    def test_method_with_varargs_3(self):
+        with self.assertRaises(objc.BadPrototypeError):
+
+            class OC_MethodWithVarargs3(NSObject):
+                def method_(self, value, value2, *args):
+                    pass
+
+    def test_method_with_varargs_4(self):
+        class OC_MethodWithVarargs4(NSObject):
+            def method_(self, value, other=9, *args):
+                pass

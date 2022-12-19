@@ -96,6 +96,8 @@ PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
 }
 #endif /* PyObjC_DEBUG */
 
+extern PyObjCMethodSignature* PyObjCMethodSignature_GetRegistered(Class cls, SEL sel);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_METHODSIGNATURE_H */

@@ -2148,22 +2148,20 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
         }
 
         if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
-            && (stubUserdata->argCount >= Py_SIZE(methinfo)) && !haveVarArgs
-            && !haveVarKwds) {
+            && (stubUserdata->argCount >= Py_SIZE(methinfo))) {
             /* OK */
 
-        } else if ((stubUserdata->argCount <= 1) && (haveVarArgs || haveVarKwds)) {
-            /* OK:
-             *    def m(self, *args, **kwds), or
-             *    def m(*args, **kwds)
-             */
+        } else if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
+                   && haveVarArgs) {
+            /* OK */
 
         } else {
             /* Wrong number of arguments, raise an error */
             PyErr_Format(PyObjCExc_BadPrototypeError,
                          "Objective-C expects %" PY_FORMAT_SIZE_T
-                         "d arguments, Python argument has %d arguments for %R",
-                         Py_SIZE(methinfo), stubUserdata->argCount, callable);
+                         "d arguments, %R has %" PY_FORMAT_SIZE_T
+                         "d positional arguments",
+                         Py_SIZE(methinfo), callable, stubUserdata->argCount);
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
@@ -2224,25 +2222,32 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
     }
 
     if (((nargs - defaultCount) <= Py_SIZE(methinfo) - 1)
-        && (nargs >= Py_SIZE(methinfo) - 1) && !haveVarArgs && !haveVarKwds) {
+        && (nargs >= Py_SIZE(methinfo) - 1)) {
         /* OK */
 
-    } else if ((nargs <= 1) && haveVarArgs && haveVarKwds) {
+    } else if (((nargs - defaultCount) <= Py_SIZE(methinfo) - 1) && haveVarArgs) {
         /* OK */
-
+#if 0
+    } else if (haveVarArgs) {
+        /* OK */
+        printf("methinfo: %ld    nargs: %ld    defaultCount: %ld    haveVarArgs: %d   haveVarKwds: %d\n",
+                Py_SIZE(methinfo), nargs, defaultCount, (int)haveVarArgs, (int)haveVarKwds);
+#endif
     } else {
         /* Wrong number of arguments, raise an error */
         if (defaultCount) {
-            PyErr_Format(
-                PyObjCExc_BadPrototypeError,
-                "Objective-C expects %" PY_FORMAT_SIZE_T
-                "d arguments, Python argument has from %d to %d arguments for %R",
-                Py_SIZE(methinfo) - 1, nargs - defaultCount, nargs, callable);
+            PyErr_Format(PyObjCExc_BadPrototypeError,
+                         "Objective-C expects %" PY_FORMAT_SIZE_T
+                         "d arguments, %R has between %" PY_FORMAT_SIZE_T
+                         "d and %" PY_FORMAT_SIZE_T "d positional arguments",
+                         Py_SIZE(methinfo) - 2, callable, nargs - defaultCount - 1,
+                         nargs - 1);
         } else {
             PyErr_Format(PyObjCExc_BadPrototypeError,
                          "Objective-C expects %" PY_FORMAT_SIZE_T
-                         "d arguments, Python argument has %d arguments for %R",
-                         Py_SIZE(methinfo) - 1, nargs, callable);
+                         "d arguments, %R has %" PY_FORMAT_SIZE_T
+                         "d positional arguments",
+                         Py_SIZE(methinfo) - 2, callable, nargs - 1);
         }
         return -1;
     }

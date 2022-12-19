@@ -68,6 +68,7 @@ class TestFunctions(TestCase):
         self.assertEqual(
             NSRectClipList.__metadata__(),  # noqa: F821
             {
+                "full_signature": b"v^{CGRect={CGPoint=dd}{CGSize=dd}}q",
                 "arguments": (
                     {
                         "c_array_length_in_arg": 1,

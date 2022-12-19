@@ -37,6 +37,7 @@ struct method_info {
     BOOL use_intermediate;
 
 } gMethods[] = {
+    /* Keep in sync with Lib/objc/_transform.py:HELPER_METHODS */
 
     {0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES},
     {0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_,
@@ -53,7 +54,13 @@ struct method_info {
     {0, "methodSignatureForSelector:", "methodSignatureForSelector_",
      "@@::", object_method_methodSignatureForSelector, NO, YES},
     {0, "respondsToSelector:", "respondsToSelector_",
-     "c@::", object_method_respondsToSelector, NO, YES},
+#ifdef __arm64__
+     "B"
+#else
+     "Z"
+#endif
+     "@::",
+     object_method_respondsToSelector, NO, YES},
     {0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_,
      YES, YES},
     {0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}",
@@ -105,134 +112,6 @@ PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
     PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
 
     objc_disposeClassPair(objc_class);
-    return 0;
-}
-
-/*
- * The Python proxy for an object should not contain any state, even if
- * the class is defined in Python. Therefore transfer all slots to the
- * Objective-C class and add '__slots__ = ()' to the Python class.
- */
-static int
-do_slots(PyObject* super_class, PyObject* clsdict)
-{
-    PyObject*  slot_value;
-    PyObject*  slots;
-    Py_ssize_t len, i;
-
-    slot_value = PyDict_GetItemStringWithError(clsdict, "__slots__");
-    if (slot_value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return -1;                                // LCOV_EXCL_LINE
-    }
-    if (slot_value == NULL) {
-        /*
-         * No __slots__ found, add an empty one and
-         * ensure that instances will have a __dict__.
-         */
-        PyObject* v;
-
-        PyErr_Clear();
-
-        slot_value = PyTuple_New(0);
-        if (slot_value == NULL) { // LCOV_BR_EXCL_LINE
-            return 0;             // LCOV_EXCL_LINE
-        }
-
-        if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                clsdict, "__slots__", slot_value)
-            < 0) {
-            // LCOV_EXCL_START
-            Py_DECREF(slot_value);
-            return -1;
-            // LCOV_EXCL_STOP
-        }
-        Py_DECREF(slot_value);
-
-        if (PyObjCClass_DictOffset(super_class) != 0) {
-            /* We already have an __dict__ */
-            return 0;
-        }
-
-        v = PyObjCInstanceVariable_New("__dict__");
-        if (v == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;   // LCOV_EXCL_LINE
-        }
-        ((PyObjCInstanceVariable*)v)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
-        ((PyObjCInstanceVariable*)v)->isSlot = 1;
-        if (PyDict_SetItemString(clsdict, "__dict__", v) < 0) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(v);
-            return -1;
-            // LCOV_EXCL_STOP
-        }
-        Py_DECREF(v);
-
-        return 0;
-    }
-
-    slots = PySequence_Fast(slot_value, "__slots__ must be a sequence");
-    if (slots == NULL) {
-        return -1;
-    }
-
-    len = PySequence_Fast_GET_SIZE(slots);
-    for (i = 0; i < len; i++) {
-        PyObjCInstanceVariable* var;
-
-        slot_value = PySequence_Fast_GET_ITEM(slots, i);
-
-        if (PyUnicode_Check(slot_value)) {
-            const char* slot_name = PyUnicode_AsUTF8(slot_value);
-            if (slot_name == NULL) {
-                return -1;
-            }
-
-            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
-            if (var == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(slots);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-
-        } else {
-            PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string, but %s",
-                         slot_value, Py_TYPE(slot_value)->tp_name);
-            Py_DECREF(slots);
-            return -1;
-        }
-
-        ((PyObjCInstanceVariable*)var)->type   = PyObjCUtil_Strdup(@encode(PyObject*));
-        ((PyObjCInstanceVariable*)var)->isSlot = 1;
-
-        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                clsdict, slot_value, (PyObject*)var)
-            < 0) {
-            // LCOV_EXCL_START
-            Py_DECREF(slots);
-            Py_DECREF(var);
-            return -1;
-            // LCOV_EXCL_STOP
-        }
-        Py_DECREF(var);
-    }
-    Py_DECREF(slots);
-
-    slot_value = PyTuple_New(0);
-    if (slot_value == NULL) { // LCOV_BR_EXCL_LINE
-        return 0;             // LCOV_EXCL_LINE
-    }
-
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            clsdict, "__slots__", slot_value)
-        < 0) {
-        // LCOV_EXCL_START
-        Py_DECREF(slot_value);
-        return -1;
-        // LCOV_EXCL_STOP
-    }
-
-    Py_DECREF(slot_value);
     return 0;
 }
 
@@ -422,23 +301,59 @@ PyObjC_RemoveInternalTypeCodes(char* buf)
     return 0;
 }
 
-static BOOL
-need_intermediate(PyObject* class_dict)
+static int
+is_ivar(PyObject* value)
 {
-    struct method_info* cur;
+    return PyObjCInstanceVariable_Check(value);
+}
 
-    for (cur = gMethods; cur->method_name != NULL; cur++) {
-        /* XXX: Should look for a selector, not necessarily using the
-         * method name.
-         *
-         * XXX: Use PyDict_GetItemStringWithError, but that requires an
-         * API change for this function as well.
-         */
-        if (PyDict_GetItemString(class_dict, cur->method_name) != NULL) {
-            return YES;
+static int
+is_instance_method(PyObject* value)
+{
+    if (PyBytes_Check(value)) {
+        return 1;
+    }
+    if (!PyObjCSelector_Check(value)) {
+        return 0;
+    }
+    if (PyObjCNativeSelector_Check(value)) {
+        return 0;
+    }
+    return !PyObjCSelector_IsClassMethod(value);
+}
+
+static int
+is_class_method(PyObject* value)
+{
+    if (PyBytes_Check(value)) {
+        return 1;
+    }
+    if (!PyObjCSelector_Check(value)) {
+        return 0;
+    }
+    if (PyObjCNativeSelector_Check(value)) {
+        return 0;
+    }
+    return PyObjCSelector_IsClassMethod(value);
+}
+
+static int
+validate_tuple(PyObject* value, int (*validate)(PyObject*), const char* message)
+{
+    Py_ssize_t i, len;
+    if (!PyTuple_Check(value)) {
+        PyErr_SetString(PyObjCExc_InternalError, message);
+        return -1;
+    }
+    len = PyTuple_GET_SIZE(value);
+    for (i = 0; i < len; i++) {
+        PyObject* item = PyTuple_GET_ITEM(value, i);
+        if (!validate(item)) {
+            PyErr_SetString(PyObjCExc_InternalError, message);
+            return -1;
         }
     }
-    return NO;
+    return 0;
 }
 
 Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
@@ -446,12 +361,12 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                                        PyObject* hiddenSelectors,
                                        PyObject* hiddenClassSelectors)
 {
-    PyObject*  seq;
+    /* XXX: Refactor into a function that must be in C and the bit that's
+     * reimplemented in Python and expose the latter to Python for testing.
+     */
     PyObject*  key_list = NULL;
-    PyObject*  key      = NULL;
     PyObject*  value    = NULL;
     Py_ssize_t i;
-    Py_ssize_t key_count;
     Py_ssize_t protocol_count     = 0;
     int        first_python_gen   = 0;
     Class      new_class          = NULL;
@@ -461,6 +376,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     PyObject*  instance_variables = NULL;
     PyObject*  instance_methods   = NULL;
     PyObject*  class_methods      = NULL;
+    int        needs_intermediate = 0;
 
     PyObjC_Assert(super_class != Nil, Nil);
     PyObjC_Assert(PyList_Check(protocols), Nil);
@@ -477,46 +393,78 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;
     }
 
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            class_dict, "__objc_python_subclass__", Py_True)
-        == -1) {
-        return Nil; // LCOV_EXCL_LINE
-    }
-
     py_superclass = PyObjCClass_New(super_class);
     if (py_superclass == NULL) { // LCOV_BR_EXCL_LINE
         return Nil;              // LCOV_EXCL_LINE
     }
 
-    instance_variables = PySet_New(NULL);
-    if (instance_variables == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;           // LCOV_EXCL_LINE
+#if 0
+    if (transform_class_dict(py_superclass, class_dict, meta_dict, protocols,
+                             &needs_intermediate, &instance_variables, &instance_methods,
+                             &class_methods)
+        == -1) {
+        goto error_cleanup;
+    }
+#else
+    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
+        PyErr_SetString(
+            PyObjCExc_InternalError,
+            "Cannot create class because 'objc.options._unravelClassDict' is not set");
+        goto error_cleanup;
+    }
+    PyObject* args[] = {NULL, class_dict, meta_dict, py_superclass, protocols};
+    PyObject* rv     = PyObject_Vectorcall(PyObjC_unravelClassDict, args + 1,
+                                           4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    if (rv == NULL) {
+        goto error_cleanup;
+    }
+    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 4) {
+        Py_DECREF(rv);
+        PyErr_SetString(
+            PyObjCExc_InternalError,
+            "'objc.options._unravelClassDict' did not return a tuple of 4 items");
+        goto error_cleanup;
+    }
+    needs_intermediate = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 0));
+    instance_variables = PyTuple_GET_ITEM(rv, 1);
+    Py_INCREF(instance_variables);
+    instance_methods = PyTuple_GET_ITEM(rv, 2);
+    Py_INCREF(instance_methods);
+    class_methods = PyTuple_GET_ITEM(rv, 3);
+    Py_INCREF(class_methods);
+    Py_DECREF(rv);
+#endif
+    PyObjC_Assert(instance_variables != NULL, Nil);
+    PyObjC_Assert(instance_methods != NULL, Nil);
+    PyObjC_Assert(class_methods != NULL, Nil);
+    if (validate_tuple(instance_variables, is_ivar,
+                       "invalid instance_variables in result of class dict transformer")
+        == -1) {
+        goto error_cleanup;
+    }
+    if (validate_tuple(instance_methods, is_instance_method,
+                       "invalid instance_methods in result of class dict transformer")
+        == -1) {
+        goto error_cleanup;
+    }
+    if (validate_tuple(class_methods, is_class_method,
+                       "invalid class_methods in result of class dict transformer")
+        == -1) {
+        goto error_cleanup;
     }
 
-    instance_methods = PySet_New(NULL);
-    if (instance_methods == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;         // LCOV_EXCL_LINE
-    }
-
-    class_methods = PySet_New(NULL);
-    if (class_methods == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;      // LCOV_EXCL_LINE
-    }
-
-    /* We must override copyWithZone: for python classes because the
-     * refcounts of python slots might be off otherwise. Yet it should
-     * be possible to override copyWithZone: in those classes.
-     *
-     * The solution: introduce an intermediate class that contains our
-     * implementation of copyWithZone:. This intermediate class is only
-     * needed when (1) the superclass implements copyWithZone: and (2)
-     * the python subclass overrides that method.
-     *
-     * The same issue is present with a number of other methods.
-     */
-
-    if (!PyObjCClass_HasPythonImplementation(py_superclass)
-        && need_intermediate(class_dict)) {
+    if (needs_intermediate) {
+        /* We must override copyWithZone: for python classes because the
+         * refcounts of python slots might be off otherwise. Yet it should
+         * be possible to override copyWithZone: in those classes.
+         *
+         * The solution: introduce an intermediate class that contains our
+         * implementation of copyWithZone:. This intermediate class is only
+         * needed when (1) the superclass implements copyWithZone: and (2)
+         * the python subclass overrides that method.
+         *
+         * The same issue is present with a number of other methods.
+         */
         Class intermediate_class;
         char  buf[256];
         int   r;
@@ -552,10 +500,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
     }
 
-    if (do_slots(py_superclass, class_dict) < 0) {
-        goto error_cleanup;
-    }
-
     if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
         /*
          * This class has a super_class that is pure objective-C
@@ -565,21 +509,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
          * See the code below the next loop.
          */
         first_python_gen = 1;
-    }
-
-    /* The code uses PyDict_Keys instead of PyDict_Next because
-     * we change the class_dict on the second iteration. The first
-     * iteration could use PyDict_Next, but is kept like this to
-     * keep the code style consistent.
-     */
-    key_list = PyDict_Keys(class_dict);
-    if (key_list == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup; // LCOV_EXCL_LINE
-    }
-
-    key_count = PyList_Size(key_list);
-    if (key_count == -1) {  // LCOV_BR_EXCL_LINE
-        goto error_cleanup; // LCOV_EXCL_LINE
     }
 
     /* Allocate the class as soon as possible, for new selector objects */
@@ -615,362 +544,17 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
     }
 
-    /* First step: call class setup hooks of entries in the class dict */
-    for (i = 0; i < key_count; i++) {
-        key = PyList_GET_ITEM(key_list, i);
+    /* Verify instance and class methods sets */
 
-        value = PyDict_GetItemWithError(class_dict, key);
-        if (value == NULL) {
-            if (PyErr_Occurred())   // LCOV_BR_EXCL_LINE
-                goto error_cleanup; // LCOV_EXCL_LINE
-            PyErr_SetString(PyObjCExc_InternalError,
-                            "PyObjCClass_BuildClass: Cannot fetch item in keylist");
-            goto error_cleanup;
-        }
+    for (i = 0; i < PyTuple_GET_SIZE(instance_methods); i++) {
+        value = PyTuple_GET_ITEM(instance_methods, i);
 
-        /*
-         * Check if the value has a class-setup hook, and if it does
-         * call said hook.
-         * XXX: Create utility function for "call optional method"
-         *      or use VectorcallMethod and handle AttributeError.
-         */
-        PyObject* m = PyObject_GetAttrString(value, "__pyobjc_class_setup__");
-        if (m == NULL) {
-            PyErr_Clear();
-
-        } else {
-            PyObject* args[5] = {NULL, key, class_dict, instance_methods, class_methods};
-            PyObject* rv      = PyObject_Vectorcall(m, args + 1,
-                                                    4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(m);
-            if (rv == NULL) {
-                goto error_cleanup;
-            }
-            Py_DECREF(rv);
-        }
-    }
-
-    /* The class_setup_hooks may have changed the class dictionary, hence
-     * we need to recalculate the key list.
-     */
-    Py_CLEAR(key_list);
-
-    key_list = PyDict_Keys(class_dict);
-    if (key_list == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup; // LCOV_EXCL_LINE
-    }
-
-    key_count = PyList_Size(key_list);
-    if (key_count == -1) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(key_list);
-        goto error_cleanup;
-        // LCOV_EXCL_STOP
-    }
-
-    /* Step 2b: Collect methods and instance variables in the class dict
-     *          into the 3 sets.
-     *
-     * XXX: This work should be done by the class setup hook instead.
-     */
-    for (i = 0; i < key_count; i++) {
-        key = PyList_GET_ITEM(key_list, i);
-
-        value = PyDict_GetItemWithError(class_dict, key);
-        if (value == NULL) { // LCOV_BR_EXCL_LINE
-            /* I'm pretty sure that keys can't disappear from
-             * the class_dict at this point.
-             */
-            // LCOV_EXCL_START
-            if (PyErr_Occurred())   // LCOV_BR_EXCL_LINE
-                goto error_cleanup; // LCOV_EXCL_LINE
-            PyErr_SetString(PyObjCExc_InternalError,
-                            "PyObjCClass_BuildClass: Cannot fetch item in keylist");
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
-        }
-
-        if (PyObjCInstanceVariable_Check(value)) {
-            if (PySet_Add(instance_variables, value) == -1) {
-                goto error_cleanup;
-            }
-
-        } else if (PyObjCSelector_Check(value)) {
-            int r;
-
-            /* Check if the 'key' is the name as the python
-             * representation of our selector. If not: add the
-             * python representation of our selector to the
-             * dict as well to ensure that the ObjC interface works
-             * from Python as well.
-             *
-             * NOTE: This also allows one to add both a class
-             * and instance method for the same selector in one
-             * generation.
-             */
-            char        buf[1024];
-            const char* py_meth_name = PyObjC_SELToPythonName(
-                PyObjCSelector_GetSelector(value), buf, sizeof(buf));
-            if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
-                /* Can only happen when the selector name is huge */
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
-
-            PyObject* pyname = PyUnicode_FromString(py_meth_name);
-            if (pyname == NULL) {   // LCOV_BR_EXCL_LINE
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
-
-            int shouldCopy = PyObject_RichCompareBool(pyname, key, Py_EQ);
-            if (shouldCopy == -1) {
-                goto error_cleanup;
-            } else if (!shouldCopy) {
-                Py_DECREF(pyname);
-                pyname = NULL;
-            }
-
-            if (PyObjCSelector_GetClass(value) != NULL) {
-                PyObject* new_value;
-                new_value = PyObjCSelector_Copy(value);
-                if (new_value == NULL) { // LCOV_BR_EXCL_LINE
-                    goto error_cleanup;  // LCOV_EXCL_LINE
-                }
-
-                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                        class_dict, key, new_value)
-                    == -1) {
-                    // LCOV_EXCL_START
-                    Py_DECREF(new_value);
-                    goto error_cleanup;
-                    // LCOV_EXCL_STOP
-                }
-
-                value = new_value;
-                Py_DECREF(new_value); /* The value is still in the dict, and hence safe to
-                                         use */
-            }
-
-            if (PyObjCSelector_IsClassMethod(value)) {
-                r = PySet_Add(class_methods, value);
-                if (r == -1) {          // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-
-                if (!PyObjCSelector_IsHidden(value)) {
-                    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                            meta_dict, key, value)
-                        == -1) {
-                        goto error_cleanup; // LCOV_EXCL_LINE
-                    }
-                } else {
-                    shouldCopy = NO;
-                }
-
-                if (shouldCopy) {
-                    r = PyDict_SetItem(meta_dict, pyname, value);
-                    Py_DECREF(pyname);
-                    if (r == -1) {          // LCOV_BR_EXCL_LINE
-                        goto error_cleanup; // LCOV_EXCL_LINE
-                    }
-                }
-
-                if (PyDict_DelItem(class_dict, key) == -1) { // LCOV_BR_EXCL_LINE
-                    goto error_cleanup;                      // LCOV_EXCL_LINE
-                }
-
-            } else {
-                r = PySet_Add(instance_methods, value);
-                if (r == -1) {          // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-
-                if (PyObjCSelector_IsHidden(value)) {
-                    r = PyDict_DelItem(class_dict, key);
-                    if (r == -1) {          // LCOV_BR_EXCL_LINE
-                        goto error_cleanup; // LCOV_EXCL_LINE
-                    }
-                    shouldCopy = NO;
-                }
-                if (shouldCopy) {
-                    r = PyDict_SetItem(class_dict, pyname, value);
-                    Py_DECREF(pyname);
-                    if (r == -1) {          // LCOV_BR_EXCL_LINE
-                        goto error_cleanup; // LCOV_EXCL_LINE
-                    }
-                }
-            }
-
-        } else if (PyObjC_is_pymethod(value) || PyObjC_is_pyfunction(value)
-                   || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
-
-            const char* ocname;
-            PyObject*   pyname = key;
-
-            if (PyUnicode_Check(pyname)) {
-                ocname = PyObjC_Unicode_Fast_Bytes(pyname);
-                if (ocname == NULL) {
-                    goto error_cleanup;
-                }
-
-            } else {
-                PyErr_Format(PyExc_TypeError, "method name is of type %s, not a string",
-                             Py_TYPE(pyname)->tp_name);
-                goto error_cleanup;
-            }
-
-            if (ocname[0] != '_' || ocname[1] != '_') {
-                /* Skip special methods (like __getattr__) to
-                 * avoid confusing type().
-                 */
-                PyObject* new_value;
-
-                new_value =
-                    PyObjCSelector_FromFunction(pyname, value, py_superclass, protocols);
-                if (new_value == NULL) {
-                    goto error_cleanup;
-                }
-                value = new_value;
-
-                if (PyObjCSelector_Check(value)) {
-                    int r;
-
-                    if (PyObjCSelector_IsClassMethod(value)) {
-                        if (!PyObjCSelector_IsHidden(value)) {
-                            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                                    meta_dict, key, value)
-                                == -1) {
-                                goto error_cleanup; // LCOV_EXCL_LINE
-                            }
-                        }
-                        if (PyDict_DelItem(class_dict, key) == -1) { // LCOV_BR_EXCL_LINE
-                            goto error_cleanup;                      // LCOV_EXCL_LINE
-                        }
-
-                        r = PySet_Add(class_methods, value);
-                        if (r == -1) {          // LCOV_BR_EXCL_LINE
-                            goto error_cleanup; // LCOV_EXCL_LINE
-                        }
-
-                    } else {
-                        if (PyObjCSelector_IsHidden(value)) {
-                            if (PyDict_DelItem( // LCOV_BR_EXCL_LINE
-                                    class_dict, key)
-                                == -1) {
-                                goto error_cleanup; // LCOV_EXCL_LINE
-                            }
-
-                        } else {
-                            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                                    class_dict, key, value)
-                                < 0) {
-                                // LCOV_EXCL_START
-                                Py_CLEAR(value);
-                                goto error_cleanup;
-                                // LCOV_EXCL_STOP
-                            }
-                        }
-
-                        r = PySet_Add(instance_methods, value);
-                        if (r == -1) {          // LCOV_BR_EXCL_LINE
-                            goto error_cleanup; // LCOV_EXCL_LINE
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* Keylist is not needed anymore */
-    Py_CLEAR(key_list);
-
-    /* Step 3: Check instance variables */
-
-    /*    convert to 'fast sequence' to ensure stable order when accessing */
-    seq = PySequence_Fast(instance_variables,
-                          "converting instance variable set to sequence");
-    if (seq == NULL) {
-        goto error_cleanup;
-    }
-    Py_DECREF(instance_variables);
-    instance_variables = seq;
-    for (i = 0; i < PySequence_Fast_GET_SIZE(instance_variables); i++) {
-        value = PySequence_Fast_GET_ITEM(instance_variables, i);
-
-        if (!PyObjCInstanceVariable_Check(value)) {
-            /* XXX: Why is this needed? */
-            continue;
-        }
-
-        /* Our only check for now is that instance variable names must be unique */
-        /* XXX: Is this really necessary? */
-        /* XXX: This doesn't check that the new class has unique instance variables!
-         *      Add test before fixing this
-         */
-        if (class_getInstanceVariable(super_class, PyObjCInstanceVariable_GetName(value))
-            != NULL) {
-            PyErr_Format(PyObjCExc_Error,
-                         "a superclass already has an instance "
-                         "variable with this name: %s",
-                         PyObjCInstanceVariable_GetName(value));
-            goto error_cleanup;
-        }
-    }
-
-    /* Step 4: Verify instance and class methods sets */
-
-    /*   first convert then to 'Fast' sequences for easier access */
-    seq = PySequence_Fast(instance_methods, "converting instance method set to sequence");
-    if (seq == NULL) {
-        goto error_cleanup;
-    }
-    Py_DECREF(instance_methods);
-    instance_methods = seq;
-
-    seq = PySequence_Fast(class_methods, "converting class method set to sequence");
-    if (seq == NULL) {
-        goto error_cleanup;
-    }
-    Py_DECREF(class_methods);
-    class_methods = seq;
-
-    for (i = 0; i < PySequence_Fast_GET_SIZE(instance_methods); i++) {
-        value = PySequence_Fast_GET_ITEM(instance_methods, i);
-
+        /* XXX: v--- This is not in the Python version! */
         if (PyBytes_Check(value)) {
             int r = PyDict_SetItem(hiddenSelectors, value, Py_None);
             if (r == -1) {          // LCOV_BR_EXCL_LINE
                 goto error_cleanup; // LCOV_EXCL_LINE
             }
-        }
-
-        if (!PyObjCSelector_Check(value)) {
-            continue;
-        }
-
-        if (PyObjCSelector_IsClassMethod(value)) { // LCOV_BR_EXCL_LINE
-            /* Assertion failure: this can only happen when the code
-             * in this file is buggy.
-             */
-
-            // LCOV_EXCL_START
-            PyErr_Format(PyExc_TypeError, "class method in instance method set: -%s",
-                         sel_getName(PyObjCSelector_GetSelector(value)));
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
-        }
-
-        if (PyObjCNativeSelector_Check(value)) { // LCOV_BR_EXCL_LINE
-            /* Assertion failure: this can only happen when the code
-             * in this file is buggy.
-             */
-
-            // LCOV_EXCL_START
-            PyErr_Format(PyExc_TypeError, "native selector -%s of %s",
-                         sel_getName(PyObjCSelector_GetSelector(value)),
-                         class_getName(PyObjCSelector_GetClass(value)));
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
-            //
         } else if (PyObjCSelector_Check(value)) {
             PyObjCSelector* sel = (PyObjCSelector*)value;
 
@@ -992,8 +576,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             }
         }
     }
-    for (i = 0; i < PySequence_Fast_GET_SIZE(class_methods); i++) {
-        value = PySequence_Fast_GET_ITEM(class_methods, i);
+    for (i = 0; i < PyTuple_GET_SIZE(class_methods); i++) {
+        value = PyTuple_GET_ITEM(class_methods, i);
 
         if (PyBytes_Check(value)) {
             /* XXX: This needs documentation */
@@ -1001,35 +585,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             if (r == -1) {          // LCOV_BR_EXCL_LINE
                 goto error_cleanup; // LCOV_EXCL_LINE
             }
-        }
-
-        if (!PyObjCSelector_Check(value)) {
-            continue;
-        }
-
-        if (!PyObjCSelector_IsClassMethod(value)) { // LCOV_BR_EXCL_LINE
-            /* Assertion failure: this can only happen when the code
-             * in this file is buggy.
-             */
-
-            // LCOV_EXCL_START
-            PyErr_Format(PyExc_TypeError, "instance method in class method set: -%s",
-                         sel_getName(PyObjCSelector_GetSelector(value)));
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
-        }
-
-        if (PyObjCNativeSelector_Check(value)) {
-            /* Assertion failure: this can only happen when the code
-             * in this file is buggy.
-             */
-
-            // LCOV_EXCL_START
-            PyErr_Format(PyExc_TypeError, "native selector +%s of %s",
-                         sel_getName(PyObjCSelector_GetSelector(value)),
-                         class_getName(PyObjCSelector_GetClass(value)));
-            goto error_cleanup;
-            // LCOV_EXCL_STOP
 
         } else if (PyObjCSelector_Check(value)) {
             PyObjCSelector* sel = (PyObjCSelector*)value;
@@ -1098,8 +653,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     /* add instance variables */
-    for (i = 0; i < PySequence_Fast_GET_SIZE(instance_variables); i++) {
-        value = PySequence_Fast_GET_ITEM(instance_variables, i);
+    for (i = 0; i < PyTuple_GET_SIZE(instance_variables); i++) {
+        value = PyTuple_GET_ITEM(instance_variables, i);
 
         if (!PyObjCInstanceVariable_Check(value)) {
             continue;

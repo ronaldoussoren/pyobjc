@@ -179,17 +179,15 @@ class TestInheritedProtoype(TestCase):
                 pass
 
     def testOptionalArgs(self):
-        # BAD: optional arguments, which don't exist in Objective-C
-        try:
+        # OK: optional positional arguments than can be used
+        #     for the argument passed from Objective-C:
+        class OC_InPro_OptArgs1(NSObject):
+            def replacementObjectForArchiver_(self, *args):
+                pass
 
-            class OC_InPro_OptArgs1(NSObject):
-                def replacementObjectForArchiver_(self, *args):
-                    pass
-
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
-
+        # Not OK: This method has one positional argument when
+        #         called from Objective-C, but no positional
+        #         argument in Python
         try:
 
             class OC_InPro_OptArgs2(NSObject):
@@ -345,19 +343,14 @@ class TestExplicitPrototype(TestCase):
             oneargmethod_ = objc.selector(oneargmethod_, signature=b"i@:i")
 
     def testOptionalArgs(self):
-        # BAD: optional arguments, which don't exist in Objective-C
-        try:
+        # OK: optional positional arguments
+        class OC_ExplProto_OptArgs1(NSObject):
+            def oneargmethod_(self, *args):
+                pass
 
-            class OC_ExplProto_OptArgs1(NSObject):
-                def oneargmethod_(self, *args):
-                    pass
+            oneargmethod_ = objc.selector(oneargmethod_, signature=b"i@:i")
 
-                oneargmethod_ = objc.selector(oneargmethod_, signature=b"i@:i")
-
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
-
+        # Not OK: keyword arguments, but too few positional ones
         try:
 
             class OC_ExplProto_OptArgs2(NSObject):
@@ -466,20 +459,6 @@ class TestImplicitSignature(TestCase):
         self.assertEqual(OC_ImplProto_TooFew1.myMethod_.selector, b"myMethod:")
         self.assertEqual(OC_ImplProto_TooFew1.myMethod_.signature, b"v@:@")
 
-    def testTooManyColons(self):
-        # OK: the number of implied colons is larger than the actual number
-        # of arguments
-        #
-        # (see 'testTooFewColons', same argument but other coding style)
-        class OC_ImplProto_TooMany2(NSObject):
-            def run_to_completion(self):
-                pass
-
-        self.assertEqual(
-            OC_ImplProto_TooMany2.run_to_completion.selector, b"run_to_completion"
-        )
-        self.assertEqual(OC_ImplProto_TooMany2.run_to_completion.signature, b"v@:")
-
     def testImpliedColonTooFew(self):
         # BAD: a method that is obviously intented to be an objective-C method, but
         # has too few arguments.
@@ -517,25 +496,17 @@ class TestImplicitSignature(TestCase):
             def setFoo_(self, value, other=3):
                 pass
 
-        try:
+        # OK: '*rest' will always be empty when
+        #     called from Objective-C
+        class OC_ImplProto_TooMany4(NSObject):
+            def setFoo_(self, value, *rest):
+                pass
 
-            class OC_ImplProto_TooMany4(NSObject):
-                def setFoo_(self, value, *rest):
-                    pass
-
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
-
-        try:
-
-            class OC_ImplProto_TooMany5(NSObject):
-                def setFoo_(self, value, **rest):
-                    pass
-
-            self.fail()
-        except objc.BadPrototypeError:
-            pass
+        # OK: '*rest' will always be empty when
+        #     called from Objective-C
+        class OC_ImplProto_TooMany5(NSObject):
+            def setFoo_(self, value, **rest):
+                pass
 
     def testMethodVariations(self):
         # OK: all methods with an implied signature are fine
@@ -579,11 +550,10 @@ class TestImplicitSignature(TestCase):
         self.assertEqual(
             OC_ImplProto_Variations.methodWithX_andY_.selector, b"methodWithX:andY:"
         )
-        self.assertEqual(
-            OC_ImplProto_Variations.method_with_embedded_underscores.selector,
-            b"method_with_embedded_underscores",
+        self.assertNotIsInstance(
+            OC_ImplProto_Variations.method_with_embedded_underscores, objc.selector
         )
-        # self.assertEqual(OC_ImplProto_Variations.__magic__.selector, b"__magic__")
+        self.assertNotIsInstance(OC_ImplProto_Variations.__magic__, objc.selector)
         self.assertEqual(
             OC_ImplProto_Variations._leadingColon.selector, b"_leadingColon"
         )
@@ -599,8 +569,8 @@ class TestImplicitSignature(TestCase):
         self.assertEqual(OC_ImplProto_Variations.method2.signature, b"@@:")
         self.assertEqual(OC_ImplProto_Variations.method1_.signature, b"v@:@")
         self.assertEqual(OC_ImplProto_Variations.methodWithX_andY_.signature, b"v@:@@")
-        self.assertEqual(
-            OC_ImplProto_Variations.method_with_embedded_underscores.signature, b"v@:"
+        self.assertNotIsInstance(
+            OC_ImplProto_Variations.method_with_embedded_underscores, objc.selector
         )
         # self.assertEqual(OC_ImplProto_Variations.__magic__.signature, b"v@:")
         self.assertEqual(OC_ImplProto_Variations._leadingColon.signature, b"v@:")

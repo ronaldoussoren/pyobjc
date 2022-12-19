@@ -46,6 +46,44 @@ class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
 
+    def test_ivar_equality(self):
+        # Check that ivar equality tests are correct,
+        # and that equal values have equal hashes.
+        ivar_a = objc.ivar("a")
+        ivar_a2 = objc.ivar("a")
+        ivar_a3 = objc.ivar("a", objc._C_FLT)
+        ivar_b = objc.ivar("b")
+        ivar_b2 = objc.ivar("b", isSlot=True)
+        ivar_b3 = objc.ivar("b", isOutlet=True)
+
+        self.assertFalse(ivar_b.__isSlot__)
+        self.assertFalse(ivar_b.__isOutlet__)
+        self.assertTrue(ivar_b2.__isSlot__)
+        self.assertTrue(ivar_b3.__isOutlet__)
+
+        self.assertTrue(ivar_a == ivar_a2)
+        self.assertFalse(ivar_a == ivar_a3)
+        self.assertFalse(ivar_a == ivar_b)
+        self.assertFalse(ivar_b == ivar_b2)
+        self.assertFalse(ivar_b == ivar_b3)
+        self.assertFalse(ivar_b2 == ivar_b3)
+
+        self.assertFalse(ivar_a != ivar_a2)
+        self.assertTrue(ivar_a != ivar_a3)
+        self.assertTrue(ivar_a != ivar_b)
+        self.assertTrue(ivar_b != ivar_b2)
+        self.assertTrue(ivar_b != ivar_b3)
+        self.assertTrue(ivar_b2 != ivar_b3)
+
+        self.assertEqual(hash(ivar_a), hash(ivar_a2))
+
+    def test_ivars_with_same_name(self):
+        with self.assertRaises(objc.error):
+
+            class WithSameName(NSObject):
+                a = objc.ivar("a")
+                b = objc.ivar("a")
+
     def test_repr(self):
         self.assertEqual(repr(TestClass.idVar), "<instance-variable idVar>")
         self.assertEqual(repr(TestClass.outlet), "<IBOutlet outlet>")

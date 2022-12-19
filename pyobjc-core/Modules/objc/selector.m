@@ -132,11 +132,15 @@ base_self(PyObject* _self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(base_signature_doc, "Objective-C signature for the method");
 
-static PyObject*
-base_signature(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable base_signature(PyObject* self,
+                                          void*     closure __attribute__((__unused__)))
 {
-    PyObjCSelector* self = (PyObjCSelector*)_self;
-    return PyBytes_FromString(self->sel_python_signature);
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(self);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    return PyBytes_FromString(methinfo->signature);
 }
 
 PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
@@ -181,6 +185,11 @@ base_signature_setter(PyObject* _self, PyObject* newVal,
 
     PyMem_Free((char*)self->base.sel_python_signature);
     self->base.sel_python_signature = t;
+
+    if (self->base.sel_methinfo != NULL) {
+        /* Native selector was changed, ensure the metadata gets updated */
+        Py_CLEAR(self->base.sel_methinfo);
+    }
     return 0;
 }
 
@@ -1060,13 +1069,24 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_native_signature = NULL;
 
     result->base.sel_selector = selector;
-    const char* tmp           = PyObjCUtil_Strdup(signature);
+
+    Py_ssize_t len = strlen(signature) + 1;
+    char*      tmp = PyMem_Malloc(len);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
+        PyErr_NoMemory();
         return NULL;
         // LCOV_EXCL_STOP
     }
+    if (PyObjCRT_SimplifySignature(signature, tmp, len) == -1) {
+        /* In some cases the runtime contains signatures that
+         * PyObjC cannot parse. Copy those as-is for easier introspection.
+         */
+        PyErr_Clear();
+        strcpy(tmp, signature);
+    }
+
     result->base.sel_python_signature = tmp;
     result->base.sel_native_signature = PyObjCUtil_Strdup(native_signature);
     if ( // LCOV_BR_EXCL_LINE
@@ -1228,11 +1248,11 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
  * This one can be allocated from python code.
  */
 
-static long
+static Py_hash_t
 pysel_hash(PyObject* o)
 {
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)o;
-    long                  h    = 0;
+    Py_hash_t             h    = 0;
 
     if (self->base.sel_self) {
         h ^= PyObject_Hash(self->base.sel_self);
@@ -1316,13 +1336,15 @@ pysel_repr(PyObject* _self)
 
     if (sel->base.sel_self == NULL) {
         if (sel->base.sel_class) {
-            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p>",
+            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p> %s",
                                         sel_getName(sel->base.sel_selector),
-                                        class_getName(sel->base.sel_class), sel);
+                                        class_getName(sel->base.sel_class), sel,
+                                        sel->base.sel_python_signature);
 
         } else {
-            rval = PyUnicode_FromFormat("<unbound selector %s at %p>",
-                                        sel_getName(sel->base.sel_selector), sel);
+            rval = PyUnicode_FromFormat("<unbound selector %s at %p> %s",
+                                        sel_getName(sel->base.sel_selector), sel,
+                                        sel->base.sel_python_signature);
         }
 
     } else {
@@ -1921,302 +1943,6 @@ PyObjCSelector_GetFlags(PyObject* obj)
     PyObjC_Assert(PyObjCSelector_Check(obj), -1);
 
     return ((PyObjCSelector*)obj)->sel_flags;
-}
-
-/*
- * Find the signature of 'selector' in the list of protocols.
- */
-static const char* _Nullable find_protocol_signature(PyObject* protocols, SEL selector,
-                                                     int is_class_method)
-{
-    Py_ssize_t i;
-    PyObject*  proto;
-    PyObject*  info;
-
-    if (!PyList_Check(protocols)) {
-        PyErr_Format(PyObjCExc_InternalError, "Protocol-list is not a 'list', but '%s'",
-                     Py_TYPE(protocols)->tp_name);
-        return NULL;
-    }
-
-    /* First try the explicit protocol definitions */
-    for (i = 0; i < PyList_GET_SIZE(protocols); i++) {
-        proto = PyList_GET_ITEM(protocols, i);
-        if (proto == NULL) {
-            PyErr_Clear();
-            continue;
-        }
-        Py_INCREF(proto);
-
-        if (PyObjCFormalProtocol_Check(proto)) {
-            const char* signature;
-
-            signature = PyObjCFormalProtocol_FindSelectorSignature(proto, selector,
-                                                                   is_class_method);
-            if (signature != NULL) {
-                Py_DECREF(proto);
-                return (char*)signature;
-            }
-
-            Py_DECREF(proto);
-            continue;
-        }
-
-        info = PyObjCInformalProtocol_FindSelector(proto, selector, is_class_method);
-        Py_DECREF(proto);
-        if (info != NULL) {
-            return PyObjCSelector_Signature(info);
-        }
-    }
-
-    /* Then check if another protocol users this selector */
-    proto = PyObjCInformalProtocol_FindProtocol(selector);
-    if (proto == NULL) {
-        return NULL;
-    }
-
-    info = PyObjCInformalProtocol_FindSelector(proto, selector, is_class_method);
-    if (info != NULL) {
-        if (PyList_Append(protocols, proto) < 0) {
-            return NULL;
-        }
-        return PyObjCSelector_Signature(info);
-    }
-
-    return NULL;
-}
-
-PyObject* _Nullable PyObjCSelector_FromFunction(PyObject* _Nullable pyname,
-                                                PyObject* callable,
-                                                PyObject* template_class,
-                                                PyObject* _Nullable protocols)
-{
-    SEL selector;
-    Method _Nullable meth;
-    int       is_class_method = 0;
-    Class     oc_class        = PyObjCClass_GetClass(template_class);
-    PyObject* value;
-    PyObject* super_sel;
-
-    if (oc_class == NULL) {
-        return NULL;
-    }
-
-    if (PyObjCPythonSelector_Check(callable)) {
-        PyObjCPythonSelector* result;
-
-        if (((PyObjCPythonSelector*)callable)->callable == NULL
-            || ((PyObjCPythonSelector*)callable)->callable == Py_None) {
-            PyErr_SetString(PyExc_ValueError, "selector object without callable");
-            return NULL;
-        }
-        result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
-        if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
-        }
-        result->base.sel_selector = ((PyObjCPythonSelector*)callable)->base.sel_selector;
-        result->numoutput         = ((PyObjCPythonSelector*)callable)->numoutput;
-        result->argcount          = ((PyObjCPythonSelector*)callable)->argcount;
-        result->base.sel_methinfo = PyObjCSelector_GetMetadata(callable);
-        Py_XINCREF(result->base.sel_methinfo);
-        result->base.sel_class = oc_class;
-        const char* tmp        = PyObjCUtil_Strdup(
-                   ((PyObjCPythonSelector*)callable)->base.sel_python_signature);
-        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(result);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-        result->base.sel_python_signature = tmp;
-        result->base.sel_native_signature = NULL;
-        result->base.sel_self             = NULL;
-        result->base.sel_flags = ((PyObjCPythonSelector*)callable)->base.sel_flags;
-        result->callable       = ((PyObjCPythonSelector*)callable)->callable;
-        if (result->callable) {
-            Py_INCREF(result->callable);
-        }
-        if (PyObjCClass_HiddenSelector(template_class,
-                                       PyObjCSelector_GetSelector(callable),
-                                       PyObjCSelector_IsClassMethod(callable))) {
-            ((PyObjCSelector*)result)->sel_flags |= PyObjCSelector_kHIDDEN;
-        } else if (PyErr_Occurred()) {
-            Py_DECREF(result);
-            return NULL;
-        }
-        return (PyObject*)result;
-    }
-
-    if (!PyObjC_is_pyfunction(callable) && !PyObjC_is_pymethod(callable)
-        && (Py_TYPE(callable) != &PyClassMethod_Type)) { /* XXX: Cleaner API ? */
-
-        PyErr_SetString(PyExc_TypeError, "expecting function, method or classmethod");
-        return NULL;
-    }
-
-    if (Py_TYPE(callable) == &PyClassMethod_Type) {
-        /*
-         * This is a 'classmethod' or 'staticmethod'. 'classmethods'
-         * will be converted to class 'selectors', 'staticmethods' are
-         * returned as-is.
-         *
-         * XXX: Is there a better way to differentiate the two?
-         */
-        PyObject* tmp;
-        is_class_method = 1;
-
-        PyObject* args[4] = {NULL, callable, Py_None, template_class};
-        tmp               = PyObject_VectorcallMethod(PyObjCNM___get__, args + 1,
-                                                      3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (tmp == NULL) {
-            return NULL;
-        }
-
-        if (PyObjC_is_pyfunction(tmp)) {
-            /* A 'staticmethod', don't convert to a selector */
-            Py_DECREF(tmp);
-            Py_INCREF(callable);
-            return callable;
-        }
-
-        callable = PyObject_GetAttrString(tmp, "__func__");
-        Py_DECREF(tmp);
-        if (callable == NULL) {
-            return NULL;
-        }
-    }
-
-    if (pyname == NULL) {
-        /* No name specified, use the function name */
-        pyname = PyObject_GetAttrString(callable, "__name__");
-        if (pyname == NULL) {
-            return NULL;
-        }
-        if (PyUnicode_Check(pyname)) {
-            const char* cname = PyUnicode_AsUTF8(pyname);
-            if (cname == NULL) {
-                return NULL;
-            }
-            selector = PyObjCSelector_DefaultSelector(cname);
-
-        } else {
-            PyErr_SetString(PyExc_TypeError, "Function name is not a string");
-            return NULL;
-        }
-
-    } else if (PyUnicode_Check(pyname)) {
-        const char* cname = PyUnicode_AsUTF8(pyname);
-
-        if (cname == NULL) {
-            return NULL;
-        }
-        selector = PyObjCSelector_DefaultSelector(cname);
-
-    } else {
-        /* XXX: In a lot of APIs we use bytes for selectors, but not here? */
-        PyErr_SetString(PyExc_TypeError, "method name must be a string");
-        return NULL;
-    }
-
-    /* XXX: This seriously fails if a class method has a different signature
-     * than an instance method of the same name!
-     *
-     * We eagerly call PyObjCClass_FindSelector because some ObjC
-     * classes are not fully initialized until they are actually used,
-     * and the code below doesn't seem to count but PyObjCClass_FindSelector
-     * is.
-     */
-    super_sel = PyObjCClass_FindSelector(template_class, selector, is_class_method);
-    if (super_sel == NULL) {
-        PyErr_Clear();
-    }
-
-    if (is_class_method) {
-        meth = class_getClassMethod(oc_class, selector);
-
-    } else {
-        meth = class_getInstanceMethod(oc_class, selector);
-
-        if (!meth && !sel_isEqual(selector, @selector(copyWithZone:))
-            && !sel_isEqual(selector, @selector(mutableCopyWithZone:))) {
-            /* Look for a classmethod, but don't do that for copyWithZone:
-             * because that method is commonly defined in Python, and
-             * overriding "NSObject +copyWithZone:" is almost certainly
-             * not the intended behaviour.
-             */
-            meth = class_getClassMethod(oc_class, selector);
-            if (meth) {
-                is_class_method = 1;
-            }
-        }
-    }
-
-    if (meth) {
-        /* The function overrides a method in the
-         * objective-C class.
-         *
-         * Get the signature through the python wrapper,
-         * the user may have specified a more exact
-         * signature!
-         */
-        const char* typestr = NULL;
-
-        if (super_sel == NULL) {
-            /* FIXME: This isn't optimal when hiding methods with non-standard types */
-            PyObject* met =
-                PyObjCClass_HiddenSelector(template_class, selector, is_class_method);
-            if (met == NULL) {
-                if (PyErr_Occurred()) {
-                    return NULL;
-                }
-                typestr = method_getTypeEncoding(meth);
-            } else {
-                typestr = ((PyObjCMethodSignature*)met)->signature;
-            }
-        } else {
-            typestr = PyObjCSelector_Signature(super_sel);
-        }
-        if (typestr == NULL) {
-            PyErr_Format(PyObjCExc_Error,
-                         "Cannot extract signature for %R from super-class", pyname);
-            return NULL;
-        }
-
-        value =
-            PyObjCSelector_New(callable, selector, typestr, is_class_method, oc_class);
-        Py_XDECREF(super_sel);
-        if (value == NULL) {
-            return NULL;
-        }
-
-    } else {
-        const char* signature = NULL;
-
-        PyErr_Clear(); /* The call to PyObjCClass_FindSelector failed */
-        if (protocols != NULL) {
-            signature = find_protocol_signature(protocols, selector, is_class_method);
-
-            if (signature == NULL && PyErr_Occurred()) {
-                return NULL;
-            }
-        }
-
-        value =
-            PyObjCSelector_New(callable, selector, signature, is_class_method, oc_class);
-        if (value == NULL) {
-            return NULL;
-        }
-    }
-
-    if (PyObjCClass_HiddenSelector(template_class, selector,
-                                   PyObjCSelector_IsClassMethod(value))) {
-        ((PyObjCSelector*)value)->sel_flags |= PyObjCSelector_kHIDDEN;
-    } else if (PyErr_Occurred()) {
-        Py_DECREF(value);
-        return value;
-    }
-
-    return value;
 }
 
 PyObject* _Nullable PyObjCSelector_Copy(PyObject* selector)

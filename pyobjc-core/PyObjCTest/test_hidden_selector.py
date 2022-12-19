@@ -94,6 +94,13 @@ class TestHiddenSelector(TestCase):
         v = o.pyobjc_instanceMethods.boolMethod()
         self.assertIs(v, True)
 
+    def testHiddenCanBeIntrospected(self):
+        o = OCTestHidden.alloc().init()
+        m = o.pyobjc_instanceMethods.body
+        self.assertIsInstance(m, objc.selector)
+        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertTrue(m.isHidden)
+
     def testHiddenInSetupHook(self):
         o = OCTestHidden.alloc().init()
 

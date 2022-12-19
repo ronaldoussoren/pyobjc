@@ -394,12 +394,10 @@ static PyObject* _Nullable struct_mp_subscript(PyObject* self, PyObject* item)
         PyObject*  result;
         PyObject*  it;
 
-        if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
-                                 &slicelength)
-            < 0) {
+        if (PySlice_Unpack(item, &start, &stop, &step) < 0) {
             return NULL;
         }
-
+        slicelength = PySlice_AdjustIndices(STRUCT_LENGTH(self), &start, &stop, step);
         if (slicelength <= 0) {
             return PyTuple_New(0);
 
@@ -454,11 +452,10 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
     } else if (PySlice_Check(item)) {
         Py_ssize_t start, stop, step, slicelength;
 
-        if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
-                                 &slicelength)
-            < 0) {
+        if (PySlice_Unpack(item, &start, &stop, &step) < 0) {
             return -1;
         }
+        slicelength = PySlice_AdjustIndices(STRUCT_LENGTH(self), &start, &stop, step);
 
         if (step == 1) {
             return struct_sq_ass_slice(self, start, stop, value);
@@ -881,7 +878,7 @@ static initproc _Nullable make_init(const char* _typestr)
     return (initproc)codeloc;
 }
 
-static long
+static Py_hash_t
 struct_hash(PyObject* self)
 {
     PyErr_Format(PyExc_TypeError, "%.100s objects are unhashable",

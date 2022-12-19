@@ -1257,6 +1257,7 @@ class TestCase(_unittest.TestCase):
 main = _unittest.main
 expectedFailure = _unittest.expectedFailure
 skipUnless = _unittest.skipUnless
+SkipTest = _unittest.SkipTest
 
 
 def expectedFailureIf(condition):

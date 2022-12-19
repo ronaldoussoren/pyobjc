@@ -393,34 +393,15 @@ class TestOverridingSpecials(TestCase):
             def froobnicate__(self, a, b):
                 pass
 
-        # XXX: workaround for a 'feature' in class-builder.m, that code
-        # ignores methods whose name starts with two underscores. That code
-        # is not necessary, or the other ways of adding methods to a class
-        # should be changed.
-        def __foo_bar__(self, a, b, c):
-            pass
-
-        # XXX: The call to python_method is needed as of PyObjC 8 due
-        #      to better errro checking in the implementation.
-        #      Need to check if this silently did the wrong thing in ealier
-        #      versions.
-        with self.assertRaises(objc.BadPrototypeError):
-            MethodNamesClass.__foo_bar__ = __foo_bar__
-
-        def __foo_bar__(self):
-            pass
-
-        MethodNamesClass.__foo_bar__ = __foo_bar__
-
         self.assertEqual(
             MethodNamesClass.someName_andArg_.selector, b"someName:andArg:"
         )
-        self.assertEqual(MethodNamesClass.__foo_bar__.selector, b"__foo_bar__")
         self.assertEqual(
             MethodNamesClass._someName_andArg_.selector, b"_someName:andArg:"
         )
         self.assertEqual(MethodNamesClass.raise__.selector, b"raise")
-        self.assertEqual(MethodNamesClass.froobnicate__.selector, b"froobnicate::")
+
+        self.assertNotIsInstance(MethodNamesClass.froobnicate__, objc.selector)
 
     def testOverrideRespondsToSelector(self):
         class OC_RespondsClass(NSObject):
@@ -480,14 +461,12 @@ class TestOverridingSpecials(TestCase):
         self.assertEqual(values, {"key": 42})
 
     def test_invalid_slots(self):
-        with self.assertRaisesRegex(TypeError, "__slots__ must be a sequence"):
+        with self.assertRaisesRegex(TypeError, "not iterable"):
 
             class ClassWithIntegerSlots(NSObject):
                 __slots__ = 42
 
-        with self.assertRaisesRegex(
-            TypeError, "__slots__ entry 42 is not a string, but int"
-        ):
+        with self.assertRaisesRegex(TypeError, "be str, not int"):
 
             class ClassWithIntegerInSlots(NSObject):
                 __slots__ = (
@@ -536,14 +515,6 @@ class TestOverridingSpecials(TestCase):
                         del class_dict[k]
                     except KeyError:
                         pass
-
-        with self.assertRaisesRegex(
-            objc.internal_error, "PyObjCClass_BuildClass: Cannot fetch item in keylist"
-        ):
-
-            class ClassWhereSetupChangesDict(NSObject):
-                attr1 = Helper()
-                attr2 = Helper()
 
     def test_class_dict_contains_int(self):
         class NoCompare:

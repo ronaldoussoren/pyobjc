@@ -1361,6 +1361,14 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
         PyErr_Clear();
         return 0;
     }
+    if (PyObjC_RemoveInternalTypeCodes(buf1) == -1) {
+        PyErr_Clear();
+        return 0;
+    }
+    if (PyObjC_RemoveInternalTypeCodes(buf2) == -1) {
+        PyErr_Clear();
+        return 0;
+    }
     return strcmp(buf1, buf2) == 0;
 }
 
@@ -1509,6 +1517,32 @@ PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
 
     return PyObject_Vectorcall(PyObjC_Decoder, args + 1,
                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}
+
+PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
+                                              PyObject* class_object, PyObject* protocols)
+{
+    if (PyObjC_transformAttribute == NULL || PyObjC_transformAttribute == Py_None) {
+        PyErr_SetString(PyObjCExc_InternalError,
+                        "objc.options._transformAttribute is not set");
+        return NULL;
+    }
+    PyObject* args[5] = {NULL, name, value, class_object, protocols};
+    return PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                               4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}
+
+PyObject* _Nullable PyObjC_UnravelClassDict(PyObject* class_dict, PyObject* class_object,
+                                            PyObject* protocols)
+{
+    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
+        PyErr_SetString(PyObjCExc_InternalError,
+                        "objc.options._unravelClassDict is not set");
+        return NULL;
+    }
+    PyObject* args[4] = {NULL, class_dict, class_object, protocols};
+    return PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                               3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 bool

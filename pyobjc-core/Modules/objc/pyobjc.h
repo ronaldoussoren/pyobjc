@@ -153,7 +153,6 @@
 #import "pointer-support.h"
 #import "proxy-registry.h"
 #import "pyobjc_unicode.h"
-#import "python-method.h"
 #import "registry.h"
 #import "released-buffer.h"
 #import "struct-sockaddr.h"

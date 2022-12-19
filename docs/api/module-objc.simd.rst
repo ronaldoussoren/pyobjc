@@ -52,7 +52,7 @@ does not support named accessors to elements.
 .. class:: vector_double4
 
    A vector of 4 floating point values. In C these values
-  are C *double* values.
+   are C *double* values.
 
 
    .. method:: __init__(self, x: float)
@@ -60,40 +60,48 @@ does not support named accessors to elements.
       Initialize all elements of the vector to the same value
 
    .. method:: __init__(self, x: float, y: float, z: float, w: float)
+      :noindex:
 
       Initialize the 4 elements of the vector
 
    .. method:: __init__(self, xy: vector_float2, z: float, w: float)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, x: float, yz: vector_float2, w: float)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, x: float, y: float, zw: vector_float2)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, xy: vector_float2, zw: vector_float2)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, x: float, yzw: vector_float3)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, xyz: vector_float3, w: float)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
    .. method:: __init__(self, xxyz: vector_float4)
+      :noindex:
 
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
@@ -150,7 +158,7 @@ does not support named accessors to elements.
 
    .. method:: __setitem__(index: int, value: float)
 
-      Replace the ``index``th element.
+      Replace element at *indx* with *value*.
 
    .. method:: __add__(self, other: vector_double4) -> vector_double4
 
@@ -158,6 +166,7 @@ does not support named accessors to elements.
       addition of *self* and *other*.
 
    .. method:: __add__(self, other: float|int) -> vector_double4
+      :noindex:
 
       Return a :class:`vector_double4` with *other*
       added to all elements of *self*.
@@ -168,6 +177,7 @@ does not support named accessors to elements.
       multiplication of *self* and *other*.
 
    .. method:: __mul__(self, other: float|int) -> vector_double4
+      :noindex:
 
       Return a :class:`vector_double4` with all
       elements of *self* multiplied by *other*.
@@ -178,6 +188,7 @@ does not support named accessors to elements.
       division of *self* and *other*.
 
    .. method:: __div__(self, other: float|int) -> vector_double4
+      :noindex:
 
       Return a :class:`vector_double4` with all
       elements of *self* divided by *other*.
@@ -456,7 +467,7 @@ Matrix types
 
       The columns of the matrix.
 
-.. class:: matrix_float3x3
+.. class:: matrix_float4x3
 
    A 4 by 3 matrix of floats,
    represented as an array of columns where each

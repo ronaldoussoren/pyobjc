@@ -9,16 +9,17 @@ class TestInspectSignatures(TestCase):
     @min_python_release("3.4")
     def test_module_functions_signature(self):
         for nm in dir(objc):
-            obj = getattr(objc, nm)
-            if isinstance(obj, types.BuiltinMethodType):
-                try:
-                    value = inspect.signature(obj)
+            with self.subTest(name=nm):
+                obj = getattr(objc, nm)
+                if isinstance(obj, types.BuiltinMethodType):
+                    try:
+                        value = inspect.signature(obj)
 
-                except ValueError:
-                    value = None
+                    except ValueError:
+                        value = None
 
-                if value is None:
-                    self.fail(f"No inspect.signature for {nm}")
+                    if value is None:
+                        self.fail(f"No inspect.signature for {nm}")
 
     @min_python_release("3.4")
     def test_class_signature(self):
@@ -51,17 +52,18 @@ class TestInspectSignatures(TestCase):
                     "__annotations__",
                 ):
                     continue
-                obj = getattr(cls, nm)
-                if isinstance(obj, types.BuiltinMethodType):
-                    try:
-                        value = inspect.signature(obj)
-                    except ValueError:
-                        value = None
+                with self.subTest(classname=cls.__name__, attr=nm):
+                    obj = getattr(cls, nm)
+                    if isinstance(obj, types.BuiltinMethodType):
+                        try:
+                            value = inspect.signature(obj)
+                        except ValueError:
+                            value = None
 
-                    if value is None and cls is objc.pyobjc_unicode:
-                        if obj == getattr(str, nm):
-                            # Don't fail for inherited methods
-                            continue
+                        if value is None and cls is objc.pyobjc_unicode:
+                            if obj == getattr(str, nm):
+                                # Don't fail for inherited methods
+                                continue
 
-                    if value is None:
-                        self.fail(f"No inspect.signature for {cls.__name__}.{nm}")
+                        if value is None:
+                            self.fail(f"No inspect.signature for {cls.__name__}.{nm}")

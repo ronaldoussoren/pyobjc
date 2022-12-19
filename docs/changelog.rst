@@ -275,8 +275,8 @@ resulting in a number of minor bug fixes.
   now raise an exception as intended, instead of breaking
   the interpreter.
 
-* Trying to delete an attribute from :data:`objc.options`
-  now raises :class:`AttributeError` instead of :class:`TypeError`.
+* Trying to delete an attribute from ``objc.options``
+  now raises ``AttributeError`` instead of ``TypeError``.
 
 * :class:`objc.selector` now copies the default signature
   from its argument when that argument is another :class:`objc.selector`.
