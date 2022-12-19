@@ -1520,7 +1520,12 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
     Py_BEGIN_ALLOW_THREADS
         @try { /* XXX: Can this raise?, and is it necessary to give up the GIL here? */
             cls = objc_metaclass_locate(base);
-            m   = class_getClassMethod(cls, sel);
+            if (cls == Nil) {
+                /* XXX: Fix for a sporadic crash when resolving methods */
+                m = nil;
+            } else {
+                m = class_getClassMethod(cls, sel);
+            }
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
@@ -2055,6 +2060,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
         }
     }
 
+#if 0 /* XXX: Disabled check due to #479 */
     /* Check if there is a current attribute with the same name that
      * is an unbound selector.
      */
@@ -2073,6 +2079,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 
         return -1;
     }
+#endif
 
     res = PyType_Type.tp_setattro(self, name, value);
     Py_XDECREF(value);

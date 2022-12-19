@@ -150,6 +150,8 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
 
     Py_BEGIN_ALLOW_THREADS
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             retval = SecKeychainFindInternetPassword(
                 keychainOrArray, serverName_length, serverName, securityDomain_length,
                 securityDomain, accountName_length, accountName, path_length, path, port,
@@ -157,6 +159,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
                 py_password_length == Py_None ? &password_length : NULL,
                 py_passwordData == Py_None ? &passwordData : NULL,
                 py_itemRef == Py_None ? &itemRef : NULL);
+#pragma clang diagnostic pop
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
@@ -183,7 +186,10 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
             Py_INCREF(py_passwordData);
         } else {
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             (void)SecKeychainItemFreeContent(NULL, passwordData);
+#pragma clang diagnostic pop
 
             if (py_passwordData == NULL) {
                 if (itemRef != NULL) {
@@ -287,12 +293,16 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
 
     Py_BEGIN_ALLOW_THREADS
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
             retval = SecKeychainFindGenericPassword(
                 keychainOrArray, serviceName_length, serviceName, accountName_length,
                 accountName, py_password_length == Py_None ? &password_length : NULL,
                 py_passwordData == Py_None ? &passwordData : NULL,
                 py_itemRef == Py_None ? &itemRef : NULL);
 
+#pragma clang diagnostic pop
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
         }
@@ -313,7 +323,10 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
             Py_INCREF(py_passwordData);
         } else {
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             (void)SecKeychainItemFreeContent(NULL, passwordData);
+#pragma clang diagnostic pop
 
             if (py_passwordData == NULL) {
                 if (itemRef != NULL) {

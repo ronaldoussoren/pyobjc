@@ -1087,59 +1087,58 @@ class TestCase(_unittest.TestCase):
     def _validateCallableMetadata(
         self, value, class_name=None, skip_simple_charptr_check=False
     ):
-        with self.subTest(repr(value)):
-            callable_meta = value.__metadata__()
-            argcount = len(callable_meta["arguments"])
+        # print(value)
+        callable_meta = value.__metadata__()
+        argcount = len(callable_meta["arguments"])
 
-            for idx, meta in [("retval", callable_meta["retval"])] + list(
-                enumerate(callable_meta["arguments"])
+        for idx, meta in [("retval", callable_meta["retval"])] + list(
+            enumerate(callable_meta["arguments"])
+        ):
+            if meta["type"].endswith(objc._C_PTR + objc._C_CHR):
+                if meta.get("c_array_delimited_by_null", False):
+                    self.fail(
+                        f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead {class_name or ''}"
+                    )
+                if not skip_simple_charptr_check:
+                    self.fail(f"{value}: {idx}: 'char*' {class_name or ''}")
+
+            v = meta.get("c_array_size_in_arg", None)
+            if isinstance(v, int):
+                if not (0 <= v < argcount):
+                    self.fail(
+                        f"{value}: {idx}: c_array_size_in_arg out of range {v} {class_name or ''}"
+                    )
+            elif isinstance(v, tuple):
+                b, e = v
+                if not (0 <= b < argcount):
+                    self.fail(
+                        f"{value}: {idx}: c_array_size_in_arg out of range {b} {class_name or ''}"
+                    )
+                if not (0 <= e < argcount):
+                    self.fail(
+                        f"{value}: {idx}: c_array_size_in_arg out of range {e} {class_name or ''}"
+                    )
+
+            tp = meta["type"]
+            if any(
+                tp.startswith(pfx) for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT)
             ):
-                if meta["type"].endswith(objc._C_PTR + objc._C_CHR):
-                    if meta.get("c_array_delimited_by_null", False):
-                        self.fail(
-                            f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead {class_name or ''}"
-                        )
-                    if not skip_simple_charptr_check:
-                        self.fail(f"{value}: {idx}: 'char*' {class_name or ''}")
-
-                v = meta.get("c_array_size_in_arg", None)
-                if isinstance(v, int):
-                    if not (0 <= v < argcount):
-                        self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {v} {class_name or ''}"
-                        )
-                elif isinstance(v, tuple):
-                    b, e = v
-                    if not (0 <= b < argcount):
-                        self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {b} {class_name or ''}"
-                        )
-                    if not (0 <= e < argcount):
-                        self.fail(
-                            f"{value}: {idx}: c_array_size_in_arg out of range {e} {class_name or ''}"
-                        )
-
-                tp = meta["type"]
-                if any(
-                    tp.startswith(pfx)
-                    for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT)
+                rest = tp[1:]
+                if not rest.startswith(objc._C_PTR) and not rest.startswith(
+                    objc._C_CHARPTR
                 ):
-                    rest = tp[1:]
-                    if not rest.startswith(objc._C_PTR) and not rest.startswith(
-                        objc._C_CHARPTR
-                    ):
+                    self.fail(
+                        f"{value}: {idx}: byref specifier on non-pointer: {tp} {class_name or ''}"
+                    )
+
+                rest = rest[1:]
+
+                if rest.startswith(objc._C_STRUCT_B):
+                    name, fields = objc.splitStructSignature(rest)
+                    if not fields:
                         self.fail(
-                            f"{value}: {idx}: byref specifier on non-pointer: {tp} {class_name or ''}"
+                            f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp} {class_name or ''}"
                         )
-
-                    rest = rest[1:]
-
-                    if rest.startswith(objc._C_STRUCT_B):
-                        name, fields = objc.splitStructSignature(rest)
-                        if not fields:
-                            self.fail(
-                                f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp} {class_name or ''}"
-                            )
 
     def assertCallableMetadataIsSane(
         self, module, *, exclude_cocoa=True, exclude_attrs=()
@@ -1179,7 +1178,9 @@ class TestCase(_unittest.TestCase):
             )
         )
 
-        for nm in dir(module):
+        module_names = sorted(dir(module))
+        for _idx, nm in enumerate(module_names):
+            # print(f"{_idx}/{len(module_names)} {nm}")
             if nm in exclude_names:
                 continue
             if nm in exclude_attrs:
@@ -1191,7 +1192,7 @@ class TestCase(_unittest.TestCase):
                     # Root class, does not conform to the NSObject
                     # protocol and useless to test.
                     continue
-                for attr_name in dir(value.pyobjc_instanceMethods):
+                for attr_name in sorted(dir(value.pyobjc_instanceMethods)):
                     if (nm, attr_name) in exclude_attrs:
                         continue
                     if attr_name.startswith("_"):
@@ -1205,7 +1206,7 @@ class TestCase(_unittest.TestCase):
                                 attr, nm, skip_simple_charptr_check=not exclude_cocoa
                             )
 
-                for attr_name in dir(value.pyobjc_classMethods):
+                for attr_name in sorted(dir(value.pyobjc_classMethods)):
                     if (nm, attr_name) in exclude_attrs:
                         continue
                     if attr_name.startswith("_"):

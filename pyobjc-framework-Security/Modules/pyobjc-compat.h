@@ -284,6 +284,14 @@ NS_ASSUME_NONNULL_BEGIN
 #define MAC_OS_X_VERSION_13_0 130000
 #endif
 
+#ifndef MAC_OS_X_VERSION_13_1
+#define MAC_OS_X_VERSION_13_1 130100
+#endif
+
+#ifndef MAC_OS_X_VERSION_13_2
+#define MAC_OS_X_VERSION_13_2 130200
+#endif
+
 /*
  *
  * End of Cocoa definitions

@@ -54,5 +54,3 @@ class TestSKWarpGeometry(TestCase):
 
         with self.assertRaises(TypeError):
             value.gridByReplacingDestPositions_([(n, n) for n in range(12)])
-
-        self.fail()

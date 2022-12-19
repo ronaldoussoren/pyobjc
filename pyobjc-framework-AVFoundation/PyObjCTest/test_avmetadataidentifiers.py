@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataIdentifiers(TestCase):
@@ -843,7 +843,6 @@ class TestAVMetadataIdentifiers(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.15")
-    @expectedFailure
     def testConstants10_15(self):
         with self.subTest("humanbody"):
             self.assertIsInstance(

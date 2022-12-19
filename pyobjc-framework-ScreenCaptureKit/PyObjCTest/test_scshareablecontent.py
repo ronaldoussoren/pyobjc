@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import ScreenCaptureKit
 
 
@@ -45,3 +45,7 @@ class TestSCShareableContent(TestCase):
             2,
             b"v@@",
         )
+
+    @min_os_level("13.1")
+    def test_methods13_1(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCWindow.isActive)

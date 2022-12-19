@@ -42,7 +42,7 @@ class TestAVAssetImageGenerator(TestCase):
         )
 
         AVAssetImageGeneratorCompletionHandler = (
-            b"v{_CMTime=qiIq}^{__CGImage}{_CMTime=qiIq}" + objc._C_NSInteger
+            b"v{_CMTime=qiIq}^{CGImage=}{_CMTime=qiIq}" + objc._C_NSInteger
         )
 
         self.assertArgIsBlock(
@@ -56,5 +56,5 @@ class TestAVAssetImageGenerator(TestCase):
         self.assertArgIsBlock(
             AVFoundation.AVAssetImageGenerator.generateCGImageAsynchronouslyForTime_completionHandler_,  # noqa: B950
             1,
-            b"v{__CGImage=}" + AVFoundation.CMTime.__typestr__ + b"@",
+            b"v^{CGImage=}" + AVFoundation.CMTime.__typestr__ + b"@",
         )

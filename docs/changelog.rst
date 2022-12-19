@@ -3,8 +3,26 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 9.0a1
+Version 9.0.1
 -------------
+
+* #512: Fix metadata for ``webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:`` and
+  ``webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:`` in the WebKit
+  bindings.
+
+* #508: Reintroduce support for bridgesupport files that was dropped in 9.0.
+
+  There are external users for this interface and the replacement used by PyObjC itself
+  is not yet in a state where it can be used by other projects.
+
+* Framework bindings were updated for the SDK included in Xcode 14.1
+
+* #517: Fix bad markup in overview of wrapped frameworks
+
+* #519: Fix compile error with Python 3.12
+
+Version 9.0
+-----------
 
 * Support for macOS 13 (Xcode 14 beta 4)
 
@@ -142,7 +160,7 @@ Version 9.0a1
 * #502: Fix incompatibility with Nuitka.
 
   Earlier version of PyObjC failed when compiled using Nuitka, this
-  version does work.
+  version does work when using Nuitka 1.1.6 or later.
 
   Limitations:
 
@@ -150,9 +168,6 @@ Version 9.0a1
     assumes that methods return ``id`` for Nuitka compiled code.
 
     That should not be a problem in practice.
-
-  - Invocations of 0-argument super will result in errors. That's
-    due to a limitation in Nuitka that the developer is lookin into.
 
   As a side effect of this builtin functions are accepted as
   the callable for a selector, even when not specifying a
@@ -167,6 +182,9 @@ Version 9.0a1
 
   This can avoid an ``objc.error`` exception when introspecting existing
   Cocoa classes.
+
+* #479: Revert change that made it impossible to replace a method
+  with a property.
 
 Version 8.6
 -----------
@@ -411,10 +429,10 @@ Version 8.4.1
 Version 8.4
 -----------
 
-.. note::
+..note::
 
-  The bindings for the Message and ServerNotification frameworks,
-  which were removed in macOS 10.9, will be removed in PyObjC 9.
+   The bindings for the Message and ServerNotification frameworks,
+   which were removed in macOS 10.9, will be removed in PyObjC 9.
 
 * Added bindings for ScreenCaptureKit (new in macOS 12.3)
 

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVMusicEvents(TestCase):
     def test_constants(self):
-        self.assertIsTypedEnum(AVFoundation.AVMIDIControlChangeMessageType)
+        self.assertIsEnumType(AVFoundation.AVMIDIControlChangeMessageType)
 
         self.assertEqual(AVFoundation.AVMIDIControlChangeMessageTypeBankSelect, 0)
         self.assertEqual(AVFoundation.AVMIDIControlChangeMessageTypeModWheel, 1)

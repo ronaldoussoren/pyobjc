@@ -20,3 +20,8 @@ class TestINIntentIdentifiers(TestCase):
         self.assertIsInstance(Intents.INSendMessageIntentIdentifier, str)
         self.assertIsInstance(Intents.INSearchForMessagesIntentIdentifier, str)
         self.assertIsInstance(Intents.INSetMessageAttributeIntentIdentifier, str)
+
+    @min_os_level("13.1")
+    def test_constants13_1(self):
+        self.assertIsInstance(Intents.INAnswerCallIntentIdentifier, str)
+        self.assertIsInstance(Intents.INHangUpCallIntentIdentifier, str)

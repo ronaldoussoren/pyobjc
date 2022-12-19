@@ -879,13 +879,22 @@ class TestSelectorEdgeCases(TestCase):
     #       and one for the regular caller.
 
     def test_no_keywords(self):
-        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+        with self.assertRaisesRegex(
+            TypeError,
+            "(does not accept keyword arguments)|(keyword arguments not supported)",
+        ):
             NSArray.alloc().init().copyWithZone_(zone=None)
 
-        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+        with self.assertRaisesRegex(
+            TypeError,
+            "(does not accept keyword arguments)|(keyword arguments not supported)",
+        ):
             NSData.dataWithBytes_length_(data=b"hello", length=3)
 
-        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+        with self.assertRaisesRegex(
+            TypeError,
+            "(does not accept keyword arguments)|(keyword arguments not supported)",
+        ):
             NSArray.alloc(cls=NSArray)
 
     def test_call_on_wrong_self(self):

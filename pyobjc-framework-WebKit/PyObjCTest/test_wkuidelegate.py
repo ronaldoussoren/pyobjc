@@ -54,19 +54,14 @@ class TestWKUIDelegate(TestCase):
             b"v",
         )
         self.assertArgIsBlock(
-            TestWKUIDelegateHelper.webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_,  # noqa: B950
-            3,
-            b"v",
-        )
-        self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_initiatedByFrame_completionHandler_,  # noqa: B950
             3,
-            b"v",
+            b"vZ",
         )
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runJavaScriptTextInputPanelWithPrompt_defaultText_initiatedByFrame_completionHandler_,  # noqa: B950
             4,
-            b"v",
+            b"v@",
         )
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runOpenPanelWithParameters_initiatedByFrame_completionHandler_,  # noqa: B950

@@ -57,6 +57,14 @@
    "SKAttributeTypeVectorHalfFloat3": { "value": 7 },
    "SKAttributeTypeVectorHalfFloat4": { "value": 8 }
   },
+  "classclones":  {
+   "SKPhysicsWorld": "PKPhysicsWorld",
+   "SKRegion": "PKRegion",
+   "SKPhysicsJoint": "PKPhysicsJoint",
+   "SKPhysicsGrid": "PKPhysicsGrid",
+   "SKPhysicsContact": "PKPhysicsContact",
+   "SKPhysicsBody": "PKPhysicsBody"
+  },
   "classes": {
    "SKTileDefinition": {
     "methods": [

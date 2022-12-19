@@ -94,7 +94,8 @@ class TestBundleVariables(TestCase):
             objc.loadBundleVariables(self.bundle, {}, 42)
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.loadBundleVariables(self.bundle, {}, [], "hello")
 
@@ -141,7 +142,8 @@ class TestSpecialVariables(TestCase):
             objc.loadSpecialVar(self.bundle, 42, 42, "hello")
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.loadSpecialVar(self.bundle, {}, "42", "hello")
 
@@ -149,7 +151,8 @@ class TestSpecialVariables(TestCase):
             objc.loadSpecialVar(self.bundle, {}, 42, 0)
 
         with self.assertRaisesRegex(
-            TypeError, "'str' object cannot be interpreted as an integer"
+            TypeError,
+            r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
         ):
             objc.loadSpecialVar(self.bundle, {}, 42, "hello", "world")
 

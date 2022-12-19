@@ -50,7 +50,7 @@ class TestAVComposition(TestCase):
     def test_methods13_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVMutableComposition.insertTimeRange_ofAsset_atTime_completionHandler_,
-            0,
+            3,
             b"v@",
         )
 

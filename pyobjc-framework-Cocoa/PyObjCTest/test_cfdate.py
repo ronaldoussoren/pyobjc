@@ -111,7 +111,9 @@ class TestDate(TestCase):
         self.assertEqual(dt.minute, nowtm.tm_min)
         units = CoreFoundation.CFGregorianUnits(days=1)
         stamp = CoreFoundation.CFAbsoluteTimeAddGregorianUnits(now, tz, units)
-        self.assertEqual(stamp - now, 24 * 3600)
+
+        # XXX: This is wrong during summer time.
+        self.assertIn(stamp - now, (24 * 3600, 25 * 3600))
         units = CoreFoundation.CFAbsoluteTimeGetDifferenceAsGregorianUnits(
             stamp, now, tz, CoreFoundation.kCFGregorianAllUnits
         )

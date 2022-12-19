@@ -100,7 +100,8 @@ class TestOptions(TestCase):
             self.assertEqual(objc.options._nscoding_version, 2)
 
             with self.assertRaisesRegex(
-                TypeError, "'str' object cannot be interpreted as an integer"
+                TypeError,
+                r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
             ):
                 objc.options._nscoding_version = ""
 
@@ -139,7 +140,8 @@ class TestOptions(TestCase):
             self.assertEqual(objc.options.deprecation_warnings, 2)
 
             with self.assertRaisesRegex(
-                TypeError, "'str' object cannot be interpreted as an integer"
+                TypeError,
+                r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
             ):
                 objc.options.deprecation_warnings = ""
 

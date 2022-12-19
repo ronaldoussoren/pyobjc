@@ -25,11 +25,11 @@ class TestAVAssetReader(TestCase):
     @min_os_level("13.0")
     def testMethods13_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVAssetReader.isMultitaskingCameraAccessSupported
+            AVFoundation.AVCaptureSession.isMultitaskingCameraAccessSupported
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVAssetReader.isMultitaskingCameraAccessEnabled
+            AVFoundation.AVCaptureSession.isMultitaskingCameraAccessEnabled
         )
-        self.asserArgIsBOOL(
-            AVFoundation.AVAssetReader.setMultitaskingCameraAccessEnabled_, 0
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureSession.setMultitaskingCameraAccessEnabled_, 0
         )

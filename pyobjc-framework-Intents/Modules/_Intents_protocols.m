@@ -27,4 +27,10 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(INShareFocusStatusIntentHandling));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1301
+    p = PyObjC_IdToPython(@protocol(INHangUpCallIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INAnswerCallIntentHandling));
+    Py_XDECREF(p);
+#endif
 }

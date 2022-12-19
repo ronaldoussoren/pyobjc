@@ -97,9 +97,9 @@ class TestAVAssetResourceLoader(TestCase):
     @min_os_level("13.0")
     def testMethods13_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVAssetResourceLoadingRequest.isEntireLengthAvailableOnDemand
+            AVFoundation.AVAssetResourceLoadingContentInformationRequest.isEntireLengthAvailableOnDemand
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAssetResourceLoadingRequest.setEntireLengthAvailableOnDemand_,
+            AVFoundation.AVAssetResourceLoadingContentInformationRequest.setEntireLengthAvailableOnDemand_,
             0,
         )
