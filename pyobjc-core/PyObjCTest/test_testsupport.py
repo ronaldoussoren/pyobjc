@@ -2077,6 +2077,120 @@ class TestTestSupport(TestCase):
                 ):
                     self.assertResultIsBOOL(m)
 
+    def test_arg_idlike(self):
+        for tp in (b"@", b"^@", b"n^@", b"o^@", b"N^@"):
+            with self.subTest(encoding=tp):
+                m = Method(3, {"type": tp})
+                try:
+                    self.assertArgIsIDLike(m, 3)
+                except self.failureException:
+                    self.fail("Unexpctedly tested as not id-like")
+
+        for tp in (b"^{__CFPython=}",):
+            with self.subTest(encoding=tp, registered=False):
+                try:
+                    m = Method(3, {"type": tp})
+                    self.assertArgIsIDLike(m, 3)
+                except self.failureException:
+                    pass
+                else:
+                    self.fail("Unexpectedly tested as id-like")
+
+                try:
+                    m = Method(3, {"type": b"^" + tp})
+                    self.assertArgIsIDLike(m, 3)
+                except self.failureException:
+                    pass
+                else:
+                    self.fail("Unexpectedly tested as id-like")
+
+            for pfx in (b"", b"^", b"n^", b"N^", b"o^"):
+                with self.subTest(encoding=tp, msg="mocked _idSignatures", pfx=pfx):
+                    orig = objc._idSignatures
+                    objc._idSignatures = lambda tp=tp: [tp]
+                    try:
+                        try:
+                            m = Method(3, {"type": pfx + tp})
+                            self.assertArgIsIDLike(m, 3)
+                        except self.failureException:
+                            self.fail("Unexpectedly tested as not id-like")
+
+                        try:
+                            m = Method(3, {"type": pfx + tp})
+                            self.assertArgIsIDLike(m, 3)
+                        except self.failureException:
+                            self.fail("Unexpectedly tested as not id-like")
+
+                    finally:
+                        objc._idSignatures = orig
+                        if tp in TestSupport._idlike_cache:
+                            TestSupport._idlike_cache.remove(tp)
+
+        try:
+            m = Method(3, {"type": b"d"})
+            self.assertArgIsIDLike(m, 3)
+        except self.failureException:
+            pass
+        else:
+            self.fail("Unexpectedly tested as id-like")
+
+    def test_result_idlike(self):
+        for tp in (b"@", b"^@", b"n^@", b"o^@", b"N^@"):
+            with self.subTest(encoding=tp):
+                m = Method(None, {"type": tp})
+                try:
+                    self.assertResultIsIDLike(m)
+                except self.failureException:
+                    self.fail("Unexpctedly tested as not id-like")
+
+        for tp in (b"^{__CFPython=}",):
+            with self.subTest(encoding=tp, registered=False):
+                try:
+                    m = Method(None, {"type": tp})
+                    self.assertResultIsIDLike(m)
+                except self.failureException:
+                    pass
+                else:
+                    self.fail("Unexpectedly tested as id-like")
+
+                try:
+                    m = Method(None, {"type": b"^" + tp})
+                    self.assertResultIsIDLike(m)
+                except self.failureException:
+                    pass
+                else:
+                    self.fail("Unexpectedly tested as id-like")
+
+            for pfx in (b"", b"^", b"n^", b"N^", b"o^"):
+                with self.subTest(encoding=tp, msg="mocked _idSignatures", pfx=pfx):
+                    orig = objc._idSignatures
+                    objc._idSignatures = lambda tp=tp: [tp]
+                    try:
+                        try:
+                            m = Method(None, {"type": pfx + tp})
+                            self.assertResultIsIDLike(m)
+                        except self.failureException:
+                            self.fail("Unexpectedly tested as not id-like")
+
+                        try:
+                            m = Method(None, {"type": pfx + tp})
+                            self.assertResultIsIDLike(m)
+                        except self.failureException:
+                            self.fail("Unexpectedly tested as not id-like")
+
+                    finally:
+                        objc._idSignatures = orig
+                        if tp in TestSupport._idlike_cache:
+                            TestSupport._idlike_cache.remove(tp)
+
+        try:
+            m = Method(None, {"type": b"d"})
+            self.assertResultIsIDLike(m)
+        except self.failureException:
+            pass
+        else:
+            self.fail("Unexpectedly tested as id-like")
+
     def test_running(self):
         orig_use = TestSupport._usepool
         orig_class = TestSupport._poolclass

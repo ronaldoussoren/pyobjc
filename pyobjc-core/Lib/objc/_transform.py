@@ -83,7 +83,6 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
                 del class_dict[key]
                 if not value.isHidden:
                     meta_dict[key] = value
-                else:
                     if canonical != key:
                         meta_dict[canonical] = value
 
@@ -194,7 +193,7 @@ def transformAttribute(name, value, class_object, protocols):
             isRequired=value.isRequired,
             isHidden=value.isHidden,
         )
-    elif isgenerator_or_async(value):
+    elif is_generator_or_async(value):
         return value
     elif isinstance(value, python_method):
         return value.__wrapped__
@@ -257,8 +256,6 @@ def transformAttribute(name, value, class_object, protocols):
             #   def ...
             #
             return classmethod(value.__wrapped__)
-        if isinstance(value, objc.python_method):
-            return classmethod(value.callable)
 
         assert not isinstance(value, classmethod)
 
@@ -462,7 +459,7 @@ def lookup_mro_dict(class_object, name):
     return NO_VALUE
 
 
-def isgenerator_or_async(value):
+def is_generator_or_async(value):
     """
     Returns true for generators and async functions
     """

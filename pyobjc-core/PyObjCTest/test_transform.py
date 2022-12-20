@@ -1481,6 +1481,24 @@ class TestClassDictProcessor(TestCase):
                 self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
             self.assertEqual(meta_dict, {})
 
+        with self.subTest("slot conflicts with attribute (string slots)"):
+            class_dict = {"__slots__": "a", "a": 42}
+            meta_dict = {}
+            with self.assertRaisesRegex(
+                objc.error,
+                "slot 'a' redefines 42",
+            ):
+                self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
+
+        with self.subTest("slot conflicts with attribute (tuple slots)"):
+            class_dict = {"__slots__": ("a",), "a": 42}
+            meta_dict = {}
+            with self.assertRaisesRegex(
+                objc.error,
+                "slot 'a' redefines 42",
+            ):
+                self.processor(class_dict, meta_dict, OC_TransformWitIvarA, [])
+
     def test_ivars(self):
         with self.subTest("unnamed ivar"):
             ivar = objc.ivar(type=objc._C_FLT)
@@ -1882,6 +1900,26 @@ class TestClassDictProcessor(TestCase):
             self.assertIs(call.args[-1], protocols)
             if call.args[0] in class_dict:
                 self.assertEqual(call.args[1], class_dict[call.args[0]])
+
+    def test_class_method_alias(self):
+        def method(self):
+            pass
+
+        method = objc.selector(method, isClassMethod=True)
+
+        class_dict = {"classy": method}
+        meta_dict = {}
+
+        rval = self.processor(class_dict, meta_dict, NSObject, [])
+        self.assertValidResult(rval)
+        self.assertNotIn("class_method", class_dict)
+        self.assertNotIn("method", class_dict)
+        self.assertIn("classy", meta_dict)
+        self.assertIn("method", meta_dict)
+        self.assertIsInstance(meta_dict["method"], objc.selector)
+        self.assertIs(meta_dict["method"], meta_dict["classy"])
+        self.assertEqual(len(rval[3]), 1)
+        self.assertIs(rval[3][0], meta_dict["method"])
 
     # XXX: Protocol validation is currently in a different part of the code, first replace the code
     #      in class-builder and then grow the functionality.

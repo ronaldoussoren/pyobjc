@@ -418,26 +418,34 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         tp = info["arguments"][argno + offset].get("type")
 
-        if tp in {b"@", b"^@"}:
+        if tp in {b"@", b"^@", b"n^@", b"N^@", b"o^@"}:
             return
 
         if tp in _idlike_cache:
             return
-        elif b"^" + tp in _idlike_cache:
+        elif tp.startswith(b"^") and tp[1:] in _idlike_cache:
             return
-        elif b"o^" + tp in _idlike_cache:
+        elif tp.startswith(b"o^") and tp[2:] in _idlike_cache:
             return
-        elif b"n^" + tp in _idlike_cache:
+        elif tp.startswith(b"n^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"N^") and tp[2:] in _idlike_cache:
             return
 
         # Assume that tests are supposed to pass,
         # our cache may be out of date
         tmp = set(objc._idSignatures())
         _idlike_cache = set(tmp)
-        _idlike_cache.update({b"o^" + x for x in tmp})
-        _idlike_cache.update({b"n^" + x for x in tmp})
 
         if tp in _idlike_cache:
+            return
+        elif tp.startswith(b"^") and tp[1:] in _idlike_cache:
+            return
+        elif tp.startswith(b"o^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"n^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"N^") and tp[2:] in _idlike_cache:
             return
 
         self.fail(
@@ -450,20 +458,34 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         tp = info["retval"].get("type")
 
-        if tp in {b"@", b"^@"}:
+        if tp in {b"@", b"^@", b"n^@", b"N^@", b"o^@"}:
             return
 
         if tp in _idlike_cache:
+            return
+        elif tp.startswith(b"^") and tp[1:] in _idlike_cache:
+            return
+        elif tp.startswith(b"o^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"n^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"N^") and tp[2:] in _idlike_cache:
             return
 
         # Assume that tests are supposed to pass,
         # our cache may be out of date
         tmp = set(objc._idSignatures())
         _idlike_cache = set(tmp)
-        _idlike_cache.update({b"o^" + x for x in tmp})
-        _idlike_cache.update({b"n^" + x for x in tmp})
 
         if tp in _idlike_cache:
+            return
+        elif tp.startswith(b"^") and tp[1:] in _idlike_cache:
+            return
+        elif tp.startswith(b"o^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"n^") and tp[2:] in _idlike_cache:
+            return
+        elif tp.startswith(b"N^") and tp[2:] in _idlike_cache:
             return
 
         self.fail(message or f"result of {method!r} is not IDLike ({tp!r})")
