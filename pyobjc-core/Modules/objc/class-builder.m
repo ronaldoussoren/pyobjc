@@ -567,8 +567,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 if (v == NULL) {        // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE
                 }
-                int r = PyDict_SetItem(hiddenSelectors, v,
-                                       (PyObject*)PyObjCSelector_GetMetadata(value));
+                int r = PyDict_SetItem(hiddenSelectors, v, value);
                 Py_DECREF(v);
                 if (r == -1) {          // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE
@@ -598,8 +597,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 if (v == NULL) {        // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE
                 }
-                int r = PyDict_SetItem(hiddenClassSelectors, v,
-                                       (PyObject*)PyObjCSelector_GetMetadata(value));
+                int r = PyDict_SetItem(hiddenClassSelectors, v, value);
                 Py_DECREF(v);
                 if (r == -1) {          // LCOV_BR_EXCL_LINE
                     goto error_cleanup; // LCOV_EXCL_LINE

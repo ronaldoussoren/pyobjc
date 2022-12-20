@@ -3398,8 +3398,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 
         if (PyObjCSelector_IsHidden(aMethod)) {
             r = PyObjCClass_SetHidden(classObject, objcMethod->name,
-                                      PyObjCSelector_IsClassMethod(aMethod),
-                                      (PyObject*)PyObjCSelector_GetMetadata(aMethod));
+                                      PyObjCSelector_IsClassMethod(aMethod), aMethod);
             if (r == -1) {
                 goto cleanup_and_return_error;
             }
@@ -3417,6 +3416,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
                 r = PyDict_SetItem(extraDict, name, aMethod);
             }
         }
+
+        ((PyObjCSelector*)aMethod)->sel_class = targetClass;
 
         Py_DECREF(name);
         name = NULL;

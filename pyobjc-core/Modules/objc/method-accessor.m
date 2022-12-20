@@ -96,14 +96,56 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         objc_object = (id)object_getClass(objc_object);
     }
 
-    /* XXX: This needs documentation */
+    /* Look for a hidden method, in practice the value (if present)
+     * will be:
+     * - None: Method is marked as hidden, no more information
+     * - objc.selector: Hidden selector, implemented in Python
+     * - method signature: Overridden method signature for a hidden method
+     */
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
     if (meta == NULL && PyErr_Occurred()) {
         return NULL;
     }
 
     if (meta && meta != Py_None) {
-        flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
+        if (PyObjCSelector_Check(meta)) {
+            /*
+             * KVO complicates things, it will insert an intermediate
+             * class that overrides KVO-related methods and those need
+             * to be called to ensure KVO actually works.
+             *
+             * Because of this "meta" can only be used as-is when
+             * it resolves to the same IMP as accessing the IMP through
+             * the instance. If it doesn't we can only use the signature;
+             *
+             * XXX: The code is not 100% reliable and could be problematic
+             *      when ObjC code replaces the method IMP. Fixing that
+             *      is possible, but requires fairly invasive changes.
+             */
+            if (class_method) {
+                /* AFAIK class methods cannot be used for KVO, ignore the
+                 * issue here.
+                 */
+                Py_INCREF(meta);
+                return meta;
+            } else {
+                IMP sel_imp =
+                    [PyObjCSelector_GetClass(meta) instanceMethodForSelector:sel];
+                IMP cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
+                if (sel_imp == cur_imp) {
+                    Py_INCREF(meta);
+                    return meta;
+                } else {
+                    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(meta);
+                    if (methinfo == NULL) {
+                        return NULL;
+                    }
+                    flattened = (char*)methinfo->signature;
+                }
+            }
+        } else if (PyObjCMethodSignature_Check(meta)) {
+            flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
+        }
     }
 
     if (flattened == NULL) {
@@ -431,14 +473,19 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
 
     if (!self->class_method && PyObjCClass_Check(self->base)) {
         /* Unbound instance method */
-        ((PyObjCSelector*)result)->sel_self = NULL;
+        PyObjC_Assert(((PyObjCSelector*)result)->sel_self == NULL, NULL);
+        return result;
     } else {
-        /* Bound instance or class method */
-        ((PyObjCSelector*)result)->sel_self = self->base;
-        Py_INCREF(self->base);
+        /* Bound instance or class method
+         *
+         * This needs to create a new selector because the value
+         * might be a "hidden" selector.
+         */
+        PyObject* tmp =
+            PyObject_CallMethod(result, "__get__", "OO", self->base, Py_TYPE(self->base));
+        Py_DECREF(result);
+        return tmp;
     }
-
-    return result;
 }
 
 static PyObject* _Nullable obj_repr(PyObject* _self)

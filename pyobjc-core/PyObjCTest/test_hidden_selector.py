@@ -42,7 +42,7 @@ class OCTestHidden(objc.lookUpClass("NSObject")):
     somebody.isHidden = True
 
     def boolMethod(self):
-        return 1
+        return True
 
     boolMethod = objc.selector(boolMethod, signature=objc._C_NSBOOL + b"@:")
     boolMethod.isHidden = True
@@ -61,7 +61,7 @@ class OCTestSubHidden(OCTestHidden):
         return "class"
 
     def boolMethod(self):
-        return 0
+        return False
 
 
 class TestHiddenSelector(TestCase):
@@ -91,7 +91,11 @@ class TestHiddenSelector(TestCase):
             AttributeError, "'OCTestHidden' object has no attribute 'boolMethod'"
         ):
             o.boolMethod()
-        v = o.pyobjc_instanceMethods.boolMethod()
+        m = o.pyobjc_instanceMethods.boolMethod
+        self.assertIsInstance(m, objc.selector)
+        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertResultIsBOOL(m)
+        v = m()
         self.assertIs(v, True)
 
     def testHiddenCanBeIntrospected(self):
@@ -157,7 +161,10 @@ class TestHiddenSelector(TestCase):
 
         self.assertIn(b"addedmethod", OCTestHidden.pyobjc_hiddenSelectors(False))
 
-        v = o.pyobjc_instanceMethods.addedmethod()
+        m = o.pyobjc_instanceMethods.addedmethod
+        self.assertIsInstance(m, objc.selector)
+        self.assertNotIsInstance(m, objc.native_selector)
+        v = m()
         self.assertEqual(v, "NEW")
 
         # Class method
@@ -232,7 +239,11 @@ class TestHiddenSelector(TestCase):
             AttributeError, "'OCTestSubHidden' object has no attribute 'boolMethod'"
         ):
             o.boolMethod()
-        v = o.pyobjc_instanceMethods.boolMethod()
+        m = o.pyobjc_instanceMethods.boolMethod
+        self.assertIsInstance(m, objc.selector)
+        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertResultIsBOOL(m)
+        v = m()
         self.assertIs(v, False)
 
         # Class

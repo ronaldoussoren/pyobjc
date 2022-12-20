@@ -208,7 +208,7 @@ not normal user code.
 
 * Fix longstanding bug in class construction::
 
-     class MyClass:
+     class MyClass(NSObject):
         @objc.objc_method(selector="foobar")
         def method(self):
            pass
@@ -228,6 +228,27 @@ not normal user code.
 
 * Tweak pyobjc_setup.py to re-enable the error message when trying to install
   framework bindings on systems other than macOS.
+
+* "Hidden" selectors implemented in Python can now be introspected though ``pyobjc_instanceMethods`` and
+  ``pyobjc_classMethod``. In previous versions the following assertion would fail::
+
+       class MyClass(NSObject):
+           def hidden(self):
+               ...
+           hidden = objc.selector(hidden, isHidden=True)
+
+
+       assert isinstance(MyClass.pyobjc_instanceMethods.hidden)
+
+  A side effect of this is that calling hidden methods implemented in Python from
+  Python now uses the "python to python" code path and won't translate argument and
+  return values from Python to Objective-C and back again.
+
+  Also note that (as usual) Key-Value Observing (KVO) complicates the picture, if
+  the hidden method is a property accessor (for KVO) and the object is observed accessing
+  the method will result in a "native" selector, not the original one due to the
+  way KVO is implemented in the system.
+
 
 Version 9.0.1
 -------------
