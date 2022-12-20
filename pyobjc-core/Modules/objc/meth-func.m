@@ -22,7 +22,9 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 {
     if (PyObjC_is_pyfunction(value)) {
         PyObject* code = PyObject_GetAttrString(value, "__code__");
-        if (code != NULL && !PyCode_Check(code)) {
+        if (code == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
+        } else if (!PyCode_Check(code)) {
             PyErr_Format(PyExc_ValueError,
                          "%R does not have a valid '__code__' attribute", value);
             Py_DECREF(code);
@@ -32,13 +34,15 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 
     } else if (PyObjC_is_pymethod(value)) {
         PyObject* func = PyObject_GetAttrString(value, "__func__");
-        if (func == NULL) {
-            return NULL;
+        if (func == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
         }
         if (PyObjC_is_pyfunction(func)) {
             PyObject* code = PyObject_GetAttrString(func, "__code__");
             Py_DECREF(func);
-            if (code != NULL && !PyCode_Check(code)) {
+            if (code == NULL) { // LCOV_BR_EXCL_LINE
+                return NULL;    // LCOV_EXCL_LINE
+            } else if (!PyCode_Check(code)) {
                 PyErr_Format(PyExc_ValueError,
                              "%R does not have a valid '__code__' attribute", value);
                 Py_DECREF(code);
@@ -64,26 +68,35 @@ PyObjC_returns_value(PyObject* value)
     }
 
     PyCodeObject* func_code = PyObjC_get_code(value);
-    if (func_code == NULL) {
+    if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return true;
+        // LCOV_EXCL_STOP
     }
 #if PY_VERSION_HEX >= 0x030b0000
     PyObject* co = PyCode_GetCode(func_code);
-    if (co == NULL) {
+    if (co == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         Py_DECREF(func_code);
         return true;
+        // LCOV_EXCL_STOP
     }
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             co, &buf, PyBUF_CONTIG_RO)
         == -1) {
         /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
+         *
+         * Note that the CPython documentation promises that the "co" object
+         * will be a bytes object.
          */
+        // LCOV_EXCL_START
         Py_DECREF(func_code);
         Py_DECREF(co);
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /* The buffer owns a strong reference */
@@ -96,8 +109,10 @@ PyObjC_returns_value(PyObject* value)
         /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
          */
-        Py_DECREF(func_code); // LCOV_EXCL_LINE
-        return NULL;          // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(func_code);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 #endif
 
@@ -157,18 +172,20 @@ PyObjC_num_defaults(PyObject* value)
     PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
 
     PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
-    if (defaults == NULL) {
-        return -1;
+    if (defaults == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;          // LCOV_EXCL_LINE
     }
     if (PyTuple_Check(defaults)) {
         Py_ssize_t num = PyTuple_Size(defaults);
         Py_DECREF(defaults);
         return num;
-    } else if (defaults != Py_None) {
+    } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(defaults);
         PyErr_Format(PyExc_ValueError, "%R has an invalid '__defaults__' attribute",
                      value);
         return -1;
+        // LCOV_EXCL_STOP
     } else {
         Py_DECREF(defaults);
         return 0;

@@ -234,10 +234,8 @@ def transformAttribute(name, value, class_object, protocols):
     # the NSObject protocol (amongst others)
     if isinstance(name, str) and helper_signature is NO_VALUE:
         current = getattr(class_object.pyobjc_instanceMethods, name, NO_VALUE)
-        # current = lookup_mro_dict(class_object, name)
         if current is NO_VALUE:
             current = getattr(class_object.pyobjc_classMethods, name, NO_VALUE)
-            # current = lookup_mro_dict(type(class_object), name)
         if isinstance(current, objc.selector):
             isclass = current.isClassMethod
             # ishidden = current.isHidden
@@ -444,21 +442,6 @@ def transformAttribute(name, value, class_object, protocols):
     )
 
 
-def lookup_mro_dict(class_object, name):
-    # XXX: I'd like to use class_object.mro() here,
-    #      but that won't work for the meta class...
-    #      Luckily Objective-C classes only support
-    #      single inheritance.
-    # XXX: Test current behaviour w.r.t. multiple inheritance!
-    cls = class_object
-    while cls is not object:
-        value = cls.__dict__.get(name, NO_VALUE)
-        if value is not NO_VALUE:
-            return value
-        cls = cls.__bases__[0]
-    return NO_VALUE
-
-
 def is_generator_or_async(value):
     """
     Returns true for generators and async functions
@@ -466,8 +449,6 @@ def is_generator_or_async(value):
     # This guard is there to deal with some edge-case testing the
     # PyObjC test suite, should never trigger in production code.
     if not isinstance(value, types.FunctionType):
-        return False
-    if not isinstance(value.__code__, types.CodeType):
         return False
 
     if inspect.iscoroutine(value) or inspect.iscoroutinefunction(value):
@@ -487,9 +468,6 @@ def returns_value(func):
     # latter is a false negative, but cannot be avoided with
     # bytecode inspection.
     prev = None
-    if not isinstance(func.__code__, types.CodeType):
-        # Invalid code object, assume it returns a value
-        return True
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":
             assert prev is not None

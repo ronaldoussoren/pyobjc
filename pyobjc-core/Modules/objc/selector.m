@@ -1338,7 +1338,7 @@ pysel_repr(PyObject* _self)
         if (sel->base.sel_class) {
             rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p>",
                                         sel_getName(sel->base.sel_selector),
-                                        class_getName(sel->base.sel_class), sel)
+                                        class_getName(sel->base.sel_class), sel);
 
         } else {
             rval = PyUnicode_FromFormat("<unbound selector %s at %p>",

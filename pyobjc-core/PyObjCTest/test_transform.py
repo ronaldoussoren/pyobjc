@@ -7,6 +7,7 @@ import inspect
 import functools
 import sys
 from unittest import mock
+import warnings
 
 from .test_vector_proxy import OC_Vector
 from . import test_protocol  # noqa: F401
@@ -161,6 +162,24 @@ class TestPythonMethod(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Unexpected keyword arguments"):
             _transform.python_method()(lambda self: None, no_arg=42)
+
+    def test_deprecated_callable_attribute(self):
+        def my_method(self):
+            pass
+
+        wrapped = _transform.python_method(my_method)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning,
+                "python_method.callable is deprecated, use __wrapped__ instead",
+            ):
+                wrapped.callable
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=DeprecationWarning)
+            self.assertIs(wrapped.callable, my_method)
 
     def test_wrapped_classmethod(self):
         @_transform.python_method
@@ -1199,7 +1218,7 @@ class TestTransformer(TestCase):
             self.assertSignaturesEqual(out.signature, b"@@:")
             self.assertFalse(out.isHidden)
 
-    def test_copyMethod(self):
+    def test_copy_method(self):
         def copyWithZone_(self, zone):
             return self
 
@@ -1218,6 +1237,30 @@ class TestTransformer(TestCase):
             self.assertEqual(out.selector, b"mutableCopyWithZone:")
             self.assertSignaturesEqual(out.signature, b"@@:^{_NSZone=}")
             self.assertFalse(out.isHidden)
+
+    def test_name_in_dict_is_not_string(self):
+        with self.subTest("with explicit selector"):
+
+            @_transform.objc_method(selector=b"foo")
+            def doit(self):
+                return 1
+
+            out = self.transformer(42, doit, NSObject, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertFalse(out.isClassMethod)
+            self.assertEqual(out.selector, b"foo")
+            self.assertSignaturesEqual(out.signature, b"@@:")
+            self.assertFalse(out.isHidden)
+
+        with self.subTest("without explicit selector"):
+
+            def doit(self):
+                return 1
+
+            with self.assertRaisesRegex(
+                TypeError, "method name is of type int, not a string"
+            ):
+                self.transformer(42, doit, NSObject, [])
 
 
 class OC_TransformWithoutDict(NSObject):

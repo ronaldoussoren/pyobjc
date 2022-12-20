@@ -162,6 +162,14 @@ num_struct_fields(const char* orig_argtype)
     return res;
 }
 
+/* Capsule cleanup helper functions.
+ *
+ * These functions will never actually be
+ * called because the capsules are stored in
+ * dictionaries that will never overwrite an
+ * existing key, or be cleared.
+ */
+// LCOV_EXCL_START
 static void
 free_type(void* obj)
 {
@@ -174,6 +182,7 @@ cleanup_ffitype_capsule(PyObject* ptr)
 {
     free_type(PyCapsule_GetPointer(ptr, "objc.__ffi_type__"));
 }
+// LCOV_EXCL_STOP
 
 static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 {
@@ -232,7 +241,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     while (isdigit(*++argtype))
         ;
     type->elements[0] = PyObjCFFI_Typestr2FFI(argtype);
-    if (type->elements[0] == NULL) {
+    if (type->elements[0] == NULL) { // LCOV_BR_EXCL_LINE
         /* Unsupported element type */
         // LCOV_EXCL_START
         PyMem_Free(type);
