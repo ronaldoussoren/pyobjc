@@ -240,6 +240,10 @@ def nsdata__radd__(self, other):
     return other + bytes(self)
 
 
+def nsdata_isascii(self, *args, **kwds):
+    return bytes(self.bytes()).isascii(*args, **kwds)
+
+
 addConvenienceForClass(
     "NSData",
     (
@@ -264,6 +268,7 @@ addConvenienceForClass(
         ("index", nsdata_index),
         ("isalnum", nsdata_isalnum),
         ("isalpha", nsdata_isalpha),
+        ("isascii", nsdata_isascii),
         ("isdigit", nsdata_isdigit),
         ("islower", nsdata_islower),
         ("isspace", nsdata_isspace),
@@ -294,16 +299,7 @@ addConvenienceForClass(
     ),
 )
 
-
-if sys.version_info[:2] >= (3, 7):
-
-    def nsdata_isascii(self, *args, **kwds):
-        return bytes(self.bytes()).isascii(*args, **kwds)
-
-    addConvenienceForClass("NSData", (("isascii", nsdata_isascii),))
-
-
-if sys.version_info[:2] >= (3, 9):
+if sys.version_info[:2] >= (3, 9):  # pragma: no branch
 
     def nsdata_removeprefix(self, *args, **kwds):
         return bytes(self.bytes()).removeprefix(*args, **kwds)

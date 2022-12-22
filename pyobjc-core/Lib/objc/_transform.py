@@ -264,8 +264,7 @@ def transformAttribute(name, value, class_object, protocols):
 
         if value.selector is not None:
             selname = value.selector
-            if isinstance(class_object, objc.objc_class):
-                registered = objc._registeredMetadataForSelector(class_object, selname)
+            registered = objc._registeredMetadataForSelector(class_object, selname)
 
         if value.signature is not None:
             signature = value.signature
@@ -430,7 +429,7 @@ def transformAttribute(name, value, class_object, protocols):
     # XXX: This is needed because SomeClass.pyobjc_instanceMethods.hiddenSelector.isHidden
     #      is false :-(
     ishidden = False
-    for cls in class_object.mro():
+    for cls in class_object.mro():  # pragma: no branch
         if cls is object:
             break
         if selname in cls.pyobjc_hiddenSelectors(isclass):
@@ -450,6 +449,8 @@ def is_generator_or_async(value):
     # PyObjC test suite, should never trigger in production code.
     if not isinstance(value, types.FunctionType):
         return False
+    if not isinstance(value.__code__, types.CodeType):
+        return False
 
     if inspect.iscoroutine(value) or inspect.iscoroutinefunction(value):
         return True
@@ -467,6 +468,9 @@ def returns_value(func):
     # returns are of the form "return" or "return None". The
     # latter is a false negative, but cannot be avoided with
     # bytecode inspection.
+    if not isinstance(func.__code__, types.CodeType):
+        return True
+
     prev = None
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":

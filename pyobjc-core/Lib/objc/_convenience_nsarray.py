@@ -104,8 +104,8 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
         if ln == 0:
             raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
-        if ln > sys.maxsize:  # pragma: no cover
-            ln = sys.maxsize
+        if ln > sys.maxsize:  # pragma: no branch
+            ln = sys.maxsize  # pragma: no cover
 
         res = self.indexOfObject_inRange_(item, (start, ln))
         if res == NSNotFound:
@@ -360,7 +360,7 @@ def nsarray__len__(self):
     return self.count()
 
 
-# NOTE: 'no cover' because call of the system array
+# NOTE: 'no cover' because all of the system array
 # classes are subclasses of NSMutableArray.
 def nsarray__copy__(self):  # pragma: no cover
     return self.copy()

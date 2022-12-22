@@ -186,6 +186,60 @@ class TestSIMDVectorTypes(TestCase):
             b"".join([objc._C_VECTOR_B, b"%d" % (nelem,), typestr, objc._C_VECTOR_E]),
         )
 
+        with self.assertRaises(TypeError):
+            a["a"] = 3
+
+        with self.assertRaises(TypeError):
+            a + "a"
+
+        with self.assertRaises(TypeError):
+            "a" + a
+
+        with self.assertRaises(TypeError):
+            a - "a"
+
+        with self.assertRaises(TypeError):
+            "a" - a
+
+        with self.assertRaises(TypeError):
+            a * "a"
+
+        with self.assertRaises(TypeError):
+            "a" * a
+
+        with self.assertRaises(TypeError):
+            a / "a"
+
+        with self.assertRaises(TypeError):
+            "a" / a
+
+        with self.assertRaises(TypeError):
+            "a" < a  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            a < "a"  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            "a" <= a  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            a <= "a"  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            "a" > a  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            a > "a"  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            "a" >= a  # noqa: B015
+
+        with self.assertRaises(TypeError):
+            a >= "a"  # noqa: B015
+
+        self.assertFalse(a == "a")
+        self.assertTrue(a != "a")
+
     def test_vector_uchar16(self):
         a = simd.vector_uchar16()
         self.assertEqual(len(a), 16)
@@ -244,11 +298,78 @@ class TestSIMDVectorTypes(TestCase):
     def test_vector_double2(self):
         self.assert_vector_type(simd.vector_double2, float, 2, True, objc._C_DBL)
 
+        v = simd.vector_double2(1.0, 2.0)
+        v.xy = simd.vector_double2(2.5, 3.5)
+        self.assertEqual(v, simd.vector_double2(2.5, 3.5))
+
+        with self.assertRaises(TypeError):
+            v.xy = 42
+
     def test_vector_double3(self):
         self.assert_vector_type(simd.vector_double3, float, 3, True, objc._C_DBL)
 
+        v = simd.vector_double3(1.0, 2.0, 3.0)
+        v.xyz = simd.vector_double3(2.5, 3.5, 4.5)
+        self.assertEqual(v, simd.vector_double3(2.5, 3.5, 4.5))
+
+        with self.assertRaises(TypeError):
+            v.xyz = 42
+
     def test_vector_double4(self):
         self.assert_vector_type(simd.vector_double4, float, 4, True, objc._C_DBL)
+
+        v = simd.vector_double4(4.0, simd.vector_double2(6.0, 8.0), 9.0)
+        self.assertIsInstance(v, simd.vector_double4)
+        self.assertEqual(v, simd.vector_double4(4.0, 6.0, 8.0, 9.0))
+
+        v = simd.vector_double4(simd.vector_double3(4.0, 6.0, 8.0), 9.0)
+        self.assertIsInstance(v, simd.vector_double4)
+        self.assertEqual(v, simd.vector_double4(4.0, 6.0, 8.0, 9.0))
+
+        self.assertEqual(repr(v), "objc.simd.vector_double4(4.0, 6.0, 8.0, 9.0)")
+        self.assertEqual(v._objc_literal(), "(vector_double4){4.0, 6.0, 8.0, 9.0}")
+
+        v.x += 0.5
+        v.y += 0.6
+        v.z += 0.7
+        v.w += 0.8
+        self.assertEqual(v, simd.vector_double4(4.5, 6.6, 8.7, 9.8))
+
+        v.xy = simd.vector_double2(1.0, 2.0)
+        self.assertEqual(v, simd.vector_double4(1.0, 2.0, 8.7, 9.8))
+
+        with self.assertRaises(TypeError):
+            v.xy = 42
+
+        v.yz = simd.vector_double2(8.0, 9.0)
+        self.assertEqual(v, simd.vector_double4(1.0, 8.0, 9.0, 9.8))
+
+        with self.assertRaises(TypeError):
+            v.yz = 42
+
+        v.zw = simd.vector_double2(10.0, 11.0)
+        self.assertEqual(v, simd.vector_double4(1.0, 8.0, 10.0, 11.0))
+
+        with self.assertRaises(TypeError):
+            v.zw = 42
+
+        v.xyz = simd.vector_double3(-1.0, -2.0, -3.0)
+        self.assertEqual(v, simd.vector_double4(-1.0, -2.0, -3.0, 11.0))
+
+        with self.assertRaises(TypeError):
+            v.xyz = 42
+
+        v.yzw = simd.vector_double3(-1.5, -2.5, -3.5)
+        self.assertEqual(v, simd.vector_double4(-1.0, -1.5, -2.5, -3.5))
+
+        with self.assertRaises(TypeError):
+            v.yzw = 42
+
+        v.xyzw = simd.vector_double4(-1.5, -2.5, -3.5, -5.5)
+        self.assertEqual(v, simd.vector_double4(-1.5, -2.5, -3.5, -5.5))
+
+        with self.assertRaises(TypeError):
+            v.xyzw = 42
 
 
 class TestSIMDMatrixTypes(TestCase):

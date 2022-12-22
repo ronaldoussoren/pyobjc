@@ -40,6 +40,7 @@ class TestClass(NSObject):
     doubleVar = objc.ivar("doubleVar", objc._C_DBL)
     outlet = objc.ivar("outlet", isOutlet=True)
     unnamed = objc.ivar()
+    shortVar = objc.ivar.short("shortVar2")
 
 
 class TestInstanceVariables(TestCase):
@@ -161,6 +162,16 @@ class TestInstanceVariables(TestCase):
 
         self.object.intVar = 42
         self.assertEqual(self.object.intVar, 42)
+
+    def testShort(self):
+        self.assertEqual(self.object.shortVar, 0)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 1"):
+            self.object.intVar = "h"
+
+        self.object.shortVar = 42
+        self.assertEqual(self.object.shortVar, 42)
+        self.assertEqual(TestClass.shortVar.__name__, "shortVar2")
 
     def testDouble(self):
         # Check that we can set and query attributes of type 'double'

@@ -186,6 +186,26 @@ class TestLazyImport(TestCase):
             "NSMachPortDelegateMethods", mod._ObjCLazyModule__informal_protocols
         )
 
+    def test_nameless_enum_label(self):
+        # XXX: This tests a workaround for a bug in libdispatch, to
+        #      be removed later.
+        initial_dict = {
+            "__doc__": "rootless test module",
+            "__spec__": object(),
+            "__loader__": object(),
+        }
+        metadict = {
+            "enums": "$$NSAWTEventType@16$$@4@",
+            "constants": "$$",
+        }
+
+        mod = objc.ObjCLazyModule(
+            "RootLess", None, None, metadict, None, initial_dict, ()
+        )
+
+        self.assertIn("NSAWTEventType", mod.__all__)
+        self.assertNotIn("", mod.__all__)
+
     def test_without_framework(self):
         initial_dict = {
             "__doc__": "rootless test module",
@@ -228,6 +248,62 @@ class TestLazyImport(TestCase):
             AttributeError, "ITLibMediaEntityPropertyPersistentID"
         ):
             mod.ITLibMediaEntityPropertyPersistentID
+
+    def test_function_wont_override_existing(self):
+        metadict = {
+            "functions": {
+                "CFAllocatorGetTypeID": (objc._C_NSUInteger, ""),
+                "CFArrayGetTypeID": (objc._C_NSUInteger, ""),
+            },
+        }
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/CoreFoundation.framework",
+            metadict,
+            None,
+            {"CFAllocatorGetTypeID": 42},
+            (),
+        )
+
+        self.assertEqual(mod.CFAllocatorGetTypeID, 42)
+        self.assertIn("CFAllocatorGetTypeID", mod.__all__)
+        self.assertIn("CFArrayGetTypeID", mod.__all__)
+        self.assertEqual(mod.CFAllocatorGetTypeID, 42)
+
+    def test_inline_function_wont_override_existing(self):
+        metadict = {
+            "functions": {
+                "makeArrayWithFormat_": (
+                    b"@@",
+                    "",
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
+                ),
+                "makeArrayWithCFormat_": (
+                    b"@*",
+                    "",
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
+                ),
+            }
+        }
+
+        inline_list = metadatafunction.function_list
+        mod = objc.ObjCLazyModule(
+            "MyFramework",
+            None,
+            None,
+            metadict,
+            inline_list,
+            {
+                "makeArrayWithFormat_": 42,
+            },
+            (),
+        )
+
+        self.assertEqual(mod.makeArrayWithFormat_, 42)
+        self.assertIn("makeArrayWithFormat_", mod.__all__)
+        self.assertIn("makeArrayWithCFormat_", mod.__all__)
+        self.assertEqual(mod.makeArrayWithFormat_, 42)
 
     def test_with_parents(self):
         mod = objc.ObjCLazyModule("RootLess", None, None, None, None, None, (sys, os))
@@ -304,6 +380,7 @@ class TestLazyImport(TestCase):
                 "min": "LONG_MIN",
                 "dblmx": "DBL_MAX",
                 "dblmn": "DBL_MIN",
+                "dbleps": "DBL_EPSILON",
                 "fltmx": "FLT_MAX",
                 "fltmn": "FLT_MIN",
                 "null": "objc.NULL",
@@ -329,6 +406,7 @@ class TestLazyImport(TestCase):
         self.assertEqual(mod.min, -sys.maxsize - 1)
         self.assertEqual(mod.dblmx, sys.float_info.max)
         self.assertEqual(mod.dblmn, sys.float_info.min)
+        self.assertEqual(mod.dbleps, sys.float_info.epsilon)
         self.assertEqual(mod.fltmx, objc._FLT_MAX)
         self.assertEqual(mod.fltmn, objc._FLT_MIN)
         self.assertEqual(mod.null, objc.NULL)
@@ -586,7 +664,7 @@ class TestLazyImport(TestCase):
 
         self.assertEqual(len(w), 0)
 
-    def test_deprecatins(self):
+    def test_deprecations(self):
         metadict = {
             "constants": "$NSWorkspaceMoveOperation$NSWorkspaceCopyOperation@@$",
             "constants_dict": {

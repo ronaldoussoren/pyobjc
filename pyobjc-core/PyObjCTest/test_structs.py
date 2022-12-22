@@ -937,7 +937,7 @@ class TestStructs(TestCase):
 
 
 class TestStructAlias(TestCase):
-    def test_create_struct_alias(self):
+    def test_register_struct_alias(self):
         OtherType = objc.registerStructAlias(b"{_OtherType=ff}", GlobalType)
         self.assertIs(OtherType, GlobalType)
 
@@ -963,6 +963,14 @@ class TestStructAlias(TestCase):
 
         with self.assertRaisesRegex(ValueError, "Bad type string"):
             objc.registerStructAlias(b"{foo=ff", GlobalType)
+
+    def test_create_struct_alias(self):
+        self.assertNotHasAttr(objc.ivar, "XxxOtherType")
+        SomeOtherType = objc.createStructAlias(
+            "XxxOtherType", b"{_SomeOtherType=ff}", GlobalType
+        )
+        self.assertIs(SomeOtherType, GlobalType)
+        self.assertHasAttr(objc.ivar, "XxxOtherType")
 
     def test_alias_for_different_shape(self):
         # XXX: See sources, the test if for the current behaviour, but
@@ -992,3 +1000,8 @@ class TestStructAlias(TestCase):
         self.assertFalse(flag)
         gc.collect()
         self.assertTrue(flag)
+
+
+class TestInternals(TestCase):
+    def test_functions_overridden(self):
+        self.assertIsNot(objc.registerStructAlias, objc._objc.registerStructAlias)

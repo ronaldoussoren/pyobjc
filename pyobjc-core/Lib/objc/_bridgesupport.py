@@ -5,7 +5,6 @@ This functionality is deprecated and will be removed in PyObjC 10.
 """
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
-import functools
 import os
 import re
 import sys
@@ -108,8 +107,8 @@ class _BridgeSupportParser:
         # As of macOS 10.13 metadata files may contain
         # typestring that end with property specific data;
         # first remove that junk.
-        if b"," in typestr:
-            typestr = typestr.split(b",", 1)[0]
+        if b"," in typestr:  # pragma: no branch
+            typestr = typestr.split(b",", 1)[0]  # pragma: no cover
 
         result = []
         for item in objc.splitSignature(typestr):
@@ -127,24 +126,24 @@ class _BridgeSupportParser:
                     objc._C_STRUCT_B + _as_bytes(item[1:-1]) + objc._C_STRUCT_E
                 )
                 result.append(start)
-                if name is not None:
+                if name is not None:  # pragma: no branch
                     result.append(_as_bytes(name))
                     result.append(b"=")
                 for nm, tp in fields:
-                    if nm is not None:
-                        result.append(b'"')
-                        result.append(_as_bytes(nm))
-                        result.append(b'"')
+                    if nm is not None:  # pragma: no branch
+                        result.append(b'"')  # pragma: no cover
+                        result.append(_as_bytes(nm))  # pragma: no cover
+                        result.append(b'"')  # pragma: no cover
 
                     result.append(self.typestr2typestr(tp))
                 result.append(stop)
 
-            elif item.startswith(objc._C_ARY_B):
-                m = re.match(rb"^.(\d*)(.*).$", item)
-                result.append(objc._C_ARY_B)
-                result.append(m.group(1))
-                result.append(self.typestr2typestr(m.group(2)))
-                result.append(objc._C_ARY_E)
+            elif item.startswith(objc._C_ARY_B):  # pragma: no branch
+                m = re.match(rb"^.(\d*)(.*).$", item)  # pragma: no cover
+                result.append(objc._C_ARY_B)  # pragma: no cover
+                result.append(m.group(1))  # pragma: no cover
+                result.append(self.typestr2typestr(m.group(2)))  # pragma: no cover
+                result.append(objc._C_ARY_E)  # pragma: no cover
 
             else:
                 result.append(item)
@@ -316,17 +315,17 @@ class _BridgeSupportParser:
 
             def has_embedded_function(typestr):
                 nm, fields = objc.splitStructSignature(_as_bytes(typestr))
-                for _nm, tp in fields:
+                for _nm, tp in fields:  # pragma: no branch
                     if tp == b"?":
                         return True
-                    elif tp == b"^?":
-                        return True
+                    elif tp == b"^?":  # pragma: no branch
+                        return True  # pragma: no cover
                     elif tp.startswith(objc._C_STRUCT_B):
                         return has_embedded_function(tp)
 
-                return False
+                return False  # pragma: no cover
 
-            if has_embedded_function(typestr):
+            if has_embedded_function(typestr):  # pragma: no branch
                 return
 
         magic = self.attribute_bool(node, "magic_cookie", None, False)
@@ -809,68 +808,3 @@ def initFrameworkWrapper(
             return bundle
 
     return bundle
-
-
-def _structConvenience(structname, structencoding):
-    def makevar(cls, name=None):
-        if name is None:
-            return objc.ivar(type=structencoding)
-        else:
-            return objc.ivar(name=name, type=structencoding)
-
-    makevar.__name__ = structname
-    makevar.__doc__ = f"Create *ivar* for type encoding {structencoding!r}"
-    if hasattr(objc.ivar, "__qualname__"):  # pragma: no branch
-        makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
-
-    objc.ivar._add_attribute(sys.intern(structname), classmethod(makevar))
-
-
-# Fake it for basic C types
-_structConvenience("bool", objc._C_BOOL)
-_structConvenience("char", objc._C_CHR)
-_structConvenience("int", objc._C_INT)
-_structConvenience("short", objc._C_SHT)
-_structConvenience("long", objc._C_LNG)
-_structConvenience("long_long", objc._C_LNG_LNG)
-_structConvenience("unsigned_char", objc._C_UCHR)
-_structConvenience("unsigned_int", objc._C_UINT)
-_structConvenience("unsigned_short", objc._C_USHT)
-_structConvenience("unsigned_long", objc._C_ULNG)
-_structConvenience("unsigned_long_long", objc._C_ULNG_LNG)
-_structConvenience("float", objc._C_FLT)
-_structConvenience("double", objc._C_DBL)
-_structConvenience("BOOL", objc._C_NSBOOL)
-_structConvenience("UniChar", objc._C_UNICHAR)
-_structConvenience("char_text", objc._C_CHAR_AS_TEXT)
-_structConvenience("char_int", objc._C_CHAR_AS_INT)
-
-_orig_createStructType = objc.createStructType
-
-
-@functools.wraps(objc.createStructType)
-def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
-    result = _orig_createStructType(name, typestr, fieldnames, doc, pack)
-    _structConvenience(name, result.__typestr__)
-    return result
-
-
-objc.createStructType = createStructType
-
-
-_orig_registerStructAlias = objc.registerStructAlias
-
-
-@functools.wraps(objc.registerStructAlias)
-def registerStructAlias(typestr, structType):
-    return _orig_registerStructAlias(typestr, structType)
-
-
-def createStructAlias(name, typestr, structType):
-    result = _orig_registerStructAlias(typestr, structType)
-    _structConvenience(name, result.__typestr__)
-    return result
-
-
-objc.createStructAlias = createStructAlias
-objc.registerStructAlias = registerStructAlias

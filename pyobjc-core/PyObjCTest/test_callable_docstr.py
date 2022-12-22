@@ -123,6 +123,13 @@ class TestDescribeType(TestCase):
         )
         self.assertEqual(mod.describe_type(b"{NamedTestStruct1=ii}"), "NamedTestStruct")
 
+        self.assertEqual(
+            mod.describe_type(
+                objc._C_STRUCT_B + b"Bar.Struct=" + objc._C_ID + objc._C_STRUCT_E
+            ),
+            "Struct",
+        )
+
     def test_union(self):
         self.assertEqual(
             mod.describe_type(objc._C_UNION_B + b"=" + objc._C_ID + objc._C_UNION_E),
@@ -148,6 +155,11 @@ class TestDescribeType(TestCase):
             ),
             "union name",
         )
+
+    def test_vector(self):
+        self.assertEqual(mod.describe_type(b"<2f>"), "simd_float2")
+        self.assertEqual(mod.describe_type(b"<4i>"), "simd_int4")
+        self.assertEqual(mod.describe_type(b"<3S>"), "simd_ushort3")
 
 
 class TestDescribeCallable(TestCase):

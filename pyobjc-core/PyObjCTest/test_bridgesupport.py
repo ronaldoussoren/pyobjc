@@ -522,8 +522,6 @@ class TestBridgeSupportParser(TestCase):
         # (big/little endian,  32- en 64-bit)
         orig_byteorder = sys.byteorder
         orig_maxsize = sys.maxsize
-        orig_createStructType = bridgesupport._orig_createStructType
-        orig_registerStructAlias = bridgesupport._orig_registerStructAlias
 
         try:
             for is32bit in (True, False):
@@ -532,10 +530,6 @@ class TestBridgeSupportParser(TestCase):
                 for endian in ("little", "big"):
                     sys.byteorder = endian
 
-                    # Reload the bridgesupport module because
-                    # it contains conditional definitions
-                    objc.createStructType = orig_createStructType
-                    objc.registerStructAlias = orig_registerStructAlias
                     reload(bridgesupport)
 
                     self.verify_xml_structure()
@@ -545,8 +539,6 @@ class TestBridgeSupportParser(TestCase):
             sys.maxsize = orig_maxsize
 
             # See above
-            objc.createStructType = orig_createStructType
-            objc.registerStructAlias = orig_registerStructAlias
             reload(bridgesupport)
 
     def verify_xml_structure(self):

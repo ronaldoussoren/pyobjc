@@ -2086,6 +2086,14 @@ class TestTestSupport(TestCase):
                 except self.failureException:
                     self.fail("Unexpctedly tested as not id-like")
 
+        for tp in (b"@", b"^@", b"n^@", b"o^@", b"N^@"):
+            with self.subTest(encoding=tp):
+                m = Method(3, {"type": tp}, selector=True)
+                try:
+                    self.assertArgIsIDLike(m, 1)
+                except self.failureException:
+                    self.fail("Unexpctedly tested as not id-like")
+
         for tp in (b"^{__CFPython=}",):
             with self.subTest(encoding=tp, registered=False):
                 try:
@@ -2190,6 +2198,115 @@ class TestTestSupport(TestCase):
             pass
         else:
             self.fail("Unexpectedly tested as id-like")
+
+    def test_validate_callable_metadata(self):
+        class Function:
+            def __init__(self, argno, metadata):
+                self._meta = {
+                    "retval": {"type": b"@"},
+                    "arguments": [
+                        {"type": b"@"},
+                        {"type": b"@"},
+                    ],
+                }
+                if argno is None:
+                    self._meta["retval"] = metadata
+                else:
+                    self._meta["arguments"][argno] = metadata
+
+            def __metadata__(self):
+                return self._meta
+
+        for idx in (None, 1):
+            with self.subTest(f"{idx}: null-delimited _C_CHARPTR"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    r"null-delimited 'char\*', use _C_CHAR_AS_TEXT instead",
+                ):
+                    func = Function(
+                        idx,
+                        {"type": objc._C_CHARPTR, "c_array_delimited_by_null": True},
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: null-delimited _C_PTR + _C_CHR"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    r"null-delimited 'char\*', use _C_CHAR_AS_TEXT instead",
+                ):
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_PTR + objc._C_CHR,
+                            "c_array_delimited_by_null": True,
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: null-delimited _C_IN + _C_PTR + _C_CHR"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    r"null-delimited 'char\*', use _C_CHAR_AS_TEXT instead",
+                ):
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_IN + objc._C_PTR + objc._C_CHR,
+                            "c_array_delimited_by_null": True,
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: size arg out of range (int)"):
+                with self.assertRaisesRegex(
+                    self.failureException, r"c_array_size_in_arg out of range 10 "
+                ):
+                    func = Function(
+                        idx,
+                        {"type": objc._C_PTR + objc._C_INT, "c_array_size_in_arg": 10},
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: size arg out of range (tuple[0])"):
+                with self.assertRaisesRegex(
+                    self.failureException, r"c_array_size_in_arg out of range 10 "
+                ):
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_PTR + objc._C_INT,
+                            "c_array_size_in_arg": (10, 1),
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: size arg out of range (tuple[1])"):
+                with self.assertRaisesRegex(
+                    self.failureException, r"c_array_size_in_arg out of range 10 "
+                ):
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_PTR + objc._C_INT,
+                            "c_array_size_in_arg": (1, 10),
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+
+            for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT):
+                with self.subTest(f"{idx}: by-ref specifier {pfx} on int"):
+                    with self.assertRaisesRegex(
+                        self.failureException, r"byref specifier on non-pointer"
+                    ):
+                        func = Function(idx, {"type": pfx + objc._C_INT})
+                        self._validateCallableMetadata(func)
+
+                with self.subTest(f"{idx}: by-ref specifier {pfx} on empty struct"):
+                    with self.assertRaisesRegex(
+                        self.failureException, r"byref to empty struct"
+                    ):
+                        func = Function(idx, {"type": pfx + b"^{_CFSomeThing=}"})
+                        self._validateCallableMetadata(func)
 
     def test_running(self):
         orig_use = TestSupport._usepool

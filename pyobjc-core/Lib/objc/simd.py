@@ -63,6 +63,7 @@ def make_type(
     limitrange=lambda x: x,
     typestr=None,
 ):
+    assert typestr is not None
     assert count > 0
     if count in (3, 4):
         assert len2_type is not None
@@ -406,8 +407,7 @@ def make_type(
 
         class_dict["xyzw"] = xyzw
 
-    if typestr is not None:
-        class_dict["__typestr__"] = typestr
+    class_dict["__typestr__"] = typestr
 
     result = type(name, (object,), class_dict)
     objc._registerVectorType(result)

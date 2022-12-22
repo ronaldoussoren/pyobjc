@@ -245,15 +245,16 @@ class ObjCLazyModule(ModuleType):
             for nm, tp in re.findall(
                 r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap
             ):
-                if not nm:
-                    continue  # XXX: needed for libdispatch, likely bug
-                if tp and tp.startswith("@="):
-                    specials.append((nm, tp[2:]))
-                else:
-                    varmap.append((nm, b"@" if not tp else tp[1:].encode("ascii")))
+                # An empty name can happen if the 'constants' definition
+                # is effectively happened (e.g. "$$").
+                if nm:
+                    if tp and tp.startswith("@="):
+                        specials.append((nm, tp[2:]))
+                    else:
+                        varmap.append((nm, b"@" if not tp else tp[1:].encode("ascii")))
 
             dct = {}
-            if varmap:  # XXX: See XXX above
+            if varmap:
                 objc.loadBundleVariables(self.__bundle, dct, varmap)
 
             for nm in dct:
