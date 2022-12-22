@@ -2209,15 +2209,72 @@ class TestTestSupport(TestCase):
                         {"type": b"@"},
                     ],
                 }
-                if argno is None:
-                    self._meta["retval"] = metadata
-                else:
-                    self._meta["arguments"][argno] = metadata
+                if metadata is not None:
+                    if argno is None:
+                        self._meta["retval"] = metadata
+                    else:
+                        self._meta["arguments"][argno] = metadata
 
             def __metadata__(self):
                 return self._meta
 
         for idx in (None, 1):
+            with self.subTest(f"{idx}: nothing special"):
+                try:
+                    func = Function(
+                        idx,
+                        None,
+                    )
+                    self._validateCallableMetadata(func)
+                except self.failureException:
+                    self.fail("Unexpected test failure")
+
+            with self.subTest(f"{idx}: _C_CHARPTR"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    r"'char\*'",
+                ):
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_CHARPTR,
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: _C_CHARPTR (skip check)"):
+                try:
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_CHARPTR,
+                        },
+                    )
+                    self._validateCallableMetadata(func, skip_simple_charptr_check=True)
+                except self.failureException:
+                    self.fail("Unexpected test failure")
+
+            with self.subTest(f"{idx}: _C_PTR + _C_CHR"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    r"'char\*'",
+                ):
+                    func = Function(
+                        idx,
+                        {"type": objc._C_PTR + objc._C_CHR},
+                    )
+                    self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: _C_PTR + _C_CHR (skip check)"):
+                try:
+                    func = Function(
+                        idx,
+                        {"type": objc._C_PTR + objc._C_CHR},
+                    )
+                    self._validateCallableMetadata(func, skip_simple_charptr_check=True)
+                except self.failureException:
+                    self.fail("Unexpected test failure")
+
             with self.subTest(f"{idx}: null-delimited _C_CHARPTR"):
                 with self.assertRaisesRegex(
                     self.failureException,
@@ -2257,6 +2314,16 @@ class TestTestSupport(TestCase):
                     )
                     self._validateCallableMetadata(func)
 
+            with self.subTest(f"{idx}: size arg ok (int)"):
+                try:
+                    func = Function(
+                        idx,
+                        {"type": objc._C_PTR + objc._C_INT, "c_array_size_in_arg": 0},
+                    )
+                    self._validateCallableMetadata(func)
+                except self.failureException:
+                    self.fail("Unexpected failure")
+
             with self.subTest(f"{idx}: size arg out of range (int)"):
                 with self.assertRaisesRegex(
                     self.failureException, r"c_array_size_in_arg out of range 10 "
@@ -2266,6 +2333,19 @@ class TestTestSupport(TestCase):
                         {"type": objc._C_PTR + objc._C_INT, "c_array_size_in_arg": 10},
                     )
                     self._validateCallableMetadata(func)
+
+            with self.subTest(f"{idx}: size arg tuple ok"):
+                try:
+                    func = Function(
+                        idx,
+                        {
+                            "type": objc._C_PTR + objc._C_INT,
+                            "c_array_size_in_arg": (0, 1),
+                        },
+                    )
+                    self._validateCallableMetadata(func)
+                except self.failureException:
+                    self.fail("Unexpected failure")
 
             with self.subTest(f"{idx}: size arg out of range (tuple[0])"):
                 with self.assertRaisesRegex(
@@ -2307,6 +2387,20 @@ class TestTestSupport(TestCase):
                     ):
                         func = Function(idx, {"type": pfx + b"^{_CFSomeThing=}"})
                         self._validateCallableMetadata(func)
+
+                with self.subTest(f"{idx}: by-ref for int pointer"):
+                    try:
+                        func = Function(idx, {"type": pfx + objc._C_PTR + objc._C_INT})
+                        self._validateCallableMetadata(func)
+                    except self.failureException:
+                        self.fail("Unexpected failure")
+
+                with self.subTest(f"{idx}: by-ref for struct pointer"):
+                    try:
+                        func = Function(idx, {"type": pfx + objc._C_PTR + b"{size=dd}"})
+                        self._validateCallableMetadata(func)
+                    except self.failureException:
+                        self.fail("Unexpected failure")
 
     def test_running(self):
         orig_use = TestSupport._usepool

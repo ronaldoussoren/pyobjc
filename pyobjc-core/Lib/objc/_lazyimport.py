@@ -290,8 +290,7 @@ class ObjCLazyModule(ModuleType):
             dct = {}
             objc.loadBundleFunctions(self.__bundle, dct, func_list)
             for nm in dct:
-                if nm not in self.__dict__:
-                    self.__dict__[nm] = dct[nm]
+                self.__dict__[nm] = dct[nm]
 
         if self.__inlinelist:
             dct = {}
@@ -299,8 +298,7 @@ class ObjCLazyModule(ModuleType):
                 self.__inlinelist, dct, func_list, skip_undefined=True
             )
             for nm in dct:
-                if nm not in self.__dict__:
-                    self.__dict__[nm] = dct[nm]
+                self.__dict__[nm] = dct[nm]
 
             self.__inlinelist = None
 
