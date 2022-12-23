@@ -1,6 +1,7 @@
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
+from .objectint import OC_ObjectInt
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -66,6 +67,14 @@ class TestSubclassing(TestCase):
             def description(self):
                 return objc.super(Level2Class, self).description()
 
+            @objc.objc_method(signature=b"f@:d")
+            def roundValue_(self, value):
+                return value / 2
+
+            @objc.python_method
+            def world(self):
+                return "world"
+
         obj = Level1Class.alloc().init()
         v = obj.hello()
         self.assertEqual(v, "level1")
@@ -80,6 +89,26 @@ class TestSubclassing(TestCase):
         v = obj.description()
         # this may be a bit hardwired for comfort
         self.assertEqual(v.find("<Level2Class"), 0)
+
+        self.assertTrue(OC_ObjectInt.respondsToSelector_of_(b"hello", obj))
+        self.assertFalse(OC_ObjectInt.respondsToSelector_of_(b"world", obj))
+
+        m = OC_ObjectInt.methodSignatureForSelector_of_(b"hello", obj)
+        self.assertEqual(m.numberOfArguments(), 2)
+        self.assertEqual(m.methodReturnType(), b"@")
+
+        m = OC_ObjectInt.methodSignatureForSelector_of_(b"roundValue:", obj)
+        self.assertEqual(m.numberOfArguments(), 3)
+        self.assertEqual(m.methodReturnType(), b"f")
+        self.assertEqual(m.getArgumentTypeAtIndex_(2), b"d")
+
+        NSInvocation = objc.lookUpClass("NSInvocation")
+        inv = NSInvocation.invocationWithMethodSignature_(m)
+        inv.setTarget_(obj)
+        inv.setSelector_(b"roundValue:")
+        inv.setArgument_atIndex_(31.0, 2)
+        inv.invoke()
+        self.assertEqual(inv.getReturnValue_(None), 15.5)
 
     def testMethodSignature(self):
         class Signature(NSObject):

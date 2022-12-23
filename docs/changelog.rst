@@ -11,6 +11,18 @@ logic in Python (where the previous version used C). This does result in
 some minor semantic changes, but those should only affect edge cases and
 not normal user code.
 
+* This release soft-deprecates using ``NSInvocation`` to call methods
+  on on Python subclasses because this feature has a fairly complex
+  implementation that doesn't quite match the regular path for calling
+  methods.
+
+  Note that the implementation of ``-[NSObject forwardInvocation:]``
+  always raises an exception.
+
+  Please let me know if removing the ``forwardInvocation:`` implementation
+  for methods implemented in Python would be problematic for you. See also
+  issue #523.
+
 * #306: The code that converts a Python callable into an ``objc.selector``
   when creating an Objective-C class is now written in Python instead of
   Objective-C. This will make it easier to evolve that code in future
@@ -249,6 +261,12 @@ not normal user code.
   the method will result in a "native" selector, not the original one due to the
   way KVO is implemented in the system.
 
+* #522: Remove the implementation of ``respondsToSector:`` and ``methodSignatureForSelector:``.
+
+
+  In previous versions PyObjC included custom implementation of these methods for
+  subclasses of ``NSObject`` implemented in Python, but the default implementation
+  in ``NSObject`` works just as well for Python classes.
 
 Version 9.0.1
 -------------

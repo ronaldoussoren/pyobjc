@@ -964,10 +964,12 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 @end
 
 #define SETUP_INVOCATION(inv, target, selector)                                          \
-    inv = [NSInvocation                                                                  \
-        invocationWithMethodSignature:[target methodSignatureForSelector:selector]];     \
-    [inv setTarget:target];                                                              \
-    [inv setSelector:selector];
+    do {                                                                                 \
+        inv = [NSInvocation                                                              \
+            invocationWithMethodSignature:[target methodSignatureForSelector:selector]]; \
+        [inv setTarget:target];                                                          \
+        [inv setSelector:selector];                                                      \
+    } while (0)
 
 @implementation OC_TestClass2
 
@@ -1021,7 +1023,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     char          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(charFunc))
+    SETUP_INVOCATION(inv, arg, @selector(charFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1033,7 +1035,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned char res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(ucharFunc))
+    SETUP_INVOCATION(inv, arg, @selector(ucharFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1045,7 +1047,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     short         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(shortFunc))
+    SETUP_INVOCATION(inv, arg, @selector(shortFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1057,7 +1059,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned short res;
     NSInvocation*  inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(ushortFunc))
+    SETUP_INVOCATION(inv, arg, @selector(ushortFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1069,7 +1071,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     int           res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(intFunc))
+    SETUP_INVOCATION(inv, arg, @selector(intFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1081,7 +1083,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned int  res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(uintFunc))
+    SETUP_INVOCATION(inv, arg, @selector(uintFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1093,7 +1095,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     long          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(longFunc))
+    SETUP_INVOCATION(inv, arg, @selector(longFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1105,7 +1107,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(ulongFunc))
+    SETUP_INVOCATION(inv, arg, @selector(ulongFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1231,7 +1233,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     long long     res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(longlongFunc))
+    SETUP_INVOCATION(inv, arg, @selector(longlongFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1243,7 +1245,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned long long res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc))
+    SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1255,7 +1257,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     float         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(floatFunc))
+    SETUP_INVOCATION(inv, arg, @selector(floatFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1267,7 +1269,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     double        res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
+    SETUP_INVOCATION(inv, arg, @selector(doubleFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1279,7 +1281,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(idFunc))
+    SETUP_INVOCATION(inv, arg, @selector(idFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1291,7 +1293,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     struct dummy  res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
+    SETUP_INVOCATION(inv, arg, @selector(dummyFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1303,7 +1305,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     struct dummy2 res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(dummy2Func))
+    SETUP_INVOCATION(inv, arg, @selector(dummy2Func));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1315,7 +1317,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     NSPoint       res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, arg, @selector(nspointFunc))
+    SETUP_INVOCATION(inv, arg, @selector(nspointFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1327,9 +1329,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     long long     res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(longlongArg:))[inv setArgument:&arg
-                                                      atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(longlongArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1342,9 +1343,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned long long res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(ulonglongArg:))[inv setArgument:&arg
-                                                       atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1356,9 +1356,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     long          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (longArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(longArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1370,9 +1369,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(ulonglongArg:))[inv setArgument:&arg
-                                                       atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(ulonglongArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1384,9 +1382,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     int           res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (intArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(intArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1398,9 +1395,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned int  res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (uintArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(uintArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1412,9 +1408,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     short         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (shortArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(shortArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1427,9 +1422,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned short res;
     NSInvocation*  inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (ushortArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(ushortArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1441,9 +1435,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     char          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (charArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(charArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1455,9 +1448,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     unsigned char res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (ucharArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(ucharArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1469,9 +1461,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     float         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (floatArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1483,9 +1474,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     double        res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (doubleArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1497,9 +1487,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     char*         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (charpArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(charpArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1511,9 +1500,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector
-                     (idArg:))[inv setArgument:&arg atIndex:2]; // First real argument
+    SETUP_INVOCATION(inv, obj, @selector(idArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];

@@ -2532,7 +2532,7 @@ class TestTestSupport(TestCase):
                     except self.failureException:
                         self.fail("Unexpected failure")
             finally:
-                objc.functio = Function
+                objc.function = orig_function
 
             fn.assert_any_call(aFunction)
 

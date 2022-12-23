@@ -14,10 +14,6 @@ static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* ar
 
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
-static void object_method_respondsToSelector(ffi_cif* cif, void* retval, void** args,
-                                             void* userarg);
-static void object_method_methodSignatureForSelector(ffi_cif* cif, void* retval,
-                                                     void** args, void* userarg);
 static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args,
                                             void* userarg);
 static void object_method_valueForKey_(ffi_cif* cif, void* retval, void** args,
@@ -51,16 +47,6 @@ struct method_info {
      NO, YES},
     {0, "forwardInvocation:", "forwardInvocation_", "v@:@",
      object_method_forwardInvocation, NO, YES},
-    {0, "methodSignatureForSelector:", "methodSignatureForSelector_",
-     "@@::", object_method_methodSignatureForSelector, NO, YES},
-    {0, "respondsToSelector:", "respondsToSelector_",
-#ifdef __arm64__
-     "B"
-#else
-     "Z"
-#endif
-     "@::",
-     object_method_respondsToSelector, NO, YES},
     {0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_,
      YES, YES},
     {0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}",
@@ -1120,145 +1106,21 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     *(id*)resp = copy;
 }
 
-/* -respondsToSelector: */
-static void
-object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void* retval,
-                                 void** args, void* userdata)
-{
-    id   self      = *(id*)args[0];
-    SEL  _meth     = *(SEL*)args[1];
-    SEL  aSelector = *(SEL*)args[2];
-    int* p_result  = (int*)retval; /* Actually BOOL. */
-
-    struct objc_super spr;
-    PyObject*         pyself;
-    PyObject*         pymeth;
-
-    PyObjC_BEGIN_WITH_GIL
-        /* First check if this class respond */
-
-        /* XXX: Shouldn't this use id_to_python? */
-        /* XXX: Is this method needed at all?
-         *      Selectors are registered with the runtime and hence seen
-         *      by the default implementation, other attributes are not
-         *      relevant. The only possible exception to this:
-         *      multiple inheritance in Python. Add tests that check that
-         *      this currently does *not* work before removing this
-         *      method.
-         */
-        pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            *p_result = NO;
-            PyObjC_GIL_RETURNVOID;
-            // LCOV_EXCL_STOP
-        }
-        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-        Py_DECREF(pyself);
-        if (pymeth) {
-            *p_result = YES;
-
-            if (PyObjCSelector_Check(pymeth)
-                && (((PyObjCSelector*)pymeth)->sel_flags
-                    & PyObjCSelector_kCLASS_METHOD)) {
-                *p_result = NO;
-            }
-
-            Py_DECREF(pymeth);
-            PyObjC_GIL_RETURNVOID;
-        }
-        PyErr_Clear();
-
-    PyObjC_END_WITH_GIL
-
-    /* Check superclass */
-    spr.super_class = (Class _Nonnull)class_getSuperclass((Class)userdata);
-    spr.receiver    = self;
-
-    *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
-                                                                           aSelector);
-    return;
-}
-
-/* -methodSignatureForSelector */
-static void
-object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)),
-                                         void* retval, void** args, void* userdata)
-{
-    id  self      = *(id*)args[0];
-    SEL _meth     = *(SEL*)args[1];
-    SEL aSelector = *(SEL*)args[2];
-
-    struct objc_super   spr;
-    PyObject*           pyself;
-    PyObject*           pymeth;
-    NSMethodSignature** p_result = (NSMethodSignature**)retval;
-
-    *p_result = nil;
-
-    spr.super_class = class_getSuperclass((Class)userdata);
-    spr.receiver    = self;
-
-    /*
-     * XXX: This checks self and super in a different order than the
-     *      previous function, without a clear reason. Note that either
-     *      order should work because we check that Python methods overriding
-     *      an existing method have a compatible signature.
-     *
-     *      See above, not sure why this is needed at all.
-     */
-    @try {
-        *p_result = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
-                         objc_msgSendSuper)(&spr, _meth, aSelector);
-
-    } @catch (NSObject* localException) {
-        *p_result = nil;
-    }
-
-    if (*p_result != nil) {
-        return;
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        /* XXX: Shouldn't this use id_to_python? */
-        pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_Clear();
-            PyObjC_GIL_RETURNVOID;
-            // LCOV_EXCL_STOP
-        }
-
-        pymeth = PyObjCObject_FindSelector(pyself, aSelector);
-        if (!pymeth) {
-            Py_DECREF(pyself);
-            PyErr_Clear();
-            PyObjC_GIL_RETURNVOID;
-        }
-
-    PyObjC_END_WITH_GIL
-
-    @try {
-        /* XXX: Shouldn't this be sel_native_signature? */
-        *p_result = [NSMethodSignature
-            signatureWithObjCTypes:((PyObjCSelector*)pymeth)->sel_python_signature];
-    } @catch (NSObject* localException) {
-        PyObjC_BEGIN_WITH_GIL
-            Py_DECREF(pymeth);
-            Py_DECREF(pyself);
-
-        PyObjC_END_WITH_GIL
-        @throw;
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        Py_DECREF(pymeth);
-        Py_DECREF(pyself);
-
-    PyObjC_END_WITH_GIL
-}
-
 /* -forwardInvocation: */
+/*
+ * XXX: Consider dropping this method, even it is a
+ *      backward compatibility break: NSObject's
+ *      forwardInvocation always raises an exception,
+ *      this implementation does a lot more than that...
+ *
+ *      The implementation is large, but still incomplete
+ *      because it reimplements the logic in the regular
+ *      path, and only does so when upcalling doesn't require
+ *      a manual implementation.
+ *
+ *      This implementation is also fairly large at over
+ *      460 lines of code.
+ */
 static void
 object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
                                 void* retval __attribute__((__unused__)), void** args,
@@ -1287,10 +1149,6 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
     PyGILState_STATE       state       = PyGILState_Ensure();
 
     /* XXX: Shouldn't this use id_to_python? */
-    /* XXX:  Same as two previous methods: add tests that validate behaviour,
-     *       then check if removing this implementation breaks anything (which
-     *       it shouldn't).
-     */
     pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     if (pyself == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START

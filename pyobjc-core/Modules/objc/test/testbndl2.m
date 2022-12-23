@@ -9999,7 +9999,7 @@ arg2id(const char* argtype, void* argptr)
 @implementation PyObjC_TestClass2 : NSObject
 
 #define SETUP_INVOCATION(inv, target, selector)                                          \
-    {                                                                                    \
+    do {                                                                                 \
         id sign = [target methodSignatureForSelector:selector];                          \
         if (sign == NULL) {                                                              \
             PyGILState_STATE state = PyGILState_Ensure();                                \
@@ -10010,7 +10010,7 @@ arg2id(const char* argtype, void* argptr)
             invocationWithMethodSignature:[target methodSignatureForSelector:selector]]; \
         [inv setTarget:target];                                                          \
         [inv setSelector:selector];                                                      \
-    }
+    } while (0)
 
 #ifdef HAVE_BOOL
 + (bool)callboolMethodOf:(PyObjC_TestClass1*)obj
@@ -10023,7 +10023,8 @@ arg2id(const char* argtype, void* argptr)
     bool          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(boolMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10039,7 +10040,8 @@ arg2id(const char* argtype, void* argptr)
     BOOL          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10054,7 +10056,8 @@ arg2id(const char* argtype, void* argptr)
     char          res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(charMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10069,7 +10072,8 @@ arg2id(const char* argtype, void* argptr)
     signed short  res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedshortMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10084,7 +10088,8 @@ arg2id(const char* argtype, void* argptr)
     signed int    res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(signedintMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10099,7 +10104,8 @@ arg2id(const char* argtype, void* argptr)
     signed long   res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedlongMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10114,8 +10120,8 @@ arg2id(const char* argtype, void* argptr)
     signed long long res;
     NSInvocation*    inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10130,7 +10136,8 @@ arg2id(const char* argtype, void* argptr)
     unsigned char res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedcharMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10145,7 +10152,8 @@ arg2id(const char* argtype, void* argptr)
     unsigned short res;
     NSInvocation*  inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedshortMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10160,7 +10168,8 @@ arg2id(const char* argtype, void* argptr)
     unsigned int  res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedintMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10175,7 +10184,8 @@ arg2id(const char* argtype, void* argptr)
     unsigned long res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedlongMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10190,8 +10200,8 @@ arg2id(const char* argtype, void* argptr)
     unsigned long long res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10206,7 +10216,8 @@ arg2id(const char* argtype, void* argptr)
     float         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(floatMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10221,7 +10232,8 @@ arg2id(const char* argtype, void* argptr)
     double        res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(doubleMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10236,7 +10248,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(idMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10251,7 +10264,8 @@ arg2id(const char* argtype, void* argptr)
     char*         res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10266,7 +10280,8 @@ arg2id(const char* argtype, void* argptr)
     NSPoint       res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10281,7 +10296,8 @@ arg2id(const char* argtype, void* argptr)
     NSRect        res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectMethod))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectMethod));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10296,8 +10312,8 @@ arg2id(const char* argtype, void* argptr)
     struct TestStruct1 res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Method))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Method));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10312,8 +10328,8 @@ arg2id(const char* argtype, void* argptr)
     struct TestStruct2 res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Method))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Method));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10328,8 +10344,8 @@ arg2id(const char* argtype, void* argptr)
     struct TestStruct3 res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Method))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Method));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10344,8 +10360,8 @@ arg2id(const char* argtype, void* argptr)
     struct TestStruct4 res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Method))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Method));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10360,8 +10376,8 @@ arg2id(const char* argtype, void* argptr)
     struct TestStruct5 res;
     NSInvocation*      inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Method))[obj forwardInvocation:inv];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Method));
+    [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -10377,7 +10393,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10394,7 +10411,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10410,7 +10428,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10426,8 +10445,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10443,7 +10462,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10459,7 +10479,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10475,8 +10496,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10492,8 +10513,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10509,8 +10530,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10526,8 +10547,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10543,8 +10564,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10560,8 +10581,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10577,7 +10598,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10593,7 +10615,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10609,7 +10632,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10625,7 +10649,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10641,7 +10666,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10657,7 +10683,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10673,8 +10700,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10690,8 +10717,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10707,8 +10734,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10724,8 +10751,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10741,8 +10768,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -10759,8 +10786,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10779,8 +10806,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10799,8 +10826,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10823,8 +10850,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(boolArg:andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10843,8 +10870,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedintArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10865,8 +10892,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlongArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10889,9 +10916,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10914,9 +10940,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10939,9 +10964,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10964,8 +10988,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(boolArg:andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10988,9 +11012,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11013,9 +11036,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11034,8 +11056,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11054,8 +11076,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11074,8 +11096,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11094,8 +11116,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11114,8 +11136,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11134,8 +11156,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11158,9 +11180,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11183,9 +11204,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11208,9 +11228,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11233,9 +11252,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11258,9 +11276,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(boolArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11279,8 +11296,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11298,8 +11315,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11316,8 +11333,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11338,8 +11355,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(BOOLArg:andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11356,8 +11373,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedintArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11376,8 +11393,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedlongArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11398,9 +11415,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11421,9 +11437,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11444,9 +11459,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11467,8 +11481,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(BOOLArg:andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11489,9 +11503,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11512,9 +11525,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11531,8 +11543,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11549,8 +11561,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11567,8 +11579,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11585,8 +11597,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11603,8 +11615,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11621,8 +11633,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11643,9 +11655,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11666,9 +11677,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11689,9 +11699,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11712,9 +11721,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11735,9 +11743,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(BOOLArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11755,8 +11762,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11774,8 +11781,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11792,8 +11799,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11814,8 +11821,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(charArg:andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11832,8 +11839,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedintArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11852,8 +11859,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedlongArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11874,9 +11881,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11897,9 +11903,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11920,9 +11925,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11943,8 +11947,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(charArg:andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11965,9 +11969,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -11988,9 +11991,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12007,8 +12009,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12025,8 +12027,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12043,8 +12045,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12061,8 +12063,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12079,8 +12081,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12097,8 +12099,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12119,9 +12121,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12142,9 +12143,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12165,9 +12165,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12188,9 +12187,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12211,9 +12209,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12235,8 +12232,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedshortArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12258,8 +12255,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedshortArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12280,8 +12277,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedshortArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12302,9 +12299,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                            andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12325,9 +12321,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                              andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12348,9 +12343,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                             andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12371,9 +12365,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12394,9 +12387,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                           andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12417,9 +12409,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                          andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12440,9 +12431,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                            andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12463,9 +12453,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                           andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12486,9 +12475,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12509,9 +12497,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                                  andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12532,9 +12519,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                                 anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12551,8 +12537,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andidArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12573,9 +12559,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                                andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12596,9 +12581,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                                andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12619,9 +12603,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                                 andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12642,9 +12625,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12665,9 +12647,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12688,9 +12669,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12711,9 +12691,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12734,9 +12713,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12754,8 +12732,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andboolArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12773,8 +12751,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andBOOLArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12791,8 +12769,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andcharArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12813,9 +12791,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                          andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12836,9 +12813,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                            andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12859,9 +12835,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                           andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12882,9 +12857,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12905,9 +12879,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12928,9 +12901,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12951,9 +12923,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                          andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12974,9 +12945,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -12997,9 +12967,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13018,8 +12987,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andfloatArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13040,8 +13009,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedintArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13058,8 +13027,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13080,9 +13049,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                              andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13103,9 +13071,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                              andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13126,8 +13093,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedintArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13148,9 +13115,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13171,9 +13137,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13194,9 +13159,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13217,9 +13181,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13240,9 +13203,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13262,8 +13224,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andboolArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13283,8 +13245,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andBOOLArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13303,8 +13265,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andcharArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13325,9 +13287,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                           andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13348,9 +13309,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                             andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13371,9 +13331,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                            andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13394,9 +13353,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13417,9 +13375,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                          andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13440,9 +13397,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13463,9 +13419,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                           andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13486,9 +13441,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                          andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13509,9 +13463,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13532,8 +13485,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(signedlongArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13554,9 +13507,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                                anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13573,8 +13525,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13595,9 +13547,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                               andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13618,9 +13569,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                               andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13641,9 +13591,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                                andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13664,9 +13613,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13687,9 +13635,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13710,9 +13657,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13733,9 +13679,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13756,9 +13701,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13780,9 +13724,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                      andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13804,9 +13747,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                      andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13827,9 +13769,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                      andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13850,9 +13791,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                               andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13873,9 +13813,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                 andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13896,9 +13835,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13919,9 +13857,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                            andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13942,9 +13879,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                              andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13965,9 +13901,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                             andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -13988,9 +13923,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                               andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14011,9 +13945,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                              andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14034,9 +13967,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                          andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14057,9 +13989,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                     andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14080,9 +14011,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                    anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14103,9 +14033,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                        andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14126,9 +14055,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                   andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14149,9 +14077,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                   andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14172,9 +14099,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                                    andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14195,9 +14121,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14218,9 +14143,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14241,9 +14165,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14264,9 +14187,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14287,9 +14209,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14311,9 +14232,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                    andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14335,9 +14255,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                    andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14358,9 +14277,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                    andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14381,9 +14299,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                             andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14404,9 +14321,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                               andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14427,9 +14343,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                              andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14450,9 +14365,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                          andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14473,9 +14387,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                            andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14496,9 +14409,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                           andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14519,9 +14431,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                             andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14542,9 +14453,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                            andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14565,9 +14475,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14588,9 +14497,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                   andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14611,9 +14519,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                  anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14632,8 +14539,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andidArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14654,9 +14561,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                 andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14677,9 +14583,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                 andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14700,9 +14605,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                                  andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14723,9 +14627,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14746,9 +14649,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14769,9 +14671,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14792,9 +14693,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14815,9 +14715,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14839,9 +14738,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                     andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14863,9 +14761,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                     andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14886,9 +14783,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                     andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14909,9 +14805,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                              andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14932,9 +14827,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14955,9 +14849,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                               andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -14977,9 +14870,8 @@ arg2id(const char* argtype, void* argptr)
 {
     id            res;
     NSInvocation* inv;
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                           andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15000,9 +14892,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                             andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15023,9 +14914,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                            andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15046,9 +14936,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                              andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15069,9 +14958,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                             andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15092,9 +14980,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15115,9 +15002,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                    andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15138,9 +15024,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                   anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15161,8 +15046,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(unsignedshortArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15183,9 +15068,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                  andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15206,9 +15090,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                  andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15229,9 +15112,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                                   andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15252,9 +15134,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15275,9 +15156,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15298,9 +15178,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15321,9 +15200,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15344,9 +15222,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15368,8 +15245,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(unsignedintArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15391,8 +15268,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(unsignedintArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15413,8 +15290,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(unsignedintArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15435,9 +15312,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                            andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15458,9 +15334,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                              andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15481,9 +15356,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                             andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15504,9 +15378,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15527,9 +15400,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                           andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15550,9 +15422,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                          andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15573,9 +15444,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                            andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15596,9 +15466,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                           andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15619,9 +15488,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15642,9 +15510,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                                  andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15665,9 +15532,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                                 anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15684,8 +15550,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andidArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15706,9 +15572,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                                andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15729,9 +15594,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                                andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15752,9 +15616,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                                 andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15775,9 +15638,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15798,9 +15660,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15821,9 +15682,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15844,9 +15704,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15867,9 +15726,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15891,9 +15749,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                    andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15915,9 +15772,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                    andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15938,9 +15794,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                    andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15961,9 +15816,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                             andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -15984,9 +15838,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                               andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16007,9 +15860,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                              andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16030,9 +15882,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                          andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16053,9 +15904,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                            andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16076,9 +15926,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                           andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16099,9 +15948,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                             andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16122,9 +15970,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                            andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16145,9 +15992,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16168,9 +16014,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                   andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16191,9 +16036,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                  anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16212,8 +16056,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andidArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16234,9 +16078,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                 andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16257,9 +16100,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                 andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16280,9 +16122,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                                  andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16303,9 +16144,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16326,9 +16166,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16349,9 +16188,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16372,9 +16210,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16395,9 +16232,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16419,9 +16255,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                        andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16443,9 +16278,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                        andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16466,9 +16300,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                        andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16489,9 +16322,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                 andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16512,9 +16344,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                   andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16535,9 +16366,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                  andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16558,9 +16388,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                              andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16581,9 +16410,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16604,9 +16432,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                               andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16627,9 +16454,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                 andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16650,9 +16476,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16673,9 +16498,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                            andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16696,9 +16520,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                       andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16719,9 +16542,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                      anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16742,9 +16564,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                          andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16765,9 +16586,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                     andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16788,9 +16608,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                     andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16811,9 +16630,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                                      andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16834,9 +16652,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                           andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16857,9 +16674,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                           andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16880,9 +16696,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                           andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16903,9 +16718,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                           andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16926,9 +16740,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongArg:
-                           andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16946,8 +16759,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16965,8 +16778,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -16983,8 +16796,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17005,9 +16818,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17026,8 +16838,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedintArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17048,8 +16860,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(floatArg:andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17070,9 +16882,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17093,9 +16904,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17116,9 +16926,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17139,9 +16948,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17162,9 +16970,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17185,9 +16992,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17204,8 +17010,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17222,8 +17028,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17240,8 +17046,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17258,8 +17064,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17276,8 +17082,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17294,8 +17100,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17316,9 +17122,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17339,9 +17144,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17362,9 +17166,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17385,9 +17188,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17408,9 +17210,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(floatArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17428,8 +17229,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17447,8 +17248,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17465,8 +17266,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17487,9 +17288,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17510,8 +17310,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(doubleArg:andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17532,9 +17332,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17555,9 +17354,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17578,9 +17376,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17601,9 +17398,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17624,9 +17420,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17647,9 +17442,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17670,9 +17464,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17689,8 +17482,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17707,8 +17500,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17725,8 +17518,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17743,8 +17536,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andcharPtrArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17761,8 +17554,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andNSPointArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17779,8 +17572,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17801,9 +17594,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17824,9 +17616,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17847,9 +17638,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17870,9 +17660,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17893,9 +17682,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17913,8 +17701,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17932,8 +17720,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17950,8 +17738,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17968,8 +17756,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedshortArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -17986,8 +17774,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18004,8 +17792,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18026,9 +17814,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18047,8 +17834,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedcharArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18069,8 +17856,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(idArg:andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18087,8 +17874,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedintArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18107,8 +17894,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedlongArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18129,9 +17916,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18148,8 +17934,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18166,8 +17952,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18184,8 +17970,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18202,8 +17988,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18220,8 +18006,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18238,8 +18024,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18260,9 +18046,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18283,9 +18068,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18306,9 +18090,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18329,9 +18112,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18352,9 +18134,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(idArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18372,8 +18153,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18391,8 +18172,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18409,8 +18190,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18431,9 +18212,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18454,9 +18234,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                          andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18477,9 +18256,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18500,9 +18278,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18523,9 +18300,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18546,9 +18322,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18569,9 +18344,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18592,9 +18366,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18615,9 +18388,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18634,8 +18406,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18652,8 +18424,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:anddoubleArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18670,8 +18442,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18688,8 +18460,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andcharPtrArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18706,8 +18478,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSPointArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18724,8 +18496,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSRectArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18746,9 +18518,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18769,9 +18540,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18792,9 +18562,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18815,9 +18584,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18838,9 +18606,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18858,8 +18625,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18877,8 +18644,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18895,8 +18662,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18917,9 +18684,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18940,9 +18706,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                          andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18963,9 +18728,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -18986,9 +18750,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19009,9 +18772,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19032,9 +18794,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19055,9 +18816,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19078,9 +18838,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19101,9 +18860,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19120,8 +18878,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19138,8 +18896,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:anddoubleArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19156,8 +18914,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19174,8 +18932,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andcharPtrArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19194,8 +18952,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSPointArg:))[inv setArgument:&arg1
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19212,8 +18970,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSRectArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19234,9 +18992,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19257,9 +19014,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19280,9 +19036,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19303,9 +19058,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19326,9 +19080,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19346,8 +19099,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19365,8 +19118,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19383,8 +19136,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19405,9 +19158,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19428,8 +19180,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(
-        inv, obj, @selector(NSRectArg:andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19450,9 +19202,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19473,9 +19224,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19496,9 +19246,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19519,9 +19268,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19542,9 +19290,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19565,9 +19312,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19588,9 +19334,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19607,8 +19352,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19625,8 +19370,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19643,8 +19388,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19661,8 +19406,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andcharPtrArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19679,8 +19424,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andNSPointArg:))[inv setArgument:&arg1
-                                                                            atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19697,8 +19442,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19719,9 +19464,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19742,9 +19486,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19765,9 +19508,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19788,9 +19530,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19811,9 +19552,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectArg:
-                         andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19835,9 +19575,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                         andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19859,9 +19598,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                         andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19882,9 +19620,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                         andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19905,9 +19642,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                  andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19928,9 +19664,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                    andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19951,9 +19686,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                   andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19974,9 +19708,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                               andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -19997,9 +19730,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                 andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20020,9 +19752,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20043,9 +19774,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                  andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20066,9 +19796,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                 andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20089,9 +19818,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                             andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20112,9 +19840,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                        andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20135,9 +19862,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                       anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20158,9 +19884,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                           andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20181,9 +19906,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                      andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20204,9 +19928,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                      andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20227,9 +19950,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                                       andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20250,9 +19972,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                            andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20273,9 +19994,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                            andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20296,9 +20016,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                            andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20319,9 +20038,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                            andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20342,9 +20060,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1Arg:
-                            andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1Arg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20366,9 +20083,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                         andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20390,9 +20106,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                         andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20413,9 +20128,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                         andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20436,9 +20150,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                  andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20459,9 +20172,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                    andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20482,9 +20194,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                   andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20505,9 +20216,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                               andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20528,9 +20238,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                 andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20551,9 +20260,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20574,9 +20282,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                  andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20597,9 +20304,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                 andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20620,9 +20326,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                             andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20643,9 +20348,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                        andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20666,9 +20370,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                       anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20689,9 +20392,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                           andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20712,9 +20414,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                      andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20735,9 +20436,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                      andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20758,9 +20458,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                                       andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20781,9 +20480,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                            andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20804,9 +20502,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                            andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20827,9 +20524,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                            andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20850,9 +20546,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                            andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20873,9 +20568,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2Arg:
-                            andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2Arg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20897,9 +20591,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                         andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20921,9 +20614,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                         andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20944,9 +20636,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                         andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20967,9 +20658,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                  andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -20990,9 +20680,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                    andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21013,9 +20702,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                   andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21036,9 +20724,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                               andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21059,9 +20746,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                 andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21082,9 +20768,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21105,9 +20790,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                  andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21128,9 +20812,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                 andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21151,9 +20834,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                             andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21174,9 +20856,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                        andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21197,9 +20878,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                       anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21220,9 +20900,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                           andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21243,9 +20922,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                      andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21266,9 +20944,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                      andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21289,9 +20966,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                                       andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21312,9 +20988,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                            andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21335,9 +21010,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                            andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21358,9 +21032,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                            andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21381,9 +21054,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                            andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21404,9 +21076,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3Arg:
-                            andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3Arg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21428,9 +21099,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                         andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21452,9 +21122,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                         andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21475,9 +21144,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                         andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21498,9 +21166,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                  andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21521,9 +21188,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                    andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21544,9 +21210,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                   andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21567,9 +21232,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                               andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21590,9 +21254,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                 andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21613,9 +21276,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21636,9 +21298,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                  andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21659,9 +21320,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                 andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21682,9 +21342,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                             andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21705,9 +21364,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                        andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21728,9 +21386,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                       anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21751,9 +21408,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                           andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21774,9 +21430,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                      andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21797,9 +21452,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                      andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21820,9 +21474,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                                       andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21843,9 +21496,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                            andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21866,9 +21518,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                            andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21889,9 +21540,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                            andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21912,9 +21562,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                            andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21935,9 +21584,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4Arg:
-                            andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4Arg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21959,9 +21607,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                         andboolArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andboolArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -21983,9 +21630,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                         andBOOLArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andBOOLArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22006,9 +21652,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                         andcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22029,9 +21674,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                  andsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22052,9 +21696,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                    andsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22075,9 +21718,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                   andsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22098,9 +21740,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                               andsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22121,9 +21762,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                 andunsignedcharArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andunsignedcharArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22144,9 +21784,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                andunsignedshortArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andunsignedshortArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22167,9 +21806,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                  andunsignedintArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andunsignedintArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22190,9 +21828,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                 andunsignedlongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andunsignedlongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22213,9 +21850,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                             andunsignedlonglongArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andunsignedlonglongArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22236,9 +21872,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                        andfloatArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andfloatArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22259,9 +21894,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                       anddoubleArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:anddoubleArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22282,9 +21916,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                           andidArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andidArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22305,9 +21938,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                      andcharPtrArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andcharPtrArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22328,9 +21960,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                      andNSPointArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andNSPointArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22351,9 +21982,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                                       andNSRectArg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andNSRectArg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22374,9 +22004,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                            andstructTestStruct1Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andstructTestStruct1Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22397,9 +22026,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                            andstructTestStruct2Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andstructTestStruct2Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22420,9 +22048,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                            andstructTestStruct3Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andstructTestStruct3Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22443,9 +22070,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                            andstructTestStruct4Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andstructTestStruct4Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22466,9 +22092,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5Arg:
-                            andstructTestStruct5Arg:))[inv setArgument:&arg1 atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5Arg:andstructTestStruct5Arg:));
+    [inv setArgument:&arg1 atIndex:2];
     [inv setArgument:&arg2 atIndex:3];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -22496,7 +22121,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22506,7 +22132,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22515,7 +22142,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(boolInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(boolInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22542,7 +22170,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22552,7 +22181,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22561,7 +22191,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(BOOLInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(BOOLInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22587,7 +22218,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22597,7 +22229,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22606,7 +22239,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22632,8 +22266,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22643,8 +22277,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22653,8 +22287,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedshortInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedshortInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22680,8 +22314,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22691,8 +22325,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22701,8 +22335,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedintInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedintInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22728,8 +22362,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22739,8 +22373,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22749,8 +22383,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlongInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlongInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22776,8 +22410,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22787,8 +22421,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22797,8 +22431,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(signedlonglongInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(signedlonglongInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22824,8 +22458,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22835,8 +22469,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22845,8 +22479,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedcharInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedcharInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22872,8 +22506,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22883,8 +22517,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22893,8 +22527,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedshortInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedshortInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22920,8 +22554,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22931,8 +22565,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22941,8 +22575,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedintInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedintInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22968,8 +22602,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -22979,8 +22613,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -22989,8 +22623,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlongInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlongInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23016,8 +22650,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23027,8 +22661,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(unsignedlonglongOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23037,8 +22671,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongInOutArg:))[inv setArgument:&arg
-                                                                             atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23064,7 +22698,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23074,7 +22709,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23083,7 +22719,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(floatInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(floatInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23109,7 +22746,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23119,7 +22757,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(doubleOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23128,8 +22767,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(doubleInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(doubleInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23155,7 +22794,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23165,7 +22805,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23174,7 +22815,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(idInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(idInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23200,7 +22842,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23210,7 +22853,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(charPtrOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23219,8 +22863,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(charPtrInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(charPtrInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23246,7 +22890,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23256,7 +22901,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSPointOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23265,8 +22911,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSPointInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSPointInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23292,7 +22938,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectInArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectInArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23302,7 +22949,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(NSRectOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23311,8 +22959,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(NSRectInOutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(NSRectInOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23338,8 +22986,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1InArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23349,8 +22997,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct1OutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1OutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23359,8 +23007,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InOutArg:))[inv setArgument:&arg
-                                                                              atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23386,8 +23034,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2InArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23397,8 +23045,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct2OutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2OutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23407,8 +23055,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InOutArg:))[inv setArgument:&arg
-                                                                              atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23434,8 +23082,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3InArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23445,8 +23093,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct3OutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3OutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23455,8 +23103,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InOutArg:))[inv setArgument:&arg
-                                                                              atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23482,8 +23130,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4InArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4InArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23493,8 +23141,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct4OutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4OutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23503,8 +23151,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4InOutArg:))[inv setArgument:&arg
-                                                                              atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct4InOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23530,8 +23178,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5InArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5InArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
@@ -23541,8 +23189,8 @@ arg2id(const char* argtype, void* argptr)
 {
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj,
-                     @selector(structTestStruct5OutArg:))[inv setArgument:&arg atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5OutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
 }
 
@@ -23551,8 +23199,8 @@ arg2id(const char* argtype, void* argptr)
     id            res;
     NSInvocation* inv;
 
-    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5InOutArg:))[inv setArgument:&arg
-                                                                              atIndex:2];
+    SETUP_INVOCATION(inv, obj, @selector(structTestStruct5InOutArg:));
+    [inv setArgument:&arg atIndex:2];
     [obj forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
