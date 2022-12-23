@@ -247,6 +247,11 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         return -1;
     }
 
+    if (PyObjCRT_SizeOfType(type) == -1) {
+        PyErr_SetString(PyExc_ValueError, "Invalid type encoding");
+        return -1;
+    }
+
     if (name) {
         self->name = PyObjCUtil_Strdup(name);
         if (self->name == NULL) {
@@ -264,7 +269,6 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         }
         return -1;
     }
-
     if (isOutletObj) {
         self->isOutlet = PyObject_IsTrue(isOutletObj);
 
@@ -540,6 +544,7 @@ PyTypeObject PyObjCInstanceVariable_Type = {
     .tp_new                                        = PyType_GenericNew,
 };
 
+#if 0
 PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
 {
     PyObject* result;
@@ -549,7 +554,7 @@ PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    ((PyObjCInstanceVariable*)result)->type = PyObjCUtil_Strdup("");
+    ((PyObjCInstanceVariable*)result)->type = PyObjCUtil_Strdup("@");
     if (((PyObjCInstanceVariable*)result)->type == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
@@ -570,5 +575,6 @@ PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
     }
     return result;
 }
+#endif
 
 NS_ASSUME_NONNULL_END

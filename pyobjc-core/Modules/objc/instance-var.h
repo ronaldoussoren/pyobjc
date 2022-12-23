@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
     char* _Nullable name; /* Name of the instance variable */
-    char* _Nullable type; /* Type of the instance variable for definition only */
+    char* _Nonnull type;  /* Type of the instance variable for definition only */
     Ivar _Nullable ivar;
     unsigned int isOutlet : 1;
     unsigned int isSlot : 1;

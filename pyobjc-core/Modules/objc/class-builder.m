@@ -364,8 +364,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     /* XXX: Refactor into a function that must be in C and the bit that's
      * reimplemented in Python and expose the latter to Python for testing.
      */
-    PyObject*  key_list = NULL;
-    PyObject*  value    = NULL;
+    PyObject*  value = NULL;
     Py_ssize_t i;
     Py_ssize_t protocol_count     = 0;
     int        first_python_gen   = 0;
@@ -398,14 +397,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
-#if 0
-    if (transform_class_dict(py_superclass, class_dict, meta_dict, protocols,
-                             &needs_intermediate, &instance_variables, &instance_methods,
-                             &class_methods)
-        == -1) {
-        goto error_cleanup;
-    }
-#else
     if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
         PyErr_SetString(
             PyObjCExc_InternalError,
@@ -426,6 +417,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         goto error_cleanup;
     }
     needs_intermediate = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 0));
+    if (needs_intermediate == -1) {
+        goto error_cleanup;
+    }
     instance_variables = PyTuple_GET_ITEM(rv, 1);
     Py_INCREF(instance_variables);
     instance_methods = PyTuple_GET_ITEM(rv, 2);
@@ -433,7 +427,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     class_methods = PyTuple_GET_ITEM(rv, 3);
     Py_INCREF(class_methods);
     Py_DECREF(rv);
-#endif
     PyObjC_Assert(instance_variables != NULL, Nil);
     PyObjC_Assert(instance_methods != NULL, Nil);
     PyObjC_Assert(class_methods != NULL, Nil);
@@ -555,7 +548,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             if (r == -1) {          // LCOV_BR_EXCL_LINE
                 goto error_cleanup; // LCOV_EXCL_LINE
             }
-        } else if (PyObjCSelector_Check(value)) {
+        } else if (PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
             PyObjCSelector* sel = (PyObjCSelector*)value;
 
             /* Set sel_class */
@@ -585,7 +578,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 goto error_cleanup; // LCOV_EXCL_LINE
             }
 
-        } else if (PyObjCSelector_Check(value)) {
+        } else if (PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
             PyObjCSelector* sel = (PyObjCSelector*)value;
 
             /* Set sel_class */
@@ -654,25 +647,39 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     for (i = 0; i < PyTuple_GET_SIZE(instance_variables); i++) {
         value = PyTuple_GET_ITEM(instance_variables, i);
 
-        if (!PyObjCInstanceVariable_Check(value)) {
-            continue;
+        if (!PyObjCInstanceVariable_Check(value)) { // LCOV_BR_EXCL_LINE
+            continue;                               // LCOV_EXCL_LINE
         }
 
-        char*  type;
-        size_t size;
-        size_t align;
+        char*      type;
+        Py_ssize_t size;
+        Py_ssize_t align;
 
         if (PyObjCInstanceVariable_IsSlot(value)) {
             type = @encode(PyObject*);
             size = sizeof(PyObject*);
         } else {
             type = PyObjCInstanceVariable_GetType(value);
-            if (type == NULL) {
+            if (type == NULL) { // LCOV_BR_EXCL_LINE
+                /* XXX: check if this can happen */
+                // LCOV_EXCL_START
+                PyErr_SetString(PyObjCExc_InternalError,
+                                "got instance variable without a type");
                 goto error_cleanup;
+                // LCOV_EXCL_STOP
             }
             size = PyObjCRT_SizeOfType(type);
+            if (size == -1) { // LCOV_BR_EXCL_LINE
+                /* This cannot happen, the ivar.__init__ method
+                 * checks that the encoding is valid.
+                 */
+                goto error_cleanup; // LCOV_EXCL_LINE
+            }
         }
         align = PyObjCRT_AlignOfType(type);
+        if (align == -1) {      // LCOV_BR_EXCL_LINE
+            goto error_cleanup; // LCOV_EXCL_LINE
+        }
 
         if (PyObjCInstanceVariable_GetName(value) == NULL) {
             PyErr_SetString(PyObjCExc_Error, "instance variable without a name");
@@ -689,8 +696,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     /* instance methods */
-    for (i = 0; i < PySequence_Fast_GET_SIZE(instance_methods); i++) {
-        value = PySequence_Fast_GET_ITEM(instance_methods, i);
+    for (i = 0; i < PyTuple_GET_SIZE(instance_methods); i++) {
+        value = PyTuple_GET_ITEM(instance_methods, i);
 
         if (!PyObjCSelector_Check(value)) {
             continue;
@@ -746,11 +753,12 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     /* class methods */
-    for (i = 0; i < PySequence_Fast_GET_SIZE(class_methods); i++) {
-        value = PySequence_Fast_GET_ITEM(class_methods, i);
+    for (i = 0; i < PyTuple_GET_SIZE(class_methods); i++) {
+        value = PyTuple_GET_ITEM(class_methods, i);
 
-        if (!PyObjCSelector_Check(value)) {
-            continue;
+        if (!PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
+            /* Cannot happen, sequence items were validated earlier */
+            continue; // LCOV_EXCL_LINE
         }
 
         Method meth;
@@ -799,7 +807,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     Py_CLEAR(py_superclass);
 
-    if (PyDict_DelItemString(class_dict, "__dict__") < 0) {
+    /* XXX: Can __dict__ ever be in the class_dict? */
+    if (PyDict_DelItemString(class_dict, "__dict__") == -1) {
         PyErr_Clear();
     }
     Py_CLEAR(instance_variables);
@@ -818,11 +827,6 @@ error_cleanup:
     Py_XDECREF(instance_methods);
     Py_XDECREF(class_methods);
     Py_XDECREF(py_superclass);
-
-    if (key_list) {
-        Py_DECREF(key_list);
-        key_list = NULL;
-    }
 
     if (new_class) {
         objc_disposeClassPair(new_class);
@@ -1001,15 +1005,9 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
             if (delmethod != NULL) {
                 PyObject* s = _PyObjCObject_NewDeallocHelper(self);
                 if (s != NULL) {
-                    /* XXX: Why not use Vectorcall uncondationally (through compat layer
-                     * on py3.8 and earlier)? */
-#if PY_VERSION_HEX >= 0x03090000
                     PyObject* args[2] = {NULL, s};
                     obj               = PyObject_Vectorcall(delmethod, args + 1,
                                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-#else
-                    obj = PyObject_CallFunctionObjArgs(delmethod, s, NULL);
-#endif
                     _PyObjCObject_FreeDeallocHelper(s);
                     if (obj == NULL) {
                         PyErr_WriteUnraisable(delmethod);
@@ -1140,6 +1138,14 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
         /* First check if this class respond */
 
         /* XXX: Shouldn't this use id_to_python? */
+        /* XXX: Is this method needed at all?
+         *      Selectors are registered with the runtime and hence seen
+         *      by the default implementation, other attributes are not
+         *      relevant. The only possible exception to this:
+         *      multiple inheritance in Python. Add tests that check that
+         *      this currently does *not* work before removing this
+         *      method.
+         */
         pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (pyself == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -1198,6 +1204,8 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
      *      previous function, without a clear reason. Note that either
      *      order should work because we check that Python methods overriding
      *      an existing method have a compatible signature.
+     *
+     *      See above, not sure why this is needed at all.
      */
     @try {
         *p_result = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
@@ -1279,6 +1287,10 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
     PyGILState_STATE       state       = PyGILState_Ensure();
 
     /* XXX: Shouldn't this use id_to_python? */
+    /* XXX:  Same as two previous methods: add tests that validate behaviour,
+     *       then check if removing this implementation breaks anything (which
+     *       it shouldn't).
+     */
     pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     if (pyself == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -1625,6 +1637,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
  *
  * XXX: Move API to vectorcall convention, and possibly inline in
  * its sole caller.
+ *
+ * XXX: Only used by "forwardInvocation", which might not be necessary!
  */
 static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
                                              BOOL* isAlloc, BOOL* isCFAlloc)
