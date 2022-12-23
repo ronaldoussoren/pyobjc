@@ -8,10 +8,12 @@ except ImportError:
 
 import pickle
 import typing
+import enum
 
 import objc
 from PyObjCTools import TestSupport
 from PyObjCTools.TestSupport import (
+    no_autorelease_pool,
     pyobjc_options,
     expectedFailure,
     expectedFailureIf,
@@ -28,7 +30,7 @@ from PyObjCTools.TestSupport import (
     fourcc,
     arch_only,
 )
-from unittest import SkipTest
+from unittest import SkipTest, mock
 
 
 class Method:
@@ -2401,6 +2403,190 @@ class TestTestSupport(TestCase):
                         self._validateCallableMetadata(func)
                     except self.failureException:
                         self.fail("Unexpected failure")
+
+    def test_assert_callable_metadata(self):
+        class Mod:
+            pass
+
+        try:
+            m = Mod()
+            m.Object = objc.lookUpClass("Object")
+            m.EnumType = enum.Enum
+        except objc.error:
+            pass  # "Object" root class is no longer present
+            self.fail("Missing object class")
+
+        else:
+            with self.subTest("Object is igored"):
+                try:
+                    self.assertCallableMetadataIsSane(m, exclude_cocoa=False)
+                except self.failureException:
+                    self.fail("Unexpected failure")
+
+                self.assertEqual(m.Object.__name__, "Object")
+                self.assertIsInstance(m.Object, objc.objc_class)
+
+        with self.subTest("validate is called for class and instance methods"):
+            NSObject = objc.lookUpClass("NSObject")
+
+            with mock.patch(
+                "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
+            ) as fn:
+                m = Mod()
+                m.Constant = 42
+                m.NSObject = NSObject
+
+                try:
+                    self.assertCallableMetadataIsSane(m, exclude_cocoa=False)
+                except self.failureException:
+                    self.fail("Unexpected failure")
+
+            fn.assert_any_call(
+                NSObject.pyobjc_instanceMethods.description,
+                "NSObject",
+                skip_simple_charptr_check=True,
+            )
+            fn.assert_any_call(
+                NSObject.pyobjc_classMethods.description,
+                "NSObject",
+                skip_simple_charptr_check=True,
+            )
+
+        with self.subTest("validate instance variables are not checked"):
+            NSObject = objc.lookUpClass("NSObject")
+
+            class MyClassForValidating(NSObject):
+                someVar = objc.ivar()
+
+                def mymethod(self):
+                    pass
+
+            self.assertIsInstance(
+                MyClassForValidating.pyobjc_instanceMethods.mymethod, objc.selector
+            )
+            self.assertIn("mymethod", dir(MyClassForValidating.pyobjc_instanceMethods))
+
+            # Also mock the Cocoa package to avoid classes ending up there as well
+            # XXX: Need to check if the actual usage of the API is safe in this respect as well!
+            Cocoa = Mod()
+            Cocoa.NSObject = objc.lookUpClass("NSObject")
+            Cocoa.NSArray = objc.lookUpClass("NSArray")
+
+            if "Cocoa" in sys.modules:
+                orig_Cocoa = sys.modules["Cocoa"]
+            else:
+                orig_Cocoa = None
+            sys.modules["Cocoa"] = Cocoa
+            try:
+
+                with mock.patch(
+                    "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
+                ) as fn:
+                    m = Mod()
+                    m.Constant = 42
+                    m.MyClassForValidating = MyClassForValidating
+                    m.NSArray = objc.lookUpClass("NSArray")
+
+                    try:
+                        self.assertCallableMetadataIsSane(m, exclude_cocoa=True)
+                    except self.failureException:
+                        self.fail("Unexpected failure")
+
+            finally:
+                if orig_Cocoa is None:
+                    del sys.modules["Cocoa"]
+                else:
+                    sys.modules["Cocoa"] = orig_Cocoa
+
+            fn.assert_any_call(
+                MyClassForValidating.mymethod,
+                "MyClassForValidating",
+                skip_simple_charptr_check=False,
+            )
+
+            for entry in fn.call_args_list:
+                self.assertNotIsInstance(entry.args[0], objc.ivar)
+                self.assertNotEqual(
+                    entry.args[0],
+                    objc.lookUpClass("NSArray").pyobjc_instanceMethods.initWithArray_,
+                )
+
+        with self.subTest("function"):
+
+            class Function:
+                pass
+
+            aFunction = Function()
+
+            orig_function = objc.function
+            objc.function = Function
+            try:
+                with mock.patch(
+                    "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
+                ) as fn:
+                    m = Mod()
+                    m.function = aFunction
+
+                    try:
+                        self.assertCallableMetadataIsSane(m, exclude_cocoa=True)
+                    except self.failureException:
+                        self.fail("Unexpected failure")
+            finally:
+                objc.functio = Function
+
+            fn.assert_any_call(aFunction)
+
+        with self.subTest("ignored entries"):
+
+            class Function:
+                pass
+
+            aFunction = Function()
+
+            orig_function = objc.function
+            objc.function = Function
+            try:
+                with mock.patch(
+                    "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
+                ) as fn:
+                    m = Mod()
+                    m.function = aFunction
+                    m.NSObject = NSObject
+
+                    try:
+                        self.assertCallableMetadataIsSane(
+                            m,
+                            exclude_cocoa=False,
+                            exclude_attrs=[
+                                "function",
+                                ("NSObject", "description"),
+                            ],
+                        )
+                    except self.failureException:
+                        self.fail("Unexpected failure")
+            finally:
+                objc.function = orig_function
+
+            fn.assert_any_call(
+                NSObject.pyobjc_classMethods.new,
+                "NSObject",
+                skip_simple_charptr_check=True,
+            )
+            for entry in fn.call_args_list:
+                self.assertIsNot(entry.args[0], aFunction)
+                self.assertIsNot(
+                    entry.args[0], NSObject.pyobjc_instanceMethods.description
+                )
+                self.assertIsNot(
+                    entry.args[0], NSObject.pyobjc_classMethods.description
+                )
+
+    @no_autorelease_pool
+    def test_without_pool(self):
+        self.assertIs(self._skip_usepool, True)
+
+    def test_with_pool(self):
+        self.assertIs(self._skip_usepool, False)
 
     def test_running(self):
         orig_use = TestSupport._usepool

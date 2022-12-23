@@ -1225,7 +1225,7 @@ class TestCase(_unittest.TestCase):
 
                     with self.subTest(classname=nm, instance_method=attr_name):
                         attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
-                        if isinstance(attr, objc.selector):
+                        if isinstance(attr, objc.selector):  # pragma: no branch
                             self._validateCallableMetadata(
                                 attr, nm, skip_simple_charptr_check=not exclude_cocoa
                             )
@@ -1238,7 +1238,7 @@ class TestCase(_unittest.TestCase):
                         continue
                     with self.subTest(classname=nm, instance_method=attr_name):
                         attr = getattr(value.pyobjc_classMethods, attr_name, None)
-                        if isinstance(attr, objc.selector):
+                        if isinstance(attr, objc.selector):  # pragma: no branch
                             self._validateCallableMetadata(
                                 attr, nm, skip_simple_charptr_check=not exclude_cocoa
                             )
