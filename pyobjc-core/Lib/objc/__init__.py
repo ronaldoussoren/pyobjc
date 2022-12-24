@@ -42,6 +42,7 @@ from ._bridgesupport import *  # noqa: F401, F403, E402
 from . import _structtype  # noqa: F401, F403, E402
 from . import _callable_docstr  # noqa: F401, F403, E402
 from . import _pycoder  # noqa: F401, F403, E402
+from ._informal_protocol import *  # noqa: F401, F403, E402
 
 
 # Helper function for new-style metadata modules

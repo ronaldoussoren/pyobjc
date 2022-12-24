@@ -68,12 +68,12 @@ class TestInformalProtocols(TestCase):
             "no implementation for instance method 'testMethod'",
         ):
 
-            class ProtoClass2(NSObject, protocols=[MyProto]):
+            class ProtoClass2A(NSObject, protocols=[MyProto]):
                 def testMethod2_(self, x):
                     pass
 
-        with self.assertRaisesRegex(objc.error, "^ProtoClass2$"):
-            objc.lookUpClass("ProtoClass2")
+        with self.assertRaisesRegex(objc.error, "^ProtoClass2A$"):
+            objc.lookUpClass("ProtoClass2A")
 
         for cls in objc.getClassList():
             self.assertNotEqual(cls.__name__, "ProtoClass2")

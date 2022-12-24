@@ -548,28 +548,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             PyErr_SetString(PyExc_TypeError, "multiple objective-C bases");
             return NULL;
 
-        } else if (PyObjCInformalProtocol_Check(v)) {
-            /* XXX: Can this path be reached in Python 3? */
-            if (PyList_Append(protocols, v) == -1) { // LCOV_BR_EXCL_START
-                // LCOV_EXCL_START
-                Py_DECREF(protocols);
-                Py_DECREF(real_bases);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                // LCOV_EXCL_STOP
-            }
-
-        } else if (PyObjCFormalProtocol_Check(v)) {
-            /* XXX: Can this path be reached in Python 3? */
-            if (PyList_Append(protocols, v) == -1) { // LCOV_BR_EXCL_START
-                // LCOV_EXCL_START
-                Py_DECREF(protocols);
-                Py_DECREF(real_bases);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                // LCOV_EXCL_STOP
-            }
-
         } else {
             r = PyList_Append(real_bases, v);
 
@@ -597,32 +575,17 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         seqlen = PySequence_Fast_GET_SIZE(seq);
         for (i = 0; i < seqlen; i++) {
-            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
-                || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                if (PyList_Append( // LCOV_BR_EXCL_LINE
-                        protocols, PySequence_Fast_GET_ITEM(seq, i))
-                    == -1) {
-                    // LCOV_EXCL_START
-                    Py_DECREF(seq);
-                    Py_DECREF(protocols);
-                    Py_DECREF(real_bases);
-                    Py_DECREF(hiddenSelectors);
-                    Py_DECREF(hiddenClassSelectors);
-                    return NULL;
-                    // LCOV_EXCL_STOP
-                }
-
-            } else {
-                PyErr_Format(PyExc_TypeError,
-                             "protocols list contains object that isn't an Objective-C "
-                             "protocol, but type %s",
-                             Py_TYPE(PySequence_Fast_GET_ITEM(seq, i))->tp_name);
+            if (PyList_Append( // LCOV_BR_EXCL_LINE
+                    protocols, PySequence_Fast_GET_ITEM(seq, i))
+                == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
         Py_DECREF(seq);
@@ -648,32 +611,17 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         seqlen = PySequence_Fast_GET_SIZE(seq);
         for (i = 0; i < seqlen; i++) {
-            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
-                || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
-                if (PyList_Append( // LCOV_BR_EXCL_LINE
-                        protocols, PySequence_Fast_GET_ITEM(seq, i))
-                    == -1) {
-                    // LCOV_EXCL_START
-                    Py_DECREF(seq);
-                    Py_DECREF(protocols);
-                    Py_DECREF(real_bases);
-                    Py_DECREF(hiddenSelectors);
-                    Py_DECREF(hiddenClassSelectors);
-                    return NULL;
-                    // LCOV_EXCL_STOP
-                }
-
-            } else {
-                PyErr_Format(PyExc_TypeError,
-                             "protocols list contains object that isn't an Objective-C "
-                             "protocol, but type %s",
-                             Py_TYPE(PySequence_Fast_GET_ITEM(seq, i))->tp_name);
+            if (PyList_Append( // LCOV_BR_EXCL_LINE
+                    protocols, PySequence_Fast_GET_ITEM(seq, i))
+                == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(protocols);
                 Py_DECREF(real_bases);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
         Py_DECREF(seq);

@@ -134,7 +134,6 @@
 #import "fsref.h"
 #import "function.h"
 #import "helpers.h"
-#import "informal-protocol.h"
 #import "instance-var.h"
 #import "ivar-accessor.h"
 #import "memview.h"

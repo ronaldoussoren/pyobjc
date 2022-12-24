@@ -14,6 +14,7 @@ import inspect
 import dis
 import keyword
 import warnings
+from ._informal_protocol import _informal_protocol_for_selector
 
 # only public objc_method until the python_method implementation
 # in C is gone
@@ -53,6 +54,13 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
     instance_variables = {}
     instance_methods = set()
     class_methods = set()
+
+    for p in protocols:
+        if not isinstance(p, (objc.formal_protocol, objc.informal_protocol)):
+            raise TypeError(
+                "protocols list contains object that isn't an Objective-C "
+                f"protocol, but type {type(p).__name__}"
+            )
 
     super_ivars = set()
     for v in class_object.__dict__.values():
@@ -362,7 +370,7 @@ def transformAttribute(name, value, class_object, protocols):
     if signature is None:
         # Look for the signature in an informal protocol when it
         # isn't set by some other means.
-        informal = objc._informalProtocolForSelector(selname)
+        informal = _informal_protocol_for_selector(selname)
         if informal is not None:
             for meth in informal.selectors:
                 if meth.selector == selname:

@@ -1757,26 +1757,6 @@ static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
     }
 }
 
-static PyObject* _Nullable mod_informalProtocolForSelector(PyObject* _Nullable mod
-                                                           __attribute__((__unused__)),
-                                                           PyObject* value)
-{
-    SEL sel;
-    if (!PyBytes_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "value should be byte string");
-        return NULL;
-    }
-
-    sel              = sel_registerName(PyBytes_AS_STRING(value));
-    PyObject* result = PyObjCInformalProtocol_FindProtocol(sel);
-    if (result == NULL && !PyErr_Occurred()) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-    Py_INCREF(result);
-    return result;
-}
-
 static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable mod
                                                              __attribute__((__unused__)),
                                                              PyObject* args)
@@ -2021,13 +2001,6 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_O,
         .ml_doc   = "_registerVectorType(type)\n" CLINIC_SEP
                   "\nRegister SIMD type with the bridge.",
-    },
-    {
-        .ml_name  = "_informalProtocolForSelector",
-        .ml_meth  = (PyCFunction)mod_informalProtocolForSelector,
-        .ml_flags = METH_O,
-        .ml_doc   = "_informalProtocolForSelector(selname)\n" CLINIC_SEP
-                  "\nLook up informal protocol info for a selector.",
     },
     {
         .ml_name  = "_registeredMetadataForSelector",
@@ -2289,9 +2262,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                                      // LCOV_EXCL_LINE
     }
 
-    if (PyType_Ready(&PyObjCInformalProtocol_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                      // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&PyObjCFormalProtocol_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                                    // LCOV_EXCL_LINE
     }
@@ -2423,11 +2393,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString(d, "informal_protocol", // LCOV_BR_EXCL_LINE
-                             (PyObject*)&PyObjCInformalProtocol_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }
