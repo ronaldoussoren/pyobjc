@@ -64,8 +64,8 @@ class TestInformalProtocols(TestCase):
     def testIncompleteClass(self):
         with self.assertRaisesRegex(
             TypeError,
-            "class ProtoClass2 does not fully implement protocol MyProto: "
-            "no implementation for testMethod",
+            "class does not fully implemented protocol 'MyProto': "
+            "no implementation for instance method 'testMethod'",
         ):
 
             class ProtoClass2(NSObject, protocols=[MyProto]):
@@ -81,8 +81,8 @@ class TestInformalProtocols(TestCase):
     def testInvalidMethodType(self):
         with self.assertRaisesRegex(
             TypeError,
-            "class ProtoClass2 does not correctly implement protocol MyProto: "
-            "the signature for method testMethod is @@: instead of I@:",
+            "class does not correctly implement protocol 'MyProto': "
+            "the signature for method testMethod is '@@:' instead of 'I@:'",
         ):
 
             class ProtoClass2(NSObject, protocols=[MyProto]):
@@ -448,7 +448,8 @@ class TestFormalProtocols(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "does not correctly implement protocol MyProtocol: method 'protoMethod' is not an instance method",
+            "class does not fully implemented protocol 'MyProtocol': "
+            "no implementation for instance method 'protoMethod'",
         ):
 
             class ClassWithClassMethod(
@@ -469,7 +470,7 @@ class TestFormalProtocols(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "does not correctly implement protocol MyClassProtocol: method 'aClassOne:' is not a class method",
+            "class does not fully implemented protocol 'MyClassProtocol': no implementation for class method 'aClassOne:'",
         ):
 
             class ClassWithInstanceMethod(

@@ -172,6 +172,91 @@ static PyMemberDef proto_members[] = {
         .name = NULL /* SENTINEL */
     }};
 
+static PyObject* _Nullable proto_get_methods(PyObject* _self, BOOL class_method)
+{
+    PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)_self;
+    PyObjC_Assert(PyTuple_Check(self->selectors), NULL);
+
+    Py_ssize_t len, i;
+    PyObject*  result;
+
+    len = PyTuple_Size(self->selectors);
+    if (len == -1) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
+
+    result = PyList_New(0);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
+
+    for (i = 0; i < len; i++) {
+        PyObject* sel = PyTuple_GetItem(self->selectors, i);
+        if (sel == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        if (!PyObjCSelector_Check(sel)) { // LCOV_BR_EXCL_LINE
+            continue;                     // LCOV_EXCL_LINE
+        }
+        if (!!class_method != !!PyObjCSelector_IsClassMethod(sel)) {
+            continue;
+        }
+
+        PyObject* item = Py_BuildValue(
+            "{sysysO}", "selector", sel_getName(PyObjCSelector_GetSelector(sel)),
+            "typestr", PyObjCSelector_Signature(sel), "required",
+            PyObjCSelector_Required(sel) ? Py_True : Py_False);
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+
+        if (PyList_Append(result, item) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(item);
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        Py_DECREF(item);
+    }
+    return result;
+}
+
+static PyObject* _Nullable proto_instanceMethods(PyObject* self)
+{
+    return proto_get_methods(self, NO);
+}
+
+static PyObject* _Nullable proto_classMethods(PyObject* self)
+{
+    return proto_get_methods(self, YES);
+}
+
+static PyMethodDef proto_methods[] = {
+    {
+        .ml_name  = "instanceMethods",
+        .ml_meth  = (PyCFunction)proto_instanceMethods,
+        .ml_flags = METH_NOARGS,
+        .ml_doc   = "instanceMethods()\n" CLINIC_SEP
+                  "\nList of instance methods in this protocol",
+    },
+    {
+        .ml_name  = "classMethods",
+        .ml_meth  = (PyCFunction)proto_classMethods,
+        .ml_flags = METH_NOARGS,
+        .ml_doc =
+            "instanceMethods()\n" CLINIC_SEP "\nList of class methods in this protocol",
+    },
+    {
+        .ml_name = NULL /* SENTINEL */
+    }};
+
 PyTypeObject PyObjCInformalProtocol_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.informal_protocol",
     .tp_basicsize                                  = sizeof(PyObjCInformalProtocol),
@@ -183,6 +268,7 @@ PyTypeObject PyObjCInformalProtocol_Type = {
     .tp_doc      = proto_cls_doc,
     .tp_traverse = proto_traverse,
     .tp_members  = proto_members,
+    .tp_methods  = proto_methods,
     .tp_new      = proto_new,
 };
 

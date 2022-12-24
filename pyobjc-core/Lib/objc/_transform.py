@@ -130,12 +130,63 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
         )
     )
 
+    validate_protocols(class_object, instance_methods, class_methods, protocols)
+
     return (
         bool(needs_intermediate),
         instance_variables,
         instance_methods,
         class_methods,
     )
+
+
+def validate_protocols(class_object, instance_methods, class_methods, protocols):
+    instance_map = {
+        sel.selector: sel for sel in instance_methods if isinstance(sel, objc.selector)
+    }
+    class_map = {
+        sel.selector: sel for sel in class_methods if isinstance(sel, objc.selector)
+    }
+
+    for proto in protocols:
+        for is_class_method, method_list in [
+            (False, proto.instanceMethods()),
+            (True, proto.classMethods()),
+        ]:
+            for sel in method_list:
+                if is_class_method:
+                    found = class_map.get(sel["selector"], None)
+                    if found is None:
+                        found = getattr(
+                            class_object.pyobjc_classMethods,
+                            sel["selector"].decode().replace(":", "_"),
+                            None,
+                        )
+                else:
+                    found = instance_map.get(sel["selector"], None)
+                    if found is None:
+                        found = getattr(
+                            class_object.pyobjc_instanceMethods,
+                            sel["selector"].decode().replace(":", "_"),
+                            None,
+                        )
+
+                if found is None:
+                    if sel["required"]:
+                        raise TypeError(
+                            f"class does not fully implemented protocol {proto.__name__!r}: "
+                            "no implementation for "
+                            f"{'class' if is_class_method else 'instance'} method "
+                            f"{sel['selector'].decode()!r}"
+                        )
+                    continue
+
+                if sel["typestr"] != found.signature:
+                    raise TypeError(
+                        f"class does not correctly implement protocol {proto.__name__!r}: "
+                        f"the signature for method {sel['selector'].decode()} is "
+                        f"{found.signature.decode()!r} instead of {sel['typestr'].decode()!r}"
+                    )
 
 
 def process_slots(class_dict, instance_variables, class_object):

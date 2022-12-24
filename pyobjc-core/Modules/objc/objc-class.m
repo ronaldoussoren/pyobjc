@@ -772,52 +772,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     Py_DECREF(real_bases);
     real_bases = v;
 
-    /* Verify that the class conforms to all protocols it claims to
-     * conform to.
-     *
-     * XXX: Move this into the refactored "class-builder" code and
-     *      move into python
-     */
-    len = PyList_Size(protocols);
-    for (i = 0; i < len; i++) {
-        PyObject* p = PyList_GetItem(protocols, i);
-
-        if (p == NULL) {
-            PyErr_Clear();
-            continue;
-        }
-
-        if (PyObjCInformalProtocol_Check(p)) {
-            if (PyObjCInformalProtocol_CheckClass(p, name, py_super_class, dict) == -1) {
-                Py_XDECREF(orig_slots);
-                Py_DECREF(real_bases);
-                Py_DECREF(protocols);
-                Py_DECREF(metadict);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                if (objc_class != Nil) {
-                    (void)PyObjCClass_UnbuildClass(objc_class);
-                }
-                return NULL;
-            }
-
-        } else if (PyObjCFormalProtocol_Check(p)) {
-            if (PyObjCFormalProtocol_CheckClass(p, name, py_super_class, dict, metadict)
-                == -1) {
-                Py_XDECREF(orig_slots);
-                Py_DECREF(real_bases);
-                Py_DECREF(protocols);
-                Py_DECREF(metadict);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                if (objc_class != Nil) {
-                    (void)PyObjCClass_UnbuildClass(objc_class);
-                }
-                return NULL;
-            }
-        }
-    }
-
     /*
      * add __pyobjc_protocols__ to the class-dict.
      *
