@@ -62,23 +62,8 @@ are also described using ``objc.informal_protocol`` objects.
    Is this necessary? we could also use the same strategy as for informal
    protocols, and drop the informal_protocol wrappers for formal protocols.
 
-In python 2.x declaring conformance to a formal protocol is done by using
-the formal protocol as a mix-in, and by implementing its methods:
-
- .. sourcecode:: python
-    :linenos:
-
-	NSLocking = objc.protocolNamed('NSLocking')
-
-	class MyLockingObject(NSObject, NSLocking):
-		def lock(self):
-			pass
-
-		def unlock(self):
-			pass
-
-In python 3.x  you don't use the protocols as mix-ins, but specify them as
-a keyword argument:
+Protocol conformance is declared by using a ``protocols`` keyword to
+the class definitions:
 
  .. sourcecode:: python
     :linenos:
@@ -92,10 +77,8 @@ a keyword argument:
 		def unlock(self):
 			pass
 
-And finally, it is also possible to specify the protocols that the class
-conforms to using an attribute named *__pyobjc_protocols__* in the class body. This
-works for both Python 2.x and 3.x, and is primarily meant to be used by code that
-needs to work with both language versions.
+Alternatively, it is also possible to specify the protocols that the class
+conforms to using an attribute named ``__pyobjc_protocols__`` in the class body.
 
  .. sourcecode:: python
     :linenos:
@@ -121,7 +104,3 @@ verified using the Objective-C introspection methods:
 
 This is useful for API's that require (and check) the implementation of formal
 protocols.
-
-.. todo::
-
-   This might also be useful for Distributed Objects and XPC, create examples
