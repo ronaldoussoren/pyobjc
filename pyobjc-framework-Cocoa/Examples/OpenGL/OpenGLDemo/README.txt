@@ -5,7 +5,7 @@ using OpenGL from a PyObjC application.  It is a port of Apple's
 "CocoaGL" example.  Note that this requires PyOpenGL to be installed.
 
 See:    /Developer/Examples/OpenGL/Cocoa/CocoaGL
-        http://pyopengl.sourceforge.net/
+        https://pyopengl.sourceforge.net/
 
 The source of this application demonstrates
 - Using PyOpenGL from Cocoa
