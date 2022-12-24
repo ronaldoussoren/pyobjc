@@ -13,6 +13,7 @@ a number of PyObjC distributions. This package provides useful utilities
 that build upon the core features of PyObjC.
 
 .. toctree::
+   :maxdepth: 1
 
    module-PyObjCTools.KeyValueCoding.rst
    module-PyObjCTools.AppHelper.rst
