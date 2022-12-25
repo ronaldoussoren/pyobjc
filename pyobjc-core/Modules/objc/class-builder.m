@@ -1184,7 +1184,13 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
      * in this function).
      */
 
-    IMP method = [self methodForSelector:theSelector];
+    IMP method;
+    @try {
+        method = [self methodForSelector:theSelector];
+    } @catch (NSObject* localException) {
+        PyGILState_Release(state);
+        @throw;
+    }
     if (method == NULL) {
         PyGILState_Release(state);
         @throw [NSException exceptionWithName:NSInternalInconsistencyException

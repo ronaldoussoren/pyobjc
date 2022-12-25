@@ -1115,7 +1115,7 @@ class OCPyTestSimpleCalls(TestCase):
         with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str'"):
             self.obj.invokeInstanceCharFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'char', got 'NoneType'"
+            ValueError, "charFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceCharFuncOf_(self.ocobj)
 
@@ -1161,7 +1161,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'unsigned char', got 'NoneType'"
+            ValueError, "ucharFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj)
 
@@ -1197,7 +1197,7 @@ class OCPyTestSimpleCalls(TestCase):
         with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str'"):
             self.obj.invokeInstanceShortFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'short', got 'NoneType'"
+            ValueError, "shortFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceShortFuncOf_(self.ocobj)
 
@@ -1239,7 +1239,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, r"depythonifying 'unsigned short', got 'NoneType'"
+            ValueError, r"ushortFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj)
 
@@ -1274,7 +1274,9 @@ class OCPyTestSimpleCalls(TestCase):
             self.obj.invokeInstanceIntFuncOf_(self.ocobj)
         with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 5"):
             self.obj.invokeInstanceIntFuncOf_(self.ocobj)
-        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'NoneType'"):
+        with self.assertRaisesRegex(
+            ValueError, "intFunc: returned None, expecting a value"
+        ):
             self.obj.invokeInstanceIntFuncOf_(self.ocobj)
 
     def testCUInt(self):
@@ -1315,7 +1317,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'unsigned int', got 'NoneType'"
+            ValueError, "uintFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj)
 
@@ -1355,7 +1357,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying '(long )?long', got 'NoneType'"
+            ValueError, "longFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceLongFuncOf_(self.ocobj)
 
@@ -1397,7 +1399,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'unsigned long long', got 'NoneType'"
+            ValueError, "ulongFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj)
 
@@ -1437,7 +1439,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long long', got 'NoneType'"
+            ValueError, "longlongFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
 
@@ -1483,7 +1485,7 @@ class OCPyTestSimpleCalls(TestCase):
         ):
             self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
-            ValueError, "depythonifying 'unsigned long long', got 'NoneType'"
+            ValueError, "ulonglongFunc: returned None, expecting a value"
         ):
             self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj)
 

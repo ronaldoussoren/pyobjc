@@ -5111,6 +5111,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
             goto cleanup;
             // LCOV_EXCL_STOP
         }
+        memset(values[i + 1], 0, PyObjCRT_SizeOfType(typestr));
         [invocation getArgument:values[i + 1] atIndex:i];
     }
 
@@ -5124,11 +5125,29 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
         goto cleanup;
         // LCOV_EXCL_STOP
     }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ffi_call(&cif, FFI_FN(method), values[0], values + 1);
+        } @catch (NSObject* localException) {
 
-    ffi_call(&cif, FFI_FN(method), values[0], values + 1);
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
-    if (values[0] != &ffi_type_void) {
-        [invocation setReturnValue:values[0]];
+    if (PyErr_Occurred()) {
+        rv = -1;
+        goto cleanup;
+    }
+
+    if (values[0] != NULL) {
+        @try {
+            [invocation setReturnValue:values[0]];
+        } @catch (NSObject* localException) {
+
+            PyObjCErr_FromObjC(localException);
+            rv = -1;
+            goto cleanup;
+        }
     }
     rv = 0;
 
