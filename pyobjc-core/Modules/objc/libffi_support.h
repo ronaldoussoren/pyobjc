@@ -69,6 +69,8 @@ extern PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
 extern Py_ssize_t validate_callable_signature(PyObject* callable, SEL sel,
                                               PyObjCMethodSignature* methinfo);
 
+extern int PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation);
+
 #if PY_VERSION_HEX >= 0x03090000
 /*
  * "Simple" variants that reduce calling overhead for a large subset

@@ -5045,4 +5045,101 @@ PyObjCFFI_FreeClosure(IMP closure)
     return userdata;
 }
 
+/*
+ * Call a method IMP using the information in the invocation, and
+ * update that invocation with the return value.
+ *
+ * This is used by the implementation of -forwardInvocation and is
+ * not performance critical. To avoid duplicating the logic in
+ * method_stub() here this function just constructs a call frame
+ * using libffi and calls the IMP through that.
+ *
+ * The caller is responsible for ensuring that the IMP is not
+ * calling forwardInvocation again...
+ */
+int
+PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
+{
+    int    rv = -1;
+    size_t i;
+    PyObjC_Assert(method != NULL, -1);
+    PyObjC_Assert(invocation != nil, -1);
+
+    NSMethodSignature* signature = [invocation methodSignature];
+    PyObjC_Assert(signature != NULL, -1);
+
+    ffi_type*   arglist[MAX_ARGCOUNT];
+    void*       values[MAX_ARGCOUNT];
+    const char* typestr;
+
+    /* Clear the lists, makes cleaning up easier */
+    memset(arglist, 0, sizeof(arglist));
+    memset(values, 0, sizeof(values));
+
+    typestr = [signature methodReturnType];
+    PyObjC_Assert(typestr != NULL, -1);
+
+    arglist[0] = PyObjCFFI_Typestr2FFI(typestr);
+    if (arglist[0] == NULL) {
+        return -1;
+    }
+    if (*typestr == _C_VOID) {
+        values[0] = NULL;
+    } else {
+        values[0] = PyMem_Malloc(PyObjCRT_SizeOfType(typestr));
+        if (values[0] == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            rv = -1;
+            goto cleanup;
+            // LCOV_EXCL_STOP
+        }
+    }
+
+    for (i = 0; i < [signature numberOfArguments]; i++) {
+        typestr        = [signature getArgumentTypeAtIndex:i];
+        arglist[i + 1] = PyObjCFFI_Typestr2FFI(typestr);
+        if (arglist[i + 1] == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            rv = -1;
+            goto cleanup;
+            // LCOV_EXCL_STOP
+        }
+        values[i + 1] = PyMem_Malloc(PyObjCRT_SizeOfType(typestr));
+        if (values[i + 1] == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            rv = -1;
+            goto cleanup;
+            // LCOV_EXCL_STOP
+        }
+        [invocation getArgument:values[i + 1] atIndex:i];
+    }
+
+    ffi_cif cif;
+    int     r =
+        ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)[signature numberOfArguments],
+                     arglist[0], arglist + 1);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        rv = -1;
+        goto cleanup;
+        // LCOV_EXCL_STOP
+    }
+
+    ffi_call(&cif, FFI_FN(method), values[0], values + 1);
+
+    if (values[0] != &ffi_type_void) {
+        [invocation setReturnValue:values[0]];
+    }
+    rv = 0;
+
+cleanup:
+    for (i = 0; i < MAX_ARGCOUNT; i++) {
+        if (values[i] != NULL) {
+            PyMem_Free(values[i]);
+        }
+    }
+
+    return rv;
+}
+
 NS_ASSUME_NONNULL_END

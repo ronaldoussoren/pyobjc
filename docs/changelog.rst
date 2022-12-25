@@ -15,18 +15,6 @@ These changes were done because it simplifies the code base, and makes it
 easier to evolve the code (which has already led to a number of easy-of-use
 improvements as described below).
 
-* This release soft-deprecates using ``NSInvocation`` to call methods
-  on on Python subclasses because this feature has a fairly complex
-  implementation that doesn't quite match the regular path for calling
-  methods.
-
-  Note that the implementation of ``-[NSObject forwardInvocation:]``
-  always raises an exception.
-
-  Please let me know if removing the ``forwardInvocation:`` implementation
-  for methods implemented in Python would be problematic for you. See also
-  issue :issue:`523`.
-
 * :issue:`306`: The code that converts a Python callable into an ``objc.selector``
   when creating an Objective-C class is now written in Python instead of
   Objective-C.
@@ -313,6 +301,16 @@ improvements as described below).
   The new implementation is also more strict in the values of selectors that are accepted,
   all selectors not be instances of ``objc.native_selector`` and must have a ``callable``
   attribute that is not ``Nonte``.
+
+* :issue:`523`: PyObjC's default implementation for ``-forwardInvocation:`` now calls the
+  method stub (``IMP``) through libffi, instead of trying to reproduce the logic
+  of the method stub in the implementation for ``-forwardInvocation:``. This removes about
+  300 lines of C code and makes sure the semantics of message forwarding match that of
+  regular method calls.
+
+  This only affects subclasses of ``NSObject`` implemented in Python, the bridge contains
+  a second implementation of ``forwardInvocation:`` for regular Python class with limited
+  functionality (and very low performance).
 
 Version 9.0.1
 -------------

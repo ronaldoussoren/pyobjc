@@ -8,10 +8,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: See comment at definition */
-static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
-                                             BOOL* isAlloc, BOOL* isCFAlloc);
-
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args,
@@ -1131,25 +1127,10 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
     NSInvocation* invocation = *(NSInvocation**)args[2];
     SEL           theSelector;
 
-    PyObject*              arglist;
-    PyObject*              result;
-    PyObject*              v;
-    BOOL                   isAlloc;
-    BOOL                   isCFAlloc;
-    Py_ssize_t             i;
-    Py_ssize_t             len;
-    PyObjCMethodSignature* signature;
-    const char*            type;
-    void*                  argbuf = NULL;
-    int                    err;
-    Py_ssize_t             arglen;
-    PyObject*              pymeth;
-    PyObject*              pyself;
-    int                    have_output = 0;
-    PyGILState_STATE       state       = PyGILState_Ensure();
+    PyGILState_STATE state = PyGILState_Ensure();
 
     /* XXX: Shouldn't this use id_to_python? */
-    pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    PyObject* pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     if (pyself == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
@@ -1157,16 +1138,25 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         // LCOV_EXCL_STOP
     }
 
+    /*
+     * First check if this is a method that's implemented in Python,
+     * if not just call super. This avoids problems when super's
+     * methodForSelector returns an IMP that invokes forwardInvocation
+     * again.
+     */
+
     Py_BEGIN_ALLOW_THREADS
         @try {
             theSelector = [invocation selector];
         } @catch (NSObject* localException) {
+            /* XXX: This is wrong, releasing the GIL while we don't hold it */
+            Py_DECREF(pyself);
             PyGILState_Release(state);
             @throw;
         }
     Py_END_ALLOW_THREADS
 
-    pymeth = PyObjCObject_FindSelector(pyself, theSelector);
+    PyObject* pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
     if ((pymeth == NULL) || PyObjCNativeSelector_Check(pymeth)) {
         struct objc_super spr;
@@ -1185,405 +1175,28 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
                                                                               invocation);
         return;
     }
+    Py_CLEAR(pymeth);
+    Py_CLEAR(pyself);
 
-    signature =
-        PyObjCMethodSignature_WithMetaData(PyObjCSelector_Signature(pymeth), NULL, NO);
-    len = Py_SIZE(signature);
+    /*
+     * The method is implemented in Python. Fetch the IMP and call it through
+     * libffi (to avoid having to reproduce the method stub implementation
+     * in this function).
+     */
 
-    Py_XDECREF(pymeth);
-    pymeth = NULL;
+    IMP method = [self methodForSelector:theSelector];
+    if (method == NULL) {
+        PyGILState_Release(state);
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"cannot resolve selector"
+                                     userInfo:nil];
+    }
 
-    arglist = PyList_New(1);
-    if (arglist == NULL) {
-        Py_DECREF(signature);
+    if (PyObjCFFI_CallUsingInvocation(method, invocation) == -1) {
         PyObjCErr_ToObjCWithGILState(&state);
         return;
     }
-
-    PyList_SET_ITEM(arglist, 0, pyself);
-    pyself = NULL;
-
-    for (i = 2; i < len; i++) {
-        type = signature->argtype[i]->type;
-        if (type == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_InternalError, "corrupt metadata");
-            Py_DECREF(arglist);
-            Py_DECREF(signature);
-            PyObjCErr_ToObjCWithGILState(&state);
-            return;
-            // LCOV_EXCL_STOP
-        }
-
-        arglen = PyObjCRT_SizeOfType(type);
-
-        if (arglen == -1) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(arglist);
-            Py_DECREF(signature);
-            PyObjCErr_ToObjCWithGILState(&state);
-            return;
-            // LCOV_EXCL_STOP
-        }
-
-        argbuf = PyMem_Malloc(arglen + 64);
-
-        [invocation getArgument:argbuf atIndex:i];
-
-        /* XXX: this needs a lot of work to adapt to the new metadata!!! */
-
-        switch (*type) {
-        case _C_INOUT:
-            if (type[1] == _C_PTR) {
-                have_output++;
-            }
-            /* FALL THROUGH */
-        case _C_IN:
-        case _C_CONST:
-            if (type[1] == _C_PTR) {
-                v = pythonify_c_value(type + 2, *(void**)argbuf);
-            } else {
-                v = pythonify_c_value(type + 1, argbuf);
-            }
-            break;
-        case _C_OUT:
-            if (type[1] == _C_PTR) {
-                have_output++;
-            }
-            PyMem_Free(argbuf);
-            argbuf = NULL;
-            v      = Py_None;
-            Py_INCREF(Py_None);
-            break;
-        default:
-            v = pythonify_c_value(type, argbuf);
-        }
-        PyMem_Free(argbuf);
-        argbuf = NULL;
-
-        if (v == NULL) {
-            Py_DECREF(arglist);
-            Py_DECREF(signature);
-            PyObjCErr_ToObjCWithGILState(&state);
-            return;
-        }
-
-        if (PyList_Append(arglist, v) < 0) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(arglist);
-            Py_DECREF(signature);
-            PyObjCErr_ToObjCWithGILState(&state);
-            return;
-            // LCOV_EXCL_STOP
-        }
-    }
-
-    v = PyList_AsTuple(arglist);
-    if (v == NULL) {
-        Py_DECREF(arglist);
-        Py_DECREF(signature);
-        PyObjCErr_ToObjCWithGILState(&state);
-        return;
-    }
-    Py_DECREF(arglist);
-    arglist = v;
-    v       = NULL;
-
-    result = PyObjC_CallPython(self, theSelector, arglist, &isAlloc, &isCFAlloc);
-    Py_DECREF(arglist);
-    if (result == NULL) {
-        Py_DECREF(signature);
-        PyObjCErr_ToObjCWithGILState(&state);
-        return;
-    }
-
-    type   = signature->rettype->type;
-    arglen = PyObjCRT_SizeOfType(type);
-
-    if (arglen == -1) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(signature);
-        PyObjCErr_ToObjCWithGILState(&state);
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    if (!have_output) {
-        if (*type != _C_VOID && *type != _C_ONEWAY) {
-            argbuf = PyMem_Malloc(arglen + 64);
-
-            err = depythonify_c_value(type, result, argbuf);
-            if (err == -1) {
-                PyMem_Free(argbuf);
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                return;
-            }
-            if (isAlloc) {
-                [(*(id*)argbuf) retain];
-            } else if (isCFAlloc) {
-                if (*(id*)argbuf != nil) {
-                    CFRetain((*(id*)argbuf));
-                }
-            }
-            [invocation setReturnValue:argbuf];
-            PyMem_Free(argbuf);
-        }
-        Py_DECREF(result);
-
-    } else {
-        Py_ssize_t idx;
-        PyObject*  real_res;
-
-        if (*type == _C_VOID && have_output == 1) {
-            /* One output argument, and a 'void' return value,
-             * the python method returned just the output
-             * argument
-             */
-            /* XXX: This should be cleaned up, unnecessary code
-             * duplication
-             */
-
-            for (i = 2; i < len; i++) {
-                void* ptr;
-                type = signature->argtype[i]->type;
-
-                if (arglen == -1) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(signature);
-                    PyObjCErr_ToObjCWithGILState(&state);
-                    return;
-                    // LCOV_EXCL_STOP
-                }
-
-                switch (*type) {
-                case _C_INOUT:
-                case _C_OUT:
-                    if (type[1] != _C_PTR) {
-                        continue;
-                    }
-                    type += 2;
-                    break;
-                default:
-                    continue;
-                }
-
-                [invocation getArgument:&ptr atIndex:i];
-                err = depythonify_c_value(type, result, ptr);
-                if (err == -1) {
-                    Py_DECREF(signature);
-                    PyObjCErr_ToObjCWithGILState(&state);
-                    return;
-                }
-                if (Py_REFCNT(result) == 1 && type[0] == _C_ID) {
-                    /* make sure return value doesn't die before
-                     * the caller can get its hands on it.
-                     */
-                    [[*(id*)ptr retain] autorelease];
-                }
-
-                /* We have exactly 1 output argument */
-                break;
-            }
-
-            Py_DECREF(signature);
-            Py_DECREF(result);
-            PyGILState_Release(state);
-            return;
-        }
-
-        if (*type != _C_VOID) {
-            if (!PyTuple_Check(result) || PyTuple_Size(result) != have_output + 1) {
-                PyErr_Format(PyExc_TypeError, "%s: Need tuple of %d arguments as result",
-                             sel_getName(theSelector), have_output + 1);
-                Py_DECREF(result);
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                return;
-            }
-            idx      = 1;
-            real_res = PyTuple_GET_ITEM(result, 0);
-
-            argbuf = PyMem_Malloc(arglen + 64);
-            if (argbuf == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_NoMemory();
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                PyMem_Free(argbuf);
-                return;
-                // LCOV_EXCL_STOP
-            }
-
-            err = depythonify_c_value(type, real_res, argbuf);
-            if (err == -1) {
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                PyMem_Free(argbuf);
-                return;
-            }
-
-            if (isAlloc) {
-                [(*(id*)argbuf) retain];
-
-            } else if (isCFAlloc) {
-                CFRetain(*(id*)argbuf);
-            }
-
-            [invocation setReturnValue:argbuf];
-            PyMem_Free(argbuf);
-
-        } else {
-            if (!PyTuple_Check(result) || PyTuple_Size(result) != have_output) {
-                PyErr_Format(PyExc_TypeError, "%s: Need tuple of %d arguments as result",
-                             sel_getName(theSelector), have_output);
-                Py_DECREF(signature);
-                Py_DECREF(result);
-                PyObjCErr_ToObjCWithGILState(&state);
-                return;
-            }
-            idx = 0;
-        }
-
-        for (i = 2; i < len; i++) {
-            void* ptr;
-            type = signature->argtype[i]->type;
-
-            if (arglen == -1) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                return;
-                // LCOV_EXCL_STOP
-            }
-
-            switch (*type) {
-            case _C_INOUT:
-            case _C_OUT:
-                if (type[1] != _C_PTR) {
-                    continue;
-                }
-                type += 2;
-                break;
-            default:
-                continue;
-            }
-
-            [invocation getArgument:&ptr atIndex:i];
-            v   = PyTuple_GET_ITEM(result, idx++);
-            err = depythonify_c_value(type, v, ptr);
-            if (err == -1) {
-                Py_DECREF(signature);
-                PyObjCErr_ToObjCWithGILState(&state);
-                return;
-            }
-            if (Py_REFCNT(v) == 1 && type[0] == _C_ID) {
-                /* make sure return value doesn't die before
-                 * the caller can get its hands on it.
-                 */
-                [[*(id*)ptr retain] autorelease];
-            }
-        }
-        Py_DECREF(result);
-    }
-    Py_DECREF(signature);
     PyGILState_Release(state);
-}
-
-/*
- * XXX: Function PyObjC_CallPython should be moved
- *
- * XXX: Move API to vectorcall convention, and possibly inline in
- * its sole caller.
- *
- * XXX: Only used by "forwardInvocation", which might not be necessary!
- */
-static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
-                                             BOOL* isAlloc, BOOL* isCFAlloc)
-{
-    PyObject* pyself = NULL;
-    PyObject* pymeth = NULL;
-    PyObject* result;
-
-    pyself = id_to_python(self);
-    if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
-    }
-
-    if (PyObjCClass_Check(pyself)) {
-        pymeth = PyObjCClass_FindSelector(pyself, selector, YES);
-    } else {
-        pymeth = PyObjCObject_FindSelector(pyself, selector);
-    }
-
-    if (pymeth == NULL) {
-        Py_DECREF(pyself);
-        return NULL;
-    }
-
-    if (NULL != ((PyObjCSelector*)pymeth)->sel_self) {
-        /* The selector is a bound selector, we didn't expect that...*/
-        PyObject* arg_self;
-
-        arg_self = PyTuple_GET_ITEM(arglist, 0);
-        if (arg_self == NULL) {
-            return NULL;
-        }
-        if (arg_self != ((PyObjCSelector*)pymeth)->sel_self) {
-
-            PyErr_SetString(PyExc_TypeError, "PyObjC_CallPython called with 'self' and "
-                                             "a method bound to another object");
-            return NULL;
-        }
-
-        arglist = PyTuple_GetSlice(arglist, 1, PyTuple_Size(arglist));
-        if (arglist == NULL) {
-            return NULL;
-        }
-    } else {
-        Py_INCREF(arglist);
-    }
-
-    if (isAlloc != NULL) {
-        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(pymeth);
-        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(arglist);
-            Py_DECREF(pymeth);
-            Py_DECREF(pyself);
-            return NULL;
-            // LCOV_EXCL_STOP
-
-        } else {
-            *isAlloc = methinfo->rettype->alreadyRetained;
-        }
-    }
-
-    if (isCFAlloc != NULL) {
-        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(pymeth);
-        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(arglist);
-            Py_DECREF(pymeth);
-            Py_DECREF(pyself);
-            return NULL;
-            // LCOV_EXCL_STOP
-        } else {
-            *isCFAlloc = methinfo->rettype->alreadyCFRetained;
-        }
-    }
-
-    result = PyObject_Call(pymeth, arglist, NULL);
-    Py_DECREF(arglist);
-    Py_DECREF(pymeth);
-    Py_DECREF(pyself);
-
-    /* XXX: This test is spurious, remove once test coverage is ok */
-    if (result == NULL) {
-        return NULL;
-    }
-
-    return result;
 }
 
 static void
