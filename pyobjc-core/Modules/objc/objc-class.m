@@ -561,70 +561,35 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     if (arg_protocols != NULL) {
-        PyObject*  seq;
-        Py_ssize_t i, seqlen;
+        PyObject* args[] = {NULL, protocols, arg_protocols};
 
-        seq = PySequence_Fast(arg_protocols, "'protocols' not a sequence?");
-        if (seq == NULL) {
+        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_extend, args + 1,
+                                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (r == NULL) {
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
         }
-
-        seqlen = PySequence_Fast_GET_SIZE(seq);
-        for (i = 0; i < seqlen; i++) {
-            if (PyList_Append( // LCOV_BR_EXCL_LINE
-                    protocols, PySequence_Fast_GET_ITEM(seq, i))
-                == -1) {
-                // LCOV_EXCL_START
-                Py_DECREF(seq);
-                Py_DECREF(protocols);
-                Py_DECREF(real_bases);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
-        }
-        Py_DECREF(seq);
+        Py_DECREF(r);
     }
 
-    /* Also look for '__pyobjc_protocols__' in the class dictionary,
-     * makes it possible to write code that works in Python 2 as well
-     * as python 3.
-     */
+    /* Also look for '__pyobjc_protocols__' in the class dictionary. */
     arg_protocols = PyDict_GetItemString(dict, "__pyobjc_protocols__");
     if (arg_protocols != NULL) {
-        PyObject*  seq;
-        Py_ssize_t i, seqlen;
+        PyObject* args[] = {NULL, protocols, arg_protocols};
 
-        seq = PySequence_Fast(arg_protocols, "'__pyobjc_protocols__' not a sequence?");
-        if (seq == NULL) {
+        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_extend, args + 1,
+                                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (r == NULL) {
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
         }
-
-        seqlen = PySequence_Fast_GET_SIZE(seq);
-        for (i = 0; i < seqlen; i++) {
-            if (PyList_Append( // LCOV_BR_EXCL_LINE
-                    protocols, PySequence_Fast_GET_ITEM(seq, i))
-                == -1) {
-                // LCOV_EXCL_START
-                Py_DECREF(seq);
-                Py_DECREF(protocols);
-                Py_DECREF(real_bases);
-                Py_DECREF(hiddenSelectors);
-                Py_DECREF(hiddenClassSelectors);
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
-        }
-        Py_DECREF(seq);
+        Py_DECREF(r);
     }
 
     metadict = PyDict_New();

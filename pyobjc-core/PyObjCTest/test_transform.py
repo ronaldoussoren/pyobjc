@@ -1964,6 +1964,15 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(len(rval[3]), 1)
         self.assertIs(rval[3][0], meta_dict["method"])
 
-    # XXX: Protocol validation is currently in a different part of the code, first replace the code
-    #      in class-builder and then grow the functionality.
-    # - Protocol validation
+    def test_invalid_protocols(self):
+        with self.assertRaisesRegex(
+            TypeError,
+            "protocols list contains object that isn't "
+            "an Objective-C protocol, but type int",
+        ):
+            class_dict = {}
+            meta_dict = {}
+            self.processor(class_dict, meta_dict, NSObject, [42])
+
+    # XXX: Should test validate_protocols here, but is already fully covered by
+    #      tests in test_protocols.

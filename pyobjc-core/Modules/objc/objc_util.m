@@ -19,6 +19,7 @@ PyObject* PyObjCExc_ObjCPointerWarning;
 
 PyObject* PyObjCNM_insert;
 PyObject* PyObjCNM_append;
+PyObject* PyObjCNM_extend;
 PyObject* PyObjCNM_timestamp;
 PyObject* PyObjCNM_fromtimestamp;
 PyObject* PyObjCNM_strftime;
@@ -67,6 +68,7 @@ PyObjCUtil_Init(PyObject* module)
 
     NEW_STR(PyObjCNM_insert, "insert");
     NEW_STR(PyObjCNM_append, "append");
+    NEW_STR(PyObjCNM_extend, "extend");
     NEW_STR(PyObjCNM_timestamp, "timestamp");
     NEW_STR(PyObjCNM_fromtimestamp, "fromtimestamp");
     NEW_STR(PyObjCNM_strftime, "strftime");

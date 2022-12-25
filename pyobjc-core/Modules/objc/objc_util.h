@@ -110,6 +110,7 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
 
 extern PyObject* PyObjCNM_insert;
 extern PyObject* PyObjCNM_append;
+extern PyObject* PyObjCNM_extend;
 extern PyObject* PyObjCNM_timestamp;
 extern PyObject* PyObjCNM_fromtimestamp;
 extern PyObject* PyObjCNM_strftime;

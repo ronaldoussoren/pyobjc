@@ -54,6 +54,33 @@ class TestInformalProtocols(TestCase):
                 ),
             )
 
+        with self.assertRaisesRegex(TypeError, r"Item 1 is a native selector"):
+            objc.informal_protocol(
+                "name",
+                (
+                    objc.selector(
+                        None,
+                        selector=b"incompleteMethod",
+                        signature=b"I@:",
+                        isRequired=1,
+                    ),
+                    NSObject.pyobjc_instanceMethods.description,
+                ),
+            )
+
+        with self.assertRaisesRegex(TypeError, r"Item 0 has a callable"):
+            objc.informal_protocol(
+                "name",
+                (
+                    objc.selector(
+                        lambda self: 42,
+                        selector=b"incompleteMethod",
+                        signature=b"I@:",
+                        isRequired=1,
+                    ),
+                ),
+            )
+
     def testMissingProto(self):
         class ProtoClass1(NSObject):
             def testMethod(self):

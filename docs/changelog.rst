@@ -11,6 +11,10 @@ logic in Python (where the previous version used C). This does result in
 some minor semantic changes, but those should only affect edge cases and
 not normal user code.
 
+These changes were done because it simplifies the code base, and makes it
+easier to evolve the code (which has already led to a number of easy-of-use
+improvements as described below).
+
 * This release soft-deprecates using ``NSInvocation`` to call methods
   on on Python subclasses because this feature has a fairly complex
   implementation that doesn't quite match the regular path for calling
@@ -21,12 +25,11 @@ not normal user code.
 
   Please let me know if removing the ``forwardInvocation:`` implementation
   for methods implemented in Python would be problematic for you. See also
-  issue #523.
+  issue :issue:`523`.
 
-* #306: The code that converts a Python callable into an ``objc.selector``
+* :issue:`306`: The code that converts a Python callable into an ``objc.selector``
   when creating an Objective-C class is now written in Python instead of
-  Objective-C. This will make it easier to evolve that code in future
-  releases.
+  Objective-C.
 
   Note that the interface that the C extension uses to invoke Python
   code is not a public API and can change in minor releases.
@@ -80,7 +83,9 @@ not normal user code.
   selector name.
 
 * PEP-8 compatible multi-word method names are no longer converted
-  to selectors, e.g.::
+  to selectors, e.g.:
+
+  .. sourcecode:: python
 
     class MyObject(NSObject):
        def some_method(self, a, b):
@@ -90,8 +95,9 @@ not normal user code.
   decorator.
 
 * Method names containing double underscores are no longer converted
-  to selectors, e.g::
+  to selectors, e.g:
 
+  .. sourcecode:: python
 
     class MyObject(NSObject):
       def spam__(self, a, b):
@@ -106,7 +112,9 @@ not normal user code.
 * Introduce a new optional subkey in ``__metadata__()``: ``full_signature``
   contains the complete signature for a method.
 
-* Setting dunder names in a class will no longer create a selector::
+* Setting dunder names in a class will no longer create a selector:
+
+  .. sourcecode:: python
 
      def __dir__(self):
          return []
@@ -119,7 +127,9 @@ not normal user code.
   This matches the behaviour of defining dunder methods in a class
   definition.
 
-* Wrapping a python_method in a classmethod now works::
+* Wrapping a python_method in a classmethod now works:
+
+  .. sourcecode:: python
 
       class MyClass(NSObject):
           @classmethod
@@ -128,7 +138,9 @@ not normal user code.
               pass
 
 * Method definitions with varargs are now accepted for selectors
-  when the number of arguments expected in Objective-C "fits"::
+  when the number of arguments expected in Objective-C "fits":
+
+  .. sourcecode:: python
 
       class MyClass(NSObject):
          def correctMethod_(self, *args):
@@ -151,32 +163,36 @@ not normal user code.
   now use the selector of the superclass method instead of
   defaulting to a transformation of the method name.
 
-  ::
+  .. sourcecode:: python
 
-       class SuperClass(NSObject):
-            @objc.selector(selector=b"buttonPressed:")
-            def pressed(self):
-                ...
+      class SuperClass(NSObject):
+          @objc.selector(selector=b"buttonPressed:")
+          def pressed(self):
+              ...
 
 
-       class SubClass(SuperClass):
-           def pressed(self):
-               ...
+      class SubClass(SuperClass):
+          def pressed(self):
+              ...
 
-   In previous versions of PyObjC ``SubClass.pressed`` would have
-   been a selector with name ``b"pressed"``, in PyObjC 9.1 the
-   selector name is inherited from the super class (``b"buttonPressed:"``).
+  In previous versions of PyObjC ``SubClass.pressed`` would have
+  been a selector with name ``b"pressed"``, in PyObjC 9.1 the
+  selector name is inherited from the super class (``b"buttonPressed:"``).
 
 * Subclassing an ``NSCoder`` has an incompatible change. In previous
   version of PyObjC the "at" argument for, for example ``-[NSCoder decodeValueOfObjCType:at:]``
-  was not passed to Python, e.g.::
+  was not passed to Python, e.g.:
+
+  .. sourcecode:: python
 
      class MyCoder(NSCoder):
          def decodeValueOfObjCType_at_(self, encoding):
              ...
 
   As of PyObjC 9.1 the "at" argument must be present in the
-  the python argument list, and will always be passed None::
+  the python argument list, and will always be passed None:
+
+  .. sourcecode:: python
 
      class MyCoder(NSCoder):
          def decodeValueOfObjCType_at_(self, encoding, at):
@@ -218,7 +234,13 @@ not normal user code.
   defined through ``__slots__``) have the same Objective-C name, and that includes
   redefining a slot in a superclass.
 
-* Fix longstanding bug in class construction::
+  In previous versions this was not an error and the two ``objc.ivar`` objects
+  would use the same memory in the instance, which could lead to crashes if
+  the two did not have the same type encoding.
+
+* Fix longstanding bug in class construction:
+
+  .. sourcecode:: python
 
      class MyClass(NSObject):
         @objc.objc_method(selector="foobar")
@@ -235,20 +257,22 @@ not normal user code.
   instead of an ``objc.selector`` for hidden selectors implemented in Python, and those
   objects did not have the ``isHidden`` attribute set to true.
 
-* #506: Code no longer uses ``PySlice_GetIndicesEx``, which was deprecated
+* :issue:`506`: Code no longer uses ``PySlice_GetIndicesEx``, which was deprecated
   by CPython in 3.6.
 
 * Tweak pyobjc_setup.py to re-enable the error message when trying to install
   framework bindings on systems other than macOS.
 
 * "Hidden" selectors implemented in Python can now be introspected though ``pyobjc_instanceMethods`` and
-  ``pyobjc_classMethod``. In previous versions the following assertion would fail::
+  ``pyobjc_classMethod``. In previous versions the following assertion would fail:
+
+  .. sourcecode:: python
 
        class MyClass(NSObject):
            def hidden(self):
-               ...
-           hidden = objc.selector(hidden, isHidden=True)
+               pass
 
+           hidden = objc.selector(hidden, isHidden=True)
 
        assert isinstance(MyClass.pyobjc_instanceMethods.hidden)
 
@@ -261,30 +285,52 @@ not normal user code.
   the method will result in a "native" selector, not the original one due to the
   way KVO is implemented in the system.
 
-* #522: Remove the implementation of ``respondsToSector:`` and ``methodSignatureForSelector:``.
-
+* :issue:`522`: Remove the implementation of ``respondsToSector:`` and ``methodSignatureForSelector:``.
 
   In previous versions PyObjC included custom implementation of these methods for
   subclasses of ``NSObject`` implemented in Python, but the default implementation
   in ``NSObject`` works just as well for Python classes.
 
+* Creating an ``objc.ivar`` will now raise an exception if the specified type encoding
+  is not valid. Previous versions would raise on the first use of the instance variable.
+
+* :issue:`522`: Reimplemented ``objc.informal_protocol`` in Python
+
+  The new implementation adds a number of new methods to give ``objc.informal_protocol`` the
+  same interface as ``objc.formal_protocol``, which simplifies the implementation of
+  code using protocols.
+
+  That said, ``objc.informal_protocol`` still has a ``selectors`` attribute that is not
+  present on ``objc.formal_protocol``. This will not change.
+
+* :issue:`522`: The code that validates if a new class conforms to all protocols it claims to
+  conform to is now written in Python.
+
+  As a side effect of this the error message for an invalid protocol conformance definition
+  no longer mentions with definition was invalid (the ``protocols`` keyword or the
+  ``__pyobjc_protocols__`` class attribute).
+
+  The new implementation is also more strict in the values of selectors that are accepted,
+  all selectors not be instances of ``objc.native_selector`` and must have a ``callable``
+  attribute that is not ``Nonte``.
+
 Version 9.0.1
 -------------
 
-* #512: Fix metadata for ``webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:`` and
+* :issue:`512`: Fix metadata for ``webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:`` and
   ``webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:`` in the WebKit
   bindings.
 
-* #508: Reintroduce support for bridgesupport files that was dropped in 9.0.
+* :issue:`508`: Reintroduce support for bridgesupport files that was dropped in 9.0.
 
   There are external users for this interface and the replacement used by PyObjC itself
   is not yet in a state where it can be used by other projects.
 
 * Framework bindings were updated for the SDK included in Xcode 14.1
 
-* #517: Fix bad markup in overview of wrapped frameworks
+* :issue:`517`: Fix bad markup in overview of wrapped frameworks
 
-* #519: Fix compile error with Python 3.12
+* :issue:`519`: Fix compile error with Python 3.12
 
 Version 9.0
 -----------
@@ -328,34 +374,34 @@ Version 9.0
 * The extension API ("pyobjc-api.h") has a changed interface for creating method IMPs, because
   of this extensions for older versions of PyObjC cannot be used with PyObjC 9.
 
-* #416: PyObjC 9.0 requires Python 3.7 or later
+* :issue:`416`: PyObjC 9.0 requires Python 3.7 or later
 
-* #384: Remove support for BridgeSupport files
+* :issue:`384`: Remove support for BridgeSupport files
 
   The bridge itself hasn't used these files for a long time, and system
   bridgesupport files are basically unusable.
 
-* #415: Remove ``objc._setClassExtender``
+* :issue:`415`: Remove ``objc._setClassExtender``
 
   This was an internal function that's no longer used by PyObjC itself.
 
-* #429: Remove ``-[OC_PythonNumber getValue:forType:]``
+* :issue:`429`: Remove ``-[OC_PythonNumber getValue:forType:]``
 
   This method is never actually used by the system and is not
   part of the ``NSNumber`` interface (but possibly was in the past)
 
-* 438: Removed bindings for the ``Message`` and ``ServerNotification``
+* :issue:`438`: Removed bindings for the ``Message`` and ``ServerNotification``
   frameworks.
 
   Both frameworks were removed in macOS 10.9 and hence cannot be
   used on a platform that's still supported by PyObjC.
 
-* #451: Removed the ``type`` attribute for ``ObjCPointer``
+* :issue:`451`: Removed the ``type`` attribute for ``ObjCPointer``
 
   The ``typestr`` attribute contains the same value and has
   more consistent naming with the rest of PyObjC.
 
-* #436: ``Quarrtz.CVPixelBufferCreateWithBytes`` now conforms to the
+* :issue:`436`: ``Quarrtz.CVPixelBufferCreateWithBytes`` now conforms to the
   PyObjC standard for returning values: it returns a tuple of two
   values, the C return value and the value return through ``pixelBufferOut``.
 
@@ -366,7 +412,7 @@ Version 9.0
   exactly the same as the types ``BOOL`` and ``bool`` have the same size
   and representation on arm64 and x86_64.
 
-* #94: Add support for SIMD types in APIs (types such as ``vector_float3``)
+* :issue:`94`: Add support for SIMD types in APIs (types such as ``vector_float3``)
 
   The python representation of these types are types with the same name in
   defined in :mod:`objc.simd`.
@@ -402,16 +448,16 @@ Version 9.0
 * The Objective-C proxy for Python methods that require a custom
   helper (instead of using libffi) now use ``imp_implementationWithBlock``.
 
-* #492: For a number of classes in ``AVFoundation``  the system actually uses
+* :issue:`492`: For a number of classes in ``AVFoundation``  the system actually uses
   instances from a parallel class hierarchy with ``_Tundra`` as a suffix of the
   class name.
 
   Updated the metadata generator to automatically register the same metadata updates
   for these classes as for the original classes.
 
-* #493: Fix typos in CoreMedioIO metadata for CoreFoundation types
+* :issue:`493`: Fix typos in CoreMedioIO metadata for CoreFoundation types
 
-* #495: Added two new assertions to ``PyObjCTools.TestSupport.TestCase``:
+* :issue:`495`: Added two new assertions to ``PyObjCTools.TestSupport.TestCase``:
 
   - ``assertArgIsIDLike``
   - ``assertResultIsIDLike``
@@ -422,7 +468,7 @@ Version 9.0
 * Fix internal error when an object that cannot be used in a boolean context
   is used for an ObjC argument that expects a ``bool`` or ``BOOL`` value.
 
-* #502: Fix incompatibility with Nuitka.
+* :issue:`502`: Fix incompatibility with Nuitka.
 
   Earlier version of PyObjC failed when compiled using Nuitka, this
   version does work when using Nuitka 1.1.6 or later.
@@ -443,18 +489,18 @@ Version 9.0
 * Move helpers for NSInvocation from pyobjc-framework-Cocoa to
   pyobjc-core.
 
-* #505: Don't use static buffer during creation of "native" selector objects
+* :issue:`505`: Don't use static buffer during creation of "native" selector objects
 
   This can avoid an ``objc.error`` exception when introspecting existing
   Cocoa classes.
 
-* #479: Revert change that made it impossible to replace a method
+* :issue:`479`: Revert change that made it impossible to replace a method
   with a property.
 
 Version 8.6
 -----------
 
-* #468: Fix setup.py for framework bindings to ensure that
+* :issue:`468`: Fix setup.py for framework bindings to ensure that
   ``python setup.py build_ext`` works for bindings that don't
   contain a C extension.
 
@@ -579,7 +625,7 @@ resulting in a number of minor bug fixes.
   The method is primarily a debugging aid for development of
   PyObjC itself.
 
-* #456: ``ApplicationServices.AXIsProcessTrustedWithOptions`` and
+* :issue:`456`: ``ApplicationServices.AXIsProcessTrustedWithOptions`` and
   ``Quartrz.CGPDFArrayGetObject`` had incorrect metadata.
 
   The testsuites for the various framework bindings now have a test
@@ -593,7 +639,7 @@ resulting in a number of minor bug fixes.
   :data:`objc._C_ATOMIC` is ignored by PyObjC (for now), and
   :data:`objc._C_COMPLEX` is not yet supported.
 
-* #456: Fix internal error for ``_C_OUT`` argument markup on
+* :issue:`456`: Fix internal error for ``_C_OUT`` argument markup on
   arguments that are CoreFoundation types.
 
   This can only happen with invalid metadata definitions in framework
@@ -601,7 +647,7 @@ resulting in a number of minor bug fixes.
   assertion error. With this change the "output" argument is always
   ``None`` in the result.
 
-* #463: Fix metadata for a number of functions with a C string argument
+* :issue:`463`: Fix metadata for a number of functions with a C string argument
 
   The metadata for the following functions was changed to have
   the correct type encoding for string argument, to fix issues with
@@ -679,11 +725,11 @@ resulting in a number of minor bug fixes.
 Version 8.4.1
 -------------
 
-* #455: ``pip install pyobjc`` on a macOS 12.2 machine tried
+* :issue:`455`: ``pip install pyobjc`` on a macOS 12.2 machine tried
   to install ``pyobjc-framework-ScreenCaptureKit``, which is
   only can be installed on macOS 12.3 or later.
 
-* #456: Fix bad metadata for ``HIServices.AXIsProcessTrustedWithOptions``
+* :issue:`456`: Fix bad metadata for ``HIServices.AXIsProcessTrustedWithOptions``
 
 * Wheels were build with Xcode 13.3 RC
 
@@ -713,7 +759,7 @@ Version 8.4
   The change in 8.3 changed long standng behaviour for mutable
   strings and may have caused unintended problems.
 
-* #418: Added :class:`typing.NewType` definitions to the
+* :issue:`418`: Added :class:`typing.NewType` definitions to the
   various framework bindings for all enum types in Cocoa
   (such as ``NSComparisonResult``).
 
@@ -732,11 +778,11 @@ Version 8.4
   The actual representation of enum types is provisional
   and might change in the future.
 
-* #440: Added :class:`typing.NewType` definitions to the
+* :issue:`440`: Added :class:`typing.NewType` definitions to the
   various framework bindings for all ``NS_STRING_ENUM``,
   ``NS_TYPED_ENUM`` and ``NS_TYPED_EXTENSIBLE_ENUM`` types in Cocoa.
 
-* #432: Fix compatibility check when a class implements protocol ``NSObject``.
+* :issue:`432`: Fix compatibility check when a class implements protocol ``NSObject``.
 
   The following code used to fail the protocol implementation check:
 
@@ -750,7 +796,7 @@ Version 8.4
   former returns ``char``, the latter ``bool``).  The compatibility check now handles trivial
   differences like this.
 
-* #428: Class ``NSData`` now implements the API from :class:`bytes`. The methods that
+* :issue:`428`: Class ``NSData`` now implements the API from :class:`bytes`. The methods that
   return bytes in :class:`bytes` also return bytes in ``NSData``. This may change in a
   future version.
 
@@ -767,7 +813,7 @@ Version 8.4
 * ``NSData([1,2,3])`` and ``NSMutableData([1,2,3])`` now work the same
   as ``bytes([1,2,3])`` and ``bytearray([1,2,3])``.
 
-* #334: Workaround for catetory on NSMutableArray that introduces a conflicting pop method
+* :issue:`334`: Workaround for catetory on NSMutableArray that introduces a conflicting pop method
 
   Some class in Cocoa can at times introduce an (undocumented) selector ``-pop``
   on subclasses of ``NSArray``, which conflicts with a convenience method that
@@ -782,7 +828,7 @@ Version 8.4
   causing an assertion failure when running tests with "``python3 -Xdev``",
   as well as a hard crash due to using the API without holding the GIL.
 
-* #445: Workaround for Python 3.11 support
+* :issue:`445`: Workaround for Python 3.11 support
 
   Workaround for `BPO-46891 <https://bugs.python.org/issue46891>`_, which causes
   a hard crash in the PyObjC testsuite. With this workaround the tests for
@@ -948,7 +994,7 @@ of test coverage for the C code in pyobjc-core.
   a sequence of selectors that contains a value that isn't an instance
   of :class:`objc.selector`.
 
-* #435: Fix build problem with Xcode 13.3
+* :issue:`435`: Fix build problem with Xcode 13.3
 
   Xcode 13.3 introduces a new warning in ``-Wall``: ``-Wunused-but-set-variable``,
   and this found some code quality issues with PyObjC.
@@ -969,7 +1015,7 @@ for edge cases that don't happen in normal programs.
   will include updating package metadata to ensure that users of Python 3.6
   will keep using PyObjC 8.x.
 
-* #414: [Python 3.10] The representation for C structures, like
+* :issue:`414`: [Python 3.10] The representation for C structures, like
   ``Foundation.NSPoint`` now have a ``__match_args__`` attribute, which means
   it is now possible to use positional arguments to these types in match expressions.
 
@@ -1040,7 +1086,7 @@ for edge cases that don't happen in normal programs.
   method have been removed because they have a better alternative in the
   :mod:`unittest` library.
 
-* #404: Instances of the Python representation of C structs can now be pickled.
+* :issue:`404`: Instances of the Python representation of C structs can now be pickled.
 
   That is, instances of ``AppKit.NSPoint``, ``Foundation.NSRange``, etc. can
   be pickled. The exception are a number of types in the CoreAudio bindings
@@ -1063,7 +1109,7 @@ for edge cases that don't happen in normal programs.
 * Fix bug in lazyloader where fetching the module's ``__all__`` could
   raise :exc:`AttributeError` for some particular constants.
 
-* #317: Cleanup code dealing with libffi closures APIs on various versions
+* :issue:`317`: Cleanup code dealing with libffi closures APIs on various versions
   of macOS.
 
 * If fetching the ``__pyobjc_object__`` attribute during conversion from
@@ -1100,7 +1146,7 @@ for edge cases that don't happen in normal programs.
 
   Note that calling such function is not supported even with this bugfix.
 
-* #406: The "docstring" field in the function list argument for
+* :issue:`406`: The "docstring" field in the function list argument for
   :func:`objc.loadBundleFunctions` was effectively ignored. It is now
   part of the document string (``__doc__``) of the :class:`objc.function`
   object.
@@ -1139,7 +1185,7 @@ for edge cases that don't happen in normal programs.
   This changes the way class methods are added to :class:`objc.ivar` to
   be more correct in the CPython interpreter.
 
-* #425: Fix CoreMIDI bindings
+* :issue:`425`: Fix CoreMIDI bindings
 
   The CoreMIDI is a wheel with a limited ABI tag, but one of the two
   extensions was build without using the limited ABI, resulting in a wheel
@@ -1166,17 +1212,17 @@ Version 8.1
 * ``SomeClass.alloc()`` would raise an internal error in PyObjC 8 when
   this method returned ``nil``.
 
-* #399: Fix error message when passing wrong number of arguments in a
+* :issue:`399`: Fix error message when passing wrong number of arguments in a
   call of an Objective-C method
 
-* #399: Disable support for ``Py_TPFLAGS_METHOD_DESCRIPTOR`` in
+* :issue:`399`: Disable support for ``Py_TPFLAGS_METHOD_DESCRIPTOR`` in
   :class:`objc.selector` and :class:`objc.python_method`.
 
   I'm looking for a better solutions, but for now this is needed
   to avoid problems in code that stores a bound selector as class
   attribute.
 
-* #401: ``AppKit.NSCenterTextAlignment`` and ``AppKit.NSRightTextAlignment``
+* :issue:`401`: ``AppKit.NSCenterTextAlignment`` and ``AppKit.NSRightTextAlignment``
   had a wrong value for arm64 systems.
 
 * Update framework bindings for Xcode 13.2 (macOS 12.1 SDK)
@@ -1236,7 +1282,7 @@ Backward incompatible changes
   due to lack of the required runtime API, and that will now result in a crash
   because PyObjC no longer checks for availability of that runtime API.
 
-* #371: Remove manual bindings for a number of old CoreGraphics APIs
+* :issue:`371`: Remove manual bindings for a number of old CoreGraphics APIs
 
   The following functions are no longer available:
 
@@ -1317,21 +1363,21 @@ in older Python versions is unchanged except for the effects of general cleanup.
 Generic Implementation Quality
 ..............................
 
-* #391: Fix some spelling errors found by the
+* :issue:`391`: Fix some spelling errors found by the
   `codespell <https://pypi.org/project/codespell/>`_ tool.
 
   The codespell tool is also run as part of pre-commit hooks.
 
-* #296: use clang-format for Objective-C code
+* :issue:`296`: use clang-format for Objective-C code
 
   The Objective-C code for the various extensions has been reformatted
   using clang-format, and this enforced by a pre-commit hook.
 
-* #374: Use pyupgrade to modernize the code base
+* :issue:`374`: Use pyupgrade to modernize the code base
 
   This is enforced by a pre-commit hook.
 
-* #388: Added "nullability" attributes to Objectice-C sources for pyobjc-core.
+* :issue:`388`: Added "nullability" attributes to Objectice-C sources for pyobjc-core.
 
   This gives the compiler and clang static analyzer more information
   that can be used to pinpoint possible bugs in the implementation. As a
@@ -1368,7 +1414,7 @@ New features
   - ShazamKit (introduced in macOS 12.0)
 
 
-* #318: Implement support for ``__class_getitem__`` for Objective-C classes
+* :issue:`318`: Implement support for ``__class_getitem__`` for Objective-C classes
 
   The result of this is that effectively all Objective-C classes can be used
   as generic classes, without runtime type checking. This is meant to be used
@@ -1387,7 +1433,7 @@ New features
      and those do not yet exist.
 
 
-* #354: Add an option to install all framework bindings, including those not
+* :issue:`354`: Add an option to install all framework bindings, including those not
   relevant for the current platform. To use this:
 
   .. sourcecode:: sh
@@ -1398,7 +1444,7 @@ New features
 Other changes and bugfixes
 ..........................
 
-* #390: pyobjc-core is no longer linked with the Carbon framework.
+* :issue:`390`: pyobjc-core is no longer linked with the Carbon framework.
 
   Due to implicit dependencies this also required a change to the Metal
   bindings: those now import AppKit instead of Foundation.
@@ -1414,12 +1460,12 @@ Other changes and bugfixes
 
   This is needed for a new API introduced in macOS 12.
 
-* #371: Link extensions in the Quartz bindings to the Quartz frameworks
+* :issue:`371`: Link extensions in the Quartz bindings to the Quartz frameworks
 
   A number of C extensions in the Quartz bindings package were not
   linked to a framework. Those now link to the Quartz framework.
 
-* #378: Fix raising ``ImportError`` when doing ``from ApplicationServices import *``
+* :issue:`378`: Fix raising ``ImportError`` when doing ``from ApplicationServices import *``
 
   The root cause for this were private classes in system frameworks that contain
   a dot in their name (for example ``Swift.DispatchQueueShim``. Those names are
@@ -1432,7 +1478,7 @@ Other changes and bugfixes
 * Fix bindings for ``SKIndexCopyDocumentRefsForDocumentIDs``, that binding
   didn't work due to a typo in the metadata.
 
-* #365: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
+* :issue:`365`: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
   file in the source tree (that is, the tree switches to implicit namespace
   packages instead of the older setuptools style for namespace packages).
 
@@ -1442,7 +1488,7 @@ Other changes and bugfixes
 * ``development-support/run-testsuite`` now uses ``venv`` instead of
   ``virtualenv``. This removes a development dependency.
 
-* PR# 367: Tweak the code that calculates ``PyObjC_BUILD_RELEASE`` in
+* :pr:`367`: Tweak the code that calculates ``PyObjC_BUILD_RELEASE`` in
   the various setup.py files to deal with versions with more than two
   labels (can happen when building using Xcode 13 beta)
 
@@ -1455,7 +1501,7 @@ Other changes and bugfixes
 * Adjusted PyObjC testcases to check for 11.0 instead of 10.16
   now that testsupport uses the real platform version.
 
-* #385: Fix race condition the lazy importer
+* :issue:`385`: Fix race condition the lazy importer
 
   When two threads simultaneously try to get an attribute from a framework
   binding one of them might fail with an attribute error because information
@@ -1466,7 +1512,7 @@ Other changes and bugfixes
 * Fix support for ``AF_UNIX`` in the support code for ``struct sockaddr``.
 
 * The implementation for opaque pointer types (such as the proxy for
-  'NSZone*') has switched to :c:func:`PyType_FromSpec`.
+  ``NSZone*``) has switched to :c:func:`PyType_FromSpec`.
 
 * The :meth:`objc.FSRef.from_path` and :meth:`objc.FSRef.as_pathname`,
   methods now use the filesystem encoding instead of the default encoding.
@@ -1479,47 +1525,47 @@ Other changes and bugfixes
 Version 7.3
 -----------
 
-* #356: Explicitly error out when building for unsupported architectures
+* :issue:`356`: Explicitly error out when building for unsupported architectures
 
   "python setup.py build" will now fail with a clear error when
   trying to build PyObjC for a CPU architecture that is no longer
   supported (such as 32-bit Intel)
 
-* #319: Use memset instead of bzero in C code to clear memory
+* :issue:`319`: Use memset instead of bzero in C code to clear memory
 
   Based on a PR by GitHub user stbdang.
 
-* #348: Fix platform version guard for using protocols in
+* :issue:`348`: Fix platform version guard for using protocols in
   MetalPerformanceShaders bindings
 
-* #344: Fix test for CFMessagePortCreateLocal
+* :issue:`344`: Fix test for CFMessagePortCreateLocal
 
   The tests didn't actually test calling the callback function
   for CFMessagePortCreateLocal.
 
-* #349: Change calls to htonl in pyobjc-core to avoid compiler warning
+* :issue:`349`: Change calls to htonl in pyobjc-core to avoid compiler warning
 
   The original code had a 32-bit assumption (using 'long' to represent
   a 32-bit value), and that causes problems for some users build from
   source.
 
-* #315: Fix binding for ``SecAddSharedWebCredential`` (Security framework)
+* :issue:`315`: Fix binding for ``SecAddSharedWebCredential`` (Security framework)
 
   Trying to use this function will no longer crash Python.
 
-* #357: Calling ``Metal.MTLCopyAllDevices()`` no longer crashes
+* :issue:`357`: Calling ``Metal.MTLCopyAllDevices()`` no longer crashes
 
   The reference count of the result of this function was handled incorrect,
   causing access to an already deallocated value when the Python reference
   was garbage collected.
 
-* #260: Add manual bindings for AXValueCreate and AXValueGetValue in ApplicationServices
+* :issue:`260`: Add manual bindings for AXValueCreate and AXValueGetValue in ApplicationServices
 
   Calling these crashed in previous versions.
 
-* #320, #324: Fix the type encoding for a number of CoreFoundation types in the Security bindings
+* :issue:`320`, :issue:`324`: Fix the type encoding for a number of CoreFoundation types in the Security bindings
 
-* #336: Add core support for 'final' classes
+* :issue:`336`: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
   that is to disable subclassing for such classes.
@@ -1555,12 +1601,12 @@ Version 7.1
 
 * Add bindings for framework "AdServices" (new in macOS 11.1)
 
-* #333: Improve SDK version detection in framework bindings
+* :issue:`333`: Improve SDK version detection in framework bindings
 
 Version 7.0.1
 -------------
 
-* Issue #337: PyObjC doesn't work on Catalina or earlier
+* :issue:`337`: PyObjC doesn't work on Catalina or earlier
 
   Fix by Lawrence D'Anna.
 
@@ -1615,13 +1661,13 @@ Version 7.0
 Version 6.2.2
 -------------
 
-* #311: Build for the Metal bindings failed on macOS 10.14
+* :issue:`311`: Build for the Metal bindings failed on macOS 10.14
 
-* #309: Fix incompatibility with macOS 11 in framework loader
+* :issue:`309`: Fix incompatibility with macOS 11 in framework loader
 
 * The classifiers now correctly identify supported Python versions
 
-* #301: pyobjc-framework-Metal build failed on macOS mojave
+* :pr:`301`: pyobjc-framework-Metal build failed on macOS mojave
 
 * Python 3.10 support: Don't assume the result of Py_REFCNT, Py_SIZE and Py_TYPE are an lvalue.
 
@@ -1638,39 +1684,39 @@ Version 6.2.2
 
 * Add ``objc._C_BYREF``. This definition was missing, but isn't used in modern ObjC code.
 
-* PR 323: Remove leading slashes from detected SDK patch to avoid miscalculating the version.
+* :pr:`323`: Remove leading slashes from detected SDK patch to avoid miscalculating the version.
 
   Patch by GitHub user linuxfood.
 
-* PR 322: Avoid *None* error in PyObjCTools.AppHelper
+* :pr:`322`: Avoid *None* error in PyObjCTools.AppHelper
 
   Patch by github user mintho
 
-* PR 321: Fix typo in documentation
+* :pr:`321`: Fix typo in documentation
 
   Patch by github user russeldavis
 
 Version 6.2.1
 -------------
 
-* Issue #299: Ensure package 'pyobjc' won't try to build the PubSub bindings on macOS 10.15
+* :issue:`299`: Ensure package 'pyobjc' won't try to build the PubSub bindings on macOS 10.15
 
   Reported by Thomas Buchberger
 
 * Minor tweaks to build and pass tests on macOS 10.14 with the latest Xcode
   that can be installed on that version of macOS.
 
-* Issue #300: Fix SystemError in block edge case
+* :issue:`300`: Fix SystemError in block edge case
 
   PyObjC raised a SystemError when converting a callable into
   an ObjC block when the callable is a bound method without
   positional arguments.
 
-* Issue #275: Fix crash on catalina caused by writing to read-only memory.
+* :issue:`275`: Fix crash on catalina caused by writing to read-only memory.
 
    Patch by Dan Villiom Podlaski Christiansen
 
-* PR #302: Make sure the SDK detection works when the version is not in the SDK name
+* :pr:`302`: Make sure the SDK detection works when the version is not in the SDK name
 
   Patch by Joshua Root
 
@@ -1687,7 +1733,7 @@ Version 6.2
 
 * Add pre-commit hook to run black on all Python code.
 
-* #290: Fix protocol conformance testing when explicitly implementing a protocol
+* :issue:`290`: Fix protocol conformance testing when explicitly implementing a protocol
 
   Before this bugfix a class explicitly conforming to a protocol could not
   implement any method that wasn't declared in the protocol, the bridge would
@@ -1695,7 +1741,7 @@ Version 6.2
 
   Issue reported by Georg Seifert.
 
-* #289: Fix Python 3 issues in ``PyObjCTools.Conversion``
+* :issue:`289`: Fix Python 3 issues in ``PyObjCTools.Conversion``
 
   Reported by vinolin asokan.
 
@@ -1711,12 +1757,12 @@ Version 6.2
 * Added bindings for framework ``AutomaticAssessmentConfiguration.framework``
   introduced in macOS 10.15.4
 
-* #298: In some cases the compiler uses the type encoding "^{NSObject=#}"
+* :issue:`298`: In some cases the compiler uses the type encoding "^{NSObject=#}"
   instead of "@".
 
   Reported by Georg Seifert.
 
-* #264: Added bindings for the Metal framework (new in macOS 10.11)
+* :issue:`264`: Added bindings for the Metal framework (new in macOS 10.11)
 
 * Most framework bindings now use the limited ABI for the included C extensions,
   reducing the number of wheels that are needed. The exception are
@@ -1736,14 +1782,14 @@ Version 6.1
 * Fix reference counting in -[OC_PythonData length], which resulted
   in use-after-free.
 
-* #281: Fix problems found in pyobjc-core by the clang static analyser
+* :issue:`281`: Fix problems found in pyobjc-core by the clang static analyser
 
 Version 6.0.1
 -------------
 
-* #277: Remove debug print accidentally left in production
+* :issue:`277`: Remove debug print accidentally left in production
 
-* #278: Suppress "-Wunguarded-availability" warnings in the extension
+* :issue:`278`: Suppress "-Wunguarded-availability" warnings in the extension
   AppKit._inlines
 
 
@@ -1801,16 +1847,16 @@ Version 6.0
 
   - MetalKit (new in macOS 10.11)
 
-* Issue #271: Fix crash when creating NSData objects on macOS 10.15
+* :issue:`271`: Fix crash when creating NSData objects on macOS 10.15
 
 Version 5.3
 -----------
 
-* PR 21: Switch xcodebuild invocation to xcrun for sdk path
+* :issue:`21`: Switch xcodebuild invocation to xcrun for sdk path
 
   Patch by Clément Bouvier
 
-* #271: Fix crash when creating NSData objects on macOS 10.15
+* :issue:`271`: Fix crash when creating NSData objects on macOS 10.15
 
 * Fix compile error on macOS 10.15
 
@@ -1819,16 +1865,16 @@ Version 5.2
 
 * Updated metadata for Xcode 10.2
 
-* #252: ``objc.registerStructAlias`` no longer emits a deprecation
+* :issue:`252`: ``objc.registerStructAlias`` no longer emits a deprecation
   warning because it is still used by the framework wrappers.
 
   The function is still deprecated though, the deprecation will reappear
   once the metadata has been updatd.
 
-* #75: The core bridge now uses :func:`PyDict_GetItemWithError`, which
+* :issue:`75`: The core bridge now uses :func:`PyDict_GetItemWithError`, which
   may result in exceptions being raised that were previously swallowed.
 
-* #247: Partially switch to the new buffer API instead of the older
+* :issue:`247`: Partially switch to the new buffer API instead of the older
   Python 2 buffer API.
 
   The new implementation is more correct, but may keep Python objects
@@ -1837,10 +1883,10 @@ Version 5.2
   ``[someData bytes]`` on a Python object keeps the ``Py_buffer`` alive
   until the next flush of the autoreleasepool.
 
-* #257: Fix incorrect metadata for the callback argument to
+* :issue:`257`: Fix incorrect metadata for the callback argument to
   ``-[AVCaptureStillImageOutput captureStillImageAsynchronouslyFromConnection:completionHandler:]``.
 
-#258: Add bindings to the "PrintCore" APIs from the ApplicationServices framework.
+* :issue:`258`: Add bindings to the "PrintCore" APIs from the ApplicationServices framework.
 
 * Python 2: UserDict.UserDict instances are now bridged to instances of
   a subclass of NSDictionary.
@@ -1848,9 +1894,9 @@ Version 5.2
 Version 5.1.2
 -------------
 
-* #254: Fix compile error on macOS 10.9 or earlier
+* :issue:`254`: Fix compile error on macOS 10.9 or earlier
 
-* #255: Calling completion handler failed due to incomplete runtime info
+* :issue:`255`: Calling completion handler failed due to incomplete runtime info
 
   PyObjC's metadata system didn't automatically set the call signature
   for blocks passed into a method implemented in Python. This causes problems
@@ -1882,7 +1928,7 @@ Version 5.1
 * Xcode 10 "GM" contains one difference from the last beta: the constant MLComputeUnitsCPUAndGPU
   in the CoreML bindings.
 
-* #222: Add a proxy for C's "FILE*" type on Python 3. This is not necessary on Python 2 because
+* :issue:`222`: Add a proxy for C's "FILE*" type on Python 3. This is not necessary on Python 2 because
   the default IO stack on Python 2 already uses FILE* internally.
 
   This proxy type is very minimal and shouldn't not be used for general I/O.
@@ -1898,9 +1944,9 @@ Version 5.1
 
 * Add metadata for deprecation warnings to the "Contacts" framework
 
-* #252: Import ABCs from ``collections.abc`` instead of ``collections`` because the latter is deprecated.
+* :issue:`252`: Import ABCs from ``collections.abc`` instead of ``collections`` because the latter is deprecated.
 
-* #180, #251: Instances of most builtin value types and sequences (int, float, str, unicode, tuple,
+* :issue:`180`, :issue:`251`: Instances of most builtin value types and sequences (int, float, str, unicode, tuple,
   list, set, frozenset and dict) can now be written to archives that require secureCoding.
 
 Version 5.0
@@ -1944,7 +1990,7 @@ Version 5.0b1
   With this patch using APIs with these types should actually
   work.
 
-* PR19: Fix deprecation warning in bridgesupport support module
+* :issue:`19`: Fix deprecation warning in bridgesupport support module
 
   Patch by: Mickaël Schoentgen
 
@@ -1985,9 +2031,9 @@ Version 5.0b1
   on a framework wrapped with a name that isn't a valid
   identifier.
 
-* #244: Bad metadata for CGPDFOperatorTableSetCallback
+* :issue:`244`: Bad metadata for CGPDFOperatorTableSetCallback
 
-* #247: Fix crash in regression test case
+* :issue:`247`: Fix crash in regression test case
 
   One specific test in pyobjc-core crashed the interpreter
   when run separately. Because of this I've disabled an
@@ -2064,9 +2110,9 @@ Version 4.2
 
 * Update metadata for Xcode 9.3
 
-* Issue #233 Fix crash in Security.AuthorizationCopyRights() wrapper
+* :issue:`233`: Fix crash in Security.AuthorizationCopyRights() wrapper
 
-* Issue #234 Fix crash in AuthorizationExecuteWithPrivileges() wrapper
+* :issue:`234`: Fix crash in AuthorizationExecuteWithPrivileges() wrapper
 
   Reported by Vangelis Koukis
 
@@ -2074,7 +2120,7 @@ Version 4.2
 
   Reported by Just van Rossum
 
-* Issue #236 : Importing can sometimes fail in multi-threaded scenarios
+* :issue:`236`: Importing can sometimes fail in multi-threaded scenarios
 
   Fix by Max Bélanger
 
@@ -2083,7 +2129,7 @@ Version 4.2
   this would also break some nice idioms.
 
 
-* Pull request #17: Fix python 3 issues in PyObjCTools.AppHelper and PyObjCTools.Conversion
+* :issue:`17`: Fix python 3 issues in PyObjCTools.AppHelper and PyObjCTools.Conversion
 
   Fix by Max Bélanger
 
@@ -2099,7 +2145,7 @@ Version 4.1
   that is raised when return a value from a block that should not
   return a value.
 
-* Issue #223: Fix hard crash when executing ``help(Cocoa)``
+* :issue:`223`: Fix hard crash when executing ``help(Cocoa)``
 
   Fetching the help for PyObjC framework wrappers isn't very useful due
   to the sheer size of the output (4.5 million lines of output for
@@ -2108,7 +2154,7 @@ Version 4.1
 
   Reported by Dave Fuller
 
-* Issue #218: Explicitly cause an ImportError when reloading ```objc._objc```
+* :issue:`218`: Explicitly cause an ImportError when reloading ```objc._objc```
 
   Reloading the PyObjC core extension now raises an ImportError because
   this cannot work and used to raise a rather vague error.
@@ -2120,14 +2166,14 @@ Version 4.1
 * Fix memory error in struct wrappers which resulted in
   a use-after-free error in the initializer for structs.
 
-* #135: Add bindings for frameworks :doc:`Security </apinotes/Security>`,
+* :issue:`135`: Add bindings for frameworks :doc:`Security </apinotes/Security>`,
   :doc:`SecurityFoundation </apinotes/SecurityFoundation>` and
   and :doc:`SecurityInterface </apinotes/SecurityInterface>`.
 
   The bindings for the Security framework don't expose a
   number of older APIs that were deprecated in macOS 10.7.
 
-* #129: Add bindings to libdispatch.
+* :issue:`129`: Add bindings to libdispatch.
 
   These bindings require macOS 10.8 or later, libdispatch was
   available earlier but macOS 10.8 changed the API in such a
@@ -2142,7 +2188,7 @@ Version 4.1
 Version 4.0.1
 -------------
 
-* Issue #213: Fix signature for ```-[NSObject forwardInvocation:]```
+* :issue:`213`: Fix signature for ```-[NSObject forwardInvocation:]```
 
   Reported by user "pyrocat"
 
@@ -2164,19 +2210,19 @@ Version 4.0.1
 Version 4.0
 -----------
 
-* Issue #204: Metadata for CGPDFDictionaryGetObject was wrong
+* :issue:`204`: Metadata for CGPDFDictionaryGetObject was wrong
 
   Reported by Nickolas Pohilets.
 
 * Updated metadata for Xcode 9 GM.
 
-* Fix #202: Add bindings for ``CGPDFDictionaryRef``, ``CGPDFScannerRef``
+* :issue:`202`: Add bindings for ``CGPDFDictionaryRef``, ``CGPDFScannerRef``
   ``CGPDFStreamRef`` and ``CGPDFStringRef`` to the Quartz bindings (including
   some minor updates to function metadata)
 
   Reported by Nickolas Pohilets.
 
-* Issue #205: Add ability to read bytes from ``objc.varlist``
+* :issue:`205`: Add ability to read bytes from ``objc.varlist``
 
   Instances of ``objc.varlist`` now have a method to return a memoryview
   that refers to the first section of the list::
@@ -2301,14 +2347,14 @@ Version 3.3
 
 New features:
 
-* Pull request #15: Fix crash when handling stack blocks
+* :issue:`15`: Fix crash when handling stack blocks
 
   Patch by Max Bélanger.  Fixes a crash when a stackbased block is passed
   into python.
 
   Later updated with tests and a different implementation.
 
-* Issue #192: 32/64-bit issue with AppHelper.endSheetMethod
+* :issue:`192`: 32/64-bit issue with AppHelper.endSheetMethod
 
   This helper decorator used the wrong signature string, which happens to
   work on 32-bit systems but not on 64-bit ones.
@@ -2331,7 +2377,7 @@ New features:
   "/Library/Frameworks", which is a framework installed by iTunes that
   can be used to (read-only) access information about an iTunes library.
 
-* Issue #178: Add basic example for the Contacts framework
+* :issue:`178`: Add basic example for the Contacts framework
 
   The Contacts framework now contains a very simple example that shows how
   to fetch contacts from the contact store.  Apple's documentation on
@@ -2358,7 +2404,7 @@ Bugfixes:
   Objective-C don't support secure coding, added a
   "supportsSecureCoding" implementation to make this explicit.
 
-* Issue #182: The block signature registered in the ObjC runtime
+* :issue:`182`: The block signature registered in the ObjC runtime
   datastructures for Python blocks was wrong, which confuses Objective-C
   code that looks at the runtime data.
 
@@ -2366,7 +2412,7 @@ Bugfixes:
 
   Patch by Alex Chekunkov.
 
-* Issue #189: Invalid invocation of "atos" command on recent macOS versions
+* :issue:`189`: Invalid invocation of "atos" command on recent macOS versions
 
   The Objective-C exception logging code in pyobjc-framework-ExceptionHandling
   calls out to the "atos" command to get readable stack traces, that
@@ -2378,7 +2424,7 @@ Version 3.2.2
 
 Bugfixes:
 
-* Issue #162: Fix conversion of unicode python string to Objective-C "UniChar"
+* :issue:`162`: Fix conversion of unicode python string to Objective-C "UniChar"
   array, it used to do the wrong thing when converting characters outside of
   the BMP.
 
@@ -2437,7 +2483,7 @@ explicitly.
 
 * Fix crash when using some APIs in the LaunchServices framework.
 
-* Issue #100:Building with the Command Line Tools for Xcode installed caused build errors
+* :issue:`100`: Building with the Command Line Tools for Xcode installed caused build errors
   on OSX 10.10
 
 * Python 3.6 made a change to the bytecode format that affected the way
@@ -2455,9 +2501,9 @@ explicitly.
 
 * Add bindings for the ModelIO framework, introduced in OSX 10.11.
 
-* Issue #153: Add missing metadata file to ApplicationServices bindings
+* :issue:`153`: Add missing metadata file to ApplicationServices bindings
 
-* Issue #157: Bad reference to "_metadata" in ApplicationServices bindings
+* :issue:`157`: Bad reference to "_metadata" in ApplicationServices bindings
 
 * ApplicationServices framework didn't do "from ... import \*" as was intended.
 
@@ -2465,31 +2511,33 @@ explicitly.
 
 * Fix build failure using the OSX 10.10 SDK.
 
-* Issue #21: Tweak build procedure for PyObjC to avoid building pyobjc-core
+* :issue:`21`: Tweak build procedure for PyObjC to avoid building pyobjc-core
   multiple times when using ``pip install pyobjc``.
 
-* Issue #123: Use Twisted's cfreactor module in the examples using Twisted.
+* :issue:`123`: Use Twisted's cfreactor module in the examples using Twisted.
 
-* Issue #148: Fix build issue for the MapKit bindings on a case
+* :issue:`148`: Fix build issue for the MapKit bindings on a case
   sensitive filesystem.
 
 * Added bindings for the IOSurface framework (pyobjc-framework-IOSurface)
 
 * Added bindings for the NetworkExtension framework (pyobjc-framework-NetworkExtension)
 
-* Issue #149: Fix compile problems with Anaconda
+* :issue:`149`: Fix compile problems with Anaconda
 
 * Fix SystemError for accessing a method whose ``__metadata__`` cannot be calculated,
-  found while researching issue #122.
+  found while researching issue :issue:`122`.
 
-* Issue #146: Don't hang when running ``python setup.py build`` using PyPy.
+* :issue:`146`: Don't hang when running ``python setup.py build`` using PyPy.
 
   Note that PyPy still doesn't work, this just ensures that the build fails instead
   of hanging indefinely.
 
-* Issue #143: Fix calculation of default type signature for selectors
+* :issue:`143`: Fix calculation of default type signature for selectors
 
-  Due to this change it is possible to use decorators like this::
+  Due to this change it is possible to use decorators like this:
+
+  .. sourcecode:: python
 
      def decorator(func):
         @functools.wraps(func)
@@ -2547,10 +2595,10 @@ Version 3.1
 
   Patch by Max Bélanger.
 
-* Issue #126: Load the LaunchServices definitions through the CoreServices
+* :issue:`126`: Load the LaunchServices definitions through the CoreServices
   umbrella framework to avoid problems on OSX 10.11.
 
-* Issue #124: Sporadic crash at program shutdown due to a race condition between
+* :issue:`124`: Sporadic crash at program shutdown due to a race condition between
   Python interpreter shutdown and Cocoa cleanup.
 
   This is mostly a workaround, I don't have a full solution for this yet and
@@ -2560,8 +2608,8 @@ Version 3.1
   that was used to build PyObjC in the same format as the OSX availability
   macros.
 
-* Added *maxTimeout* parameter to ``PyObjCTools.AppHelper.runConsoleEventLoop``
-  to fix issue #117. The default value is 3 seconds, which means that
+* :issue:`117`: Added *maxTimeout* parameter to ``PyObjCTools.AppHelper.runConsoleEventLoop``.
+  The default value is 3 seconds, which means that
   the console eventloop will stop within 3 seconds of calling ``stopEventLoop``.
 
 * Re-enable faster method calls for simple method calls.
@@ -2638,46 +2686,34 @@ Version 3.0.5
 
   Patch by Max Bélanger.
 
-* BridgeSupport code failed when there are unions in the bridgesupport
+* :issue:`111`: BridgeSupport code failed when there are unions in the bridgesupport
   file due to a bug in the code that parses Objective-C encoded types.
-
-  Issue #111
 
 * BridgeSupport code didn't work properly with Python 3.x
 
 * Add objc.MAC_OS_X_VERSION_10_10 and MAC_OS_X_VERSION_10_9.
 
-* The code that checked for compliance to formal protocols didn't look
+* :issue:`107`: The code that checked for compliance to formal protocols didn't look
   at parent classes to determine if a class implements the protocol.
-
-  Issue #107
 
 * Fix build issue for python 3.
 
 Version 3.0.4
 -------------
 
-* Fix installation on OSX 10.10 when using "pip install pyobjc".
+* :issue:`102`, :issue:`103`: Fix installation on OSX 10.10 when using "pip install pyobjc".
 
-  Issues #102, #103.
-
-* Fix crash when ``sys.modules`` contains an object that is not a string.
-
-  Issue #95.
+* :issue`:95`: Fix crash when ``sys.modules`` contains an object that is not a string.
 
 * Fix crash on OSX 10.8 or later when using a 32-bit build and accessing
   an instance of "Object" (that is, pre-Nextstep classes).
 
-* Fix a crash when using blocks without metadata, but with a block
+* :issue:`106`: Fix a crash when using blocks without metadata, but with a block
   signature from the block runtime.
 
-  Issue #106
-
-* ``PyObjCTools.MachSignals`` likely hasn't worked at all since PyObjC 2.0
+* :issue:`109`: ``PyObjCTools.MachSignals`` likely hasn't worked at all since PyObjC 2.0
   because it uses a C module that was never ported to PyObjC 2.0. This private
   module is reintroduced in this release (with a slightly changed API)
-
-  Issue #109
 
 Version 3.0.3
 -------------
@@ -2687,24 +2723,24 @@ Version 3.0.3
 Version 3.0.2
 -------------
 
-* Issue #99: Installation failed with recent versions of setuptools due to
+* :issue:`99`: Installation failed with recent versions of setuptools due to
   invalid assumptions in the PyObjC setup script.
 
-* Issue #93: For a objc.PyObjCPointer object ``ptr.pointerAsInteger`` returned
+* :issue:`93`: For a objc.PyObjCPointer object ``ptr.pointerAsInteger`` returned
   a 32-bit value on 64-bit systems.
 
-* Issue #92: Removed dependency on pyobjc-framework-GameKit from the pyobjc
+* :issue:`92`: Removed dependency on pyobjc-framework-GameKit from the pyobjc
   package, GameKit isn't packaged yet.
 
 
 Version 3.0.1
 -------------
 
-* Issue #86: Fix installation issue with setuptools 3.6.
+* :issue:`86`: Fix installation issue with setuptools 3.6.
 
-* Issue #85: Remove debug output from the wrapper for ``NSApplicationMain``.
+* :issue:`85`: Remove debug output from the wrapper for ``NSApplicationMain``.
 
-* Issue #82: NSArray.__iter__ was accedently removed in PyObjC 3.0
+* :issue:`82`: NSArray.__iter__ was accedently removed in PyObjC 3.0
 
 * PyObjCTools.Debugging didn't work properly on recent OSX versions (at least OSX 10.9)
   because ``/usr/bin/atos`` no longer worked.
@@ -2712,7 +2748,7 @@ Version 3.0.1
 Version 3.0
 -----------
 
-* Issue #50: Accessing Objective-C methods on "magic cookie" variables,
+* :issue:`50`: Accessing Objective-C methods on "magic cookie" variables,
   like ``LaunchServices.kLSSharedFileListItemLast`` would crash the interpreter.
 
   This affected code like::
@@ -2739,14 +2775,14 @@ Version 3.0
   This makes it easier to add a more "pythonic" API to Objective-C subclasses without
   being hindered by PyObjC's conventions for naming methods.
 
-* Issue #64: Fix metadata for ``Quartz.CGEventKeyboardSetUnicodeString``
+* :issue:`64`: Fix metadata for ``Quartz.CGEventKeyboardSetUnicodeString``
   and ``Quartz.CGEventKeyboardGetUnicodeString``.
 
-* Issue #77: Passing a bound selector as a block argument failed when the block
+* :issue:`77`: Passing a bound selector as a block argument failed when the block
   was actually called because the trampoline that calls back to Python accidentally
   ignored the bound ``self`` argument.
 
-* Issue #76: It is now possible to pass ``None`` to a method expecting a block
+* :issue:`76`: It is now possible to pass ``None`` to a method expecting a block
   argument, as with normal object arguments the Objective-C method receives
   a ``nil`` value.
 
@@ -2885,7 +2921,7 @@ Version 3.0
   had in earlier releases (in particular classes that are not mentioned in Apple's
   documentation).
 
-* Issue #3: The bridge now lazily looks for Objective-C methods as they are used from Python, instead
+* :issue:`3`: The bridge now lazily looks for Objective-C methods as they are used from Python, instead
   of trying to maintain a class *__dict__* that mirrors the method list of the Objective-C
   class.
 
@@ -2948,7 +2984,7 @@ Version 3.0
   cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that
   contain only smaller tuples can be read back by earlier versions.
 
-* Issue #38: Struct wrappers and opaque pointer types now implement support for :func:`sys.getsizeof`,
+* :issue:`38`: Struct wrappers and opaque pointer types now implement support for :func:`sys.getsizeof`,
   as do :class:`objc.FSRef`, :class:`objc.FSSpec`, and Objective-C classes.
 
   The size of Objective-C instances is not entirely correct, and cannot be. The :func:`sizeof <sys.sizeof>` function
@@ -3288,18 +3324,18 @@ Version 2.5.1
 
   This increases interoperability with code that expects to read back a
   non-keyed archive in a different process. An example of this is the use
-  of Growl (see issue #31)
+  of Growl (see issue :issue:`31`)
 
   Instances of subclasses of unicode are not affected by this change, and
   can only be read back by other PyObjC programs.
 
-- Issue #43: It was no longer possible to create instances of
+- :issue:`43`: It was no longer possible to create instances of
   LaunchServices.LSLaunchURLSpec due to incomplete metadata.
 
-- Issue #41: the 'install.py' script in the root of pyobjc repository
+- :issue:`41`: the 'install.py' script in the root of pyobjc repository
   failed to perform an install when running in a clean checkout of the tree.
 
-- Issue #44: the various Cocoa frameworks only export @protocol definitions when
+- :issue:`44`: the various Cocoa frameworks only export @protocol definitions when
   they happen to be used by code in the framework. Added extensions to the
   various framework wrappers to ensure that all protocols are available to
   python code.
@@ -3310,7 +3346,7 @@ Version 2.5.1
   This is the reverse of the *__c_void_p__()* method that was added
   earlier.
 
-- Issue #46: It was not possible to use the Quartz.CoreGraphics module
+- :issue:`46`: It was not possible to use the Quartz.CoreGraphics module
   on OSX 10.5 when the binary was build on 10.8 (and using a 10.5 deployment
   target).
 
@@ -3361,11 +3397,11 @@ Version 2.5
   This is mostly done for the PyObjC unittests and shouldn't affect user
   code.
 
-- Issue #30: Explicitly check if the compiler works, and try to
+- :issue:`30`: Explicitly check if the compiler works, and try to
   fall back to clang if it doesn't. This uses a simular algorithm as
   the fix for <https://bugs.python.org/issue13590> in Python's tracker.
 
-- Issue #22: Reimplement support for bridgesupport files
+- :issue:`22`: Reimplement support for bridgesupport files
 
   This reintroduces ``objc.parseBridgeSupport`` and
   ``objc.initFrameworkWrapper``, both are reimplemented in Python
@@ -3547,12 +3583,12 @@ Version 2.5
   sets, that is calling ``cmp(anNSSet, aValue)`` will raise a TypeError exception unless
   both arguments are the same object (``anNSSet is aValue``).
 
-- Issue #36: explicitly document that PyObjC does not support the Objective-C Garbage Collection
+- :issue:`36`: explicitly document that PyObjC does not support the Objective-C Garbage Collection
   system (introduced in OSX 10.5, deprecated in OSX 10.8), and also mention this in the
   documentation for the screen saver framework because the screen saver engine uses GC on
   OSX 10.6 and 10.7.
 
-- Issue #37: Fix runtime link error with EPD (Enthought Python Distribution),
+- :issue:`37`: Fix runtime link error with EPD (Enthought Python Distribution),
   which doesn't include the pymactoolbox functionality.
 
 - Various improvements to the documentation
@@ -3574,9 +3610,9 @@ Version 2.4.1
 - Rename ReadMe.txt to README.txt to work around misfeature in the
   sdist command in distutils.
 
-- Issue #28: Avoid crash when using CGEventTabProxy values.
+- :issue:`28`: Avoid crash when using CGEventTabProxy values.
 
-- Issue #33: "easy_install pyobjc" no longer tries to install the
+- :issue:`33`: "easy_install pyobjc" no longer tries to install the
   InterfaceBuilderKit bindings on OSX 10.7 or later.
 
 Version 2.4
