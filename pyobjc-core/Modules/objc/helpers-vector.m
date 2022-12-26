@@ -3,6 +3,7 @@
  *
  *     ** DO NOT EDIT **
  */
+// LCOV_EXCL_START
 #import "pyobjc.h"
 #include <simd/simd.h>
 
@@ -16097,3 +16098,4 @@ PyObjC_setup_simd(void)
     return 0;
 }
 NS_ASSUME_NONNULL_END
+// LCOV_EXCL_STOP
