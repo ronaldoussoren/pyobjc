@@ -1016,6 +1016,20 @@ Py_DECREF(b2);
 
 END_UNITTEST
 
+BEGIN_UNITTEST(MethodSignatureString)
+PyObjCMethodSignature* sig = PyObjCMethodSignature_WithMetaData("@@:d", NULL, NO);
+FAIL_IF(sig == NULL);
+
+PyObject* repr = PyObject_Str((PyObject*)sig);
+Py_DECREF(sig);
+FAIL_IF(repr == NULL);
+if (!PyUnicode_Check(repr)) {
+    Py_DECREF(repr);
+    FAIL_IF(1);
+}
+Py_DECREF(repr);
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1053,6 +1067,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(InvalidObjCPointer),
                                     TESTDEF(InvalidRegistryUsage),
                                     TESTDEF(BytesInterning),
+                                    TESTDEF(MethodSignatureString),
                                     {0, 0, 0, 0}};
 
 int

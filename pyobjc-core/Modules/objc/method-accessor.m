@@ -342,8 +342,8 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
     PyObject*           result = NULL;
 
     if (PyUnicode_Check(name)) {
-        if (PyObjC_Unicode_Fast_Bytes(name) == NULL) {
-            return NULL;
+        if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;                               // LCOV_EXCL_LINE
         }
 
     } else {
@@ -463,8 +463,8 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
 
     /* Didn't find the selector the first trip around, try harder. */
     const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
-    if (name_bytes == NULL) {
-        return NULL;
+    if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
     result = find_selector(self->base, name_bytes, self->class_method);
     if (result == NULL) {
