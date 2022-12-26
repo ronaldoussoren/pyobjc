@@ -570,13 +570,19 @@ class TestMethods(TestCase):
             NotImplementedError, "^Vector types not supported by libffi caller$"
         ):
 
-            class OC_VectorProxyUnsupported(objc.lookUpClass("NSObject")):
-                def mymethod_a_b_c_(self, a, b, c):
+            class OC_VectorProxyUnsupportedA(objc.lookUpClass("NSObject")):
+                @objc.objc_method(signature=b"<3f>@:<4f><3f><2f>")
+                def mymethodWithA_b_c_(self, a, b, c):
                     return 1
 
-                mymethod_a_b_c_ = objc.selector(
-                    mymethod_a_b_c_, signature=b"<3f>@:<4f><3f><2f>"
-                )
+        with self.assertRaisesRegex(
+            NotImplementedError, "^Vector types not supported by libffi caller$"
+        ):
+
+            class OC_VectorProxyUnsupportedB(objc.lookUpClass("NSObject")):
+                @objc.objc_method(signature=b"<3f>@:<4f><3f><2f>", isclass=True)
+                def mymethodWithA_b_c_(self, a, b, c):
+                    return 1
 
 
 class TestIMP(TestCase):

@@ -1142,16 +1142,20 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     Py_ssize_t curArg = 1; /* Leave space for PY_VECTORCALL_ARGUMENTS_OFFSET */
 
     rettype = methinfo->rettype->type;
-    if (rettype == NULL) {
+    if (rettype == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "closure has NULL returntype");
         goto error;
+        // LCOV_EXCL_STOP
     }
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (unlikely(callable == NULL)) {
+    if (unlikely(callable == NULL)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Missing callable in closure object");
         goto error;
+        // LCOV_EXCL_STOP
     }
 
     /* Avoid calling a PyObjCPythonSelector directory, it does
@@ -1205,9 +1209,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     for (i = startArg; i < methinfo_size; i++) {
 
         const char* argtype = methinfo->argtype[i]->type;
-        if (argtype == NULL) {
-            PyErr_SetString(PyObjCExc_InternalError, "closure has NULL returntype");
+        if (argtype == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_InternalError, "closure has NULL argtype");
             goto error;
+            // LCOV_EXCL_STOP
         }
 
         switch (*argtype) {
@@ -2340,6 +2346,9 @@ PyObjCFFI_FreeIMP(IMP imp)
 IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
 {
     if (PyObjCNativeSelector_Check((PyObject*)aSelector)) {
+        /* XXX: Check if this can ever be used, current test suite doesn't test this
+         * path.
+         */
         PyObjCNativeSelector* nativeSelector = (PyObjCNativeSelector*)aSelector;
         Method                aMeth;
 

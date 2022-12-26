@@ -403,8 +403,8 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
 
                 PyObject* dict = ((PyTypeObject*)c)->tp_dict;
                 PyObject* v    = PyDict_GetItemWithError(dict, name);
-                if (v == NULL && PyErr_Occurred()) {
-                    return NULL;
+                if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return NULL;                     // LCOV_EXCL_LINE
 
                 } else if (v != NULL) {
                     if (PyObjCSelector_Check(v)) {

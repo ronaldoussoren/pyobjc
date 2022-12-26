@@ -23,8 +23,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     PyObjC_Assert(PyBytes_Check(selector), -1);
 
     sublist = PyDict_GetItemWithError(registry, selector);
-    if (sublist == NULL && PyErr_Occurred()) {
-        return -1;
+    if (sublist == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return -1;                             // LCOV_EXCL_LINE
     }
     if (sublist == NULL) {
         sublist = PyList_New(0);
@@ -89,8 +89,8 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
 
     sublist = PyDict_GetItemWithError(registry, k);
     Py_DECREF(k);
-    if (sublist == NULL)
-        return NULL;
+    if (sublist == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
 
     len = PyList_Size(sublist);
     for (i = 0; i < len; i++) {

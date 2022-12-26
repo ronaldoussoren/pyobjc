@@ -7,7 +7,6 @@ extern Class _Nullable PyObjCClass_BuildClass(Class, PyObject*, char*, PyObject*
                                               PyObject*, PyObject*, PyObject*);
 extern int PyObjCClass_UnbuildClass(Class);
 extern int PyObjCClass_FinishClass(Class);
-extern int PyObjC_RemoveInternalTypeCodes(char*);
 
 NS_ASSUME_NONNULL_END
 

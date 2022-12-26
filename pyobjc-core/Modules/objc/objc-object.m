@@ -57,9 +57,11 @@ static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused
 
         if (PyLong_Check(attrval)) {
             p = PyLong_AsVoidPtr(attrval);
-            if (p == NULL && PyErr_Occurred()) {
+            if (p == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(attrval);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
         } else {
@@ -112,11 +114,13 @@ static PyObject* _Nullable object_repr(PyObject* _self)
                                 self->objc_object);
 }
 
+// LCOV_EXCL_START
 static void
 object_del(PyObject* obj __attribute__((__unused__)))
 {
     /* Dummy function, we do not want the default implementation */
 }
+// LCOV_EXCL_STOP
 
 static void
 object_dealloc(PyObject* obj)
@@ -340,8 +344,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -356,8 +360,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             PyObject* cache = PyObjCClass_GetLookupCache((PyTypeObject*)base);
             if (cache != NULL) {
                 descr = PyDict_GetItemWithError(cache, name);
-                if (descr == NULL && PyErr_Occurred()) {
-                    return NULL;
+                if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return NULL;                         // LCOV_EXCL_LINE
                 }
                 if (descr != NULL) {
                     break;
@@ -380,8 +384,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
 
         descr = PyDict_GetItemWithError(dict, name);
-        if (descr == NULL && PyErr_Occurred()) {
-            return NULL;
+        if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;                         // LCOV_EXCL_LINE
         } else if (descr != NULL) {
             if (first_class != NULL) {
                 if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr)
@@ -600,8 +604,8 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
             dict = *dictptr;
             if (dict != NULL) {
                 res = PyDict_GetItemWithError(dict, name);
-                if (res == NULL && PyErr_Occurred()) {
-                    goto done;
+                if (res == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    goto done;                         // LCOV_EXCL_LINE
                 } else if (res != NULL) {
                     Py_INCREF(res);
                     goto done;

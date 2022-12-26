@@ -30,8 +30,6 @@ extern void PyObjCErr_FromObjC(NSObject* localException);
 extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
     __attribute__((__noreturn__));
 
-extern NSException* _Nullable PyObjCErr_AsExc(void);
-
 extern char* _Nullable PyObjCUtil_Strdup(const char* value);
 
 extern NSMapTableKeyCallBacks   PyObjCUtil_PointerKeyCallBacks;
@@ -129,7 +127,7 @@ extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
 extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
                                                      PyObject*);
-extern PyObject* _Nullable PyObjC_UnravelClassDict(PyObject*, PyObject*, PyObject*);
+extern int PyObjC_RemoveInternalTypeCodes(char*);
 
 NS_ASSUME_NONNULL_END
 

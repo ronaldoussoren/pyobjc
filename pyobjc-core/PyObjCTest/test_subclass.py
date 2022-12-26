@@ -1,4 +1,6 @@
 import objc
+import sys
+import io
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
 from .objectint import OC_ObjectInt
@@ -132,6 +134,23 @@ class TestSubclassing(TestCase):
         self.assertEqual(x.getArgumentTypeAtIndex_(1), b":")
         self.assertEqual(x.getArgumentTypeAtIndex_(2), b"@")
         self.assertEqual(x.getArgumentTypeAtIndex_(3), b"i")
+
+    def test_subclassMethodSignatureError(self):
+        class OC_SubClassingMethodSignatureBase(NSObject):
+            def method(self):
+                return 1
+
+        self.assertResultHasType(OC_SubClassingMethodSignatureBase.method, objc._C_ID)
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "signature that is not compatible with super-class: @@: != d@:",
+        ):
+
+            class OC_SubClassingMethodSignatureChild(OC_SubClassingMethodSignatureBase):
+                @objc.objc_method(signature=b"d@:")
+                def method(self):
+                    pass
 
 
 class TestSelectors(TestCase):
@@ -610,6 +629,25 @@ class TestOverridingSpecials(TestCase):
                 return True
 
         self.assertNotIsInstance(ClassWithEq.__eq__, objc.selector)
+
+    def test_del_raises(self):
+        class ClassWithDel(NSObject):
+            def __del__(self):
+                raise ValueError("huh?")
+
+        o = ClassWithDel.alloc().init()
+
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
+
+            del o
+
+        finally:
+            sys.stderr = orig_stderr
+
+        self.assertIn("ValueError: huh", captured_stderr.getvalue())
+        self.assertIn("Exception ignored", captured_stderr.getvalue())
 
 
 class TestSelectorAttributes(TestCase):

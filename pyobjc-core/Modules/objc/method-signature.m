@@ -1112,9 +1112,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
 
                 if (args) {
                     d = PyDict_GetItemWithError(args, k);
-                    if (d == NULL && PyErr_Occurred()) {
+                    if (d == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
                         Py_DECREF(k);
                         return -1;
+                        // LCOV_EXCL_STOP
                     }
                     Py_DECREF(k);
 

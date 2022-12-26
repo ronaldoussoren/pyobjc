@@ -202,8 +202,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (likely(PyDict_CheckExact(value))) {
             v = PyDict_GetItemWithError(value, k);
-            if (v == NULL && PyErr_Occurred()) {
-                PyObjC_GIL_FORWARD_EXC();
+            if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();        // LCOV_EXCL_LINE
             }
             Py_XINCREF(v);
 

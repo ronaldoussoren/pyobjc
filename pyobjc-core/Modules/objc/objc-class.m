@@ -71,8 +71,8 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
                     PyObject* r = PyDict_GetItemWithError(hidden, v);
                     Py_DECREF(v);
                     if (r == NULL) {
-                        if (PyErr_Occurred()) {
-                            return NULL;
+                        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                            return NULL;        // LCOV_EXCL_LINE
                         }
 
                     } else {

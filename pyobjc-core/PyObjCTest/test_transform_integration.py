@@ -8,21 +8,21 @@ NSObject = objc.lookUpClass("NSObject")
 
 @contextlib.contextmanager
 def patch(function):
-    orig_value = objc.options._unravelClassDict
+    orig_value = objc.options._processClassDict
     try:
-        objc.options._unravelClassDict = function
+        objc.options._processClassDict = function
 
         yield
 
     finally:
-        objc.options._unravelClassDict = orig_value
+        objc.options._processClassDict = orig_value
 
 
 class TestTransformerIntegrationErrors(TestCase):
     def tetst_unset(self):
         with patch(None):
             with self.assertRaisesRegex(
-                objc.internal_error, "'objc.options._unravelClassDict' is not set"
+                objc.internal_error, "'objc.options._processClassDict' is not set"
             ):
 
                 name = "OC_TransformIntegrationErrorNS"
@@ -152,3 +152,60 @@ class TestTransformerIntegrationErrors(TestCase):
                         name = f"OC_TransformIntegrationErrorCM{idx}"
 
                         type(name, (NSObject,), {"answer": value})
+
+    def test_not_tuples(self):
+        with self.subTest("ivars"):
+
+            def helper(class_dict, meta_dict, class_object, protocols):
+                return False, 42, (), ()  # noqa: B023
+
+            with patch(helper):
+                with self.assertRaisesRegex(
+                    objc.internal_error,
+                    "invalid instance_variables in result of class dict transformer",
+                ):
+
+                    name = "OC_TransformIntegrationErrorNT1"
+
+                    type(name, (NSObject,), {})
+
+        with self.subTest("instance methods"):
+
+            def helper(class_dict, meta_dict, class_object, protocols):
+                return False, (), 42, ()  # noqa: B023
+
+            with patch(helper):
+                with self.assertRaisesRegex(
+                    objc.internal_error,
+                    "invalid instance_methods in result of class dict transformer",
+                ):
+
+                    name = "OC_TransformIntegrationErrorNT2"
+
+                    type(name, (NSObject,), {})
+
+        with self.subTest("class methods"):
+
+            def helper(class_dict, meta_dict, class_object, protocols):
+                return False, (), (), 42  # noqa: B023
+
+            with patch(helper):
+                with self.assertRaisesRegex(
+                    objc.internal_error,
+                    "invalid class_methods in result of class dict transformer",
+                ):
+
+                    name = "OC_TransformIntegrationErrorNT3"
+
+                    type(name, (NSObject,), {})
+
+    def test_without_processDict(self):
+        with patch(None):
+            with self.assertRaisesRegex(
+                objc.internal_error,
+                "Cannot create class because 'objc.options._processClassDict' is not set",
+            ):
+
+                class OC_TransformIntegrationErrorNoPD(NSObject):
+                    def method(self):
+                        pass

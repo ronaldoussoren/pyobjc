@@ -135,11 +135,12 @@ PyObjCErr_FromObjC(NSObject* localException)
             }
 
             PyObject* exc = id_to_python(localException);
-            if (exc == NULL) {
-                PyErr_Clear();
+            if (exc == NULL) { // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
             } else {
-                if (PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc) == -1) {
-                    PyErr_Clear();
+                if (PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc)
+                    == -1) {       // LCOV_BR_EXCL_LINE
+                    PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             }
             Py_CLEAR(exc);
@@ -191,28 +192,32 @@ PyObjCErr_FromObjC(NSObject* localException)
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
              */
-            if (PyDict_SetItemString(dict, "name", c_localException_name) == -1) {
-                PyErr_Clear();
+            if (PyDict_SetItemString(dict, "name", c_localException_name)
+                == -1) {       // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_name);
 
-            if (PyDict_SetItemString(dict, "reason", c_localException_reason) == -1) {
-                PyErr_Clear();
+            if (PyDict_SetItemString(dict, "reason", c_localException_reason)
+                == -1) {       // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
                 if (v != NULL) {
-                    if (PyDict_SetItemString(dict, "userInfo", v) == -1) {
-                        PyErr_Clear();
+                    if (PyDict_SetItemString(dict, "userInfo", v)
+                        == -1) {       // LCOV_BR_EXCL_LINE
+                        PyErr_Clear(); // LCOV_EXCL_LINE
                     }
                     Py_DECREF(v);
                 } else {           // LCOV_BR_EXCL_LINE
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
-                if (PyDict_SetItemString(dict, "userInfo", Py_None) == -1) {
-                    PyErr_Clear();
+                if (PyDict_SetItemString(dict, "userInfo", Py_None)
+                    == -1) {       // LCOV_BR_EXCL_LINE
+                    PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             }
 
@@ -226,20 +231,21 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
-            if (PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict) == -1) {
-                PyErr_Clear();
+            if (PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict)
+                == -1) {       // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_CLEAR(dict);
-            if (PyObject_SetAttrString(exc_value, "name", c_localException_name) == -1) {
-                PyErr_Clear();
+            if (PyObject_SetAttrString(exc_value, "name", c_localException_name)
+                == -1) {       // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
             }
             PyErr_Restore(exc_type, exc_value, exc_traceback);
         }
     PyObjC_END_WITH_GIL
 }
 
-NSException*
-PyObjCErr_AsExc(void)
+static NSException* _Nullable python_exception_to_objc(void)
 {
     PyObject*            exc_type;
     PyObject*            exc_value;
@@ -250,12 +256,11 @@ PyObjCErr_AsExc(void)
     NSException*         val;
     NSMutableDictionary* userInfo;
 
-    /* XXX: Add precondition that there is an exception,
-     *      check all callers, and enforce in debug builds
-     */
+    PyObjC_Assert(PyErr_Occurred(), nil);
+
     PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-    if (exc_type == NULL) {
-        return nil;
+    if (exc_type == NULL) { // LCOV_BR_EXCL_LINE
+        return nil;         // LCOV_EXCL_LINE
     }
 
     PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
@@ -384,16 +389,13 @@ PyObjCErr_AsExc(void)
 void
 PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
 {
-    NSException* exc = PyObjCErr_AsExc();
+    NSException* exc = python_exception_to_objc();
     if (exc == nil)                // LCOV_BR_EXCL_LINE
         PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
     if (state) {
         PyGILState_Release(*state);
     }
-    // if (PyGILState_Check()) {
-    //     printf("Still own GIL!\n");
-    // }
     @throw exc;
     __builtin_unreachable();
 }
@@ -405,8 +407,8 @@ char* _Nullable PyObjCUtil_Strdup(const char* value)
 
     len    = strlen(value);
     result = PyMem_Malloc(len + 1);
-    if (result == NULL)
-        return NULL;
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
 
     memcpy(result, value, len);
     result[len] = 0;
@@ -1534,23 +1536,124 @@ PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
                                4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
-PyObject* _Nullable PyObjC_UnravelClassDict(PyObject* class_dict, PyObject* class_object,
-                                            PyObject* protocols)
-{
-    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
-        PyErr_SetString(PyObjCExc_InternalError,
-                        "objc.options._unravelClassDict is not set");
-        return NULL;
-    }
-    PyObject* args[4] = {NULL, class_dict, class_object, protocols};
-    return PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
-                               3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-}
-
 bool
 version_is_deprecated(int version)
 {
     return (PyObjC_DeprecationVersion && version && version <= PyObjC_DeprecationVersion);
+}
+
+/* PyObjC uses a number of typecode descriptors that aren't available in
+ * the objc runtime. Remove these from the type string (inline).
+ *
+ */
+static int
+tc2tc(char* buf)
+{
+    /* Skip pointer declarations and annotations */
+    for (;;) {
+        switch (*buf) {
+        case _C_PTR:
+        case _C_IN:
+        case _C_OUT:
+        case _C_INOUT:
+        case _C_ONEWAY:
+        case _C_CONST:
+            buf++;
+            break;
+        default:
+            goto exit;
+        }
+    }
+
+exit:
+    switch (*buf) {
+    case _C_NSBOOL:
+#ifdef __arm64__
+        *buf = _C_BOOL;
+#else
+        *buf = _C_CHR;
+#endif
+        break;
+
+    case _C_CHAR_AS_INT:
+    case _C_CHAR_AS_TEXT:
+        *buf = _C_CHR;
+        break;
+
+    case _C_UNICHAR:
+        *buf = _C_SHT;
+        break;
+
+    case _C_STRUCT_B:
+        while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
+        }
+        while (buf && *buf && *buf != _C_STRUCT_E) {
+            if (*buf == '"') {
+                /* embedded field name */
+                buf = strchr(buf + 1, '"');
+                if (buf == NULL) {
+                    return -1;
+                }
+                buf++;
+            }
+            tc2tc(buf);
+            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            if (new_buf == NULL) {
+                return -1;
+            }
+            buf = new_buf;
+        }
+        break;
+
+    case _C_UNION_B:
+        while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
+        }
+        while (buf && *buf && *buf != _C_UNION_E) {
+            if (*buf == '"') {
+                /* embedded field name */
+                buf = strchr(buf + 1, '"');
+                if (buf == NULL) {
+                    return -1;
+                }
+                buf++;
+            }
+            tc2tc(buf);
+            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            if (new_buf == NULL) {
+                return -1;
+            }
+            buf = new_buf;
+        }
+        break;
+
+    case _C_ARY_B:
+        while (isdigit(*++buf))
+            ;
+        tc2tc(buf);
+        break;
+    }
+    return 0;
+}
+
+/*
+ * XXX: _C_VECTOR... requires completely removing part of the buffer
+ */
+int
+PyObjC_RemoveInternalTypeCodes(char* buf)
+{
+    char* _Nullable cur = buf;
+
+    while (*cur) {
+        if (tc2tc(cur) == -1) {
+            PyErr_SetString(PyObjCExc_Error, "invalid type encoding");
+            return -1;
+        }
+        cur = (char*)PyObjCRT_SkipTypeSpec(cur);
+        if (cur == NULL) {
+            return -1;
+        }
+    }
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

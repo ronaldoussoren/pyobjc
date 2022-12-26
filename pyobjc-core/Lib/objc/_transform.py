@@ -681,4 +681,4 @@ class python_method:
 
 
 objc.options._transformAttribute = transformAttribute
-objc.options._unravelClassDict = processClassDict
+objc.options._processClassDict = processClassDict

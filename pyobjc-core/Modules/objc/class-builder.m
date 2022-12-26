@@ -169,120 +169,6 @@ error_cleanup:
  *   the running app)
  */
 
-/* PyObjC uses a number of typecode descriptors that aren't available in
- * the objc runtime. Remove these from the type string (inline).
- *
- */
-static int
-tc2tc(char* buf)
-{
-    /* Skip pointer declarations and annotations */
-    for (;;) {
-        switch (*buf) {
-        case _C_PTR:
-        case _C_IN:
-        case _C_OUT:
-        case _C_INOUT:
-        case _C_ONEWAY:
-        case _C_CONST:
-            buf++;
-            break;
-        default:
-            goto exit;
-        }
-    }
-
-exit:
-    switch (*buf) {
-    case _C_NSBOOL:
-#ifdef __arm64__
-        *buf = _C_BOOL;
-#else
-        *buf = _C_CHR;
-#endif
-        break;
-
-    case _C_CHAR_AS_INT:
-    case _C_CHAR_AS_TEXT:
-        *buf = _C_CHR;
-        break;
-
-    case _C_UNICHAR:
-        *buf = _C_SHT;
-        break;
-
-    case _C_STRUCT_B:
-        while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
-        }
-        while (buf && *buf && *buf != _C_STRUCT_E) {
-            if (*buf == '"') {
-                /* embedded field name */
-                buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
-                    return -1;
-                }
-                buf++;
-            }
-            tc2tc(buf);
-            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-            if (new_buf == NULL) {
-                return -1;
-            }
-            buf = new_buf;
-        }
-        break;
-
-    case _C_UNION_B:
-        while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
-        }
-        while (buf && *buf && *buf != _C_UNION_E) {
-            if (*buf == '"') {
-                /* embedded field name */
-                buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
-                    return -1;
-                }
-                buf++;
-            }
-            tc2tc(buf);
-            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-            if (new_buf == NULL) {
-                return -1;
-            }
-            buf = new_buf;
-        }
-        break;
-
-    case _C_ARY_B:
-        while (isdigit(*++buf))
-            ;
-        tc2tc(buf);
-        break;
-    }
-    return 0;
-}
-
-/* XXX: This function and tc2tc should be in objc_support.m
- * XXX: _C_VECTOR... requires completely removing part of the buffer
- */
-int
-PyObjC_RemoveInternalTypeCodes(char* buf)
-{
-    char* _Nullable cur = buf;
-
-    while (*cur) {
-        if (tc2tc(cur) == -1) {
-            PyErr_SetString(PyObjCExc_Error, "invalid type encoding");
-            return -1;
-        }
-        cur = (char*)PyObjCRT_SkipTypeSpec(cur);
-        if (cur == NULL) {
-            return -1;
-        }
-    }
-    return 0;
-}
-
 static int
 is_ivar(PyObject* value)
 {
@@ -379,14 +265,14 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_unravelClassDict == NULL || PyObjC_unravelClassDict == Py_None) {
+    if (PyObjC_processClassDict == NULL || PyObjC_processClassDict == Py_None) {
         PyErr_SetString(
             PyObjCExc_InternalError,
-            "Cannot create class because 'objc.options._unravelClassDict' is not set");
+            "Cannot create class because 'objc.options._processClassDict' is not set");
         goto error_cleanup;
     }
     PyObject* args[] = {NULL, class_dict, meta_dict, py_superclass, protocols};
-    PyObject* rv     = PyObject_Vectorcall(PyObjC_unravelClassDict, args + 1,
+    PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
                                            4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     if (rv == NULL) {
         goto error_cleanup;
@@ -395,7 +281,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         Py_DECREF(rv);
         PyErr_SetString(
             PyObjCExc_InternalError,
-            "'objc.options._unravelClassDict' did not return a tuple of 4 items");
+            "'objc.options._processClassDict' did not return a tuple of 4 items");
         goto error_cleanup;
     }
     needs_intermediate = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 0));
@@ -986,7 +872,7 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
             delmethod = PyObjCClass_GetDelMethod(cls);
             if (delmethod != NULL) {
                 PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-                if (s != NULL) {
+                if (s != NULL) { // LCOV_BR_EXCL_LINE
                     PyObject* args[2] = {NULL, s};
                     obj               = PyObject_Vectorcall(delmethod, args + 1,
                                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1187,9 +1073,11 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
     IMP method;
     @try {
         method = [self methodForSelector:theSelector];
-    } @catch (NSObject* localException) {
+    } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         PyGILState_Release(state);
         @throw;
+        // LCOV_EXCL_STOP
     }
     if (method == NULL) {
         PyGILState_Release(state);
