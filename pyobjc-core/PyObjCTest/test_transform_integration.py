@@ -30,7 +30,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 type(name, (NSObject,), {})
 
     def test_not_tuple(self):
-        for idx, value in enumerate((42, (True, (), (), (), ()), [True, (), (), ()])):
+        for idx, value in enumerate((42, (True, (), (), (), ()), [True, (), ()])):
 
             with self.subTest(value):
 
@@ -46,35 +46,10 @@ class TestTransformerIntegrationErrors(TestCase):
 
                 with patch(helper):
                     with self.assertRaisesRegex(
-                        objc.internal_error, "did not return a tuple of 4 items"
+                        objc.internal_error, "did not return a tuple of 3 items"
                     ):
 
                         name = f"OC_TransformIntegrationErrorNT{idx}"
-
-                        type(name, (NSObject,), {})
-
-    def test_invalid_needs_intermediate(self):
-        class NotBool:
-            def __bool__(self):
-                raise ValueError("not a boolean")
-
-        for idx, value in enumerate((NotBool(),)):
-            with self.subTest(value):
-
-                def helper(
-                    class_dict,
-                    meta_dict,
-                    class_object,
-                    protocols,
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                ):
-                    return value, (), (), ()  # noqa: B023
-
-                with patch(helper):
-                    with self.assertRaisesRegex(ValueError, "not a boolean"):
-
-                        name = f"OC_TransformIntegrationErrorNI{idx}"
 
                         type(name, (NSObject,), {})
 
@@ -95,7 +70,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return False, (value,), (), ()  # noqa: B023
+                    return (value,), (), ()  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -116,7 +91,7 @@ class TestTransformerIntegrationErrors(TestCase):
             hidden_instance_methods,
             hidden_class_methods,
         ):
-            return False, (objc.ivar(),), (), ()  # noqa: B023
+            return (objc.ivar(),), (), ()  # noqa: B023
 
         with patch(helper):
             with self.assertRaisesRegex(objc.error, "instance variable without a name"):
@@ -148,7 +123,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return False, (), (value,), ()  # noqa: B023
+                    return (), (value,), ()  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -183,7 +158,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return False, (), (), (value,)  # noqa: B023
+                    return (), (), (value,)  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -206,7 +181,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return False, 42, (), ()  # noqa: B023
+                return 42, (), ()  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(
@@ -228,7 +203,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return False, (), 42, ()  # noqa: B023
+                return (), 42, ()  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(
@@ -250,7 +225,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return False, (), (), 42  # noqa: B023
+                return (), (), 42  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(

@@ -26,29 +26,28 @@ struct method_info {
     const char* typestr;
     void (*func)(ffi_cif*, void*, void**, void*);
     BOOL override_only;
-    BOOL use_intermediate;
 
 } gMethods[] = {
     /* Keep in sync with Lib/objc/_transform.py:HELPER_METHODS */
 
-    {0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES},
+    {0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO},
     {0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_,
-     NO, YES},
-    {0, "valueForKey:", "valueForKey_", "@@:@", object_method_valueForKey_, NO, YES},
+     NO},
+    {0, "valueForKey:", "valueForKey_", "@@:@", object_method_valueForKey_, NO},
     {0, "takeStoredValue:forKey:", "takeStoredValue_forKey_", "v@:@@",
-     object_method_setValue_forKey_, NO, YES},
+     object_method_setValue_forKey_, NO},
     {0, "takeValue:forKey:", "takeValue_forKey_", "v@:@@", object_method_setValue_forKey_,
-     NO, YES},
+     NO},
     {0, "setValue:forKey:", "setValue_forKey_", "v@:@@", object_method_setValue_forKey_,
-     NO, YES},
+     NO},
     {0, "forwardInvocation:", "forwardInvocation_", "v@:@",
-     object_method_forwardInvocation, NO, YES},
+     object_method_forwardInvocation, NO},
     {0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_,
-     YES, YES},
+     YES},
     {0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}",
-     object_method_copyWithZone_, YES, YES},
+     object_method_copyWithZone_, YES},
 
-    {0, 0, 0, 0, 0, 0, 0}};
+    {0, 0, 0, 0, 0, 0}};
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -229,21 +228,15 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                                        PyObject* hiddenSelectors,
                                        PyObject* hiddenClassSelectors)
 {
-    /* XXX: Refactor into a function that must be in C and the bit that's
-     * reimplemented in Python and expose the latter to Python for testing.
-     */
     PyObject*  value = NULL;
     Py_ssize_t i;
     Py_ssize_t protocol_count     = 0;
-    int        first_python_gen   = 0;
     Class      new_class          = NULL;
     Class      new_meta_class     = NULL;
     PyObject*  py_superclass      = NULL;
-    int        have_intermediate  = 0;
     PyObject*  instance_variables = NULL;
     PyObject*  instance_methods   = NULL;
     PyObject*  class_methods      = NULL;
-    int        needs_intermediate = 0;
 
     PyObjC_Assert(super_class != Nil, Nil);
     PyObjC_Assert(PyList_Check(protocols), Nil);
@@ -278,22 +271,18 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     if (rv == NULL) {
         goto error_cleanup;
     }
-    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 4) {
+    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 3) {
         Py_DECREF(rv);
         PyErr_SetString(
             PyObjCExc_InternalError,
-            "'objc.options._processClassDict' did not return a tuple of 4 items");
+            "'objc.options._processClassDict' did not return a tuple of 3 items");
         goto error_cleanup;
     }
-    needs_intermediate = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 0));
-    if (needs_intermediate == -1) {
-        goto error_cleanup;
-    }
-    instance_variables = PyTuple_GET_ITEM(rv, 1);
+    instance_variables = PyTuple_GET_ITEM(rv, 0);
     Py_INCREF(instance_variables);
-    instance_methods = PyTuple_GET_ITEM(rv, 2);
+    instance_methods = PyTuple_GET_ITEM(rv, 1);
     Py_INCREF(instance_methods);
-    class_methods = PyTuple_GET_ITEM(rv, 3);
+    class_methods = PyTuple_GET_ITEM(rv, 2);
     Py_INCREF(class_methods);
     Py_DECREF(rv);
     PyObjC_Assert(instance_variables != NULL, Nil);
@@ -315,25 +304,19 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         goto error_cleanup;
     }
 
-    if (needs_intermediate) {
-        /* We must override copyWithZone: for python classes because the
-         * refcounts of python slots might be off otherwise. Yet it should
-         * be possible to override copyWithZone: in those classes.
-         *
-         * The solution: introduce an intermediate class that contains our
-         * implementation of copyWithZone:. This intermediate class is only
-         * needed when (1) the superclass implements copyWithZone: and (2)
-         * the python subclass overrides that method.
-         *
-         * The same issue is present with a number of other methods.
-         */
+    /*
+     * A number of methods need to be implemented by PyObjC, but it should
+     * also be possible to implement these in Python. Because of this
+     * the bridge always introduces an intermediate class between the
+     * Objective-C class and the first generation Python class.
+     */
+    if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
         Class intermediate_class;
         char  buf[256];
         int   r;
 
-        have_intermediate = 1;
-
-        r = snprintf(buf, sizeof(buf), "_PyObjCCopying_%s", class_getName(super_class));
+        r = snprintf(buf, sizeof(buf), "_PyObjCIntermediate_%s",
+                     class_getName(super_class));
         if (r < 0 || r >= (int)sizeof(buf)) { // LCOV_BR_EXCL_LINE
             /* Formatting the name failed, which is unlikely to happen */
             // LCOV_EXCL_START
@@ -360,17 +343,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
             goto error_cleanup;     // LCOV_EXCL_LINE
         }
-    }
-
-    if (!PyObjCClass_HasPythonImplementation(py_superclass)) {
-        /*
-         * This class has a super_class that is pure objective-C
-         * We'll add some instance variables and methods that are
-         * needed for the correct functioning of the class.
-         *
-         * See the code below the next loop.
-         */
-        first_python_gen = 1;
     }
 
     /* Allocate the class as soon as possible, for new selector objects */
@@ -403,50 +375,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 new_class,
                 (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
             goto error_cleanup; // LCOV_EXCL_LINE
-        }
-    }
-
-    /* Allocate space for the new instance variables and methods */
-    if (first_python_gen) {
-        /* Our parent is a pure Objective-C class, add our magic
-         * methods and variables
-         */
-
-        if (!have_intermediate) {
-            /* XXX: This loop is also in the function that builds the
-             *      intermediate class, refactor this.
-             */
-            setup_gMethods_selectors();
-            for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
-                if (cur->override_only) {
-                    if (![super_class instancesRespondToSelector:cur->selector]) {
-                        continue;
-                    }
-                }
-
-                PyObjCMethodSignature* methinfo =
-                    PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
-                if (methinfo == NULL)   // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-
-                IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, new_class);
-                Py_CLEAR(methinfo);
-                if (closure == NULL)    // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-
-                class_addMethod(new_class, cur->selector, closure, cur->typestr);
-                PyObject* sel =
-                    PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
-                if (sel == NULL) // LCOV_BR_EXCL_LINE
-                    /* The call can only fail when running out of memory */
-                    goto error_cleanup; // LCOV_EXCL_LINE
-
-                int r = PyDict_SetItemString(class_dict, cur->method_name, sel);
-                Py_DECREF(sel);
-
-                if (r == -1)            // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-            }
         }
     }
 

@@ -18,20 +18,6 @@ from .test_protocol import MyProtocol
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 
-IMPLIED_SELECTORS = {
-    b"dealloc": b"v@:",
-    b"storedValueForKey:": b"@@:@",
-    b"valueForKey:": b"@@:@",
-    b"takeStoredValue:forKey:": b"v@:@@",
-    b"takeValue:forKey:": b"v@:@@",
-    b"setValue:forKey:": b"v@:@@",
-    b"forwardInvocation:": b"v@:@",
-    b"methodSignatureForSelector:": b"@@::",
-    b"respondsToSelector:": b"Z@::",
-    b"copyWithZone:": b"@@:^{_NSZone=}",
-    b"mutableCopyWithZone:": b"@@:^{_NSZone=}",
-}
-
 
 class TestObjCMethod(TestCase):
     def test_exposed(self):
@@ -1291,22 +1277,21 @@ class TestClassDictProcessor(TestCase):
     def assertValidResult(self, rval):
         # Sanity check of the return value of the processor
         self.assertIsInstance(rval, tuple)
-        self.assertEqual(len(rval), 4)
-        self.assertIsInstance(rval[0], bool)
+        self.assertEqual(len(rval), 3)
+        self.assertIsInstance(rval[0], tuple)
         self.assertIsInstance(rval[1], tuple)
         self.assertIsInstance(rval[2], tuple)
-        self.assertIsInstance(rval[3], tuple)
 
-        for item in rval[1]:
+        for item in rval[0]:
             self.assertIsInstance(item, objc.ivar)
 
-        for item in rval[2]:
+        for item in rval[1]:
             self.assertIsInstance(item, (objc.selector, bytes))
             self.assertNotIsInstance(item, objc.native_selector)
             if isinstance(item, objc.selector):
                 self.assertFalse(item.isClassMethod)
 
-        for item in rval[3]:
+        for item in rval[2]:
             self.assertIsInstance(item, (objc.selector, bytes))
             self.assertNotIsInstance(item, objc.native_selector)
             if isinstance(item, objc.selector):
@@ -1329,7 +1314,6 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(
             rval,
             (
-                False,
                 (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                 (),
                 (),
@@ -1358,7 +1342,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                     (),
                     (),
@@ -1383,7 +1366,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (), (), ()))
+            self.assertEqual(rval, ((), (), ()))
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
@@ -1406,7 +1389,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     tuple(
                         objc.ivar(nm, objc._C_PythonObject, isSlot=True)
                         for nm in ("a", "b")
@@ -1437,7 +1419,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     tuple(
                         objc.ivar(nm, objc._C_PythonObject, isSlot=True)
                         for nm in ("a", "b")
@@ -1467,7 +1448,7 @@ class TestClassDictProcessor(TestCase):
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
-                (False, (objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), ()),
+                ((objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), ()),
             )
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
@@ -1491,7 +1472,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     tuple(
                         objc.ivar(nm, objc._C_PythonObject, isSlot=True)
                         for nm in ("a", "b")
@@ -1560,7 +1540,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (), (), ()))
+            self.assertEqual(rval, ((), (), ()))
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
@@ -1583,7 +1563,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     tuple(
                         objc.ivar(nm, objc._C_PythonObject, isSlot=True)
                         for nm in ("a", "b")
@@ -1614,7 +1593,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                     (),
                     (),
@@ -1642,7 +1620,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(
                 rval,
                 (
-                    False,
                     tuple(
                         objc.ivar(nm, objc._C_PythonObject, isSlot=True)
                         for nm in ("a", "b")
@@ -1730,10 +1707,10 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), ()))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
-            self.assertIs(ivar, rval[1][0])
+            self.assertIs(ivar, rval[0][0])
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
             self.assertEqual(len(hidden_class_methods), 0)
@@ -1753,10 +1730,10 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), ()))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
-            self.assertIs(ivar, rval[1][0])
+            self.assertIs(ivar, rval[0][0])
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
             self.assertEqual(len(hidden_class_methods), 0)
@@ -1776,10 +1753,10 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, (False, (ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), ()))
             self.assertEqual(ivar.__name__, "varname")
             self.assertIs(ivar, class_dict["var"])
-            self.assertIs(ivar, rval[1][0])
+            self.assertIs(ivar, rval[0][0])
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
             self.assertEqual(len(hidden_class_methods), 0)
@@ -1885,17 +1862,16 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertFalse(rval[0])
-            self.assertEqual(rval[1], ())
+            self.assertEqual(rval[0], ())
             if wrap_classmethod:
-                self.assertEqual(rval[2], ())
-                check = rval[3]
+                self.assertEqual(rval[1], ())
+                check = rval[2]
                 self.assertIn("method_", meta_dict)
                 self.assertNotIn("method_", class_dict)
 
             else:
-                self.assertEqual(rval[3], ())
-                check = rval[2]
+                self.assertEqual(rval[2], ())
+                check = rval[1]
                 self.assertNotIn("method_", meta_dict)
                 self.assertIn("method_", class_dict)
 
@@ -1930,16 +1906,15 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertFalse(rval[0])
-            self.assertEqual(rval[1], ())
+            self.assertEqual(rval[0], ())
 
             if wrap_classmethod:
-                self.assertEqual(rval[2], ())
-                check = rval[3]
+                self.assertEqual(rval[1], ())
+                check = rval[2]
 
             else:
-                self.assertEqual(rval[3], ())
-                check = rval[2]
+                self.assertEqual(rval[2], ())
+                check = rval[1]
 
             self.assertNotIn("method_", meta_dict)
             self.assertNotIn("method_", class_dict)
@@ -1981,19 +1956,18 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertFalse(rval[0])
-            self.assertEqual(rval[1], ())
+            self.assertEqual(rval[0], ())
             self.assertEqual(len(hidden_instance_methods), 0)
             self.assertEqual(len(hidden_class_methods), 0)
 
             if wrap_classmethod:
-                self.assertEqual(rval[2], ())
-                check = rval[3]
+                self.assertEqual(rval[1], ())
+                check = rval[2]
                 check_dict = meta_dict
 
             else:
-                self.assertEqual(rval[3], ())
-                check = rval[2]
+                self.assertEqual(rval[2], ())
+                check = rval[1]
                 check_dict = class_dict
 
             self.assertEqual(len(check), 1)
@@ -2029,17 +2003,16 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertFalse(rval[0])
-            self.assertEqual(rval[1], ())
+            self.assertEqual(rval[0], ())
 
             if wrap_classmethod:
-                self.assertEqual(rval[2], ())
-                check = rval[3]
+                self.assertEqual(rval[1], ())
+                check = rval[2]
                 check_dict = meta_dict
 
             else:
-                self.assertEqual(rval[3], ())
-                check = rval[2]
+                self.assertEqual(rval[2], ())
+                check = rval[1]
                 check_dict = class_dict
 
             self.assertEqual(len(check), 1)
@@ -2063,163 +2036,6 @@ class TestClassDictProcessor(TestCase):
     def test_class_methods(self):
         self.check_selectors(wrap_classmethod=False)
 
-    def test_methods_needing_intermediate(self):
-        # XXX: Might need to keep this logic in C for two reasons:
-        #  1. DRY w.r.t. method names
-        #  2. This directly affects correctness of the bridge itself.
-
-        for selector in (b"dealloc",):
-            with self.subTest(selector=selector):
-
-                def method(self):
-                    pass
-
-                class_dict = {selector.decode(): method}
-                meta_dict = {}
-                hidden_instance_methods = {}
-                hidden_class_methods = {}
-                rval = self.processor(
-                    class_dict,
-                    meta_dict,
-                    NSObject,
-                    [],
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                )
-                self.assertValidResult(rval)
-                self.assertTrue(rval[0])
-                m = class_dict[selector.decode()]
-                self.assertFalse(m.isClassMethod)
-                self.assertEqual(m.selector, selector)
-                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
-                self.assertEqual(len(hidden_instance_methods), 0)
-                self.assertEqual(len(hidden_class_methods), 0)
-
-            with self.subTest(selector=selector, second_gen=True):
-
-                def method(self):
-                    pass
-
-                class_dict = {selector.decode(): method}
-                meta_dict = {}
-                hidden_instance_methods = {}
-                hidden_class_methods = {}
-                rval = self.processor(
-                    class_dict,
-                    meta_dict,
-                    OC_TransformWithoutDict,
-                    [],
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                )
-                self.assertValidResult(rval)
-                self.assertFalse(rval[0])
-
-                m = class_dict[selector.decode()]
-                self.assertFalse(m.isClassMethod)
-                self.assertEqual(m.selector, selector)
-                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
-                self.assertEqual(len(hidden_instance_methods), 0)
-                self.assertEqual(len(hidden_class_methods), 0)
-
-        for selector in (
-            b"storedValueForKey:",
-            b"valueForKey:",
-            b"forwardInvocation:",
-            b"methodSignatureForSelector:",
-            b"respondsToSelector:",
-            b"copyWithZone:",
-            b"mutableCopyWithZone:",
-        ):
-            with self.subTest(selector=selector):
-
-                def method(self, arg):
-                    pass
-
-                class_dict = {selector.decode().replace(":", "_"): method}
-                meta_dict = {}
-                hidden_instance_methods = {}
-                hidden_class_methods = {}
-                rval = self.processor(
-                    class_dict,
-                    meta_dict,
-                    NSObject,
-                    [],
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                )
-                self.assertValidResult(rval)
-                self.assertTrue(rval[0])
-
-                m = class_dict[selector.decode().replace(":", "_")]
-                self.assertFalse(m.isClassMethod)
-                self.assertEqual(m.selector, selector)
-                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
-                self.assertEqual(len(hidden_instance_methods), 0)
-                self.assertEqual(len(hidden_class_methods), 0)
-
-        for selector in (
-            b"takeStoredValue:forKey:",
-            b"takeValue:forKey:",
-            b"setValue:forKey:",
-        ):
-            with self.subTest(selector=selector, match_name=True):
-
-                def method(self, arg1, arg2):
-                    pass
-
-                class_dict = {selector.decode().replace(":", "_"): method}
-                meta_dict = {}
-                hidden_instance_methods = {}
-                hidden_class_methods = {}
-                rval = self.processor(
-                    class_dict,
-                    meta_dict,
-                    NSObject,
-                    [],
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                )
-                self.assertValidResult(rval)
-                self.assertTrue(rval[0])
-
-                m = class_dict[selector.decode().replace(":", "_")]
-                self.assertFalse(m.isClassMethod)
-                self.assertEqual(m.selector, selector)
-                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
-                self.assertEqual(len(hidden_instance_methods), 0)
-                self.assertEqual(len(hidden_class_methods), 0)
-
-            with self.subTest(selector=selector, match_name=False):
-
-                # @objc.objc_method(selector=selector)
-                def method(self, arg1, arg2):
-                    pass
-
-                method = objc.selector(method, selector=selector)
-
-                class_dict = {"method": method}
-                meta_dict = {}
-                hidden_instance_methods = {}
-                hidden_class_methods = {}
-                rval = self.processor(
-                    class_dict,
-                    meta_dict,
-                    NSObject,
-                    [],
-                    hidden_instance_methods,
-                    hidden_class_methods,
-                )
-                self.assertValidResult(rval)
-                self.assertTrue(rval[0])
-
-                m = class_dict[selector.decode().replace(":", "_")]
-                self.assertFalse(m.isClassMethod)
-                self.assertEqual(m.selector, selector)
-                self.assertEqual(m.signature, IMPLIED_SELECTORS[selector])
-                self.assertEqual(len(hidden_instance_methods), 0)
-                self.assertEqual(len(hidden_class_methods), 0)
-
     def test_python_methods(self):
         def method(self):
             pass
@@ -2237,7 +2053,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods,
         )
         self.assertValidResult(rval)
-        self.assertEqual(rval, (False, (), (), ()))
+        self.assertEqual(rval, ((), (), ()))
         self.assertIs(class_dict["method"], method)
         self.assertEqual(meta_dict, {})
         self.assertEqual(len(hidden_instance_methods), 0)
@@ -2265,8 +2081,8 @@ class TestClassDictProcessor(TestCase):
         self.assertValidResult(rval)
         self.assertIn("attrgetter", class_dict)
         self.assertIsInstance(class_dict["attrgetter"], objc.selector)
-        self.assertEqual(len(rval[2]), 1)
-        self.assertIs(rval[2][0], class_dict["attrgetter"])
+        self.assertEqual(len(rval[1]), 1)
+        self.assertIs(rval[1][0], class_dict["attrgetter"])
         self.assertEqual(len(hidden_instance_methods), 0)
         self.assertEqual(len(hidden_class_methods), 0)
 
@@ -2292,10 +2108,10 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods,
         )
         self.assertValidResult(rval)
+        self.assertEqual(len(rval[1]), 1)
+        self.assertEqual(rval[1][0], b"instancevalue")
         self.assertEqual(len(rval[2]), 1)
-        self.assertEqual(rval[2][0], b"instancevalue")
-        self.assertEqual(len(rval[3]), 1)
-        self.assertEqual(rval[3][0], b"classvalue")
+        self.assertEqual(rval[2][0], b"classvalue")
         self.assertEqual(len(hidden_instance_methods), 1)
         self.assertEqual(len(hidden_class_methods), 1)
         self.assertEqual(hidden_instance_methods[b"instancevalue"], None)
@@ -2366,8 +2182,8 @@ class TestClassDictProcessor(TestCase):
         self.assertIn("method", meta_dict)
         self.assertIsInstance(meta_dict["method"], objc.selector)
         self.assertIs(meta_dict["method"], meta_dict["classy"])
-        self.assertEqual(len(rval[3]), 1)
-        self.assertIs(rval[3][0], meta_dict["method"])
+        self.assertEqual(len(rval[2]), 1)
+        self.assertIs(rval[2][0], meta_dict["method"])
         self.assertEqual(len(hidden_instance_methods), 0)
         self.assertEqual(len(hidden_class_methods), 0)
 

@@ -1021,6 +1021,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_FatalError("Cannot store generated class");  // LCOV_EXCL_LINE
     }
 
+    PyObjC_Assert(info->hasPythonImpl, NULL);
+
     Py_INCREF(res);
     return res;
 }
@@ -2174,6 +2176,16 @@ static PyObject* _Nullable cls_get_hasdict(PyObject* self, void* _Nullable closu
     return result;
 }
 
+static PyObject* _Nullable cls_get_haspythonimplementation(PyObject* self,
+                                                           void* _Nullable closure
+                                                           __attribute__((__unused__)))
+{
+    PyObject* result =
+        (((PyObjCClassObject*)self)->hasPythonImpl != 0) ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
+}
+
 static PyGetSetDef class_getset[] = {
     {
         .name = "pyobjc_classMethods",
@@ -2207,6 +2219,11 @@ static PyGetSetDef class_getset[] = {
         .name = "__hasdict__",
         .get  = cls_get_hasdict,
         .doc  = "True if the class has an __dict__",
+    },
+    {
+        .name = "__has_python_implementation__",
+        .get  = cls_get_haspythonimplementation,
+        .doc  = "True if the class has a Python implementation",
     },
     {
         /* Access __name__ through a property: Objective-C name

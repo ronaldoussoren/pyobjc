@@ -63,19 +63,15 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
         unsigned i, ivarCount;
 
         ivarList = class_copyIvarList(cur, &ivarCount);
-        if (ivarList == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_Error, "class_copyIvarList failed");
-            Py_DECREF(result);
-            return NULL;
-            // LCOV_EXCL_STOP
+        if (ivarList == NULL) {
+            cur = class_getSuperclass(cur);
+            continue;
         }
 
         for (i = 0; i < ivarCount; i++) {
             ivar                  = ivarList[i];
             const char* ivar_name = ivar_getName(ivar);
 
-            /* XXX: Haven't found a way yet to trigger this */
             if (ivar == NULL) // LCOV_BR_EXCL_LINE
                 continue;     // LCOV_EXCL_LINE
 

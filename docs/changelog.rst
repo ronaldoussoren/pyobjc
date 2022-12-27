@@ -312,6 +312,22 @@ improvements as described below).
   a second implementation of ``forwardInvocation:`` for regular Python class with limited
   functionality (and very low performance).
 
+* In previous versions PyObjC would introduce an intermediate class between a pure Objective-C
+  super class and the first Python sub class when this was needed for correctness. This class
+  is now always introduced.
+
+  There are two reasons for this:
+  1) Adding some methods (such as ``copyWithZone_``) to a class after it was constructed
+     caused problems in older version because the intermediate class wasn't present.
+
+  2) Simplifies the code for building a class
+
+  The intermediate class is named ``_PyObjCIntermediate_{NAME}`` where ``{NAME}`` is the name
+  of the super class, in previous versions it was named ``_PyObjCCopying_{NAME}``.
+
+* Fix ``objc.listInstanceVariables`` failure when one of the classes in the class hierarchy
+  does not have instance variables.
+
 Version 9.0.1
 -------------
 

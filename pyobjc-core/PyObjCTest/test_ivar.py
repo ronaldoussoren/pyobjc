@@ -412,6 +412,7 @@ class TestAllInstanceVariables(TestCase):
             extra = objc.ivar("extra", objc._C_FLT)
 
         obj = PythonClassWithVariables.alloc().init()
+        print(obj.extra)
         v = objc.listInstanceVariables(obj)
         self.assertIn(("charValue", objc._C_CHR), v)
         self.assertIn(("intValue", objc._C_INT), v)

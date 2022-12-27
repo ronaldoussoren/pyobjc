@@ -23,24 +23,6 @@ __all__ = ("objc_method", "python_method")
 
 NO_VALUE = object()
 
-# This needs to be kept in sync with class-builder.m:gMethods
-#
-# XXX: Consider always introducing the intermediate class, which
-#      would take away the need for this dict.
-HELPER_METHODS = {
-    b"dealloc": b"v@:",
-    b"storedValueForKey:": b"@@:@",
-    b"valueForKey:": b"@@:@",
-    b"takeStoredValue:forKey:": b"v@:@@",
-    b"takeValue:forKey:": b"v@:@@",
-    b"setValue:forKey:": b"v@:@@",
-    b"forwardInvocation:": b"v@:@",
-    b"methodSignatureForSelector:": b"@@::",
-    b"respondsToSelector:": b"Z@::",
-    b"copyWithZone:": b"@@:^{_NSZone=}",
-    b"mutableCopyWithZone:": b"@@:^{_NSZone=}",
-}
-
 
 def processClassDict(
     class_dict,
@@ -54,10 +36,9 @@ def processClassDict(
     First step into creating a subclass for a Cocoa class:
 
     - Transform attributes
-    - Return (needs_intermediate, instance_variablees, instanstance_methods, class_methods)
+    - Return (instance_variablees, instanstance_methods, class_methods)
     """
     # XXX: Need meta_dict!
-    needs_intermediate = False
     instance_variables = {}
     instance_methods = set()
     class_methods = set()
@@ -109,11 +90,6 @@ def processClassDict(
                     class_dict[canonical] = value
 
                 instance_methods.add(value)
-                if (
-                    not getattr(class_object, "__objc_python_subclass__", False)
-                    and value.selector in HELPER_METHODS
-                ):
-                    needs_intermediate = True
 
         elif isinstance(value, objc.ivar):
             if value.__name__ in instance_variables:
@@ -160,7 +136,6 @@ def processClassDict(
             hidden_class_methods[sel.selector] = sel
 
     return (
-        bool(needs_intermediate),
         instance_variables,
         instance_methods,
         class_methods,
@@ -291,19 +266,11 @@ def transformAttribute(name, value, class_object, protocols):
     else:
         registered = None
 
-    if selname is not None:
-        # Look up the selector in HELPER_METHODS and use that signature
-        # instead of the default. All methods in HELPER_METHODS are
-        # instance methods.
-        #
-        # This is needed to do the right thing for a number of optional
-        # methods in the NSObject protocol, such as ``copyWithZone:``.
-        helper_signature = HELPER_METHODS.get(selname, NO_VALUE)
-        if helper_signature is not NO_VALUE:
-            signature = helper_signature
-            isclass = False
-    else:
-        helper_signature = NO_VALUE
+    if selname in {b"copy", b"copyWithZone:", b"mutableCopy", b"mutableCopyWithZone:"}:
+        # Specials: NSObject defines copy and copyWithZone as class methods,
+        # while most users would expect to define an instance method.
+        isclass = False
+    helper_signature = NO_VALUE
 
     # DWIM: Copy classmethod-ness and signature from
     # a pre-existing method on the class, but prefer
@@ -315,7 +282,8 @@ def transformAttribute(name, value, class_object, protocols):
         if current is NO_VALUE:
             current = getattr(class_object.pyobjc_classMethods, name, NO_VALUE)
         if isinstance(current, objc.selector):
-            isclass = current.isClassMethod
+            if isclass is None:
+                isclass = current.isClassMethod
             # ishidden = current.isHidden
             signature = current.signature
             selname = current.selector

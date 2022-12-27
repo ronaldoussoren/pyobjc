@@ -103,6 +103,8 @@ class SplitSignatureTest(TestCase):
             # method is private anyway...
             "fm_addNotificationBlockObserverForName_object_queue_usingBlock_",
             "fm_addNotificationBlockObserverForObject_keyPath_options_usingBlock_",
+            "fm_removeNotificationBlockObserver_",
+            "fm_setAssociatedObject_assocatedObjectDescriptor_",
             "SCN_setupDisplayLinkWithQueue_screen_policy_",
         ]
 
