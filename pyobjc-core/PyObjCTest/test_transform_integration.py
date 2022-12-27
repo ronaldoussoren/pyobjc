@@ -34,7 +34,14 @@ class TestTransformerIntegrationErrors(TestCase):
 
             with self.subTest(value):
 
-                def helper(class_dict, meta_dict, class_object, protocols):
+                def helper(
+                    class_dict,
+                    meta_dict,
+                    class_object,
+                    protocols,
+                    hidden_instance_methods,
+                    hidden_class_methods,
+                ):
                     return value  # noqa: B023
 
                 with patch(helper):
@@ -54,7 +61,14 @@ class TestTransformerIntegrationErrors(TestCase):
         for idx, value in enumerate((NotBool(),)):
             with self.subTest(value):
 
-                def helper(class_dict, meta_dict, class_object, protocols):
+                def helper(
+                    class_dict,
+                    meta_dict,
+                    class_object,
+                    protocols,
+                    hidden_instance_methods,
+                    hidden_class_methods,
+                ):
                     return value, (), (), ()  # noqa: B023
 
                 with patch(helper):
@@ -73,7 +87,14 @@ class TestTransformerIntegrationErrors(TestCase):
         ):
             with self.subTest(value):
 
-                def helper(class_dict, meta_dict, class_object, protocols):
+                def helper(
+                    class_dict,
+                    meta_dict,
+                    class_object,
+                    protocols,
+                    hidden_instance_methods,
+                    hidden_class_methods,
+                ):
                     return False, (value,), (), ()  # noqa: B023
 
                 with patch(helper):
@@ -87,7 +108,14 @@ class TestTransformerIntegrationErrors(TestCase):
 
         idx += 1
 
-        def helper(class_dict, meta_dict, class_object, protocols):
+        def helper(
+            class_dict,
+            meta_dict,
+            class_object,
+            protocols,
+            hidden_instance_methods,
+            hidden_class_methods,
+        ):
             return False, (objc.ivar(),), (), ()  # noqa: B023
 
         with patch(helper):
@@ -112,7 +140,14 @@ class TestTransformerIntegrationErrors(TestCase):
         ):
             with self.subTest(value):
 
-                def helper(class_dict, meta_dict, class_object, protocols):
+                def helper(
+                    class_dict,
+                    meta_dict,
+                    class_object,
+                    protocols,
+                    hidden_instance_methods,
+                    hidden_class_methods,
+                ):
                     return False, (), (value,), ()  # noqa: B023
 
                 with patch(helper):
@@ -140,7 +175,14 @@ class TestTransformerIntegrationErrors(TestCase):
         ):
             with self.subTest(value):
 
-                def helper(class_dict, meta_dict, class_object, protocols):
+                def helper(
+                    class_dict,
+                    meta_dict,
+                    class_object,
+                    protocols,
+                    hidden_instance_methods,
+                    hidden_class_methods,
+                ):
                     return False, (), (), (value,)  # noqa: B023
 
                 with patch(helper):
@@ -156,7 +198,14 @@ class TestTransformerIntegrationErrors(TestCase):
     def test_not_tuples(self):
         with self.subTest("ivars"):
 
-            def helper(class_dict, meta_dict, class_object, protocols):
+            def helper(
+                class_dict,
+                meta_dict,
+                class_object,
+                protocols,
+                hidden_instance_methods,
+                hidden_class_methods,
+            ):
                 return False, 42, (), ()  # noqa: B023
 
             with patch(helper):
@@ -171,7 +220,14 @@ class TestTransformerIntegrationErrors(TestCase):
 
         with self.subTest("instance methods"):
 
-            def helper(class_dict, meta_dict, class_object, protocols):
+            def helper(
+                class_dict,
+                meta_dict,
+                class_object,
+                protocols,
+                hidden_instance_methods,
+                hidden_class_methods,
+            ):
                 return False, (), 42, ()  # noqa: B023
 
             with patch(helper):
@@ -186,7 +242,14 @@ class TestTransformerIntegrationErrors(TestCase):
 
         with self.subTest("class methods"):
 
-            def helper(class_dict, meta_dict, class_object, protocols):
+            def helper(
+                class_dict,
+                meta_dict,
+                class_object,
+                protocols,
+                hidden_instance_methods,
+                hidden_class_methods,
+            ):
                 return False, (), (), 42  # noqa: B023
 
             with patch(helper):

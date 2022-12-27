@@ -42,7 +42,14 @@ HELPER_METHODS = {
 }
 
 
-def processClassDict(class_dict, meta_dict, class_object, protocols):
+def processClassDict(
+    class_dict,
+    meta_dict,
+    class_object,
+    protocols,
+    hidden_instance_methods,
+    hidden_class_methods,
+):
     """
     First step into creating a subclass for a Cocoa class:
 
@@ -139,6 +146,18 @@ def processClassDict(class_dict, meta_dict, class_object, protocols):
     )
 
     validate_protocols(class_object, instance_methods, class_methods, protocols)
+
+    for sel in instance_methods:
+        if isinstance(sel, bytes):
+            hidden_instance_methods[sel] = None
+        elif sel.isHidden:
+            hidden_instance_methods[sel.selector] = sel
+
+    for sel in class_methods:
+        if isinstance(sel, bytes):
+            hidden_class_methods[sel] = None
+        elif sel.isHidden:
+            hidden_class_methods[sel.selector] = sel
 
     return (
         bool(needs_intermediate),

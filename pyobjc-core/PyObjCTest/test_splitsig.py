@@ -102,6 +102,7 @@ class SplitSignatureTest(TestCase):
             # Unclear why this signature isn't correct, possibly due to the 'queue'.
             # method is private anyway...
             "fm_addNotificationBlockObserverForName_object_queue_usingBlock_",
+            "fm_addNotificationBlockObserverForObject_keyPath_options_usingBlock_",
             "SCN_setupDisplayLinkWithQueue_screen_policy_",
         ]
 

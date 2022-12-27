@@ -271,9 +271,10 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             "Cannot create class because 'objc.options._processClassDict' is not set");
         goto error_cleanup;
     }
-    PyObject* args[] = {NULL, class_dict, meta_dict, py_superclass, protocols};
+    PyObject* args[] = {NULL,      class_dict,      meta_dict,           py_superclass,
+                        protocols, hiddenSelectors, hiddenClassSelectors};
     PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
-                                           4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                           6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     if (rv == NULL) {
         goto error_cleanup;
     }
@@ -405,68 +406,6 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
     }
 
-    /* Verify instance and class methods sets */
-
-    for (i = 0; i < PyTuple_GET_SIZE(instance_methods); i++) {
-        value = PyTuple_GET_ITEM(instance_methods, i);
-
-        /* XXX: v--- This is not in the Python version! */
-        if (PyBytes_Check(value)) {
-            int r = PyDict_SetItem(hiddenSelectors, value, Py_None);
-            if (r == -1) {          // LCOV_BR_EXCL_LINE
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
-        } else if (PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
-            PyObjCSelector* sel = (PyObjCSelector*)value;
-
-            /* Set sel_class */
-            sel->sel_class = new_class;
-
-            if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
-                PyObject* v = PyObjCBytes_InternFromString(
-                    sel_getName(PyObjCSelector_GetSelector(value)));
-                if (v == NULL) {        // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-                int r = PyDict_SetItem(hiddenSelectors, v, value);
-                Py_DECREF(v);
-                if (r == -1) {          // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-            }
-        }
-    }
-    for (i = 0; i < PyTuple_GET_SIZE(class_methods); i++) {
-        value = PyTuple_GET_ITEM(class_methods, i);
-
-        if (PyBytes_Check(value)) {
-            /* XXX: This needs documentation */
-            int r = PyDict_SetItem(hiddenClassSelectors, value, Py_None);
-            if (r == -1) {          // LCOV_BR_EXCL_LINE
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
-
-        } else if (PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
-            PyObjCSelector* sel = (PyObjCSelector*)value;
-
-            /* Set sel_class */
-            sel->sel_class = new_class;
-
-            if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
-                PyObject* v = PyObjCBytes_InternFromString(
-                    sel_getName(PyObjCSelector_GetSelector(value)));
-                if (v == NULL) {        // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-                int r = PyDict_SetItem(hiddenClassSelectors, v, value);
-                Py_DECREF(v);
-                if (r == -1) {          // LCOV_BR_EXCL_LINE
-                    goto error_cleanup; // LCOV_EXCL_LINE
-                }
-            }
-        }
-    }
-
     /* Allocate space for the new instance variables and methods */
     if (first_python_gen) {
         /* Our parent is a pure Objective-C class, add our magic
@@ -571,6 +510,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             continue;
         }
 
+        /* Make sure that the selector is bound to the newly created class */
+        ((PyObjCSelector*)value)->sel_class = new_class;
+
         Method meth;
         int    is_override = 0;
         IMP    imp;
@@ -628,6 +570,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             /* Cannot happen, sequence items were validated earlier */
             continue; // LCOV_EXCL_LINE
         }
+
+        /* Make sure that the selector is bound to the newly created class */
+        ((PyObjCSelector*)value)->sel_class = new_class;
 
         Method meth;
         int    is_override = 0;
