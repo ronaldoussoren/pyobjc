@@ -5,7 +5,7 @@ import decimal
 
 import objc
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestNSDecimalWrapper(TestCase):
@@ -169,6 +169,11 @@ class TestNSDecimalWrapper(TestCase):
         d2 = round(d1, -1)
         self.assertEqual(d2, objc.NSDecimal("20"))
 
+        with self.assertRaisesRegex(
+            TypeError, r"function takes at most 1 argument \(2 given\)"
+        ):
+            d1.__round__(1, 2)
+
     def test_pow(self):
         with self.assertRaisesRegex(
             TypeError, r"pow\(\) and \*\* are not supported for NSDecimal"
@@ -305,6 +310,41 @@ class TestUsingNSDecimalNumber(TestCase):
         v = n.decimalValue()
         self.assertEqual(d, v)
 
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            cls.decimalNumberWithDecimal_(d, 1)
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an NSDecimal, got instance of 'str'"
+        ):
+            cls.decimalNumberWithDecimal_("42.5")
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            cls.alloc().initWithDecimal_(d, 1)
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an NSDecimal, got instance of 'str'"
+        ):
+            cls.alloc().initWithDecimal_("42.5")
+
+    @expectedFailure
+    def test_subclassing(self):
+        # At least on macOS 13 subclassing of NSDecimalNumber basically doesn't work,
+        # leaving the test here as a reminder of that.
+        NSDecimalNumber = objc.lookUpClass("NSDecimalNumber")
+
+        class OC_DecimalNumberPlusOne(NSDecimalNumber):
+            @objc.objc_method(signature=NSDecimalNumber.initWithDecimal_.signature)
+            def initWithDecimal_(self, value):
+                return super().initWithDecimal_(value)
+
+            def decimalValue(self):
+                return super().decimalValue() + 1
+
+        o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
+        print(type(o))
+        v = objc.NSDecimal(o)
+        print(v)
+
 
 class TestDecimalByReference(TestCase):
     def test_byref_in(self):
@@ -316,6 +356,11 @@ class TestDecimalByReference(TestCase):
 
         self.assertIsInstance(r, str)
         self.assertEqual(r, "1.5")
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an NSDecimal, got instance of 'str'"
+        ):
+            o.stringFromDecimal_("42.5")
 
     def test_byref_out(self):
         o = OC_TestDecimal.alloc().init()

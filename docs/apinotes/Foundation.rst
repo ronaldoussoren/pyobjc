@@ -194,3 +194,10 @@ The method ``getUUIDBytes:`` returns an instance of bytes of length 16.
 ......................
 
 - ``initWithFormat:options:locale:arguments:`` cannot be  used from Python.
+
+
+``NSDecimalNumber``
+...................
+
+Subclassing ``NSDecimalNumber`` is support in theory, but in practice this won't work because
+the Foundation framework doesn't support this.

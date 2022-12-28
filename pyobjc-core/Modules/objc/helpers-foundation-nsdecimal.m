@@ -471,6 +471,39 @@ decimal_power(PyObject* left __attribute__((__unused__)),
     return NULL;
 }
 
+static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
+                                                    NSDecimal* value, bool round_down)
+{
+    /* XXX: Need tests that trigger these errors, including the loss of precision one */
+    NSDecimal value2;
+    switch (status) {
+    case NSCalculationOverflow:
+        PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+        return NULL;
+    case NSCalculationUnderflow:
+        PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+        return NULL;
+    case NSCalculationDivideByZero:
+        PyErr_SetString(PyExc_ZeroDivisionError, "Division by zero");
+        return NULL;
+    /*
+     * Ignore these:
+     */
+    case NSCalculationLossOfPrecision:
+    case NSCalculationNoError:
+        break;
+    }
+
+    if (round_down) {
+        NSDecimalRound(&value2, value, 0, NSRoundDown);
+        NSDecimalCompact(&value2);
+        return Decimal_New(&value2);
+    } else {
+        NSDecimalCompact(value);
+        return Decimal_New(value);
+    }
+}
+
 #define TRY_COERCE(left, right)                                                          \
     int r = decimal_coerce(&left, &right);                                               \
     if (r == 1) {                                                                        \
@@ -488,18 +521,7 @@ decimal_power(PyObject* left __attribute__((__unused__)),
                                                                                          \
         err = nsdecimal_function(&result, &Decimal_Value(left), &Decimal_Value(right),   \
                                  NSRoundPlain);                                          \
-        if (err == NSCalculationOverflow) {                                              \
-            PyErr_SetString(PyExc_OverflowError, "Numeric overflow");                    \
-            return NULL;                                                                 \
-                                                                                         \
-        } else if (err == NSCalculationUnderflow) {                                      \
-            PyErr_SetString(PyExc_OverflowError, "Numeric underflow");                   \
-            return NULL;                                                                 \
-                                                                                         \
-        } else {                                                                         \
-            NSDecimalCompact(&result);                                                   \
-            return Decimal_New(&result);                                                 \
-        }                                                                                \
+        return decimal_result_to_python(err, &result, false);                            \
     }
 
 DECIMAL_OPERATOR(decimal_add, NSDecimalAdd)
@@ -510,25 +532,14 @@ DECIMAL_OPERATOR(decimal_divide, NSDecimalDivide)
 static PyObject*
 decimal_floordivide(PyObject* left, PyObject* right)
 {
-    NSDecimal          result, result2;
+    NSDecimal          result;
     NSCalculationError err;
 
     TRY_COERCE(left, right);
 
     err = NSDecimalDivide(&result, &Decimal_Value(left), &Decimal_Value(right),
                           NSRoundPlain);
-    if (err == NSCalculationOverflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
-        return NULL;
-
-    } else if (err == NSCalculationUnderflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
-        return NULL;
-    }
-
-    NSDecimalRound(&result2, &result, 0, NSRoundDown);
-    NSDecimalCompact(&result2);
-    return Decimal_New(&result2);
+    return decimal_result_to_python(err, &result, true);
 }
 
 static int
@@ -557,19 +568,7 @@ decimal_negative(PyObject* self)
     DecimalFromComponents(&zero, 0, 0, 0);
 
     err = NSDecimalSubtract(&result, &zero, &Decimal_Value(self), NSRoundPlain);
-
-    if (err == NSCalculationOverflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
-        return NULL;
-
-    } else if (err == NSCalculationUnderflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
-        return NULL;
-
-    } else {
-        NSDecimalCompact(&result);
-        return Decimal_New(&result);
-    }
+    return decimal_result_to_python(err, &result, false);
 }
 
 static PyObject*
@@ -591,18 +590,7 @@ decimal_absolute(PyObject* self)
     }
 
     err = NSDecimalSubtract(&result, &zero, &Decimal_Value(self), NSRoundPlain);
-    if (err == NSCalculationOverflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
-        return NULL;
-
-    } else if (err == NSCalculationUnderflow) {
-        PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
-        return NULL;
-
-    } else {
-        NSDecimalCompact(&result);
-        return Decimal_New(&result);
-    }
+    return decimal_result_to_python(err, &result, false);
 }
 
 static PyObject* _Nullable decimal_round(PyObject* self, PyObject* _Nullable args,
@@ -621,6 +609,7 @@ static PyObject* _Nullable decimal_round(PyObject* self, PyObject* _Nullable arg
     return Decimal_New(&result);
 }
 
+/* XXX: Can 'l' ever be something else than NSDecimal? */
 static int
 decimal_coerce(PyObject** l, PyObject** r)
 {
@@ -724,8 +713,8 @@ decimal_repr(PyObject* self)
 {
     NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
     PyObject* tmp = id_to_python(val);
-    if (tmp == NULL) {
-        return NULL;
+    if (tmp == NULL) { // LCOV_BR_EXCL_START
+        return NULL;   // LCOV_EXCL_STOP
     }
     PyObject* repr = PyObject_Str(tmp);
     Py_XDECREF(tmp);
@@ -813,10 +802,13 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
+            // LCOV_EXCL_START
+            // AFAIK the method won't raise.
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
             res = nil;
         }
+        // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) {
@@ -851,10 +843,13 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
+            // LCOV_EXCL_START
+            // AFAIK the method won't raise.
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
             res = nil;
         }
+        // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) {
@@ -934,12 +929,9 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
             super.super_class = PyObjCSelector_GetClass(method);
             super.receiver    = PyObjCObject_GetObject(self);
 
-#if defined(__i386__) || defined(__arm64__)
-            /* XXX: The call below doesn't work on i386, I'm not sure why.
-             * Because nobody will every subclass NSDecimalNumber this is not
-             * really a problem.
-             */
-            aDecimal = [PyObjCObject_GetObject(self) decimalValue];
+#if defined(__arm64__)
+            aDecimal = ((NSDecimal(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method));
 #else
             ((void (*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)(
                 &aDecimal, &super, PyObjCSelector_GetSelector(method));
@@ -1058,8 +1050,9 @@ PyObjC_setup_nsdecimal(PyObject* m)
 {
     PyType_Ready(&Decimal_Type);
 
-    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type) == -1) {
-        return -1;
+    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (@encode(NSDecimal)[1] == '?') {
@@ -1071,46 +1064,47 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     PyType_Ready(&Decimal_Type);
 
-    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type) == -1) {
-        return -1;
+    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
     Class classNSNumber        = objc_lookUpClass("NSNumber");
 
-    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, @selector(initWithDecimal:),
-                                     call_NSDecimalNumber_initWithDecimal_,
-                                     mkimp_NSDecimalNumber_initWithDecimal_)
+    if (PyObjC_RegisterMethodMapping(
+            classNSDecimalNumber, @selector(initWithDecimal:), // LCOV_BR_EXCL_LINE
+            call_NSDecimalNumber_initWithDecimal_, mkimp_NSDecimalNumber_initWithDecimal_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     Class classNSDecimalNumberPlaceholder =
         objc_lookUpClass("NSDecimalNumberPlaceholder");
-    if (classNSDecimalNumberPlaceholder != nil) {
+    if (classNSDecimalNumberPlaceholder != nil) { // LCOV_BR_EXCL_LINE
         if (PyObjC_RegisterMethodMapping(classNSDecimalNumberPlaceholder,
                                          @selector(initWithDecimal:),
                                          call_NSDecimalNumber_initWithDecimal_,
                                          mkimp_NSDecimalNumber_initWithDecimal_)
             < 0) {
 
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         }
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber,
+    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, // LCOV_BR_EXCL_LINE
                                      @selector(decimalNumberWithDecimal:),
                                      call_NSDecimalNumber_decimalNumberWithDecimal_,
                                      mkimp_NSDecimalNumber_decimalNumberWithDecimal_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSNumber, @selector(decimalValue),
-                                     call_NSDecimalNumber_decimalValue,
-                                     mkimp_NSDecimalNumber_decimalValue)
+    if (PyObjC_RegisterMethodMapping(
+            classNSNumber, @selector(decimalValue), // LCOV_BR_EXCL_LINE
+            call_NSDecimalNumber_decimalValue, mkimp_NSDecimalNumber_decimalValue)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;
