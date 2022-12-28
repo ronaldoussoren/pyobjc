@@ -915,8 +915,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
     if (PyObjCObject_Check(self)) {
         PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
-        if (hidden == NULL && PyErr_Occurred()) {
-            return NULL;
+        if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;                          // LCOV_EXCL_LINE
         }
         if (PyObjCObject_IsMagic(self) || hidden) {
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
@@ -927,8 +927,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         if (PyObjCClass_HiddenSelector(self, sel, YES)) {
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
-        } else if (PyErr_Occurred()) {
-            return NULL;
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;               // LCOV_EXCL_LINE
         }
     }
 

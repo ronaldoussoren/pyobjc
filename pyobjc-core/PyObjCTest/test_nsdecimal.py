@@ -34,6 +34,28 @@ class TestNSDecimalWrapper(TestCase):
         d = objc.NSDecimal(500, -6, True)
         self.assertEqual(str(d), str(500 * 10**-6 * -1))
 
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            objc.NSDecimal("a", -6, True)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str'"):
+            objc.NSDecimal(500, "a", True)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"NSDecimal\(value\) or NSDecimal\(mantissa, exponent, isNegative\)",
+        ):
+            objc.NSDecimal(500, -6, True, False)
+
+        with self.assertRaisesRegex(
+            TypeError, "cannot convert instance of NSObject to NSDecimal"
+        ):
+            objc.NSDecimal(objc.lookUpClass("NSObject").new())
+
+        d = objc.NSDecimal("invalid")
+        self.assertEqual(str(d), "NaN")
+
     def test_comparing(self):
         d1 = objc.NSDecimal("1.500")
         d2 = objc.NSDecimal("1.500")
@@ -340,3 +362,27 @@ class TestDecimalByReference(TestCase):
         self.assertEqual(str(d1), "1.25")
         self.assertIsInstance(d2, objc.NSDecimal)
         self.assertEqual(str(d2), "2.5")
+
+    def test_to_id(self):
+        v = objc.NSDecimal("2.75")
+        a = objc.lookUpClass("NSArray").arrayWithArray_([v])
+
+        o = a[0]
+        self.assertIsInstance(o, objc.lookUpClass("NSDecimalNumber"))
+        self.assertEqual(o, v)
+
+        b = objc.NSDecimal(o)
+        self.assertIsInstance(b, objc.NSDecimal)
+        self.assertIsNot(b, v)
+        self.assertEqual(b, v)
+
+    def test_create_no_args(self):
+        v = objc.NSDecimal()
+        self.assertEqual(v, objc.NSDecimal("0.0"))
+
+    def test_bool_context(self):
+        v = objc.NSDecimal("0")
+        self.assertIs(bool(v), False)
+
+        v = objc.NSDecimal("0.0001")
+        self.assertIs(bool(v), True)

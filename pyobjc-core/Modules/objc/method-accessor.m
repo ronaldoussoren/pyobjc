@@ -74,9 +74,11 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (unbound_instance_method) {
-                methsig = [objc_object instanceMethodSignatureForSelector:sel];
+                methsig = [objc_object
+                    instanceMethodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             } else {
-                methsig = [objc_object methodSignatureForSelector:sel];
+                methsig =
+                    [objc_object methodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -103,8 +105,8 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
      * - method signature: Overridden method signature for a hidden method
      */
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
-    if (meta == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (meta == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                        // LCOV_EXCL_LINE
     }
 
     if (meta && meta != Py_None) {
@@ -143,8 +145,6 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                     flattened = (char*)methinfo->signature;
                 }
             }
-        } else if (PyObjCMethodSignature_Check(meta)) {
-            flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
         }
     }
 
@@ -221,6 +221,10 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 // LCOV_EXCL_STOP
             }
 
+            /* XXX: This needs some documentation. Basically resolve the method
+             * through normal lookup first, that avoid replicating objc_object.tp_getattro
+             * here.
+             */
             v = PyObject_GetAttrString(self, name);
             if (v == NULL) {
                 PyErr_Clear();
@@ -261,11 +265,6 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                     // LCOV_EXCL_START
                     PyErr_Clear();
                     continue;
-#if 0
-                    free(methods);
-                    Py_DECREF(res);
-                    return NULL;
-#endif
                     // LCOV_EXCL_STOP
                 }
             }
@@ -341,22 +340,29 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
     ObjCMethodAccessor* self   = (ObjCMethodAccessor*)_self;
     PyObject*           result = NULL;
 
+    PyObjC_Assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base), NULL);
+
     if (PyUnicode_Check(name)) {
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;                               // LCOV_EXCL_LINE
         }
 
-    } else {
+    } else { // LCOV_BR_EXCL_LINE
+        /* This should never happen, CPython checks for the type of 'name'
+         * before calling this slot.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError, "Expecting string, got %s", Py_TYPE(name)->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjC_is_ascii_string(name, "__dict__")) {
 
         PyObject* dict;
         dict = make_dict(self->base, self->class_method);
-        if (dict == NULL) {
-            return NULL;
+        if (dict == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
         }
 
         result = PyDictProxy_New(dict);
@@ -413,8 +419,8 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
                          * fetch the actual result
                          */
                         v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
-                        if (v == NULL) {
-                            return NULL;
+                        if (v == NULL) { // LCOV_BR_EXCL_LINE
+                            return NULL; // LCOV_EXCL_LINE
                         }
                         result = v;
                         Py_INCREF(result);
@@ -425,9 +431,6 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
                     break;
                 }
             }
-
-        } else {
-            result = PyObject_GetAttr(self->base, name);
         }
     }
 
@@ -505,8 +508,8 @@ static PyObject* _Nullable obj_dir(PyObject* self)
                                ((ObjCMethodAccessor*)self)->class_method);
     PyObject* result;
 
-    if (dict == NULL) {
-        return NULL;
+    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     result = PyMapping_Keys(dict);

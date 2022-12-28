@@ -142,7 +142,7 @@ DecimalFromString(NSDecimal* aDecimal, NSString* aString,
     NSDecimalNumber* num;
 
     num       = [[NSDecimalNumber alloc] initWithString:aString];
-    *aDecimal = [num decimalValue];
+    *aDecimal = [num decimalValue]; // LCOV_BR_EXCL_LINE
     [num release];
 }
 
@@ -156,7 +156,7 @@ DecimalFromComponents(NSDecimal* aDecimal, unsigned long long mantissa,
                                            exponent:exponent
                                          isNegative:negative];
 
-    *aDecimal = [num decimalValue];
+    *aDecimal = [num decimalValue]; // LCOV_BR_EXCL_LINE
     [num release];
 }
 
@@ -237,39 +237,45 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
          * first convert the float to a string using repr, that
          * is easier than extracting the components of the
          * float.
+         *
+         * Previous versions converted to NSString through
+         * PyObject_Repr(), but that might give an incorrect
+         * value for float subclasses with an overridden __repr__,
+         * which includes for example a float enum:
+         *
+         *     class FloatEnum(float, enum.Enum): ...
          */
         NSString* stringVal;
-
-        PyObject* uniVal = PyObject_Repr(pyValue);
-        if (uniVal == NULL)
-            return -1;
-
-        if (uniVal == NULL)
-            return -1;
-
-        if (depythonify_python_object(uniVal, &stringVal) == -1) {
-            Py_DECREF(uniVal);
+        stringVal = [[NSString alloc]
+            initWithFormat:@"%.*g", DBL_DECIMAL_DIG, PyFloat_AsDouble(pyValue)];
+        if (stringVal == nil) {
+            PyErr_SetString(PyObjCExc_Error, "Converting double to NSString failed");
             return -1;
         }
 
-        Py_BEGIN_ALLOW_THREADS
-            @try {
-                DecimalFromString(outResult, stringVal, NULL);
+        @try {
+            DecimalFromString(outResult, stringVal, NULL);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-            }
-        Py_END_ALLOW_THREADS
+            // LCOV_EXCL_START
+            /* Experiments show that DecimalFromString won't raise, but
+             * returns a NaN value if the input cannot be parsed.
+             */
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+        // LCOV_EXCL_STOP
 
-        if (PyErr_Occurred())
-            return -1;
+        [stringVal release];
+
+        if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+            return -1;        // LCOV_EXCL_LINE
         return 0;
     }
 
     if (_NSDecimalNumber_Class == NULL) {
         _NSDecimalNumber_Class = PyObjCClass_New([NSDecimalNumber class]);
-        if (_NSDecimalNumber_Class == NULL) {
-            PyErr_Clear();
+        if (_NSDecimalNumber_Class == NULL) { // LCOV_BR_EXCL_LINE
+            PyErr_Clear();                    // LCOV_EXCL_LINE
         }
     }
 
@@ -280,7 +286,7 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         return 0;
     }
 
-    PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
+    PyErr_Format(PyExc_TypeError, "cannot convert instance of %s to NSDecimal",
                  pyValue->ob_type->tp_name);
     return -1;
 }
@@ -329,7 +335,7 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
                 return 0;
             }
 
-            PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
+            PyErr_Format(PyExc_TypeError, "cannot convert instance of %s to NSDecimal",
                          pyValue->ob_type->tp_name);
             return -1;
 
@@ -343,13 +349,18 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
             Py_BEGIN_ALLOW_THREADS
                 @try {
                     DecimalFromString(&Decimal_Value(self), stringVal, NULL);
+
+                    // LCOV_EXCL_START
+                    // DecimalFromString does not raise, but returns a NaN on
+                    // invalid values.
                 } @catch (NSObject* localException) {
                     PyObjCErr_FromObjC(localException);
                 }
+                // LCOV_EXCL_STOP
             Py_END_ALLOW_THREADS
 
-            if (PyErr_Occurred())
-                return -1;
+            if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+                return -1;        // LCOV_EXCL_LINE
             return 0;
 
         } else {
@@ -429,9 +440,11 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
         return PyBool_FromLong(res != NSOrderedAscending);
     case Py_GT:
         return PyBool_FromLong(res == NSOrderedDescending);
-    default:
+    default: // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "Bad comparison arg");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -525,7 +538,7 @@ decimal_nonzero(PyObject* self)
 
     DecimalFromComponents(&zero, 0, 0, 0);
 
-    return NSDecimalCompare(&zero, &Decimal_Value(self)) == NSOrderedSame;
+    return NSDecimalCompare(&zero, &Decimal_Value(self)) != NSOrderedSame;
 }
 
 static PyObject*

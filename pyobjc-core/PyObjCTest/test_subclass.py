@@ -1,6 +1,7 @@
 import objc
 import sys
 import io
+import warnings
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
 from .objectint import OC_ObjectInt
@@ -647,6 +648,27 @@ class TestOverridingSpecials(TestCase):
             sys.stderr = orig_stderr
 
         self.assertIn("ValueError: huh", captured_stderr.getvalue())
+        self.assertIn("Exception ignored", captured_stderr.getvalue())
+
+    def test_uninit_warn_as_error(self):
+        o = NSObject.alloc()
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=objc.UninitializedDeallocWarning)
+
+            orig_stderr = sys.stderr
+            try:
+                sys.stderr = captured_stderr = io.StringIO()
+
+                del o
+
+            finally:
+                sys.stderr = orig_stderr
+
+        self.assertIn(
+            "leaking an uninitialized object of type NSObject",
+            captured_stderr.getvalue(),
+        )
         self.assertIn("Exception ignored", captured_stderr.getvalue())
 
 

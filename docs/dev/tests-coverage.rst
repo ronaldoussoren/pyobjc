@@ -41,6 +41,11 @@ code is correct):
 
 2. Memory allocation failure handling
 
+.. note::
+
+   I've also started marking branches and failure cases as excluded when
+   the propagate one of the cases mentioned earlier.
+
 Use ``LCOV_EXCL_LINE`` in a comment to exclude a specific line.
 
 Use ``LCOV_EXCL_START`` and ``EXC_EXCL_STOP`` in comments to exclude a block

@@ -1321,8 +1321,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             }
 
             PyObject* hidden = PyObjCClass_HiddenSelector(class_for_base, meth_name, YES);
-            if (hidden == NULL && PyErr_Occurred()) {
-                return NULL;
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return NULL;                          // LCOV_EXCL_LINE
 
             } else if (hidden) {
                 continue;
@@ -1747,8 +1747,8 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
         return NULL;
     }
     PyObject* hidden = PyObjCClass_HiddenSelector(self, sel_getUid(name_bytes), YES);
-    if (hidden == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                          // LCOV_EXCL_LINE
     } else if (hidden) {
         PyErr_SetObject(PyExc_AttributeError, name);
         return NULL;
@@ -1902,9 +1902,11 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             PyObject* hidden =
                 PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(value),
                                            PyObjCSelector_IsClassMethod(value));
-            if (hidden == NULL && PyErr_Occurred()) {
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(value);
                 return -1;
+                // LCOV_EXCL_STOP
 
             } else if (hidden) {
                 Py_DECREF(value);
@@ -2266,9 +2268,11 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             /* Check if the selector should be hidden */
             PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),
                                                           method_getName(methods[i]), NO);
-            if (hidden == NULL && PyErr_Occurred()) {
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             } else if (hidden) {
                 continue;
             }
@@ -2896,8 +2900,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
 
     PyObject* hidden = PyObjCClass_HiddenSelector(cls, selector, class_method);
 
-    if (hidden == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                          // LCOV_EXCL_LINE
     } else if (hidden) {
         (void)PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector),
                                    Py_None);
@@ -3291,8 +3295,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         r = 0;
         if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name,
                                         PyObjCSelector_IsClassMethod(aMethod))) {
-            if (PyErr_Occurred()) {
-                r = -1;
+            if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                r = -1;             // LCOV_EXCL_LINE
             } else if (PyObjCSelector_IsClassMethod(aMethod)) {
                 r = PyDict_SetItem(metaDict, name, aMethod);
 

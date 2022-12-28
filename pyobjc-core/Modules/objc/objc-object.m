@@ -84,13 +84,18 @@ static PyObject* _Nullable object_repr(PyObject* _self)
     PyObjCObject* self = (PyObjCObject*)_self;
     PyObject*     res;
 
-    if (self->flags & PyObjCObject_kMAGIC_COOKIE) {
+    if (self->flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        //
+        // There currently is no code path that can create objective-c
+        // magic instances, only through CoreFoundation (corefoundation.m)
+        // and those don't hit this path.
         return PyUnicode_FromFormat("<%s objective-c magic instance %p>",
                                     Py_TYPE(self)->tp_name, self->objc_object);
+        // LCOV_EXCL_STOP
     }
 
-    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0
-        && !PyObjCObject_IsClassic(self)) {
+    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0) {
         /* Try to call the method 'description', which is the ObjC
          * equivalent of __repr__. If that fails we'll fall back to
          * the default repr.
@@ -145,10 +150,7 @@ object_dealloc(PyObject* obj)
          */
         PyObjC_UnregisterPythonProxy(PyObjCObject_GetObject(obj), obj);
 
-        if (PyObjCObject_IsClassic(obj)) {
-            /* pass */
-
-        } else if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
+        if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
             /* pass */
 
         } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
@@ -167,7 +169,7 @@ object_dealloc(PyObject* obj)
                      Py_TYPE(obj)->tp_name);
             ((PyObjCObject*)obj)->objc_object = nil;
             if (PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf) == -1) {
-                PyErr_WriteUnraisable(obj);
+                PyErr_WriteUnraisable((PyObject*)Py_TYPE(obj));
             }
 
         } else {
@@ -175,9 +177,10 @@ object_dealloc(PyObject* obj)
                 @try {
                     CFRelease(((PyObjCObject*)obj)->objc_object);
 
-                } @catch (NSObject* localException) {
-                    NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
-                          localException);
+                } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
+                    NSLog(
+                        @"PyObjC: Exception during dealloc of proxy: %@", // LCOV_BR_EXCL_LINE
+                        localException);
                 }
             Py_END_ALLOW_THREADS;
             ((PyObjCObject*)obj)->objc_object = nil;
@@ -228,12 +231,6 @@ object_verify_type(PyObject* obj)
         if (tp != Py_TYPE(obj)) {
             PyTypeObject* tmp;
 
-            if (tp->tp_dict == NULL) {
-                if (PyType_Ready(tp) < 0)
-                    Py_DECREF(tp);
-                return -1;
-            }
-
             /* XXX: The correct way to do this is calling ``setattr(obj, "__class__",
              * tp)`` Investigate the impact of that. Performance shouldn't be an issue
              * here, a isa change should not happen often.
@@ -252,9 +249,11 @@ object_verify_type(PyObject* obj)
             Py_INCREF(tp);
             Py_DECREF(tmp);
 
-            if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) {
+            if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(tp);
                 return -1;
+                // LCOV_EXCL_STOP
             }
         }
         Py_CLEAR(tp);
@@ -299,19 +298,24 @@ PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* nam
 
         /* Create (unbound) selector */
         const char* encoding = method_getTypeEncoding(m);
-        if (encoding == NULL) {
+        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "Native selector with Nil type encoding");
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
         if (result == NULL) {
+            /* XXX: Can fail if the 'encoding' is invalid, needs test case */
             return NULL;
         }
 
         /* add to __dict__ 'cache' */
-        if (PyDict_SetItem(dict, name, result) == -1) {
+        if (PyDict_SetItem(dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         /* and return as a borrowed reference */
@@ -368,8 +372,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
                 }
             }
 
-            if (PyObjCClass_CheckMethodList(base, 0) < 0) {
-                return NULL;
+            if (PyObjCClass_CheckMethodList(base, 0) < 0) { // LCOV_BR_EXCL_LINE
+                return NULL;                                // LCOV_EXCL_LINE
             }
 
             dict = ((PyTypeObject*)base)->tp_dict;
@@ -378,6 +382,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             dict = ((PyTypeObject*)base)->tp_dict;
 
         } else {
+            /* XXX: Can this ever happen? */
             return NULL;
         }
 
@@ -403,8 +408,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
              * Skip hidden methods.
              */
             if (!PyObjCClass_HiddenSelector(base, sel, NO)) {
-                if (PyErr_Occurred()) {
-                    return NULL;
+                if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return NULL;        // LCOV_EXCL_LINE
                 }
 
                 descr = PyObjCClass_TryResolveSelector(base, name, sel);
@@ -432,8 +437,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
-    if (mro == NULL) {
-        return NULL;
+    if (mro == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
     PyObjC_Assert(PyTuple_Check(mro), NULL);
@@ -462,8 +467,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             Method    m      = methods[j];
             PyObject* hidden = PyObjCClass_HiddenSelector(base, method_getName(m), NO);
 
-            if (hidden == NULL && PyErr_Occurred()) {
-                return NULL;
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return NULL;                          // LCOV_EXCL_LINE
             } else if (hidden) {
                 continue;
             }
@@ -533,8 +538,8 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
     }
 
     namestr = PyUnicode_AsUTF8(name);
-    if (namestr == NULL) {
-        return NULL;
+    if (namestr == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;       // LOCV_EXCL_LINE
     }
 
     if (object_verify_not_nil(obj, name) == -1) {
@@ -546,10 +551,6 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
     }
 
     tp = Py_TYPE(obj);
-    if (tp->tp_dict == NULL) {
-        if (PyType_Ready(tp) < 0)
-            goto done;
-    }
 
     /* replace _PyType_Lookup */
     if (descr == NULL) {
@@ -564,9 +565,11 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
         f = Py_TYPE(descr)->tp_descr_get;
         if (f != NULL && PyDescr_IsData(descr)) {
             res = f(descr, obj, (PyObject*)Py_TYPE(obj));
-            if (res == NULL && !PyErr_Occurred()) {
+            if (res == NULL && !PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_SetString(PyObjCExc_Error, "Descriptor getter returned NULL "
                                                  "without raising an exception");
+                // LCOV_EXCL_STOP
             }
             goto done;
         }
@@ -633,9 +636,11 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
 
     if (f != NULL) {
         res = f(descr, obj, (PyObject*)Py_TYPE(obj));
-        if (res == NULL && !PyErr_Occurred()) {
+        if (res == NULL && !PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "Descriptor getter returned NULL "
                                              "without raising an exception");
+            // LCOV_EXCL_STOP
         }
         goto done;
     }
@@ -646,11 +651,9 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
         goto done;
     }
 
-    if (!PyObjCObject_IsClassic(obj)) {
-        res = PyObjCSelector_FindNative(obj, namestr);
-        if (res)
-            goto done;
-    }
+    res = PyObjCSelector_FindNative(obj, namestr);
+    if (res)
+        goto done;
 
     PyErr_Format(PyExc_AttributeError, "'%.50s' object has no attribute '%.400s'",
                  tp->tp_name, namestr);
@@ -1030,9 +1033,11 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
             PyObject* hidden =
                 PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
-            if (hidden == NULL && PyErr_Occurred()) {
+            if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
+                // LCOV_EXCL_STOP
                 return NULL;
             } else if (hidden) {
                 continue;

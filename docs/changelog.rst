@@ -328,6 +328,14 @@ improvements as described below).
 * Fix ``objc.listInstanceVariables`` failure when one of the classes in the class hierarchy
   does not have instance variables.
 
+* Fix crash when the filter for the ``UninitializedDeallocWarning`` warning is set to "error".
+
+* Fix conversion of float subclasses with custom ``__repr__`` to ``objc.NSDecimal``.
+
+* Fix handling ``objc.NSDecimal`` in boolean contexts: In previous versions
+  ``objc.NSDecimal(0)`` was interpreted as true-ish in boolean contexts, it now
+  is interpreted as false-ish just like other number types.
+
 Version 9.0.1
 -------------
 

@@ -649,6 +649,28 @@ class TestLazyImport(TestCase):
         self.assertTrue((mod.kCFAllocatorMallocZone.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorMallocZone, mod.CFAllocatorRef)
 
+    def test_magic_objc_does_not_work(self):
+        metadict = {
+            "constants_dict": {
+                "kCFURLUbiquitousItemDownloadingStatusDownloaded": "=@",
+            },
+        }
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/CoreFoundation.framework",
+            metadict,
+            None,
+            {},
+            (),
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "Don't know CF type for typestr '@', cannot create special wrapper",
+        ):
+            mod.kCFURLUbiquitousItemDownloadingStatusDownloaded
+
     def assertDeprecationWarning(self, func):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")

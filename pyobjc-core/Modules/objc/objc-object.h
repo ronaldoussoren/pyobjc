@@ -5,7 +5,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define PyObjCObject_kDEFAULT 0x00
 #define PyObjCObject_kUNINITIALIZED 0x01
-#define PyObjCObject_kCLASSIC 0x02
 #define PyObjCObject_kDEALLOC_HELPER 0x04
 #define PyObjCObject_kSHOULD_NOT_RELEASE 0x08
 #define PyObjCObject_kMAGIC_COOKIE 0x10
@@ -43,8 +42,6 @@ void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object);
 
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
-#define PyObjCObject_IsClassic(object)                                                   \
-    (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
 #define PyObjCObject_IsBlock(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kBLOCK)
 #define PyObjCObject_IsMagic(object)                                                     \
     (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE)
