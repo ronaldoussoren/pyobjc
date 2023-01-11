@@ -1,0 +1,1272 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "structs": {
+   "IOBluetoothL2CAPChannelEvent": { "ignore": true, "comment": "appers to be unused" },
+   "OBEXSessionEvent": { "ignore": true, "comment": "needs manual bindings" }
+  },
+  "classes": {
+   "IOBluetoothDevice": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "deviceWithAddress:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withAddress:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withDeviceRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getDeviceRef"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openL2CAPChannelSync:withPSM:delegate:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openL2CAPChannelAsync:withPSM:delegate:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "openL2CAPChannel:findExisting:newChannel:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "sendL2CAPEchoRequest:length:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "openRFCOMMChannel:channel:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openRFCOMMChannelSync:withChannelID:delegate:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openRFCOMMChannelAsync:withChannelID:delegate:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getAddress"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openL2CAPChannelSync:withPSM:withConfiguration:delegate:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "openL2CAPChannelAsync:withPSM:withConfiguration:delegate:"
+     }
+    ]
+   },
+   "IOBluetoothDevicePair": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "replyPINCode:PINCode:"
+     }
+    ]
+   },
+   "IOBluetoothL2CAPChannel": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "writeAsyncTrap:length:refcon:"
+     },
+     {
+      "args": {
+       "0": {},
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "writeAsync:length:refcon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeSync:length:"
+     }
+    ]
+   },
+   "IOBluetoothOBEXSession": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": true,
+      "selector": "withIncomingRFCOMMChannel:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithIncomingRFCOMMChannel:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "openTransportConnection:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "sendDataToTransport:dataLength:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setOpenTransportConnectionAsyncSelector:target:refCon:"
+     },
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setOBEXSessionOpenConnectionCallback:refCon:"
+     }
+    ]
+   },
+   "IOBluetoothRFCOMMChannel": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withRFCOMMChannelRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getRFCOMMChannelRef"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "write:length:sleep:"
+     },
+     {
+      "args": {
+       "0": {},
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "writeAsync:length:refcon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeSync:length:"
+     },
+     {
+      "args": {
+       "0": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "writeSimple:length:sleep:bytesSent:"
+     }
+    ]
+   },
+   "IOBluetoothSDPDataElement": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withSDPDataElementRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSDPDataElementRef"
+     }
+    ]
+   },
+   "IOBluetoothSDPServiceRecord": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withSDPServiceRecordRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSDPServiceRecordRef"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "getRFCOMMChannelID:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "getL2CAPPSM:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "getServiceRecordHandle:"
+     }
+    ]
+   },
+   "IOBluetoothSDPUUID": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "uuidWithBytes:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withSDPUUIDRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSDPUUIDRef"
+     }
+    ]
+   },
+   "NSMutableDictionary": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "dictionaryWithOBEXHeadersData:headersDataSize:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addTargetHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addHTTPHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addBodyHeader:length:endOfBody:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addWhoHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addConnectionIDHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addApplicationParameterHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addByteSequenceHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addObjectClassHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addAuthorizationChallengeHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addAuthorizationResponseHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addTimeISOHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addUserDefinedHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addImageDescriptorHeader:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withOBEXHeadersData:headersDataSize:"
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readRSSIForDeviceComplete:device:info:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readLinkQualityForDeviceComplete:device:info:error:"
+     },
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "registerIncomingDataListener:refCon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "write:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withL2CAPChannelRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getL2CAPChannelRef"
+     }
+    ]
+   },
+   "OBEXSession": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "6": {}
+      },
+      "class_method": false,
+      "selector": "OBEXConnect:maxPacketLength:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "0": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "OBEXDisconnect:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "3": {},
+       "7": {}
+      },
+      "class_method": false,
+      "selector": "OBEXPut:headersData:headersDataLength:bodyData:bodyDataLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXGet:headers:headersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "0": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "OBEXAbort:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "2": {},
+       "6": {}
+      },
+      "class_method": false,
+      "selector": "OBEXSetPath:constants:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "3": {},
+       "7": {}
+      },
+      "class_method": false,
+      "selector": "OBEXConnectResponse:flags:maxPacketLength:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXDisconnectResponse:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXPutResponse:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXGetResponse:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXAbortResponse:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "1": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "OBEXSetPathResponse:optionalHeaders:optionalHeadersLength:eventSelector:selectorTarget:refCon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setEventCallback:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setEventRefCon:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setEventSelector:target:refCon:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "serverHandleIncomingData:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "clientHandleIncomingData:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "sendDataToTransport:dataLength:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "openTransportConnection:selectorTarget:refCon:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "IOBluetoothL2CAPChannelDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "l2capChannelData:data:length:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "l2capChannelWriteComplete:refcon:status:"
+     }
+    ]
+   },
+   "IOBluetoothRFCOMMChannelDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "rfcommChannelData:data:length:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "rfcommChannelWriteComplete:refcon:status:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "rfcommChannelWriteComplete:refcon:status:bytesWritten:"
+     }
+    ]
+   }
+  },
+  "functions": {
+   "IOBluetoothAddSCOAudioDevice": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "IOBluetoothFindNumberOfRegistryEntriesOfClassName": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothIgnoreHIDDevice": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothL2CAPChannelRegisterForChannelCloseNotification": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{OpaqueIOBluetoothObjectRef=}"
+        },
+        {
+         "typestr": "^{OpaqueIOBluetoothObjectRef=}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {}
+    },
+    "retval": {}
+   },
+   "IOBluetoothNSStringFromDeviceAddress": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothNSStringFromDeviceAddressColon": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothNSStringToDeviceAddress": {
+    "args": {
+     "1": {}
+    }
+   },
+   "IOBluetoothOBEXSessionCreateWithIOBluetoothDeviceRefAndChannelNumber": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "IOBluetoothOBEXSessionCreateWithIOBluetoothSDPServiceRecordRef": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "IOBluetoothOBEXSessionCreateWithIncomingIOBluetoothRFCOMMChannel": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {},
+     "3": {}
+    }
+   },
+   "IOBluetoothOBEXSessionOpenTransportConnection": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueOBEXSessionRef=}"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {}
+    }
+   },
+   "IOBluetoothPackData": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "variadic": true
+   },
+   "IOBluetoothPackDataList": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "IOBluetoothRemoveIgnoredHIDDevice": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothRemoveSCOAudioDevice": {
+    "args": {
+     "0": {}
+    }
+   },
+   "IOBluetoothUnpackData": {
+    "args": {
+     "1": {},
+     "2": {}
+    },
+    "variadic": true
+   },
+   "IOBluetoothUnpackDataList": {
+    "args": {
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "IOBluetoothUserNotificationUnregister": {
+    "args": {
+     "0": {}
+    }
+   },
+   "OBEXAddApplicationParameterHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddAuthorizationChallengeHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddAuthorizationResponseHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddBodyHeader": {
+    "args": {
+     "0": {},
+     "3": {}
+    }
+   },
+   "OBEXAddByteSequenceHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddConnectionIDHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddCountHeader": {
+    "args": {
+     "1": {}
+    }
+   },
+   "OBEXAddDescriptionHeader": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "OBEXAddHTTPHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddLengthHeader": {
+    "args": {
+     "1": {}
+    }
+   },
+   "OBEXAddNameHeader": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "OBEXAddObjectClassHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddTargetHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddTime4ByteHeader": {
+    "args": {
+     "1": {}
+    }
+   },
+   "OBEXAddTimeISOHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddTypeHeader": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "OBEXAddUserDefinedHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXAddWhoHeader": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXCreateVCard": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "6": {},
+     "8": {},
+     "10": {},
+     "12": {},
+     "14": {},
+     "16": {},
+     "18": {},
+     "20": {},
+     "22": {},
+     "24": {},
+     "26": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "OBEXCreateVEvent": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "6": {},
+     "8": {},
+     "10": {},
+     "12": {},
+     "14": {},
+     "16": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "OBEXGetHeaders": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "OBEXHeadersToBytes": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "OBEXSessionAbort": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "4": {}
+    }
+   },
+   "OBEXSessionAbortResponse": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionConnect": {
+    "args": {
+     "0": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "6": {}
+    }
+   },
+   "OBEXSessionConnectResponse": {
+    "args": {
+     "0": {},
+     "4": {},
+     "6": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "OBEXSessionDelete": {
+    "args": {
+     "0": {}
+    }
+   },
+   "OBEXSessionDisconnect": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "4": {}
+    }
+   },
+   "OBEXSessionDisconnectResponse": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionGet": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionGetAvailableCommandPayloadLength": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXSessionGetAvailableCommandResponsePayloadLength": {
+    "args": {
+     "0": {},
+     "2": {}
+    }
+   },
+   "OBEXSessionGetMaxPacketLength": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "OBEXSessionGetResponse": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionHasOpenOBEXConnection": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "OBEXSessionPut": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {},
+     "6": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "7": {}
+    }
+   },
+   "OBEXSessionPutResponse": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionSetPath": {
+    "args": {
+     "0": {},
+     "3": {},
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "6": {}
+    }
+   },
+   "OBEXSessionSetPathResponse": {
+    "args": {
+     "0": {},
+     "2": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "5": {}
+    }
+   },
+   "OBEXSessionSetServerCallback": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {}
+    }
+   }
+  },
+  "informal_protocols": {
+   "IOBluetoothHostControllerDelegate": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readRSSIForDeviceComplete:device:info:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readLinkQualityForDeviceComplete:device:info:error:"
+     }
+    ]
+   }
+  }
+ }
+}
