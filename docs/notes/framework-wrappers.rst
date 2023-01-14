@@ -458,7 +458,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`PencilKit </apinotes/PencilKit>`                                               | `pyobjc-framework-PencilKit`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| PHASE                                                                                |                                                      | Not wrapped yet                         |
+| :doc:`PHASE </apinotes/PHASE>`                                                       | `pyobjc-framework-PHASE`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Photos </apinotes/Photos>`                                                     | `pyobjc-framework-Photos`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -788,3 +788,4 @@ prioritizing work.
 .. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/
 .. _`pyobjc-framework-IOBluetooth`: https://pypi.org/project/pyobjc-framework-IOBluetooth/
 .. _`pyobjc-framework-IOBluetoothUI`: https://pypi.org/project/pyobjc-framework-IOBluetoothUI/
+.. _`pyobjc-framework-PHASE`: https://pypi.org/project/pyobjc-framework-PHASE/

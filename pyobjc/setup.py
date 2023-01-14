@@ -126,6 +126,7 @@ FRAMEWORK_WRAPPERS = [
     ("OSLog", "10.15", None),
     ("PassKit", "11.0", None),
     ("PencilKit", "10.15", None),
+    ("PHASE", "12.0", None),
     ("Photos", "10.11", None),
     ("PhotosUI", "10.11", None),
     ("PreferencePanes", None, None),

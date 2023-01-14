@@ -338,6 +338,8 @@ improvements as described below).
 
 * :issue:`381`: Add bindings for the IOBluetooth and IOBluetoothUI frameworks
 
+* Add bindings for the PHASE framework
+
 Version 9.0.1
 -------------
 

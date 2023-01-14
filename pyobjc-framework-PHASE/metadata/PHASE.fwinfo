@@ -1,0 +1,102 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "typed_enum": {
+   "PHASESpatialCategory": { "type": "@", "type_name": "NSString" }
+  },
+  "classes": {
+   "PHASEAssetRegistry": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "registerGlobalMetaParameter:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "registerSoundEventAssetWithRootNode:identifier:error:"
+     },
+     {
+      "args": {
+       "5": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "registerSoundAssetAtURL:identifier:assetType:channelLayout:normalizationMode:error:"
+     },
+     {
+      "args": {
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "registerSoundAssetWithData:identifier:format:normalizationMode:error:"
+     }
+    ]
+   },
+   "PHASEEngine": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "startAndReturnError:"
+     }
+    ]
+   },
+   "PHASEObject": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "addChild:error:"
+     }
+    ]
+   },
+   "PHASESoundEvent": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithEngine:assetIdentifier:mixerParameters:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithEngine:assetIdentifier:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}
