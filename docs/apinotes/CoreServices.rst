@@ -22,7 +22,8 @@ The CoreServices framework is an umbrella framework containing a number of other
 
  * *CarbonCore*
 
-  The definitions for this framework are not available in Python.
+  Only definitions from 'BackupCore.h' and 'DiskSpaceRecovery.h'  are available in Python.
+
 
  * *DictionaryServices*
 
