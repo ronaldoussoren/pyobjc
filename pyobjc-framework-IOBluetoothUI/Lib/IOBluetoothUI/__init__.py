@@ -1,5 +1,5 @@
 """
-Python mapping for the IOBluetooth framework.
+Python mapping for the IOBluetoothUI framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
@@ -7,16 +7,15 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import Cocoa
+import IOBluetooth
 import objc
 from . import _metadata
-from . import _IOBluetooth, _funcmacros
 
 
-sys.modules["IOBluetooth"] = mod = objc.ObjCLazyModule(
-    "IOBluetooth",
-    "com.apple.Bluetooth",
-    objc.pathForFramework("/System/Library/Frameworks/IOBluetooth.framework"),
+sys.modules["IOBluetoothUI"] = mod = objc.ObjCLazyModule(
+    "IOBluetoothUI",
+    "com.apple.BluetoothUI",
+    objc.pathForFramework("/System/Library/Frameworks/IOBluetoothUI.framework"),
     _metadata.__dict__,
     None,
     {
@@ -25,11 +24,7 @@ sys.modules["IOBluetooth"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (
-        _funcmacros,
-        _IOBluetooth,
-        Cocoa,
-    ),
+    (IOBluetooth,),
 )
 
-del sys.modules["IOBluetooth._metadata"]
+del sys.modules["IOBluetoothUI._metadata"]

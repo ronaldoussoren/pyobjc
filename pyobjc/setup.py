@@ -93,6 +93,7 @@ FRAMEWORK_WRAPPERS = [
     ("InstallerPlugins", None, None),
     ("InstantMessage", "10.5", None),
     ("IOBluetooth", None, None),
+    ("IOBluetoothUI", None, None),
     ("IOSurface", "10.6", None),
     ("KernelManagement", "11.0", None),
     ("LatentSemanticMapping", None, None),

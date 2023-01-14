@@ -16,7 +16,6 @@ VERSION = "9.1"
 setup(
     name="pyobjc-framework-IOBluetooth",
     description="Wrappers for the framework IOBluetooth on macOS",
-    min_os_level="10.2",
     packages=["IOBluetooth"],
     ext_modules=[
         Extension(

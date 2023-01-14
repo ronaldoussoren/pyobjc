@@ -1,0 +1,154 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "aliases": {
+   "IOBluetoothDeviceSelectorControllerRef": { "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothPairingControllerRef": { "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothServiceBrowserControllerRef": { "alias": "IOBluetoothObjectRef" }
+  },
+  "enum_type": {
+   "IOBluetoothServiceBrowserControllerOptions": { "type": "I" },
+   "BluetoothKeyboardReturnType": { "type": "I" }
+  },
+  "classes": {
+   "IOBluetoothDeviceSelectorController": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n" }
+      },
+      "class_method": false,
+      "selector": "setSearchAttributes:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSearchAttributes"
+     }
+    ]
+   },
+   "IOBluetoothObjectPushUIController": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   },
+   "IOBluetoothPairingController": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "n" }
+      },
+      "class_method": false,
+      "selector": "setSearchAttributes:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSearchAttributes"
+     }
+    ]
+   },
+   "IOBluetoothServiceBrowserController": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "browseDevices:options:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "browseDevicesAsSheetForWindow:options:window:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "withServiceBrowserControllerRef:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getServiceBrowserControllerRef"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "discover:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "discoverAsSheetForWindow:withRecord:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n" },
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "discoverWithDeviceAttributes:serviceList:serviceRecord:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n" }
+      },
+      "class_method": false,
+      "selector": "setSearchAttributes:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "getSearchAttributes"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "IOBluetoothGetDeviceSelectorController": {
+    "retval": {}
+   },
+   "IOBluetoothGetPairingController": {
+    "retval": {}
+   },
+   "IOBluetoothValidateHardwareWithDescription": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
