@@ -10,7 +10,8 @@ import sys
 import Cocoa
 import objc
 from . import _metadata
-from . import _IOBluetooth
+from . import _IOBluetooth, _funcmacros
+
 
 sys.modules["IOBluetooth"] = mod = objc.ObjCLazyModule(
     "IOBluetooth",
@@ -24,7 +25,11 @@ sys.modules["IOBluetooth"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_IOBluetooth, Cocoa),
+    (
+        _funcmacros,
+        _IOBluetooth,
+        Cocoa,
+    ),
 )
 
 del sys.modules["IOBluetooth._metadata"]

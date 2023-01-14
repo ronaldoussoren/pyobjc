@@ -92,6 +92,7 @@ FRAMEWORK_WRAPPERS = [
     ("IntentsUI", "12.0", None),
     ("InstallerPlugins", None, None),
     ("InstantMessage", "10.5", None),
+    ("IOBluetooth", None, None),
     ("IOSurface", "10.6", None),
     ("KernelManagement", "11.0", None),
     ("LatentSemanticMapping", None, None),

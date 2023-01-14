@@ -7,7 +7,9 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup
+import os
+
+from pyobjc_setup import Extension, setup
 
 VERSION = "9.1"
 
@@ -16,6 +18,19 @@ setup(
     description="Wrappers for the framework IOBluetooth on macOS",
     min_os_level="10.2",
     packages=["IOBluetooth"],
+    ext_modules=[
+        Extension(
+            "IOBluetooth._IOBluetooth",
+            ["Modules/_IOBluetooth.m"],
+            extra_link_args=["-framework", "IOBluetooth"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_IOBluetooth")
+            ],
+        )
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

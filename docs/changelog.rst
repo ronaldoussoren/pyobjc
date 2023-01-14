@@ -336,6 +336,8 @@ improvements as described below).
   ``objc.NSDecimal(0)`` was interpreted as true-ish in boolean contexts, it now
   is interpreted as false-ish just like other number types.
 
+* Add bindings for the IOBluetooth framework
+
 Version 9.0.1
 -------------
 

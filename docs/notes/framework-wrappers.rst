@@ -335,7 +335,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`IntentsUI </apinotes/IntentsUI>`                                               | `pyobjc-framework-IntentsUI`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| IOBluetooth                                                                          | -                                                    | Will not be wrapped.                    |
+| :doc:`IOBluetooth </apinotes/IOBluetooth>`                                           | `pyobjc-framework-IOBluetooth`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | IOBluetoothUI                                                                        | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -787,3 +787,4 @@ prioritizing work.
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-SafetyKit`: https://pypi.org/project/pyobjc-framework-SafetyKit/
 .. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/
+.. _`pyobjc-framework-IOBluetooth`: https://pypi.org/project/pyobjc-framework-IOBluetooth/

@@ -2,9 +2,212 @@
 // for information on how to update this file.
 {
  "definitions": {
+   "opaque": {
+    "IOBluetoothObjectRef": {
+     "typestr": "^{OpaqueIOBluetoothObjectRef=}"
+    },
+    "OBEXSessionRef" : {
+     "typestr": "^{OpaqueOBEXSessionRef=}"
+    }
+  },
+
+  "aliases": {
+   "BluetoothHCILEUsedFeatures": { "alias": "BluetoothHCISupportedFeatures" },
+   "BluetoothHCILESupportedFeatures": { "alias": "BluetoothHCISupportedFeatures" },
+   "IOBluetoothDeviceRef": { "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothL2CAPChannelRef":{ "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothRFCOMMChannelRef":{ "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothSDPServiceRecordRef":{ "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothSDPUUIDRef":{ "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothSDPDataElementRef":{ "alias": "IOBluetoothObjectRef" },
+   "IOBluetoothUserNotificationRef":{ "alias": "IOBluetoothObjectRef" }
+  },
+  "enum_type": {
+   "OBEXTransportEventType": { "type": "I" },
+   "BluetoothHCITransmitPowerLevelType": { "type": "C" },
+   "BluetoothLEAdvertisingType": { "type": "C" },
+   "BluetoothLEScanDuplicateFilter": { "type": "C" },
+   "BluetoothLEConnectionInterval": { "type": "C" },
+   "BluetoothLEScanFilter": { "type": "C" },
+   "BluetoothLEScan": { "type": "C" },
+   "BluetoothSDPPDUID": { "type": "S" },
+   "BluetoothLEScanType": { "type": "S" },
+   "BluetoothLEAddressType": { "type": "S" },
+   "BluetoothSDPErrorCode": { "type": "S" },
+   "BluetoothAirMode": { "type": "C" },
+   "BluetoothHCIStatus": { "type": "C" },
+   "BluetoothHCIEventStatus": { "type": "C" },
+   "BluetoothOOBDataPresence": { "type": "C" },
+   "BluetoothAuthenticationRequirements": { "type": "C" },
+   "BluetoothKeypressNotificationType": { "type": "C" },
+   "BluetoothLinkType": { "type": "C" },
+   "BluetoothIOCapability": { "type": "C" },
+   "BluetoothHCIFECRequired": { "type": "C" },
+   "BluetoothHCIInquiryMode": { "type": "C" },
+   "BluetoothHCIInquiryScanType": { "type": "C" },
+   "BluetoothHCIEncryptionMode": { "type": "C" },
+   "BluetoothHCIHoldModeActivity": { "type": "C" },
+   "BluetoothHCIAuthenticationEnable": { "type": "C" },
+   "BluetoothHCIAFHChannelAssessmentMode": { "type": "C" },
+   "BluetoothHCILoopbackMode": { "type": "C" },
+   "BluetoothHCIFlowControlState": { "type": "C" },
+   "BluetoothHCIPageScanMode": { "type": "C" },
+   "BluetoothHCIPageScanPeriodMode": { "type": "C" },
+   "BluetoothHCIPageScanEnableState": { "type": "C" },
+   "BluetoothHCICommandOpCodeGroup": { "type": "C" },
+   "BluetoothHCICommandOpCodeCommand": { "type": "S" },
+   "BluetoothRFCOMMMTU": { "type": "S" },
+   "BluetoothHCICommandOpCode": { "type": "S" },
+   "BluetoothHCIPowerState": { "type": "I" },
+   "BluetoothHCIVendorCommandSelector": { "type": "I" },
+   "BluetoothRFCOMMParityType": { "type": "I" },
+   "BluetoothRFCOMMLineStatus": { "type": "I" },
+   "BluetoothTransportTypes": {
+    "type": "I"
+   },
+   "BluetoothHCIGeneralFlowControlStates": {
+    "type": "I"
+   },
+   "BluetoothAMPDisconnectPhysicalLinkResponseStatus": {
+    "type": "I"
+   },
+   "BluetoothAMPCreatePhysicalLinkResponseStatus": {
+    "type": "I"
+   },
+   "BluetoothAMPGetAssocResponseStatus": {
+    "type": "I"
+   },
+   "BluetoothAMPGetInfoResponseStatus": {
+    "type": "I"
+   },
+   "BluetoothAMPDiscoverResponseControllerStatus": {
+    "type": "I"
+   },
+   "BluetoothAMPCommandRejectReason": {
+    "type": "I"
+   },
+   "BluetoothAMPManagerCode": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerKeypressNotificationType": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerPairingFailedReasonCode": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerOOBData": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerIOCapability": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerUserOutputCapability": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerUserInputCapability": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerCommandCode": {
+    "type": "I"
+   },
+   "BluetoothLESecurityManagerKeyDistributionFormat": {
+    "type": "I"
+   },
+   "BluetoothL2CAPSupervisoryFuctionType": {
+    "type": "I"
+   },
+   "BluetoothL2CAPQoSType": {
+    "type": "I"
+   },
+   "BluetoothL2CAPInformationExtendedFeaturesMask": {
+    "type": "I"
+   },
+   "BluetoothL2CAPInformationResult": {
+    "type": "I"
+   },
+   "BluetoothL2CAPInformationType": {
+    "type": "I"
+   },
+   "BluetoothL2CAPConfigurationRetransmissionAndFlowControlFlags": {
+    "type": "I"
+   },
+   "BluetoothL2CAPConfigurationOption": {
+    "type": "I"
+   },
+   "BluetoothL2CAPConfigurationResult": {
+    "type": "I"
+   },
+   "BluetoothL2CAPConnectionStatus": {
+    "type": "I"
+   },
+   "BluetoothL2CAPConnectionResult": {
+    "type": "I"
+   },
+   "BluetoothL2CAPCommandRejectReason": {
+    "type": "I"
+   },
+   "BluetoothL2CAPCommandCode": {
+    "type": "I"
+   },
+   "BluetoothLAP": {
+    "type": "I"
+   },
+   "BluetoothL2CAPChannelID": {
+    "type": "S"
+   },
+   "BluetoothPacketType": {
+    "type": "S"
+   },
+   "BluetoothHCIErroneousDataReporting": {
+    "type": "C"
+   },
+   "BluetoothAllowRoleSwitch": {
+    "type": "C"
+   },
+   "BluetoothRole": {
+    "type": "C"
+   },
+   "BluetoothPageScanPeriodMode": {
+    "type": "C"
+   },
+   "BluetoothHCIPageScanType": {
+    "type": "C"
+   },
+   "BluetoothPageScanMode": {
+    "type": "C"
+   },
+   "BluetoothPageScanRepetitionMode": {
+    "type": "C"
+   },
+   "BluetoothEncryptionEnable": {
+    "type": "C"
+   },
+   "BluetoothKeyType": {
+    "type": "C"
+   },
+   "BluetoothKeyFlag": {
+    "type": "C"
+   }
+  },
+  "enum": {
+   "kBluetoothL2CAPFlushTimeoutEnd": { "ignore": true },
+   "kBluetoothLimitedInquiryAccessCodeEnd": { "ignore": true },
+   "kBluetoothSynchronousConnectionPacketTypeEnd": { "ignore": true },
+   "kBluetoothServiceClassMajorEnd": { "ignore": true },
+   "kBluetoothDeviceClassMajorEnd": { "ignore": true },
+   "kBluetoothDeviceClassMinorEnd": { "ignore": true },
+   "kBluetoothPacketTypeEnd": { "ignore": true }
+  },
   "structs": {
    "IOBluetoothL2CAPChannelEvent": { "ignore": true, "comment": "appers to be unused" },
-   "OBEXSessionEvent": { "ignore": true, "comment": "needs manual bindings" }
+   "OBEXSessionEvent": { "ignore": true, "comment": "needs manual bindings" },
+   "BluetoothHCIEventLEReadRemoteUsedFeaturesCompleteResults": { "packed": true },
+   "BluetoothHCIEventLEConnectionUpdateCompleteResults": { "packed": true },
+   "BluetoothHCIEventLEConnectionCompleteResults": { "packed": true },
+   "BluetoothHCIEventLEEnhancedConnectionCompleteResults": { "packed": true },
+   "BluetoothHCILESupportedFeatures": { "ignore": true },
+   "BluetoothHCILEUsedFeatures": { "ignore": true },
+   "BluetoothHCIEventReturnLinkKeysResults": { "ignore": true }
   },
   "classes": {
    "IOBluetoothDevice": {
@@ -37,49 +240,49 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "openL2CAPChannelSync:withPSM:delegate:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "openL2CAPChannelAsync:withPSM:delegate:"
      },
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "openL2CAPChannel:findExisting:newChannel:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1}
       },
       "class_method": false,
       "selector": "sendL2CAPEchoRequest:length:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o"}
       },
       "class_method": false,
       "selector": "openRFCOMMChannel:channel:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "openRFCOMMChannelSync:withChannelID:delegate:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "openRFCOMMChannelAsync:withChannelID:delegate:"
@@ -109,7 +312,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "replyPINCode:PINCode:"
@@ -120,7 +323,7 @@
     "methods": [
      {
       "args": {
-       "0": {},
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
        "2": {}
       },
       "class_method": false,
@@ -128,7 +331,7 @@
      },
      {
       "args": {
-       "0": {},
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
        "2": {}
       },
       "class_method": false,
@@ -136,7 +339,7 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "writeSync:length:"
@@ -168,7 +371,7 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1}
       },
       "class_method": false,
       "selector": "sendDataToTransport:dataLength:"
@@ -206,14 +409,14 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "write:length:sleep:"
      },
      {
       "args": {
-       "0": {},
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
        "2": {}
       },
       "class_method": false,
@@ -221,15 +424,15 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "writeSync:length:"
      },
      {
       "args": {
-       "0": {},
-       "3": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "writeSimple:length:sleep:bytesSent:"
@@ -293,7 +496,7 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1}
       },
       "class_method": true,
       "selector": "uuidWithBytes:length:"
@@ -316,105 +519,105 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "dictionaryWithOBEXHeadersData:headersDataSize:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addTargetHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addHTTPHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addBodyHeader:length:endOfBody:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addWhoHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addConnectionIDHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addApplicationParameterHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addByteSequenceHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addObjectClassHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addAuthorizationChallengeHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addAuthorizationResponseHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addTimeISOHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addUserDefinedHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "addImageDescriptorHeader:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "withOBEXHeadersData:headersDataSize:"
@@ -423,6 +626,13 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "rfcommChannelData:data:length:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 2 }
+      }
+     },
      {
       "args": {
        "2": {}
@@ -470,7 +680,7 @@
     "methods": [
      {
       "args": {
-       "2": {},
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },
        "6": {}
       },
       "class_method": false,
@@ -478,7 +688,7 @@
      },
      {
       "args": {
-       "0": {},
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
        "4": {}
       },
       "class_method": false,
@@ -486,8 +696,8 @@
      },
      {
       "args": {
-       "1": {},
-       "3": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 },
        "7": {}
       },
       "class_method": false,
@@ -495,7 +705,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -503,7 +713,7 @@
      },
      {
       "args": {
-       "0": {},
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
        "4": {}
       },
       "class_method": false,
@@ -511,7 +721,7 @@
      },
      {
       "args": {
-       "2": {},
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },
        "6": {}
       },
       "class_method": false,
@@ -519,7 +729,7 @@
      },
      {
       "args": {
-       "3": {},
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 },
        "7": {}
       },
       "class_method": false,
@@ -527,7 +737,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -535,7 +745,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -543,7 +753,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -551,7 +761,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -559,7 +769,7 @@
      },
      {
       "args": {
-       "1": {},
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
        "5": {}
       },
       "class_method": false,
@@ -602,7 +812,7 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1}
       },
       "class_method": false,
       "selector": "sendDataToTransport:dataLength:"
@@ -615,6 +825,17 @@
       "selector": "openTransportConnection:selectorTarget:refCon:"
      }
     ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "l2capChannelData:data:length:"
+     }
+    ]
    }
   },
   "formal_protocols": {
@@ -622,7 +843,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "l2capChannelData:data:length:"
@@ -640,7 +861,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "rfcommChannelData:data:length:"
@@ -671,7 +892,7 @@
    },
    "IOBluetoothFindNumberOfRegistryEntriesOfClassName": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
    "IOBluetoothIgnoreHIDDevice": {
@@ -706,75 +927,38 @@
    },
    "IOBluetoothNSStringFromDeviceAddress": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "IOBluetoothNSStringFromDeviceAddressColon": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "IOBluetoothNSStringToDeviceAddress": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "IOBluetoothOBEXSessionCreateWithIOBluetoothDeviceRefAndChannelNumber": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "IOBluetoothOBEXSessionCreateWithIOBluetoothSDPServiceRecordRef": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "IOBluetoothOBEXSessionCreateWithIncomingIOBluetoothRFCOMMChannel": {
-    "args": {
-     "0": {},
-     "1": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "2": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "IOBluetoothOBEXSessionOpenTransportConnection": {
-    "args": {
-     "0": {},
-     "1": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OpaqueOBEXSessionRef=}"
-        },
-        {
-         "typestr": "i"
-        },
-        {
-         "typestr": "^v"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "2": {}
-    }
    },
    "IOBluetoothPackData": {
+     "ignore": true,
     "args": {
      "0": {},
      "1": {}
@@ -782,6 +966,7 @@
     "variadic": true
    },
    "IOBluetoothPackDataList": {
+     "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -799,6 +984,7 @@
     }
    },
    "IOBluetoothUnpackData": {
+     "ignore": true,
     "args": {
      "1": {},
      "2": {}
@@ -806,6 +992,7 @@
     "variadic": true
    },
    "IOBluetoothUnpackDataList": {
+     "ignore": true,
     "args": {
      "1": {},
      "2": {},
@@ -819,37 +1006,37 @@
    },
    "OBEXAddApplicationParameterHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
    "OBEXAddAuthorizationChallengeHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
    "OBEXAddAuthorizationResponseHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
    "OBEXAddBodyHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "3": {}
     }
    },
    "OBEXAddByteSequenceHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
    "OBEXAddConnectionIDHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
@@ -866,7 +1053,7 @@
    },
    "OBEXAddHTTPHeader": {
     "args": {
-     "0": {},
+     "0": {  "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
@@ -883,13 +1070,13 @@
    },
    "OBEXAddObjectClassHeader": {
     "args": {
-     "0": {},
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
    "OBEXAddTargetHeader": {
     "args": {
-     "0": {},
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "2": {}
     }
    },
@@ -900,7 +1087,7 @@
    },
    "OBEXAddTimeISOHeader": {
     "args": {
-     "0": {},
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1},
      "2": {}
     }
    },
@@ -912,32 +1099,32 @@
    },
    "OBEXAddUserDefinedHeader": {
     "args": {
-     "0": {},
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1},
      "2": {}
     }
    },
    "OBEXAddWhoHeader": {
     "args": {
-     "0": {},
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1},
      "2": {}
     }
    },
    "OBEXCreateVCard": {
     "args": {
-     "0": {},
-     "2": {},
-     "4": {},
-     "6": {},
-     "8": {},
-     "10": {},
-     "12": {},
-     "14": {},
-     "16": {},
-     "18": {},
-     "20": {},
-     "22": {},
-     "24": {},
-     "26": {}
+     "0": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 1},
+     "2": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 3},
+     "4": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 5},
+     "6": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 7},
+     "8": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 9},
+     "10": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 11},
+     "12": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 13},
+     "14": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 15},
+     "16": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 17},
+     "18": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 19},
+     "20": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 21},
+     "22": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 23},
+     "24": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 25},
+     "26": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 27}
     },
     "retval": {
      "already_cfretained": true
@@ -945,15 +1132,15 @@
    },
    "OBEXCreateVEvent": {
     "args": {
-     "0": {},
-     "2": {},
-     "4": {},
-     "6": {},
-     "8": {},
-     "10": {},
-     "12": {},
-     "14": {},
-     "16": {}
+     "0": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 1},
+     "2": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 3},
+     "4": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 5},
+     "6": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 7},
+     "8": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 9},
+     "10": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 11},
+     "12": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 13},
+     "14": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 15},
+     "16": { "type_modifier": "n", "type_override": "^t", "c_array_length_in_arg": 17}
     },
     "retval": {
      "already_cfretained": true
@@ -961,7 +1148,7 @@
    },
    "OBEXGetHeaders": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     },
     "retval": {}
    },
@@ -972,80 +1159,16 @@
     "retval": {}
    },
    "OBEXSessionAbort": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "4": {}
-    }
+    "ignore": true
    },
    "OBEXSessionAbortResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionConnect": {
-    "args": {
-     "0": {},
-     "3": {},
-     "5": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "6": {}
-    }
+    "ignore": true
    },
    "OBEXSessionConnectResponse": {
-    "args": {
-     "0": {},
-     "4": {},
-     "6": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "7": {}
-    }
+    "ignore": true
    },
    "OBEXSessionDelete": {
     "args": {
@@ -1053,199 +1176,55 @@
     }
    },
    "OBEXSessionDisconnect": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "4": {}
-    }
+    "ignore": true
    },
    "OBEXSessionDisconnectResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionGet": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionGetAvailableCommandPayloadLength": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "OBEXSessionGetAvailableCommandResponsePayloadLength": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "OBEXSessionGetMaxPacketLength": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "OBEXSessionGetResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionHasOpenOBEXConnection": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "OBEXSessionPut": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {},
-     "6": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "7": {}
-    }
+    "ignore": true
    },
    "OBEXSessionPutResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionSetPath": {
-    "args": {
-     "0": {},
-     "3": {},
-     "5": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "6": {}
-    }
+    "ignore": true
    },
    "OBEXSessionSetPathResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "5": {}
-    }
+    "ignore": true
    },
    "OBEXSessionSetServerCallback": {
-    "args": {
-     "0": {},
-     "1": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{OBEXSessionEvent=I^{OpaqueOBEXSessionRef=}^vZ^v^v(_union OBEXSessionEvent::(unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOBluetooth.framework/Headers/OBEX.h:792:2)={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})(={OBEXConnectCommandResponseData=C^vQSCC}{OBEXDisconnectCommandResponseData=C^vQ}{OBEXPutCommandResponseData=C^vQ}{OBEXGetCommandResponseData=C^vQ}{OBEXSetPathCommandResponseData=C^vQCC}{OBEXAbortCommandResponseData=C^vQ}{OBEXConnectCommandData=^vQSCC}{OBEXDisconnectCommandData=^vQ}{OBEXPutCommandData=^vQQ}{OBEXGetCommandData=^vQ}{OBEXSetPathCommandData=^vQCC}{OBEXAbortCommandData=^vQ}{OBEXErrorData=i^vQ})}"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     },
-     "2": {}
-    }
+    "ignore": true
    }
   },
   "informal_protocols": {
