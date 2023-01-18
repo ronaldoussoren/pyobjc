@@ -101,10 +101,6 @@ class SplitSignatureTest(TestCase):
             "has_key",
             # Unclear why this signature isn't correct, possibly due to the 'queue'.
             # method is private anyway...
-            "fm_addNotificationBlockObserverForName_object_queue_usingBlock_",
-            "fm_addNotificationBlockObserverForObject_keyPath_options_usingBlock_",
-            "fm_removeNotificationBlockObserver_",
-            "fm_setAssociatedObject_assocatedObjectDescriptor_",
             "SCN_setupDisplayLinkWithQueue_screen_policy_",
         ]
 
@@ -127,6 +123,16 @@ class SplitSignatureTest(TestCase):
 
                 if not isinstance(sel, objc.selector):
                     continue
+
+                if (
+                    sel.selector.startswith(b"fm:")
+                    or sel.selector.startswith(b"_fm:")
+                    or sel.selector.startswith(b"_ax:")
+                ):
+                    # These keep turning up on test runs on macOS 13.1. Ignore as these
+                    # are private APIs.
+                    continue
+
                 elems = objc.splitSignature(sel.signature)
 
                 argcount = len(elems) - 3  # retval, self, _sel

@@ -1030,6 +1030,36 @@ if (!PyUnicode_Check(repr)) {
 Py_DECREF(repr);
 END_UNITTEST
 
+BEGIN_UNITTEST(ValidEncoding)
+FAIL_IF(!PyObjCRT_IsValidEncoding("@", 1));
+FAIL_IF(PyObjCRT_IsValidEncoding("@", 0));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("<23f>", 5));
+FAIL_IF(PyObjCRT_IsValidEncoding("<23f>", 3));
+FAIL_IF(PyObjCRT_IsValidEncoding("<23f>", 4));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("[23{a=ff}]", 10));
+FAIL_IF(PyObjCRT_IsValidEncoding("[23{a=ff}]", 9));
+FAIL_IF(PyObjCRT_IsValidEncoding("[23{a=ff}]", 8));
+FAIL_IF(PyObjCRT_IsValidEncoding("[23{a=ff}]", 5));
+FAIL_IF(PyObjCRT_IsValidEncoding("[23{a=ff}]", 3));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("{a=ff}", 6));
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=ff}", 5));
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=ff}", 4));
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=ff}", 3));
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=ff}", 2));
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=ff}", 1));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("n^{a=i}", 7));
+FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 5));
+FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 2));
+FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 1));
+
+FAIL_IF(PyObjCRT_IsValidEncoding("{a=\"f\"i}", 8));
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1068,6 +1098,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(InvalidRegistryUsage),
                                     TESTDEF(BytesInterning),
                                     TESTDEF(MethodSignatureString),
+                                    TESTDEF(ValidEncoding),
                                     {0, 0, 0, 0}};
 
 int

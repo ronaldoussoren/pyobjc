@@ -340,6 +340,20 @@ improvements as described below).
 
 * Add bindings for the PHASE framework
 
+* #363: Support possible buffer overrun in NSCoder API helpers
+
+  The implementations for NSCoder APIs that have a type encoding argument assumed
+  that the ``Py_buffer`` representation of the type encoding is a NUL-terminated string.
+
+  This is a valid assumption for the ``bytes`` and ``bytesarray`` types, but is
+  not guaranteed by the buffer API and could result in reading past the end of the
+  buffer when an incomplete type encoding is passed to these APIs.
+
+  As a side effect of this fix there is minor change in the API for these methods:
+  - Type encodings containing unions and bitfields now error out early;
+  - Type encodings for structs cannot contain embedded field names;
+  - The APIs are slightly slower due to validating the type encoding.
+
 Version 9.0.1
 -------------
 

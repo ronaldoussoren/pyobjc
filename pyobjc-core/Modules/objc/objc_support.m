@@ -1306,6 +1306,139 @@ PyObjCRT_SizeOfType(const char* start_type)
     }
 }
 
+extern bool
+PyObjCRT_IsValidEncoding(const char* type, Py_ssize_t type_length)
+{
+    const char* end_type = type + type_length;
+    if (type_length == 0) {
+        return false;
+    }
+
+    switch (*type) {
+    case _C_UNDEF:
+    case _C_VOID:
+    case _C_ID:
+    case _C_CLASS:
+    case _C_SEL:
+    case _C_CHR:
+    case _C_UCHR:
+    case _C_SHT:
+    case _C_USHT:
+    case _C_BOOL:
+    case _C_NSBOOL:
+    case _C_INT:
+    case _C_UINT:
+    case _C_LNG:
+    case _C_LNG_LNG:
+    case _C_ULNG:
+    case _C_ULNG_LNG:
+    case _C_FLT:
+    case _C_DBL:
+    case _C_UNICHAR:
+    case _C_CHAR_AS_TEXT:
+    case _C_CHAR_AS_INT:
+    case _C_CHARPTR:
+#ifdef _C_ATOM
+    case _C_ATOM:
+#endif
+        return true;
+
+    case _C_VECTOR_B:
+        type++;
+        /* Digits */
+        while (type < end_type && isdigit(*type)) {
+            type++;
+        }
+
+        /* Check if there is space for a format char
+         * and the closing '>'
+         */
+        if (type + 1 >= end_type) {
+            return false;
+        }
+        if (type[1] != _C_VECTOR_E) {
+            return false;
+        }
+        return PyObjCRT_IsValidEncoding(type, 1);
+
+    case _C_ARY_B:
+        type++;
+        type_length--;
+
+        /* Digits */
+        while (type < end_type && isdigit(*type)) {
+            type++;
+        }
+
+        /* Type encoding */
+        if (!PyObjCRT_IsValidEncoding(type, end_type - type)) {
+            return false;
+        }
+        type = PyObjCRT_SkipTypeSpec(type);
+        if (type == NULL) {
+            PyErr_Clear();
+            return false;
+        }
+        if (type >= end_type) {
+            return false;
+        }
+        return *type == _C_ARY_E;
+
+    case _C_STRUCT_B:
+        while (type < end_type && *type != _C_STRUCT_E && *type++ != '=') {
+            /* skip "<name>=" */
+        }
+
+        if (type >= end_type) {
+            return false;
+        }
+
+        while (type < end_type && *type != _C_STRUCT_E) {
+            if (*type == '"') {
+                /* XXX: Struct encodings with embedded field names
+                 *      are not supported by the only user of this
+                 *      API.
+                 */
+                return false;
+            }
+
+            if (!PyObjCRT_IsValidEncoding(type, end_type - type)) {
+                return false;
+            }
+
+            type = PyObjCRT_SkipTypeSpec(type);
+            if (type == NULL) {
+                PyErr_Clear();
+                return false;
+            }
+        }
+        if (type >= end_type) {
+            return false;
+        }
+        return *type == _C_STRUCT_E;
+
+    case _C_BFLD:
+    case _C_UNION_B:
+        /* XXX:  The only user of this API does not support
+         * bitfields and unions in the first place.
+         */
+        return false;
+
+    case _C_PTR:
+    case _C_CONST:
+    case _C_IN:
+    case _C_INOUT:
+    case _C_OUT:
+    case _C_BYCOPY:
+    case _C_BYREF:
+    case _C_ONEWAY:
+        return PyObjCRT_IsValidEncoding(type + 1, type_length - 1);
+
+    default:
+        return false;
+    }
+}
+
 PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, const void* datum,
                                                      BOOL alreadyRetained,
                                                      BOOL alreadyCFRetained)

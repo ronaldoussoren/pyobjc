@@ -50,10 +50,10 @@ class TestNSCoderUsage(TestCase):
                 try:
                     coder.encodeValueOfObjCType_at_(b"X", 2)
                 except objc.error as exc:
-                    if "PyObjCRT_SizeOfType: Unhandled type" not in str(exc):
+                    if "type encoding is not valid" not in str(exc):
                         raise
                 else:
-                    raise AssertionError("Bad encoding value")
+                    raise AssertionError("Bad encoding type")
 
             def initWithCoder_(self, coder):
                 # NSObject does not implement NSCoding, no need to

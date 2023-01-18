@@ -78,6 +78,8 @@ extern const char* _Nullable PyObjCRT_SkipTypeSpec(const char* type);
 extern const char* _Nullable PyObjCRT_NextField(const char* type);
 extern const char* PyObjCRT_SkipTypeQualifiers(const char* type);
 extern Py_ssize_t  PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
+extern bool        PyObjCRT_IsValidEncoding(const char* type, Py_ssize_t type_length)
+    __attribute__((__pure__));
 
 extern const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 

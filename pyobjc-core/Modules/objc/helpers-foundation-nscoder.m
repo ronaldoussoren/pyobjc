@@ -18,7 +18,12 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
-    /* XXX: Check that view is a null terminated string */
+
+    if (!PyObjCRT_IsValidEncoding(view.buf, view.len)) {
+        PyErr_SetString(PyObjCExc_InternalError, "type encoding is not valid");
+        return NULL;
+    }
+
     value = arguments[1];
 
     size = PyObjCRT_SizeOfType(view.buf);
@@ -159,7 +164,10 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
-    /* XXX: Check that view is a null-terminated string */
+    if (!PyObjCRT_IsValidEncoding(view.buf, view.len)) {
+        PyErr_SetString(PyObjCExc_InternalError, "type encoding is not valid");
+        return NULL;
+    }
     if (depythonify_c_value(@encode(NSUInteger), arguments[1], &count) == -1) {
         PyBuffer_Release(&view);
         return NULL;
@@ -340,6 +348,10 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
+    if (!PyObjCRT_IsValidEncoding(view.buf, view.len)) {
+        PyErr_SetString(PyObjCExc_InternalError, "type encoding is not valid");
+        return NULL;
+    }
     py_buf = arguments[1];
 
     if (py_buf != Py_None) {
@@ -466,7 +478,10 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_size_(
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
-    /* XXX: Verify that view is a null-terminated string */
+    if (!PyObjCRT_IsValidEncoding(view.buf, view.len)) {
+        PyErr_SetString(PyObjCExc_InternalError, "type encoding is not valid");
+        return NULL;
+    }
     py_buf = arguments[1];
     if (depythonify_c_value(@encode(Py_ssize_t), arguments[2], &size) == -1) {
         PyBuffer_Release(&view);
@@ -604,7 +619,10 @@ static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
-    /* XXX: Check that view is a null-terminated string */
+    if (!PyObjCRT_IsValidEncoding(view.buf, view.len)) {
+        PyErr_SetString(PyObjCExc_InternalError, "type encoding is not valid");
+        return NULL;
+    }
     if (depythonify_c_value(@encode(NSUInteger), arguments[1], &count) == -1) {
         PyBuffer_Release(&view);
         return NULL;
