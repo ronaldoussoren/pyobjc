@@ -191,7 +191,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__SecurityInterface(v
         return m;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationView),
+    if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationRights),
                                      call_authorizationRights,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
@@ -199,7 +199,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__SecurityInterface(v
         return NULL;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationView:),
+    if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationRights:),
                                      call_setAuthorizationRights_,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {

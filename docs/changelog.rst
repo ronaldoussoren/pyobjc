@@ -354,6 +354,9 @@ improvements as described below).
   - Type encodings for structs cannot contain embedded field names;
   - The APIs are slightly slower due to validating the type encoding.
 
+* Calling ``-[SFAuthorizationView authorizationRights]`` now works, in previous
+  version the support code was present but enabled for a non-existing method name.
+
 Version 9.0.1
 -------------
 
