@@ -8,35 +8,65 @@ NS_ASSUME_NONNULL_BEGIN
 PyObject* PyObjC_NULL = NULL;
 
 static PyObject*
-obj_repr(PyObject* self __attribute__((__unused__)))
+null_repr(PyObject* self __attribute__((__unused__)))
 {
     Py_INCREF(PyObjCNM_objc_NULL);
     return PyObjCNM_objc_NULL;
 }
 
-PyTypeObject PyObjC_NULL_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.NULL_type",
-    .tp_basicsize                                  = sizeof(PyObject),
-    .tp_itemsize                                   = 0,
-    .tp_repr                                       = obj_repr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable null_new(PyObject* self __attribute__((__unused__)),
+                                    PyObject* args __attribute__((__unused__)),
+                                    PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.NULL_type' instances");
+    return NULL;
+}
+#endif
+
+static PyType_Slot null_slots[] = {
+    {.slot = Py_tp_repr, .pfunc = (void*)&null_repr},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&null_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
 
-PyObject* _Nullable PyObjCInitNULL(void)
+static PyType_Spec null_spec = {
+    .name      = "objc.NULL_type",
+    .basicsize = sizeof(PyObject),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = null_slots,
+};
+
+static PyObject* PyObjC_NULL_Type;
+
+int
+PyObjCInitNULL(PyObject* module)
 {
-    PyObject* result;
-
-    if (PyType_Ready(&PyObjC_NULL_Type) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                             // LCOV_EXCL_LINE
+    PyObjC_NULL_Type = PyType_FromSpec(&null_spec);
+    if (PyObjC_NULL_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
     }
 
-    result = PyObjC_NULL = PyObject_New(PyObject, &PyObjC_NULL_Type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    PyObjC_NULL = PyObject_New(PyObject, (PyTypeObject*)PyObjC_NULL_Type);
+    if (PyObjC_NULL == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;             // LCOV_EXCL_LINE
     }
-    Py_XINCREF(PyObjC_NULL);
 
-    return result;
+    if (PyModule_AddObject(module, "NULL", PyObjC_NULL) == -1) { // LCOV_BR_EXCL_LINE
+        return -1;                                               // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjC_NULL);
+
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

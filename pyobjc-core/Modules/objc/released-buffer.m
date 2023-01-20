@@ -45,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void*)buffer
 {
-    /* XXX: Assert GIL is held */
     return buffer.buf;
 }
 

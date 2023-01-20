@@ -74,7 +74,6 @@ static PyObject* _Nullable weakref_call(PyObject* s, PyObject* _Nullable args,
 
 #endif /* PY_VERSION_HEX < 0x03090000 */
 
-/* XXX: vectorcall variant for weakref_new? */
 static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unused__)),
                                        PyObject* _Nullable args, PyObject* _Nullable kwds)
 {

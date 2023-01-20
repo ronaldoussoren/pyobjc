@@ -62,6 +62,11 @@ class TestNULL(TestCase):
         ):
             type(objc.NULL)()
 
+        with self.assertRaisesRegex(
+            TypeError, "cannot set 'foo' attribute of immutable type 'objc.NULL_type'"
+        ):
+            type(objc.NULL).foo = 1
+
 
 class TestNullArgumentsHelper(objc.lookUpClass("NSObject")):
     def callList_andInOut_(self, lst, value):

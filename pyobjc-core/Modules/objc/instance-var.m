@@ -315,27 +315,6 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
     return Py_None;
 }
 
-static PyObject* _Nullable ivar_add_attribute(PyObject* self, PyObject* _Nullable args)
-{
-    PyObject* name;
-    PyObject* value;
-
-    if (!PyArg_ParseTuple(args, "UO", &name, &value)) {
-        return NULL;
-    }
-
-    /* XXX: This is suboptimal, convert this type to a heap type instead */
-    /* XXX: This uses a private CPython API function */
-    if (_PyObject_GenericSetAttrWithDict(self, name, value, NULL) == -1) {
-        return NULL;
-    }
-
-    PyType_Modified((PyTypeObject*)self);
-
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
 static Py_hash_t
 ivar_hash(PyObject* o)
 {
@@ -425,24 +404,15 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
     return Py_NotImplemented;
 }
 
-static PyMethodDef ivar_methods[] = {
-    {
-        .ml_name  = "__pyobjc_class_setup__",
-        .ml_meth  = (PyCFunction)ivar_class_setup,
-        .ml_flags = METH_VARARGS | METH_KEYWORDS,
-    },
-    {
-        .ml_name  = "_add_attribute",
-        .ml_meth  = (PyCFunction)ivar_add_attribute,
-        .ml_flags = METH_VARARGS | METH_CLASS,
-        .ml_doc   = "_add_attribute(name, value)\n" CLINIC_SEP "\n"
-                    "(private) add a named attribute to the class",
+static PyMethodDef ivar_methods[] = {{
+                                         .ml_name  = "__pyobjc_class_setup__",
+                                         .ml_meth  = (PyCFunction)ivar_class_setup,
+                                         .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                     },
 
-    },
-
-    {
-        .ml_name = NULL /* SENTINEL */
-    }};
+                                     {
+                                         .ml_name = NULL /* SENTINEL */
+                                     }};
 
 PyDoc_STRVAR(
     ivar_doc,
@@ -524,57 +494,49 @@ static PyGetSetDef ivar_getset[] = {{
                                         .name = NULL /* SENTINEL */
                                     }};
 
-PyTypeObject PyObjCInstanceVariable_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "ivar",
-    .tp_basicsize                                  = sizeof(PyObjCInstanceVariable),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = ivar_dealloc,
-    .tp_repr                                       = ivar_repr,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_richcompare                                = ivar_richcompare,
-    .tp_hash                                       = ivar_hash,
-    .tp_doc                                        = ivar_doc,
-    .tp_methods                                    = ivar_methods,
-    .tp_getset                                     = ivar_getset,
-    .tp_descr_get                                  = ivar_descr_get,
-    .tp_descr_set                                  = ivar_descr_set,
-    .tp_init                                       = ivar_init,
-    .tp_alloc                                      = PyType_GenericAlloc,
-    .tp_new                                        = PyType_GenericNew,
+static PyType_Slot ivar_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&ivar_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&ivar_repr},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_richcompare, .pfunc = (void*)&ivar_richcompare},
+    {.slot = Py_tp_hash, .pfunc = (void*)&ivar_hash},
+    {.slot = Py_tp_doc, .pfunc = (void*)&ivar_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&ivar_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&ivar_getset},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)&ivar_descr_get},
+    {.slot = Py_tp_descr_set, .pfunc = (void*)&ivar_descr_set},
+    {.slot = Py_tp_init, .pfunc = (void*)&ivar_init},
+    {.slot = Py_tp_alloc, .pfunc = (void*)&PyType_GenericAlloc},
+    {.slot = Py_tp_new, .pfunc = (void*)&PyType_GenericNew},
+
+    {0, NULL} /* sentinel */
 };
 
-#if 0
-PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
+static PyType_Spec ivar_spec = {
+    .name      = "objc.ivar",
+    .basicsize = sizeof(PyObjCInstanceVariable),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = ivar_slots,
+};
+
+PyObject* PyObjCInstanceVariable_Type = (PyObject* _Nonnull)NULL;
+
+int
+PyObjCInstanceVariable_Setup(PyObject* module)
 {
-    PyObject* result;
-
-    result = PyObjCInstanceVariable_Type.tp_alloc(&PyObjCInstanceVariable_Type, 0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    PyObject* tmp = PyType_FromSpec(&ivar_spec);
+    if (tmp == NULL) {
+        return -1;
     }
+    PyObjCInstanceVariable_Type = tmp;
 
-    ((PyObjCInstanceVariable*)result)->type = PyObjCUtil_Strdup("@");
-    if (((PyObjCInstanceVariable*)result)->type == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(result);
-        return NULL;
-        // LCOV_EXCL_STOP
+    if (PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-
-    ((PyObjCInstanceVariable*)result)->isOutlet = 0;
-    ((PyObjCInstanceVariable*)result)->isSlot   = 0;
-    ((PyObjCInstanceVariable*)result)->ivar     = 0;
-    ((PyObjCInstanceVariable*)result)->name     = PyObjCUtil_Strdup(name);
-
-    if (((PyObjCInstanceVariable*)result)->name == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(result);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-    return result;
+    Py_INCREF(PyObjCInstanceVariable_Type);
+    return 0;
 }
-#endif
 
 NS_ASSUME_NONNULL_END

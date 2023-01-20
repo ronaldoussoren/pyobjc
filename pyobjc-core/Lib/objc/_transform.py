@@ -38,7 +38,6 @@ def processClassDict(
     - Transform attributes
     - Return (instance_variablees, instanstance_methods, class_methods)
     """
-    # XXX: Need meta_dict!
     instance_variables = {}
     instance_methods = set()
     class_methods = set()
@@ -253,8 +252,6 @@ def transformAttribute(name, value, class_object, protocols):
 
     isclass = None
 
-    # XXX: Introspecting hidden methods through the method accessors doesn't work
-    # ishidden =False
     if not isinstance(name, str):
         selname = None
     else:

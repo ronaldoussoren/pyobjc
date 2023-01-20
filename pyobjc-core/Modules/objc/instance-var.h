@@ -12,11 +12,12 @@ typedef struct {
     unsigned int isSlot : 1;
 } PyObjCInstanceVariable;
 
-extern PyTypeObject PyObjCInstanceVariable_Type;
+extern PyObject* PyObjCInstanceVariable_Type;
 #define PyObjCInstanceVariable_Check(obj)                                                \
-    PyObject_TypeCheck((obj), &PyObjCInstanceVariable_Type)
+    PyObject_TypeCheck((obj), (PyTypeObject*)PyObjCInstanceVariable_Type)
 
 extern PyObject* _Nullable PyObjCInstanceVariable_New(const char* name);
+extern int PyObjCInstanceVariable_Setup(PyObject* module);
 
 #define PyObjCInstanceVariable_IsOutlet(obj) (((PyObjCInstanceVariable*)(obj))->isOutlet)
 #define PyObjCInstanceVariable_IsSlot(obj) (((PyObjCInstanceVariable*)(obj))->isSlot)

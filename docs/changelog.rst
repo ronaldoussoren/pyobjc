@@ -357,6 +357,15 @@ improvements as described below).
 * Calling ``-[SFAuthorizationView authorizationRights]`` now works, in previous
   version the support code was present but enabled for a non-existing method name.
 
+* :issue:`527`: The type of ``objc.NULL`` is now created with ``PyType_FromSpec``.
+
+  This has the unfortunate side effect of making it possible to change type
+  attributes on Python 3.9 or earlier. Do not do this, the type is immutable
+  in Python 3.10 or later.
+
+* :issue:`423`: ``objc.ivar`` is now created with ``PyType_FromSpec``. Because of
+  that the private method ``objc.ivar._add_attribute`` has been removed.
+
 Version 9.0.1
 -------------
 

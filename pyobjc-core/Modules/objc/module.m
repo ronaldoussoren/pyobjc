@@ -407,7 +407,6 @@ PyDoc_STRVAR(getClassList_doc,
              "Return a list with all Objective-C classes known to the runtime.\n");
 static PyObject* _Nullable getClassList(PyObject* self __attribute__((__unused__)))
 {
-    /* XXX: Is PyObjC_GetClassList used anywhere else? */
     return PyObjC_GetClassList();
 }
 
@@ -2191,7 +2190,7 @@ static struct PyModuleDef mod_module = {
 PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void)
 {
     _Static_assert(sizeof(BOOL) == sizeof(bool), "BOOL and bool should have same size");
-    PyObject *m, *d, *v;
+    PyObject *m, *d;
 
     if (PyObjC_Initialized) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -2199,6 +2198,11 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
                         "Reload of objc._objc detected, this is not supported");
         return NULL;
         // LCOV_EXCL_STOP
+    }
+
+    m = PyModule_Create(&mod_module);
+    if (m == 0) {    // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE // LCOV_EXCL_LINE
     }
 
     if (PyObjC_InitSuperCallRegistry() == -1) { // LCOV_BR_EXCL_LINE
@@ -2230,10 +2234,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                     // LCOV_EXCL_LINE
     }
 
-    /* XXX:
-     *  Come up with an abstraction that readies a list of types and adds
-     *  tem to the module dict
-     */
     if (PyType_Ready(&PyObjCFunc_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     }
@@ -2257,9 +2257,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
     if (PyType_Ready(&PyObjCPythonSelector_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                                    // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCInstanceVariable_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                      // LCOV_EXCL_LINE
     }
 
     if (PyType_Ready(&PyObjCFormalProtocol_Type) < 0) { // LCOV_BR_EXCL_LINE
@@ -2327,14 +2324,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                  // LCOV_EXCL_LINE
     }
 
-    /* XXX: Move to the start to be able to move global variables
-     * to a module state struct later.
-     */
-    m = PyModule_Create(&mod_module);
-    if (m == 0) {    // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE // LCOV_EXCL_LINE
-    }
-
     if (PyObjC_SetupOptions(m) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                  // LCOV_EXCL_LINE
     }
@@ -2388,11 +2377,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "FSRef", (PyObject*)&PyObjC_FSRefType)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }
@@ -2451,16 +2435,12 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1007 */
 
-    v = PyObjCInitNULL();
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (PyObjCInitNULL(m) == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
-
-    if (PyDict_SetItemString(d, "NULL", v) < 0) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(v);                             // LCOV_EXCL_LINE
-        return NULL;                              // LCOV_EXCL_LINE
+    if (PyObjCInstanceVariable_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;                             // LCOV_EXCL_LINE
     }
-    Py_DECREF(v);
 
     if (PyObjCUtil_Init(m) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;              // LCOV_EXCL_LINE
@@ -2567,6 +2547,7 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     PyEval_InitThreads();
 #endif
 
+    /* XXX: Why is this needed? */
     if (![NSThread isMultiThreaded]) {
         [NSThread detachNewThreadSelector:@selector(targetForBecomingMultiThreaded:)
                                  toTarget:[OC_NSAutoreleasePoolCollector class]

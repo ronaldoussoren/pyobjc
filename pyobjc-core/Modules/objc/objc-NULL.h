@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjC_NULL;
-extern PyObject* _Nullable PyObjCInitNULL(void);
+extern int       PyObjCInitNULL(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 
