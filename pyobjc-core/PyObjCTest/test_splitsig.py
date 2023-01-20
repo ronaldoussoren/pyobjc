@@ -124,11 +124,39 @@ class SplitSignatureTest(TestCase):
                 if not isinstance(sel, objc.selector):
                     continue
 
-                if (
-                    sel.selector.startswith(b"fm:")
-                    or sel.selector.startswith(b"_fm:")
-                    or sel.selector.startswith(b"_ax:")
+                if sel.selector.split(b":", 1)[0] in (
+                    b"fm",
+                    b"_fm",
+                    b"_ax",
+                    b"_scr",
+                    b"CA_interpolateValues",
+                    b"__NS_swiftOverlay",
+                    b"__im",
+                    b"__msv",
+                    b"_compatibility",
+                    b"_fides",
+                    b"_intents",
+                    b"_ql",
+                    b"ck",
+                    b"cksqlcs",
+                    b"if",
+                    b"pep",
+                    b"safari",
+                ) or sel.selector in (
+                    b"isNSArray::",
+                    b"isNSCFConstantString::",
+                    b"isNSData::",
+                    b"isNSDate::",
+                    b"isNSDictionary::",
+                    b"isNSNumber::",
+                    b"isNSObject::",
+                    b"isNSOrderedSet::",
+                    b"isNSSet::",
+                    b"isNSString::",
+                    b"isNSTimeZone::",
+                    b"isNSValue::",
                 ):
+
                     # These keep turning up on test runs on macOS 13.1. Ignore as these
                     # are private APIs.
                     continue
@@ -138,12 +166,19 @@ class SplitSignatureTest(TestCase):
                 argcount = len(elems) - 3  # retval, self, _sel
                 coloncount = sel.selector.count(b":")
 
-                self.assertEqual(
-                    argcount,
-                    coloncount,
-                    "%s [%d:%d] %r %r"
-                    % (sel.selector.decode("latin1"), argcount, coloncount, elems, cls),
-                )
+                with self.subTest(cls=cls.__name__, sel=sel.selector):
+                    self.assertEqual(
+                        argcount,
+                        coloncount,
+                        "%s [%d:%d] %r %r"
+                        % (
+                            sel.selector.decode("latin1"),
+                            argcount,
+                            coloncount,
+                            elems,
+                            cls,
+                        ),
+                    )
 
     def testSplitStructSignature(self):
         with self.assertRaisesRegex(ValueError, "not a struct encoding"):
