@@ -366,6 +366,9 @@ improvements as described below).
 * :issue:`423`: ``objc.ivar`` is now created with ``PyType_FromSpec``. Because of
   that the private method ``objc.ivar._add_attribute`` has been removed.
 
+* Fixed bug that could result in a crash when the proxy for a Python iterator
+  ended up being deallocated after the Python interpreter is finalized.
+
 Version 9.0.1
 -------------
 

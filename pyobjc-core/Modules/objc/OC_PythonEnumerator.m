@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         @try {
-            [super release];
+            [super dealloc];
         } @catch (NSObject* exc) {
             PyObjC_LEAVE_GIL;
             @throw;
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        [super release];
+        [super dealloc];
         return;
         // LCOV_EXCL_STOP
     }
