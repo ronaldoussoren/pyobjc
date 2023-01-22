@@ -647,3 +647,11 @@ class TestMethodsWithVarargs(TestCase):
         class OC_MethodWithVarargs4(NSObject):
             def method_(self, value, other=9, *args):
                 pass
+
+
+class TestSuperClassAttr(TestCase):
+    def test_class_of_builtin_super(self):
+        self.assertIs(super(object, object()).__class__, super)
+
+    def test_class_of_objc_super(self):
+        self.assertIs(objc.super(object, object()).__class__, objc.super)
