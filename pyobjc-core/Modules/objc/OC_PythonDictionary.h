@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  *      PyMapping_* API is not flexible enough, and most sequence also implement
  *      the generic mapping interface to deal with slices.
  */
+/* XXX: Cannot be PyObjC_FINAL_CLASS */
 @interface OC_PythonDictionary : NSMutableDictionary {
     PyObject* value;
 }

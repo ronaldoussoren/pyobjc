@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * This class implements an NSEnumerator for proxied Python dictionaries.
  */
-@interface OC_PythonDictionaryEnumerator : NSEnumerator {
+PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     OC_PythonDictionary* value;
     Py_ssize_t           pos;
     BOOL                 valid;
@@ -83,11 +83,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype _Nullable)dictionaryWithPythonObject:(PyObject*)v
 {
+    PyObjC_Assert(v != NULL, nil);
     return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
+    PyObjC_Assert(v != NULL, nil);
     self = [super init];
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
         return nil;            // LCOV_EXCL_LINE
@@ -331,7 +333,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSEnumerator*)keyEnumerator
 {
-    /* XXX: Can value be NULL?? */
     if (value && PyDict_CheckExact(value)) {
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
@@ -506,7 +507,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Class)classForCoder
 {
-    if (PyDict_CheckExact(value)) {
+    if (value && PyDict_CheckExact(value)) {
         return [NSMutableDictionary class];
     } else {
         return [OC_PythonDictionary class];

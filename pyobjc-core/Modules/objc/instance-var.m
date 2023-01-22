@@ -262,13 +262,14 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         self->name = NULL;
     }
 
-    self->type = PyObjCUtil_Strdup(type);
-    if (self->type == NULL) {
+    char* type_copy = PyObjCUtil_Strdup(type);
+    if (type_copy == NULL) {
         if (name) {
             PyMem_Free(self->name);
         }
         return -1;
     }
+    self->type = type_copy;
     if (isOutletObj) {
         self->isOutlet = PyObject_IsTrue(isOutletObj);
 

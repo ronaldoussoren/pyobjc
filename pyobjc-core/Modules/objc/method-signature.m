@@ -1276,7 +1276,8 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         return NULL;      // LCOV_EXCL_LINE
     }
     Py_SET_SIZE(result, max_idx);
-    result->signature             = NULL;
+    /* XXX: This will be set to a non-null value in all non-error paths */
+    result->signature             = (const char* _Nonnull)NULL;
     result->suggestion            = NULL;
     result->variadic              = NO;
     result->null_terminated_array = NO;

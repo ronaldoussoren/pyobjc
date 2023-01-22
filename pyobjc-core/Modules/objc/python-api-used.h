@@ -184,7 +184,7 @@ PyAPI_FUNC(PyObject* _Nullable) PyMember_GetOne(const char*, struct PyMemberDef*
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyMember_SetOne(char*, struct PyMemberDef*, PyObject*)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(Py_buffer* info)
+PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(const Py_buffer* info)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyMethod_Function(PyObject*)
     __attribute__((warn_unused_result));
@@ -370,12 +370,13 @@ PyAPI_FUNC(int) Py_ReprEnter(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(void) Py_ReprLeave(PyObject*);
 PyAPI_FUNC(int) PyObject_GetBuffer(PyObject* exporter, Py_buffer* view, int flags)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(void*) PyBuffer_GetPointer(Py_buffer* view, Py_ssize_t* indices)
+PyAPI_FUNC(void*) PyBuffer_GetPointer(const Py_buffer* view, const Py_ssize_t* indices)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyBuffer_ToContiguous(void* buf, Py_buffer* src, Py_ssize_t len,
+PyAPI_FUNC(int) PyBuffer_ToContiguous(void* buf, const Py_buffer* src, Py_ssize_t len,
                                       char order) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyBuffer_FromContiguous(Py_buffer* view, void* buf, Py_ssize_t len,
-                                        char fort) __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyBuffer_FromContiguous(const Py_buffer* view, const void* buf,
+                                        Py_ssize_t len, char fort)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyBuffer_IsContiguous(const Py_buffer* view, char fort)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyBuffer_FillInfo(Py_buffer* view, PyObject* _Nullable exporter,
@@ -384,7 +385,7 @@ PyAPI_FUNC(int) PyBuffer_FillInfo(Py_buffer* view, PyObject* _Nullable exporter,
 PyAPI_FUNC(void) PyBuffer_Release(Py_buffer* view);
 PyAPI_FUNC(const Py_buffer*) PyPickleBuffer_GetBuffer(PyObject*)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(Py_buffer* info)
+PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(const Py_buffer* info)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PySlice_Unpack(PyObject* slice, Py_ssize_t* start, Py_ssize_t* stop,
                                Py_ssize_t* step) __attribute__((warn_unused_result));

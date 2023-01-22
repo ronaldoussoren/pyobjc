@@ -432,7 +432,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     Py_ssize_t i, n;
     PyObject * mro, *base;
     PyObject*  descr = NULL;
-    char       selbuf[2048];
+    char       selbuf[1024];
     char*      sel_name;
 
     /* Look in tp_dict of types in MRO */
@@ -475,9 +475,14 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
             sel_name =
                 (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
-            if (sel_name == NULL) {
+            if (sel_name == NULL) { // LCOV_BR_EXCL_LINE
+                /* This can only be hit if the method selector is nil or
+                 * if the selector name is longer than 1K
+                 */
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 continue;
+                // LCOV_EXCL_STOP
             }
 
             if (strcmp(sel_name, name_bytes) == 0) {
@@ -1004,8 +1009,8 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(Py_TYPE(self)->tp_dict);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     if (PyObjCObject_IsMagic(self)) {
@@ -1028,8 +1033,8 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
             /* Check if the selector should be hidden */
             sel = method_getName(methods[i]);
-            if (sel == NULL)
-                continue;
+            if (sel == NULL) // LCOV_BR_EXCL_LINE
+                continue;    // LCOV_EXCL_LINE
 
             PyObject* hidden =
                 PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
@@ -1037,31 +1042,38 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
-                // LCOV_EXCL_STOP
                 return NULL;
+                // LCOV_EXCL_STOP
             } else if (hidden) {
                 continue;
             }
 
             name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
                                                  sizeof(selbuf));
-            if (name == NULL) {
+            if (name == NULL) { // LCOV_BR_EXCL_LINE
+                /* Can only fail if the selector name is longer than the buffer */
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 continue;
+                // LCOV_EXCL_STOP
             }
 
             item = PyUnicode_FromString(name);
-            if (item == NULL) {
+            if (item == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
-            if (PyList_Append(result, item) == -1) {
+            if (PyList_Append(result, item) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
                 Py_DECREF(item);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(item);
         }

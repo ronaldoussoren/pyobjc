@@ -21,7 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    PyObjC_Assert(value != NULL, NULL);
+    /* XXX: This assertion is needed for correctness, without
+     * it
+     * ``PyObjCTest.test_archive_python.TestArchivePlainPython.test_recursive_frozenset_subclass_and_inst``
+     * causes a segmentation fault.
+     */
+    PyObjC_Assert(value != NULL, ((PyObject* _Nonnull)NULL));
     Py_INCREF(value);
     return value;
 }

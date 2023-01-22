@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
 /* XXX: Also implement <NSObject>? */
-@interface OC_PythonObject : NSProxy <NSCopying> {
+PyObjC_FINAL_CLASS @interface OC_PythonObject : NSProxy<NSCopying> {
     PyObject* pyObject;
 }
 

@@ -48,30 +48,32 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 
     if (PyUnicode_Check(name)) {
         const char* b = PyObjC_Unicode_Fast_Bytes(name);
-        if (b == NULL) {
-            return NULL;
+        if (b == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
         sel = PyObjCSelector_DefaultSelector(b);
 
-    } else if (!skip) {
+    } else if (!skip) { // LCOV_BR_EXCL_LINE
+        /* This should hever happen, Python's attribute machinery
+         * rejects attribute names of the wrong type
+         */
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "attribute name is not a string");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (!skip) {
         PyObject *    mro, *res, *tmp, *dict;
         PyTypeObject* starttype;
         descrgetfunc  f;
-        Py_ssize_t    i, n;
+        Py_ssize_t    i, n = 0;
 
         starttype = su->obj_type;
         mro       = starttype->tp_mro;
 
-        if (mro == NULL) {
-            n = 0;
-
-        } else {
+        if (mro != NULL) {
             PyObjC_Assert(PyTuple_Check(mro), NULL);
             n = PyTuple_GET_SIZE(mro);
         }
@@ -91,8 +93,8 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
              * Also make sure that the method tables are up-to-date.
              */
             if (PyObjCClass_Check(tmp)) {
-                if (PyObjCClass_CheckMethodList(tmp, NO) < 0) {
-                    return NULL;
+                if (PyObjCClass_CheckMethodList(tmp, NO) < 0) { // LCOV_BR_EXCL_LINE
+                    return NULL;                                // LCOV_EXCL_LINE
                 }
             }
 
@@ -153,8 +155,8 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 
                     return res;
 
-                } else if (PyErr_Occurred()) {
-                    return NULL;
+                } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return NULL;               // LCOV_EXCL_LINE
                 }
             }
         }

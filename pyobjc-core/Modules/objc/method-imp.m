@@ -15,19 +15,9 @@ typedef struct {
     ffi_cif* _Nullable cif;
 } PyObjCIMPObject;
 
-#define ASSERT_IS_IMP(self, retval)                                                      \
-    if (!PyObjCIMP_Check(self)) {                                                        \
-        PyErr_BadInternalCall();                                                         \
-        return retval;                                                                   \
-    }
-
-/*
- * XXX: Inspect users and consider removing
- * the type check (or move it to a debug assertion
- */
 ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 {
-    ASSERT_IS_IMP(self, NULL)
+    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
     return ((PyObjCIMPObject*)self)->cif;
 }
@@ -35,7 +25,7 @@ ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 int
 PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 {
-    ASSERT_IS_IMP(self, -1)
+    PyObjC_Assert(PyObjCIMP_Check(self), -1);
 
     ((PyObjCIMPObject*)self)->cif = cif;
     return 0;
@@ -43,14 +33,14 @@ PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 
 SEL _Nullable PyObjCIMP_GetSelector(PyObject* self)
 {
-    ASSERT_IS_IMP(self, NULL)
+    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
     return ((PyObjCIMPObject*)self)->selector;
 }
 
 IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 {
-    ASSERT_IS_IMP(self, NULL)
+    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
     return ((PyObjCIMPObject*)self)->imp;
 }
@@ -58,14 +48,14 @@ IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 int
 PyObjCIMP_GetFlags(PyObject* self)
 {
-    ASSERT_IS_IMP(self, -1)
+    PyObjC_Assert(PyObjCIMP_Check(self), -1);
 
     return ((PyObjCIMPObject*)self)->flags;
 }
 
 PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 {
-    ASSERT_IS_IMP(self, NULL)
+    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
     return ((PyObjCIMPObject*)self)->signature;
 }
@@ -229,13 +219,9 @@ static PyObject* _Nullable imp_signature(PyObject* _self,
                                          void*     closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    if (self->signature) {
-        return PyBytes_FromString(self->signature->signature);
-    } else {
-        /* XXX: Verify if this can ever be reached */
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    PyObjC_Assert(self->signature != NULL, NULL);
+    PyObjC_Assert(self->signature->signature != NULL, NULL);
+    return PyBytes_FromString(self->signature->signature);
 }
 
 PyDoc_STRVAR(imp_selector_doc, "Objective-C name for the IMP");
@@ -376,6 +362,7 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
     PyObjCIMPObject* result;
 
     PyObjC_Assert(callfunc != NULL, NULL);
+    PyObjC_Assert(signature != NULL, NULL);
 
     result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE

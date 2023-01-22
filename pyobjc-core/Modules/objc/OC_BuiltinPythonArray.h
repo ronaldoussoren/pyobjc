@@ -2,7 +2,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OC_BuiltinPythonArray : OC_PythonArray {
+PyObjC_FINAL_CLASS @interface OC_BuiltinPythonArray : OC_PythonArray {
 }
 @end
 

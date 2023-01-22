@@ -4902,6 +4902,8 @@ error_cleanup:
  * as an initial argument), and is set to 0 otherwise.
  */
 
+/* Only called from code that's unreachable during testing */
+// LCOV_EXCL_START
 static const char*
 ffi_status_str(ffi_status rv)
 {
@@ -4916,6 +4918,7 @@ ffi_status_str(ffi_status rv)
         return "UNKNOWN";
     }
 }
+// LCOV_EXCL_STOP
 
 ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 {
@@ -4936,26 +4939,32 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 
     /* Build FFI argumentlist description */
     cl_arg_types = PyMem_Malloc(sizeof(ffi_type*) * (2 + Py_SIZE(methinfo)));
-    if (cl_arg_types == NULL) {
+    if (cl_arg_types == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(cl_ret_type);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < Py_SIZE(methinfo); i++) {
         cl_arg_types[i] = PyObjCFFI_Typestr2FFI(methinfo->argtype[i]->type);
-        if (cl_arg_types[i] == NULL) {
+        if (cl_arg_types[i] == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyMem_Free(cl_arg_types);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
     /* Create the invocation description */
     cif = PyMem_Malloc(sizeof(*cif));
-    if (cif == NULL) {
+    if (cif == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(cl_arg_types);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (methinfo->variadic) {
@@ -4988,12 +4997,14 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
                           cl_arg_types);
     }
 
-    if (rv != FFI_OK) {
+    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(cif);
         PyMem_Free(cl_arg_types);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI CIF for %s: err=%d [%s]",
                      methinfo->signature, rv, ffi_status_str(rv));
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return cif;
@@ -5028,9 +5039,12 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
         return NULL;
     }
 
-    if (alloc_prepped_closure(&cl, cif, &codeloc, func, userdata) == -1) {
+    if (alloc_prepped_closure(&cl, cif, &codeloc, func, userdata)
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_Assert(codeloc != NULL, NULL);
@@ -5089,8 +5103,8 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     PyObjC_Assert(typestr != NULL, -1);
 
     arglist[0] = PyObjCFFI_Typestr2FFI(typestr);
-    if (arglist[0] == NULL) {
-        return -1;
+    if (arglist[0] == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;            // LCOV_EXCL_LINE
     }
     if (*typestr == _C_VOID) {
         values[0] = NULL;
@@ -5151,12 +5165,15 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     if (values[0] != NULL) {
         @try {
             [invocation setReturnValue:values[0]];
+
+            // LCOV_EXCL_START
         } @catch (NSObject* localException) {
 
             PyObjCErr_FromObjC(localException);
             rv = -1;
             goto cleanup;
         }
+        // LCOV_EXCL_STOP
     }
     rv = 0;
 

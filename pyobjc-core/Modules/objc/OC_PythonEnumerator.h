@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OC_PythonEnumerator : NSEnumerator {
+PyObjC_FINAL_CLASS @interface OC_PythonEnumerator : NSEnumerator {
     PyObject* value;
     BOOL      valid;
 }

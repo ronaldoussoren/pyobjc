@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  *              can be used everywhere where NSArray or NSMutableArray objects
  *              are expected.
  */
+/* XXX: Cannot be PyObjC_FINAL_CLASS */
 @interface OC_PythonArray : NSMutableArray {
     PyObject* value;
 }

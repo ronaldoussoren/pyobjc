@@ -25,17 +25,19 @@ static void
 obj_dealloc(PyObject* self)
 {
     /* Users or this type must release the buffer after use */
+
+#ifdef PyObjC_DEBUG
     if (((((struct pyobjc_memview*)self))->view).obj != NULL) { // LCOV_BR_EXCL_LINE
         /* Users of this API must release the buffer, enforce this
          * at runtime.
          *
-         * XXX: This matches the implementation of PyBuffer_Release,
-         * but setting .obj to NULL is not a documented API invariant!
-         *
-         * XXX: Consider moving the call to Release to this function...
+         * This code is only active in debug builds because the check
+         * above is not a documented API invariant for PyBuffer_Release
+         * (but does match the behaviour of that function).
          */
         PyObjCErr_InternalError(); /* LCOV_EXCL_LINE */
     }
+#endif
 
     PyObject_Free(self);
 }

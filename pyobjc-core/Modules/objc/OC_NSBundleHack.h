@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  *     if it does not do the right thing
  */
 
-@interface OC_NSBundleHack : NSBundle {
+PyObjC_FINAL_CLASS @interface OC_NSBundleHack : NSBundle {
 }
 + (void)installBundleHack;
 + (BOOL)bundleHackUsed;

@@ -537,6 +537,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
          * Class methods should always be bound, therefore we only
          * have to validate the type of self for instance methods.
          */
+        PyObjC_Assert(self->base.sel_class != Nil, NULL);
         PyObject* myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
@@ -646,6 +647,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
     if (self->sel_call_func) {
         execute = self->sel_call_func;
     } else {
+        PyObjC_Assert(self->base.sel_class != NULL, NULL);
+
         execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
                                       self->base.sel_methinfo->signature);
         if (execute == NULL)
@@ -680,6 +683,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
     } else {
         PyObject* myClass;
+
+        PyObjC_Assert(self->base.sel_class != Nil, NULL);
 
         myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
@@ -775,8 +780,8 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     result->base.sel_flags            = meth->base.sel_flags;
     result->base.sel_class            = meth->base.sel_class;
     result->base.sel_methinfo         = NULL;
-    result->base.sel_python_signature = NULL;
-    result->base.sel_native_signature = NULL;
+    result->base.sel_python_signature = (const char* _Nonnull)NULL;
+    result->base.sel_native_signature = (const char* _Nonnull)NULL;
     result->base.sel_mappingcount     = meth->base.sel_mappingcount;
     result->base.sel_self             = NULL;
     result->sel_cif                   = NULL;
@@ -1065,8 +1070,8 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
 #endif
     result->sel_call_func             = NULL;
     result->sel_cif                   = NULL;
-    result->base.sel_python_signature = NULL;
-    result->base.sel_native_signature = NULL;
+    result->base.sel_python_signature = (const char* _Nonnull)NULL;
+    result->base.sel_native_signature = (const char* _Nonnull)NULL;
 
     result->base.sel_selector = selector;
 
@@ -1152,12 +1157,13 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
-    result->base.sel_self     = NULL;
-    result->base.sel_class    = cls;
-    result->base.sel_flags    = 0;
-    result->base.sel_methinfo = NULL; /* We might not know the class right now */
-    result->callable          = NULL;
-    result->argcount          = 0;
+    result->base.sel_self  = NULL;
+    result->base.sel_class = cls;
+    result->base.sel_flags = 0;
+    result->base.sel_methinfo =
+        (PyObjCMethodSignature* _Nonnull)NULL; /* We might not know the class right now */
+    result->callable = (PyObject* _Nonnull)NULL;
+    result->argcount = 0;
 
     result->base.sel_selector         = selector;
     result->base.sel_python_signature = signature;
@@ -1767,8 +1773,8 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     result->base.sel_methinfo         = NULL;
     result->base.sel_selector         = meth->base.sel_selector;
     result->base.sel_class            = meth->base.sel_class;
-    result->base.sel_python_signature = NULL;
-    result->base.sel_native_signature = NULL;
+    result->base.sel_python_signature = (const char* _Nonnull)NULL;
+    result->base.sel_native_signature = (const char* _Nonnull)NULL;
     result->argcount                  = 0;
     result->numoutput                 = 0;
 #if PY_VERSION_HEX >= 0x03090000
@@ -1825,8 +1831,12 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
 static void
 pysel_dealloc(PyObject* obj)
 {
-    /* XXX: Can this ever be NULL */
-    Py_CLEAR(((PyObjCPythonSelector*)obj)->callable);
+    if (((PyObjCPythonSelector*)obj)->callable != NULL) {
+        /* This open codes Py_CLEAR to avoid a nullabity warning */
+        PyObject* tmp                          = ((PyObjCPythonSelector*)obj)->callable;
+        ((PyObjCPythonSelector*)obj)->callable = (PyObject* _Nonnull)NULL;
+        Py_DECREF(tmp);
+    }
     sel_dealloc(obj);
 }
 

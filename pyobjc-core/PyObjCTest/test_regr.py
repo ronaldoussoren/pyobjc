@@ -654,4 +654,19 @@ class TestSuperClassAttr(TestCase):
         self.assertIs(super(object, object()).__class__, super)
 
     def test_class_of_objc_super(self):
-        self.assertIs(objc.super(object, object()).__class__, objc.super)
+        self.assertIs(objc.super(NSObject, NSObject.new()).__class__, objc.super)
+
+    def test_single_arg_super(self):
+        v = objc.super(NSInvocation)
+        v.__new__
+
+        with self.assertRaisesRegex(
+            TypeError, "attribute name must be string, not 'int'"
+        ):
+            getattr(v, 42)
+
+    def test_super_attr_name(self):
+        with self.assertRaisesRegex(
+            TypeError, "attribute name must be string, not 'int'"
+        ):
+            getattr(objc.super(NSObject, NSObject.new()), 42)

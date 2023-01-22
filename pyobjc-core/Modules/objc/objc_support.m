@@ -1307,8 +1307,9 @@ PyObjCRT_SizeOfType(const char* start_type)
 }
 
 extern bool
-PyObjCRT_IsValidEncoding(const char* type, Py_ssize_t type_length)
+PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
 {
+    const char* type     = _type; /* Strip "_Nonnull" */
     const char* end_type = type + type_length;
     if (type_length == 0) {
         return false;

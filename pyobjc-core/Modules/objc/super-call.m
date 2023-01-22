@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Consider using a minimal python type instead of a capsule */
+/* XXX: Use a minimal python type instead of a capsule */
 struct registry {
     PyObjC_CallFunc         call_to_objc;
     PyObjC_MakeIMPBlockFunc make_call_to_python_block;
@@ -31,17 +31,16 @@ static PyObject* special_registry = (PyObject* _Nonnull)NULL;
 int
 PyObjC_InitSuperCallRegistry(void)
 {
-    if (signature_registry == NULL) {
-        signature_registry = PyDict_New();
-        if (signature_registry == NULL) // LCOV_BR_EXCL_LINE
-            return -1;                  // LCOV_EXCL_LINE
-    }
+    PyObjC_Assert(signature_registry == NULL, -1);
+    PyObjC_Assert(special_registry == NULL, -1);
 
-    if (special_registry == NULL) {
-        special_registry = PyDict_New();
-        if (special_registry == NULL) // LCOV_BR_EXCL_LINE
-            return -1;                // LCOV_EXCL_LINE
-    }
+    signature_registry = PyDict_New();
+    if (signature_registry == NULL) // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
+
+    special_registry = PyDict_New();
+    if (special_registry == NULL) // LCOV_BR_EXCL_LINE
+        return -1;                // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -70,6 +69,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     PyObject*        pyclass;
     PyObject*        entry;
     PyObject*        lst;
+
+    PyObjC_Assert(special_registry != NULL, -1);
 
     if (!make_call_to_python_block) {
         PyErr_SetString(PyObjCExc_Error,
@@ -163,6 +164,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
     struct registry* v;
     PyObject*        entry;
     int              r;
+
+    PyObjC_Assert(signature_registry != NULL, -1);
 
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
@@ -339,21 +342,17 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
     special = search_special(class, sel);
     if (special) {
         return special->call_to_objc;
-    } else if (PyErr_Occurred()) {
-        return NULL;
+    } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
 
     special = find_signature(signature);
     if (special) {
         return special->call_to_objc;
-    } else if (PyErr_Occurred()) {
-        return NULL;
+    } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
 
-    const char* sel_signature = sel_getName(sel);
-    if (sel_signature == NULL) {
-        return NULL;
-    }
     return PyObjCFFI_Caller;
 }
 
@@ -383,8 +382,8 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
         special = search_special(super_class, aSelector);
         if (special) {
             func = special->make_call_to_python_block;
-        } else if (PyErr_Occurred()) {
-            return NULL;
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;               // LCOV_EXCL_LINE
         }
     }
 
@@ -392,8 +391,8 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
         generic = find_signature(methinfo->signature);
         if (generic != NULL) {
             func = generic->make_call_to_python_block;
-        } else if (PyErr_Occurred()) {
-            return NULL;
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;               // LCOV_EXCL_LINE
         }
     }
 
@@ -423,7 +422,6 @@ PyObjCUnsupportedMethod_IMP(PyObject* _Nonnull callable __attribute__((__unused_
                             PyObjCMethodSignature* _Nonnull methinfo
                             __attribute__((__unused__)))
 {
-    /* XXX: Don't particularly like using NSException here */
     @throw [NSException
         exceptionWithName:NSInvalidArgumentException
                    reason:@"Implementing this method from Python is not supported"

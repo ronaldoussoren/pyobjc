@@ -108,7 +108,7 @@ calc_current_version(void)
     }
 }
 
-@interface OC_NSAutoreleasePoolCollector : NSObject
+PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
 /*
  * This class is used to automatically reset the
  * global pool when an outer autorelease pool is
@@ -1774,8 +1774,15 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
 
     sel = sel_registerName(pysel);
 
-    PyObjCMethodSignature* sig =
-        PyObjCMethodSignature_GetRegistered(PyObjCClass_GetClass(class), sel);
+    Class cls = PyObjCClass_GetClass(class);
+    if (cls == Nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyObjC_Assert(PyErr_Occurred(), NULL);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    PyObjCMethodSignature* sig = PyObjCMethodSignature_GetRegistered(cls, sel);
     if (sig == NULL) {
         PyErr_Clear();
         Py_INCREF(Py_None);

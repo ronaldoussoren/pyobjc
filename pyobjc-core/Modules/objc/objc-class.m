@@ -401,6 +401,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                                      &arg_protocols, &final)) {
         return NULL;
     }
+    PyObjC_Assert(name != NULL, NULL);
+    PyObjC_Assert(bases != NULL, NULL);
+    PyObjC_Assert(dict != NULL, NULL);
 
     if (!PyTuple_Check(bases)) {
         PyErr_SetString(PyExc_TypeError, "'bases' must be tuple");
@@ -897,13 +900,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
         return NULL;
     }
-    Py_DECREF(args);
-    Py_DECREF(real_bases);
-    args       = NULL;
-    real_bases = NULL;
-
-    Py_DECREF(protocols);
-    protocols = NULL;
+    Py_CLEAR(args);
+    Py_CLEAR(real_bases);
+    Py_CLEAR(protocols);
 
     if (orig_slots != NULL) {
         /* Restore the initial value of __slots__ */
@@ -912,9 +911,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             == -1) {
             // LCOV_EXCL_START
             Py_XDECREF(orig_slots);
-            Py_DECREF(args);
-            Py_DECREF(real_bases);
-            Py_DECREF(protocols);
             Py_DECREF(old_dict);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
@@ -1095,7 +1091,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
             break;
         /* class_getSuperclass returns Nil only if its argument is Nil */
         cls = PyObjCClass_New((Class _Nonnull)class_getSuperclass(info->class));
-        if (cls == NULL) { // LCOV_BR_EXCL_LINErg 4¬øª≥
+        if (cls == NULL) { // LCOV_BR_EXCL_LINE
             /* Abort checking if the class object cannot be created. Should
              * never happen in practice...
              */
@@ -3235,7 +3231,6 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 
         aMethod = PyObjC_TransformAttribute(name, aMethod, classObject, protocols);
         Py_CLEAR(name);
-        Py_INCREF(aMethod);
         if (aMethod == NULL) {
             PyErr_Format(PyExc_TypeError, "All objects in methodArray must be of "
                                           "type <objc.selector>, <function>, "

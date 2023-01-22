@@ -1,13 +1,6 @@
 #include "pyobjc.h"
 NS_ASSUME_NONNULL_BEGIN
 
-/*
- * XXX: Vectorcall variants for as_tuple and as_buffer
- *
- * Both should be fairly easy as there is only one argument,
- * although supporting keyword arguments complicates things.
- */
-
 typedef struct {
     PyObject_HEAD
 
@@ -285,7 +278,6 @@ static PyObject* _Nullable object_subscript(PyObject* self, PyObject* item)
         }
 
         if (step != 1) {
-            /* XXX: Might be cool to support other steps... */
             PyErr_Format(PyExc_ValueError,
                          "objc.varlist doesn't support slice steps other than 1");
             return NULL;
@@ -334,7 +326,6 @@ object_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
         }
 
         if (step != 1) {
-            /* XXX: Might be cool to support other steps... */
             PyErr_Format(PyExc_ValueError,
                          "objc.varlist doesn't support slice steps other than 1");
             return -1;
