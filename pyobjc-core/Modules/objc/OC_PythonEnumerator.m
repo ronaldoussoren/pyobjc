@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         @try {
-            [super dealloc];
+            [super release];
         } @catch (NSObject* exc) {
             PyObjC_LEAVE_GIL;
             @throw;
