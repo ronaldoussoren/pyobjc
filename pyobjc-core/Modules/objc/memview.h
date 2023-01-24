@@ -3,9 +3,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-int PyObjCMemView_Check(PyObject* view);
-PyObject* _Nullable PyObjCMemView_New(void);
-Py_buffer* _Nullable PyObjCMemView_GetBuffer(PyObject* view);
+extern int PyObjCMemView_Check(PyObject* view);
+extern PyObject* _Nullable PyObjCMemView_New(void);
+extern Py_buffer* _Nullable PyObjCMemView_GetBuffer(PyObject* view);
+extern int PyObjCMemView_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

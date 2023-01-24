@@ -10,6 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static PyObject* PyObjCFunc_Type;
+#define PyObjCFunction_Check(value)                                                      \
+    PyObject_TypeCheck(value, (PyTypeObject*)PyObjCFunc_Type)
+
+int(PyObjCFunction_Check)(PyObject* value) { return PyObjCFunction_Check(value); }
+
 typedef struct {
     PyObject_HEAD
 
@@ -76,6 +82,12 @@ static PyMemberDef func_members[] = {{
                                          .name   = "__module__",
                                          .type   = T_OBJECT,
                                          .offset = offsetof(func_object, module),
+                                     },
+                                     {
+                                         .name   = "__vectorcalloffset__",
+                                         .type   = T_PYSSIZET,
+                                         .offset = offsetof(func_object, vectorcall),
+                                         .flags  = READONLY,
                                      },
                                      {
                                          .name = NULL /* SENTINEL */
@@ -396,28 +408,51 @@ func_descr_get(PyObject* self, PyObject* _Nullable obj __attribute__((__unused__
     return self;
 }
 
-PyTypeObject PyObjCFunc_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.function",
-    .tp_basicsize                                  = sizeof(func_object),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = func_dealloc,
-    .tp_repr                                       = func_repr,
-#if PY_VERSION_HEX >= 0x03090000
-    .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset = offsetof(func_object, vectorcall),
-    .tp_call              = PyVectorcall_Call,
-#else
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_call  = func_call,
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable func_new(PyObject* self __attribute__((__unused__)),
+                                    PyObject* args __attribute__((__unused__)),
+                                    PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.function' instances");
+    return NULL;
+}
 #endif
 
-    .tp_getattro  = PyObject_GenericGetAttr,
-    .tp_setattro  = PyObject_GenericSetAttr,
-    .tp_doc       = "Wrapper around a Objective-C function",
-    .tp_methods   = func_methods,
-    .tp_members   = func_members,
-    .tp_getset    = func_getset,
-    .tp_descr_get = func_descr_get,
+static PyType_Slot func_slots[] = {
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_setattro, .pfunc = (void*)&PyObject_GenericSetAttr},
+    {.slot = Py_tp_methods, .pfunc = (void*)&func_methods},
+    {.slot = Py_tp_members, .pfunc = (void*)&func_members},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)&func_descr_get},
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&func_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&func_repr},
+    {.slot = Py_tp_getset, .pfunc = (void*)&func_getset},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&func_new},
+#endif
+#if PY_VERSION_HEX >= 0x03090000
+    {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+#else
+    {.slot = Py_tp_call, .pfunc = (void*)&func_call},
+#endif
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec func_spec = {
+    .name      = "objc.function",
+    .basicsize = sizeof(func_object),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#elif PY_VERSION_HEX >= 0x03090000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_HEAPTYPE,
+
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = func_slots,
 };
 
 PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, void* func,
@@ -427,7 +462,7 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
 
     PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
 
-    result = PyObject_NEW(func_object, &PyObjCFunc_Type);
+    result = PyObject_NEW(func_object, (PyTypeObject*)PyObjCFunc_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -464,7 +499,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
         doc = NULL;
     }
 
-    result = PyObject_New(func_object, &PyObjCFunc_Type);
+    result = PyObject_New(func_object, (PyTypeObject*)PyObjCFunc_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -510,6 +545,23 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject* func)
 {
     return ((func_object*)func)->methinfo;
+}
+
+int
+PyObjCFunc_Setup(PyObject* module)
+{
+    PyObjCFunc_Type = PyType_FromSpec(&func_spec);
+    if (PyObjCFunc_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(module, "function", PyObjCFunc_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCFunc_Type);
+
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

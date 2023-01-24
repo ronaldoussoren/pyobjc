@@ -52,19 +52,6 @@ static PyObject* _Nullable decimal_round(PyObject* self, PyObject* _Nullable arg
                                          PyObject* _Nullable kwds);
 static Py_hash_t decimal_hash(PyObject* o);
 
-static PyNumberMethods decimal_asnumber = {
-    .nb_add          = decimal_add,
-    .nb_subtract     = decimal_subtract,
-    .nb_multiply     = decimal_multiply,
-    .nb_power        = decimal_power,
-    .nb_negative     = decimal_negative,
-    .nb_positive     = decimal_positive,
-    .nb_absolute     = decimal_absolute,
-    .nb_bool         = decimal_nonzero,
-    .nb_floor_divide = decimal_floordivide,
-    .nb_true_divide  = decimal_divide,
-};
-
 static NSDecimalNumber*
 Decimal_ObjCValue(PyObject* self)
 {
@@ -84,14 +71,14 @@ static PyObject* _Nullable decimal_get__pyobjc_object__(PyObject* self, void* cl
     return PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
 }
 
-static PyGetSetDef decimal_getseters[] = {{
-                                              .name = "__pyobjc_object__",
-                                              .get = (getter)decimal_get__pyobjc_object__,
-                                              .doc = "NSDecimalNumber instance",
-                                          },
-                                          {
-                                              .name = NULL /* SENTINEL */
-                                          }};
+static PyGetSetDef decimal_getset[] = {{
+                                           .name = "__pyobjc_object__",
+                                           .get  = (getter)decimal_get__pyobjc_object__,
+                                           .doc  = "NSDecimalNumber instance",
+                                       },
+                                       {
+                                           .name = NULL /* SENTINEL */
+                                       }};
 
 static PyMethodDef decimal_methods[] = {{.ml_name  = "as_int",
                                          .ml_meth  = (PyCFunction)decimal_asint,
@@ -114,26 +101,49 @@ decimal_getattro(PyObject* o, PyObject* attr_name)
     return PyObject_GenericGetAttr(o, attr_name);
 }
 
-static PyTypeObject Decimal_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "Foundation.NSDecimal",
-    .tp_basicsize                                  = sizeof(DecimalObject),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = decimal_dealloc,
-    .tp_repr                                       = decimal_repr,
-    .tp_str                                        = decimal_repr,
-    .tp_as_number                                  = &decimal_asnumber,
-    .tp_hash                                       = decimal_hash,
-    .tp_getattro                                   = decimal_getattro,
-    .tp_setattro                                   = PyObject_GenericSetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = "NSDecimal wrapper",
-    .tp_richcompare                                = decimal_richcompare,
-    .tp_methods                                    = decimal_methods,
-    .tp_getset                                     = decimal_getseters,
-    .tp_new                                        = decimal_new,
+static PyObject* Decimal_Type;
+
+PyDoc_STRVAR(decimal_cls_doc, "NSDecimal wrapper");
+
+static PyType_Slot decimal_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&decimal_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&decimal_repr},
+    {.slot = Py_tp_str, .pfunc = (void*)&decimal_repr},
+    {.slot = Py_tp_hash, .pfunc = (void*)&decimal_hash},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&decimal_getattro},
+    {.slot = Py_tp_setattro, .pfunc = (void*)&PyObject_GenericSetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&decimal_cls_doc},
+    {.slot = Py_tp_richcompare, .pfunc = (void*)&decimal_richcompare},
+    {.slot = Py_tp_methods, .pfunc = (void*)&decimal_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&decimal_getset},
+    {.slot = Py_tp_new, .pfunc = (void*)&decimal_new},
+    {.slot = Py_nb_add, .pfunc = (void*)&decimal_add},
+    {.slot = Py_nb_subtract, .pfunc = (void*)&decimal_subtract},
+    {.slot = Py_nb_multiply, .pfunc = (void*)&decimal_multiply},
+    {.slot = Py_nb_power, .pfunc = (void*)&decimal_power},
+    {.slot = Py_nb_negative, .pfunc = (void*)&decimal_negative},
+    {.slot = Py_nb_positive, .pfunc = (void*)&decimal_positive},
+    {.slot = Py_nb_absolute, .pfunc = (void*)&decimal_absolute},
+    {.slot = Py_nb_bool, .pfunc = (void*)&decimal_nonzero},
+    {.slot = Py_nb_floor_divide, .pfunc = (void*)&decimal_floordivide},
+    {.slot = Py_nb_true_divide, .pfunc = (void*)&decimal_divide},
+
+    {0, NULL} /* sentinel */
 };
 
-#define Decimal_Check(obj) PyObject_TypeCheck(obj, &Decimal_Type)
+static PyType_Spec decimal_spec = {
+    .name      = "objc.NSDecimal",
+    .basicsize = sizeof(DecimalObject),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = decimal_slots,
+};
+
+#define Decimal_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)Decimal_Type)
 
 static void
 DecimalFromString(NSDecimal* aDecimal, NSString* aString,
@@ -166,7 +176,7 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
 {
     DecimalObject* self;
 
-    self = PyObject_New(DecimalObject, &Decimal_Type);
+    self = PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
     if (self == NULL) {          // LCOV_BR_EXCL_LINE
         return PyErr_NoMemory(); // LCOV_EXCL_LINE
     }
@@ -629,7 +639,7 @@ decimal_coerce(PyObject** l, PyObject** r)
         if (PyBytes_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l))
             goto error;
 
-        left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
+        left = (PyObject*)PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
         if (left == NULL) // LCOV_BR_EXCL_LINE
             goto error;   // LCOV_EXCL_LINE
 
@@ -650,7 +660,7 @@ decimal_coerce(PyObject** l, PyObject** r)
         if (PyBytes_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r))
             goto error;
 
-        right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
+        right = (PyObject*)PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
         if (right == NULL) // LCOV_BR_EXCL_LINE
             goto error;    // LCOV_EXCL_LINE
 
@@ -738,7 +748,7 @@ Decimal_New(const NSDecimal* aDecimal)
 {
     DecimalObject* result;
 
-    result = PyObject_New(DecimalObject, &Decimal_Type);
+    result = PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -1048,25 +1058,21 @@ mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* me
 int
 PyObjC_setup_nsdecimal(PyObject* m)
 {
-    PyType_Ready(&Decimal_Type);
-
-    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    Decimal_Type = PyType_FromSpec(&decimal_spec);
+    if (Decimal_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;              // LCOV_EXCL_LINE
     }
+
+    if (PyModule_AddObject(m, "NSDecimal", Decimal_Type) == -1) { // LCOV_BR_EXCL_LINE
+        return -1;                                                // LCOV_EXCL_LINE
+    }
+    Py_INCREF(Decimal_Type);
 
     if (@encode(NSDecimal)[1] == '?') {
         Decimal_Encoding[0] = '{';
         strcpy(Decimal_Encoding + 1, "_NSDecimal");
         strcpy(Decimal_Encoding + 11, @encode(NSDecimal) + 2);
         Decimal_Encoding_Len = strlen(Decimal_Encoding);
-    }
-
-    PyType_Ready(&Decimal_Type);
-
-    if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
     }
 
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");

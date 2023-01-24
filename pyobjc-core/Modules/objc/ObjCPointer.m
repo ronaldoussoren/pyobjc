@@ -31,41 +31,68 @@ void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
     return ((PyObjCPointer*)(obj))->ptr;
 }
 
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable ptr_new(PyObject* self __attribute__((__unused__)),
+                                   PyObject* args __attribute__((__unused__)),
+                                   PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.PyObjCPointer' instances");
+    return NULL;
+}
+#endif
+
 static void
-PyObjCPointer_dealloc(PyObject* _self)
+ptr_dealloc(PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
     Py_XDECREF(self->typestr);
     PyObject_Free((PyObject*)self);
 }
 
-static PyMemberDef PyObjCPointer_members[] = {
-    {
-        .name   = "typestr",
-        .type   = T_OBJECT,
-        .offset = offsetof(PyObjCPointer, typestr),
-        .flags  = READONLY,
-    },
-    {
-        .name   = "pointerAsInteger",
-        .type   = T_LONG,
-        .offset = offsetof(PyObjCPointer, ptr),
-        .flags  = READONLY,
-    },
-    {
-        .name = NULL /* SENTINEL */
-    }};
+static PyMemberDef ptr_members[] = {{
+                                        .name   = "typestr",
+                                        .type   = T_OBJECT,
+                                        .offset = offsetof(PyObjCPointer, typestr),
+                                        .flags  = READONLY,
+                                    },
+                                    {
+                                        .name   = "pointerAsInteger",
+                                        .type   = T_LONG,
+                                        .offset = offsetof(PyObjCPointer, ptr),
+                                        .flags  = READONLY,
+                                    },
+                                    {
+                                        .name = NULL /* SENTINEL */
+                                    }};
 
-PyTypeObject PyObjCPointer_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "PyObjCPointer",
-    .tp_basicsize                                  = sizeof(PyObjCPointer),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = PyObjCPointer_dealloc,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc     = "Wrapper around a Objective-C Pointer",
-    .tp_members = PyObjCPointer_members,
+PyDoc_STRVAR(ptr_doc, "Wrapper around a Objective-C Pointer");
+
+static PyType_Slot ptr_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&ptr_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_members, .pfunc = (void*)&ptr_members},
+    {.slot = Py_tp_doc, .pfunc = (void*)&ptr_doc},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&ptr_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec ptr_spec = {
+    .name      = "objc.PyObjCPointer",
+    .basicsize = sizeof(PyObjCPointer),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = ptr_slots,
+};
+
+PyObject* PyObjCPointer_Type = (PyObject* _Nonnull)NULL;
 
 PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
 {
@@ -94,7 +121,7 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
         return NULL;
     }
 
-    self = PyObject_NEW(PyObjCPointer, &PyObjCPointer_Type);
+    self = PyObject_NEW(PyObjCPointer, (PyTypeObject*)PyObjCPointer_Type);
     if (self == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
     }
@@ -108,6 +135,23 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     }
 
     return (PyObject*)self;
+}
+
+int
+PyObjCPointer_Setup(PyObject* module)
+{
+    PyObject* tmp = PyType_FromSpec(&ptr_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCPointer_Type = tmp;
+
+    if (PyModule_AddObject(module, "ObjCPointer", PyObjCPointer_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCPointer_Type);
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

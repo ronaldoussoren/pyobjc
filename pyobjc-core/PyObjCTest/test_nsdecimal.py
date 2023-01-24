@@ -2,8 +2,10 @@
 Tests for the NSDecimal wrapper type
 """
 import decimal
+import warnings
 
 import objc
+from objc import super
 from PyObjCTest.decimal import OC_TestDecimal
 from PyObjCTools.TestSupport import TestCase, expectedFailure
 
@@ -145,11 +147,11 @@ class TestNSDecimalWrapper(TestCase):
         self.assertEqual(d2.as_float(), 25.0)
 
         with self.assertRaisesRegex(
-            TypeError, r"int\(\) argument must .*, not 'Foundation.NSDecimal'"
+            TypeError, r"int\(\) argument must .*, not 'objc.NSDecimal'"
         ):
             int(d1)
         with self.assertRaisesRegex(
-            TypeError, r"float\(\) argument must be .*, not 'Foundation.NSDecimal'"
+            TypeError, r"float\(\) argument must be .*, not 'objc.NSDecimal'"
         ):
             float(d1)
 
@@ -228,43 +230,43 @@ class TestNSDecimalWrapper(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for \+: 'Foundation.NSDecimal' and 'float'",
+            r"unsupported operand type\(s\) for \+: 'objc.NSDecimal' and 'float'",
         ):
             d1 + 0.5
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for -: 'Foundation.NSDecimal' and 'float'",
+            r"unsupported operand type\(s\) for -: 'objc.NSDecimal' and 'float'",
         ):
             d1 - 0.5
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for \*: 'Foundation.NSDecimal' and 'float'",
+            r"unsupported operand type\(s\) for \*: 'objc.NSDecimal' and 'float'",
         ):
             d1 * 0.5
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for /: 'Foundation.NSDecimal' and 'float'",
+            r"unsupported operand type\(s\) for /: 'objc.NSDecimal' and 'float'",
         ):
             d1 / 0.5
 
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for \+: 'float' and 'Foundation.NSDecimal'",
+            r"unsupported operand type\(s\) for \+: 'float' and 'objc.NSDecimal'",
         ):
             0.5 + d1
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for -: 'float' and 'Foundation.NSDecimal'",
+            r"unsupported operand type\(s\) for -: 'float' and 'objc.NSDecimal'",
         ):
             0.5 - d1
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for \*: 'float' and 'Foundation.NSDecimal'",
+            r"unsupported operand type\(s\) for \*: 'float' and 'objc.NSDecimal'",
         ):
             0.5 * d1
         with self.assertRaisesRegex(
             TypeError,
-            r"unsupported operand type\(s\) for /: 'float' and 'Foundation.NSDecimal'",
+            r"unsupported operand type\(s\) for /: 'float' and 'objc.NSDecimal'",
         ):
             0.5 / d1
 
@@ -318,13 +320,16 @@ class TestUsingNSDecimalNumber(TestCase):
         ):
             cls.decimalNumberWithDecimal_("42.5")
 
-        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
-            cls.alloc().initWithDecimal_(d, 1)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.UninitializedDeallocWarning)
 
-        with self.assertRaisesRegex(
-            TypeError, "Expecting an NSDecimal, got instance of 'str'"
-        ):
-            cls.alloc().initWithDecimal_("42.5")
+            with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+                cls.alloc().initWithDecimal_(d, 1)
+
+            with self.assertRaisesRegex(
+                TypeError, "Expecting an NSDecimal, got instance of 'str'"
+            ):
+                cls.alloc().initWithDecimal_("42.5")
 
     @expectedFailure
     def test_subclassing(self):
@@ -340,10 +345,11 @@ class TestUsingNSDecimalNumber(TestCase):
             def decimalValue(self):
                 return super().decimalValue() + 1
 
-        o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
-        print(type(o))
-        v = objc.NSDecimal(o)
-        print(v)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.UninitializedDeallocWarning)
+            o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
+            v = objc.NSDecimal(o)
+            print(v)
 
 
 class TestDecimalByReference(TestCase):

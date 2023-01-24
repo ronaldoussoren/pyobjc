@@ -6,6 +6,10 @@ NS_ASSUME_NONNULL_BEGIN
  * that implements a usable API.
  */
 
+static PyObject* FILE_Type;
+
+#define FILE_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)FILE_Type)
+
 struct file_object {
     PyObject_HEAD
 
@@ -286,16 +290,28 @@ static PyMethodDef file_methods[] = {{.ml_name  = "readline",
 
                                      {.ml_name = NULL, /* Sentinel */}};
 
-PyTypeObject FILE_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FILE",
-    .tp_basicsize                                  = sizeof(struct file_object),
-    .tp_itemsize                                   = 0,
-    .tp_new                                        = file_new,
-    .tp_dealloc                                    = file_dealloc,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = "Wrapper around a FILE* object",
-    .tp_methods                                    = file_methods,
+PyDoc_STRVAR(file_doc, "Wrapper around a FILE* object");
+
+static PyType_Slot file_slots[] = {
+    {.slot = Py_tp_new, .pfunc = (void*)&file_new},
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&file_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&file_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&file_methods},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec file_spec = {
+    .name      = "objc.FILE",
+    .basicsize = sizeof(struct file_object),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = file_slots,
 };
 
 PyObject*
@@ -305,7 +321,7 @@ FILE_create(FILE* fp)
 
     PyObjC_Assert(fp != NULL, NULL);
 
-    self     = PyObject_NEW(struct file_object, &FILE_Type);
+    self     = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
     self->fp = fp;
     return (PyObject*)self;
 }
@@ -319,6 +335,22 @@ FILE* _Nullable FILE_get(PyObject* fp)
     }
 
     return ((struct file_object*)fp)->fp;
+}
+
+int
+FILE_Setup(PyObject* module)
+{
+    FILE_Type = PyType_FromSpec(&file_spec);
+    if (FILE_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;           // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(module, "FILE", FILE_Type) == -1) { // LCOV_BR_EXCL_LINE
+        return -1;                                             // LCOV_EXCL_LINE
+    }
+    Py_INCREF(FILE_Type);
+
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

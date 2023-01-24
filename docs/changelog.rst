@@ -363,6 +363,27 @@ improvements as described below).
   attributes on Python 3.9 or earlier. Do not do this, the type is immutable
   in Python 3.10 or later.
 
+* :issue:`527`: A number of types are now created with ``PyType_FromSpec``:
+
+  * ``objc.PyObjCPointer``
+
+  * ``objc.FILE``
+
+  * ``objc.formal_protocol``
+
+  * ``objc.function``
+
+  * ``objc.NSDecimal``
+
+  For these types the class can be changed in Python 3.9 earlier, but not
+  in 3.10 or later. The ability to change class attributes in Python 3.9 and earlier
+  is due to a limitation in ``PyType_FromSpec`` in those versions, don't rely on this.
+
+  This is a small step towards supporting subinterpreters, although it is unclear at
+  this time when PyObjC will support this in part due to CPython missing some API
+  functionality required by the implementation of ``objc.objc_object`` and ``objc.objc_class``
+  when using ``PyType_FromSpec``.
+
 * :issue:`423`: ``objc.ivar`` is now created with ``PyType_FromSpec``. Because of
   that the private method ``objc.ivar._add_attribute`` has been removed.
 

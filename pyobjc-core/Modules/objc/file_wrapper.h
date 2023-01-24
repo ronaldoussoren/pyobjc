@@ -3,15 +3,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* A basic wrapper for C's "FILE*"
- * that implements a usable API.
- */
-extern PyTypeObject FILE_Type;
-
-#define FILE_Check(obj) PyObject_TypeCheck(obj, &FILE_Type)
-
 extern PyObject* _Nullable FILE_create(FILE* fp);
 extern FILE* _Nullable FILE_get(PyObject* fp);
+
+extern int FILE_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

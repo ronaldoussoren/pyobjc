@@ -2241,12 +2241,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                     // LCOV_EXCL_LINE
     }
 
-    if (PyType_Ready(&PyObjCFunc_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                          // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCPointer_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                             // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&PyObjCMetaClass_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                               // LCOV_EXCL_LINE
     }
@@ -2266,9 +2260,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                                    // LCOV_EXCL_LINE
     }
 
-    if (PyType_Ready(&PyObjCFormalProtocol_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                    // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&PyObjCUnicode_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                             // LCOV_EXCL_LINE
     }
@@ -2290,10 +2281,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     }
-    if (PyType_Ready(&FILE_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                    // LCOV_EXCL_LINE
-    }
-
 #ifndef Py_HAVE_LOCAL_LOOKUP
     PyObjCSuper_Type.tp_doc      = PySuper_Type.tp_doc;
     PyObjCSuper_Type.tp_init     = PySuper_Type.tp_init;
@@ -2338,20 +2325,24 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyObjC_setup_nsdecimal(m) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                     // LCOV_EXCL_LINE
     }
+    if (PyObjCPointer_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
+    }
+    if (FILE_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
+    }
+    if (PyObjCFormalProtocol_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                         // LCOV_EXCL_LINE
+    }
+    if (PyObjCFunc_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
+    }
 
     d = PyModule_GetDict(m);
     if (d == 0) {    // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE
     }
 
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "ObjCPointer", (PyObject*)&PyObjCPointer_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString(d, "FILE", (PyObject*)&FILE_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                                  // LCOV_EXCL_LINE
-    }
     if ( // LCOV_BR_EXCL_LINE
         PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type)
         < 0) {
@@ -2387,18 +2378,8 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }
-    if (PyDict_SetItemString(d, "formal_protocol", // LCOV_BR_EXCL_LINE
-                             (PyObject*)&PyObjCFormalProtocol_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "varlist", (PyObject*)&PyObjC_VarList_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "function", (PyObject*)&PyObjCFunc_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }
@@ -2447,6 +2428,9 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
     if (PyObjCInstanceVariable_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
         return NULL;                             // LCOV_EXCL_LINE
+    }
+    if (PyObjCMemView_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     if (PyObjCUtil_Init(m) < 0) { // LCOV_BR_EXCL_LINE

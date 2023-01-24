@@ -18,6 +18,8 @@ typedef struct {
     Protocol* objc;
 } PyObjCFormalProtocol;
 
+PyObject* PyObjCFormalProtocol_Type;
+
 static void
 proto_dealloc(PyObject* object)
 {
@@ -195,8 +197,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 #endif
 
-    result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
-                                                 &PyObjCFormalProtocol_Type);
+    result = (PyObjCFormalProtocol*)PyObject_New(
+        PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
     Py_DECREF(selectors);
     Py_DECREF(supers);
 
@@ -245,7 +247,7 @@ static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullab
     PyObject*             protocol;
     Protocol*             objc_protocol;
 
-    if (!PyArg_ParseTuple(args, "O!", &PyObjCFormalProtocol_Type, &protocol)) {
+    if (!PyArg_ParseTuple(args, "O!", PyObjCFormalProtocol_Type, &protocol)) {
         return NULL;
     }
 
@@ -454,18 +456,27 @@ static PyGetSetDef proto_getset[] = {{
                                          .name = NULL /* SENTINEL */
                                      }};
 
-PyTypeObject PyObjCFormalProtocol_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.formal_protocol",
-    .tp_basicsize                                  = sizeof(PyObjCFormalProtocol),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = proto_dealloc,
-    .tp_repr                                       = proto_repr,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = proto_cls_doc,
-    .tp_methods                                    = proto_methods,
-    .tp_getset                                     = proto_getset,
-    .tp_new                                        = proto_new,
+static PyType_Slot proto_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&proto_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&proto_repr},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&proto_cls_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&proto_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&proto_getset},
+    {.slot = Py_tp_new, .pfunc = (void*)&proto_new},
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec proto_spec = {
+    .name      = "objc.formal_protocol",
+    .basicsize = sizeof(PyObjCFormalProtocol),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = proto_slots,
 };
 
 PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
@@ -474,8 +485,8 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 
     PyObjC_Assert(protocol != NULL, NULL);
 
-    result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
-                                                 &PyObjCFormalProtocol_Type);
+    result = (PyObjCFormalProtocol*)PyObject_New(
+        PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -492,6 +503,23 @@ Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)
     PyObjC_Assert(PyObjCFormalProtocol_Check(self), NULL);
 
     return self->objc;
+}
+
+int
+PyObjCFormalProtocol_Setup(PyObject* module)
+{
+    PyObjCFormalProtocol_Type = PyType_FromSpec(&proto_spec);
+    if (PyObjCFormalProtocol_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                           // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(module, "formal_protocol", PyObjCFormalProtocol_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCFormalProtocol_Type);
+
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

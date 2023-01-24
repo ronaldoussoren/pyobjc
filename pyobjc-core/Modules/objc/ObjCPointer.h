@@ -10,14 +10,16 @@ NS_ASSUME_NONNULL_BEGIN
  * that contains pointers.
  */
 
-extern PyTypeObject PyObjCPointer_Type;
-#define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)
+extern PyObject* PyObjCPointer_Type;
+#define PyObjCPointer_Check(o) (Py_TYPE(o) == (PyTypeObject*)PyObjCPointer_Type)
 
 extern PyObject* _Nullable PyObjCPointer_New(void* ptr, const char* type)
     __attribute__((__warn_unused_result__));
 
 /* XXX: Nullable because of type checking */
 extern void* _Nullable PyObjCPointer_Ptr(PyObject* object);
+
+extern int PyObjCPointer_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 
