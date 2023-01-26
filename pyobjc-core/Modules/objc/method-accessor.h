@@ -3,8 +3,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern PyTypeObject PyObjCMethodAccessor_Type;
 extern PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method);
+extern int PyObjCMethodAccessor_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

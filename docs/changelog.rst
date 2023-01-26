@@ -375,6 +375,10 @@ improvements as described below).
 
   * ``objc.NSDecimal``
 
+  * ``objc.varlist``
+
+  * ``objc.WeakRef``
+
   For these types the class can be changed in Python 3.9 earlier, but not
   in 3.10 or later. The ability to change class attributes in Python 3.9 and earlier
   is due to a limitation in ``PyType_FromSpec`` in those versions, don't rely on this.

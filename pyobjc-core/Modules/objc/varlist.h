@@ -17,9 +17,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern PyTypeObject PyObjC_VarList_Type;
+extern PyObject* _Nullable PyObjCVarList_New(const char* tp, void* array);
 
-extern PyObject* _Nullable PyObjC_VarList_New(const char* tp, void* array);
+extern int PyObjCVarList_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

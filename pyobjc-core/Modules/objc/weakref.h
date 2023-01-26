@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern PyTypeObject PyObjCWeakRef_Type;
+extern int PyObjCWeakRef_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

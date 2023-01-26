@@ -30,6 +30,8 @@ typedef struct {
 #endif
 } PyObjC_WeakRef;
 
+static PyObject* PyObjCWeakRef_Type;
+
 static void
 weakref_dealloc(PyObject* object)
 {
@@ -101,7 +103,8 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
         return NULL;
     }
 
-    result = (PyObjC_WeakRef*)PyObject_New(PyObjC_WeakRef, &PyObjCWeakRef_Type);
+    result =
+        (PyObjC_WeakRef*)PyObject_New(PyObjC_WeakRef, (PyTypeObject*)PyObjCWeakRef_Type);
     if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         return NULL;                // LCOV_EXCL_LINE
     }
@@ -115,22 +118,64 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
     return (PyObject*)result;
 }
 
-PyTypeObject PyObjCWeakRef_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.WeakRef",
-    .tp_basicsize                                  = sizeof(PyObjC_WeakRef),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = weakref_dealloc,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset = offsetof(PyObjC_WeakRef, vectorcall),
-    .tp_call              = PyVectorcall_Call,
-#else
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_call  = weakref_call,
+static PyMemberDef weakref_members[] = {
+    {
+        .name   = "__vectorcalloffset__",
+        .type   = T_PYSSIZET,
+        .offset = offsetof(PyObjC_WeakRef, vectorcall),
+        .flags  = READONLY,
+    },
+    {
+        .name = NULL /* SENTINEL */
+    }};
 #endif
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_doc      = weakref_cls_doc,
-    .tp_new      = weakref_new,
+
+static PyType_Slot weakref_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&weakref_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&weakref_cls_doc},
+    {.slot = Py_tp_new, .pfunc = (void*)&weakref_new},
+#if PY_VERSION_HEX >= 0x03090000
+    {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+    {.slot = Py_tp_members, .pfunc = (void*)&weakref_members},
+#else
+    {.slot = Py_tp_call, .pfunc = (void*)&weakref_call},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec weakref_spec = {
+    .name      = "objc.WeakRef",
+    .basicsize = sizeof(PyObjC_WeakRef),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_HAVE_VECTORCALL,
+#elif PY_VERSION_HEX >= 0x03090000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = weakref_slots,
+};
+
+int
+PyObjCWeakRef_Setup(PyObject* module)
+{
+    PyObjCWeakRef_Type = PyType_FromSpec(&weakref_spec);
+    if (PyObjCWeakRef_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                    // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(module, "WeakRef", PyObjCWeakRef_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCWeakRef_Type);
+
+    return 0;
+}
 
 NS_ASSUME_NONNULL_END

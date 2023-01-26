@@ -58,7 +58,7 @@ class TestNULL(TestCase):
         self.assertHasAttr(objc, "NULL")
         self.assertEqual(repr(objc.NULL), "objc.NULL")
         with self.assertRaisesRegex(
-            TypeError, "cannot create 'objc.NULL_type' instances"
+            TypeError, "cannot create 'objc._NULL_type' instances"
         ):
             type(objc.NULL)()
 

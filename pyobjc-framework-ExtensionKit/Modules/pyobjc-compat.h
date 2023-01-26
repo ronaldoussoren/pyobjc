@@ -37,6 +37,15 @@ NS_ASSUME_NONNULL_BEGIN
 #define instancetype id
 #endif
 
+#ifdef __has_attribute
+#if __has_attribute(objc_subclassing_restricted)
+#define PyObjC_FINAL_CLASS __attribute__((__objc_subclassing_restricted__))
+#endif
+#endif
+#ifndef PyObjC_FINAL_CLASS
+#define PyObjC_FINAL_CLASS
+#endif
+
 /*
  *
  * Start of Cocoa definitions

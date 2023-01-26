@@ -8,6 +8,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable methacc_new(PyObject* self __attribute__((__unused__)),
+                                       PyObject* args __attribute__((__unused__)),
+                                       PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._method_access' instances");
+    return NULL;
+}
+#endif
+
 static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                                          int class_method)
 {
@@ -291,12 +301,12 @@ typedef struct {
     PyObject_HEAD
     PyObject* base;
     int       class_method;
-} ObjCMethodAccessor;
+} PyObjCMethodAccessor;
 
 static void
-obj_dealloc(PyObject* _self)
+methacc_dealloc(PyObject* _self)
 {
-    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
+    PyObjCMethodAccessor* self = (PyObjCMethodAccessor*)_self;
 
     PyObject_GC_UnTrack(_self);
 
@@ -314,17 +324,17 @@ obj_dealloc(PyObject* _self)
 }
 
 static int
-obj_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
+methacc_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
 {
-    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
+    PyObjCMethodAccessor* self = (PyObjCMethodAccessor*)_self;
     Py_VISIT(self->base);
     return 0;
 }
 
 static int
-obj_clear(PyObject* _self)
+methacc_clear(PyObject* _self)
 {
-    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
+    PyObjCMethodAccessor* self = (PyObjCMethodAccessor*)_self;
 
     /* Maintain the invariant that 'base' is not NULL */
     PyObject* tmp = self->base;
@@ -335,10 +345,10 @@ obj_clear(PyObject* _self)
     return 0;
 }
 
-static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
+static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 {
-    ObjCMethodAccessor* self   = (ObjCMethodAccessor*)_self;
-    PyObject*           result = NULL;
+    PyObjCMethodAccessor* self   = (PyObjCMethodAccessor*)_self;
+    PyObject*             result = NULL;
 
     PyObjC_Assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base), NULL);
 
@@ -491,10 +501,10 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
     }
 }
 
-static PyObject* _Nullable obj_repr(PyObject* _self)
+static PyObject* _Nullable methacc_repr(PyObject* _self)
 {
-    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-    PyObject*           rval;
+    PyObjCMethodAccessor* self = (PyObjCMethodAccessor*)_self;
+    PyObject*             rval;
 
     rval = PyUnicode_FromFormat("<%s method-accessor for %R>",
                                 self->class_method ? "class" : "instance", self->base);
@@ -502,10 +512,10 @@ static PyObject* _Nullable obj_repr(PyObject* _self)
     return rval;
 }
 
-static PyObject* _Nullable obj_dir(PyObject* self)
+static PyObject* _Nullable methacc_dir(PyObject* self)
 {
-    PyObject* dict = make_dict(((ObjCMethodAccessor*)self)->base,
-                               ((ObjCMethodAccessor*)self)->class_method);
+    PyObject* dict = make_dict(((PyObjCMethodAccessor*)self)->base,
+                               ((PyObjCMethodAccessor*)self)->class_method);
     PyObject* result;
 
     if (dict == NULL) { // LCOV_BR_EXCL_LINE
@@ -518,37 +528,54 @@ static PyObject* _Nullable obj_dir(PyObject* self)
     return result;
 }
 
-static PyMethodDef obj_methods[] = {{
-                                        .ml_name  = "__dir__",
-                                        .ml_meth  = (PyCFunction)obj_dir,
-                                        .ml_flags = METH_NOARGS,
-                                    },
-                                    {
-                                        .ml_name = NULL /* SENTINEL */
-                                    }};
+static PyMethodDef methacc_methods[] = {{
+                                            .ml_name  = "__dir__",
+                                            .ml_meth  = (PyCFunction)methacc_dir,
+                                            .ml_flags = METH_NOARGS,
+                                        },
+                                        {
+                                            .ml_name = NULL /* SENTINEL */
+                                        }};
 
-PyTypeObject PyObjCMethodAccessor_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.method_acces",
-    .tp_basicsize                                  = sizeof(ObjCMethodAccessor),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = obj_dealloc,
-    .tp_clear                                      = obj_clear,
-    .tp_traverse                                   = obj_traverse,
-    .tp_repr                                       = obj_repr,
-    .tp_getattro                                   = obj_getattro,
-    .tp_flags   = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
-    .tp_methods = obj_methods,
+static PyType_Slot methacc_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&methacc_dealloc},
+    {.slot = Py_tp_clear, .pfunc = (void*)&methacc_clear},
+    {.slot = Py_tp_traverse, .pfunc = (void*)&methacc_traverse},
+    {.slot = Py_tp_repr, .pfunc = (void*)&methacc_repr},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&methacc_getattro},
+    {.slot = Py_tp_methods, .pfunc = (void*)&methacc_methods},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&methacc_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec methacc_spec = {
+    .name      = "objc._method_access",
+    .basicsize = sizeof(PyObjCMethodAccessor),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_GC,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_GC,
+#endif
+    .slots = methacc_slots,
+};
+
+static PyObject* PyObjCMethodAccessor_Type;
 
 PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
-    ObjCMethodAccessor* result;
+    PyObjCMethodAccessor* result;
     PyObjC_Assert(PyObjCObject_Check(base) || PyObjCClass_Check(base), NULL);
     if (class_method) {
         PyObjC_Assert(PyObjCClass_Check(base), NULL);
     }
 
-    result = PyObject_GC_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
+    result =
+        PyObject_GC_New(PyObjCMethodAccessor, (PyTypeObject*)PyObjCMethodAccessor_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -559,6 +586,17 @@ PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
     PyObject_GC_Track((PyObject*)result);
 
     return (PyObject*)result;
+}
+
+int
+PyObjCMethodAccessor_Setup(PyObject* module __attribute__((__unused__)))
+{
+    PyObject* tmp = PyType_FromSpec(&methacc_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCMethodAccessor_Type = tmp;
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

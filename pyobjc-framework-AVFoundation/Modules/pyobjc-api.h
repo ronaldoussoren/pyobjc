@@ -145,7 +145,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjCObject_ReleaseTransient (PyObjC_API->releasetransient)
 #define PyObjC_NULL (*(PyObjC_API->pyobjc_null))
 #define PyObjC_DepythonifyCArray (PyObjC_API->dep_c_array_count)
-#define PyObjC_VarList_New (PyObjC_API->varlistnew)
+#define PyObjCVarList_New (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
 #define PyObjCPointerWrapper_RegisterID (PyObjC_API->register_id_alias)
 #define PyObjCMemView_Check (PyObjC_API->memview_check)

@@ -15,7 +15,7 @@ import objc
 class TestVarlistVarious(TestCase):
     def test_cannot_create(self):
         with self.assertRaisesRegex(
-            TypeError, "Cannot create instances of 'objc.varlist'"
+            TypeError, "cannot create 'objc.varlist' instances"
         ):
             objc.varlist()
 

@@ -8,7 +8,9 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestOptionVarious(TestCase):
     def test_option_creation(self):
-        with self.assertRaisesRegex(TypeError, "Cannot create instances of this type"):
+        with self.assertRaisesRegex(
+            TypeError, "cannot create 'objc._OptionsType' instances"
+        ):
             type(objc.options)()
 
         with self.assertRaisesRegex(TypeError, "Cannot call this method"):

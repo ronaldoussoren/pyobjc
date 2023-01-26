@@ -19,7 +19,7 @@ static PyObject* _Nullable null_new(PyObject* self __attribute__((__unused__)),
                                     PyObject* args __attribute__((__unused__)),
                                     PyObject* kwds __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.NULL_type' instances");
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._NULL_type' instances");
     return NULL;
 }
 #endif
@@ -34,7 +34,7 @@ static PyType_Slot null_slots[] = {
 };
 
 static PyType_Spec null_spec = {
-    .name      = "objc.NULL_type",
+    .name      = "objc._NULL_type",
     .basicsize = sizeof(PyObject),
     .itemsize  = 0,
 #if PY_VERSION_HEX >= 0x030a0000

@@ -102,7 +102,7 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 
     PyObject* py_element =
         PyObject_CallFunction(gCGPathElement, "lN", element->type,
-                              PyObjC_VarList_New(@encode(CGPoint), element->points));
+                              PyObjCVarList_New(@encode(CGPoint), element->points));
     if (element == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }

@@ -20,6 +20,8 @@ struct options {
     PyObject_HEAD;
 };
 
+static PyObject* PyObjCOptions_Type;
+
 #define _STR(v) #v
 #define STR(v) _STR(v)
 
@@ -169,7 +171,7 @@ bundle_hack_get(PyObject* s __attribute__((__unused__)),
     return PyBool_FromLong([OC_NSBundleHack bundleHackUsed]);
 }
 
-static PyGetSetDef object_getset[] = {
+static PyGetSetDef options_getset[] = {
     /* Public properties */
     GETSET(verbose, "If True the bridge is more verbose"),
     GETSET(use_kvo, "The default value for __useKVO__ for new classes"),
@@ -217,58 +219,75 @@ static PyGetSetDef object_getset[] = {
     {0, 0, 0, 0, 0} /* Sentinel */
 };
 
-static PyObject* _Nullable object_new(PyTypeObject* tp __attribute__((__unused__)),
-                                      PyObject* _Nullable args
-                                      __attribute__((__unused__)),
-                                      PyObject* _Nullable kwds
-                                      __attribute__((__unused__)))
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable options_new(PyTypeObject* tp __attribute__((__unused__)),
+                                       PyObject* _Nullable args
+                                       __attribute__((__unused__)),
+                                       PyObject* _Nullable kwds
+                                       __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_TypeError, "Cannot create instances of this type");
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._OptionsType' instances");
     return NULL;
 }
+#endif
 
-static PyObject* _Nullable object_dont_call(PyObject* self __attribute__((__unused__)),
-                                            PyObject* _Nullable args
-                                            __attribute__((__unused__)),
-                                            PyObject* _Nullable kwds
-                                            __attribute__((__unused__)))
+static PyObject* _Nullable options_dont_call(PyObject* self __attribute__((__unused__)),
+                                             PyObject* _Nullable args
+                                             __attribute__((__unused__)),
+                                             PyObject* _Nullable kwds
+                                             __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError, "Cannot call this method");
     return NULL;
 }
 
-static PyMethodDef object_methods[] = {{
-                                           .ml_name  = "__copy__",
-                                           .ml_meth  = (PyCFunction)object_dont_call,
-                                           .ml_flags = METH_VARARGS | METH_KEYWORDS,
-                                       },
-                                       {
-                                           .ml_name  = "__reduce__",
-                                           .ml_meth  = (PyCFunction)object_dont_call,
-                                           .ml_flags = METH_VARARGS | METH_KEYWORDS,
-                                       },
-                                       {
-                                           .ml_name = NULL /* SENTINEL */
-                                       }};
+static PyMethodDef options_methods[] = {{
+                                            .ml_name  = "__copy__",
+                                            .ml_meth  = (PyCFunction)options_dont_call,
+                                            .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                        },
+                                        {
+                                            .ml_name  = "__reduce__",
+                                            .ml_meth  = (PyCFunction)options_dont_call,
+                                            .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                        },
+                                        {
+                                            .ml_name = NULL /* SENTINEL */
+                                        }};
 
-static PyTypeObject PyObjCOptions_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc._OptionsType",
-    .tp_basicsize                                  = sizeof(struct options),
-    .tp_itemsize                                   = 0,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_methods                                    = object_methods,
-    .tp_getset                                     = object_getset,
-    .tp_new                                        = object_new,
+static PyType_Slot options_slots[] = {
+    {.slot = Py_tp_methods, .pfunc = (void*)&options_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&options_getset},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&options_new},
+#endif
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec options_spec = {
+    .name      = "objc._OptionsType",
+    .basicsize = sizeof(struct options),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = options_slots,
 };
 
 int
 PyObjC_SetupOptions(PyObject* m)
 {
-    if (PyType_Ready(&PyObjCOptions_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                               // LCOV_EXCL_LINE
+    PyObjCOptions_Type = PyType_FromSpec(&options_spec);
+    if (PyObjCOptions_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                    // LCOV_EXCL_LINE
     }
 
-    PyObject* o = (PyObject*)PyObject_New(struct object, &PyObjCOptions_Type);
+    PyObject* o =
+        (PyObject*)PyObject_New(struct object, (PyTypeObject*)PyObjCOptions_Type);
     if (o == NULL) { // LCOV_BR_EXCL_LINE
         return -1;   // LCOV_EXCL_LINE
     }

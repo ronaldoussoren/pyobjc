@@ -1283,7 +1283,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         break;
 
                     case PyObjC_kVariableLengthArray:
-                        v = PyObjC_VarList_New(resttype, *(void**)args[i]);
+                        v = PyObjCVarList_New(resttype, *(void**)args[i]);
                         break;
                     }
                 }
@@ -1354,7 +1354,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     break;
 
                 case PyObjC_kVariableLengthArray:
-                    v = PyObjC_VarList_New(gCharEncoding, args[i]);
+                    v = PyObjCVarList_New(gCharEncoding, args[i]);
                     break;
                 }
             }
@@ -3686,7 +3686,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                         objc_result = PyObjC_NULL;
 
                     } else {
-                        objc_result = PyObjC_VarList_New(resttype, *(void**)pRetval);
+                        objc_result = PyObjCVarList_New(resttype, *(void**)pRetval);
                     }
                     break;
 
@@ -3946,7 +3946,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                     goto error_cleanup;
 
                             } else {
-                                v = PyObjC_VarList_New(methinfo->rettype->type, pRetval);
+                                v = PyObjCVarList_New(methinfo->rettype->type, pRetval);
                                 if (!v)
                                     goto error_cleanup;
                             }
