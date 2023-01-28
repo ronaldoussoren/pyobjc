@@ -5,10 +5,10 @@
  * basically a buffer with extra attributes.
  */
 
-static PyTypeObject audio_channel_layout_type; /* Forward definition */
+static PyObject* audio_channel_layout_type;
 
 #define audio_channel_layout_check(obj)                                                  \
-    PyObject_TypeCheck(obj, &audio_channel_layout_type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)audio_channel_layout_type)
 
 struct audio_channel_layout {
     PyObject_HEAD
@@ -140,11 +140,6 @@ avl_get_item(PyObject* _self, Py_ssize_t idx)
     return result;
 }
 
-static PySequenceMethods avl_as_sequence = {
-    .sq_length = avl_length,
-    .sq_item   = avl_get_item,
-};
-
 static PyObject*
 avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
@@ -157,7 +152,8 @@ avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result = PyObject_New(struct audio_channel_layout, &audio_channel_layout_type);
+    result = PyObject_New(struct audio_channel_layout,
+                          (PyTypeObject*)audio_channel_layout_type);
     if (result == NULL) {
         return NULL;
     }
@@ -203,18 +199,25 @@ avl_dealloc(PyObject* object)
 PyDoc_STRVAR(avl_doc, "AudioChannelLayout(num_channels)\n" CLINIC_SEP
                       "Return an audiobuffer list.");
 
-static PyTypeObject audio_channel_layout_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioChannelLayout",
-    .tp_basicsize                                  = sizeof(struct audio_channel_layout),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = avl_dealloc,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = avl_doc,
-    .tp_members                                    = avl_members,
-    .tp_getset                                     = avl_getset,
-    .tp_new                                        = avl_new,
-    .tp_as_sequence                                = &avl_as_sequence,
+static PyType_Slot avl_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&avl_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&avl_doc},
+    {.slot = Py_tp_getset, .pfunc = (void*)&avl_getset},
+    {.slot = Py_tp_members, .pfunc = (void*)&avl_members},
+    {.slot = Py_tp_new, .pfunc = (void*)&avl_new},
+    {.slot = Py_sq_length, .pfunc = (void*)&avl_length},
+    {.slot = Py_sq_item, .pfunc = (void*)&avl_get_item},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec avl_spec = {
+    .name      = "CoreAudio.AudioChannelLayout",
+    .basicsize = sizeof(struct audio_channel_layout),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = avl_slots,
 };
 
 static PyObject*
@@ -228,7 +231,8 @@ pythonify_audio_channel_layout(void* pointer)
         return Py_None;
     }
 
-    result = PyObject_New(struct audio_channel_layout, &audio_channel_layout_type);
+    result = PyObject_New(struct audio_channel_layout,
+                          (PyTypeObject*)audio_channel_layout_type);
     if (result == NULL) {
         return NULL;
     }
@@ -263,21 +267,30 @@ init_audio_channel_layout(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_channel_layout_type) == -1)
-        return -1;
-
-    r = PyDict_SetItemString(audio_channel_layout_type.tp_dict, "__typestr__",
-                             PyBytes_FromString(@encode(AudioChannelLayout)));
-    if (r == -1)
-        return -1;
-
-    Py_INCREF(&audio_channel_layout_type);
-    r = PyModule_AddObject(module, "AudioChannelLayout",
-                           (PyObject*)&audio_channel_layout_type);
-    if (r == -1) {
-        Py_DECREF(&audio_channel_layout_type);
+    PyObject* tmp = PyType_FromSpec(&avl_spec);
+    if (tmp == NULL) {
         return -1;
     }
+    audio_channel_layout_type = tmp;
+
+    PyObject* ts = PyBytes_FromString(@encode(AudioChannelLayout));
+    if (ts == NULL) {
+        Py_CLEAR(audio_channel_layout_type);
+        return -1;
+    }
+
+    r = PyObject_SetAttrString(audio_channel_layout_type, "__typestr__", ts);
+    if (r == -1) {
+        Py_CLEAR(audio_channel_layout_type);
+        return -1;
+    }
+
+    r = PyModule_AddObject(module, "AudioChannelLayout", audio_channel_layout_type);
+    if (r == -1) {
+        Py_CLEAR(audio_channel_layout_type);
+        return -1;
+    }
+    Py_INCREF(audio_channel_layout_type);
 
     r = PyObjCPointerWrapper_Register("AudioChannelLayout*", @encode(AudioChannelLayout*),
                                       pythonify_audio_channel_layout,

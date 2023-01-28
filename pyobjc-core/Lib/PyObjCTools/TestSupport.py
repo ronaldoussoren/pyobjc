@@ -1201,6 +1201,30 @@ class TestCase(_unittest.TestCase):
                 "copyRenderedTextureForCGLContext_pixelFormat_bounds_isFlipped_",
             )
         )
+        exclude_attrs.add(
+            (
+                "NSObject",
+                "newTaggedNSStringWithASCIIBytes__length__",
+            )
+        )
+        exclude_attrs.add(
+            (
+                "NSObject",
+                "utf8ValueSafe",
+            )
+        )
+        exclude_attrs.add(
+            (
+                "NSObject",
+                "utf8ValueSafe_",
+            )
+        )
+        exclude_attrs.add(
+            (
+                "NSObject",
+                "isKeyExcludedFromWebScript_",
+            )
+        )
 
         module_names = sorted(dir(module))
         for _idx, nm in enumerate(module_names):

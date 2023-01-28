@@ -5,10 +5,10 @@
  * basically a buffer with extra attributes.
  */
 
-static PyTypeObject audio_channel_description_type; /* Forward definition */
+static PyObject* audio_channel_description_type;
 
 #define audio_channel_description_check(obj)                                             \
-    PyObject_TypeCheck(obj, &audio_channel_description_type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)audio_channel_description_type)
 
 struct audio_channel_description {
     PyObject_HEAD
@@ -135,8 +135,8 @@ acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result =
-        PyObject_New(struct audio_channel_description, &audio_channel_description_type);
+    result = PyObject_New(struct audio_channel_description,
+                          (PyTypeObject*)audio_channel_description_type);
     if (result == NULL) {
         return NULL;
     }
@@ -174,17 +174,23 @@ PyDoc_STRVAR(acd_doc,
              "this will allocate a buffer, otherwise no buffer is "
              "allocated\n");
 
-static PyTypeObject audio_channel_description_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioChannelDescription",
-    .tp_basicsize = sizeof(struct audio_channel_description),
-    .tp_itemsize  = 0,
-    .tp_dealloc   = acd_dealloc,
-    .tp_getattro  = PyObject_GenericGetAttr,
-    .tp_flags     = Py_TPFLAGS_DEFAULT,
-    .tp_doc       = acd_doc,
-    .tp_getset    = acd_getset,
-    .tp_members   = acd_members,
-    .tp_new       = acd_new,
+static PyType_Slot acd_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&acd_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&acd_doc},
+    {.slot = Py_tp_getset, .pfunc = (void*)&acd_getset},
+    {.slot = Py_tp_members, .pfunc = (void*)&acd_members},
+    {.slot = Py_tp_new, .pfunc = (void*)&acd_new},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec acd_spec = {
+    .name      = "CoreAudio.AudioChannelDescription",
+    .basicsize = sizeof(struct audio_channel_description),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = acd_slots,
 };
 
 static PyObject*
@@ -192,8 +198,8 @@ acd_create(AudioChannelDescription* item)
 {
     struct audio_channel_description* result;
 
-    result =
-        PyObject_New(struct audio_channel_description, &audio_channel_description_type);
+    result = PyObject_New(struct audio_channel_description,
+                          (PyTypeObject*)audio_channel_description_type);
     if (result == NULL) {
         return NULL;
     }
@@ -241,21 +247,32 @@ init_audio_channel_description(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_channel_description_type) == -1)
-        return -1;
-
-    r = PyDict_SetItemString(audio_channel_description_type.tp_dict, "__typestr__",
-                             PyBytes_FromString(@encode(AudioChannelDescription)));
-    if (r == -1)
-        return -1;
-
-    Py_INCREF(&audio_channel_description_type);
-    r = PyModule_AddObject(module, "AudioChannelDescription",
-                           (PyObject*)&audio_channel_description_type);
-    if (r == -1) {
-        Py_DECREF(&audio_channel_description_type);
+    PyObject* tmp = PyType_FromSpec(&acd_spec);
+    if (tmp == NULL) {
         return -1;
     }
+    audio_channel_description_type = tmp;
+
+    PyObject* ts = PyBytes_FromString(@encode(AudioChannelDescription));
+    if (ts == NULL) {
+        Py_CLEAR(audio_channel_description_type);
+        return -1;
+    }
+
+    r = PyObject_SetAttrString(audio_channel_description_type, "__typestr__", ts);
+    Py_DECREF(ts);
+    if (r == -1) {
+        Py_CLEAR(audio_channel_description_type);
+        return -1;
+    }
+
+    r = PyModule_AddObject(module, "AudioChannelDescription",
+                           audio_channel_description_type);
+    if (r == -1) {
+        Py_CLEAR(audio_channel_description_type);
+        return -1;
+    }
+    Py_INCREF(audio_channel_description_type);
 
     r = PyObjCPointerWrapper_Register(
         "AudioChannelDescription*", @encode(AudioChannelDescription*),

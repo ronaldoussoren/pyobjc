@@ -5,9 +5,10 @@
  * basically a buffer with extra attributes.
  */
 
-static PyTypeObject audio_buffer_list_type; /* Forward definition */
+static PyObject* audio_buffer_list_type;
 
-#define audio_buffer_list_check(obj) PyObject_TypeCheck(obj, &audio_buffer_list_type)
+#define audio_buffer_list_check(obj)                                                     \
+    PyObject_TypeCheck(obj, (PyTypeObject*)audio_buffer_list_type)
 
 struct audio_buffer_list {
     PyObject_HEAD
@@ -86,11 +87,6 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
     return result;
 }
 
-static PySequenceMethods abl_as_sequence = {
-    .sq_length = abl_length,
-    .sq_item   = abl_get_item,
-};
-
 static PyObject*
 abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
@@ -103,7 +99,10 @@ abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result = PyObject_New(struct audio_buffer_list, &audio_buffer_list_type);
+    if (audio_buffer_list_type == NULL)
+        abort();
+    result =
+        PyObject_New(struct audio_buffer_list, (PyTypeObject*)audio_buffer_list_type);
     if (result == NULL) {
         return NULL;
     }
@@ -145,17 +144,24 @@ abl_dealloc(PyObject* object)
 PyDoc_STRVAR(abl_doc,
              "AudioBufferList(num_buffers)\n" CLINIC_SEP "Return an audiobuffer list.");
 
-static PyTypeObject audio_buffer_list_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioBufferList",
-    .tp_basicsize                                  = sizeof(struct audio_buffer_list),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = abl_dealloc,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = abl_doc,
-    .tp_members                                    = abl_members,
-    .tp_new                                        = abl_new,
-    .tp_as_sequence                                = &abl_as_sequence,
+static PyType_Slot abl_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&abl_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&abl_doc},
+    {.slot = Py_tp_members, .pfunc = (void*)&abl_members},
+    {.slot = Py_tp_new, .pfunc = (void*)&abl_new},
+    {.slot = Py_sq_length, .pfunc = (void*)&abl_length},
+    {.slot = Py_sq_item, .pfunc = (void*)&abl_get_item},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec abl_spec = {
+    .name      = "CoreAudio.AudioBufferList",
+    .basicsize = sizeof(struct audio_buffer_list),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = abl_slots,
 };
 
 static PyObject*
@@ -169,7 +175,8 @@ pythonify_audio_buffer_list(void* pointer)
         return Py_None;
     }
 
-    result = PyObject_New(struct audio_buffer_list, &audio_buffer_list_type);
+    result =
+        PyObject_New(struct audio_buffer_list, (PyTypeObject*)audio_buffer_list_type);
     if (result == NULL) {
         return NULL;
     }
@@ -204,20 +211,30 @@ init_audio_buffer_list(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_buffer_list_type) == -1)
-        return -1;
-
-    r = PyDict_SetItemString(audio_buffer_list_type.tp_dict, "__typestr__",
-                             PyBytes_FromString(@encode(AudioBufferList)));
-    if (r == -1)
-        return -1;
-
-    Py_INCREF(&audio_buffer_list_type);
-    r = PyModule_AddObject(module, "AudioBufferList", (PyObject*)&audio_buffer_list_type);
-    if (r == -1) {
-        Py_DECREF(&audio_buffer_list_type);
+    PyObject* tmp = PyType_FromSpec(&abl_spec);
+    if (tmp == NULL) {
         return -1;
     }
+    audio_buffer_list_type = tmp;
+
+    PyObject* ts = PyBytes_FromString(@encode(AudioBufferList));
+    if (ts == NULL) {
+        Py_CLEAR(audio_buffer_list_type);
+        return -1;
+    }
+    r = PyObject_SetAttrString(audio_buffer_list_type, "__typestr__", ts);
+    Py_DECREF(ts);
+    if (r == -1) {
+        Py_CLEAR(audio_buffer_list_type);
+        return -1;
+    }
+
+    r = PyModule_AddObject(module, "AudioBufferList", audio_buffer_list_type);
+    if (r == -1) {
+        Py_CLEAR(audio_buffer_list_type);
+        return -1;
+    }
+    Py_INCREF(audio_buffer_list_type);
 
     r = PyObjCPointerWrapper_Register("AudioBufferList*", @encode(AudioBufferList*),
                                       pythonify_audio_buffer_list,

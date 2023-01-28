@@ -2,10 +2,10 @@
  * AudioValueTranslation bindings
  */
 
-static PyTypeObject audio_value_translation_type; /* Forward definition */
+static PyObject* audio_value_translation_type;
 
 #define audio_value_translation_check(obj)                                               \
-    PyObject_TypeCheck(obj, &audio_value_translation_type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)audio_value_translation_type)
 
 struct audio_value_translation {
     PyObject_HEAD
@@ -215,7 +215,8 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result = PyObject_New(struct audio_value_translation, &audio_value_translation_type);
+    result = PyObject_New(struct audio_value_translation,
+                          (PyTypeObject*)audio_value_translation_type);
     if (result == NULL) {
         return NULL;
     }
@@ -281,18 +282,24 @@ PyDoc_STRVAR(
     "this will allocate a buffer, otherwise no buffer is "
     "allocated\n");
 
-static PyTypeObject audio_value_translation_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioValueTranslation",
-    .tp_basicsize = sizeof(struct audio_value_translation),
-    .tp_itemsize  = 0,
-    .tp_dealloc   = avt_dealloc,
-    .tp_getattro  = PyObject_GenericGetAttr,
-    .tp_flags     = Py_TPFLAGS_DEFAULT,
-    .tp_doc       = avt_doc,
-    .tp_methods   = avt_methods,
-    .tp_getset    = avt_getset,
-    .tp_members   = avt_members,
-    .tp_new       = avt_new,
+static PyType_Slot avt_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&avt_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&avt_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&avt_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&avt_getset},
+    {.slot = Py_tp_members, .pfunc = (void*)&avt_members},
+    {.slot = Py_tp_new, .pfunc = (void*)&avt_new},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec avt_spec = {
+    .name      = "CoreAudio.AudioValueTranslation",
+    .basicsize = sizeof(struct audio_value_translation),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = avt_slots,
 };
 
 static PyObject*
@@ -306,7 +313,8 @@ pythonify_audio_value_translation(void* pointer)
         return Py_None;
     }
 
-    result = PyObject_New(struct audio_value_translation, &audio_value_translation_type);
+    result = PyObject_New(struct audio_value_translation,
+                          (PyTypeObject*)audio_value_translation_type);
     if (result == NULL) {
         return NULL;
     }
@@ -344,21 +352,29 @@ init_audio_value_translation(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_value_translation_type) == -1)
-        return -1;
-
-    r = PyDict_SetItemString(audio_value_translation_type.tp_dict, "__typestr__",
-                             PyBytes_FromString(@encode(AudioValueTranslation)));
-    if (r == -1)
-        return -1;
-
-    Py_INCREF(&audio_value_translation_type);
-    r = PyModule_AddObject(module, "AudioValueTranslation",
-                           (PyObject*)&audio_value_translation_type);
-    if (r == -1) {
-        Py_DECREF(&audio_value_translation_type);
+    PyObject* tmp = PyType_FromSpec(&avt_spec);
+    if (tmp == NULL) {
         return -1;
     }
+    audio_value_translation_type = tmp;
+
+    PyObject* ts = PyBytes_FromString(@encode(AudioValueTranslation));
+    if (ts == NULL) {
+        Py_CLEAR(audio_value_translation_type);
+        return -1;
+    }
+    r = PyObject_SetAttrString(audio_value_translation_type, "__typestr__", ts);
+    if (r == -1) {
+        Py_CLEAR(audio_value_translation_type);
+        return -1;
+    }
+
+    r = PyModule_AddObject(module, "AudioValueTranslation", audio_value_translation_type);
+    if (r == -1) {
+        Py_CLEAR(audio_value_translation_type);
+        return -1;
+    }
+    Py_INCREF(audio_value_translation_type);
 
     r = PyObjCPointerWrapper_Register(
         "AudioValueTranslation*", @encode(AudioValueTranslation*),

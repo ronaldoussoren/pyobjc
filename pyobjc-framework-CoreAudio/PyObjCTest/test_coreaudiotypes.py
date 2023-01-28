@@ -667,6 +667,7 @@ class TestManualWrappers(TestCase):
 
     def testAudioBufferList(self):
         bl = CoreAudio.AudioBufferList(2)
+        print(bl)
         self.assertEqual(len(bl), 2)
 
         i0 = bl[0]
