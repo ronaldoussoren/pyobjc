@@ -379,6 +379,10 @@ improvements as described below).
 
   * ``objc.WeakRef``
 
+  * ``objc.super``
+
+  * ``objc.IMP``
+
   For these types the class can be changed in Python 3.9 earlier, but not
   in 3.10 or later. The ability to change class attributes in Python 3.9 and earlier
   is due to a limitation in ``PyType_FromSpec`` in those versions, don't rely on this.
@@ -390,6 +394,9 @@ improvements as described below).
 
 * :issue:`423`: ``objc.ivar`` is now created with ``PyType_FromSpec``. Because of
   that the private method ``objc.ivar._add_attribute`` has been removed.
+
+* The creation of ``objc.super`` is now less hacky although it still
+  relies on implementation details of ``builtins.super``.
 
 * Fixed bug that could result in a crash when the proxy for a Python iterator
   ended up being deallocated after the Python interpreter is finalized.

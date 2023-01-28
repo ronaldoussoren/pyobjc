@@ -47,7 +47,7 @@ class TestUnicodeProxy(TestCase):
 
     def test_cannot_instantiate(self):
         with self.assertRaisesRegex(
-            TypeError, "Cannot create instances of 'objc.unicode' in Python"
+            TypeError, "cannot create 'objc.pyobjc_unicode' instances"
         ):
             objc.pyobjc_unicode("foo")
 

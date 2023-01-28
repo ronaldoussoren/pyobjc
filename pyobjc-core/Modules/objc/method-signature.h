@@ -6,9 +6,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define SHORTCUT_MAX_ARGBUF 512
 
-extern PyTypeObject PyObjCMethodSignature_Type;
+extern PyObject* PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
-    PyObject_TypeCheck(obj, &PyObjCMethodSignature_Type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCMethodSignature_Type)
 
 enum _PyObjC_PointerType
 #if __has_feature(objc_fixed_enum)
@@ -97,6 +97,8 @@ PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
 #endif /* PyObjC_DEBUG */
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_GetRegistered(Class cls, SEL sel);
+
+extern int PyObjCMethodSignature_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

@@ -62,6 +62,16 @@ PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 
 /* ========================================================================= */
 
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable imp_new(PyObject* self __attribute__((__unused__)),
+                                   PyObject* args __attribute__((__unused__)),
+                                   PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.IMP' instances");
+    return NULL;
+}
+#endif
+
 static PyObject* _Nullable imp_vectorcall(PyObject* _self,
                                           PyObject* const* _Nullable args, size_t nargsf,
                                           PyObject* _Nullable kwnames)
@@ -336,25 +346,54 @@ static PyMethodDef imp_methods[] = {{
                                         .ml_name = NULL /* SENTINEL */
                                     }};
 
-PyTypeObject PyObjCIMP_Type = {
-    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.IMP",
-    .tp_basicsize                          = sizeof(PyObjCIMPObject),
-    .tp_itemsize                           = 0,
-    .tp_dealloc                            = imp_dealloc,
-    .tp_repr                               = imp_repr,
-    .tp_getattro                           = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset = offsetof(PyObjCIMPObject, vectorcall),
-    .tp_call              = PyVectorcall_Call,
-#else
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_call  = imp_call,
+static PyMemberDef imp_members[] = {{
+                                        .name   = "__vectorcalloffset__",
+                                        .type   = T_PYSSIZET,
+                                        .offset = offsetof(PyObjCIMPObject, vectorcall),
+                                        .flags  = READONLY,
+                                    },
+                                    {
+                                        .name = NULL /* SENTINEL */
+                                    }};
+
 #endif
 
-    .tp_methods = imp_methods,
-    .tp_getset  = imp_getset,
+static PyType_Slot imp_slots[] = {
+    {.slot = Py_tp_repr, .pfunc = (void*)&imp_repr},
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&imp_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_getset, .pfunc = (void*)&imp_getset},
+    {.slot = Py_tp_methods, .pfunc = (void*)&imp_methods},
+#if PY_VERSION_HEX >= 0x03090000
+    {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+    {.slot = Py_tp_members, .pfunc = (void*)&imp_members},
+#else
+    {.slot = Py_tp_call, .pfunc = (void*)&imp_call},
+#endif
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&imp_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec imp_spec = {
+    .name      = "objc.IMP",
+    .basicsize = sizeof(PyObjCIMPObject),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_VECTORCALL,
+#elif PY_VERSION_HEX >= 0x03090000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = imp_slots,
+};
+
+PyObject* PyObjCIMP_Type;
 
 static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
                                          PyObjCMethodSignature* signature, int flags)
@@ -364,7 +403,7 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
     PyObjC_Assert(callfunc != NULL, NULL);
     PyObjC_Assert(signature != NULL, NULL);
 
-    result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
+    result = PyObject_New(PyObjCIMPObject, (PyTypeObject*)PyObjCIMP_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -549,9 +588,19 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
 }
 
 int
-PyObjCIMP_SetUpMethodWrappers(void)
+PyObjCIMP_SetUp(PyObject* module)
 {
     int r;
+
+    PyObjCIMP_Type = PyType_FromSpec(&imp_spec);
+    if (PyObjCIMP_Type == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(module, "IMP", PyObjCIMP_Type) == -1) { // LCOV_BR_EXCL_LINE
+        return -1;                                                 // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCIMP_Type);
 
     r = PyObjC_RegisterMethodMapping(nil, @selector(instanceMethodForSelector:),
                                      call_instanceMethodForSelector_,

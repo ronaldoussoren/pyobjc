@@ -5,12 +5,8 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestSuperObject(TestCase):
     def test_super_type(self):
-        if objc._pep447:
-            self.assertIs(objc.super, super)
-
-        else:
-            self.assertIsSubclass(objc.super, super)
-            self.assertIsNot(objc.super, super)
+        self.assertIsSubclass(objc.super, super)
+        self.assertIsNot(objc.super, super)
 
 
 class TestMethodResolution(TestCase):

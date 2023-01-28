@@ -2191,6 +2191,29 @@ struct objc_string_values {
 
                           {NULL, 0}};
 
+typedef int (*setup_function)(PyObject*);
+
+static setup_function _Nullable setup_functions[] = {PyObjC_SetupOptions,
+                                                     PyObjC_setup_nsdecimal,
+                                                     PyObjCPointer_Setup,
+                                                     FILE_Setup,
+                                                     PyObjCFormalProtocol_Setup,
+                                                     PyObjCFunc_Setup,
+                                                     PyObjCVarList_Setup,
+                                                     PyObjCSuper_Setup,
+                                                     PyObjCMethodSignature_Setup,
+                                                     PyObjCUnicode_Setup,
+                                                     PyObjCInitNULL,
+                                                     PyObjCInstanceVariable_Setup,
+                                                     PyObjCMemView_Setup,
+                                                     PyObjCWeakRef_Setup,
+                                                     PyObjCMethodAccessor_Setup,
+                                                     PyObjCUtil_Init,
+                                                     PyObjCIMP_SetUp,
+                                                     PyObjC_init_ctests,
+
+                                                     NULL};
+
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
@@ -2260,34 +2283,12 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                                    // LCOV_EXCL_LINE
     }
 
-    if (PyType_Ready(&PyObjCUnicode_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                             // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCIMP_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                         // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCMethodSignature_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                     // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&PyObjC_FSRefType) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                           // LCOV_EXCL_LINE
     }
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     }
-#ifndef Py_HAVE_LOCAL_LOOKUP
-    PyObjCSuper_Type.tp_doc      = PySuper_Type.tp_doc;
-    PyObjCSuper_Type.tp_init     = PySuper_Type.tp_init;
-    PyObjCSuper_Type.tp_alloc    = PySuper_Type.tp_alloc;
-    PyObjCSuper_Type.tp_new      = PySuper_Type.tp_new;
-    PyObjCSuper_Type.tp_dealloc  = PySuper_Type.tp_dealloc;
-    PyObjCSuper_Type.tp_free     = PySuper_Type.tp_free;
-    PyObjCSuper_Type.tp_traverse = PySuper_Type.tp_traverse;
-    if (PyType_Ready(&PyObjCSuper_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                           // LCOV_EXCL_LINE
-    }
-#endif /* !Py_HAVE_LOCAL_LOOKUP */
-
     if (PyObjC_setup_nsdata() < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                 // LCOV_EXCL_LINE
     }
@@ -2308,27 +2309,14 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                  // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_SetupOptions(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                  // LCOV_EXCL_LINE
+    for (setup_function* cur = setup_functions; *cur != NULL; cur++) {
+        if ((*cur)(m) < 0) { // LCOV_BR_EXCL_LINE
+            return NULL;     // LCOV_EXCL_LINE
+        }
     }
 
-    if (PyObjC_setup_nsdecimal(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                     // LCOV_EXCL_LINE
-    }
-    if (PyObjCPointer_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                  // LCOV_EXCL_LINE
-    }
-    if (FILE_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;         // LCOV_EXCL_LINE
-    }
-    if (PyObjCFormalProtocol_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                         // LCOV_EXCL_LINE
-    }
-    if (PyObjCFunc_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;               // LCOV_EXCL_LINE
-    }
-    if (PyObjCVarList_Setup(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                  // LCOV_EXCL_LINE
+    if (PyObjCAPI_Register(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                 // LCOV_EXCL_LINE
     }
 
     d = PyModule_GetDict(m);
@@ -2352,11 +2340,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL; // LCOV_EXCL_LINE
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "selector", (PyObject*)&PyObjCSelector_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
@@ -2372,63 +2355,9 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL; // LCOV_EXCL_LINE
     }
     if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "IMP", (PyObject*)&PyObjCIMP_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
             d, "_structwrapper", (PyObject*)&StructBase_Type)
         < 0) {
         return NULL; // LCOV_EXCL_LINE
-    }
-
-#ifndef Py_HAVE_LOCAL_LOOKUP
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "super", (PyObject*)&PyObjCSuper_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString(d, "_pep447", Py_False) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                        // LCOV_EXCL_LINE
-    }
-#else  /* Py_HAVE_LOCAL_LOOKUP */
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "super", (PyObject*)&PySuper_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString(d, "_pep447", Py_True) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                       // LCOV_EXCL_LINE
-    }
-#endif /* Py_HAVE_LOCAL_LOOKUP */
-
-    if (PyObjCInitNULL(m) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;               // LCOV_EXCL_LINE
-    }
-    if (PyObjCInstanceVariable_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                             // LCOV_EXCL_LINE
-    }
-    if (PyObjCMemView_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                    // LCOV_EXCL_LINE
-    }
-    if (PyObjCWeakRef_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                    // LCOV_EXCL_LINE
-    }
-    if (PyObjCMethodAccessor_Setup(m) == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                           // LCOV_EXCL_LINE
-    }
-
-    if (PyObjCUtil_Init(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;              // LCOV_EXCL_LINE
-    }
-    if (PyObjCAPI_Register(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                 // LCOV_EXCL_LINE
-    }
-    if (PyObjCIMP_SetUpMethodWrappers() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                           // LCOV_EXCL_LINE
-    }
-    if (PyObjC_init_ctests(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                 // LCOV_EXCL_LINE
     }
 
     {

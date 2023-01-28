@@ -24,9 +24,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern PyTypeObject PyObjCIMP_Type;
+extern PyObject* PyObjCIMP_Type;
 
-#define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, &PyObjCIMP_Type)
+#define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCIMP_Type)
 
 extern _Nullable IMP PyObjCIMP_GetIMP(PyObject* self) __attribute__((warn_unused_result));
 extern PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
@@ -39,7 +39,7 @@ extern ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 extern int PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
     __attribute__((warn_unused_result));
 
-extern int PyObjCIMP_SetUpMethodWrappers(void) __attribute__((warn_unused_result));
+extern int PyObjCIMP_SetUp(PyObject* module) __attribute__((warn_unused_result));
 
 NS_ASSUME_NONNULL_END
 

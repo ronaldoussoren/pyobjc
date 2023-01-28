@@ -15,10 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    __strong id _Nullable objc_object;
-#if Py_HAVE_LOCAL_LOOKUP
-    PyObject* _Nullable objc_dict;
-#endif /* Py_HAVE_LOCAL_LOOKUP */
+    __strong     id _Nullable objc_object;
     unsigned int flags;
 } PyObjCObject;
 

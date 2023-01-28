@@ -176,6 +176,31 @@ PyTypeObject PyObjCSuper_Type = {
     .tp_base  = &PySuper_Type,
 };
 
+int
+PyObjCSuper_Setup(PyObject* module)
+{
+    PyObjC_Assert(sizeof(superobject) == PySuper_Type.tp_basicsize, -1);
+
+    PyObjCSuper_Type.tp_doc      = PySuper_Type.tp_doc;
+    PyObjCSuper_Type.tp_init     = PySuper_Type.tp_init;
+    PyObjCSuper_Type.tp_alloc    = PySuper_Type.tp_alloc;
+    PyObjCSuper_Type.tp_new      = PySuper_Type.tp_new;
+    PyObjCSuper_Type.tp_dealloc  = PySuper_Type.tp_dealloc;
+    PyObjCSuper_Type.tp_free     = PySuper_Type.tp_free;
+    PyObjCSuper_Type.tp_traverse = PySuper_Type.tp_traverse;
+    if (PyType_Ready(&PyObjCSuper_Type) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                             // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "super", (PyObject*)&PyObjCSuper_Type)
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF((PyObject*)&PyObjCSuper_Type);
+
+    return 0;
+}
+
 #endif /* !Py_HAVE_LOCAL_LOOKUP */
 
 NS_ASSUME_NONNULL_END

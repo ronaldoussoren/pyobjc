@@ -83,12 +83,14 @@ static PyMemberDef func_members[] = {{
                                          .type   = T_OBJECT,
                                          .offset = offsetof(func_object, module),
                                      },
+#if PY_VERSION_HEX >= 0x03090000
                                      {
                                          .name   = "__vectorcalloffset__",
                                          .type   = T_PYSSIZET,
                                          .offset = offsetof(func_object, vectorcall),
                                          .flags  = READONLY,
                                      },
+#endif
                                      {
                                          .name = NULL /* SENTINEL */
                                      }};

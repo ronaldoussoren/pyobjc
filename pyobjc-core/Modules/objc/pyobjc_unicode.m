@@ -26,16 +26,16 @@ typedef struct {
 
 } PyObjCUnicodeObject;
 
-PyDoc_STRVAR(class_doc, "objc.pyobjc_unicode\n"
-                        "\n"
-                        "Subclass of unicode for representing NSString values. Use\n"
-                        "the method nsstring to access the NSString.\n"
-                        "\n"
-                        "Note that instances are immutable and won't be updated when\n"
-                        "the value of the NSString changes.");
+PyDoc_STRVAR(unic_doc, "objc.pyobjc_unicode\n"
+                       "\n"
+                       "Subclass of unicode for representing NSString values. Use\n"
+                       "the method nsstring to access the NSString.\n"
+                       "\n"
+                       "Note that instances are immutable and won't be updated when\n"
+                       "the value of the NSString changes.");
 
 static void
-class_dealloc(PyObject* obj)
+unic_dealloc(PyObject* obj)
 {
     PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
     PyObject*            weakrefs = uobj->weakrefs;
@@ -53,7 +53,7 @@ class_dealloc(PyObject* obj)
     PyUnicode_Type.tp_dealloc(obj);
 }
 
-static PyObject* _Nullable meth_nsstring(PyObject* self)
+static PyObject* _Nullable unic_nsstring(PyObject* self)
 {
     PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)self;
 
@@ -68,7 +68,7 @@ static PyObject* _Nullable meth_nsstring(PyObject* self)
     return uobj->py_nsstr;
 }
 
-static PyObject* _Nullable meth_getattro(PyObject* o, PyObject* attr_name)
+static PyObject* _Nullable unic_getattro(PyObject* o, PyObject* attr_name)
 {
     PyObject* res;
     res = PyObject_GenericGetAttr(o, attr_name);
@@ -76,7 +76,7 @@ static PyObject* _Nullable meth_getattro(PyObject* o, PyObject* attr_name)
         PyObject* py_nsstr;
 
         PyErr_Clear();
-        py_nsstr = meth_nsstring(o);
+        py_nsstr = unic_nsstring(o);
         if (py_nsstr == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;        // LCOV_EXCL_LINE
         }
@@ -86,7 +86,7 @@ static PyObject* _Nullable meth_getattro(PyObject* o, PyObject* attr_name)
     return res;
 }
 
-static PyObject* _Nullable meth_reduce(PyObject* self)
+static PyObject* _Nullable unic_reduce(PyObject* self)
 {
     PyObject* retVal = NULL;
     PyObject* v      = NULL;
@@ -120,59 +120,86 @@ error:
     // LCOV_EXCL_STOP
 }
 
-static PyMethodDef class_methods[] = {{.ml_name  = "nsstring",
-                                       .ml_meth  = (PyCFunction)meth_nsstring,
-                                       .ml_flags = METH_NOARGS,
-                                       .ml_doc   = "directly access NSString instance"},
-                                      {
-                                          .ml_name  = "__reduce__",
-                                          .ml_meth  = (PyCFunction)meth_reduce,
-                                          .ml_flags = METH_NOARGS,
-                                      },
-                                      {
-                                          .ml_name = NULL /* SENTINEL */
-                                      }};
+static PyMethodDef unic_methods[] = {{.ml_name  = "nsstring",
+                                      .ml_meth  = (PyCFunction)unic_nsstring,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc   = "directly access NSString instance"},
+                                     {
+                                         .ml_name  = "__reduce__",
+                                         .ml_meth  = (PyCFunction)unic_reduce,
+                                         .ml_flags = METH_NOARGS,
+                                     },
+                                     {
+                                         .ml_name = NULL /* SENTINEL */
+                                     }};
 
-static PyObject* _Nullable nsstring_get__pyobjc_object__(PyObject* self,
-                                                         void* _Nullable closure
-                                                         __attribute__((__unused__)))
+static PyObject* _Nullable unic_get__pyobjc_object__(PyObject* self,
+                                                     void* _Nullable closure
+                                                     __attribute__((__unused__)))
 {
-    return meth_nsstring(self);
+    return unic_nsstring(self);
 }
 
-static PyGetSetDef nsstring_getsetters[] = {
+static PyGetSetDef unic_getset[] = {{
+                                        .name = "__pyobjc_object__",
+                                        .get  = (getter)unic_get__pyobjc_object__,
+                                        .doc  = "raw NSString instance",
+                                    },
+                                    {
+                                        .name = NULL /* SENTINEL */
+                                    }};
+
+static PyMemberDef unic_members[] = {
     {
-        .name = "__pyobjc_object__",
-        .get  = (getter)nsstring_get__pyobjc_object__,
-        .doc  = "raw NSString instance",
+        .name   = "__weaklistoffset__",
+        .type   = T_PYSSIZET,
+        .offset = offsetof(PyObjCUnicodeObject, weakrefs),
+        .flags  = READONLY,
     },
     {
         .name = NULL /* SENTINEL */
     }};
 
-static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused__)),
-                                     PyObject*     args __attribute__((__unused__)),
-                                     PyObject*     kwds __attribute__((__unused__)))
+#if PY_VERSION_HEX < 0x030a0000
+
+static PyObject* _Nullable unic_new(PyTypeObject* type __attribute__((__unused__)),
+                                    PyObject*     args __attribute__((__unused__)),
+                                    PyObject*     kwds __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError,
-                    "Cannot create instances of 'objc.unicode' in Python");
+                    "cannot create instances of 'objc.pyobjc_unicode' in Python");
     return NULL;
 }
+#endif
 
-PyTypeObject PyObjCUnicode_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.pyobjc_unicode",
-    .tp_basicsize                                  = sizeof(PyObjCUnicodeObject),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = class_dealloc,
-    .tp_getattro                                   = meth_getattro,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = class_doc,
-    .tp_weaklistoffset = offsetof(PyObjCUnicodeObject, weakrefs),
-    .tp_methods        = class_methods,
-    .tp_getset         = nsstring_getsetters,
-    .tp_base           = &PyUnicode_Type,
-    .tp_new            = class_new,
+static PyType_Slot unic_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&unic_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&unic_getattro},
+    {.slot = Py_tp_doc, .pfunc = (void*)&unic_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&unic_methods},
+    {.slot = Py_tp_members, .pfunc = (void*)&unic_members},
+    {.slot = Py_tp_getset, .pfunc = (void*)&unic_getset},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&unic_new},
+#endif
+    {.slot = Py_tp_base, .pfunc = (void*)&PyUnicode_Type},
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec unic_spec = {
+    .name      = "objc.pyobjc_unicode",
+    .basicsize = sizeof(PyObjCUnicodeObject),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = unic_slots,
+};
+
+PyObject* PyObjCUnicode_Type;
 
 /*
  * Python 3.3 introduced a new, more efficient representation
@@ -234,7 +261,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         return NULL;
     }
 
-    result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+    result = PyObject_New(PyObjCUnicodeObject, (PyTypeObject*)PyObjCUnicode_Type);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObject_Free(characters);
@@ -456,6 +483,23 @@ error:
     PyErr_NoMemory();
     return NULL;
     // LCOV_EXCL_STOP
+}
+
+int
+PyObjCUnicode_Setup(PyObject* module)
+{
+    PyObject* tmp = PyType_FromSpec(&unic_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCUnicode_Type = tmp;
+
+    if (PyModule_AddObject(module, "pyobjc_unicode", PyObjCUnicode_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCUnicode_Type);
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

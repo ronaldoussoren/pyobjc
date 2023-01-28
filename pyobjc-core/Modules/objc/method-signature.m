@@ -163,16 +163,42 @@ sig_dealloc(PyObject* _self)
     PyObject_Free(self);
 }
 
-PyTypeObject PyObjCMethodSignature_Type = {
-    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc._method_signature",
-    .tp_basicsize                          = sizeof(PyObjCMethodSignature),
-    .tp_itemsize                           = sizeof(struct _PyObjC_ArgDescr*),
-    .tp_dealloc                            = sig_dealloc,
-    .tp_repr                               = sig_str,
-    .tp_str                                = sig_str,
-    .tp_getattro                           = PyObject_GenericGetAttr,
-    .tp_flags                              = Py_TPFLAGS_DEFAULT,
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable sig_new(PyObject* self __attribute__((__unused__)),
+                                   PyObject* args __attribute__((__unused__)),
+                                   PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._method_signature' instances");
+    return NULL;
+}
+#endif
+
+static PyType_Slot sig_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&sig_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&sig_str},
+    {.slot = Py_tp_str, .pfunc = (void*)&sig_str},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&sig_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec sig_spec = {
+    .name      = "objc._method_signature",
+    .basicsize = sizeof(PyObjCMethodSignature),
+    .itemsize  = sizeof(struct _PyObjC_ArgDescr*),
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = sig_slots,
+};
+
+PyObject* PyObjCMethodSignature_Type;
 
 static int
 determine_if_shortcut(PyObjCMethodSignature* methinfo)
@@ -422,8 +448,8 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
         return NULL;              // LCOV_EXCL_LINE
     }
 
-    retval =
-        PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, nargs /*+1*/);
+    retval = PyObject_NewVar(PyObjCMethodSignature,
+                             (PyTypeObject*)PyObjCMethodSignature_Type, nargs /*+1*/);
 
     if (retval == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -1271,7 +1297,8 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         max_idx += 1;
     }
 
-    result = PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, max_idx);
+    result = PyObject_NewVar(PyObjCMethodSignature,
+                             (PyTypeObject*)PyObjCMethodSignature_Type, max_idx);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -1921,6 +1948,17 @@ PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
 {
     return PyObjC_CopyRegistry(registry,
                                (PyObjC_ItemTransform)PyObjCMethodSignature_AsDict);
+}
+
+int
+PyObjCMethodSignature_Setup(PyObject* module __attribute__((__unused__)))
+{
+    PyObject* tmp = PyType_FromSpec(&sig_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCMethodSignature_Type = tmp;
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

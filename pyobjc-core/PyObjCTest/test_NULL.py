@@ -63,7 +63,7 @@ class TestNULL(TestCase):
             type(objc.NULL)()
 
         with self.assertRaisesRegex(
-            TypeError, "cannot set 'foo' attribute of immutable type 'objc.NULL_type'"
+            TypeError, "cannot set 'foo' attribute of immutable type 'objc._NULL_type'"
         ):
             type(objc.NULL).foo = 1
 

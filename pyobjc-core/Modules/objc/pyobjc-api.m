@@ -38,7 +38,7 @@ struct pyobjc_api objc_api = {
     .free_c_array              = PyObjC_FreeCArray,
     .py_to_c_array             = PyObjC_PythonToCArray,
     .c_array_to_py             = PyObjC_CArrayToPython,
-    .imp_type                  = &PyObjCIMP_Type,
+    .imp_type                  = NULL,
     .imp_get_imp               = PyObjCIMP_GetIMP,
     .imp_get_sel               = PyObjCIMP_GetSelector,
     .newtransient              = PyObjCObject_NewTransient,
@@ -58,7 +58,8 @@ struct pyobjc_api objc_api = {
 int
 PyObjCAPI_Register(PyObject* module)
 {
-    PyObject* API = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
+    objc_api.imp_type = (PyTypeObject*)PyObjCIMP_Type;
+    PyObject* API     = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
 
     if (API == NULL) // LCOV_BR_EXCL_LINE
         return -1;   // LCOV_EXCL_LINE

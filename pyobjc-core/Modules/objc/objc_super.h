@@ -3,11 +3,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#ifndef Py_HAVE_LOCAL_LOOKUP
-
 extern PyTypeObject PyObjCSuper_Type;
-
-#endif /* !Py_HAVE_LOCAL_LOOKUP */
+extern int          PyObjCSuper_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 
