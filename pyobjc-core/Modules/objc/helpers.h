@@ -3,12 +3,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern int PyObjC_setup_nsdata(void);
-extern int PyObjC_setup_nscoder(void);
+extern int PyObjC_setup_nsdata(PyObject* m);
+extern int PyObjC_setup_nscoder(PyObject* m);
 extern int PyObjC_setup_nsdecimal(PyObject* m);
-extern int PyObjC_setup_nsobject(void);
-extern int PyObjC_setup_simd(void);
-extern int PyObjC_setup_nsinvocation(void);
+extern int PyObjC_setup_nsobject(PyObject* m);
+extern int PyObjC_setup_simd(PyObject* m);
+extern int PyObjC_setup_nsinvocation(PyObject* m);
 
 extern PyObject* _Nullable pythonify_nsdecimal(const void* value);
 extern int depythonify_nsdecimal(PyObject* value, void* out);

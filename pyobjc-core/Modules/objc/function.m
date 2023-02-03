@@ -399,7 +399,11 @@ func_dealloc(PyObject* s)
     if (self->cif != NULL) {
         PyObjCFFI_FreeCIF(self->cif);
     }
+    PyTypeObject* tp = Py_TYPE(s);
     PyObject_Free(s);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyObject*

@@ -41,7 +41,11 @@ memview_dealloc(PyObject* self)
     }
 #endif
 
+    PyTypeObject* tp = Py_TYPE(self);
     PyObject_Free(self);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 #if PY_VERSION_HEX < 0x030a0000

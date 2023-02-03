@@ -819,7 +819,9 @@ def generate_setup_function(stream: typing.IO[str]):
     #
     #       This requires wider changes..
     print("int", file=stream)
-    print("PyObjC_setup_simd(void)", file=stream)
+    print(
+        "PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))", file=stream
+    )
     print("{", file=stream)
 
     for signature in ALL_SIGNATURES:

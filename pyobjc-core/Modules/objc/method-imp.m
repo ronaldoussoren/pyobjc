@@ -220,7 +220,11 @@ imp_dealloc(PyObject* _self)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     Py_XDECREF(self->signature);
+    PyTypeObject* tp = Py_TYPE(self);
     PyObject_Free(self);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 PyDoc_STRVAR(imp_signature_doc, "Objective-C signature for the IMP");

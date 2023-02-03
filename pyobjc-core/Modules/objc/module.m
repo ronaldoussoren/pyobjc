@@ -2193,26 +2193,69 @@ struct objc_string_values {
 
 typedef int (*setup_function)(PyObject*);
 
-static setup_function _Nullable setup_functions[] = {PyObjC_SetupOptions,
-                                                     PyObjC_setup_nsdecimal,
-                                                     PyObjCPointer_Setup,
-                                                     FILE_Setup,
-                                                     PyObjCFormalProtocol_Setup,
-                                                     PyObjCFunc_Setup,
-                                                     PyObjCVarList_Setup,
-                                                     PyObjCSuper_Setup,
-                                                     PyObjCMethodSignature_Setup,
-                                                     PyObjCUnicode_Setup,
-                                                     PyObjCInitNULL,
-                                                     PyObjCInstanceVariable_Setup,
-                                                     PyObjCMemView_Setup,
-                                                     PyObjCWeakRef_Setup,
-                                                     PyObjCMethodAccessor_Setup,
-                                                     PyObjCUtil_Init,
-                                                     PyObjCIMP_SetUp,
-                                                     PyObjC_init_ctests,
+/* XXX: Consider generating this table with a helper script:
+ * - Naming convention (e.g. all function names ending with _Setup)
+ * - Encode dependencies somehow
+ * - Script that extracts function names and dependencies,
+ *   using topsort to generate this array.
+ */
+static setup_function _Nullable setup_functions[] = {
+    PyObjC_InitProxyRegistry, /* Must be first */
 
-                                                     NULL};
+    PyObjCPointerWrapper_Init,
+    PyObjC_SetupOptions,
+    PyObjC_setup_nsdecimal,
+    PyObjCPointer_Setup,
+    FILE_Setup,
+    PyObjCFormalProtocol_Setup,
+    PyObjCFunc_Setup,
+    PyObjCVarList_Setup,
+    PyObjCSuper_Setup,
+    PyObjCMethodSignature_Setup,
+    PyObjCUnicode_Setup,
+    PyObjCInitNULL,
+    PyObjCInstanceVariable_Setup,
+    PyObjCMemView_Setup,
+    PyObjCWeakRef_Setup,
+    PyObjCMethodAccessor_Setup,
+    PyObjCUtil_Init,
+    PyObjCIMP_SetUp,
+    PyObjC_init_ctests,
+    PyObjCSelector_Setup,
+    PyObjC_setup_nsdata,
+    PyObjC_setup_nscoder,
+    PyObjC_setup_nsobject,
+    PyObjC_setup_simd,
+    PyObjC_setup_nsinvocation,
+    PyObjCCFType_Setup,
+    PyObjCBlock_Setup,
+    PyObjCFSRef_Setup,
+    PyObjC_SockAddr_Setup,
+
+    PyObjCAPI_Register, /* Must be last */
+    NULL};
+
+#define ADD_CONSTANT_TABLE(module, var_name, item_creator)                               \
+    do {                                                                                 \
+        __typeof__((var_name)[0])* cur = (var_name);                                     \
+                                                                                         \
+        for (; cur->name != NULL; cur++) {                                               \
+            PyObject* t = item_creator(cur->value);                                      \
+            if (t == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
+                return NULL; /* LCOV_EXCL_LINE */                                        \
+            }                                                                            \
+            if (PyModule_AddObject((module), cur->name, t)) { /* LCOV_BR_EXCL_LINE */    \
+                Py_DECREF(t);                                 /* LCOV_EXCL_LINE */       \
+                return NULL;                                  /* LCOV_EXCL_LINE */       \
+            }                                                                            \
+        }                                                                                \
+    } while (0)
+
+static PyObject*
+bytes_from_char(char ch)
+{
+    return PyBytes_FromStringAndSize(&ch, 1);
+}
 
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
@@ -2220,7 +2263,7 @@ static struct PyModuleDef mod_module = {
 PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void)
 {
     _Static_assert(sizeof(BOOL) == sizeof(bool), "BOOL and bool should have same size");
-    PyObject *m, *d;
+    PyObject* m;
 
     if (PyObjC_Initialized) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -2239,7 +2282,12 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                            // LCOV_EXCL_LINE
     }
 
+    /* Create a temporary release pool for handling values autoreleased during
+     * the setup function.
+     */
     NSAutoreleasePool* initReleasePool = [[NSAutoreleasePool alloc] init];
+
+    /* XXX: See earlier, unclear if this is still needed */
     [OC_NSBundleHack installBundleHack];
 
     PyObjCClass_DefaultModule = PyUnicode_FromString("objc");
@@ -2247,23 +2295,12 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         return NULL;                         // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_InitProxyRegistry() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                      // LCOV_EXCL_LINE
-    }
-
     PyObjC_TypeStr2CFTypeID = PyDict_New();
     if (PyObjC_TypeStr2CFTypeID == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;                       // LCOV_EXCL_LINE
     }
 
-    if (PyObjCBlock_Setup() == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                 // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_SockAddr_Setup() == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                     // LCOV_EXCL_LINE
-    }
-
+    /* XXX: Move these to setup functions as well */
     if (PyType_Ready(&PyObjCMetaClass_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                               // LCOV_EXCL_LINE
     }
@@ -2273,184 +2310,59 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     if (PyType_Ready((PyTypeObject*)&PyObjCObject_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                                           // LCOV_EXCL_LINE
     }
-    if (PyType_Ready(&PyObjCSelector_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                              // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCNativeSelector_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                    // LCOV_EXCL_LINE
-    }
-    if (PyType_Ready(&PyObjCPythonSelector_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                    // LCOV_EXCL_LINE
-    }
 
-    if (PyType_Ready(&PyObjC_FSRefType) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                           // LCOV_EXCL_LINE
-    }
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
-    }
-    if (PyObjC_setup_nsdata() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                 // LCOV_EXCL_LINE
-    }
-    if (PyObjC_setup_nscoder() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                  // LCOV_EXCL_LINE
-    }
-    if (PyObjC_setup_nsobject() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                   // LCOV_EXCL_LINE
-    }
-    if (PyObjC_setup_simd() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;               // LCOV_EXCL_LINE
-    }
-    if (PyObjC_setup_nsinvocation() < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                       // LCOV_EXCL_LINE
-    }
-
-    if (PyObjCCFType_Setup() == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                  // LCOV_EXCL_LINE
     }
 
     for (setup_function* cur = setup_functions; *cur != NULL; cur++) {
         if ((*cur)(m) < 0) { // LCOV_BR_EXCL_LINE
             return NULL;     // LCOV_EXCL_LINE
         }
-    }
-
-    if (PyObjCAPI_Register(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                 // LCOV_EXCL_LINE
-    }
-
-    d = PyModule_GetDict(m);
-    if (d == 0) {    // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-
-    if ( // LCOV_BR_EXCL_LINE
-        PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "objc_class", (PyObject*)&PyObjCClass_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "objc_object", (PyObject*)&PyObjCObject_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "selector", (PyObject*)&PyObjCSelector_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "native_selector", (PyObject*)&PyObjCNativeSelector_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "FSRef", (PyObject*)&PyObjC_FSRefType)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            d, "_structwrapper", (PyObject*)&StructBase_Type)
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-
-    {
-        struct objc_int_values* cur = objc_int_values;
-
-        for (; cur->name != NULL; cur++) {
-            if (PyModule_AddIntConstant( // LCOV_BR_EXCL_LINE
-                    m, cur->name, cur->value)
-                < 0) {
-                return NULL; // LCOV_EXCL_LINE
-            }
+        if (PyErr_Occurred()) {
+            return NULL;
         }
     }
+
+    /* XXX: Move these to setup functions as well */
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
+        return NULL; // LCOV_EXCL_LINE
+    }
+    Py_INCREF((PyObject*)&PyObjCMetaClass_Type);
+
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            m, "objc_class", (PyObject*)&PyObjCClass_Type)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
+    }
+    Py_INCREF((PyObject*)&PyObjCClass_Type);
+
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            m, "objc_object", (PyObject*)&PyObjCObject_Type)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
+    }
+    Py_INCREF((PyObject*)&PyObjCObject_Type);
+
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            m, "_structwrapper", (PyObject*)&StructBase_Type)
+        < 0) {
+        return NULL; // LCOV_EXCL_LINE
+    }
+    Py_INCREF((PyObject*)&StructBase_Type);
+
+    ADD_CONSTANT_TABLE(m, objc_int_values, PyLong_FromLong);
+    ADD_CONSTANT_TABLE(m, objc_float_values, PyFloat_FromDouble);
+    ADD_CONSTANT_TABLE(m, objc_string_values, PyUnicode_FromString);
+    ADD_CONSTANT_TABLE(m, objc_typestr_values, bytes_from_char);
+    ADD_CONSTANT_TABLE(m, objc_typestr_long_values, PyBytes_FromString);
 
     if (PyModule_AddIntConstant( // LCOV_BR_EXCL_LINE
             m, "MAC_OS_X_VERSION_CURRENT", calc_current_version())
         < 0) {
         return NULL; // LCOV_EXCL_LINE
     }
-
-    {
-        struct objc_float_values* cur = objc_float_values;
-        PyObject*                 t   = PyFloat_FromDouble(cur->value);
-        if (t == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
-        }
-
-        for (; cur->name != NULL; cur++) {
-            if (PyModule_AddObject(m, cur->name, t) < 0) { // LCOV_BR_EXCL_LINE
-                return NULL;                               // LCOV_EXCL_LINE
-            }
-        }
-    }
-
-    {
-        struct objc_string_values* cur = objc_string_values;
-        for (; cur->name != NULL; cur++) {
-            if (PyModule_AddStringConstant( // LCOV_BR_EXCL_LINE
-                    m, cur->name, cur->value)
-                < 0) {
-                return NULL; // LCOV_EXCL_LINE
-            }
-        }
-    }
-
-    {
-        struct objc_typestr_values* cur = objc_typestr_values;
-
-        for (; cur->name != NULL; cur++) {
-            PyObject* t = PyBytes_FromStringAndSize(&cur->value, 1);
-            if (t == NULL) { // LCOV_BR_EXCL_LINE
-                return NULL; // LCOV_EXCL_LINE
-            }
-            if (PyModule_AddObject(m, cur->name, t)) { // LCOV_BR_EXCL_LINE
-                return NULL;                           // LCOV_EXCL_LINE
-            }
-        }
-    }
-
-    {
-        struct objc_typestr_long_values* cur = objc_typestr_long_values;
-
-        for (; cur->name != NULL; cur++) {
-            PyObject* t = PyBytes_FromString(cur->value);
-            if (t == NULL) { // LCOV_BR_EXCL_LINE
-                return NULL; // LCOV_EXCL_LINE
-            }
-            if (PyModule_AddObject(m, cur->name, t)) { // LCOV_BR_EXCL_LINE
-                return NULL;                           // LCOV_EXCL_LINE
-            }
-        }
-    }
-
-    PyObjCPointerWrapper_Init();
-
-    /* Issue #298, at least in Xcode 11.3 the following code results in
-     * a type encoding of "^{NSObject=#}" instead of "@" for the property:
-     *
-     * typedef NSObject<NSObject> ObjectClass;
-     *
-     * ...
-     * @property ObjectClass* value;
-     * ...
-     */
-    if (PyObjCPointerWrapper_RegisterID( // LCOV_BR_EXCL_LINE
-            "NSObject", "^{NSObject=#}")
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-
-#if PY_VERSION_HEX < 0x03070000
-    PyEval_InitThreads();
-#endif
 
     /* XXX: Why is this needed? */
     if (![NSThread isMultiThreaded]) {
@@ -2460,19 +2372,12 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     }
 
     [initReleasePool release];
+
     /* Allocate an auto-release pool for our own use, this avoids numerous
      * warnings during startup of a python script.
      */
     global_release_pool = nil;
     [OC_NSAutoreleasePoolCollector newAutoreleasePool];
-
-#ifndef Py_ARG_NSInteger
-#error "No Py_ARG_NSInteger"
-#endif
-
-#ifndef Py_ARG_NSUInteger
-#error "No Py_ARG_NSUInteger"
-#endif
 
     /*
      * Archives created with Python 2.x can contain instances of

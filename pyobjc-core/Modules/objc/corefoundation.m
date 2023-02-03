@@ -261,7 +261,7 @@ static const char* _Nullable gNames[] = {
 };
 
 int
-PyObjCCFType_Setup(void)
+PyObjCCFType_Setup(PyObject* module __attribute__((__unused__)))
 {
 #ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
     static char encodingBuf[128];

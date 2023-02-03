@@ -322,7 +322,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
 }
 
 int
-PyObjC_setup_nsinvocation(void)
+PyObjC_setup_nsinvocation(PyObject* module __attribute__((__unused__)))
 {
     Class classNSInvocation = objc_lookUpClass("NSInvocation");
 

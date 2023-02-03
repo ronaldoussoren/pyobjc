@@ -408,7 +408,7 @@ mkimp_NSObject_retain(PyObject*              callable,
 }
 
 int
-PyObjC_setup_nsobject(void)
+PyObjC_setup_nsobject(PyObject* module __attribute__((__unused__)))
 {
     int r;
 

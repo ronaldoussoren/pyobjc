@@ -7,6 +7,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+PyObject* PyObjCSelector_Type;
+PyObject* PyObjCNativeSelector_Type;
+PyObject* PyObjCPythonSelector_Type;
+
 static char* _Nullable pysel_default_signature(SEL selector, PyObject* callable);
 static PyObject* _Nullable pysel_new(PyTypeObject* type, PyObject* _Nullable args,
                                      PyObject* _Nullable kwds);
@@ -346,7 +350,11 @@ sel_dealloc(PyObject* object)
         PyMem_Free((char*)self->sel_native_signature);
         self->sel_native_signature = NULL;
     }
-    Py_TYPE(object)->tp_free(object);
+    PyTypeObject* tp = Py_TYPE(object);
+    tp->tp_free(object);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 PyDoc_STRVAR(base_selector_type_doc,
@@ -381,17 +389,28 @@ PyDoc_STRVAR(base_selector_type_doc,
              "  True if this is a required method in an informal protocol, False\n"
              "  otherwise. The default value is 'True'. This argument is only used\n"
              "  when defining an 'informal_protocol' object.\n");
-PyTypeObject PyObjCSelector_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.selector",
-    .tp_basicsize                                  = sizeof(PyObjCSelector),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = sel_dealloc,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_doc                                        = base_selector_type_doc,
-    .tp_methods                                    = sel_methods,
-    .tp_getset                                     = base_getset,
-    .tp_new                                        = pysel_new,
+static PyType_Slot sel_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&sel_dealloc},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_doc, .pfunc = (void*)&base_selector_type_doc},
+    {.slot = Py_tp_methods, .pfunc = (void*)&sel_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&base_getset},
+    {.slot = Py_tp_new, .pfunc = (void*)&pysel_new},
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec sel_spec = {
+    .name      = "objc.selector",
+    .basicsize = sizeof(PyObjCSelector),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_BASETYPE,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = sel_slots,
 };
 
 /*
@@ -772,7 +791,7 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
             obj = NULL;
         }
     }
-    result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);
+    result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -887,26 +906,50 @@ static PyGetSetDef objcsel_getset[] = {{
                                            .name = NULL /* SENTINEL */
                                        }};
 
-PyTypeObject PyObjCNativeSelector_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.native_selector",
-    .tp_basicsize                                  = sizeof(PyObjCNativeSelector),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = objcsel_dealloc,
-    .tp_repr                                       = objcsel_repr,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags = Py_TPFLAGS_DEFAULT
-                | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
-    .tp_vectorcall_offset = offsetof(PyObjCNativeSelector, base.sel_vectorcall),
-    .tp_call              = PyVectorcall_Call,
-#else
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_call  = objcsel_call,
+static PyMemberDef objcsel_members[] = {
+    {
+        .name   = "__vectorcalloffset__",
+        .type   = T_PYSSIZET,
+        .offset = offsetof(PyObjCNativeSelector, base.sel_vectorcall),
+        .flags  = READONLY,
+    },
+    {
+        .name = NULL /* SENTINEL */
+    }};
 #endif
-    .tp_richcompare = objcsel_richcompare,
-    .tp_getset      = objcsel_getset,
-    .tp_base        = &PyObjCSelector_Type,
-    .tp_descr_get   = objcsel_descr_get,
+
+static PyType_Slot objcsel_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&objcsel_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&objcsel_repr},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_richcompare, .pfunc = (void*)&objcsel_richcompare},
+    {.slot = Py_tp_getset, .pfunc = (void*)&objcsel_getset},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)&objcsel_descr_get},
+#if PY_VERSION_HEX >= 0x03090000
+    {.slot = Py_tp_members, .pfunc = (void*)&objcsel_members},
+    {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+#else
+    {.slot = Py_tp_call, .pfunc = (void*)&objcsel_call},
+#endif
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec objcsel_spec = {
+    .name      = "objc.native_selector",
+    .basicsize = sizeof(PyObjCNativeSelector),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_HAVE_VECTORCALL,
+
+#elif PY_VERSION_HEX >= 0x03090000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = objcsel_slots,
 };
 
 PyObject*
@@ -1055,7 +1098,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
         return NULL;
     }
 
-    result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);
+    result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
@@ -1154,7 +1197,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     if (signature == NULL) // LCOV_BR_EXCL_LINE
         return NULL;       // LCOV_EXCL_LINE
 
-    result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
+    result = PyObject_New(PyObjCPythonSelector, (PyTypeObject*)PyObjCPythonSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
     result->base.sel_self  = NULL;
@@ -1765,7 +1808,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
         }
     }
 
-    result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
+    result = PyObject_New(PyObjCPythonSelector, (PyTypeObject*)PyObjCPythonSelector_Type);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -1879,27 +1922,51 @@ static PyGetSetDef pysel_getset[] = {{
                                          .name = NULL /* SENTINEL */
                                      }};
 
-PyTypeObject PyObjCPythonSelector_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.python_selector",
-    .tp_basicsize                                  = sizeof(PyObjCPythonSelector),
-    .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = pysel_dealloc,
-    .tp_repr                                       = pysel_repr,
-    .tp_hash                                       = pysel_hash,
-#if PY_VERSION_HEX < 0x03090000
-    .tp_call  = pysel_call,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-#else
-    .tp_call = PyVectorcall_Call,
-    .tp_flags = Py_TPFLAGS_DEFAULT
-                | Py_TPFLAGS_HAVE_VECTORCALL, // | Py_TPFLAGS_METHOD_DESCRIPTOR,
-    .tp_vectorcall_offset = offsetof(PyObjCPythonSelector, base.sel_vectorcall),
+#if PY_VERSION_HEX >= 0x03090000
+static PyMemberDef pysel_members[] = {
+    {
+        .name   = "__vectorcalloffset__",
+        .type   = T_PYSSIZET,
+        .offset = offsetof(PyObjCPythonSelector, base.sel_vectorcall),
+        .flags  = READONLY,
+    },
+    {
+        .name = NULL /* SENTINEL */
+    }};
 #endif
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_richcompare = pysel_richcompare,
-    .tp_getset      = pysel_getset,
-    .tp_base        = &PyObjCSelector_Type,
-    .tp_descr_get   = pysel_descr_get,
+
+static PyType_Slot pysel_slots[] = {
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&pysel_dealloc},
+    {.slot = Py_tp_repr, .pfunc = (void*)&pysel_repr},
+    {.slot = Py_tp_hash, .pfunc = (void*)&pysel_hash},
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_richcompare, .pfunc = (void*)&pysel_richcompare},
+    {.slot = Py_tp_getset, .pfunc = (void*)&pysel_getset},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)pysel_descr_get},
+#if PY_VERSION_HEX >= 0x03090000
+    {.slot = Py_tp_members, .pfunc = (void*)&pysel_members},
+    {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+#else
+    {.slot = Py_tp_call, .pfunc = (void*)&pysel_call},
+#endif
+
+    {0, NULL} /* sentinel */
+};
+
+static PyType_Spec pysel_spec = {
+    .name      = "objc.python_selector",
+    .basicsize = sizeof(PyObjCPythonSelector),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_HAVE_VECTORCALL,
+
+#elif PY_VERSION_HEX >= 0x03090000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+    .slots = pysel_slots,
 };
 
 const char* _Nullable PyObjCSelector_Signature(PyObject* obj)
@@ -1965,6 +2032,47 @@ PyObject* _Nullable PyObjCSelector_Copy(PyObject* selector)
         PyErr_SetString(PyExc_TypeError, "copy non-selector");
         return NULL;
     }
+}
+
+int
+PyObjCSelector_Setup(PyObject* module)
+{
+    PyObject* tmp = PyType_FromSpec(&sel_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCSelector_Type = tmp;
+
+    if (PyModule_AddObject(module, "selector", PyObjCSelector_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCSelector_Type);
+
+    tmp = PyType_FromSpecWithBases(&pysel_spec, PyObjCSelector_Type);
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
+    }
+    PyObjCPythonSelector_Type = tmp;
+
+    if (PyModule_AddObject(module, "python_selector", PyObjCPythonSelector_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCPythonSelector_Type);
+
+    tmp = PyType_FromSpecWithBases(&objcsel_spec, PyObjCSelector_Type);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCNativeSelector_Type = tmp;
+
+    if (PyModule_AddObject(module, "native_selector", PyObjCNativeSelector_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCNativeSelector_Type);
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

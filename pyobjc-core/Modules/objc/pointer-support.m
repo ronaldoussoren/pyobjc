@@ -295,7 +295,7 @@ FILE_Convert(PyObject* obj, void* pObj)
 }
 
 int
-PyObjCPointerWrapper_Init(void)
+PyObjCPointerWrapper_Init(PyObject* module __attribute__((__unused__)))
 {
     int r = 0;
 
@@ -312,6 +312,21 @@ PyObjCPointerWrapper_Init(void)
     r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*), FILE_New, FILE_Convert);
     if (r == -1)   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
+
+    /* Issue #298, at least in Xcode 11.3 the following code results in
+     * a type encoding of "^{NSObject=#}" instead of "@" for the property:
+     *
+     * typedef NSObject<NSObject> ObjectClass;
+     *
+     * ...
+     * @property ObjectClass* value;
+     * ...
+     */
+    if (PyObjCPointerWrapper_RegisterID( // LCOV_BR_EXCL_LINE
+            "NSObject", "^{NSObject=#}")
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
 
     return 0;
 }

@@ -1349,7 +1349,7 @@ mkimp_NSCoder_encodeBytes_length_forKey_(PyObject*              callable,
 }
 
 int
-PyObjC_setup_nscoder(void)
+PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
 {
     Class classNSCoder = objc_lookUpClass("NSCoder");
 

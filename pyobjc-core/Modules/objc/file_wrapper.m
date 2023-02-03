@@ -43,7 +43,11 @@ file_dealloc(PyObject* self)
     /* Don't close the file, we don't own the
      * FILE* reference.
      */
+    PyTypeObject* tp = Py_TYPE(self);
     PyObject_Free(self);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyObject* _Nullable file_close(PyObject* _self)

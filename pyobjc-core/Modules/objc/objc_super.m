@@ -12,8 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#ifndef Py_HAVE_LOCAL_LOOKUP
-
 /*
  * NOTE: This is a minor tweak of Python 2.5's super_getattro and is a rather
  * crude hack.
@@ -164,43 +162,56 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
     return PyObject_GenericGetAttr(self, name);
 }
 
-PyTypeObject PyObjCSuper_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.super",
-    .tp_basicsize                                  = sizeof(superobject),
-    .tp_itemsize                                   = 0,
-    .tp_getattro                                   = super_getattro,
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
-    .tp_alloc = PyType_GenericAlloc,
-    .tp_new   = PyType_GenericNew,
-    .tp_free  = PyObject_GC_Del,
-    .tp_base  = &PySuper_Type,
+static void
+super_dealloc(PyObject* obj)
+{
+    Py_CLEAR(((superobject*)obj)->type);
+    Py_CLEAR(((superobject*)obj)->obj);
+    Py_CLEAR(((superobject*)obj)->obj_type);
+
+    PyTypeObject* tp = Py_TYPE(obj);
+    tp->tp_free(obj);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
+}
+
+static PyType_Slot super_slots[] = {
+    {.slot = Py_tp_getattro, .pfunc = (void*)&super_getattro},
+    {.slot = Py_tp_dealloc, .pfunc = (void*)&super_dealloc},
+    {.slot = Py_tp_doc, .pfunc = NULL},
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec super_spec = {
+    .name      = "objc.super",
+    .basicsize = sizeof(superobject),
+    .itemsize  = 0,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .slots     = super_slots,
+};
+
+static PyObject* PyObjCSuper_Type;
 
 int
 PyObjCSuper_Setup(PyObject* module)
 {
     PyObjC_Assert(sizeof(superobject) == PySuper_Type.tp_basicsize, -1);
 
-    PyObjCSuper_Type.tp_doc      = PySuper_Type.tp_doc;
-    PyObjCSuper_Type.tp_init     = PySuper_Type.tp_init;
-    PyObjCSuper_Type.tp_alloc    = PySuper_Type.tp_alloc;
-    PyObjCSuper_Type.tp_new      = PySuper_Type.tp_new;
-    PyObjCSuper_Type.tp_dealloc  = PySuper_Type.tp_dealloc;
-    PyObjCSuper_Type.tp_free     = PySuper_Type.tp_free;
-    PyObjCSuper_Type.tp_traverse = PySuper_Type.tp_traverse;
-    if (PyType_Ready(&PyObjCSuper_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                             // LCOV_EXCL_LINE
+    super_slots[2].pfunc = (void*)(PySuper_Type.tp_doc);
+
+    PyObject* tmp = PyType_FromSpecWithBases(&super_spec, (PyObject*)&PySuper_Type);
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
+    PyObjCSuper_Type = tmp;
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "super", (PyObject*)&PyObjCSuper_Type)
+            module, "super", PyObjCSuper_Type)
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
-    Py_INCREF((PyObject*)&PyObjCSuper_Type);
-
+    Py_INCREF(PyObjCSuper_Type);
     return 0;
 }
-
-#endif /* !Py_HAVE_LOCAL_LOOKUP */
 
 NS_ASSUME_NONNULL_END

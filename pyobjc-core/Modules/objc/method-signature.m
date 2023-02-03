@@ -160,7 +160,11 @@ sig_dealloc(PyObject* _self)
         }
         PyMem_Free(self->argtype[i]);
     }
+    PyTypeObject* tp = Py_TYPE(self);
     PyObject_Free(self);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 #if PY_VERSION_HEX < 0x030a0000

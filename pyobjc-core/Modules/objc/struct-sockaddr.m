@@ -21,7 +21,7 @@ static PyObject* socket_error    = NULL;
 static PyObject* socket_gaierror = NULL;
 
 int
-PyObjC_SockAddr_Setup(void)
+PyObjC_SockAddr_Setup(PyObject* module __attribute__((__unused__)))
 {
     /* XXX: Condider moving setting these through options.m */
     PyObject* mod;

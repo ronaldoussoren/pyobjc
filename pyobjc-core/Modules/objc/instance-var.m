@@ -25,7 +25,11 @@ ivar_dealloc(PyObject* _ivar)
     if (ivar->type) {
         PyMem_Free(ivar->type);
     }
-    Py_TYPE(ivar)->tp_free((PyObject*)ivar);
+    PyTypeObject* tp = Py_TYPE(ivar);
+    tp->tp_base->tp_dealloc(_ivar);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyObject* _Nullable ivar_repr(PyObject* _self)
@@ -507,8 +511,6 @@ static PyType_Slot ivar_slots[] = {
     {.slot = Py_tp_descr_get, .pfunc = (void*)&ivar_descr_get},
     {.slot = Py_tp_descr_set, .pfunc = (void*)&ivar_descr_set},
     {.slot = Py_tp_init, .pfunc = (void*)&ivar_init},
-    {.slot = Py_tp_alloc, .pfunc = (void*)&PyType_GenericAlloc},
-    {.slot = Py_tp_new, .pfunc = (void*)&PyType_GenericNew},
 
     {0, NULL} /* sentinel */
 };

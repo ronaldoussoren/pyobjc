@@ -545,7 +545,7 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
 }
 
 int
-PyObjCBlock_Setup(void)
+PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
 {
     Class StackBlock;
     Class GlobalBlock = objc_lookUpClass("__NSGlobalBlock__");

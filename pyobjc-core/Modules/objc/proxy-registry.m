@@ -13,7 +13,7 @@ static NSMapTable* _Nonnull objc_proxies;
 int PyObjC_weakref_proxy_registry = 0;
 
 int
-PyObjC_InitProxyRegistry(void)
+PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
 {
     python_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                       PyObjCUtil_PointerValueCallBacks, 0);

@@ -25,7 +25,11 @@ proto_dealloc(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     PyObjC_UnregisterPythonProxy(self->objc, object);
-    Py_TYPE(object)->tp_free(object);
+    PyTypeObject* tp = Py_TYPE(object);
+    tp->tp_free(object);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyObject* _Nullable proto_repr(PyObject* object)

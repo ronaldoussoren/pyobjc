@@ -383,6 +383,16 @@ improvements as described below).
 
   * ``objc.IMP``
 
+  * ``objc.FSRef``
+
+  * ``objc.selector``
+
+  * ``objc.native_selector``
+
+  * ``objc.python_selector``
+
+  * all types created by ``objc.createStructType``
+
   * ``CoreAudio.AudioBuffer``
 
   * ``CoreAudio.AudioBufferList``
@@ -410,6 +420,14 @@ improvements as described below).
 
 * Fixed bug that could result in a crash when the proxy for a Python iterator
   ended up being deallocated after the Python interpreter is finalized.
+
+* Code cleanup for ``objc._objc`` continues, in this version the module initialisation
+  code was much simplied, most of it is now table-driven. This has no user visible
+  effects.
+
+* Types created by ``objc.createStructType`` now have a (read-only) ``__packed__`` attribute
+  that's ``-1`` if the C struct has default packing, and positive integer when
+  the C struct has some other packing.
 
 Version 9.0.1
 -------------

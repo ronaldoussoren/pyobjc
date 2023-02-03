@@ -30,12 +30,12 @@ typedef struct {
     PyObject_HEAD
 
     FSRef ref;
-} PyObjC_FSRefObject;
+} PyObjCFSRefObject;
 
 static PyObject* _Nullable fsref_as_bytes(PyObject* ref, void* _Nullable closure
                                           __attribute__((__unused__)))
 {
-    return PyBytes_FromStringAndSize((char*)&((PyObjC_FSRefObject*)ref)->ref,
+    return PyBytes_FromStringAndSize((char*)&((PyObjCFSRefObject*)ref)->ref,
                                      sizeof(FSRef));
 }
 
@@ -49,7 +49,7 @@ static PyObject* _Nullable fsref_as_path(PyObject* ref)
     OSStatus rc;
     UInt8    buffer[1024];
 
-    rc = FSRefMakePath(&((PyObjC_FSRefObject*)ref)->ref, buffer, sizeof(buffer));
+    rc = FSRefMakePath(&((PyObjCFSRefObject*)ref)->ref, buffer, sizeof(buffer));
     if (rc != 0) {
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
 
@@ -87,6 +87,16 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
     return PyObjC_decode_fsref(&result);
 }
 
+#if PY_VERSION_HEX < 0x030a0000
+static PyObject* _Nullable fsref_new(PyObject* self __attribute__((__unused__)),
+                                     PyObject* args __attribute__((__unused__)),
+                                     PyObject* kwds __attribute__((__unused__)))
+{
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.FSRef' instances");
+    return NULL;
+}
+#endif
+
 static PyGetSetDef fsref_getset[] = {{
                                          .name = "data",
                                          .get  = fsref_as_bytes,
@@ -116,22 +126,39 @@ static PyMethodDef fsref_methods[] = {
         .ml_name = NULL /* SENTINEL */
     }};
 
-PyTypeObject PyObjC_FSRefType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FSRef",
-    .tp_basicsize                                  = sizeof(PyObjC_FSRefObject),
-    .tp_itemsize                                   = 0,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_setattro                                   = PyObject_GenericSetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_methods                                    = fsref_methods,
-    .tp_getset                                     = fsref_getset,
+static PyType_Slot fsref_slots[] = {
+    {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
+    {.slot = Py_tp_setattro, .pfunc = (void*)&PyObject_GenericSetAttr},
+    {.slot = Py_tp_methods, .pfunc = (void*)&fsref_methods},
+    {.slot = Py_tp_getset, .pfunc = (void*)&fsref_getset},
+#if PY_VERSION_HEX < 0x030a0000
+    {.slot = Py_tp_new, .pfunc = (void*)&fsref_new},
+#endif
+
+    {0, NULL} /* sentinel */
 };
+
+static PyType_Spec fsref_spec = {
+    .name      = "objc.FSRef",
+    .basicsize = sizeof(PyObjCFSRefObject),
+    .itemsize  = 0,
+#if PY_VERSION_HEX >= 0x030a0000
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+#else
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+#endif
+
+    .slots = fsref_slots,
+};
+
+PyObject* PyObjCFSRef_Type;
 
 int
 PyObjC_encode_fsref(PyObject* value, void* buffer)
 {
-    if (PyObjC_FSRefCheck(value)) {
-        *(FSRef*)buffer = ((PyObjC_FSRefObject*)value)->ref;
+    if (PyObjCFSRef_Check(value)) {
+        *(FSRef*)buffer = ((PyObjCFSRefObject*)value)->ref;
         return 0;
     }
 
@@ -141,13 +168,31 @@ PyObjC_encode_fsref(PyObject* value, void* buffer)
 
 PyObject* _Nullable PyObjC_decode_fsref(const void* buffer)
 {
-    PyObjC_FSRefObject* result = PyObject_New(PyObjC_FSRefObject, &PyObjC_FSRefType);
+    PyObjCFSRefObject* result =
+        PyObject_New(PyObjCFSRefObject, (PyTypeObject*)PyObjCFSRef_Type);
 
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
     result->ref = *(const FSRef*)buffer;
     return (PyObject*)result;
+}
+
+int
+PyObjCFSRef_Setup(PyObject* module)
+{
+    PyObject* tmp = PyType_FromSpec(&fsref_spec);
+    if (tmp == NULL) {
+        return -1;
+    }
+    PyObjCFSRef_Type = tmp;
+
+    if (PyModule_AddObject(module, "FSRef", PyObjCFSRef_Type)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    Py_INCREF(PyObjCFSRef_Type);
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,7 @@ extern void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature,
                                           PyObject*              callable)
     __attribute__((__warn_unused_result__));
 extern void PyObjCBlock_Release(void* _block);
-extern int  PyObjCBlock_Setup(void) __attribute__((__warn_unused_result__));
+extern int  PyObjCBlock_Setup(PyObject* module) __attribute__((__warn_unused_result__));
 extern PyObject* _Nullable PyObjCBlock_Call(PyObject* self, PyObject* args)
     __attribute__((__warn_unused_result__));
 

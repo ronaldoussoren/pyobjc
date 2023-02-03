@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern int PyObjC_weakref_proxy_registry;
 
-extern int PyObjC_InitProxyRegistry(void);
+extern int PyObjC_InitProxyRegistry(PyObject*);
 
 extern int PyObjC_RegisterPythonProxy(id original, PyObject* proxy);
 extern int PyObjC_RegisterObjCProxy(PyObject* original, id proxy);

@@ -46,7 +46,11 @@ ptr_dealloc(PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
     Py_XDECREF(self->typestr);
+    PyTypeObject* tp = Py_TYPE(self);
     PyObject_Free((PyObject*)self);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyMemberDef ptr_members[] = {{

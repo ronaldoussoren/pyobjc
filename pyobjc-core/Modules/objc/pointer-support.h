@@ -19,7 +19,7 @@ extern int PyObjCPointerWrapper_RegisterCF(const char*);
 extern PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char*, const void*);
 
 extern int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);
-extern int PyObjCPointerWrapper_Init(void);
+extern int PyObjCPointerWrapper_Init(PyObject*);
 extern int PyObjCPointerWrapper_HaveWrapper(const char*);
 
 extern const char* _Nullable PyObjCPointerWrapper_Describe(const char* signature);

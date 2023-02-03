@@ -202,7 +202,7 @@ mkimp_NSMutableData_mutableBytes(PyObject* callable, PyObjCMethodSignature* meth
 }
 
 int
-PyObjC_setup_nsdata(void)
+PyObjC_setup_nsdata(PyObject* module __attribute__((__unused__)))
 {
     Class classNSData        = objc_lookUpClass("NSData");
     Class classNSMutableData = objc_lookUpClass("NSMutableData");

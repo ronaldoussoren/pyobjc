@@ -15158,7 +15158,7 @@ mkimp_simd_quatf_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 int
-PyObjC_setup_simd(void)
+PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE

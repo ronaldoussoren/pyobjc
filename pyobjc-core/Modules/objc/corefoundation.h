@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjC_NSCFTypeClass;
 
-extern int PyObjCCFType_Setup(void);
+extern int PyObjCCFType_Setup(PyObject* module);
 extern PyObject* _Nullable PyObjCCFType_New(char*, char*, CFTypeID);
 extern PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char*, void*);
 extern PyObject* _Nullable PyObjCCF_NewSpecialFromTypeID(CFTypeID, void*);

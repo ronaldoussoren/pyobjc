@@ -55,14 +55,15 @@ typedef struct {
     Py_ssize_t     numoutput; /* XXX: To be removed, only set and never read */
 } PyObjCPythonSelector;
 
-extern PyTypeObject PyObjCSelector_Type;
-extern PyTypeObject PyObjCNativeSelector_Type;
-extern PyTypeObject PyObjCPythonSelector_Type;
-#define PyObjCSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCSelector_Type)
+extern PyObject* PyObjCSelector_Type;
+extern PyObject* PyObjCNativeSelector_Type;
+extern PyObject* PyObjCPythonSelector_Type;
+#define PyObjCSelector_Check(obj)                                                        \
+    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCSelector_Type)
 #define PyObjCNativeSelector_Check(obj)                                                  \
-    PyObject_TypeCheck(obj, &PyObjCNativeSelector_Type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCNativeSelector_Type)
 #define PyObjCPythonSelector_Check(obj)                                                  \
-    PyObject_TypeCheck(obj, &PyObjCPythonSelector_Type)
+    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCPythonSelector_Type)
 
 extern PyObject* _Nullable PyObjCSelector_Copy(PyObject* obj);
 extern const char* _Nullable PyObjCSelector_Signature(PyObject* obj);
@@ -89,6 +90,8 @@ extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
                                               const char* _Nullable signature,
                                               int class_method, Class _Nullable class);
 extern SEL PyObjCSelector_DefaultSelector(const char* methname);
+
+extern int PyObjCSelector_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

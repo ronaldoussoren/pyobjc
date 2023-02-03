@@ -50,7 +50,11 @@ unic_dealloc(PyObject* obj)
 
     [uobj->nsstr release];
 
+    PyTypeObject* tp = Py_TYPE(obj);
     PyUnicode_Type.tp_dealloc(obj);
+#if PY_VERSION_HEX >= 0x030a0000
+    Py_DECREF(tp);
+#endif
 }
 
 static PyObject* _Nullable unic_nsstring(PyObject* self)
@@ -182,7 +186,6 @@ static PyType_Slot unic_slots[] = {
 #if PY_VERSION_HEX < 0x030a0000
     {.slot = Py_tp_new, .pfunc = (void*)&unic_new},
 #endif
-    {.slot = Py_tp_base, .pfunc = (void*)&PyUnicode_Type},
     {0, NULL} /* sentinel */
 };
 
@@ -488,7 +491,7 @@ error:
 int
 PyObjCUnicode_Setup(PyObject* module)
 {
-    PyObject* tmp = PyType_FromSpec(&unic_spec);
+    PyObject* tmp = PyType_FromSpecWithBases(&unic_spec, (PyObject*)&PyUnicode_Type);
     if (tmp == NULL) {
         return -1;
     }
