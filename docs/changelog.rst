@@ -429,6 +429,11 @@ improvements as described below).
   that's ``-1`` if the C struct has default packing, and positive integer when
   the C struct has some other packing.
 
+* :issue:`382`: Add bindings for APIs defined in header ``xpc/xpc.h``
+
+  This is a low-level API to perform RPCs using the XPC protocol on macOS.
+
+
 Version 9.0.1
 -------------
 

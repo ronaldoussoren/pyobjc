@@ -609,6 +609,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | WeatherKit                                                                           | -                                                    | Swift only framework.                   |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`xpc </apinotes/xpc>`                                                           | `pyobjc-framework-libxpc`_                           |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 
 Frameworks that are marked as "Will not be wrapped" will not be wrapped, mostly because these frameworks are not
 useful for Python programmers. Frameworks that are marked with "Not wrapped yet" will be wrapped in some future
@@ -782,6 +784,7 @@ prioritizing work.
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
+.. _`pyobjc-framework-libxpc`: https://pypi.org/project/pyobjc-framework-libxpc/
 .. _`pyobjc-framework-SafetyKit`: https://pypi.org/project/pyobjc-framework-SafetyKit/
 .. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/
 .. _`pyobjc-framework-IOBluetooth`: https://pypi.org/project/pyobjc-framework-IOBluetooth/

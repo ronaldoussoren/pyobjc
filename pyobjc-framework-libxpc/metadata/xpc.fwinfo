@@ -1,0 +1,552 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "typed_enum": {
+   "xpc_activity_state_t": { "type": "q" },
+   "xpc_session_create_flags_t": { "type": "q" }
+  },
+  "enum": {
+   "XPC_ARRAY_APPEND": { "value": 18446744073709551615 },
+   "XPC_API_VERSION": { "ignore": true },
+   "XPC_CONNECTION_MACH_SERVICE_LISTENER": { "value": 1 },
+   "XPC_CONNECTION_MACH_SERVICE_PRIVILEGED": { "value": 2 }
+  },
+  "externs": {
+   "_xpc_type_activity": { "ignore": true },
+   "_xpc_type_array": { "ignore": true },
+   "_xpc_type_bool": { "ignore": true },
+   "_xpc_type_connection": { "ignore": true },
+   "_xpc_type_data": { "ignore": true },
+   "_xpc_type_date": { "ignore": true },
+   "_xpc_type_dictionary": { "ignore": true },
+   "_xpc_type_double": { "ignore": true },
+   "_xpc_type_endpoint": { "ignore": true },
+   "_xpc_type_error": { "ignore": true },
+   "_xpc_type_fd": { "ignore": true },
+   "_xpc_type_int64": { "ignore": true },
+   "_xpc_type_null": { "ignore": true },
+   "_xpc_type_rich_error": { "ignore": true },
+   "_xpc_type_session": { "ignore": true },
+   "_xpc_type_shmem": { "ignore": true },
+   "_xpc_type_string": { "ignore": true },
+   "_xpc_type_uint64": { "ignore": true },
+   "_xpc_type_uuid": { "ignore": true },
+   "_xpc_bool_false": { "ignore": true },
+   "_xpc_bool_true": { "ignore": true },
+   "_xpc_error_connection_interrupted": { "ignore": true },
+   "_xpc_error_connection_invalid": { "ignore": true },
+   "_xpc_error_key_description": { "ignore": true },
+   "_xpc_error_peer_code_signing_requirement": { "ignore": true },
+   "_xpc_error_termination_imminent": { "ignore": true },
+   "_xpc_event_key_name": { "ignore": true },
+   "XPC_ACTIVITY_REQUIRE_BATTERY_LEVEL": { "ignore": true },
+   "XPC_ACTIVITY_INTERVAL": { "ignore": true },
+   "XPC_ACTIVITY_REPEATING": { "ignore": true },
+   "XPC_ACTIVITY_DELAY": { "ignore": true },
+   "XPC_ACTIVITY_GRACE_PERIOD": { "ignore": true },
+   "XPC_ACTIVITY_REQUIRE_HDD_SPINNING": { "ignore": true },
+   "XPC_ACTIVITY_PRIORITY": { "ignore": true },
+   "XPC_ACTIVITY_PRIORITY_MAINTENANCE": { "ignore": true },
+   "XPC_ACTIVITY_PRIORITY_UTILITY": { "ignore": true },
+   "XPC_ACTIVITY_ALLOW_BATTERY": { "ignore": true },
+   "XPC_ACTIVITY_REQUIRE_SCREEN_SLEEP": { "ignore": true },
+   "XPC_ACTIVITY_PREVENT_DEVICE_SLEEP": { "ignore": true },
+   "XPC_ACTIVITY_CHECK_IN": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_15_MIN": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_1_DAY": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_1_HOUR": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_1_MIN": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_30_MIN": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_4_HOURS": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_5_MIN": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_7_DAYS": {"ignore": true},
+   "XPC_ACTIVITY_INTERVAL_8_HOURS": {"ignore": true}
+  },
+  "functions": {
+   "xpc_retain": { "ignore": true },
+   "xpc_release": { "ignore": true },
+   "xpc_activity_copy_criteria": {
+    "retval": { "already_retained": true }
+   },
+   "xpc_uuid_create": {
+    "retval": { "already_retained": true }
+   },
+   "xpc_endpoint_create": {
+    "retval": { "already_retained": true }
+   },
+   "xpc_activity_register": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_array_apply": {
+    "args": {
+     "1": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "Q" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
+    }
+   },
+   "xpc_session_send_message_with_reply_async": {
+    "args": {
+     "2": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_connection_send_message_with_reply": {
+    "args": {
+     "3": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_dictionary_apply": {
+    "args": {
+     "1": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
+    }
+   },
+   "xpc_connection_set_event_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_session_set_cancel_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_session_set_incoming_message_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_activity_unregister": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_array_create": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   },
+   "xpc_array_get_data": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    },
+    "retval": { "c_array_length_in_arg": 2 }
+   },
+   "xpc_array_get_string": {
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
+   },
+   "xpc_array_get_uuid": {
+    "retval": { "c_array_of_fixed_length": 16, "type_override": "^v" }
+   },
+   "xpc_array_set_data": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+    }
+   },
+   "xpc_array_set_string": {
+    "args": {
+     "2": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
+    }
+   },
+   "xpc_array_set_uuid": {
+    "args": {
+     "2": {}
+    }
+   },
+   "xpc_connection_create": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_connection_create_mach_service": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_connection_get_context": {
+    "retval": {}
+   },
+   "xpc_connection_get_name": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "xpc_connection_set_context": {
+    "args": {
+     "1": {}
+    }
+   },
+   "xpc_connection_set_finalizer_f": {
+    "args": {
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "xpc_connection_set_peer_code_signing_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_connection_create_from_endpoint": { "retval": { "already_retained": true }},
+   "xpc_copy": { "retval": { "already_retained": true }},
+   "xpc_null_create": { "retval": { "already_retained": true }},
+   "xpc_bool_create": { "retval": { "already_retained": true }},
+   "xpc_int64_create": { "retval": { "already_retained": true }},
+   "xpc_uint64_create": { "retval": { "already_retained": true }},
+   "xpc_double_create": { "retval": { "already_retained": true }},
+   "xpc_date_create": { "retval": { "already_retained": true }},
+   "xpc_fd_create": { "retval": { "already_retained": true }},
+   "xpc_shmem_create": { "retval": { "already_retained": true }},
+   "xpc_data_create_with_dispatch_data": { "retval": { "already_retained": true }},
+   "xpc_date_create_from_current": { "retval": { "already_retained": true }},
+   "xpc_array_create_empty": { "retval": { "already_retained": true }},
+   "xpc_array_create_connection": { "retval": { "already_retained": true }},
+   "xpc_dictionary_create_empty": { "retval": { "already_retained": true }},
+   "xpc_dictionary_create_reply": { "retval": { "already_retained": true }},
+   "xpc_copy_description": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true, "free_result": true }
+   },
+   "xpc_data_create": {
+    "args": {
+     "0": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 1}
+    },
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "xpc_data_get_bytes": {
+    "args": {
+     "1": { "type_modifier": "o", "c_array_length_in_arg": 3 }
+    }
+   },
+   "xpc_data_get_bytes_ptr": {
+    "retval": { "c_array_of_variable_length": true }
+   },
+   "xpc_debugger_api_misuse_info": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "xpc_dictionary_create": {
+    "ignore": true,
+    "args": {
+     "0": { "c_array_length_in_arg": 2, "type_modifier": "n" },
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_dictionary_create_connection": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_dictionary_dup_fd": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_array": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_bool": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_data": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
+    },
+    "retval": { "c_array_length_in_arg": 2}
+   },
+   "xpc_dictionary_get_date": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_dictionary": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_double": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_int64": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_string": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
+   },
+   "xpc_dictionary_get_uint64": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_get_uuid": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "c_array_of_fixed_length": 16, "type_override": "^v" }
+   },
+   "xpc_dictionary_get_value": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_bool": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_connection": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_data": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3}
+    }
+   },
+   "xpc_dictionary_set_date": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_double": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_fd": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_int64": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_string": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_uint64": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_set_uuid": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": {}
+    }
+   },
+   "xpc_dictionary_set_value": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_get_type": {
+    "retval": {}
+   },
+   "xpc_main": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "xpc_rich_error_copy_description": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true, "free_result": true }
+   },
+   "xpc_session_activate": {
+    "args": {
+     "1": { "type_modifier": "o"}
+    }
+   },
+   "xpc_session_copy_description": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true, "free_result": true }
+   },
+   "xpc_session_create_mach_service": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "3": { "type_modifier": "o" }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_session_create_xpc_service": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "3": { "type_modifier": "o" }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_session_send_message": {
+    "retval": { "already_retained": true }
+   },
+   "xpc_session_send_message_with_reply_sync": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    },
+    "retval": { "already_retained": true }
+   },
+   "xpc_set_event_stream_handler": {
+    "args": {
+     "0": { "type_override" : "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": {
+      "callable": {
+       "args": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "xpc_shmem_map": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "xpc_string_create": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
+
+   },
+   "xpc_string_create_with_format": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true, "printf_format": true }
+    },
+    "retval": { "already_retained": true },
+    "variadic": true
+   },
+   "xpc_string_create_with_format_and_arguments": {
+    "ignore": true,
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "xpc_string_get_string_ptr": {
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
+   },
+   "xpc_type_get_name": {
+    "args": {
+     "0": {}
+    },
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "xpc_uuid_get_bytes": {
+    "retval": { "c_array_of_fixed_length": 16, "type_override": "^v"  }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
