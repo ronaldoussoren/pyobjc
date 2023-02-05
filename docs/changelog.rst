@@ -433,7 +433,7 @@ improvements as described below).
 
   This is a low-level API to perform RPCs using the XPC protocol on macOS.
 
-* Updated libdispatch bindings, fixing a number of issues with automatic
+* :issue:`376`: Updated libdispatch bindings, fixing a number of issues with automatic
   retaincount management.
 
 * The python package name in ``pyobjc-framework-libdispatch`` is now ``dispatch`` instead
