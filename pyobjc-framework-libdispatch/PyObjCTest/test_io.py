@@ -34,12 +34,14 @@ class TestIoAPI(TestCase):
         )  # dispatch_queue_t
         self.assertArgIsBlock(libdispatch.dispatch_write, 3, b"v@i")
 
+        self.assertResultIsRetained(libdispatch.dispatch_io_create)
         self.assertResultHasType(libdispatch.dispatch_io_create, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_io_create, 0, objc._C_ULNG)
         self.assertArgHasType(libdispatch.dispatch_io_create, 1, objc._C_INT)
         self.assertArgHasType(libdispatch.dispatch_io_create, 2, objc._C_ID)
         self.assertArgIsBlock(libdispatch.dispatch_write, 3, b"v@i")
 
+        self.assertResultIsRetained(libdispatch.dispatch_io_create_with_path)
         self.assertResultHasType(libdispatch.dispatch_io_create_with_path, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_io_create_with_path, 0, objc._C_ULNG)
         self.assertArgHasType(
@@ -53,6 +55,7 @@ class TestIoAPI(TestCase):
         self.assertArgHasType(libdispatch.dispatch_io_create_with_path, 4, objc._C_ID)
         self.assertArgIsBlock(libdispatch.dispatch_io_create_with_path, 5, b"vi")
 
+        self.assertResultIsRetained(libdispatch.dispatch_io_create_with_io)
         self.assertResultHasType(libdispatch.dispatch_io_create_with_io, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_io_create_with_io, 0, objc._C_ULNG)
         self.assertArgHasType(

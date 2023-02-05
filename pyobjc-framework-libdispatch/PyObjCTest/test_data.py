@@ -23,6 +23,7 @@ class TestDataAPI(TestCase):
 
     @min_os_level("10.7")
     def test_functions(self):
+        self.assertResultIsRetained(libdispatch.dispatch_data_create)
         self.assertResultHasType(libdispatch.dispatch_data_create, objc._C_ID)
         self.assertArgHasType(
             libdispatch.dispatch_data_create, 0, objc._C_IN + objc._C_PTR + objc._C_VOID
@@ -40,10 +41,12 @@ class TestDataAPI(TestCase):
         # FIXME: dispatch_data_create_map
         self.assertIsInstance(libdispatch.dispatch_data_create_map, type(id))
 
+        self.assertResultIsRetained(libdispatch.dispatch_data_create_concat)
         self.assertResultHasType(libdispatch.dispatch_data_create_concat, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_create_concat, 0, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_create_concat, 1, objc._C_ID)
 
+        self.assertResultIsRetained(libdispatch.dispatch_data_create_subrange)
         self.assertResultHasType(libdispatch.dispatch_data_create_subrange, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_create_subrange, 0, objc._C_ID)
         self.assertArgHasType(
@@ -59,6 +62,7 @@ class TestDataAPI(TestCase):
             libdispatch.dispatch_data_apply, 1, dispatch_data_applier_t
         )
 
+        self.assertResultIsRetained(libdispatch.dispatch_data_copy_region)
         self.assertResultHasType(libdispatch.dispatch_data_copy_region, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 0, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 1, objc._C_ULNG)

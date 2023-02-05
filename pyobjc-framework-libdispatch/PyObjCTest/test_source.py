@@ -72,6 +72,7 @@ class TestSourceAPI(TestCase):
 
     @min_os_level("10.6")
     def test_functions(self):
+        self.assertResultIsRetained(libdispatch.dispatch_source_create)
         self.assertResultHasType(libdispatch.dispatch_source_create, objc._C_ID)
         self.assertArgHasType(
             libdispatch.dispatch_source_create,

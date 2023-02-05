@@ -6,6 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestSemaphoreAPI(TestCase):
     @min_os_level("10.6")
     def test_functions(self):
+        self.assertResultIsRetained(libdispatch.dispatch_semaphore_create)
         self.assertResultHasType(libdispatch.dispatch_semaphore_create, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_semaphore_create, 0, objc._C_LNG)
 

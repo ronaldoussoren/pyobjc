@@ -6,6 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestGroupAPI(TestCase):
     @min_os_level("10.6")
     def test_functions(self):
+        self.assertResultIsRetained(libdispatch.dispatch_group_create)
         self.assertResultHasType(libdispatch.dispatch_group_create, objc._C_ID)
 
         self.assertResultHasType(libdispatch.dispatch_group_async, objc._C_VOID)

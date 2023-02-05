@@ -6,17 +6,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestWorkloop(TestCase):
     @min_os_level("10.14")
     def test_functions(self):
-        self.assertResultHasType(libdispatch.dispatch_workloop_create, objc._C_ID)
         self.assertResultIsRetained(libdispatch.dispatch_workloop_create)
+        self.assertResultHasType(libdispatch.dispatch_workloop_create, objc._C_ID)
         self.assertArgHasType(
             libdispatch.dispatch_workloop_create, 0, b"n^" + objc._C_CHAR_AS_TEXT
         )
         self.assertArgIsNullTerminated(libdispatch.dispatch_workloop_create, 0)
 
+        self.assertResultIsRetained(libdispatch.dispatch_workloop_create_inactive)
         self.assertResultHasType(
             libdispatch.dispatch_workloop_create_inactive, objc._C_ID
         )
-        self.assertResultIsRetained(libdispatch.dispatch_workloop_create_inactive)
         self.assertArgHasType(
             libdispatch.dispatch_workloop_create_inactive,
             0,

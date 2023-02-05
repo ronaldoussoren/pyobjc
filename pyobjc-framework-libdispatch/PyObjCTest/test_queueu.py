@@ -5,7 +5,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestQueueAPI(TestCase):
     def test_constants(self):
-        self.assertFalse(hasattr(libdispatch, "DISPATCH_APPLY_AUTO_AVAILABLE"))
+        # self.assertFalse(hasattr(libdispatch, "DISPATCH_APPLY_AUTO_AVAILABLE"))
+        self.assertEqual(libdispatch.DISPATCH_APPLY_AUTO, None)
 
         self.assertEqual(libdispatch.DISPATCH_APPLY_AUTO, None)
         self.assertEqual(libdispatch.DISPATCH_QUEUE_SERIAL, None)
@@ -88,7 +89,7 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_apply_f, 2, objc._C_PTR + objc._C_VOID
         )
-        self.assertArgIsFunction(libdispatch.dispatch_apply_f, 3, b"v^vL", 1)
+        self.assertArgIsFunction(libdispatch.dispatch_apply_f, 3, b"v^vQ", 1)
 
         self.assertResultHasType(libdispatch.dispatch_get_current_queue, objc._C_ID)
 
@@ -243,6 +244,8 @@ class TestQueueAPI(TestCase):
             objc._C_ULNG,
         )
 
+        self.assertResultIsRetained(libdispatch.dispatch_queue_create)
+        self.assertResultIsRetained(libdispatch.dispatch_queue_create_with_target)
         self.assertResultHasType(
             libdispatch.dispatch_queue_create_with_target, objc._C_ID
         )
