@@ -8,7 +8,9 @@ The full API is described in `Apple's documentation`__.
 
 .. __: https://developer.apple.com/documentation/dispatch?language=objc
 
-These bindings are accessed through the ``libdispatch`` package (that is, ``import libdispatch``).
+These bindings are accessed through the ``dispatch`` package (that is, ``import dispatch``).
+
+For backward compatibility ``import libdispatch`` works as well.
 
 
 API Notes

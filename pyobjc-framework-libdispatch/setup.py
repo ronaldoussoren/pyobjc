@@ -15,15 +15,15 @@ setup(
     name="pyobjc-framework-libdispatch",
     description="Wrappers for libdispatch on macOS",
     min_os_level="10.8",
-    packages=["libdispatch"],
+    packages=["dispatch", "libdispatch"],
     ext_modules=[
         Extension(
-            "libdispatch._inlines",
+            "dispatch._inlines",
             ["Modules/_libdispatch_inlines.m"],
             py_limited_api=True,
         ),
         Extension(
-            "libdispatch._libdispatch",
+            "dispatch._dispatch",
             ["Modules/_libdispatch.m"],
             # py_limited_api=True
         ),

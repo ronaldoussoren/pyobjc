@@ -1,8 +1,8 @@
 from PyObjCTools.TestSupport import TestCase
 
-import libdispatch
+import dispatch
 
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(libdispatch)
+        self.assertCallableMetadataIsSane(dispatch)

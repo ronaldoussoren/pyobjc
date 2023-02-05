@@ -8,30 +8,19 @@ documentation for details on how to use these functions.
 import sys
 
 import objc
-from libdispatch import _metadata
-from libdispatch._inlines import _inline_list_
+import dispatch
 
 sys.modules["libdispatch"] = mod = objc.ObjCLazyModule(
     "libdispatch",
     None,
     None,
-    _metadata.__dict__,
-    _inline_list_,
+    None,
+    None,
     {
         "__doc__": __doc__,
         "objc": objc,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
+    (dispatch,),
 )
-
-
-import libdispatch._libdispatch as _manual  # isort:skip # noqa: E402
-
-for nm in dir(_manual):
-    if nm.startswith("__"):
-        continue
-    setattr(mod, nm, getattr(_manual, nm))
-
-
-del sys.modules["libdispatch._metadata"]

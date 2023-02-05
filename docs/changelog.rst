@@ -436,6 +436,9 @@ improvements as described below).
 * Updated libdispatch bindings, fixing a number of issues with automatic
   retaincount management.
 
+* The python package name in ``pyobjc-framework-libdispatch`` is now ``dispatch`` instead
+  of ``libdispatch``. The old name also works, with no plans to remove it.
+
 Version 9.0.1
 -------------
 

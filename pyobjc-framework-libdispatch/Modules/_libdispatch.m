@@ -86,11 +86,11 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_libdispatch", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+    PyModuleDef_HEAD_INIT, "_dispatch", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
-PyObject* PyInit__libdispatch(void);
+PyObject* PyInit__dispatch(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__libdispatch(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
 {
     PyObject*              m;
     dispatch_source_type_t s;
