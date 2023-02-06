@@ -11,6 +11,23 @@ import JavaScriptCore._util
 import objc
 from JavaScriptCore import _metadata
 
+
+def JSExportAs(PropertyName, Selector):
+    return (
+        objc.selector(
+            None,
+            selector=Selector.selector
+            + b"__JS_EXPORT_AS__"
+            + PropertyName.encode()
+            + b":",
+            signature=Selector.signature + b"@",
+            isRequired=False,
+            isClassMethod=Selector.isClassMethod,
+        ),
+        Selector,
+    )
+
+
 sys.modules["JavaScriptCore"] = mod = objc.ObjCLazyModule(
     "JavaScriptCore",
     "com.apple.JavaScriptCore",
@@ -22,6 +39,7 @@ sys.modules["JavaScriptCore"] = mod = objc.ObjCLazyModule(
         "objc": objc,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "JSExportAs": JSExportAs,
     },
     (CoreFoundation,),
 )

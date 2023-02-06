@@ -439,6 +439,14 @@ improvements as described below).
 * The python package name in ``pyobjc-framework-libdispatch`` is now ``dispatch`` instead
   of ``libdispatch``. The old name also works, with no plans to remove it.
 
+* :issue:`113`: Implement ``JavaScriptCore.JSExportAs``
+
+  This required some change to pyobjc-core as well. The exact interface used
+  by ``JSExportAs`` is for now considered a private implementation detail.
+
+  XXX: As this time actually using JSExportAs doesn't work, even though
+  the shape of the protocol looks correctly.
+
 Version 9.0.1
 -------------
 

@@ -120,7 +120,24 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     len = PySequence_Fast_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
         PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
-        if (!PyObjCSelector_Check(sel)) {
+        if (PyTuple_Check(sel) && PyTuple_Size(sel) == 2) {
+            /* Support for JSExportAs requires adding a tuple of two items
+             * to the list of selectors.
+             */
+            if (!PyObjCSelector_Check(PyTuple_GET_ITEM(sel, 0))) {
+                PyErr_SetString(PyExc_TypeError,
+                                "Selectors is not a list of objc.selector instances");
+                Py_DECREF(supers);
+                return NULL;
+            }
+            if (!PyObjCSelector_Check(PyTuple_GET_ITEM(sel, 1))) {
+                PyErr_SetString(PyExc_TypeError,
+                                "Selectors is not a list of objc.selector instances");
+                Py_DECREF(supers);
+                return NULL;
+            }
+
+        } else if (!PyObjCSelector_Check(sel)) {
             PyErr_SetString(PyExc_TypeError,
                             "Selectors is not a list of objc.selector instances");
             Py_DECREF(supers);
@@ -153,18 +170,38 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
 
     len = PySequence_Fast_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
-        PyObject*   sel          = PySequence_Fast_GET_ITEM(selectors, i);
-        SEL         theSel       = PyObjCSelector_GetSelector(sel);
-        const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
+        PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
 
-        if (unlikely(theSignature == NULL)) { // LCOV_BR_EXCL_LINE
-            /* Should never happen, field cannot be NULL */
-            goto error; // LCOV_EXCL_LINE
+        if (PyTuple_Check(sel)) {
+            for (i = 0; i < PyTuple_GET_SIZE(sel); i++) {
+                SEL         theSel = PyObjCSelector_GetSelector(PyTuple_GET_ITEM(sel, i));
+                const char* theSignature =
+                    PyObjCSelector_GetNativeSignature(PyTuple_GET_ITEM(sel, i));
+
+                if (unlikely(theSignature == NULL)) { // LCOV_BR_EXCL_LINE
+                    /* Should never happen, field cannot be NULL */
+                    goto error; // LCOV_EXCL_LINE
+                }
+
+                protocol_addMethodDescription(
+                    theProtocol, theSel, theSignature,
+                    (BOOL)PyObjCSelector_Required(PyTuple_GET_ITEM(sel, i)),
+                    PyObjCSelector_IsClassMethod(PyTuple_GET_ITEM(sel, i)) ? NO : YES);
+            }
+
+        } else {
+            SEL         theSel       = PyObjCSelector_GetSelector(sel);
+            const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
+
+            if (unlikely(theSignature == NULL)) { // LCOV_BR_EXCL_LINE
+                /* Should never happen, field cannot be NULL */
+                goto error; // LCOV_EXCL_LINE
+            }
+
+            protocol_addMethodDescription(theProtocol, theSel, theSignature,
+                                          (BOOL)PyObjCSelector_Required(sel),
+                                          PyObjCSelector_IsClassMethod(sel) ? NO : YES);
         }
-
-        protocol_addMethodDescription(theProtocol, theSel, theSignature,
-                                      (BOOL)PyObjCSelector_Required(sel),
-                                      PyObjCSelector_IsClassMethod(sel) ? NO : YES);
 
 #ifndef protocol_getMethodDescription
         /* See issue #17 */

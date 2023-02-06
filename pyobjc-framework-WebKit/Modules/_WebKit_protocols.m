@@ -8,9 +8,21 @@
 #import <WebKit/WKScriptMessageHandlerWithReply.h>
 #endif
 
+#if 0
+#import <JavaScriptCore/JavaScriptCore.h>
+@protocol TestHelper <JSExport>
+JSExportAs(
+        doFoo,
+        -doFoo:(id)first withBar:(id)second
+        );
+-(id)method1:(id)arg;
+@end
+#endif
+
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
+    p = PyObjC_IdToPython(@protocol(TestHelper));
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(WebUIDelegate));
     Py_XDECREF(p);

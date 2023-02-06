@@ -522,6 +522,28 @@ class TestFormalProtocols(TestCase):
         ):
             pass
 
+    def test_protocol_with_tuples(self):
+        my_protocol = objc.formal_protocol(
+            "NestedSelectors",
+            None,
+            [
+                objc.selector(None, selector=b"firstMethod", signature=b"I@:"),
+                (
+                    objc.selector(None, selector=b"secondMethod", signature=b"Q@:"),
+                    objc.selector(None, selector=b"thirdMethod", signature=b"d@:"),
+                ),
+            ],
+        )
+
+        self.assertCountEqual(
+            my_protocol.instanceMethods(),
+            [
+                {"selector": b"firstMethod", "typestr": b"I@:", "required": True},
+                {"selector": b"secondMethod", "typestr": b"Q@:", "required": True},
+                {"selector": b"thirdMethod", "typestr": b"d@:", "required": True},
+            ],
+        )
+
 
 class Test3InformalProtocols(TestCase):
     def testOptional(self):

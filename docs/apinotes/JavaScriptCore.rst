@@ -76,8 +76,23 @@ Not supported at the moment as this requires manual wrappers (C code).
 ``JSExport``
 ............
 
-macOS 10.9 introcuded a ``JSExport`` protocol. There is a C macro for renaming the name
-seen in JavaScript for a given selector. That macro is not available in Python.
+macOS 10.9 introcuded a ``JSExport`` protocol. The macro ``JSExportAs`` is
+available as a function with a slightly more involved interface:
+
+.. sourcecode:: python
+
+   export_proto = objc.formal_protocol(
+            "ExportProto",
+            (objc.protocolNamed("JSExport"),),
+            [
+                 JavaScriptCore.JSExportAs("doFoo",
+                                           objc.selector(None, selector=b"doFoo:withBar:", signature=b"v@:@@"),
+                 ),
+                 objc.selector(None, selector=b"method1:", signature=b"v@:@"),
+            ]
+    )
+
+But sadly, using a protocol defined in Python does not work at this time.
 
 To use the protocol you must use a Python that's build with macOS 10.9 or later
 as the deployment target.
