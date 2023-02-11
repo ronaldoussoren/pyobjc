@@ -138,8 +138,8 @@ PyObjCErr_FromObjC(NSObject* localException)
             if (exc == NULL) { // LCOV_BR_EXCL_LINE
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } else {
-                if (PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc)
-                    == -1) {       // LCOV_BR_EXCL_LINE
+                if ( // LCOV_BR_EXCL_LINE
+                    PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             }
@@ -192,22 +192,22 @@ PyObjCErr_FromObjC(NSObject* localException)
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
              */
-            if (PyDict_SetItemString(dict, "name", c_localException_name)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if ( // LCOV_BR_EXCL_LINE
+                PyDict_SetItemString(dict, "name", c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_name);
 
-            if (PyDict_SetItemString(dict, "reason", c_localException_reason)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if ( // LCOV_BR_EXCL_LINE
+                PyDict_SetItemString(dict, "reason", c_localException_reason) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
                 if (v != NULL) {
-                    if (PyDict_SetItemString(dict, "userInfo", v)
-                        == -1) {       // LCOV_BR_EXCL_LINE
+                    if ( // LCOV_BR_EXCL_LINE
+                        PyDict_SetItemString(dict, "userInfo", v) == -1) {
                         PyErr_Clear(); // LCOV_EXCL_LINE
                     }
                     Py_DECREF(v);
@@ -215,8 +215,8 @@ PyObjCErr_FromObjC(NSObject* localException)
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
-                if (PyDict_SetItemString(dict, "userInfo", Py_None)
-                    == -1) {       // LCOV_BR_EXCL_LINE
+                if ( // LCOV_BR_EXCL_LINE
+                    PyDict_SetItemString(dict, "userInfo", Py_None) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             }
@@ -231,13 +231,13 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
-            if (PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if ( // LCOV_BR_EXCL_LINE
+                PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_CLEAR(dict);
-            if (PyObject_SetAttrString(exc_value, "name", c_localException_name)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if ( // LCOV_BR_EXCL_LINE
+                PyObject_SetAttrString(exc_value, "name", c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             PyErr_Restore(exc_type, exc_value, exc_traceback);

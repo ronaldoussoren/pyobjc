@@ -182,13 +182,13 @@ int
 PyObjCFSRef_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&fsref_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     PyObjCFSRef_Type = tmp;
 
-    if (PyModule_AddObject(module, "FSRef", PyObjCFSRef_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "FSRef", PyObjCFSRef_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFSRef_Type);

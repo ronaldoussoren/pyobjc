@@ -561,8 +561,8 @@ PyObjCFunc_Setup(PyObject* module)
         return -1;                 // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(module, "function", PyObjCFunc_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "function", PyObjCFunc_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFunc_Type);

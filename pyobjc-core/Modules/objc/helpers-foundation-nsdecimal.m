@@ -152,7 +152,7 @@ DecimalFromString(NSDecimal* aDecimal, NSString* aString,
     NSDecimalNumber* num;
 
     num       = [[NSDecimalNumber alloc] initWithString:aString];
-    *aDecimal = [num decimalValue]; // LCOV_BR_EXCL_LINE
+    *aDecimal = [num decimalValue];
     [num release];
 }
 
@@ -166,7 +166,7 @@ DecimalFromComponents(NSDecimal* aDecimal, unsigned long long mantissa,
                                            exponent:exponent
                                          isNegative:negative];
 
-    *aDecimal = [num decimalValue]; // LCOV_BR_EXCL_LINE
+    *aDecimal = [num decimalValue];
     [num release];
 }
 
@@ -454,7 +454,7 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
         return PyBool_FromLong(res != NSOrderedAscending);
     case Py_GT:
         return PyBool_FromLong(res == NSOrderedDescending);
-    default: // LCOV_BR_EXCL_LINE
+    default:
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "Bad comparison arg");
         return NULL;
@@ -1082,8 +1082,8 @@ PyObjC_setup_nsdecimal(PyObject* m)
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
     Class classNSNumber        = objc_lookUpClass("NSNumber");
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSDecimalNumber, @selector(initWithDecimal:), // LCOV_BR_EXCL_LINE
+    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+            classNSDecimalNumber, @selector(initWithDecimal:),
             call_NSDecimalNumber_initWithDecimal_, mkimp_NSDecimalNumber_initWithDecimal_)
         < 0) {
         return -1; // LCOV_EXCL_LINE
@@ -1110,9 +1110,9 @@ PyObjC_setup_nsdecimal(PyObject* m)
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSNumber, @selector(decimalValue), // LCOV_BR_EXCL_LINE
-            call_NSDecimalNumber_decimalValue, mkimp_NSDecimalNumber_decimalValue)
+    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+            classNSNumber, @selector(decimalValue), call_NSDecimalNumber_decimalValue,
+            mkimp_NSDecimalNumber_decimalValue)
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }

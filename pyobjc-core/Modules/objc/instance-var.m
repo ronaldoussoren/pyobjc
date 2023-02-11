@@ -534,8 +534,8 @@ PyObjCInstanceVariable_Setup(PyObject* module)
     }
     PyObjCInstanceVariable_Type = tmp;
 
-    if (PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCInstanceVariable_Type);

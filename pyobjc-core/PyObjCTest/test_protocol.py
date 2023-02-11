@@ -544,6 +544,56 @@ class TestFormalProtocols(TestCase):
             ],
         )
 
+        with self.assertRaisesRegex(TypeError, "Selectors is not a list of "):
+            objc.formal_protocol(
+                "NestedSelectors2",
+                None,
+                [
+                    objc.selector(None, selector=b"firstMethod", signature=b"I@:"),
+                    (objc.selector(None, selector=b"secondMethod", signature=b"Q@:"),),
+                ],
+            )
+
+        with self.assertRaisesRegex(TypeError, "Selectors is not a list of "):
+            objc.formal_protocol(
+                "NestedSelectors3",
+                None,
+                [
+                    objc.selector(None, selector=b"firstMethod", signature=b"I@:"),
+                    (
+                        objc.selector(None, selector=b"secondMethod", signature=b"Q@:"),
+                        objc.selector(None, selector=b"thirdMethod", signature=b"Q@:"),
+                        objc.selector(None, selector=b"fourthMethod", signature=b"Q@:"),
+                    ),
+                ],
+            )
+
+        with self.assertRaisesRegex(TypeError, "Selectors is not a list of "):
+            objc.formal_protocol(
+                "NestedSelectors4",
+                None,
+                [
+                    objc.selector(None, selector=b"firstMethod", signature=b"I@:"),
+                    (
+                        objc.selector(None, selector=b"secondMethod", signature=b"Q@:"),
+                        42,
+                    ),
+                ],
+            )
+
+        with self.assertRaisesRegex(TypeError, "Selectors is not a list of "):
+            objc.formal_protocol(
+                "NestedSelectors5",
+                None,
+                [
+                    objc.selector(None, selector=b"firstMethod", signature=b"I@:"),
+                    (
+                        42,
+                        objc.selector(None, selector=b"secondMethod", signature=b"Q@:"),
+                    ),
+                ],
+            )
+
 
 class Test3InformalProtocols(TestCase):
     def testOptional(self):

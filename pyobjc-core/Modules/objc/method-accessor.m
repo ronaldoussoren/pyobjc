@@ -84,11 +84,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (unbound_instance_method) {
-                methsig = [objc_object
-                    instanceMethodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
+                methsig = [objc_object instanceMethodSignatureForSelector:sel];
             } else {
-                methsig =
-                    [objc_object methodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
+                methsig = [objc_object methodSignatureForSelector:sel];
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -596,8 +594,8 @@ int
 PyObjCMethodAccessor_Setup(PyObject* module __attribute__((__unused__)))
 {
     PyObject* tmp = PyType_FromSpec(&methacc_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     PyObjCMethodAccessor_Type = tmp;
     return 0;

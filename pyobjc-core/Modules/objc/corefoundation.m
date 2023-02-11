@@ -235,9 +235,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
             result, "__module__", PyObjCClass_DefaultModule)
         < 0) {
-        // LCOV_EXCL_START
-        PyErr_Clear();
-        // LCOV_EXCL_STOP
+        PyErr_Clear(); // LCOV_EXCL_LINE
     }
 
     if (PyDict_SetItem(gTypeid2class, cf, result) == -1) { // LCOV_BR_EXCL_LINE
@@ -328,8 +326,8 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
     CFTypeID typeid;
 
     if (v == NULL) {
-        if (PyErr_Occurred()) {
-            return NULL;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
         PyErr_Format(PyExc_ValueError,
                      "Don't know CF type for typestr '%s', cannot create special wrapper",
@@ -337,8 +335,8 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
         return NULL;
     }
 
-    if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) {
-        return NULL;
+    if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                                              // LCOV_EXCL_LINE
     }
 
     return PyObjCCF_NewSpecialFromTypeID(typeid, datum);

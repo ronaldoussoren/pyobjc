@@ -5039,8 +5039,8 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
         return NULL;
     }
 
-    if (alloc_prepped_closure(&cl, cif, &codeloc, func, userdata)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        alloc_prepped_closure(&cl, cif, &codeloc, func, userdata) == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         return NULL;

@@ -2043,8 +2043,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCSelector_Type = tmp;
 
-    if (PyModule_AddObject(module, "selector", PyObjCSelector_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "selector", PyObjCSelector_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCSelector_Type);
@@ -2055,8 +2055,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCPythonSelector_Type = tmp;
 
-    if (PyModule_AddObject(module, "python_selector", PyObjCPythonSelector_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "python_selector", PyObjCPythonSelector_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCPythonSelector_Type);
@@ -2067,8 +2067,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCNativeSelector_Type = tmp;
 
-    if (PyModule_AddObject(module, "native_selector", PyObjCNativeSelector_Type)
-        == -1) {   // LCOV_BR_EXCL_LINE
+    if ( // LCOV_BR_EXCL_LINE
+        PyModule_AddObject(module, "native_selector", PyObjCNativeSelector_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCNativeSelector_Type);

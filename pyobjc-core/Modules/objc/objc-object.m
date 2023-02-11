@@ -177,10 +177,9 @@ object_dealloc(PyObject* obj)
                 @try {
                     CFRelease(((PyObjCObject*)obj)->objc_object);
 
-                } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                    NSLog(
-                        @"PyObjC: Exception during dealloc of proxy: %@", // LCOV_BR_EXCL_LINE
-                        localException);
+                } @catch (NSObject* localException) {
+                    NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
+                          localException);
                 }
             Py_END_ALLOW_THREADS;
             ((PyObjCObject*)obj)->objc_object = nil;
