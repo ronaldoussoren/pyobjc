@@ -33,8 +33,8 @@ alloc_prepped_closure(ffi_closure** cl, ffi_cif* cif, void** codeloc, void* func
 
 #ifdef __arm64__
 
-    /* XXX: This pragma is needed because we compile with deployment
-     *      target 10.9 even for arm64.
+    /* This pragma is needed because we compile with deployment
+     * target 10.9 even for arm64.
      */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"

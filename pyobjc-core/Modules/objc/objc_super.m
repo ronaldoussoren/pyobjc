@@ -21,9 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    PyTypeObject* type;
-    PyObject*     obj;
-    PyTypeObject* obj_type;
+    PyTypeObject* _Nullable type;
+    PyObject* _Nullable obj;
+    PyTypeObject* _Nullable obj_type;
 } superobject;
 
 static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)

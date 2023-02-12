@@ -1137,6 +1137,15 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
     def test_complex_newobj_ex(self):
         pass
 
+    def test_builtin_exceptions(self):
+        import builtins
+
+        for t in builtins.__dict__.values():
+            if isinstance(t, type) and issubclass(t, BaseException):
+                s = self.dumps(t)
+                u = self.loads(s)
+                self.assertIs(u, t)
+
     @expectedFailure
     def test_newobj_not_class(self):
         # Exception handling in NSCoder is dodgy

@@ -447,7 +447,7 @@ def load_reduce(coder, setValue):
         and len(args) in (1, 2)
         and isinstance(args[0], NSData)
     ):
-        # XXX: This is a crude hack to fix roundtripping
+        # This is a crude hack to fix roundtripping
         # datetime.datetime instances through an NSArchiver.
         # The underlying problem is twofold:
         # 1. For non-keyed coders "bytes" is read back as "NSData"

@@ -389,10 +389,10 @@ addConvenienceForClass(
     ),
 )
 
-# XXX: See #334: Some part of Cocoa can load a category on subclasses of
+# See #334: Some part of Cocoa can load a category on subclasses of
 # NSMutableArray that defines a pop method, which then interferes with
 # nsarray_pop.
-# The code below registers our own pop on all known subclasses of NSArray...
+# The code below registers our own pop on all known subclasses of NSArray.
 for cls in (
     "__NSArrayI",
     "__NSArrayM",

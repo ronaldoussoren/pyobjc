@@ -611,7 +611,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                                               size_t nargsf, PyObject* _Nullable kwnames)
 {
     /* XXX: Need logic to reset sel_call_func and sel_vectocall when
-     * the methodinfo changes, but here and in the "simple" variant.
+     * the methodinfo changes, both here and in the "simple" variant.
      * This way extensions can register a new call_func even after the
      * method has been resolved.
      */

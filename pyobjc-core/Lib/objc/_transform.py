@@ -6,8 +6,6 @@ latter).
 The C code relies on this code to do most semantic checks, and only
 performs checks that are needed to avoid crashes.
 """
-# XXX: Update the reference documentation as well to ensure
-#      that it is clear and up-to-date.
 import objc
 import types
 import inspect
@@ -230,11 +228,6 @@ def transformAttribute(name, value, class_object, protocols):
     elif isinstance(value, (objc.native_selector, staticmethod, type)):
         return value
     elif isinstance(value, objc.selector):
-        # XXX: The C code copies objc.selector instances instead of
-        # returning them as is.  Need to check when this
-        # is necessary and add tests for this.
-        # XXX: Might be needed when the same selector is added to
-        # two different classes, need explicit tests for this.
         if value.callable is None:
             raise ValueError(f"{name!r}: selector object without callable")
         return objc.selector(

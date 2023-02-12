@@ -594,16 +594,13 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
     NSUInteger i;
     size_t     r;
 
-    /* XXX: snprintf is overkill here */
-    r = snprintf(buf, buflen, "%s", [sig methodReturnType]);
-    if (r > buflen) {
+    r = strlcpy(buf, [sig methodReturnType], buflen);
+    if (r >= buflen) {
         PyErr_Format(PyObjCExc_InternalError, "NSMethodsignature too large (%ld)", r);
         return NULL;
     }
 
-    /* XXX: The side effect of checking the value is nice,
-     * but otherwise ``end = buf + r`` would work just as well.
-     */
+    /* Using SkipTypeSpec validates the buffer */
     end = (char*)PyObjCRT_SkipTypeSpec(buf);
     if (end == NULL) {
         return NULL;
@@ -613,16 +610,13 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
     buf = end;
 
     for (i = 0; i < arg_count; i++) {
-        /* XXX: snprintf is overkill here */
-        r = snprintf(buf, buflen, "%s", [sig getArgumentTypeAtIndex:i]);
-        if (r > buflen) {
+        r = strlcpy(buf, [sig getArgumentTypeAtIndex:i], buflen);
+        if (r >= buflen) {
             PyErr_Format(PyObjCExc_InternalError, "NSMethodsignature too large (%ld)", r);
             return NULL;
         }
 
-        /* XXX: The side effect of checking the value is nice,
-         * but otherwise ``end = buf + r`` would work just as well.
-         */
+        /* Using SkipTypeSpec validates the buffer */
         end = (char*)PyObjCRT_SkipTypeSpec(buf);
         if (end == NULL) {
             return NULL;
@@ -1353,15 +1347,7 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
     PyObject* compiled;
     int       r;
 
-    /* XXX: Move creation of the registry to a separate function called from
-     * module init.
-     */
-    if (registry == NULL) {
-        registry = PyObjC_NewRegistry();
-        if (registry == NULL) {
-            return -1;
-        }
-    }
+    PyObjC_Assert(registry != NULL, -1);
     PyObjC_Assert(PyBytes_Check(class_name), -1);
     PyObjC_Assert(PyBytes_Check(selector), -1);
     if (!PyDict_Check(metadata)) {
@@ -1962,6 +1948,12 @@ PyObjCMethodSignature_Setup(PyObject* module __attribute__((__unused__)))
         return -1;
     }
     PyObjCMethodSignature_Type = tmp;
+
+    tmp = PyObjC_NewRegistry();
+    if (tmp == NULL) {
+        return -1;
+    }
+    registry = tmp;
     return 0;
 }
 

@@ -2,12 +2,17 @@ __all__ = ("informal_protocol",)
 import objc
 import collections
 
+
+# A mapping from a selector on a list of informal protocols
+# implementing that selector.
+#
+# The current implementation only uses the last informal
+# protocol that claims a selector.
 _selToProtocolMapping = collections.defaultdict(list)
 
 
 def _informal_protocol_for_selector(sel):
     if sel in _selToProtocolMapping:
-        # XXX: See below
         return _selToProtocolMapping[sel][-1]
     else:
         return None
@@ -34,7 +39,6 @@ class informal_protocol:
                 raise TypeError(f"Item {idx} has a callable")
 
         for item in self.selectors:
-            # XXX: C implementation overwrites existing mappings
             _selToProtocolMapping[item.selector].append(self)
 
     def __repr__(self):
