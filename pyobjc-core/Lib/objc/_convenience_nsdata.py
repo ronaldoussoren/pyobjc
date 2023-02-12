@@ -67,8 +67,9 @@ def nsdata__getitem__(self, item):
     return buff[item]
 
 
-# XXX: The methods below are a bit too simplistic,
-#      use NSData methods were applicable
+# The method implementations below are a bit simplistic,
+# but should be "good enough" for most usages of these
+# APIs. Cocoa does not have equivalent methods.
 def nsdata_capitalize(self):
     return bytes(self.bytes()).capitalize()
 
@@ -368,7 +369,6 @@ def nsmutabledata__imul__(self, count):
         return self
 
     else:
-        # XXX: This is suboptimal...
         orig = self.copy()
         for _ in range(count - 1):
             self += orig
@@ -394,17 +394,18 @@ def nsmutabledata_pop(self, index=-1):
 
 
 def nsmutabledata_remove(self, value):
-    # XXX: Optimize me
-    tmp = bytearray(self)
-    tmp.remove(value)
-    self.setData_(tmp)
+    value = operator.index(value)
+    value = value.to_bytes(1, "little")
+    rng = self.rangeOfData_options_range_(value, 0, (0, len(self)))
+    if rng[1] == 0:
+        return
+    self.replaceBytesInRange_withBytes_length_(rng, b"", 0)
 
 
 def nsmutabledata_insert(self, index, value):
-    # XXX: Optimize me
-    tmp = bytearray(self)
-    tmp.insert(index, value)
-    self.setData_(tmp)
+    value = operator.index(value)
+    value = value.to_bytes(1, "little")
+    self.replaceBytesInRange_withBytes_length_((index, 0), value, len(value))
 
 
 def nsmutabledata_append(self, value):
