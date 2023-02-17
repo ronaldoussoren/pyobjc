@@ -12160,6 +12160,7 @@
        "4": { "type_override": "o" }
       }
      },
+     {
       "selector": "stringWithValidatedFormat:validFormatSpecifiers:error:",
       "class_method": true,
       "args": {
