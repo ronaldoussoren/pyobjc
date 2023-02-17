@@ -12135,6 +12135,7 @@
        "0": { "printf_format": true },
        "3": { "type_override": "o" }
       }
+     },
      {
       "selector": "initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
       "class_method": false,
