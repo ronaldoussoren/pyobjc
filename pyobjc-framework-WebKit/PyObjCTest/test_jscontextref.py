@@ -120,3 +120,17 @@ class TestJSContextRef(TestCase):
             1,
             JavaScriptCore.JSStringRef.__typestr__,
         )
+
+    @min_os_level("13.3")
+    def test_functions13_3(self):
+        self.assertArgHasType(
+            JavaScriptCore.JSGlobalContextIsInspectable,
+            0,
+            JavaScriptCore.JSStringRef.__typestr__,
+        )
+
+        self.assertArgHasType(
+            JavaScriptCore.JSGlobalContextSetInspectable,
+            0,
+            JavaScriptCore.JSStringRef.__typestr__,
+        )

@@ -90,6 +90,7 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWChannelBandUnknown, 0)
         self.assertEqual(CoreWLAN.kCWChannelBand2GHz, 1)
         self.assertEqual(CoreWLAN.kCWChannelBand5GHz, 2)
+        self.assertEqual(CoreWLAN.kCWChannelBand6GHz, 3)
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsNone, 0)
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsUnicast, 1 << 1)
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsMulticast, 1 << 2)

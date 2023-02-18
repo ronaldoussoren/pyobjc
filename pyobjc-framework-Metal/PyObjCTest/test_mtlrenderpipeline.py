@@ -1,5 +1,5 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLRenderPipeline(TestCase):
@@ -121,7 +121,6 @@ class TestMTLRenderPipeline(TestCase):
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
 
-    @expectedFailure  # Documented, but not actually working..
     @min_os_level("10.12")
     def test_methods10_12(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)

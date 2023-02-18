@@ -28,6 +28,12 @@ class TestMPSGraphResizeOps(TestCase):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingModeFloor, 3
         )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingModeRoundToEven, 4
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingModeRoundToOdd, 5
+        )
 
     def test_methods(self):
         self.assertArgIsBOOL(

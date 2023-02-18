@@ -1188,6 +1188,14 @@ class TestCase(_unittest.TestCase):
         else:
             exclude_names = set()
 
+        exclude_method_names = {
+            "copyRenderedTextureForCGLContext_pixelFormat_bounds_isFlipped_",
+            "newTaggedNSStringWithASCIIBytes__length__",
+            "utf8ValueSafe",
+            "utf8ValueSafe_",
+            "isKeyExcludedFromWebScript_",
+        }
+
         exclude_attrs = set(exclude_attrs)
         exclude_attrs.add(("NSColor", "scn_C3DColorIgnoringColorSpace_success_"))
         exclude_attrs.add(
@@ -1241,6 +1249,8 @@ class TestCase(_unittest.TestCase):
                     # protocol and useless to test.
                     continue
                 for attr_name in sorted(dir(value.pyobjc_instanceMethods)):
+                    if attr_name in exclude_method_names:
+                        continue
                     if (nm, attr_name) in exclude_attrs:
                         continue
                     if attr_name.startswith("_"):
@@ -1255,6 +1265,8 @@ class TestCase(_unittest.TestCase):
                             )
 
                 for attr_name in sorted(dir(value.pyobjc_classMethods)):
+                    if attr_name in exclude_method_names:
+                        continue
                     if (nm, attr_name) in exclude_attrs:
                         continue
                     if attr_name.startswith("_"):

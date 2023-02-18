@@ -12,6 +12,13 @@ import objc
 from StoreKit import _metadata
 from StoreKit import _StoreKit
 
+
+def SKLocalizedString(x):
+    return Foundation.NSLocalizedStringFromTableInBundle(
+        x, None, mod.StoreKitBundle, ""
+    )
+
+
 sys.modules["StoreKit"] = mod = objc.ObjCLazyModule(
     "StoreKit",
     "com.apple.StoreKit",
@@ -23,6 +30,7 @@ sys.modules["StoreKit"] = mod = objc.ObjCLazyModule(
         "objc": objc,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "SKLocalizedString": SKLocalizedString,
     },
     (_StoreKit, Foundation),
 )

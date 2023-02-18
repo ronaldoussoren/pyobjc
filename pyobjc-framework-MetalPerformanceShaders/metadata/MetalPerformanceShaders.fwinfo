@@ -1400,8 +1400,14 @@
    "MPSNDArrayConstantIndex": {
     "value": "MPSDeviceCapsIndex-4"
    },
-   "MPSUserAvailableFunctionConstantStartIndex": {
+   "MPSNDArrayConstantMultiDestSrcAddressingIndex": {
     "value": "MPSDeviceCapsIndex-8"
+   },
+   "MPSNDArrayConstantMultiDestDstAddressingIndex": {
+    "value": "MPSDeviceCapsIndex-9"
+   },
+   "MPSUserAvailableFunctionConstantStartIndex": {
+    "value": "MPSDeviceCapsIndex-10"
    },
    "MPSUserConstantIndex": {
     "value": "MPSDeviceCapsIndex-3"

@@ -90,6 +90,8 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.errSecCSInvalidEntitlements, -66994)
         self.assertEqual(Security.errSecCSInvalidRuntimeVersion, -66993)
         self.assertEqual(Security.errSecCSRevokedNotarization, -66992)
+        self.assertEqual(Security.errSecCSCMSConstructionFailed, -66991)
+        self.assertEqual(Security.errSecCSRemoteSignerFailed, -66990)
 
         self.assertIsInstance(Security.kSecCFErrorArchitecture, str)
         self.assertIsInstance(Security.kSecCFErrorPattern, str)

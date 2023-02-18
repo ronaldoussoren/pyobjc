@@ -55,6 +55,7 @@ class TestMTLLibrary(TestCase):
         self.assertIsEnumType(Metal.MTLLibraryType)
         self.assertIsEnumType(Metal.MTLPatchType)
         self.assertIsEnumType(Metal.MTLLibraryOptimizationLevel)
+        self.assertIsEnumType(Metal.MTLCompileSymbolVisibility)
 
     def test_constants(self):
         self.assertEqual(Metal.MTLPatchTypeNone, 0)
@@ -88,6 +89,9 @@ class TestMTLLibrary(TestCase):
 
         self.assertEqual(Metal.MTLLibraryOptimizationLevelDefault, 0)
         self.assertEqual(Metal.MTLLibraryOptimizationLevelSize, 1)
+
+        self.assertEqual(Metal.MTLCompileSymbolVisibilityDefault, 0)
+        self.assertEqual(Metal.MTLCompileSymbolVisibilityHidden, 1)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -172,4 +176,14 @@ class TestMTLLibrary(TestCase):
         )
         self.assertArgIsBOOL(
             Metal.MTLCompileOptions.alloc().init().setPreserveInvariance_, 0
+        )
+
+    @min_os_level("13.3")
+    def test_methods13_3(self):
+        self.assertResultIsBOOL(
+            Metal.MTLCompileOptions.alloc().init().allowReferencingUndefinedSymbols
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLCompileOptions.alloc().init().setAllowReferencingUndefinedSymbols_,
+            0,
         )

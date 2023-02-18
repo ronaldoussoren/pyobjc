@@ -35,6 +35,14 @@ class TestMPSCore_MPSFunctionConstantIndices(TestCase):
             MetalPerformanceShaders.MPSDeviceCapsIndex - 7,
         )
         self.assertEqual(
-            MetalPerformanceShaders.MPSUserAvailableFunctionConstantStartIndex,
+            MetalPerformanceShaders.MPSNDArrayConstantMultiDestSrcAddressingIndex,
             MetalPerformanceShaders.MPSDeviceCapsIndex - 8,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSNDArrayConstantMultiDestDstAddressingIndex,
+            MetalPerformanceShaders.MPSDeviceCapsIndex - 9,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSUserAvailableFunctionConstantStartIndex,
+            MetalPerformanceShaders.MPSDeviceCapsIndex - 10,
         )

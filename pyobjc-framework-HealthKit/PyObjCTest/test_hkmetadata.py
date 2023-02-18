@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import HealthKit
 
 
@@ -197,3 +197,7 @@ class TestHKMetadata(TestCase):
         self.assertIsInstance(
             HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
         )
+
+    @min_os_level("13.3")
+    def test_constants13_3(self):
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeadphoneGain, str)

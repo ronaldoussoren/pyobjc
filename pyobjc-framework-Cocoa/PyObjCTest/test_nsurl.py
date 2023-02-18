@@ -319,6 +319,13 @@ class TestNSURL(TestCase):
     def testConstants11_3(self):
         self.assertIsInstance(Foundation.NSURLUbiquitousItemIsExcludedFromSyncKey, str)
 
+    @min_os_level("13.3")
+    def testConstants13_3(self):
+        self.assertIsInstance(Foundation.NSURLFileIdentifierKey, str)
+        self.assertIsInstance(Foundation.NSURLVolumeTypeNameKey, str)
+        self.assertIsInstance(Foundation.NSURLVolumeSubtypeKey, str)
+        self.assertIsInstance(Foundation.NSURLVolumeMountFromLocationKey, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(

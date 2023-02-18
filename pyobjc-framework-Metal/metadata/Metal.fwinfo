@@ -444,8 +444,7 @@
       "selector": "setTileSamplerState:atIndex:",
       "class_method": false,
       "args": {
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" }
+       "1":  { "type_override": "Q" }
       }
      },
      {

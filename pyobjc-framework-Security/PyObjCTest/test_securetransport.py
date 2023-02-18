@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 SSLReadFunc = b"i@o^vN^L"
@@ -544,7 +544,6 @@ class TestSecureTransport(TestCase):
         self.assertArgHasType(Security.SSLSetError, 0, objc._C_ID)
         self.assertArgHasType(Security.SSLSetError, 1, objc._C_INT)
 
-    @expectedFailure
     @min_os_level("10.13")
     def test_functions10_13_missing(self):
         self.assertResultHasType(Security.SSLSetALPNProtocols, objc._C_INT)

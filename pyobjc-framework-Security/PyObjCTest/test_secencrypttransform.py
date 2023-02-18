@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -24,7 +24,6 @@ class TestSecEncryptTransform(TestCase):
     def test_constants10_8(self):
         self.assertIsInstance(Security.kSecOAEPEncodingParametersAttributeName, str)
 
-    @expectedFailure
     @min_os_level("10.8")
     def test_constants10_8_missing(self):
         self.assertIsInstance(Security.kSecOAEPMessageLengthAttributeName, str)
@@ -50,7 +49,6 @@ class TestSecEncryptTransform(TestCase):
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-    @expectedFailure
     @min_os_level("10.7")
     def test_functions_missing(self):
         # On 10.13.4 (beta) both functions are found, but crash...

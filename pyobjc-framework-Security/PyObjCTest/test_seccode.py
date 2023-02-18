@@ -1,9 +1,9 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
-class TestCode(TestCase):
+class TestSecCode(TestCase):
     def test_types(self):
         self.assertIsCFType(Security.SecCodeRef)
 
@@ -51,7 +51,6 @@ class TestCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoTrust, str)
         self.assertIsInstance(Security.kSecCodeInfoUnique, str)
 
-    @expectedFailure
     def test_constants_missing(self):
         self.assertIsInstance(Security.kSecGuestAttributeArchitecture, str)
         self.assertIsInstance(Security.kSecGuestAttributeSubarchitecture, str)
@@ -151,6 +150,10 @@ class TestCode(TestCase):
         self.assertResultHasType(Security.SecCodeMapMemory, objc._C_INT)
         self.assertArgHasType(Security.SecCodeMapMemory, 0, objc._C_ID)
         self.assertArgHasType(Security.SecCodeMapMemory, 1, objc._C_UINT)
+
+    @min_os_level("10.13")
+    def test_functions10_13(self):
+        Security.SecCodeValidateFileResource
 
     @min_os_level("11.0")
     def test_functions11_0(self):

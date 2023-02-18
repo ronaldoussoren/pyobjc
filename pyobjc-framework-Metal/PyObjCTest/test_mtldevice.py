@@ -228,6 +228,15 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsPrimitiveMotionBlur(self):
         return 1
 
+    def shouldMaximizeConcurrentCompilation(self):
+        return 1
+
+    def setShouldMaximizeConcurrentCompilation_(self, a):
+        pass
+
+    def maximumConcurrentCompilationTaskCount(self):
+        return 1
+
     def supportsBinaryFunctionPointers(self):
         return 1
 
@@ -927,6 +936,16 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPrimitiveMotionBlur)
+
+        self.assertResultIsBOOL(TestMTLDeviceHelper.shouldMaximizeConcurrentCompilation)
+        self.assertArgIsBOOL(
+            TestMTLDeviceHelper.setShouldMaximizeConcurrentCompilation_, 0
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.maximumConcurrentCompilationTaskCount,
+            objc._C_NSUInteger,
+        )
 
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_,

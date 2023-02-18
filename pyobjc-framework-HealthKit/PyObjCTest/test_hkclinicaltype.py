@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import HealthKit
 
 
@@ -14,3 +14,7 @@ class TestHKClinicalType(TestCase):
         self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierProcedureRecord, str)
         self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierVitalSignRecord, str)
         self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierCoverageRecord, str)
+
+    @min_os_level("13.3")
+    def test_constants13_3(self):
+        self.assertIsInstance(HealthKit.HKClinicalTypeIdentifierClinicalNoteRecord, str)

@@ -39,6 +39,18 @@ class TestMPSGraphCore(TestCase):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutHW, 6
         )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutNCDHW, 7
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutNDHWC, 8
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutOIDHW, 9
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutDHWIO, 10
+        )
 
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicit, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_VALID, 1)

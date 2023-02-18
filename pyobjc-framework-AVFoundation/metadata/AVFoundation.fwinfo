@@ -45,6 +45,9 @@
    "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" }
   },
   "enum_type": {
+   "AVPlayerInterstitialEventAssetListResponseStatus": {
+    "type": "q"
+   },
    "AVMIDIMetaEventType": {
     "type": "q"
    },

@@ -818,6 +818,13 @@ class TestURL(TestCase):
             CoreFoundation.kCFURLUbiquitousItemIsExcludedFromSyncKey, str
         )
 
+    @min_os_level("13.3")
+    def testConstants13_3(self):
+        self.assertIsInstance(CoreFoundation.kCFURLFileIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeTypeNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSubtypeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeMountFromLocationKey, str)
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

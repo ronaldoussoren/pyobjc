@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import BackgroundAssets
 import objc
 
@@ -69,3 +69,9 @@ class TestBADownloadManager(TestCase):
             BackgroundAssets.BADownloadManager.cancelDownload_error_
         )
         self.assertArgIsOut(BackgroundAssets.BADownloadManager.cancelDownload_error_, 1)
+
+    @min_os_level("13.3")
+    def test_methods13_3(self):
+        self.assertResultIsOut(
+            BackgroundAssets.BADownloadManager.fetchCurrentDownloads_, 0
+        )

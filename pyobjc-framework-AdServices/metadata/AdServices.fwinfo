@@ -1,21 +1,31 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "AAAttributionErrorCodeNetworkError": { "value": 1 },
-   "AAAttributionErrorCodeInternalError": { "value": 2 },
-   "AAAttributionErrorCodePlatformNotSupported": { "value": 3 }
-  },
   "classes": {
    "AAAttribution": {
     "methods": [
      {
-      "class_method": true,
-      "selector": "attributionTokenWithError:",
       "args": {
-       "0": { "type_modifier": "o" }
-      }
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "attributionTokenWithError:"
      }
     ]
+   }
+  },
+  "enum": {
+   "AAAttributionErrorCodeInternalError": {
+    "value": 2
+   },
+   "AAAttributionErrorCodeNetworkError": {
+    "value": 1
+   },
+   "AAAttributionErrorCodePlatformNotSupported": {
+    "value": 3
    }
   }
  }

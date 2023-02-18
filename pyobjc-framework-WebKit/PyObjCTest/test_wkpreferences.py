@@ -44,3 +44,8 @@ class TestWKPreferences(TestCase):
 
         self.assertResultIsBOOL(WebKit.WKPreferences.isElementFullscreenEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setElementFullscreenEnabled_, 0)
+
+    @min_os_level("13.3")
+    def testMethods13_3(self):
+        self.assertResultIsBOOL(WebKit.WKPreferences.shouldPrintBackgrounds)
+        self.assertArgIsBOOL(WebKit.WKPreferences.setShouldPrintBackgrounds_, 0)

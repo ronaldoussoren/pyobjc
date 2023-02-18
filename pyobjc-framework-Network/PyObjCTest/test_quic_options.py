@@ -8,6 +8,7 @@ class TestQUICOptions(TestCase):
         self.assertEqual(Network.nw_quic_stream_type_unknown, 0)
         self.assertEqual(Network.nw_quic_stream_type_bidirectional, 1)
         self.assertEqual(Network.nw_quic_stream_type_unidirectional, 2)
+        self.assertEqual(Network.nw_quic_stream_type_datagram, 3)
 
     @min_os_level("12.0")
     def test_functions12_0(self):

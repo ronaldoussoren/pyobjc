@@ -115,6 +115,8 @@ class TestAVError(TestCase):
         self.assertEqual(
             AVFoundation.AVErrorAirPlayReceiverTemporarilyUnavailable, -11882
         )
+        self.assertEqual(AVFoundation.AVErrorEncodeFailed, -11883)
+        self.assertEqual(AVFoundation.AVErrorSandboxExtensionDenied, -11884)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

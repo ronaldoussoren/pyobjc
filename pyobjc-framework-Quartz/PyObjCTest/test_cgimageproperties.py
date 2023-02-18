@@ -877,3 +877,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kIIOCameraModelType_SimplifiedPinhole, str)
         self.assertIsInstance(Quartz.kIIOCameraModelType_GenericPinhole, str)
         self.assertIsInstance(Quartz.kIIOCameraModel_Intrinsics, str)
+
+    @min_os_level("13.3")
+    def testConstants13_3(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)

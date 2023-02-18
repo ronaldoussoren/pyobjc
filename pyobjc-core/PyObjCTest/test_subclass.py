@@ -450,7 +450,9 @@ class TestOverridingSpecials(TestCase):
         )
         self.assertEqual(MethodNamesClass.raise__.selector, b"raise")
 
-        self.assertNotIsInstance(MethodNamesClass.froobnicate__, objc.selector)
+        # This must be a selector due to having selectors with unnamed parts
+        # in Objective-C.
+        self.assertIsInstance(MethodNamesClass.froobnicate__, objc.selector)
 
     def testOverrideRespondsToSelector(self):
         class OC_RespondsClass(NSObject):

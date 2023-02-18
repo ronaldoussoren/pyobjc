@@ -516,6 +516,41 @@
       }
      },
      {
+      "selector": "getBytesWithHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "n^v", "c_array_length_in_arg": 2 },
+	  "2": { "typestr": "q"  }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "5": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "getMutableBytesWithHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "N^v", "c_array_length_in_arg": 2 },
+	  "2": { "typestr": "q"  },
+	  "3": { "typestr": "@"  }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "5": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "initWithDataPointer:shape:dataType:strides:deallocator:error:",
       "class_method": false,
       "args": {

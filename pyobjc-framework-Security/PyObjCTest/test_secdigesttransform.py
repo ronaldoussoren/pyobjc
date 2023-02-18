@@ -28,5 +28,7 @@ class TestAuthorizationDB(TestCase):
 
     @expectedFailure
     def test_functions_missing(self):
-        return  # On 10.13.4 beta the function is found, but crashes
+        self.fail(
+            "crashy function"
+        )  # On 10.13.4 beta the function is found, but crashes
         self.assertIsInstance(Security.SecDigestTransformGetTypeID(), int)

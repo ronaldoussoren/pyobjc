@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "expressions": {
+   "StoreKitBundle": { "value": "NSBundle.bundleWithPath_('/System/Library/Frameworks/StoreKit.framework')" }
+  },
   "classes": {
    "SKArcadeService": {
     "methods": [

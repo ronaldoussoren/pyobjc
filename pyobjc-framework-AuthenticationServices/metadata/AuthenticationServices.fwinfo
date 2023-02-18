@@ -12,7 +12,8 @@
    "ASAuthorizationCustomMethod": { "type": "@","type_name": "NSString" },
    "ASAuthorizationSecurityKeyPublicKeyCredentialDescriptorTransport": { "type": "@","type_name": "NSString" },
    "ASCOSEAlgorithmIdentifier": { "type": "q"},
-   "ASCOSEEllipticCurveIdentifier": { "type": "q"}
+   "ASCOSEEllipticCurveIdentifier": { "type": "q"},
+   "ASAuthorizationProviderExtensionFederationType": { "type": "q"}
   },
   "enum": {
    "ASAuthorizationAppleIDButtonTypeSignUp": { "value": 2 },

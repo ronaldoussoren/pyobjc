@@ -2,9 +2,20 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "BADownloadState": { "type": "q" },
+   "BADownloaderPriority": { "type": "q" }
+  },
   "classes": {
    "BADownloadManager": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "etchCurrentDownloads:"
+     },
      {
       "args": {
        "1": { "type_modifier": "o" }

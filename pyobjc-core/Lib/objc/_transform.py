@@ -403,6 +403,10 @@ def transformAttribute(name, value, class_object, protocols):
                     signature_parts[0] = overridden_rval
 
                 for idx in overridden_args:
+                    if (idx < 0) or idx >= len(signature_parts) - 1:
+                        raise objc.error(
+                            f"{name!r} has invalid metadata, index {idx} out of range"
+                        )
                     signature_parts[idx + 1] = overridden_args[idx]
                 signature = b"".join(signature_parts)
 
@@ -528,11 +532,11 @@ def default_selector(name):
     """
     if name.endswith("__") and keyword.iskeyword(name[:-2]):
         name = name[:-2]
-    if "_" in name[1:] and not name.endswith("_"):
-        return None
-    if "__" in name:
+    if name.startswith("__") and name.endswith("__"):
         return None
 
+    if "_" in name[1:] and not name.endswith("_"):
+        return None
     value = name.replace("_", ":").encode()
     if value.startswith(b":"):
         value = b"_" + value[1:]

@@ -6,6 +6,9 @@ class TestAVPlayerInterstitialEventController(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventRestrictions)
         self.assertIsTypedEnum(AVFoundation.AVPlayerInterstitialEventCue, str)
+        self.assertIsEnumType(
+            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatus
+        )
 
     def testConstants(self):
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventRestrictionNone, 0)
@@ -23,10 +26,39 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEventRestrictionNone,
         )
 
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatusAvailable, 0
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatusCleared, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatusUnavailable, 2
+        )
+
     @min_os_level("11.3")
     def test_constants11_3(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerWaitingDuringInterstitialEventReason, str
+        )
+
+    @min_os_level("13.3")
+    def test_constants13_3(self):
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorAssetListResponseStatusDidChangeNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorAssetListResponseStatusDidChangeEventKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorAssetListResponseStatusDidChangeStatusKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorAssetListResponseStatusDidChangeErrorKey,
+            str,
         )
 
     @min_os_level("13.0")

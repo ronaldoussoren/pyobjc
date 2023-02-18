@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import HealthKit
 
 
@@ -15,3 +15,8 @@ class TestHKFHIRResource(TestCase):
         self.assertIsInstance(HealthKit.HKFHIRResourceTypeMedicationStatement, str)
         self.assertIsInstance(HealthKit.HKFHIRResourceTypeObservation, str)
         self.assertIsInstance(HealthKit.HKFHIRResourceTypeProcedure, str)
+
+    @min_os_level("13.3")
+    def test_constants13_3(self):
+        self.assertIsInstance(HealthKit.HKFHIRResourceTypeDiagnosticReport, str)
+        self.assertIsInstance(HealthKit.HKFHIRResourceTypeDocumentReference, str)
