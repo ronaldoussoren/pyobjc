@@ -26,6 +26,25 @@ improvements as described below).
   in C was incorrect or inconsistent. Those problems have been fixed as
   part of this effort (see below for details).
 
+* The new implementation is smarter about converting callables to selectors
+  and will not convert callables whose name doesn't match the pattern for
+  selector names. This reduces the need to decorate python-only methods
+  with ``objc.python_method``.
+
+  In particular, multi-word method names in PEP 8 style will no longer
+  be converted to selectors by default, e.g.:
+
+  .. sourcecode:: python
+
+     class SomeClass(NSObject):
+        def some_method(self, a, b, c):
+            pass
+
+    In previous versions PyObjC would raise an error for this class
+    definition when trying to convert it to a selector, in 9.1 or later
+    this is recognized as a name that doesn't match the selector naming
+    convention and is not converted to a selector.
+
 * The BadPrototypeError raised when a method is not compatible with number
   of arguments expected by Objective-C now mentions the number of
   arguments excluding the "self" argument, instead of including it.
