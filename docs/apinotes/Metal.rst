@@ -32,11 +32,11 @@ It is generally safer to use ``MTLRasterizationRateLayerDescriptor.horizontal`` 
 
 It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` instead
 
-``MTLPackedFloat3``, ``MTLPackedFloat4x3``, ``MTLAccelerationStructureInstanceDescriptor``
-..........................................................................................
+``MTLPackedFloat3``
+...................
 
-These structures contain vector types and are not exposed at the moment.
-
+The C type contains an anonymous union. In Python the only attribute is
+``elements`` (list of 3 floats).
 
 ``MTLMapIndirectBufferFormat``
 ..............................

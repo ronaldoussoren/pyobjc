@@ -34,6 +34,9 @@ static PyObjC_function_map function_map[] = {
     {"MTLTextureSwizzleChannelsMake",
      (PyObjC_Function_Pointer)&MTLTextureSwizzleChannelsMake},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1200
+    {"MTLPackedFloat3Make", (PyObjC_Function_Pointer)&MTLPackedFloat3Make},
+#endif
     {0, 0}};
 
 #pragma clang diagnostic pop

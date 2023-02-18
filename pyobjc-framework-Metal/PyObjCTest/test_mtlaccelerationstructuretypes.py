@@ -4,26 +4,26 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestMTLAccelerationStructureTypes(TestCase):
     def test_structs(self):
-        self.assertNotHasAttr(Metal, "MTLPackedFloat3")
-        self.assertNotHasAttr(Metal, "MTLPackedFloat4x3")
-        self.assertNotHasAttr(Metal, "MTLAccelerationStructureInstanceDescriptor")
+        v = Metal.MTLPackedFloat3()
+        self.assertEqual(v.elements, None)
 
-        # v = Metal.MTLPackedFloat3()
-        # self.assertIsInstance(v.x, float)
-        # self.assertIsInstance(v.y, float)
-        # self.assertIsInstance(v.z, float)
-        # self.asssertNotHasattr(v, "elements")
+        v = Metal.MTLPackedFloat3([1, 2, 3])
+        self.assertEqual(v.elements, [1, 2, 3])
+        # self.assertEqual(v.x, 1)
+        # self.assertEqual(v.y, 2)
+        # self.assertEqual(v.z, 3)
 
-        # v = Metal.MTLPackedFloat4x3()
-        # self.assertHasattr(v, "columns")
+        v = Metal.MTLPackedFloat4x3()
+        self.assertHasAttr(v, "columns")
 
-        # v = Metal.MTLAccelerationStructureInstanceDescriptor()
-        # self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
-        # self.assertIsInstance(v.flags, int)
-        # self.assertIsInstance(v.mask, int)
-        # self.assertIsInstance(v.intersectionFunctionTableOffset, int)
-        # self.assertIsInstance(v.accelerationStructureIndex, int)
+        v = Metal.MTLAccelerationStructureInstanceDescriptor()
+        self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.mask, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.accelerationStructureIndex, int)
 
     def test_functions(self):
-        # MTLPackedFloat3 is not available (See above)
-        self.assertNotHasAttr(Metal, "MTLPackedFloat3Make")
+        v = Metal.MTLPackedFloat3Make(1, 2, 3)
+        self.assertIsInstance(v, Metal.MTLPackedFloat3)
+        self.assertEqual(v, [(1.0, 2.0, 3.0)])

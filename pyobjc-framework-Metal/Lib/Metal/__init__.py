@@ -27,5 +27,4 @@ sys.modules["Metal"] = mod = objc.ObjCLazyModule(
     (_Metal, AppKit),
 )
 
-
 del sys.modules["Metal._metadata"]

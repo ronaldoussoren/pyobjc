@@ -447,6 +447,10 @@ improvements as described below).
   XXX: As this time actually using JSExportAs doesn't work, even though
   the shape of the protocol looks correctly.
 
+* The ``Metal`` bindings now contain definitions for ``MTLPackedFloat3``,
+  ``MTLPackedFloat4x3``, ``MTLAccelerationStructureInstanceDescriptor``
+  and ``MTLPackedFloat3Make``.
+
 Version 9.0.1
 -------------
 
