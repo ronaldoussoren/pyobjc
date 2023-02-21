@@ -6,7 +6,6 @@ import SearchKit
 
 
 class AppController(Cocoa.NSObject):
-
     myWindow = objc.IBOutlet()
 
     selectDirectoryButton = objc.IBOutlet()

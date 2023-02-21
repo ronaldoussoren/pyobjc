@@ -541,7 +541,6 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
 
 
 if sys.platform == "darwin" and os.uname()[2] >= "7.0.0":
-
     # macOS 10.3 and later use 'setValue:forKey: u' instead of
     # 'takeValue:forKey: u', test these as wel.
 

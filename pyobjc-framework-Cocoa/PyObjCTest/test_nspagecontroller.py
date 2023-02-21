@@ -18,7 +18,6 @@ class TestNSPageController(TestCase):
         self.assertEqual(AppKit.NSPageControllerTransitionStyleHorizontalStrip, 2)
 
     def testProtocols(self):
-
         self.assertResultHasType(
             TestNSPageControllerHelper.pageController_frameForObject_,
             AppKit.NSRect.__typestr__,

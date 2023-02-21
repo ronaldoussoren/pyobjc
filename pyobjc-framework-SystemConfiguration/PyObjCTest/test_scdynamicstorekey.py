@@ -4,7 +4,6 @@ import SystemConfiguration
 
 class TestSCDynamicStoreKey(TestCase):
     def testFunctions(self):
-
         r = SystemConfiguration.SCDynamicStoreKeyCreate(
             None, "Setup:/%s/%d", b"PyObjC", 9
         )

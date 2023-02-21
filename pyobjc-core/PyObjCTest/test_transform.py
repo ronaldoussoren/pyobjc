@@ -304,7 +304,6 @@ class TestTransformer(TestCase):
             out = self.transformer("value", value, NSObject, [])
 
     def test_dont_transform_selector(self):
-
         with self.subTest("native class selector"):
             value = NSObject.description
             self.assertIsInstance(value, objc.selector)
@@ -1634,7 +1633,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(len(hidden_class_methods), 0)
 
         with self.subTest("slot overrides parent class"):
-
             class_dict = {"__slots__": ("a",)}
             meta_dict = {}
             hidden_instance_methods = {}
@@ -1797,7 +1795,6 @@ class TestClassDictProcessor(TestCase):
             self.assertEqual(meta_dict, {})
 
         with self.subTest("ivar overrides parent class"):
-
             ivar = objc.ivar()
             class_dict = {"iv": ivar, "__slots__": ()}
             meta_dict = {}
@@ -1934,7 +1931,6 @@ class TestClassDictProcessor(TestCase):
                 self.assertEqual(hidden_instance_methods[b"method:"], method_)
 
         with self.subTest("method name doesn't match selector"):
-
             # @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
             def method(self, a):
                 pass
@@ -1978,7 +1974,6 @@ class TestClassDictProcessor(TestCase):
             self.assertIs(check_dict["method"], check_dict["sendValue_"])
 
         with self.subTest("method name doesn't match selector for hidden method"):
-
             # @objc.objc_method(selector=b"sendValue:", isclass=wrap_classmethod)
             def method(self, a):
                 pass
@@ -2091,7 +2086,6 @@ class TestClassDictProcessor(TestCase):
             def __pyobjc_class_setup__(
                 self, name, class_dict, instance_methods, class_methods
             ):
-
                 instance_methods.add(b"instancevalue")
                 class_methods.add(b"classvalue")
 

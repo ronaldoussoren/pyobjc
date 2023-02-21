@@ -180,7 +180,6 @@ class TestMiscTypes(TestCase):
         )
 
     def test_string_ref(self):
-
         v1 = OC_PointerSupport.getString()
         self.assertEqual(v1, "a static string")
 

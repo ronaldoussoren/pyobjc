@@ -5,7 +5,6 @@ import ReplayKit
 
 class TestRPError(TestCase):
     def test_constants(self):
-
         self.assertEqual(ReplayKit.RPRecordingErrorUnknown, -5800)
         self.assertEqual(ReplayKit.RPRecordingErrorUserDeclined, -5801)
         self.assertEqual(ReplayKit.RPRecordingErrorDisabled, -5802)

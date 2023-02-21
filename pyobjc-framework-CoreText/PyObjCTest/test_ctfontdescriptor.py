@@ -125,7 +125,6 @@ class TestCTFontDescriptor(TestCase):
         )
 
     def testFunctions(self):
-
         self.assertResultIsCFRetained(CoreText.CTFontDescriptorCreateWithAttributes)
         v = CoreText.CTFontDescriptorCreateWithAttributes(
             {

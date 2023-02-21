@@ -57,7 +57,6 @@ class AppController(NSObject):
         NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_
     )
     def didEndSheet_returnCode_contextInfo_(self, sheet, returnCode, contextInfo):
-
         # Find out which calendar was selected for the new event/task
         # We do this using the calendarData array controller which is bound to
         # the calendar popups in the sheet
@@ -98,7 +97,6 @@ class AppController(NSObject):
     def createNewEventWithCalendar_title_startDate_endDate_(
         self, calendar, title, startDate, endDate
     ):
-
         # Create a new CalEvent object
         newEvent = CalEvent.event()
 
@@ -123,7 +121,6 @@ class AppController(NSObject):
     def createNewTaskWithCalendar_title_priority_dueDate_(
         self, calendar, title, priority, dueDate
     ):
-
         # Create a new CalTask object
         newTask = CalTask.task()
 

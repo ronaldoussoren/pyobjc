@@ -10,7 +10,6 @@ from macholib.MachO import MachO
 
 
 def rewriteFramework(framework, frameworkMap):
-
     basename = os.path.splitext(os.path.basename(framework))[0]
     dyld = os.path.abspath(os.path.join(framework, basename))
 

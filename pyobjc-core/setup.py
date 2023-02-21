@@ -473,7 +473,6 @@ def _fixup_compiler(use_ccache):
             cc = None
 
     if cc is not None and not _working_compiler(cc):
-
         cc = None
 
     if cc is None:

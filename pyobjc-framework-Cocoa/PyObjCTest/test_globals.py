@@ -92,7 +92,6 @@ class NSLogTest(TestCase):
         try:
             Foundation.NSLog("This is a test")
         finally:
-
             data = self.stopCaptureStderr()
             self.assertIn(b"This is a test", data)
 
@@ -103,7 +102,6 @@ class NSLogTest(TestCase):
         try:
             Foundation.NSLog("This is a test%@", ", ronald")
         finally:
-
             data = self.stopCaptureStderr()
             self.assertIn(b"This is a test, ronald", data)
 

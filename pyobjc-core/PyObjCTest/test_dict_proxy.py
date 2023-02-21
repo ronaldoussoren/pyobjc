@@ -58,7 +58,6 @@ class TestDictionary(TestCase):
             self.assertIs(OC_TestSet.classOf_(self.mapClass()), OC_PythonDictionary)
 
     def testMutableCopy(self):
-
         s = self.mapClass({1: 2, "a": "c"})
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEqual(dict(s), o)

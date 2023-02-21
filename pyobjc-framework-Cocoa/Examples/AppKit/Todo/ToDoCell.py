@@ -7,7 +7,6 @@ DEFERRED = 2
 
 
 class ToDoCell(Cocoa.NSButtonCell):
-
     __slots__ = ("_triState", "_doneImage", "_deferredImage", "_timeDue")
 
     def init(self):
@@ -51,7 +50,6 @@ class ToDoCell(Cocoa.NSButtonCell):
             return self._triState
 
     def updateImage(self):
-
         if self._triState == NOT_DONE:
             self.setImage_(None)
         elif self._triState == DONE:

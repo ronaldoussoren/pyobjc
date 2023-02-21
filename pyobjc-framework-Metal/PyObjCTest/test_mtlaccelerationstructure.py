@@ -37,7 +37,6 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertPickleRoundTrips(v)
 
     def test_constants(self):
-
         self.assertEqual(Metal.MTLAccelerationStructureUsageNone, 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsagePreferFastBuild, 1 << 1)

@@ -251,7 +251,6 @@ def runConsoleEventLoop(
     stopper = PyObjCAppHelperRunLoopStopper.alloc().init()
     PyObjCAppHelperRunLoopStopper.addRunLoopStopper_toRunLoop_(stopper, runLoop)
     try:
-
         while stopper.shouldRun():
             nextfire = runLoop.limitDateForMode_(mode)
             if not stopper.shouldRun():
@@ -314,7 +313,6 @@ def runEventLoop(
 
     firstRun = NSApp() is None
     try:
-
         while stopper.shouldRun():
             try:
                 if firstRun:

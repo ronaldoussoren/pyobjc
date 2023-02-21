@@ -79,7 +79,6 @@ def sdkForPython(_cache=[]):  # noqa: B006, M511
     or None if no framework was used
     """
     if not _cache:
-
         cflags = _get_config_var("CFLAGS")
         m = _re.search(r"-isysroot\s+([^ ]*)(\s|$)", cflags)
         if m is None:

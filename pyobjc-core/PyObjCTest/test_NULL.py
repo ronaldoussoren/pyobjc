@@ -201,7 +201,6 @@ class TestNULLArguments(TestCase):
         self.assertEqual(rv, 26)
 
     def testCalledOutNULL(self):
-
         helper = OCTestNULL.alloc().init()
         obj = TestNullArgumentsHelper.alloc().init()
 

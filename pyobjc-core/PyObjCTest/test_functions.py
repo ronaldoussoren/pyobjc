@@ -173,7 +173,6 @@ class TestFunctions(TestCase):
         with self.assertRaisesRegex(
             TypeError, "Metadata dictionary is of type 'int' instead of 'dict'"
         ):
-
             m = {}
             objc.loadBundleFunctions(
                 bundle,
@@ -193,7 +192,6 @@ class TestFunctions(TestCase):
         with self.assertRaisesRegex(
             objc.error, "Callable metadata with too many arguments"
         ):
-
             m = {}
             objc.loadBundleFunctions(
                 bundle,

@@ -210,7 +210,6 @@ def framework_requires(include_all=False):
     result = []
 
     for name, introduced, removed in FRAMEWORK_WRAPPERS:
-
         marker = []
         if introduced is not None:
             marker.append(f'platform_release>="{MACOS_TO_DARWIN[introduced]}"')
@@ -516,7 +515,6 @@ class oc_test(Command):
                         "/build/",
                         "/dist/",
                     ):
-
                         if p in fn:
                             print(f"Unwanted pattern {p!r} in sdist for {nm}: {fn}")
                             failures += 1
@@ -569,7 +567,6 @@ def frameworks_in_table(filename):
     result = {}
     in_table = False
     with open(filename) as stream:
-
         for line in stream:
             if not in_table:
                 if line.startswith("+--") or line.startswith("+=="):

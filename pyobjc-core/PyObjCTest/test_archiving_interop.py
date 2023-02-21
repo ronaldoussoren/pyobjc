@@ -170,7 +170,6 @@ class TestNSKeyedArchivingInterop(TestCase):
 
     def test_interop_seq(self):
         for testval in (["a", "b", 3], ("a", "b", 3)):
-
             data = NSKeyedArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
@@ -185,7 +184,6 @@ class TestNSKeyedArchivingInterop(TestCase):
 
     def test_interop_set(self):
         for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
-
             data = NSKeyedArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
@@ -202,7 +200,6 @@ class TestNSKeyedArchivingInterop(TestCase):
 
     def test_interop_dict(self):
         for testval in ({"a": "b", "c": 42},):
-
             data = NSKeyedArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
@@ -308,7 +305,6 @@ class TestNSArchivingInterop(TestCase):
 
     def test_interop_seq(self):
         for testval in (["a", "b", 3], ("a", "b", 3)):
-
             data = NSArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
@@ -323,7 +319,6 @@ class TestNSArchivingInterop(TestCase):
 
     def test_interop_set(self):
         for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
-
             data = NSArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
@@ -340,7 +335,6 @@ class TestNSArchivingInterop(TestCase):
 
     def test_interop_dict(self):
         for testval in ({"a": "b", "c": 42},):
-
             data = NSArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:

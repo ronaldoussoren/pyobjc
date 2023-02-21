@@ -47,7 +47,6 @@ class Class4:
 
 
 def gen_archive(fname, archiver):
-
     # NOTE: Changes to this code should also be done
     #       to the verification code in PyObjCTest/test_archiving_interop.py
 

@@ -72,7 +72,6 @@ class TestCGContext(TestCase):
 
     @min_os_level("10.5")
     def testFunctions10_5(self):
-
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )

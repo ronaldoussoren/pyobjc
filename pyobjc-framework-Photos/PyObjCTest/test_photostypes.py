@@ -21,7 +21,6 @@ class TestPhotosTypes(TestCase):
         self.assertIsEnumType(Photos.PHObjectType)
 
     def test_constants(self):
-
         self.assertEqual(Photos.PHAssetMediaTypeUnknown, 0)
         self.assertEqual(Photos.PHAssetMediaTypeImage, 1)
         self.assertEqual(Photos.PHAssetMediaTypeVideo, 2)

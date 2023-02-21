@@ -75,7 +75,6 @@ class JoystickView(NSView):
     def bind_toObject_withKeyPath_options_(
         self, bindingName, observableController, keyPath, options
     ):
-
         if bindingName == "angle":
             # observe the controller for changes -- note, pass binding identifier
             # as the context, so we get that back in observeValueForKeyPath:...

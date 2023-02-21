@@ -177,7 +177,6 @@ class AppController(Cocoa.NSObject):
     def tableView_setObjectValue_forTableColumn_row_(
         self, aTableView, anObject, aTableColumn, rowIndex
     ):
-
         # Set the "label" or "value" attribute of the entry from the data
         # storage at index "rowIndex"
         self._data[rowIndex][aTableColumn.identifier()] = anObject

@@ -531,7 +531,6 @@ class TestArraysOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
-
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
@@ -553,7 +552,6 @@ class TestArraysOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
-
         v = fillArray_count_(None, 3)  # noqa: F821
         self.assertEqual(list(v), [0, 1, 4])
 
@@ -609,7 +607,6 @@ class TestArraysOut(TestCase):
 
 class TestArraysInOut(TestCase):
     def testFixedSize(self):
-
         a = (1, 2, 3, 4)
         v = reverse4Tuple_(a)  # noqa: F821
         self.assertEqual(a, (1, 2, 3, 4))
@@ -633,7 +630,6 @@ class TestArraysInOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
-
         a = (b"a", b"b", b"c")
         v = reverseStrings_(a)  # noqa: F821
         self.assertEqual(a, (b"a", b"b", b"c"))
@@ -655,7 +651,6 @@ class TestArraysInOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
-
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         v = reverseArray_count_(a, 4)  # noqa: F821
         self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
@@ -691,7 +686,6 @@ class TestArraysInOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
-
         c, v = reverseArray_uptoCount_(range(10), 10)  # noqa: F821
         self.assertEqual(c, 5)
         self.assertEqual(len(v), 5)
@@ -705,7 +699,6 @@ class TestArraysInOut(TestCase):
 
 class TestArraysIn(TestCase):
     def testFixedSize(self):
-
         v = make4Tuple_((1.0, 4.0, 8.0, 12.5))  # noqa: F821
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 4.0, 8.0, 12.5])
@@ -725,7 +718,6 @@ class TestArraysIn(TestCase):
         self.assertIs(v, None)
 
     def testNullTerminated(self):
-
         v = makeStringArray_((b"hello", b"world", b"there"))  # noqa: F821
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), ["hello", "world", "there"])
@@ -752,7 +744,6 @@ class TestArraysIn(TestCase):
         self.assertEqual(v, None)
 
     def testWithCount(self):
-
         v = makeIntArray_count_((1, 2, 3, 4), 3)  # noqa: F821
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), [1, 2, 3])
@@ -789,7 +780,6 @@ class TestArrayReturns(TestCase):
     #   -> integers
     #   -> CF-types
     def testFixedSize(self):
-
         v = makeIntArrayOf5()  # noqa: F821
         self.assertEqual(len(v), 5)
         self.assertEqual(v[0], 0)
@@ -817,7 +807,6 @@ class TestArrayReturns(TestCase):
         self.assertEqual(v, objc.NULL)
 
     def testNULLterminated(self):
-
         v = makeStringArray()  # noqa: F821
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [b"hello", b"world", b"out", b"there"])
@@ -832,7 +821,6 @@ class TestByReference(TestCase):
     # test_methods2 for that :-)
 
     def testInput(self):
-
         r = sumX_andY_(1, 2)  # noqa: F821
         self.assertEqual(r, 1 + 2)
 
@@ -843,7 +831,6 @@ class TestByReference(TestCase):
             sumX_andY_(42, objc.NULL)  # noqa: F821
 
     def testOutput(self):
-
         div, rem = divBy5_remainder_(55, None)  # noqa: F821
         self.assertEqual(div, 11)
         self.assertEqual(rem, 0)
@@ -911,7 +898,6 @@ class TestByReference(TestCase):
 
 class TestPrintfFormat(TestCase):
     def test_nsformat(self):
-
         v = makeArrayWithFormat_("%3d", 10)  # noqa: F821
         self.assertEqual(list(v), ["%3d", " 10"])
 
@@ -922,7 +908,6 @@ class TestPrintfFormat(TestCase):
         self.assertEqual(list(v), ["\xf1", "\xf1"])
 
     def test_cformat(self):
-
         v = makeArrayWithCFormat_(b"%3d", 10)  # noqa: F821
         self.assertEqual(list(v), ["%3d", " 10"])
 

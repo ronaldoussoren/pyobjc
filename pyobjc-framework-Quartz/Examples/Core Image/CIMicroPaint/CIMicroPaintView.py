@@ -31,7 +31,6 @@ class CIMicroPaintView(SampleCIView):
             ),
             ("inputRadius0", 0.0),
         ):
-
             self.brushFilter.setValue_forKey_(v, k)
 
         self.compositeFilter = Quartz.CIFilter.filterWithName_(

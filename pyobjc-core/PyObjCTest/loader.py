@@ -51,7 +51,6 @@ gTopdir = dirname(dirname(__file__))
 
 
 def makeTestSuite():
-
     plain_suite = importExternalTestCases(
         "test_*.py", join(gTopdir, "PyObjCTest"), package="PyObjCTest"
     )

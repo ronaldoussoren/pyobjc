@@ -49,7 +49,6 @@ class SimpleImage:
 
 class RectTest(TestCase):
     def setUp(self):
-
         # Force NSApp initialisation, needed for some of the tests
         Cocoa.NSApplication.sharedApplication().activateIgnoringOtherApps_(0)
 
@@ -94,7 +93,7 @@ class RectTest(TestCase):
             value = img.getPixel(x, y)
             return bytes(value)
 
-        for ((x, y), (h, w)) in points:
+        for (x, y), (h, w) in points:
             for ox in range(w):
                 for oy in range(h):
                     allpoints.remove((x + ox, y + oy))

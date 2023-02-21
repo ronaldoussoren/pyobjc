@@ -24,14 +24,12 @@ class TestTransformerIntegrationErrors(TestCase):
             with self.assertRaisesRegex(
                 objc.internal_error, "'objc.options._processClassDict' is not set"
             ):
-
                 name = "OC_TransformIntegrationErrorNS"
 
                 type(name, (NSObject,), {})
 
     def test_not_tuple(self):
         for idx, value in enumerate((42, (True, (), (), (), ()), [True, (), ()])):
-
             with self.subTest(value):
 
                 def helper(
@@ -48,7 +46,6 @@ class TestTransformerIntegrationErrors(TestCase):
                     with self.assertRaisesRegex(
                         objc.internal_error, "did not return a tuple of 3 items"
                     ):
-
                         name = f"OC_TransformIntegrationErrorNT{idx}"
 
                         type(name, (NSObject,), {})
@@ -77,7 +74,6 @@ class TestTransformerIntegrationErrors(TestCase):
                         objc.internal_error,
                         "invalid instance_variables in result of class dict transformer",
                     ):
-
                         name = f"OC_TransformIntegrationErrorIV{idx}"
                         type(name, (NSObject,), {})
 
@@ -95,7 +91,6 @@ class TestTransformerIntegrationErrors(TestCase):
 
         with patch(helper):
             with self.assertRaisesRegex(objc.error, "instance variable without a name"):
-
                 name = f"OC_TransformIntegrationErrorIV{idx}"
 
                 type(name, (NSObject,), {})
@@ -130,7 +125,6 @@ class TestTransformerIntegrationErrors(TestCase):
                         objc.internal_error,
                         "invalid instance_methods in result of class dict transformer",
                     ):
-
                         name = f"OC_TransformIntegrationErrorIM{idx}"
 
                         type(name, (NSObject,), {"answer": value})
@@ -165,7 +159,6 @@ class TestTransformerIntegrationErrors(TestCase):
                         objc.internal_error,
                         "invalid class_methods in result of class dict transformer",
                     ):
-
                         name = f"OC_TransformIntegrationErrorCM{idx}"
 
                         type(name, (NSObject,), {"answer": value})
@@ -188,7 +181,6 @@ class TestTransformerIntegrationErrors(TestCase):
                     objc.internal_error,
                     "invalid instance_variables in result of class dict transformer",
                 ):
-
                     name = "OC_TransformIntegrationErrorNT1"
 
                     type(name, (NSObject,), {})
@@ -210,7 +202,6 @@ class TestTransformerIntegrationErrors(TestCase):
                     objc.internal_error,
                     "invalid instance_methods in result of class dict transformer",
                 ):
-
                     name = "OC_TransformIntegrationErrorNT2"
 
                     type(name, (NSObject,), {})
@@ -232,7 +223,6 @@ class TestTransformerIntegrationErrors(TestCase):
                     objc.internal_error,
                     "invalid class_methods in result of class dict transformer",
                 ):
-
                     name = "OC_TransformIntegrationErrorNT3"
 
                     type(name, (NSObject,), {})

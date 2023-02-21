@@ -15,7 +15,6 @@ GREEN = Cocoa.NSColor.greenColor()
 
 
 class CGraphView(Cocoa.NSView):
-
     azmuthSlider = objc.IBOutlet()
     mapOffsetEWSlider = objc.IBOutlet()
     mapOffsetNSSlider = objc.IBOutlet()

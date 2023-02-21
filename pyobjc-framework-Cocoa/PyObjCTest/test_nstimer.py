@@ -38,7 +38,6 @@ class TestNSTimer(TestCase):
         del pool
 
     def testPythonLeakage(self):
-
         # Ignore first run, this has some side-effects that would
         # taint the result.
         self._testHelp()

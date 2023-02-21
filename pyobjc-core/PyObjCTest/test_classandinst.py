@@ -101,7 +101,6 @@ class TestClassAndInstance(TestCase):
         self.assertTrue(PyObjC_TestClassAndInstanceSubclass.alloc().init().isInstance())
 
     def testClassAndInstance(self):
-
         # Having the next line true would be nice:
         # self.assertEqual(PyObjC_TestClassAndInstance.isInstance(), objc.NO)
         # But we'll have to settle for this one instead:

@@ -5,7 +5,6 @@ import PHASE
 
 class TesPHASETypes(TestCase):
     def test_constants(self):
-
         self.assertIsEnumType(PHASE.PHASEUpdateMode)
         self.assertEqual(PHASE.PHASEUpdateModeAutomatic, 0)
         self.assertEqual(PHASE.PHASEUpdateModeManual, 1)

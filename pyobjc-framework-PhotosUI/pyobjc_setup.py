@@ -151,7 +151,6 @@ class oc_test(test.test):
         working_set.__init__()
 
     def run(self):
-
         self.cleanup_environment()
         self.add_project_to_sys_path()
 
@@ -318,7 +317,6 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
-
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
         fp.write("#include <stdarg.h>\nint main(void) { return 0; }\n")
         fp.flush()
@@ -536,7 +534,6 @@ def _sort_key(version):
 
 
 def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
-
     k = kwds.copy()
 
     os_level = get_sdk_level()

@@ -8,7 +8,6 @@ TODO: This needs to be an example that does something useful
 import JavaScriptCore
 
 with JavaScriptCore.autoreleasing(JavaScriptCore.JSGlobalContextCreate(None)) as ctx:
-
     script = JavaScriptCore.JSStringCreateWithUTF8CString(b"return new Array")
     fn, exc = JavaScriptCore.JSObjectMakeFunction(
         ctx, None, 0, None, script, None, 1, None

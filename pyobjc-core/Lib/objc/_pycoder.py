@@ -122,7 +122,6 @@ encode_dispatch = {}
 def save_reduce(
     coder, func, args, state=None, listitems=None, dictitems=None, obj=None
 ):
-
     if not isinstance(args, tuple):
         raise PicklingError("args from reduce() should be a tuple")
 

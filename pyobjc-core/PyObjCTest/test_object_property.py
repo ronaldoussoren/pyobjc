@@ -48,7 +48,6 @@ class OCObserve(NSObject):
     def observeValueForKeyPath_ofObject_change_context_(
         self, keypath, value, change, context
     ):
-
         # We don't get to keep the 'change' dictionary, make
         # a copy (it gets reused in future calls)
         new_change = {}
@@ -357,7 +356,6 @@ class TestObjectProperty(TestCase):
         lst = []
 
         class OCTestObjectProperty4(NSObject):
-
             p1 = objc.object_property()
 
             @p1.getter
@@ -556,7 +554,6 @@ class TestObjectProperty(TestCase):
             self.fail("Deleting an object_property shouldn't be possible")
 
     def testDefaultSetterWithoutIvar(self):
-
         try:
 
             class OCTestObjectProperty7(NSObject):

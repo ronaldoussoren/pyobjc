@@ -10,7 +10,6 @@ class Converter(NSObject):
 
 
 class ConverterController(NSObject):
-
     # First define the IB Outlets, the 'ivar' calls below define new
     # instance variables in the objective-C class (e.g. visible
     # for introspection in objective-C)

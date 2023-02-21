@@ -39,7 +39,6 @@ class ArrayTests(seq_tests.CommonTest):
         pass
 
     def test_constructors(self):
-
         self.assertEqual(NSArray(), ())
         t0_3 = (0, 1, 2, 3)
         t0_3_bis = NSArray(t0_3)

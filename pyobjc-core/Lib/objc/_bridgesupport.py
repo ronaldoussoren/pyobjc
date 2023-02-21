@@ -245,7 +245,6 @@ class _BridgeSupportParser:
         if self.attribute_bool(
             node, "function_pointer", None, False
         ) or self.attribute_bool(node, "block", None, False):
-
             v = self.attribute_bool(node, "function_pointer_retained", None, True)
             result["callable_retained"] = v
 

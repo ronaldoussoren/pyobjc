@@ -58,7 +58,6 @@ else:
             ),
             "variadic": False,
         }:
-
             print("Unexpected metadata for 'ABAddPropertiesAndTypes'")
             passed = False
 

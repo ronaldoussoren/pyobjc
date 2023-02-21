@@ -68,7 +68,6 @@ class DragSupportDataSource(Cocoa.NSObject):
     def tableView_validateDrop_proposedRow_proposedDropOperation_(
         self, tableView, info, row, operation
     ):
-
         # Avoid drag&drop on self. This might be interersting to enable in
         # light of ordered relationships
         if info.draggingSource() is not tableView:
@@ -77,7 +76,6 @@ class DragSupportDataSource(Cocoa.NSObject):
             return Cocoa.NSDragOperationNone
 
     def tableView_acceptDrop_row_dropOperation_(self, tableView, info, row, operation):
-
         success = False
         urlStrings = info.draggingPasteboard().stringForType_(Cocoa.NSStringPboardType)
 
@@ -86,7 +84,6 @@ class DragSupportDataSource(Cocoa.NSObject):
             Cocoa.NSContentBinding
         )
         if destinationContentBindingInfo is not None:
-
             destinationArrayController = destinationContentBindingInfo.objectForKey_(
                 Cocoa.NSObservedObjectKey
             )

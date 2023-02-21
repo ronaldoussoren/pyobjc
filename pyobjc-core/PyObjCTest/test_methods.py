@@ -95,7 +95,6 @@ for method, argmeta in [
     (b"passOutID:", {2: {"type_modifier": b"o"}}),
     (b"passInID:", {2: {"type_modifier": b"n"}}),
 ]:
-
     objc.registerMetaDataForSelector(b"OC_TestClass1", method, {"arguments": argmeta})
 
 

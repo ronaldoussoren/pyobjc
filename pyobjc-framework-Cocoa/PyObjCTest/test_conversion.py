@@ -75,7 +75,6 @@ class TestConversion(TestCase):
             (datetime.datetime.now(), Cocoa.NSDate),
             (datetime.date.today(), Cocoa.NSDate),
         ):
-
             with self.subTest(value=value, type=type(value).__name__):
                 v = Conversion.propertyListFromPythonCollection(value)
                 self.assertIsInstance(v, result_type)

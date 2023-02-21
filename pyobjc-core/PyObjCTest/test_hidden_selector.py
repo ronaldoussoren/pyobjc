@@ -191,7 +191,6 @@ class TestHiddenSelector(TestCase):
         self.assertEqual(v, "class")
 
     def testHiddenInSubClass(self):
-
         # Instance
         o = OCTestSubHidden.alloc().init()
         with self.assertRaisesRegex(

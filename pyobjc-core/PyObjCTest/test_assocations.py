@@ -78,7 +78,6 @@ class TestAssocations(TestCase):
 
     @min_os_level("10.6")
     def testClearing(self):
-
         o = NSObject.alloc().init()
 
         key1 = "key1"

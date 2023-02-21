@@ -51,7 +51,6 @@ def bind_and_listen(hostport):
 
 
 class AsyncPythonInterpreter(NSObject):
-
     commandReactor = objc.IBOutlet("commandReactor")
 
     def init(self):

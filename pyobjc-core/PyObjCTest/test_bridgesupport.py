@@ -2007,7 +2007,6 @@ class TestInitFrameworkWrapper(TestCase):
 
     def test_calls_initwrappper(self):
         with Patcher() as p:
-
             SENTINEL = object()
 
             class InlineTab:

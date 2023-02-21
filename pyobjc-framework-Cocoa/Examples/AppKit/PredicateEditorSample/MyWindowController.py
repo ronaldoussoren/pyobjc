@@ -155,7 +155,6 @@ class MyWindowController(Cocoa.NSWindowController):
             return False
 
         elif isinstance(predicate, Cocoa.NSCompoundPredicate):
-
             predicate_type = predicate.compoundPredicateType()
             cleanSubpredicates = []
             for dirtySubpredicate in predicate.subpredicates():

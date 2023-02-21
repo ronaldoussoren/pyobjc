@@ -242,7 +242,6 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
         def test_interop_seq(self):
             for testval in (["a", "b", 3], ("a", "b", 3)):
-
                 (
                     data,
                     error,
@@ -265,7 +264,6 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
         def test_interop_set(self):
             for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
-
                 (
                     data,
                     error,
@@ -291,7 +289,6 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
         def test_interop_dict(self):
             for testval in ({"a": "b", "c": 42},):
-
                 (
                     data,
                     error,

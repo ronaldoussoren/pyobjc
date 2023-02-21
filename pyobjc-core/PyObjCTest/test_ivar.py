@@ -116,7 +116,6 @@ class TestInstanceVariables(TestCase):
     # XXX: Arange for an objc_object that refers to NULL
 
     def test_non_existing_ivar(self):
-
         instance = NSObject.alloc().init()
         iv = objc.ivar("nosuchname")
 
@@ -194,7 +193,6 @@ class TestInstanceVariables(TestCase):
         self.assertEqual(self.deleted, 1)
 
     def testLeak2(self):
-
         self.deleted = 0
 
         pool = NSAutoreleasePool.alloc().init()
@@ -420,7 +418,6 @@ class TestAllInstanceVariables(TestCase):
 
     def testAnonymousIvar(self):
         class AnonIvarClass(NSObject):
-
             var = objc.ivar()
             var2 = objc.ivar(type=objc._C_DBL)
 
