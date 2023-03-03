@@ -10,7 +10,6 @@ NSObject = objc.lookUpClass("NSObject")
 
 
 class TestBasicDescriptors(TestCase):
-
     # IBOutlet is tested in test_ivar
 
     def test_IB_DESIGNABLE(self):

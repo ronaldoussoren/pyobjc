@@ -53,7 +53,6 @@ class TestCGWindow(TestCase):
         self.assertEqual(Quartz.kCGWindowImageNominalResolution, (1 << 4))
 
     def testFunctions(self):
-
         self.assertResultIsCFRetained(Quartz.CGWindowListCopyWindowInfo)
         v = Quartz.CGWindowListCopyWindowInfo(0, 0)
         self.assertIsInstance(v, Quartz.CFArrayRef)

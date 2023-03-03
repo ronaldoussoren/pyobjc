@@ -476,7 +476,6 @@ class TestJSObjectRef(TestCase):
         )
 
     def test_functions(self):
-
         self.assertResultHasType(
             JavaScriptCore.JSObjectMakeConstructor,
             JavaScriptCore.JSObjectRef.__typestr__,

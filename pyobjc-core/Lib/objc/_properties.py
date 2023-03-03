@@ -168,7 +168,6 @@ class object_property:
                     instance_methods.add(setterName)
 
                 else:
-
                     if self._ivar is NULL:
                         raise ValueError(
                             "Cannot create default setter for property " "without ivar"
@@ -299,7 +298,6 @@ class object_property:
         return self
 
     def setter(self, function):
-
         if self.__created:
             v = self._clone()
             v._ro = False

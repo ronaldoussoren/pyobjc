@@ -281,7 +281,6 @@ class TestNSMutableArrayInteraction(TestCase):
         if objc.platform == "MACOSX" or hasattr(
             Foundation.NSMutableArray, "replaceObjectsInRange_withObjects_count_"
         ):
-
             a = Foundation.NSMutableArray.arrayWithArray_(range(4))
             self.assertEqual(a, (0, 1, 2, 3))
 

@@ -50,7 +50,6 @@ class ToDoDocument(Cocoa.NSDocument):
         return self
 
     def __del__(self):  # dealloc in Objective-C code
-
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
 
     def selectedItem(self):

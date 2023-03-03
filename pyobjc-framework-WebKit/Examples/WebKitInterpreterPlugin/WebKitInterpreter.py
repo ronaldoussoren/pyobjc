@@ -614,7 +614,6 @@ class PyInterpreter(NSObject):
 
 
 class WebKitInterpreter(NSView):
-
     arguments = objc.ivar("arguments")
     pyInterpreter = objc.ivar("pyInterpreter")
     scrollView = objc.ivar("scrollView")

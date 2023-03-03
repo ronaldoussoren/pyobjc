@@ -301,7 +301,6 @@ class TestFormalProtocols(TestCase):
             pass
 
     def dont_testDefiningingProtocols(self):
-
         # Pretty useless, but should work
 
         self.assertTrue(MyOtherProtocol.conformsTo_(MyProtocol))
@@ -750,7 +749,6 @@ class TestFormalProtocols2(TestCase):
         )
 
     def test_inherit_with_optional(self):
-
         # First a class that doesn't implemented the protocol
         # method. Is OK because the method is optional
         class ImplementingProto4(NSObject, protocols=[MyProtocol4]):

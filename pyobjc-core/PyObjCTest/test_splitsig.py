@@ -156,7 +156,6 @@ class SplitSignatureTest(TestCase):
                     b"isNSTimeZone::",
                     b"isNSValue::",
                 ):
-
                     # These keep turning up on test runs on macOS 13.1. Ignore as these
                     # are private APIs.
                     continue

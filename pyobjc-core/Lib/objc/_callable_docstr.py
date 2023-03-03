@@ -39,7 +39,6 @@ prefixes = {
 
 
 def describe_type(typestr):
-
     nm = basic_types.get(typestr)
     if nm is not None:
         return nm

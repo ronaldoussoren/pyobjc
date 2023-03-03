@@ -754,7 +754,6 @@ class TestLazyImport(TestCase):
             self.assertDeprecationWarning(lambda: mod.max)
 
     def test_functions_all(self):
-
         for override in (False, True):
             metadict = {
                 "functions": {

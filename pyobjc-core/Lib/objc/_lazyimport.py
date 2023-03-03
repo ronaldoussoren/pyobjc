@@ -208,7 +208,6 @@ class ObjCLazyModule(ModuleType):
         raise AttributeError(name)
 
     def __calc_all(self):
-
         # Ensure that all dynamic entries get loaded
         if self.__varmap_dct:
             dct = {}

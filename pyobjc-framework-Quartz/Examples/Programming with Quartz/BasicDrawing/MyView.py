@@ -39,7 +39,6 @@ class MyView(Cocoa.NSView):
                 UIHandling.kHICommandDrawNSLayoutMgr,
                 UIHandling.kHICommandDrawCustomNSLayoutMgr,
             ):
-
                 if _drawingCommand == UIHandling.kHICommandDrawNSString:
                     FrameworkTextDrawing.drawNSStringWithAttributes()
 

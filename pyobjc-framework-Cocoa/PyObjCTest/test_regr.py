@@ -18,7 +18,6 @@ class TestRegr(TestCase):
         )
 
     def testThreadHang(self):
-
         # Temporarily redirect stderr to a file, this allows us to check
         # that NSLog actually wrote some text.
         fp = os.open("/tmp/pyobjc-thread.txt", os.O_RDWR | os.O_CREAT, 0o666)

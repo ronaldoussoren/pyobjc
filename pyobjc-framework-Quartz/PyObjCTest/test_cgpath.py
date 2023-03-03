@@ -206,7 +206,6 @@ class TestCGPath(TestCase):
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-
         path = Quartz.CGPathCreateMutable()
         self.assertIsInstance(path, Quartz.CGPathRef)
 

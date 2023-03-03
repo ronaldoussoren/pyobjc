@@ -95,7 +95,6 @@ class ToDoItem(Cocoa.NSObject):
         return self
 
     def encodeWithCoder_(self, coder):
-
         coder.encodeObject_(self._day)
         coder.encodeObject_(self._itemName)
         coder.encodeObject_(self._notes)
@@ -110,7 +109,6 @@ class ToDoItem(Cocoa.NSObject):
         coder.encodeValueOfObjCType_at_(objc._C_INT, tempStatus)
 
     def initWithCoder_(self, coder):
-
         self.setDay_(coder.decodeObject())
         self.setItemName_(coder.decodeObject())
         self.setNotes_(coder.decodeObject())

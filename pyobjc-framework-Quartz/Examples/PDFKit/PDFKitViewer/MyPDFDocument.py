@@ -139,7 +139,6 @@ class MyPDFDocument(Cocoa.NSDocument):
                 self._pdfView.document().indexForPage_(outlineItem.destination().page())
                 == newPageIndex
             ):
-
                 newlySelectedRow = i
                 self._outlineView.selectRow_byExtendingSelection_(
                     newlySelectedRow, False
@@ -205,7 +204,6 @@ class MyPDFDocument(Cocoa.NSDocument):
         return self._searchResults.count()
 
     def tableView_objectValueForTableColumn_row_(self, aTableView, theColumn, rowIndex):
-
         if theColumn.identifier() == "page":
             return (
                 self._searchResults.objectAtIndex_(rowIndex)

@@ -15,7 +15,6 @@ class MetadataInheritanceHelper(NSObject):
 
 
 class TestMetadataInheritance(TestCase):
-
     # These tests that PyObjC's signatures overrides don't
     # kick in when the new signature is incompatible with
     # the native signature.

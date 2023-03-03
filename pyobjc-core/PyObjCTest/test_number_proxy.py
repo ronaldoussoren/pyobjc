@@ -923,7 +923,6 @@ class TestFailedComparisions(TestCase):
             OC_Misc.compare_and_(other_num, num)
 
     def test_comparison_failures(self):
-
         with self.assertRaisesRegex(
             TypeError, r"'.{1,2}' not supported between instances of 'int' and 'object'"
         ):

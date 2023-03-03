@@ -26,7 +26,7 @@ def libraryNameForSymbol(symbol):
     bndl = NSBundle.bundleWithPath_("/System/Library/Frameworks/System.framework")
     d = {}
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
-    for (fn, _sig) in FUNCTIONS:
+    for fn, _sig in FUNCTIONS:
         if fn not in d:
             raise ValueError(f"Couldn't find function {fn}")
     symbol = b"_" + symbol

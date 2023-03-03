@@ -324,7 +324,6 @@ class TestStream(TestCase):
         os.unlink("/tmp/pyobjc.test.txt")
 
     def testStreamPair(self):
-
         self.assertArgIsOut(CoreFoundation.CFStreamCreateBoundPair, 1)
         self.assertArgIsOut(CoreFoundation.CFStreamCreateBoundPair, 2)
         readStream, writeStream = CoreFoundation.CFStreamCreateBoundPair(

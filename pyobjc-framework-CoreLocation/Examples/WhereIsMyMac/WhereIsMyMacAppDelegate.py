@@ -67,7 +67,6 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
     def locationManager_didUpdateToLocation_fromLocation_(
         self, manager, newLocation, oldLocation
     ):
-
         # Ignore updates where nothing we care about changed
         if newLocation is None:
             return

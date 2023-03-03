@@ -571,7 +571,6 @@ class TestNSFileManager(TestCase):
 
     @min_os_level("10.6")
     def testProtocols10_6(self):
-
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldCopyItemAtURL_toURL_
         )

@@ -18,7 +18,6 @@ class TestTime(TestCase):
         self.assertEqual(dispatch.DISPATCH_WALLTIME_NOW, cast_ulonglong(-1))
 
     def test_structs(self):
-
         tv = dispatch.timespec(50, 100)
         self.assertEqual(tv.tv_sec, 50)
         self.assertEqual(tv.tv_nsec, 100)

@@ -35,7 +35,6 @@ class BasicSequenceTests:
         self.assertIs(OC_TestSet.classOf_(self.seqClass()), OC_BuiltinPythonArray)
 
     def testMutableCopy(self):
-
         s = self.seqClass(range(20))
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEqual(list(s), o)

@@ -51,7 +51,6 @@ class BasicSetTests:
         self.assertIs(OC_TestSet.classOf_(self.setClass()), OC_BuiltinPythonSet)
 
     def testMutableCopy(self):
-
         s = self.setClass(range(20))
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEqual(s, o)

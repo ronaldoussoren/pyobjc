@@ -115,7 +115,6 @@ for method, argmeta in [
     (b"unsignedshortInOutArg:", {2: {"type_modifier": b"N"}}),
     (b"unsignedshortOutArg:", {2: {"type_modifier": b"o"}}),
 ]:
-
     objc.registerMetaDataForSelector(
         b"PyObjC_TestClass1", method, {"arguments": argmeta}
     )
@@ -261,7 +260,6 @@ for method, argmeta in [
     (b"invokeunsignedshortInOutArg:of:", {2: {"type_modifier": b"N"}}),
     (b"invokeunsignedshortOutArg:of:", {2: {"type_modifier": b"o"}}),
 ]:
-
     objc.registerMetaDataForSelector(
         b"PyObjC_TestClass2", method, {"arguments": argmeta}
     )

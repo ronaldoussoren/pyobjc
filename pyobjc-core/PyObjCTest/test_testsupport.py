@@ -2478,7 +2478,6 @@ class TestTestSupport(TestCase):
                 orig_Cocoa = None
             sys.modules["Cocoa"] = Cocoa
             try:
-
                 with mock.patch(
                     "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
                 ) as fn:

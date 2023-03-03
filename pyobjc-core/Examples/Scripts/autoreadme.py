@@ -24,7 +24,6 @@ class NotificationHandler(NSObject):
     """
 
     def handleMountNotification_(self, aNotification):
-
         # Find the path to the just inserted volume
         path = aNotification.userInfo()["NSDevicePath"]
 

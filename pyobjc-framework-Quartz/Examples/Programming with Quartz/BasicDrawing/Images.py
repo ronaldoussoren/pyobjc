@@ -177,7 +177,6 @@ def doColorRampImage(context):
 def doImageWithCallbacksCreatedFromURL(
     context, url, width, height, bitsPerComponent, isRGB
 ):
-
     if isRGB:
         bitsPerPixel = bitsPerComponent * 3
     else:

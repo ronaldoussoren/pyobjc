@@ -79,7 +79,6 @@ class TestObjCWeakRef(TestCase):
 
     @min_os_level("10.7")
     def test_weakref_to_objc(self):
-
         pool = NSAutoreleasePool.alloc().init()
 
         o = NSObject.alloc().init()
@@ -100,7 +99,6 @@ class TestObjCWeakRef(TestCase):
 
     @min_os_level("10.7")
     def test_weakref_call_interface(self):
-
         pool = NSAutoreleasePool.alloc().init()
 
         o = NSObject.alloc().init()

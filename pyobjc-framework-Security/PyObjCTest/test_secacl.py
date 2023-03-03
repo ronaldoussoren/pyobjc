@@ -8,7 +8,6 @@ class TestSecACL(TestCase):
         self.assertIsCFType(Security.SecACLRef)
 
     def test_constants(self):
-
         self.assertEqual(Security.kSecKeychainPromptRequirePassphase, 0x0001)
         self.assertEqual(Security.kSecKeychainPromptUnsigned, 0x0010)
         self.assertEqual(Security.kSecKeychainPromptUnsignedAct, 0x0020)

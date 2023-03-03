@@ -413,7 +413,6 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
 
     @objc.python_method
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
-
         # log.err(why)
         self._methodSignatures[aMethod] = "<error> {} {}".format(
             aMethod,

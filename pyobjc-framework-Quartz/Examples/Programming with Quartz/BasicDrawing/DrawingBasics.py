@@ -223,7 +223,6 @@ def doClippedCircle(context):
 
 
 def doPDFDocument(context, url):
-
     pdfDoc = Quartz.CGPDFDocumentCreateWithURL(url)
     if pdfDoc is not None:
         Quartz.CGContextScaleCTM(context, 0.5, 0.5)

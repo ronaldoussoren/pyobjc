@@ -8,7 +8,6 @@ import objc
 
 class TestInputMethodKit(TestCase):
     def testClasses(self):
-
         self.assertHasAttr(InputMethodKit, "IMKInputController")
         self.assertIsInstance(InputMethodKit.IMKInputController, objc.objc_class)
 

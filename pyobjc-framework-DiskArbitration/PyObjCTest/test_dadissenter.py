@@ -5,7 +5,6 @@ import objc
 
 class TestDADissenter(TestCase):
     def test_constants(self):
-
         self.assertEqual(DiskArbitration.kDAReturnSuccess, 0)
         self.assertEqual(DiskArbitration.kDAReturnError, cast_int(0xF8DA0001))
         self.assertEqual(DiskArbitration.kDAReturnBusy, cast_int(0xF8DA0002))

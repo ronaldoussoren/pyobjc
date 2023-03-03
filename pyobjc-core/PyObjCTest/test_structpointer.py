@@ -10,7 +10,6 @@ TestStructPointerStructPtr = objc.createOpaquePointerType(
 
 class TestOpaqueStructPointer(TestCase):
     def testPointer(self):
-
         # Check that the TestPointerStructPtr has a signature that is
         # different from the one in the method definition. The latter contains
         # more information.

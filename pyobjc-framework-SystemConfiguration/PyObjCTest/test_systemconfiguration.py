@@ -47,7 +47,6 @@ class TestSystemConfiguration(TestCase):
         self.assertTrue(isinstance(err, SystemConfiguration.CFErrorRef))
 
     def testFunctions(self):
-
         err = SystemConfiguration.SCError()
         self.assertIsInstance(err, int)
 

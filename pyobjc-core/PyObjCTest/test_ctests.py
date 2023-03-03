@@ -19,7 +19,6 @@ methods = {}
 
 
 def do_exec(value, locals_dict, globals_dict):
-
     exec(value, locals_dict, globals_dict)
 
 

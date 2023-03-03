@@ -208,7 +208,6 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
     def showPackedGlyphs_length_glyphRange_atPoint_font_color_printAdjustment_(
         self, glyphs, glyphLen, glyphRange, point, font, color, printingAdjustment
     ):
-
         # Obtain the destination drawing context.
         context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
@@ -277,7 +276,6 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
             or self._textMode == Quartz.kCGTextStrokeClip
             or self._textMode == Quartz.kCGTextFillStrokeClip
         ) and self._clippingDrawProc is not None:
-
             self._clippingDrawProc(context, point.x, point.y, self._clippingInfo)
 
         Quartz.CGContextRestoreGState(context)

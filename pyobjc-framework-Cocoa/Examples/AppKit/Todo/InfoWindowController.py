@@ -110,7 +110,6 @@ class InfoWindowController(Cocoa.NSWindowController):
         if (notification.object() is self.infoNotifyHour) or (
             notification.object() is self.infoNotifyMinute
         ):
-
             dueSecs = ConvertTimeToSeconds(
                 self.infoNotifyHour.intValue(),
                 self.infoNotifyMinute.intValue(),
@@ -197,7 +196,6 @@ class InfoWindowController(Cocoa.NSWindowController):
         )
 
     def __del__(self):  # dealloc
-
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
 
         # Cannot to this

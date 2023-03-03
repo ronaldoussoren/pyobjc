@@ -38,7 +38,6 @@ class TestNSPathControl(TestCase):
 
     @min_os_level("10.5")
     def testProtocols(self):
-
         self.assertResultIsBOOL(
             TestNSPathControlHelper.pathControl_shouldDragItem_withPasteboard_
         )

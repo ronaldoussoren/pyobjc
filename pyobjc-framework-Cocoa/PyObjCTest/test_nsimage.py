@@ -131,7 +131,6 @@ class TestNSImage(TestCase):
         self.assertArgIsBOOL(AppKit.NSImage.setTemplate_, 0)
 
     def testProtocols(self):
-
         self.assertArgHasType(
             TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
             2,

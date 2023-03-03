@@ -128,7 +128,6 @@ class TestCGRemoteOperation(TestCase):
 
     @expectedFailure
     def testMissing(self):
-
         self.fail("CGScreenRegisterMoveCallback")
         self.fail("CGScreenUnregisterMoveCallback")
         self.fail("CGReleaseScreenRefreshRects")

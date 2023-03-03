@@ -102,7 +102,6 @@ class CalendarMatrix(Cocoa.NSMatrix):
         return self._selectedDay
 
     def refreshCalendar(self):
-
         selDate = self.selectedDay()
         currentMonth = selDate.monthOfYear()
         currentYear = selDate.yearOfCommonEra()

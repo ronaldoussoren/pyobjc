@@ -47,7 +47,7 @@ def WMEnable(name="Python"):
         return False
     d = {}
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
-    for (fn, _sig) in FUNCTIONS:
+    for fn, _sig in FUNCTIONS:
         if fn not in d:
             print("Missing", fn, file=sys.stderr)
             return False

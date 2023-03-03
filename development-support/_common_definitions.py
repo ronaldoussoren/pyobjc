@@ -122,7 +122,6 @@ def variants(
     if os.path.islink(
         os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
     ):
-
         result = []
         for nm in os.listdir("/Library/Frameworks/Python.framework/Versions"):
             if nm == ver:

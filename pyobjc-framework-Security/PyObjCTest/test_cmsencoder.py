@@ -8,7 +8,6 @@ class TestCMSEncoder(TestCase):
         self.assertIsCFType(Security.CMSEncoderRef)
 
     def test_constants(self):
-
         self.assertEqual(Security.kCMSAttrNone, 0x0000)
         self.assertEqual(Security.kCMSAttrSmimeCapabilities, 0x0001)
         self.assertEqual(Security.kCMSAttrSmimeEncryptionKeyPrefs, 0x0002)

@@ -21,7 +21,6 @@ class TestSKIndex(TestCase):
         self.assertEqual(CoreServices.kSKDocumentStateDeletePending, 3)
 
     def testFunctions(self):
-
         self.assertIsInstance(CoreServices.SKIndexGetTypeID(), int)
         self.assertIsInstance(CoreServices.SKIndexDocumentIteratorGetTypeID(), int)
 

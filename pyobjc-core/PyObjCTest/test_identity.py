@@ -19,7 +19,6 @@ class TestPythonRoundTrip(TestCase):
     # TODO: verify
 
     def testBasicPython(self):
-
         container = OC_TestIdentity.alloc().init()
 
         for v in (self, object(), list, sum):
@@ -27,7 +26,6 @@ class TestPythonRoundTrip(TestCase):
             self.assertTrue(v is container.storedObject(), repr(v))
 
     def testPythonContainer(self):
-
         container = OC_TestIdentity.alloc().init()
 
         for v in ([1, 2, 3], (1, 2, 3), {1: 2, 3: 4}):
@@ -70,7 +68,6 @@ class ObjCRoundTrip(TestCase):
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
     def testNSString(self):
-
         container = OC_TestIdentity.alloc().init()
 
         cls = objc.lookUpClass("NSObject")

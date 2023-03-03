@@ -184,7 +184,6 @@ class TestNSBitmapImageRep(TestCase):
 
 
 class TestBadCreation(TestCase):
-
     # Redirect stderr to /dev/null for the duration of this test,
     # AppKit.NSBitmapImageRep will write an error message to stderr.
 

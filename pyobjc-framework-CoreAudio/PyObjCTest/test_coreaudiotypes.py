@@ -748,7 +748,6 @@ class TestManualWrappers(TestCase):
         self.assertEqual(v.mCoordinates, (5.0, 6.0, 7.0))
 
     def test_AudioChannelLayout(self):
-
         with self.assertRaises(TypeError):
             v = CoreAudio.AudioChannelLayout()
 

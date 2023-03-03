@@ -7,7 +7,6 @@ import objc
 class TestBrowseDescriptor(TestCase):
     @min_os_level("10.15")
     def test_functions10_15(self):
-
         self.assertResultIsRetained(Network.nw_browse_descriptor_create_bonjour_service)
         self.assertArgIsIn(Network.nw_browse_descriptor_create_bonjour_service, 0)
         self.assertArgIsNullTerminated(
@@ -29,7 +28,6 @@ class TestBrowseDescriptor(TestCase):
 
     @min_os_level("13.0")
     def test_functions13_0(self):
-
         self.assertResultIsRetained(
             Network.nw_browse_descriptor_create_application_service
         )

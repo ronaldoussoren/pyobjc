@@ -39,7 +39,6 @@ class MemberClass(NSObject):
 
 class TestRetains(TestCase):
     def testPyClass(self):
-
         global LeaksDel
 
         LeaksDel = 0

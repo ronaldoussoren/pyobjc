@@ -59,7 +59,6 @@ class TestCoreFoundation(TestCase):
         self.assertIn(str(datetime.date.today()), repr(obj))
 
     def testBridged(self):
-
         obj = OC_TestCoreFoundation.createUUID()
 
         self.assertIsInstance(obj, CFUUIDRef)

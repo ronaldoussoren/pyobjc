@@ -447,7 +447,6 @@ class TestCTFont(TestCase):
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-
         font = CoreText.CTFontCreateUIFontForLanguage(
             CoreText.kCTFontMiniSystemFontType, 10.0, "nl_NL"
         )

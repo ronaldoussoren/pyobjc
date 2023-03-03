@@ -18,7 +18,6 @@ def exportImageWithMaskFromURLWithDestination(
     maskwidth,
     maskheight,
 ):
-
     imageBitsPerPixel = bitsPerComponent * 3
     bytesPerRow = ((imagewidth * imageBitsPerPixel) + 7) / 8
     shouldInterpolate = True
@@ -2617,7 +2616,6 @@ def doMaskImageWithMaskFromURL(
     maskwidth,
     maskheight,
 ):
-
     imageBitsPerPixel = bitsPerComponent * 3
     bytesPerRow = ((imagewidth * imageBitsPerPixel) + 7) / 8
     shouldInterpolate = True
@@ -2703,7 +2701,6 @@ def doMaskImageWithGrayImageFromURL(
     maskwidth,
     maskheight,
 ):
-
     imageBitsPerPixel = bitsPerComponent * 3
     bytesPerRow = ((imagewidth * imageBitsPerPixel) + 7) / 8
     shouldInterpolate = True
@@ -2794,7 +2791,6 @@ def doMaskImageWithGrayImageFromURL(
 
 
 def doMaskImageWithColorFromURL(context, url, width, height, isColor):
-
     # This routine treats color images as RGB.
     bitsPerComponent = 8
     if isColor:
