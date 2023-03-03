@@ -22,6 +22,7 @@ VERSION = "9.1"
 FRAMEWORK_WRAPPERS = [
     # Name                      Introduced          Removed
     ("libdispatch", "10.8", None),
+    ("libxpc", "10.8", None),
     ("Accessibility", "11.0", None),
     ("AdServices", "11.0", None),
     ("AdSupport", "10.14", None),

@@ -14,7 +14,7 @@ VERSION = "9.1"
 setup(
     name="pyobjc-framework-PHASE",
     description="Wrappers for the framework PHASE on macOS",
-    min_os_version="12.0",
+    min_os_level="12.0",
     packages=["PHASE"],
     version=VERSION,
     install_requires=[

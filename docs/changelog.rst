@@ -451,6 +451,8 @@ improvements as described below).
   ``MTLPackedFloat4x3``, ``MTLAccelerationStructureInstanceDescriptor``
   and ``MTLPackedFloat3Make``.
 
+* Upgraded framework bindings for Xcode 14.3 (macOS 13.3 SDK)
+
 Version 9.0.1
 -------------
 

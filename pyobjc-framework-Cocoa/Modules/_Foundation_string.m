@@ -27,7 +27,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
     if (PyObjC_PythonToObjC(@encode(NSRange), arguments[2], &aRange)) {
         return NULL;
     }
-    buf1 = arguments[3];
+    buf2 = arguments[3];
 
     if (buf1 != Py_None) {
         PyErr_SetString(PyExc_ValueError, "output buffer must be None");
