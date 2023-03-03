@@ -3224,7 +3224,17 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error;
         }
 
-        name = PyObject_GetAttrString(aMethod, "__name__");
+#if PY_VERSION_HEX < 0x030a0000
+        if (PyObject_TypeCheck(aMethod, &PyClassMethod_Type)) {
+            PyObject* func = PyObject_GetAttrString(aMethod, "__func__");
+            if (func == NULL) {
+                goto cleanup_and_return_error;
+            }
+            name = PyObject_GetAttrString(func, "__name__");
+            Py_DECREF(func);
+        } else
+#endif
+            name = PyObject_GetAttrString(aMethod, "__name__");
         if (name == NULL) {
             goto cleanup_and_return_error;
         }

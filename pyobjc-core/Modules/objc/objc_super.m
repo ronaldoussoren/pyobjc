@@ -200,7 +200,22 @@ PyObjCSuper_Setup(PyObject* module)
 
     super_slots[2].pfunc = (void*)(PySuper_Type.tp_doc);
 
-    PyObject* tmp = PyType_FromSpecWithBases(&super_spec, (PyObject*)&PySuper_Type);
+#if PY_VERSION_HEX < 0x030a0000
+    PyObject* bases = PyTuple_New(1);
+    if (bases == NULL) {
+        return -1;
+    }
+    PyTuple_SET_ITEM(bases, 0, (PyObject*)&PySuper_Type);
+    Py_INCREF(&PySuper_Type);
+#endif
+
+    PyObject* tmp = PyType_FromSpecWithBases(&super_spec,
+#if PY_VERSION_HEX >= 0x030a0000
+                                             (PyObject*)&PySuper_Type);
+#else
+                                             bases);
+    Py_CLEAR(bases);
+#endif
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         return -1;     // LCOV_EXCL_LINE
     }

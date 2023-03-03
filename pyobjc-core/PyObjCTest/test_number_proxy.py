@@ -301,20 +301,24 @@ class TestNSNumber(TestCase):
 
         # NOTE: The expected values in the test below were determined by running
         #       the equivalent ObjC code.
-        if objc.arch == "arm64":
-            self.assertEqual(
-                OC_NumberInt.numberAsUnsignedLong_(v), 18_446_744_073_709_551_615
-            )
-            self.assertEqual(
-                OC_NumberInt.numberAsUnsignedInteger_(v), 18_446_744_073_709_551_615
-            )
-        else:
-            self.assertEqual(
-                OC_NumberInt.numberAsUnsignedLong_(v), 18_446_744_073_709_551_488
-            )
-            self.assertEqual(
-                OC_NumberInt.numberAsUnsignedInteger_(v), 18_446_744_073_709_551_488
-            )
+
+        # Test disabled because this tests an implementation detail of NSNumber and
+        # causes test failures on newer versions of macOS (that can be reproduced in
+        # Objective-C code).
+        # if objc.arch == "arm64":
+        #    self.assertEqual(
+        #        OC_NumberInt.numberAsUnsignedLong_(v), 18_446_744_073_709_551_615
+        #    )
+        #    self.assertEqual(
+        #        OC_NumberInt.numberAsUnsignedInteger_(v), 18_446_744_073_709_551_615
+        #    )
+        # else:
+        #    self.assertEqual(
+        #        OC_NumberInt.numberAsUnsignedLong_(v), 18_446_744_073_709_551_488
+        #    )
+        #    self.assertEqual(
+        #        OC_NumberInt.numberAsUnsignedInteger_(v), 18_446_744_073_709_551_488
+        #    )
 
         # The first entry in the tuple below is incorrect, that happens to be what
         # is returned by NSNumber on some platforms (in particular, any Python where
@@ -328,6 +332,7 @@ class TestNSNumber(TestCase):
         self.assertIn(
             OC_NumberInt.numberAsUnsignedLongLong_(v),
             (
+                9_223_372_036_854_775_808,
                 18_446_744_073_709_551_489,
                 18_446_744_073_709_551_488,
                 18_446_744_073_709_551_615,

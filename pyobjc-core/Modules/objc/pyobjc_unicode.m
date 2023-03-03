@@ -50,7 +50,9 @@ unic_dealloc(PyObject* obj)
 
     [uobj->nsstr release];
 
+#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(obj);
+#endif
     PyUnicode_Type.tp_dealloc(obj);
 #if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
@@ -170,8 +172,7 @@ static PyObject* _Nullable unic_new(PyTypeObject* type __attribute__((__unused__
                                     PyObject*     args __attribute__((__unused__)),
                                     PyObject*     kwds __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_TypeError,
-                    "cannot create instances of 'objc.pyobjc_unicode' in Python");
+    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.pyobjc_unicode' instances");
     return NULL;
 }
 #endif
@@ -491,7 +492,22 @@ error:
 int
 PyObjCUnicode_Setup(PyObject* module)
 {
-    PyObject* tmp = PyType_FromSpecWithBases(&unic_spec, (PyObject*)&PyUnicode_Type);
+#if PY_VERSION_HEX < 0x030a0000
+    PyObject* bases = PyTuple_New(1);
+    if (bases == NULL) {
+        return -1;
+    }
+    PyTuple_SET_ITEM(bases, 0, (PyObject*)&PyUnicode_Type);
+    Py_INCREF(&PyUnicode_Type);
+#endif
+
+    PyObject* tmp = PyType_FromSpecWithBases(&unic_spec,
+#if PY_VERSION_HEX >= 0x030a0000
+                                             (PyObject*)&PyUnicode_Type);
+#else
+                                             bases);
+    Py_CLEAR(bases);
+#endif
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         return -1;     // LCOV_EXCL_LINE
     }

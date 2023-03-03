@@ -280,7 +280,8 @@ def transformAttribute(name, value, class_object, protocols):
 
     if isinstance(value, classmethod):
         # Unwrap "classmethod" instances.
-        value = value.__wrapped__
+        # XXX: Switch to __wrapped__ when support for 3.9 is dropped
+        value = value.__func__
         isclass = True
 
         if isinstance(value, python_method):
@@ -322,7 +323,10 @@ def transformAttribute(name, value, class_object, protocols):
                     f"{name!r} is objc_method with isclass specified wraps classmethod"
                 )
             isclass = True
-            value = value.__wrapped__.__wrapped__
+
+            # XXX switch from __func__ to __wrapped-__ when support
+            # for 3.9 ends.
+            value = value.__wrapped__.__func__
         else:
             value = value.__wrapped__
 
@@ -657,6 +661,7 @@ class python_method:
         warnings.warn(
             "python_method.callable is deprecated, use __wrapped__ instead",
             DeprecationWarning,
+            stacklevel=2,
         )
         return self.__wrapped__
 

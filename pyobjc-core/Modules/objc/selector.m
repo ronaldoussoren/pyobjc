@@ -350,8 +350,10 @@ sel_dealloc(PyObject* object)
         PyMem_Free((char*)self->sel_native_signature);
         self->sel_native_signature = NULL;
     }
+#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(object);
-    tp->tp_free(object);
+#endif
+    PyObject_Del(object);
 #if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
 #endif
@@ -408,7 +410,7 @@ static PyType_Spec sel_spec = {
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_BASETYPE,
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE,
 #endif
     .slots = sel_slots,
 };
@@ -2049,19 +2051,45 @@ PyObjCSelector_Setup(PyObject* module)
     }
     Py_INCREF(PyObjCSelector_Type);
 
-    tmp = PyType_FromSpecWithBases(&pysel_spec, PyObjCSelector_Type);
+#if PY_VERSION_HEX < 0x030a0000
+    PyObject* bases = PyTuple_New(1);
+    if (bases == NULL) {
+        return -1;
+    }
+    PyTuple_SET_ITEM(bases, 0, PyObjCSelector_Type);
+    Py_INCREF(PyObjCSelector_Type);
+#endif
+
+    tmp = PyType_FromSpecWithBases(&pysel_spec,
+#if PY_VERSION_HEX >= 0x030a0000
+                                   PyObjCSelector_Type);
+#else
+                                   bases);
+#endif
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+#if PY_VERSION_HEX <= 0x03090000
+        Py_CLEAR(bases);
+#endif
+        return -1; // LCOV_EXCL_LINE
     }
     PyObjCPythonSelector_Type = tmp;
 
     if ( // LCOV_BR_EXCL_LINE
         PyModule_AddObject(module, "python_selector", PyObjCPythonSelector_Type) == -1) {
+#if PY_VERSION_HEX <= 0x03090000
+        Py_CLEAR(bases);
+#endif
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCPythonSelector_Type);
 
-    tmp = PyType_FromSpecWithBases(&objcsel_spec, PyObjCSelector_Type);
+    tmp = PyType_FromSpecWithBases(&objcsel_spec,
+#if PY_VERSION_HEX >= 0x030a0000
+                                   PyObjCSelector_Type);
+#else
+                                   bases);
+    Py_CLEAR(bases);
+#endif
     if (tmp == NULL) {
         return -1;
     }
@@ -2072,6 +2100,11 @@ PyObjCSelector_Setup(PyObject* module)
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCNativeSelector_Type);
+
+    /* Make it impossible to subclass objc.selector, other than the two subtypes
+     * created in this function.
+     */
+    ((PyTypeObject*)PyObjCSelector_Type)->tp_flags &= ~Py_TPFLAGS_BASETYPE;
     return 0;
 }
 

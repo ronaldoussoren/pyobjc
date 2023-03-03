@@ -660,13 +660,9 @@ class TestSuperClassAttr(TestCase):
         v = objc.super(NSInvocation)
         v.__new__
 
-        with self.assertRaisesRegex(
-            TypeError, "attribute name must be string, not 'int'"
-        ):
+        with self.assertRaisesRegex(TypeError, "attribute name must be string"):
             getattr(v, 42)
 
     def test_super_attr_name(self):
-        with self.assertRaisesRegex(
-            TypeError, "attribute name must be string, not 'int'"
-        ):
+        with self.assertRaisesRegex(TypeError, "attribute name must be string"):
             getattr(objc.super(NSObject, NSObject.new()), 42)

@@ -348,7 +348,9 @@ varlist_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 static void
 varlist_dealloc(PyObject* self)
 {
+#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
+#endif
     PyObject_Del(self);
 #if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);

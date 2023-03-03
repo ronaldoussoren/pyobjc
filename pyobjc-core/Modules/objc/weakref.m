@@ -38,8 +38,10 @@ weakref_dealloc(PyObject* object)
     PyObjC_WeakRef* self = (PyObjC_WeakRef*)object;
 
     objc_storeWeak(&self->object, nil);
+#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(object);
-    tp->tp_free(object);
+#endif
+    PyObject_Del(object);
 #if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
 #endif
