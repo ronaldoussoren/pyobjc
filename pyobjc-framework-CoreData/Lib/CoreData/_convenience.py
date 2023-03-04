@@ -55,7 +55,7 @@ def NSMOgetValueForKey_(self, name):
         raise AttributeError(name)
 
 
-if os.uname()[2] < "13." or True:
+if os.uname()[2] < "13.":
     addConvenienceForClass(
         "NSManagedObject",
         (("__setattr__", NSMOsetValue_ForKey_), ("__getattr__", NSMOgetValueForKey_)),

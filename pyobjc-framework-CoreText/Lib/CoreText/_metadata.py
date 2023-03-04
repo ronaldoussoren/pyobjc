@@ -266,11 +266,6 @@ functions = {
         },
     ),
     "CTRunGetStringRange": (b"{_CFRange=qq}^{__CTRun=}",),
-    "CTFontCreateWithQuickdrawInstance": (
-        b"^{__CTFont=}*sCd",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
     "CTFontManagerUnregisterFontsForURL": (
         b"B^{__CFURL=}I^^{__CFError=}",
         "",

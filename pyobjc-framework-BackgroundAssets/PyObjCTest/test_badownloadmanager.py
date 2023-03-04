@@ -72,6 +72,6 @@ class TestBADownloadManager(TestCase):
 
     @min_os_level("13.3")
     def test_methods13_3(self):
-        self.assertResultIsOut(
+        self.assertArgIsOut(
             BackgroundAssets.BADownloadManager.fetchCurrentDownloads_, 0
         )

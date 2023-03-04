@@ -854,9 +854,10 @@
     }
    },
    "CTFontCreateWithQuickdrawInstance": {
+    "ignore": true,
     "args": {
      "0": {
-      "type_override": "*"
+      "type_override": "^t"
      }
     },
     "retval": {

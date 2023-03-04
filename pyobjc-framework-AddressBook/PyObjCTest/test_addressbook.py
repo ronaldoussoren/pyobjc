@@ -24,9 +24,53 @@ class TestCallableMetadata(TestCase):
         self.assertCallableMetadataIsSane(
             AddressBook,
             exclude_attrs={
+                # All of these are private APIs, test cannot see if APIs are public or not.
                 (
                     "ABAddressBookRef",
                     "nts_managedObjectContextWithStoreDescription_databasePath_loadFailure_",
                 ),
+                ("ABAddressBookRef", "abGlobalAPIUnlockInFile_line_"),
+                (
+                    "ABAddressBookRef",
+                    "abGlobalAPIUnlockInFile_line_togglingSuddenTermination_",
+                ),
+                (
+                    "ABAddressBookRef",
+                    "abGlobalAPITryLockInFile_line_togglingSuddenTermination_",
+                ),
+                (
+                    "ABAddressBookRef",
+                    "abGlobalAPILockInFile_line_contextBlock_togglingSuddenTermination_",
+                ),
+                ("ABAddressBookRef", "abRunWithGlobalAPILockInFile_line_block_"),
+                ("ABAddressBookRef", "abGlobalAPILockInFile_line_"),
+                (
+                    "ABAddressBookRef",
+                    "abGlobalAPILockInFile_line_togglingSuddenTermination_",
+                ),
+                ("ABAddressBookRef", "abGlobalAPITryLockInFile_line_"),
+                ("ABAddressBookRef", "globalAPIUnlockForAddressBook_inFile_line_"),
+                ("ABAddressBookRef", "abGlobalAPILockInFile_line_contextBlock_"),
+                (
+                    "ABAddressBookRef",
+                    "abGlobalAPIUnlockInFile_line_contextBlock_togglingSuddenTermination_",
+                ),
+                ("ABAddressBookRef", "abGlobalAPIUnlockInFile_line_contextBlock_"),
+                ("ABAddressBookRef", "abResultWithGlobalAPILockInFile_line_block_"),
+                ("ABPersonRef", "abGlobalAPILockInFile_line_"),
+                (
+                    "ABPersonRef",
+                    "abGlobalAPILockInFile_line_togglingSuddenTermination_",
+                ),
+                ("ABPersonRef", "abGlobalAPITryLockInFile_line_"),
+                ("ABPersonRef", "globalAPIUnlockForAddressBook_inFile_line_"),
+                ("ABPersonRef", "abGlobalAPILockInFile_line_contextBlock_"),
+                ("ABPersonRef", "globalAPILockForAddressBook_inFile_line_"),
+                ("ABGroupRef", "abGlobalAPILockInFile_line_"),
+                ("ABGroupRef", "abGlobalAPILockInFile_line_togglingSuddenTermination_"),
+                ("ABGroupRef", "abGlobalAPITryLockInFile_line_"),
+                ("ABGroupRef", "globalAPIUnlockForAddressBook_inFile_line_"),
+                ("ABGroupRef", "abGlobalAPILockInFile_line_contextBlock_"),
+                ("ABGroupRef", "globalAPILockForAddressBook_inFile_line_"),
             },
         )

@@ -70,16 +70,16 @@ class MyCoder(Foundation.NSCoder):
     def encodeBytes_length_(self, value, length):
         self.coded.append(("bytes", value, length))
 
-    def decodeValueOfObjCType_at_(self, tp):
+    def decodeValueOfObjCType_at_(self, tp, value):
         if tp == b"i":
             return 42
         elif tp == b"d":
             return 1.5
 
-    def decodeArrayOfObjCType_count_at_(self, tp, cnt):
+    def decodeArrayOfObjCType_count_at_(self, tp, cnt, value):
         return range(cnt)
 
-    def decodeBytesWithReturnedLength_(self):
+    def decodeBytesWithReturnedLength_(self, length):
         return (b"ABCDEabcde", 10)
 
 
