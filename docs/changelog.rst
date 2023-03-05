@@ -453,6 +453,14 @@ improvements as described below).
 
 * Upgraded framework bindings for Xcode 14.3 (macOS 13.3 SDK)
 
+* Dropped custom implementation of ``protocol_getMethodDescription``
+
+  FB11984735: In earlier versions of macOS there were problems with actually
+  registering protocols in some cases. A custom implementation of this
+  function allowed tests to pass. Turns out that debugging code that uses
+  ``protocol_getMethodDescription`` during protocol construction caused problems...
+
+
 Version 9.0.1
 -------------
 

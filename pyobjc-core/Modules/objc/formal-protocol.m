@@ -202,41 +202,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
                                           (BOOL)PyObjCSelector_Required(sel),
                                           PyObjCSelector_IsClassMethod(sel) ? NO : YES);
         }
-
-#ifndef protocol_getMethodDescription
-        /* See issue #17 */
-        struct objc_method_description descr = protocol_getMethodDescription(
-            theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
-            PyObjCSelector_IsClassMethod(sel) ? NO : YES);
-        if (descr.name == NULL) {
-            PyErr_Format(
-                PyExc_RuntimeError,
-                "Cannot find '%s' in newly constructed protocol (before registration)",
-                sel_getName(theSel));
-            goto error;
-        }
-#endif
     }
     objc_registerProtocol(theProtocol);
-
-#ifndef protocol_getMethodDescription
-    /* See issue #17 */
-    for (i = 0; i < len; i++) {
-        PyObject* sel    = PySequence_Fast_GET_ITEM(selectors, i);
-        SEL       theSel = PyObjCSelector_GetSelector(sel);
-
-        struct objc_method_description descr = protocol_getMethodDescription(
-            theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
-            PyObjCSelector_IsClassMethod(sel) ? NO : YES);
-        if (descr.name == NULL) {
-            PyErr_Format(
-                PyExc_RuntimeError,
-                "Cannot find '%s' in newly constructed protocol (after registration)",
-                sel_getName(theSel));
-            goto error;
-        }
-    }
-#endif
 
     result = (PyObjCFormalProtocol*)PyObject_New(
         PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
