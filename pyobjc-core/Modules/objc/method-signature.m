@@ -1817,6 +1817,9 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
         Py_DECREF(v);
         if (r == -1)    // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
+    } else if (PyErr_Occurred()) {
+        /* Invalid metadata, XXX don't like this pattern */
+        goto error;
     }
 
     return result;
