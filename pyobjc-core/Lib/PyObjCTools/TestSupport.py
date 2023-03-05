@@ -1108,7 +1108,11 @@ class TestCase(_unittest.TestCase):
     def _validateCallableMetadata(
         self, value, class_name=None, skip_simple_charptr_check=False
     ):
-        # print(value)
+        if isinstance(value, objc.selector):
+            signature = value.signature
+            if objc._C_PTR not in signature and objc._C_CHARPTR not in signature:
+                return
+
         callable_meta = value.__metadata__()
         argcount = len(callable_meta["arguments"])
 
