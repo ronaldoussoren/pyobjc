@@ -1233,7 +1233,30 @@ class TestCase(_unittest.TestCase):
             )
         )
 
-        module_names = sorted(dir(module))
+        # module_names = sorted(dir(module))
+
+        if isinstance(module, objc.ObjCLazyModule):
+            module_names = []
+            module_names.extend(
+                cls.__name__
+                for cls in objc.getClassList()
+                if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
+            )
+            module_names.extend(module._ObjCLazyModule__funcmap or [])
+            module_names.extend(module.__dict__.keys())
+            todo = list(module._ObjCLazyModule__parents or [])
+            while todo:
+                parent = todo.pop()
+                if isinstance(parent, objc.ObjCLazyModule):
+                    module_names.extend(parent._ObjCLazyModule__funcmap)
+                    todo.extend(parent._ObjCLazyModule__parents)
+                    module_names.extend(parent.__dict__.keys())
+                else:
+                    module_names.extend(dir(module))
+            module_names.sort()
+        else:
+            module_names = sorted(dir(module))
+
         for _idx, nm in enumerate(module_names):
             # print(f"{_idx}/{len(module_names)} {nm}")
             if nm in exclude_names:

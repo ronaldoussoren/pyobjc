@@ -460,6 +460,14 @@ improvements as described below).
   function allowed tests to pass. Turns out that debugging code that uses
   ``protocol_getMethodDescription`` during protocol construction caused problems...
 
+* :issue:`535`: Speed up standalone tests with ``assertCallableMetadataIsSane``
+
+  This assertion method is very slow because it looks at all callable attributes,
+  sped up considerably for standalone tests by only looking at attribute names
+  that might be callable (by poking in implementation details of the lazy loader).
+
+  This halves the time needed to run the check for the Cocoa bindings (from
+  over 200 seconds to just over 100 seconds). That's still too slow, but does help.
 
 Version 9.0.1
 -------------
