@@ -2416,7 +2416,8 @@
       "args": {
        "0": {
         "c_array_delimited_by_null": true,
-        "type_override": "r*"
+        "type_modifier": "n",
+        "type_override": "^t"
        },
        "2": {
         "c_array_of_variable_length": true,
@@ -12117,7 +12118,7 @@
       "class_method": false,
       "args": {
        "0": { "printf_format": true },
-       "2": { "type_override": "o" }
+       "2": { "type_modifier": "o" }
       }
      },
      {
@@ -12125,7 +12126,7 @@
       "class_method": false,
       "args": {
        "0": { "printf_format": true },
-       "2": { "type_override": "o" }
+       "2": { "type_modifier": "o" }
       }
      },
      {
@@ -12133,7 +12134,7 @@
       "class_method": false,
       "args": {
        "0": { "printf_format": true },
-       "3": { "type_override": "o" }
+       "3": { "type_modifier": "o" }
       }
      },
      {
@@ -12141,7 +12142,7 @@
       "class_method": false,
       "args": {
        "0": { "printf_format": true },
-       "3": { "type_override": "o" }
+       "3": { "type_modifier": "o" }
       }
      },
      {
@@ -12149,7 +12150,7 @@
       "class_method": false,
       "suggestion": "use -initWithValidatedFormat:validatedFormatSpecifiers:error:",
       "args": {
-       "3": { "type_override": "o" }
+       "3": { "type_modifier": "o" }
       }
      },
      {
@@ -12157,7 +12158,7 @@
       "class_method": false,
       "suggestion": "use -initWithValidatedFormat:validatedFormatSpecifiers:locale:error:",
       "args": {
-       "4": { "type_override": "o" }
+       "4": { "type_modifier": "o" }
       }
      },
      {
@@ -12165,7 +12166,7 @@
       "class_method": true,
       "args": {
        "0": { "printf_format": true },
-       "2": { "type_override": "o" }
+       "2": { "type_modifier": "o" }
       }
      },
      {
@@ -12173,7 +12174,7 @@
       "class_method": true,
       "args": {
        "0": { "printf_format": true },
-       "3": { "type_override": "o" }
+       "3": { "type_modifier": "o" }
       }
      },
      {
@@ -12181,7 +12182,7 @@
       "class_method": true,
       "args": {
        "0": { "printf_format": true },
-       "2": { "type_override": "o" }
+       "2": { "type_modifier": "o" }
       }
      },
      {
@@ -12189,7 +12190,7 @@
       "class_method": true,
       "args": {
        "0": { "printf_format": true },
-       "3": { "type_override": "o" }
+       "3": { "type_modifier": "o" }
       }
      },
 
@@ -13918,7 +13919,7 @@
       "selector": "fileURLWithFileSystemRepresentation:isDirectory:relativeToURL:",
       "class_method": true,
       "args": {
-       "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
        "1": { "type_override": "Z" }
       }
      },
@@ -13926,7 +13927,7 @@
       "selector": "initFileURLWithFileSystemRepresentation:isDirectory:relativeToURL:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_delimited_by_null": true },
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
        "1": { "type_override": "Z" }
       }
      },

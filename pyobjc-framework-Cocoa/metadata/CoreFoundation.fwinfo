@@ -299,6 +299,7 @@
    },
    "CFStringCreateStringWithValidatedFormatAndArguments": {
     "suggestion": "use CFStringCreateStringWithValidatedFormat instead",
+    "ignore": true,
     "args": {
      "5": { "type_modifier": "o" }
     }

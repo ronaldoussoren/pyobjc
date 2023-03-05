@@ -132,6 +132,10 @@ class TestString(TestCase):
             self.assertEqual(s, "X" + (" " * (len(b) - 1)))
 
     def testFunctions(self):
+        self.assertNotHasAttr(
+            CoreFoundation, "CFStringCreateStringWithValidatedFormatAndArguments"
+        )
+
         v = CoreFoundation.CFStringGetLength("bla bla")
         self.assertEqual(v, 7)
 
