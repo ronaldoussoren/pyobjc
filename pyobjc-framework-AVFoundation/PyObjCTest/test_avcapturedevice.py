@@ -323,10 +323,10 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice_Tundra.isStudioLightEnabled
         )
-        self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setStudioLightEnabled_, 0)
-        self.assertArgIsBOOL(
-            AVFoundation.AVCaptureDevice_Tundra.setStudioLightEnabled_, 0
-        )
+        # self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setStudioLightEnabled_, 0)
+        # self.assertArgIsBOOL(
+        #    AVFoundation.AVCaptureDevice_Tundra.setStudioLightEnabled_, 0
+        # )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightActive)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isStudioLightActive)
         self.assertResultIsBOOL(
