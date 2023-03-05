@@ -1181,7 +1181,7 @@ class TestCase(_unittest.TestCase):
 
             exclude_names = set(dir(Cocoa))
 
-            # Don't exclude 'NSObject' because a number
+            # Don't exclude NSObject' because a number
             # of frameworks define categories on this class.
             exclude_names -= {"NSObject"}
         else:
@@ -1270,7 +1270,7 @@ class TestCase(_unittest.TestCase):
                     # Root class, does not conform to the NSObject
                     # protocol and useless to test.
                     continue
-                for attr_name in sorted(dir(value.pyobjc_instanceMethods)):
+                for attr_name, attr in value.pyobjc_instanceMethods.__dict__.items():
                     if attr_name in exclude_method_names:
                         continue
                     if (nm, attr_name) in exclude_attrs:
@@ -1280,13 +1280,12 @@ class TestCase(_unittest.TestCase):
                         continue
 
                     with self.subTest(classname=nm, instance_method=attr_name):
-                        attr = getattr(value.pyobjc_instanceMethods, attr_name, None)
                         if isinstance(attr, objc.selector):  # pragma: no branch
                             self._validateCallableMetadata(
                                 attr, nm, skip_simple_charptr_check=not exclude_cocoa
                             )
 
-                for attr_name in sorted(dir(value.pyobjc_classMethods)):
+                for attr_name, attr in value.pyobjc_classMethods.__dict__.items():
                     if attr_name in exclude_method_names:
                         continue
                     if (nm, attr_name) in exclude_attrs:
@@ -1294,6 +1293,7 @@ class TestCase(_unittest.TestCase):
                     if attr_name.startswith("_"):
                         # Skip private names
                         continue
+
                     with self.subTest(classname=nm, instance_method=attr_name):
                         attr = getattr(value.pyobjc_classMethods, attr_name, None)
                         if isinstance(attr, objc.selector):  # pragma: no branch

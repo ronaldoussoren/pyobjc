@@ -469,6 +469,9 @@ improvements as described below).
   This halves the time needed to run the check for the Cocoa bindings (from
   over 200 seconds to just over 100 seconds). That's still too slow, but does help.
 
+  The method is also smarter about iterating over methods, shaving another 20 seconds
+  from this test.
+
 Version 9.0.1
 -------------
 
