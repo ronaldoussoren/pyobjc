@@ -1109,6 +1109,9 @@ class TestCase(_unittest.TestCase):
         self, value, class_name=None, skip_simple_charptr_check=False
     ):
         if isinstance(value, objc.selector):
+            # Check if the signature might contain types that are interesting
+            # for this method. This avoids creating a metadata dict for 'simple'
+            # methods.
             signature = value.signature
             if objc._C_PTR not in signature and objc._C_CHARPTR not in signature:
                 return
@@ -1237,8 +1240,9 @@ class TestCase(_unittest.TestCase):
             )
         )
 
-        # module_names = sorted(dir(module))
-
+        # Calculate all (interesting) names in the module. This pokes into
+        # the implementation details of objc.ObjCLazyModule to avoid loading
+        # all attributes (which is expensive for larger bindings).
         if isinstance(module, objc.ObjCLazyModule):
             module_names = []
             module_names.extend(
