@@ -12,8 +12,6 @@ import sys
 import warnings
 import xml.etree.ElementTree as ET
 
-import pkg_resources
-
 import objc
 
 ctypes = None
@@ -669,6 +667,7 @@ def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):  # noqa: A
 
 
 def safe_resource_string(package, resource):
+    import pkg_resources
     with contextlib.suppress(ImportError):
         return pkg_resources.resource_string(package, resource)
 
