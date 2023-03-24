@@ -73,6 +73,11 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentBurnInAnnotationsOption, str)
         self.assertIsInstance(Quartz.PDFDocumentSaveTextFromOCROption, str)
 
+    @min_os_level("13.4")
+    def test_constants13_3(self):
+        self.assertIsInstance(Quartz.PDFDocumentSaveImagesAsJPEGOption, str)
+        self.assertIsInstance(Quartz.PDFDocumentOptimizeImagesForScreenOption, str)
+
     def testMethods(self):
         self.assertResultIsBOOL(Quartz.PDFDocument.isEncrypted)
         self.assertResultIsBOOL(Quartz.PDFDocument.isLocked)

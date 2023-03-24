@@ -28,3 +28,9 @@ class TestAppKitErrors(TestCase):
         self.assertEqual(AppKit.NSWorkspaceAuthorizationInvalidError, 67328)
         self.assertEqual(AppKit.NSWorkspaceErrorMinimum, 67328)
         self.assertEqual(AppKit.NSWorkspaceErrorMaximum, 67455)
+
+        self.assertEqual(AppKit.NSWindowSharingRequestAlreadyRequested, 67456)
+        self.assertEqual(AppKit.NSWindowSharingRequestNoEligibleSession, 67457)
+        self.assertEqual(AppKit.NSWindowSharingRequestUnspecifiedError, 67458)
+        self.assertEqual(AppKit.NSWindowSharingErrorMinimum, 67456)
+        self.assertEqual(AppKit.NSWindowSharingErrorMaximum, 67466)

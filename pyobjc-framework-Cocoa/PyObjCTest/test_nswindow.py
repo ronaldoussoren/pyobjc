@@ -403,6 +403,14 @@ class TestNSWindow(TestCase):
         self.assertResultIsBOOL(AppKit.NSWindow.allowsAutomaticWindowTabbing)
         self.assertArgIsBOOL(AppKit.NSWindow.setAllowsAutomaticWindowTabbing_, 0)
 
+    @min_os_level("13.3")
+    def testMethods13_3(self):
+        self.assertResultIsBOOL(AppKit.NSWindow.hasActiveWindowSharingSession)
+
+        self.assertArgIsBlock(
+            AppKit.NSWindow.transferWindowSharingToWindow_completionHandler_, 1, b"v@"
+        )
+
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSWindowDelegate")
