@@ -77,8 +77,7 @@
     "special": true,
     "typestr": "{_MTLMapIndirectArguments=IIIIIIII}"
    },
-   "MTLPackedFloat3": { "typestr": "{_MTLPackedFloat3=[3f]}", "fieldnames": ["elements"] },
-   "MTLAccelerationStructureUserIDInstanceDescriptor": { "ignore": true, "comment": "vector types" }
+   "MTLPackedFloat3": { "typestr": "{_MTLPackedFloat3=[3f]}", "fieldnames": ["elements"] }
   },
   "classes": {
    "MTLRasterizationRateMapDescriptor": {

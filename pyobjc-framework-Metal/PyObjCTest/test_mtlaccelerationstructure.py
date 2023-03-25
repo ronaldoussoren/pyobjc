@@ -10,17 +10,19 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertIsEnumType(Metal.MTLMotionBorderMode)
 
     def test_structs(self):
-        # Vector types in fields
-        self.assertFalse(hasattr(Metal, "MTLAccelerationStructureInstanceDescriptor"))
+        v = Metal.MTLAccelerationStructureInstanceDescriptor()
+        self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.accelerationStructureIndex, int)
 
-        # v = Metal.MTLAccelerationStructureInstanceDescriptor()
-        # self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
-        # self.assertIsInstance(v.options, int)
-        # self.assertIsInstance(v.intersectionFunctionTableOffset, int)
-        # self.assertIsInstance(v.accelerationStructureIndex, int)
-
-        # Vector types in fields
-        self.assertNotHasAttr(Metal, "MTLAccelerationStructureUserIDInstanceDescriptor")
+        v = Metal.MTLAccelerationStructureUserIDInstanceDescriptor()
+        self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.mask, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.accelerationStructureIndex, int)
+        self.assertIsInstance(v.userID, int)
 
         v = Metal.MTLAccelerationStructureMotionInstanceDescriptor()
         self.assertIsInstance(v.options, int)
