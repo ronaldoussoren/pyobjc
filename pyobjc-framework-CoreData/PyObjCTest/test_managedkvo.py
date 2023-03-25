@@ -62,7 +62,7 @@ class Test(TestCase):
         self.assertEqual(testValue, managedObject._.testAttribute)
 
         testValue = "Zebras have long legs."
-        managedObject.testAttribute = testValue
+        managedObject._.testAttribute = testValue
 
         self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
