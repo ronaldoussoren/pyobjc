@@ -5,13 +5,12 @@ This functionality is deprecated and will be removed in PyObjC 10.
 """
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
+import contextlib
 import os
 import re
 import sys
 import warnings
 import xml.etree.ElementTree as ET
-
-import pkg_resources
 
 import objc
 
@@ -667,13 +666,10 @@ def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):  # noqa: A
         )
 
 
-def safe_resource_exists(package, resource):
-    try:
-        return pkg_resources.resource_exists(package, resource)
-    except ImportError:
-        # resource_exists raises ImportError when it cannot find
-        # the first argument.
-        return False
+def safe_resource_string(package, resource):
+    import pkg_resources
+    with contextlib.suppress(ImportError):
+        return pkg_resources.resource_string(package, resource)
 
 
 def initFrameworkWrapper(
@@ -749,10 +745,8 @@ def initFrameworkWrapper(
     # Look for metadata in the Python wrapper and prefer that over the
     # data in the framework or in system locations.
     # Needed because the system bridgesupport files are buggy.
-    if safe_resource_exists(frameworkResourceName, "PyObjC.bridgesupport"):
-        data = pkg_resources.resource_string(
-            frameworkResourceName, "PyObjC.bridgesupport"
-        )
+    data = safe_resource_string(frameworkResourceName, "PyObjC.bridgesupport")
+    if data:
         _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
         return bundle
 
@@ -772,10 +766,9 @@ def initFrameworkWrapper(
             _parseBridgeSupport(data, globals, frameworkName)
 
         # Check if we have additional metadata bundled with PyObjC
-        if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
-            data = pkg_resources.resource_string(
-                frameworkResourceName, "PyObjCOverrides.bridgesupport"
-            )
+        data = safe_resource_string(
+            frameworkResourceName, "PyObjCOverrides.bridgesupport")
+        if data:
             _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
@@ -796,12 +789,9 @@ def initFrameworkWrapper(
                 _parseBridgeSupport(data, globals, frameworkName)
 
             # Check if we have additional metadata bundled with PyObjC
-            if safe_resource_exists(
-                frameworkResourceName, "PyObjCOverrides.bridgesupport"
-            ):
-                data = pkg_resources.resource_string(
-                    frameworkResourceName, "PyObjCOverrides.bridgesupport"
-                )
+            data = safe_resource_string(
+                frameworkResourceName, "PyObjCOverrides.bridgesupport")
+            if data:
                 _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
             return bundle
