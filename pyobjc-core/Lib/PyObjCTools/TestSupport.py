@@ -1256,8 +1256,8 @@ class TestCase(_unittest.TestCase):
             while todo:
                 parent = todo.pop()
                 if isinstance(parent, objc.ObjCLazyModule):
-                    module_names.extend(parent._ObjCLazyModule__funcmap)
-                    todo.extend(parent._ObjCLazyModule__parents)
+                    module_names.extend(parent._ObjCLazyModule__funcmap or ())
+                    todo.extend(parent._ObjCLazyModule__parents or ())
                     module_names.extend(parent.__dict__.keys())
                 else:
                     module_names.extend(dir(module))
@@ -1272,7 +1272,10 @@ class TestCase(_unittest.TestCase):
             if nm in exclude_attrs:
                 continue
 
-            value = getattr(module, nm)
+            try:
+                value = getattr(module, nm)
+            except AttributeError:
+                continue
             if isinstance(value, objc.objc_class):
                 if value.__name__ == "Object":
                     # Root class, does not conform to the NSObject

@@ -126,11 +126,11 @@ class TestJSContextRef(TestCase):
         self.assertArgHasType(
             JavaScriptCore.JSGlobalContextIsInspectable,
             0,
-            JavaScriptCore.JSStringRef.__typestr__,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
 
         self.assertArgHasType(
             JavaScriptCore.JSGlobalContextSetInspectable,
             0,
-            JavaScriptCore.JSStringRef.__typestr__,
+            JavaScriptCore.JSContextRef.__typestr__,
         )

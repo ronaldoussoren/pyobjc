@@ -113,7 +113,7 @@ class TestDate(TestCase):
         stamp = CoreFoundation.CFAbsoluteTimeAddGregorianUnits(now, tz, units)
 
         # XXX: This is wrong during summer time.
-        self.assertIn(stamp - now, (24 * 3600, 25 * 3600))
+        self.assertIn(stamp - now, (23 * 3600, 24 * 3600, 25 * 3600))
         units = CoreFoundation.CFAbsoluteTimeGetDifferenceAsGregorianUnits(
             stamp, now, tz, CoreFoundation.kCFGregorianAllUnits
         )

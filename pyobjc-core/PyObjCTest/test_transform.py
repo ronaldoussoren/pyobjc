@@ -275,7 +275,10 @@ class TestTransformer(TestCase):
 
             out = self.transformer("value", value, NSObject, [])
             self.assertIsInstance(out, classmethod)
-            self.assertIs(out.__wrapped__, value.__wrapped__.__wrapped__)
+            if sys.version_info[:2] < (3, 10):
+                self.assertIs(out.__func__, value.__func__.__wrapped__)
+            else:
+                self.assertIs(out.__wrapped__, value.__wrapped__.__wrapped__)
 
     def test_dont_transform_dunder_method(self):
         def __dir__(self):
@@ -368,7 +371,10 @@ class TestTransformer(TestCase):
 
         out = self.transformer("method_name", classmethod(method_name), NSObject, [])
         self.assertIsInstance(out, classmethod)
-        self.assertIs(out.__wrapped__, method_name)
+        if sys.version_info[:2] < (3, 10):
+            self.assertIs(out.__func__, method_name)
+        else:
+            self.assertIs(out.__wrapped__, method_name)
 
         def other__method__name(self, a):
             pass
@@ -380,7 +386,10 @@ class TestTransformer(TestCase):
             "other__method__name", classmethod(other__method__name), NSObject, []
         )
         self.assertIsInstance(out, classmethod)
-        self.assertIs(out.__wrapped__, other__method__name)
+        if sys.version_info[:2] < (3, 10):
+            self.assertIs(out.__func__, other__method__name)
+        else:
+            self.assertIs(out.__wrapped__, other__method__name)
 
     def check_function_conversion(
         self, *, wrap_classmethod, inner_wrap=lambda x: x, outer_wrap=lambda x: x
