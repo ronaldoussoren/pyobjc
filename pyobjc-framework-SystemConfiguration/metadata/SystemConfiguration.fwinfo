@@ -708,7 +708,8 @@
    },
    "SCErrorString": {
     "retval": {
-     "type_override": "*"
+     "type_override": "^t",
+     "c_array_delimited_by_null": true
     }
    },
    "SCNetworkCheckReachabilityByAddress": {
@@ -726,7 +727,9 @@
    "SCNetworkCheckReachabilityByName": {
     "args": {
      "0": {
-      "type_override": "*"
+      "type_override": "^t",
+      "c_array_delimited_by_null": true,
+      "type_modifier": "n"
      },
      "1": {
       "type_modifier": "o",
@@ -1219,7 +1222,7 @@
       "type_override": "^{__CFAllocator=}"
      },
      "1": {
-      "type_override": "*"
+      "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true
      }
     },
     "retval": {
