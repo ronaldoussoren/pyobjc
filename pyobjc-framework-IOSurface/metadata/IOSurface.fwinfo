@@ -210,7 +210,6 @@
     },
     "retval": {
      "already_cfretained": true,
-     "already_retained": true,
      "type_override": "^{__IOSurface=}"
     }
    },

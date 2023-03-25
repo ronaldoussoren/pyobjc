@@ -1108,10 +1108,11 @@ class TestCase(_unittest.TestCase):
     def _validateCallableMetadata(
         self, value, class_name=None, skip_simple_charptr_check=False
     ):
-        if isinstance(value, objc.selector):
+        if False and isinstance(value, objc.selector):
             # Check if the signature might contain types that are interesting
             # for this method. This avoids creating a metadata dict for 'simple'
             # methods.
+            # XXX: Disabled this shortcut due to adding already_retained tests
             signature = value.signature
             if objc._C_PTR not in signature and objc._C_CHARPTR not in signature:
                 return
@@ -1122,6 +1123,13 @@ class TestCase(_unittest.TestCase):
         for idx, meta in [("retval", callable_meta["retval"])] + list(
             enumerate(callable_meta["arguments"])
         ):
+            if meta.get("already_retained", False) and meta.get(
+                "already_cfretained", False
+            ):
+                self.fail(
+                    f"{value}: {idx}: both already_retained and already_cfretained"
+                )
+
             if meta["type"].endswith(objc._C_PTR + objc._C_CHR) or meta[
                 "type"
             ].endswith(objc._C_CHARPTR):

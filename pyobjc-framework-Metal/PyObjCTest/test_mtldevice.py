@@ -461,12 +461,12 @@ class TestMTLDevice(TestCase):
 
     @min_os_level("10.11")
     def test_funtions10_11(self):
-        self.assertResultIsRetained(Metal.MTLCreateSystemDefaultDevice)
-        self.assertResultIsRetained(Metal.MTLCopyAllDevices)
+        self.assertResultIsCFRetained(Metal.MTLCreateSystemDefaultDevice)
+        self.assertResultIsCFRetained(Metal.MTLCopyAllDevices)
 
     @min_os_level("10.13")
     def test_funtions10_13(self):
-        self.assertResultIsRetained(Metal.MTLCopyAllDevicesWithObserver)
+        self.assertResultIsCFRetained(Metal.MTLCopyAllDevicesWithObserver)
         self.assertArgIsOut(Metal.MTLCopyAllDevicesWithObserver, 0)
         self.assertArgIsBlock(
             Metal.MTLCopyAllDevicesWithObserver, 1, MTLDeviceNotificationHandler

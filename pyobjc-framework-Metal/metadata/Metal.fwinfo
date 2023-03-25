@@ -1683,13 +1683,13 @@
     "args": { "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }}
    },
    "MTLCreateSystemDefaultDevice": {
-    "retval": { "already_retained": true }
+    "retval": { "already_cfretained": true }
    },
    "MTLCopyAllDevices": {
-    "retval": { "already_retained": true }
+    "retval": { "already_cfretained": true }
    },
    "MTLCopyAllDevicesWithObserver": {
-    "retval": { "already_retained": true },
+    "retval": { "already_cfretained": true },
     "args": {
      "0": { "type_modifier": "o" },
      "1": {

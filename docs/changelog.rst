@@ -472,6 +472,9 @@ improvements as described below).
   The method is also smarter about iterating over methods, shaving another 20 seconds
   from this test.
 
+* :issue:`539`: Fix incorrect metadata for ``IOSurfaceCreate`` that resulted in a crash
+  when that API was used.
+
 Version 9.0.1
 -------------
 
