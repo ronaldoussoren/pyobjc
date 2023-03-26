@@ -2088,8 +2088,8 @@ class TestInitFrameworkWrapper(TestCase):
             TEST_BRIDGESUPPORT_DIRECTORIES = []
 
             p.patch("objc.loadBundle", loadBundle)
-            p.patch("pkg_resources.resource_exists", resource_exists)
-            p.patch("pkg_resources.resource_string", resource_string)
+            p.patch("objc._bridgesupport.resource_exists", resource_exists)
+            p.patch("objc._bridgesupport.resource_string", resource_string)
             p.patch("objc._bridgesupport._parseBridgeSupport", parseBridgeSupport)
             p.patch(
                 "objc._bridgesupport.BRIDGESUPPORT_DIRECTORIES",
@@ -2802,30 +2802,6 @@ class TestInitFrameworkWrapper(TestCase):
 
             # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter
-
-    def test_safe_resource_exists(self):
-        with Patcher() as p:
-            return_value = False
-            exception = None
-
-            def resource_exists(resource, path):
-                if exception:
-                    raise exception
-                return return_value
-
-            p.patch("pkg_resources.resource_exists", resource_exists)
-
-            return_value = False
-            exception = None
-            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
-
-            return_value = True
-            exception = None
-            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), True)
-
-            return_value = True
-            exception = ImportError
-            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
     def test_real_loader(self):
         script = os.path.join(os.path.dirname(__file__), "helper_bridgesupport.py")
