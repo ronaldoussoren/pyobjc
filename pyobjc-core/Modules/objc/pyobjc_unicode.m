@@ -156,12 +156,14 @@ static PyGetSetDef unic_getset[] = {{
                                     }};
 
 static PyMemberDef unic_members[] = {
+#if PY_VERSION_HEX >= 0x03090000
     {
         .name   = "__weaklistoffset__",
         .type   = T_PYSSIZET,
         .offset = offsetof(PyObjCUnicodeObject, weakrefs),
         .flags  = READONLY,
     },
+#endif
     {
         .name = NULL /* SENTINEL */
     }};
@@ -511,6 +513,12 @@ PyObjCUnicode_Setup(PyObject* module)
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         return -1;     // LCOV_EXCL_LINE
     }
+#if PY_VERSION_HEX < 0x03090000
+    /* Support for setting this slot through PyType_Spec was introduced
+     * in 3.9
+     */
+    ((PyTypeObject*)tmp)->tp_weaklistoffset = offsetof(PyObjCUnicodeObject, weakrefs);
+#endif
     PyObjCUnicode_Type = tmp;
 
     if ( // LCOV_BR_EXCL_LINE
