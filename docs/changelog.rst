@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 9.1
------------
+Version 9.1b1
+-------------
 
 This is a fairly large larger update due to rewriting part of the core
 logic in Python (where the previous version used C). This does result in
@@ -474,6 +474,10 @@ improvements as described below).
 
 * :issue:`539`: Fix incorrect metadata for ``IOSurfaceCreate`` that resulted in a crash
   when that API was used.
+
+* :issue:`537`: Switch from ``pkg_resources`` to ``importlib`` in the support for
+  bridgesupport XML files because the setuptools project has deprecated the
+  ``pkg_resources`` module.
 
 Version 9.0.1
 -------------
