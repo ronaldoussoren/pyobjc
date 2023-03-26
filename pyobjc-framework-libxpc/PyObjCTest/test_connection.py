@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import xpc
 import objc
+import platform
 
 xpc_finalizer_t = b"v^v"
 
@@ -11,9 +12,13 @@ class TestConnection(TestCase):
         self.assertIsInstance(xpc.XPC_ERROR_CONNECTION_INTERRUPTED, objc.objc_object)
         self.assertIsInstance(xpc.XPC_ERROR_CONNECTION_INVALID, objc.objc_object)
         self.assertIsInstance(xpc.XPC_ERROR_TERMINATION_IMMINENT, objc.objc_object)
-        self.assertIsInstance(
-            xpc.XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT, objc.objc_object
-        )
+
+        if (
+            platform.mac_ver()[0] != "10.16"
+        ):  # Skip test on Python's build with pre-11.0 SDK
+            self.assertIsInstance(
+                xpc.XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT, objc.objc_object
+            )
 
         self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_LISTENER, 1 << 0)
         self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_PRIVILEGED, 1 << 1)
