@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_python_release
 
 import objc
 from objc import _transform
@@ -2120,6 +2120,9 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(hidden_instance_methods[b"instancevalue"], None)
         self.assertEqual(hidden_class_methods[b"classvalue"], None)
 
+    @min_python_release(
+        "3.9"
+    )  # Test doesn't work on older Python versions due to stdlib changes
     def test_class_dict_is_transformed(self):
         # This test just makes sure that the attribute transformer is actually used,
         # that way this testcase doesn't have to test the transformer indirectly.
