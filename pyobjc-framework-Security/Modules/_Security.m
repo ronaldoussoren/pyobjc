@@ -73,7 +73,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         return NULL;
     }
 
-    if (py_securityDomain == Py_None) {
+    if (py_securityDomain == Py_None || py_securityDomain == PyObjC_NULL) {
         securityDomain = NULL;
 
     } else {
@@ -87,7 +87,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         }
     }
 
-    if (py_accountName == Py_None) {
+    if (py_accountName == Py_None || py_accountName == PyObjC_NULL) {
         accountName = NULL;
     } else {
         accountName_token = PyObjC_PythonToCArray(
@@ -103,7 +103,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         }
     }
 
-    if (py_path == NULL) {
+    if (py_path == Py_None || py_path == PyObjC_NULL) {
         path = NULL;
     } else {
         path_token = PyObjC_PythonToCArray(NO, NO, &string, py_path, (void**)&path,
@@ -260,7 +260,7 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
         return NULL;
     }
 
-    if (py_accountName == Py_None) {
+    if (py_accountName == Py_None || py_accountName == PyObjC_NULL) {
         accountName = NULL;
     } else {
         accountName_token = PyObjC_PythonToCArray(
