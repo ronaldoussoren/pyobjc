@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "9.1b1"
+VERSION = "9.1"
 
 setup(
     name="pyobjc-framework-CoreMedia",
