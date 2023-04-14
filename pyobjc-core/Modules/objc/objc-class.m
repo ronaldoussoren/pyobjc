@@ -1813,17 +1813,29 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
                 return -1;
             }
         }
-        value = PyObjC_TransformAttribute(name, value, self, protocols);
+        PyObject* old_value = value;
+        value               = PyObjC_TransformAttribute(name, value, self, protocols);
         Py_DECREF(protocols);
         if (value == NULL) {
             return -1;
         }
 
         if (PyObjCNativeSelector_Check(value)) {
-            Py_DECREF(value);
-            PyErr_SetString(PyExc_TypeError,
-                            "Assigning native selectors is not supported");
-            return -1;
+            /* XXX:
+             *   The test for old_value is not ideal and is present
+             *   to make it possible to use ``python_method(sel)`` to
+             *   create an alias for ``sel``. Can't check for ``python_method``
+             *   here because that type is python only.
+             *
+             *   Remove this once there is a good and documented way to
+             *   accomplish this.
+             */
+            if (value == old_value) {
+                Py_DECREF(value);
+                PyErr_SetString(PyExc_TypeError,
+                                "Assigning native selectors is not supported");
+                return -1;
+            }
 
         } else if (((PyObjCClassObject*)self)->isCFWrapper) {
             /* This is a wrapper class for a CoreFoundation type

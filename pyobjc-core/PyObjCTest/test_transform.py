@@ -2120,6 +2120,31 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(hidden_instance_methods[b"instancevalue"], None)
         self.assertEqual(hidden_class_methods[b"classvalue"], None)
 
+    def test_rename_selector(self):
+        # This is used by some code that tries to give a
+        # nicer interface to ObjC classes
+
+        class_dict = {"makeArray": objc.python_method(NSMutableArray.initWithArray_)}
+        meta_dict = {}
+        hidden_instance_methods = {}
+        hidden_class_methods = {}
+
+        rval = self.processor(
+            class_dict,
+            meta_dict,
+            NSMutableArray,
+            [],
+            hidden_instance_methods,
+            hidden_class_methods,
+        )
+
+        self.assertValidResult(rval)
+        self.assertEqual(len(rval[1]), 0)
+        self.assertEqual(len(rval[2]), 0)
+        self.assertEqual(len(hidden_instance_methods), 0)
+        self.assertEqual(len(hidden_class_methods), 0)
+        self.assertEqual(class_dict["makeArray"], NSMutableArray.initWithArray_)
+
     @min_python_release(
         "3.9"
     )  # Test doesn't work on older Python versions due to stdlib changes

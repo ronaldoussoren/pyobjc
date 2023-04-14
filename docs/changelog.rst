@@ -3,6 +3,18 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.1
+------------
+
+* Fix handling ``python_method(native_selector)`` when assigning to a class
+  attribute. That is, the following was broken in 9.1b1:
+
+  .. sourcecode:: python
+
+     import Foundation, objc
+
+     NSArray.makeArray = objc.python_method(NSArray.arrayWithArray_)
+
 Version 9.1b1
 -------------
 

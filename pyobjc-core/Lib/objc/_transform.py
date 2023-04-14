@@ -64,10 +64,15 @@ def processClassDict(
             setup(key, class_dict, instance_methods, class_methods)
 
     for key, value in list(class_dict.items()):
+        old_value = value
         new_value = transformAttribute(key, value, class_object, protocols)
         if new_value is not value:
             class_dict[key] = new_value
             value = new_value
+
+        if isinstance(value, objc.selector):
+            if isinstance(old_value, python_method):
+                continue
 
         if isinstance(value, objc.selector):
             canonical = value.selector.decode().replace(":", "_")
