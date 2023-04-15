@@ -15,6 +15,11 @@ Version 9.1
 
      NSArray.makeArray = objc.python_method(NSArray.arrayWithArray_)
 
+* :issue:`535`: Reverted ome of the speedups in ``assertCallableMetadataIsSane``
+
+  A new sanity check required reverting some of the speedups in
+  ``assertCallableMetadataIsSane``.
+
 Version 9.1b1
 -------------
 
