@@ -1071,3 +1071,16 @@ class TestSelectorEdgeCases(TestCase):
 
         obj = ClassWithDirAsSelector.alloc().init()
         self.assertEqual(obj.method(), dir(obj))
+
+
+class TestMixin(TestCase):
+    def test_basic(self):
+        class Mixin:
+            pass
+
+        class MixinBase1(NSObject, Mixin):
+            pass
+
+        class MixinUser1(MixinBase1):
+            def method(self):
+                pass

@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.1.1
+-------------
+
+* :issue:`548`: Fix unexpected error when using mix-in classes
+
 Version 9.1
 ------------
 

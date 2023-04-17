@@ -479,8 +479,10 @@ def transformAttribute(name, value, class_object, protocols):
     #      is false :-(
     ishidden = False
     for cls in class_object.mro():  # pragma: no branch
-        if cls is object:
-            break
+        if not issubclass(cls, objc.objc_class):
+            # Skip all non-objc class in the MRO to ignore
+            # mixin classees.
+            continue
         if selname in cls.pyobjc_hiddenSelectors(isclass):
             ishidden = True
             break

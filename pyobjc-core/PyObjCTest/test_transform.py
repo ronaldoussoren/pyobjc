@@ -2239,3 +2239,5 @@ class TestClassDictProcessor(TestCase):
 
     # XXX: Should test validate_protocols here, but is already fully covered by
     #      tests in test_protocols.
+
+    # XXX: Add tests using mixin classes as a super-class
