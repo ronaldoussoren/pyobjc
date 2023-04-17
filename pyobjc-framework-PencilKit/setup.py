@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "9.1"
+VERSION = "9.1.1"
 
 setup(
     name="pyobjc-framework-PencilKit",

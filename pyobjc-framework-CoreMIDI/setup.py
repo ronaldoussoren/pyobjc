@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "9.1"
+VERSION = "9.1.1"
 
 setup(
     name="pyobjc-framework-CoreMIDI",
