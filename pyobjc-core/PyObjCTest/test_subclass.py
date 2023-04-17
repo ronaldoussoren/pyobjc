@@ -1084,3 +1084,19 @@ class TestMixin(TestCase):
         class MixinUser1(MixinBase1):
             def method(self):
                 pass
+
+    def test_ignore_selectors_in_mix(self):
+        class Mixin:
+            def method(self):
+                return 42
+
+            method = objc.selector(method, signature=b"d@:")
+
+        class MixinBase2(NSObject, Mixin):
+            pass
+
+        class MixinUser2(MixinBase2):
+            def method(self):
+                return 1
+
+        self.assertResultHasType(MixinUser2.method, b"@")

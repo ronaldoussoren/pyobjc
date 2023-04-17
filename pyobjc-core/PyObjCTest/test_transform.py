@@ -226,6 +226,20 @@ class TransformerHelper2(TransformerHelper):
     pass
 
 
+class Mixin:
+    def method1(self):
+        return 1
+
+    def method2(self):
+        return 1
+
+    method2 = objc.selector(method2, signature=b"d@:")
+
+
+class TransformerHelperWithMixin(NSObject, Mixin):
+    pass
+
+
 class TestTransformer(TestCase):
     transformer = staticmethod(_transform.transformAttribute)
 
@@ -1255,6 +1269,25 @@ class TestTransformer(TestCase):
                 TypeError, "method name is of type int, not a string"
             ):
                 self.transformer(42, doit, NSObject, [])
+
+    def test_mixin_is_ignored(self):
+        with self.subTest("regular method in mixin"):
+
+            def method1(self):
+                pass
+
+            out = self.transformer("method1", method1, TransformerHelperWithMixin, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"v@:")
+
+        with self.subTest("selector in mixin"):
+
+            def method2(self):
+                pass
+
+            out = self.transformer("method2", method2, TransformerHelperWithMixin, [])
+            self.assertIsInstance(out, objc.selector)
+            self.assertEqual(out.signature, b"v@:")
 
 
 class OC_TransformWithoutDict(NSObject):
