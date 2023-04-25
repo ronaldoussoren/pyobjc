@@ -398,6 +398,10 @@ class oc_test(Command):
                 print("Framework wrapper for %s does not contain setup.py" % (nm))
                 failures += 1
 
+            if not os.path.exists(os.path.join(subdir, "pyproject.toml")):
+                print("Framework wrapper for %s does not contain pyproject.toml" % (nm))
+                failures += 1
+
             if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
                 print(
                     "Framework wrapper for %s does not contain pyobjc_setup.py" % (nm)

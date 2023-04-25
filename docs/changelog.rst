@@ -3,6 +3,16 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.2
+-----------
+
+* :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
+
+  Recent versions of pip give a deprecation warning for projects without
+  a ``pyproject.toml``, and version 23.1 enabled the ``pyproject.toml``
+  backend by default. Add a minimal ``pyproject.toml`` to get a consistent
+  build regardless of the version of pip
+
 Version 9.1.1
 -------------
 
