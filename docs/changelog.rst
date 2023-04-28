@@ -18,6 +18,9 @@ Version 9.2
 
 * :issue:`551`: Fix crash in pyobjc-core when using Python 3.12a7.
 
+* :issue:`449`: Added explicit tests for dealing with Objective-C categories
+  that are loaded while using classes from Python.
+
 Version 9.1.1
 -------------
 
