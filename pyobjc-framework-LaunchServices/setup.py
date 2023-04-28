@@ -3,7 +3,13 @@ Deprecated wrappers for the "LaunchServices" framework on macOS.
 
 Use the "CoreServices" bindings instead.
 """
-from pyobjc_setup import setup
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "9.1.1"
 

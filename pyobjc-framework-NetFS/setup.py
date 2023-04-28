@@ -7,7 +7,12 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "9.1.1"
 

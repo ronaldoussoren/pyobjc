@@ -6,10 +6,13 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
-# import os
-#
-# from pyobjc_setup import setup, Extension
-from pyobjc_setup import setup
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "9.1.1"
 
@@ -18,24 +21,10 @@ setup(
     description="Wrappers for the framework MetalPerformanceShadersGraph on macOS",
     min_os_level="10.16",
     packages=["MetalPerformanceShadersGraph"],
-    # ext_modules=[
-    #    Extension(
-    #        "MetalPerformanceShadersGraph._MetalPerformanceShadersGraph",
-    #        ["Modules/_MetalPerformanceShadersGraph.m"],
-    #        extra_link_args=["-framework", "MetalPerformanceShadersGraph"],
-    #        py_limited_api=True,
-    #        depends=[
-    #            os.path.join("Modules", fn)
-    #            for fn in os.listdir("Modules")
-    #            if fn.startswith("_MetalPerformanceShadersGraph")
-    #        ],
-    #    )
-    # ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
         "pyobjc-framework-MetalPerformanceShaders>=" + VERSION,
     ],
     long_description=__doc__,
-    # options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

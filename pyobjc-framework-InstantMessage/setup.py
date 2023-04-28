@@ -11,7 +11,13 @@ and (Objective-)C frameworks
 Note that this framework is deprecated in OSX 10.9, use the Social framework
 instead if you target that OSX release.
 """
-from pyobjc_setup import setup
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "9.1.1"
 
