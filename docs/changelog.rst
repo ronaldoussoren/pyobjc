@@ -13,6 +13,8 @@ Version 9.2
   backend by default. Add a minimal ``pyproject.toml`` to get a consistent
   build regardless of the version of pip
 
+* :issue:`551`: Fix crash in pyobjc-core when using Python 3.12a7.
+
 Version 9.1.1
 -------------
 
