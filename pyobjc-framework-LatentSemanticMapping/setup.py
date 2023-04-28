@@ -12,7 +12,13 @@ and (Objective-)C frameworks.
 NOTE: Apple's documentation for this framework is very minimal at the moment,
 making it very hard to actually use the framework.
 """
-from pyobjc_setup import setup
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "9.1.1"
 

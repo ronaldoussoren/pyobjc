@@ -10,15 +10,16 @@ and (Objective-)C frameworks
 #
 # Distutils doesn't understand '.mm' as an extension
 #
-import distutils.unixccompiler
 import os
+import sys
 
-from pyobjc_setup import Extension, setup
+sys.path.insert(0, os.path.dirname(__file__))
+
+
+from pyobjc_setup import Extension, setup  # noqa: E402
 
 VERSION = "9.1.1"
 
-
-distutils.unixccompiler.UnixCCompiler.src_extensions.append(".mm")
 
 setup(
     name="pyobjc-framework-CoreAudioKit",
