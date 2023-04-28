@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 9.2
 -----------
 
+* The project is now actively tested with Python 3.12 pre-releases and
+  will ship wheels for 3.12 shortly after the first 3.12 beta is released.
+
 * :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
 
   Recent versions of pip give a deprecation warning for projects without
