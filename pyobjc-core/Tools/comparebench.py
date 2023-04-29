@@ -36,7 +36,11 @@ def main():
         base = results[0]["bench"][key]
         row = [key]
         for r in results:
-            cur = r["bench"][key]
+            try:
+                cur = r["bench"][key]
+            except KeyError as exc:
+                print(f"{key}: {exc!r}")
+                continue
             if cur == base:
                 row.append(f"{cur:.3f}")
             else:

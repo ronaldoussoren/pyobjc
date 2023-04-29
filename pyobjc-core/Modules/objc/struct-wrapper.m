@@ -91,9 +91,11 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
                                            Py_ssize_t ihigh)
 {
     PyObject*  result;
-    Py_ssize_t i, len;
+    Py_ssize_t i;
 
-    len = STRUCT_LENGTH(self);
+#ifdef PyObjC_DEBUG
+    Py_ssize_t len = STRUCT_LENGTH(self);
+#endif
     PyObjC_Assert(ilow >= 0, NULL);
     PyObjC_Assert(ihigh <= len, NULL);
 
@@ -152,7 +154,7 @@ static int
 struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* v)
 {
     PyObject*  seq;
-    Py_ssize_t i, len;
+    Py_ssize_t i;
 
     if (v == NULL) {
         PyErr_Format(PyExc_TypeError, "Cannot delete items in instances of %.100s",
@@ -160,7 +162,9 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         return -1;
     }
 
-    len = STRUCT_LENGTH(self);
+#ifdef PyObjC_DEBUG
+    Py_ssize_t len = STRUCT_LENGTH(self);
+#endif
     PyObjC_Assert(ilow >= 0, -1);
     PyObjC_Assert(ilow <= len, -1);
     PyObjC_Assert(ihigh >= 0, -1);
