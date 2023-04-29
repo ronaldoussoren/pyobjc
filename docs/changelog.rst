@@ -21,6 +21,9 @@ Version 9.2
 * :issue:`449`: Added explicit tests for dealing with Objective-C categories
   that are loaded while using classes from Python.
 
+* :issue:`552`: Fix the version of macOS where the SafariServices framework is
+  present.
+
 Version 9.1.1
 -------------
 

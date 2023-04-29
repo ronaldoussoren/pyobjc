@@ -137,7 +137,7 @@ FRAMEWORK_WRAPPERS = [
     ("QuickLookThumbnailing", "10.15", None),
     ("ReplayKit", "11.0", None),
     ("SafetyKit", "13.0", None),
-    ("SafariServices", "10.11", None),
+    ("SafariServices", "10.12", None),
     ("ScreenSaver", None, None),
     ("ScreenTime", "11.0", None),
     ("ScriptingBridge", "10.5", None),

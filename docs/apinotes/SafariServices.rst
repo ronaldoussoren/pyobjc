@@ -14,6 +14,6 @@ API Notes
 
 .. note::
 
-   This framework is only available on macOS 10.11 and later.
+   This framework is only available on macOS 10.12 and later.
 
 The entire framework is available from Python.

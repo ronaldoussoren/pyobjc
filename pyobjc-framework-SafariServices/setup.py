@@ -20,7 +20,7 @@ VERSION = "9.1.1"
 setup(
     name="pyobjc-framework-SafariServices",
     description="Wrappers for the framework SafariServices on macOS",
-    min_os_level="10.11",
+    min_os_level="10.12",
     packages=["SafariServices"],
     ext_modules=[
         Extension(
