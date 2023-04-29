@@ -8,8 +8,11 @@
 #include <simd/simd.h>
 
 #import <GameplayKit/GameplayKit.h>
-#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+
+#if PyObjC_BUILD_RELEASE >= 1013
+#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
