@@ -6,6 +6,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 9.2
 -----------
 
+* :issue:`549`: Document that ``objc.super`` must be used instead of
+  ``builtin.super`` when calling superclass methods in a Cocoa subclass.
+
+  See `the documentation <(https://pyobjc.readthedocs.io/core/super.html>`_
+  for more details.
+
 * The project is now actively tested with Python 3.12 pre-releases and
   will ship wheels for 3.12 shortly after the first 3.12 beta is released.
 
