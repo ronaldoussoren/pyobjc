@@ -33,8 +33,8 @@ For most users this will install PyObjC using `wheel <https://pypi.org/project/w
 archives, which means you don't have to have a compiler on your machine.
 
 Some use cases require installation of all framework bindings, not just those that are
-relevant for the current system. In PyObjC 8 you can install framework bindings using the
-*allbindings** extra:
+relevant for the current system. In PyObjC 8 or later you can install framework bindings
+using the *allbindings** extra:
 
 .. sourcecode:: sh
 
@@ -116,6 +116,10 @@ version of macOS than the one you used for the build
   Python itself is build with ``MACOSX_DEPLOYMENT_TARGET`` set to the earliest
   version of macOS you want to support. PyObC, and other extension packages,
   should automatically pick up the deployment target from the Python build.
+
+* Using the latest version of macOS to build binaries gives the most featureful
+  binaries, building on older macOS versions can drop specific support for
+  some newer APIs.
 
   .. note::
 
