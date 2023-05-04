@@ -12,6 +12,7 @@
  * be available on all macOS versions once compiled.
  */
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 static PyObjC_function_map function_map[] = {

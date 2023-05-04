@@ -1,8 +1,6 @@
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    os_release,
-    expectedFailureIf,
 )
 import objc
 import GameController
@@ -16,13 +14,11 @@ class TestGCMicroGamepad(TestCase):
         self.assertIsInstance(GameController.GCInputMicroGamepadButtonX, str)
         self.assertIsInstance(GameController.GCInputMicroGamepadButtonMenu, str)
 
-    @expectedFailureIf(os_release() == "10.11")
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def testClasses(self):
         self.assertIsInstance(GameController.GCMicroGamepad, objc.objc_class)
 
-    @expectedFailureIf(os_release() == "10.11")
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertResultIsBlock(
             GameController.GCMicroGamepad.valueChangedHandler, b"v@@"

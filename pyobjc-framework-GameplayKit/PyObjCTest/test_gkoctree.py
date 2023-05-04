@@ -1,10 +1,11 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import GameplayKit
 
 from objc import simd
 
 
 class TestGKOctree(TestCase):
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertArgHasType(
             GameplayKit.GKOctree.octreeWithBoundingBox_minimumCellSize_,

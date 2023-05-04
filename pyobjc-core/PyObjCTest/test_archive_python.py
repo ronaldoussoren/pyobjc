@@ -29,6 +29,7 @@ from PyObjCTools.TestSupport import (
     skipUnless,
     expectedFailure,
     expectedFailureIf,
+    min_os_level,
     os_level_key,
     os_release,
     pyobjc_options,
@@ -1769,6 +1770,7 @@ class TestArchivePythonObjCSubclass(TestCase):
 
 
 class TestSecureArchivingPython(TestCase):
+    @min_os_level("10.13")
     def test_secure_archive_sequence(self):
         archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
         sequence = collections.UserList()
@@ -1783,6 +1785,7 @@ class TestSecureArchivingPython(TestCase):
 
         archive.finishEncoding()
 
+    @min_os_level("10.13")
     def test_secure_archive_mapping(self):
         archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
         mapping = collections.UserDict()
@@ -1796,6 +1799,7 @@ class TestSecureArchivingPython(TestCase):
 
         archive.finishEncoding()
 
+    @min_os_level("10.13")
     def test_secure_archive_set(self):
         archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
 
@@ -1813,6 +1817,7 @@ class TestSecureArchivingPython(TestCase):
 
         archive.finishEncoding()
 
+    @min_os_level("10.13")
     def test_secure_archive_object(self):
         archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
 

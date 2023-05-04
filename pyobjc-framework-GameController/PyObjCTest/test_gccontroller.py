@@ -1,9 +1,4 @@
-from PyObjCTools.TestSupport import (
-    TestCase,
-    min_os_level,
-    os_release,
-    expectedFailureIf,
-)
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 import GameController
 
@@ -34,8 +29,7 @@ class TestGCController(TestCase):
             b"v",
         )
 
-    @expectedFailureIf(os_release() == "10.11")
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def testMethods10_11(self):
         self.assertResultIsBOOL(
             GameController.GCEventViewController.controllerUserInteractionEnabled

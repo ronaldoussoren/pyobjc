@@ -71,7 +71,12 @@ class TestDebugging(TestCase):
     @expectedFailureIf(sys.byteorder == "big")
     def testAtos(self):
         NSThread = objc.lookUpClass("NSThread")
-        v = " ".join(hex(x) for x in NSThread.callStackReturnAddresses())
+        NSArray = objc.lookUpClass("NSArray")
+
+        # The intermediate NSArray is necessary on 10.11
+        v = " ".join(
+            hex(x) for x in NSArray.arrayWithArray_(NSThread.callStackReturnAddresses())
+        )
         fp = Debugging._run_atos(v)
         value = fp.read()
         fp.close()

@@ -122,6 +122,7 @@ class TestGKMatchMaker(TestCase):
         self.assertResultIsBOOL(GameKit.GKMatchRequest.restrictToAutomatch)
         self.assertArgIsBOOL(GameKit.GKMatchRequest.setRestrictToAutomatch_, 0)
 
+    @min_os_level("13.1")
     def testMethods13_1(self):
         self.assertArgIsBlock(
             GameKit.GKMatchmaker.startGroupActivityWithPlayerHandler_, 0, b"v@"

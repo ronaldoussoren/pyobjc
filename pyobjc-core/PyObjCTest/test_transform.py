@@ -1,4 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_python_release
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_python_release,
+    os_level_key,
+    os_release,
+    expectedFailureIf,
+)
 
 import objc
 from objc import _transform
@@ -1028,7 +1034,9 @@ class TestTransformer(TestCase):
             self.assertIsInstance(out, objc.selector)
             self.assertSignaturesEqual(out.signature, b"s@:@f")
 
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.12"))
     def test_protocol_method(self):
+        # Protocol creation bug in at least 10.11
         with self.subTest("ObjC protocol, instance method match"):
 
             def method1(self):

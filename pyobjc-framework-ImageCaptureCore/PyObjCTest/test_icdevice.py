@@ -1,5 +1,9 @@
 import ImageCaptureCore
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    max_os_level,
+)
 
 
 class TestICDevice(TestCase):
@@ -75,7 +79,7 @@ class TestICDevice(TestCase):
             b"v@:I@@^v",
         )
 
-    @expectedFailure
+    @max_os_level("10.14")
     def testMethods_removed_in_10_15(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isShared)
 

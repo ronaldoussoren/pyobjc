@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 import ModelIO
 from objc import simd
@@ -79,5 +79,6 @@ class TestMDLAsset(TestCase):
             ModelIO.MDLAsset.setUpAxis_, 0, simd.vector_float3.__typestr__
         )
 
+    @min_sdk_level("10.12")
     def testProtocolObjects(self):
         self.assertProtocolExists("MDLLightProbeIrradianceDataSource")

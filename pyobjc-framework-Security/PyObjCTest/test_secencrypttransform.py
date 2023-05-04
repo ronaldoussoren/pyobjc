@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 import objc
 
 
@@ -24,8 +24,10 @@ class TestSecEncryptTransform(TestCase):
     def test_constants10_8(self):
         self.assertIsInstance(Security.kSecOAEPEncodingParametersAttributeName, str)
 
+    @expectedFailure
     @min_os_level("10.8")
     def test_constants10_8_missing(self):
+        # Fails on 10.11
         self.assertIsInstance(Security.kSecOAEPMessageLengthAttributeName, str)
         self.assertIsInstance(Security.kSecOAEPMGF1DigestAlgorithmAttributeName, str)
 

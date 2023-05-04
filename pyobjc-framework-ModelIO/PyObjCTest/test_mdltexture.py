@@ -64,12 +64,6 @@ class TestMDLTexture(TestCase):
             5,
         )
 
-        self.assertArgHasType(
-            ModelIO.MDLNoiseTexture.initCellularNoiseWithFrequency_name_textureDimensions_channelEncoding_,
-            2,
-            simd.vector_int2.__typestr__,
-        )
-
         self.assertResultHasType(
             ModelIO.MDLTexture.dimensions, simd.vector_int2.__typestr__
         )
@@ -87,17 +81,6 @@ class TestMDLTexture(TestCase):
 
         self.assertArgHasType(
             ModelIO.MDLCheckerboardTexture.initWithDivisions_name_dimensions_channelCount_channelEncoding_color1_color2_,
-            2,
-            simd.vector_int2.__typestr__,
-        )
-
-        self.assertArgHasType(
-            ModelIO.MDLSkyCubeTexture.initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_upperAtmosphereScattering_groundAlbedo_,
-            2,
-            simd.vector_int2.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.MDLSkyCubeTexture.initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_sunAzimuth_upperAtmosphereScattering_groundAlbedo_,
             2,
             simd.vector_int2.__typestr__,
         )
@@ -130,5 +113,20 @@ class TestMDLTexture(TestCase):
 
     @min_os_level("10.13")
     def testMethods10_13(self):
+        self.assertArgHasType(
+            ModelIO.MDLSkyCubeTexture.initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_upperAtmosphereScattering_groundAlbedo_,
+            2,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLSkyCubeTexture.initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_sunAzimuth_upperAtmosphereScattering_groundAlbedo_,
+            2,
+            simd.vector_int2.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLNoiseTexture.initCellularNoiseWithFrequency_name_textureDimensions_channelEncoding_,
+            2,
+            simd.vector_int2.__typestr__,
+        )
         self.assertResultIsBOOL(ModelIO.MDLTexture.writeToURL_level_)
         self.assertResultIsBOOL(ModelIO.MDLTexture.writeToURL_type_level_)

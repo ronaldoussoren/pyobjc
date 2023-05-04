@@ -262,8 +262,15 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
          *     class FloatEnum(float, enum.Enum): ...
          */
         NSString* stringVal;
-        stringVal = [[NSString alloc]
-            initWithFormat:@"%.*g", DBL_DECIMAL_DIG, PyFloat_AsDouble(pyValue)];
+        stringVal = [[NSString alloc] initWithFormat:@"%.*g",
+#ifdef DBL_DECIMAL_DIG
+                                                     DBL_DECIMAL_DIG,
+#else
+                                                     /* With Xcode 7.3 (macOS 10.11) the
+                                                        public macro is not available */
+                                                     __DBL_DECIMAL_DIG__,
+#endif
+                                                     PyFloat_AsDouble(pyValue)];
         if (stringVal == nil) {
             PyErr_SetString(PyObjCExc_Error, "Converting double to NSString failed");
             return -1;
@@ -1056,7 +1063,11 @@ mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* me
   error:
       Py_XDECREF(v);
       PyObjCErr_ToObjCWithGILState(&state);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
+
       __builtin_unreachable(); // LCOV_EXCL_LINE
+#pragma clang diagnostic pop
     };
     return imp_implementationWithBlock(block);
 }

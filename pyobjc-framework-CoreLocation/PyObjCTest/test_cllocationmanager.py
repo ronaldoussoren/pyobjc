@@ -73,13 +73,18 @@ class TestCLLocationManager(TestCase):
         self.assertArgIsBOOL(
             CoreLocation.CLLocationManager.setPausesLocationUpdatesAutomatically_, 0
         )
+        self.assertResultIsBOOL(CoreLocation.CLLocationManager.headingAvailable)
+
+    @min_os_level("10.12")
+    def testMethods10_12(self):
+        # Documentation claims there APIs are available on 10.11, in practice they aren't
+
         self.assertResultIsBOOL(
             CoreLocation.CLLocationManager.allowsBackgroundLocationUpdates
         )
         self.assertArgIsBOOL(
             CoreLocation.CLLocationManager.setAllowsBackgroundLocationUpdates_, 0
         )
-        self.assertResultIsBOOL(CoreLocation.CLLocationManager.headingAvailable)
 
     @min_os_level("10.15")
     def testMethods10_15(self):

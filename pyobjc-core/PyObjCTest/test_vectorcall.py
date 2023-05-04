@@ -3,7 +3,7 @@
 #
 #    ** DO NOT EDIT **
 #
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, skipUnless
 import objc
 from functools import partial
 from objc import simd
@@ -11,7 +11,10 @@ from objc import simd
 
 # Needs to be replaced by minimal definitions for
 # CGColor and CGColorSpace
-import Quartz  # noqa: F401
+try:
+    import Quartz  # noqa: F401
+except ImportError:
+    pass
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
@@ -872,6 +875,18 @@ objc.registerMetaDataForSelector(
     b"NSObject", b"clssimdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
 )
 
+if os_level_key(os_release()) >= os_level_key("10.12"):
+    HAVE_GK = 1
+else:
+    HAVE_GK = 0
+
+if os_level_key(os_release()) >= os_level_key("10.13"):
+    HAVE_SIMD_STRUCTS = 1
+    HAVE_MPS = 1
+else:
+    HAVE_SIMD_STRUCTS = 0
+    HAVE_MPS = 0
+
 
 class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
     def v16C(self):
@@ -1325,23 +1340,25 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idid_GKBox_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+    if HAVE_GK:
 
-    def idid_GKQuad_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        def idid_GKBox_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
+
+        def idid_GKQuad_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
     def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
         self.argvalues = (
@@ -1490,35 +1507,37 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idGKBox_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+    if HAVE_GK:
 
-    def idGKBox_f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        def idGKBox_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
-    def idGKQuad_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        def idGKBox_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
-    def idGKQuad_f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        def idGKQuad_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
+
+        def idGKQuad_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
     def idMDLVoxelIndexExtent_(self, arg0):
         self.argvalues = (arg0,)
@@ -1771,66 +1790,73 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vsimdfloat4x4_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+    if HAVE_SIMD_STRUCTS:
 
-    def vsimdquatd_d_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        def vsimdfloat4x4_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    def vsimdquatf_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        def vsimdquatd_d_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    def vsimdquatf_v3f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        def vsimdquatf_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    def vsimdquatf_d_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        def vsimdquatf_v3f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    def GKBox(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float3(1.0, 2.0, 3.0),
-            objc.simd.vector_float3(4.0, 5.0, 6.0),
-        )
+        def vsimdquatf_d_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    def GKQuad(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+    if HAVE_GK:
 
-    def GKTriangleQ_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            (
-                objc.simd.vector_float3(-18.5, -19.5, -110.5),
-                objc.simd.vector_float3(-111.5, -112.5, -113.5),
-                objc.simd.vector_float3(-17.5, 11.5, 122.5),
-            ),
-        )
+        def GKBox(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            )
+
+        def GKQuad(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float2(9.0, 10.0),
+                objc.simd.vector_float2(11.0, 12.0),
+            )
+
+        def GKTriangleQ_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            )
 
     def MDLAxisAlignedBoundingBox(self):
         self.argvalues = None
@@ -1868,25 +1894,27 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             objc.simd.vector_int4(-20, -21, -22, -23),
         )
 
-    def MPSAxisAlignedBoundingBox(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float3(1.5, 2.5, 3.5),
-            objc.simd.vector_float3(4.5, 5.5, 6.5),
-        )
+    if HAVE_MPS:
 
-    def MPSImageHistogramInfo(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            4398046511104,
-            True,
-            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-        )
+        def MPSAxisAlignedBoundingBox(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            )
+
+        def MPSImageHistogramInfo(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
 
     def matrixdouble4x4(self):
         self.argvalues = None
@@ -1976,52 +2004,54 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def simdfloat4x4(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_float4x4(
-            (
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+    if HAVE_SIMD_STRUCTS:
+
+        def simdfloat4x4(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
             )
-        )
 
-    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_float4x4(
-            (
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+        def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
             )
-        )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            )
 
-    def simdquatdd_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        def simdquatdd_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
-    def simdquatf(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        def simdquatf(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-    def simdquatfd_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        def simdquatfd_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
 
 class OC_VectorCallClass(objc.lookUpClass("NSObject")):
@@ -2526,25 +2556,27 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    @classmethod
-    def idid_GKBox_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+    if HAVE_GK:
 
-    @classmethod
-    def idid_GKQuad_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        @classmethod
+        def idid_GKBox_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
+
+        @classmethod
+        def idid_GKQuad_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
     @classmethod
     def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
@@ -2706,39 +2738,41 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    @classmethod
-    def idGKBox_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+    if HAVE_GK:
 
-    @classmethod
-    def idGKBox_f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        @classmethod
+        def idGKBox_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
-    @classmethod
-    def idGKQuad_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        @classmethod
+        def idGKBox_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
-    @classmethod
-    def idGKQuad_f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return "hello"
+        @classmethod
+        def idGKQuad_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
+
+        @classmethod
+        def idGKQuad_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
     @classmethod
     def idMDLVoxelIndexExtent_(self, arg0):
@@ -3025,74 +3059,81 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    @classmethod
-    def vsimdfloat4x4_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+    if HAVE_SIMD_STRUCTS:
 
-    @classmethod
-    def vsimdquatd_d_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        @classmethod
+        def vsimdfloat4x4_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    @classmethod
-    def vsimdquatf_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        @classmethod
+        def vsimdquatd_d_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    @classmethod
-    def vsimdquatf_v3f_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        @classmethod
+        def vsimdquatf_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    @classmethod
-    def vsimdquatf_d_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
+        @classmethod
+        def vsimdquatf_v3f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    @classmethod
-    def GKBox(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float3(1.0, 2.0, 3.0),
-            objc.simd.vector_float3(4.0, 5.0, 6.0),
-        )
+        @classmethod
+        def vsimdquatf_d_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
 
-    @classmethod
-    def GKQuad(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+    if HAVE_GK:
 
-    @classmethod
-    def GKTriangleQ_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            (
-                objc.simd.vector_float3(-18.5, -19.5, -110.5),
-                objc.simd.vector_float3(-111.5, -112.5, -113.5),
-                objc.simd.vector_float3(-17.5, 11.5, 122.5),
-            ),
-        )
+        @classmethod
+        def GKBox(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            )
+
+        @classmethod
+        def GKQuad(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float2(9.0, 10.0),
+                objc.simd.vector_float2(11.0, 12.0),
+            )
+
+        @classmethod
+        def GKTriangleQ_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            )
 
     @classmethod
     def MDLAxisAlignedBoundingBox(self):
@@ -3134,27 +3175,29 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             objc.simd.vector_int4(-20, -21, -22, -23),
         )
 
-    @classmethod
-    def MPSAxisAlignedBoundingBox(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float3(1.5, 2.5, 3.5),
-            objc.simd.vector_float3(4.5, 5.5, 6.5),
-        )
+    if HAVE_MPS:
 
-    @classmethod
-    def MPSImageHistogramInfo(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return (
-            4398046511104,
-            True,
-            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-        )
+        @classmethod
+        def MPSAxisAlignedBoundingBox(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            )
+
+        @classmethod
+        def MPSImageHistogramInfo(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
 
     @classmethod
     def matrixdouble4x4(self):
@@ -3251,57 +3294,59 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
         )
 
-    @classmethod
-    def simdfloat4x4(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_float4x4(
-            (
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+    if HAVE_SIMD_STRUCTS:
+
+        @classmethod
+        def simdfloat4x4(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
             )
-        )
 
-    @classmethod
-    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
-        self.argvalues = (
-            arg0,
-            arg1,
-        )
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_float4x4(
-            (
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+        @classmethod
+        def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
             )
-        )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            )
 
-    @classmethod
-    def simdquatdd_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        @classmethod
+        def simdquatdd_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
-    @classmethod
-    def simdquatf(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        @classmethod
+        def simdquatf(self):
+            self.argvalues = None
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-    @classmethod
-    def simdquatfd_(self, arg0):
-        self.argvalues = (arg0,)
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        @classmethod
+        def simdquatfd_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
 
 class TestVectorCall(TestCase):
@@ -20572,6 +20617,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20649,6 +20695,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20726,6 +20773,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20826,6 +20874,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20918,6 +20967,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -20942,6 +20992,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -20966,6 +21017,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21037,6 +21089,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21108,6 +21161,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21202,6 +21256,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21288,6 +21343,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21312,6 +21368,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -27898,6 +27955,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27961,6 +28019,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28024,6 +28083,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28108,6 +28168,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28185,6 +28246,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28208,6 +28270,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28231,6 +28294,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28313,6 +28377,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28395,6 +28460,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28500,6 +28566,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28597,6 +28664,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28621,6 +28689,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28645,6 +28714,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28702,6 +28772,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28759,6 +28830,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28837,6 +28909,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28908,6 +28981,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28931,6 +29005,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28954,6 +29029,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29030,6 +29106,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29106,6 +29183,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29205,6 +29283,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29296,6 +29375,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29320,6 +29400,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -40613,6 +40694,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40694,6 +40776,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40775,6 +40858,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40885,6 +40969,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40984,6 +41069,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41011,6 +41097,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41038,6 +41125,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatd_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41096,6 +41184,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatd_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41154,6 +41243,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatd_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41229,6 +41319,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatd_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41299,6 +41390,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatd_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41320,6 +41412,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatd_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41341,6 +41434,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41386,6 +41480,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41431,6 +41526,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41488,6 +41584,7 @@ class TestVectorCall(TestCase):
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41541,6 +41638,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41559,6 +41657,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41577,6 +41676,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_v3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41635,6 +41735,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_v3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41695,6 +41796,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_v3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41770,6 +41872,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_v3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41842,6 +41945,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41863,6 +41967,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41884,6 +41989,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -41942,6 +42048,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42000,6 +42107,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42075,6 +42183,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42145,6 +42254,7 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42166,6 +42276,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42187,6 +42298,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42224,6 +42336,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42261,6 +42374,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42311,6 +42425,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42358,6 +42473,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKBox(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42379,6 +42495,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKBox_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42400,6 +42517,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42434,6 +42552,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42468,6 +42587,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42515,6 +42635,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42559,6 +42680,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKQuad(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42577,6 +42699,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKQuad_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42595,6 +42718,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42645,6 +42769,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42695,6 +42820,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_GKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42754,6 +42880,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42812,6 +42939,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKTriangleQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42836,6 +42964,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKTriangleQ__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43828,6 +43957,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_MPSAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43868,6 +43998,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_clsMPSAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43908,6 +44039,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_MPSAxisAlignedBoundingBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43961,6 +44093,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_clsMPSAxisAlignedBoundingBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -44011,6 +44144,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_imp_MPSAxisAlignedBoundingBox(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -44032,6 +44166,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_imp_MPSAxisAlignedBoundingBox_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -44053,6 +44188,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_MPSImageHistogramInfo(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -44094,6 +44230,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_clsMPSImageHistogramInfo(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -44136,6 +44273,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_MPSImageHistogramInfo_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -44190,6 +44328,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_clsMPSImageHistogramInfo_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -44242,6 +44381,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_imp_MPSImageHistogramInfo(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -44265,6 +44405,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_MPS, "MPS not available")
     def test_imp_MPSImageHistogramInfo_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46101,6 +46242,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46144,6 +46286,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46187,6 +46330,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46243,6 +46387,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46296,6 +46441,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -46321,6 +46467,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46346,6 +46493,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46466,6 +46614,7 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46588,6 +46737,7 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4simdfloat4x4_id__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46739,6 +46889,7 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4simdfloat4x4_id__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46880,6 +47031,7 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4simdfloat4x4_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -46918,6 +47070,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4simdfloat4x4_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46956,6 +47109,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatdd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -46999,6 +47153,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatdd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47042,6 +47197,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatdd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47094,6 +47250,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatdd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47145,6 +47302,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatdd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47162,6 +47320,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatdd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47179,6 +47338,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatf(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47212,6 +47372,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatf(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47245,6 +47406,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatf_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47291,6 +47453,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatf_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47334,6 +47497,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatf(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47351,6 +47515,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatf_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47368,6 +47533,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatfd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47411,6 +47577,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatfd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47454,6 +47621,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatfd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47506,6 +47674,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatfd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -47557,6 +47726,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatfd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47574,6 +47744,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatfd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1

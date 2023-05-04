@@ -30,6 +30,12 @@ Version 9.2
 * :issue:`552`: Fix the version of macOS where the SafariServices framework is
   present.
 
+* :issue:`552`: Fixed some issues found by testing on a macOS 10.11 system
+
+* Trying to implement a method with SIMD types as arguments or return value
+  will now give a more useful error when the bridge does not support the
+  signature.
+
 Version 9.1.1
 -------------
 

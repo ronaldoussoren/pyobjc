@@ -454,8 +454,10 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyCommercial, str)
         self.assertIsInstance(AVFoundation.AVMetadataExtraAttributeInfoKey, str)
 
-    @min_os_level("10.11.3")
+    @min_os_level("10.12")
     def testConstants10_11_3(self):
+        # The documentation says this value is availaable on 10.11.3, but testing
+        # shows the value isn't available in 10.11.6.
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceHLSDateRange, str)
 
     @min_os_level("10.12")

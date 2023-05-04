@@ -72,5 +72,9 @@ class TestCallableMetadata(TestCase):
                 ("ABGroupRef", "globalAPIUnlockForAddressBook_inFile_line_"),
                 ("ABGroupRef", "abGlobalAPILockInFile_line_contextBlock_"),
                 ("ABGroupRef", "globalAPILockForAddressBook_inFile_line_"),
+                ("ABAddressBookRef", "abGlobalMailRecentAPILockInFile_line_"),
+                ("ABAddressBookRef", "abGlobalMailRecentAPIUnlockInFile_line_"),
+                ("ABAddressBookRef", "abGlobalMailRecentAPILockInFile_line_"),
+                ("ABAddressBookRef", "abGlobalMailRecentAPIUnlockInFile_line_"),
             },
         )

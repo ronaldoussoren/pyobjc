@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 import ModelIO
 
@@ -62,7 +62,6 @@ class TestMDLTypes(TestCase):
             TestMDLTypesHelper.objectAtIndexedSubscript_, 0, objc._C_NSUInteger
         )
 
-    @expectedFailure
     def testStructs(self):
         self.assertEqual(
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,

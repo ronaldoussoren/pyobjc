@@ -92,7 +92,6 @@ class TestSceneKitTypes(TestCase):
         w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
         self.assertIsInstance(w, SceneKit.SCNMatrix4)
 
-    @expectedFailure
     def testFunctions_unsupported(self):
         # XXX
         SceneKit.SCNVector3FromGLKVector3

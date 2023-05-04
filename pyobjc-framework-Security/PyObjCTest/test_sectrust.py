@@ -42,7 +42,7 @@ class TestSecTrusted(TestCase):
         self.assertIsInstance(Security.kSecTrustRevocationChecked, str)
         self.assertIsInstance(Security.kSecTrustRevocationValidUntilDate, str)
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_constants10_11(self):
         self.assertIsInstance(Security.kSecTrustCertificateTransparency, str)
 

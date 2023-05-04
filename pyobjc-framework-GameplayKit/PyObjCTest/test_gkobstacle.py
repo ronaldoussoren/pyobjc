@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import GameplayKit  # noqa: F401
 from objc import simd
 
@@ -36,6 +36,8 @@ class TestGKObstacle(TestCase):
             GameplayKit.GKPolygonObstacle.vertexAtIndex_, simd.vector_float2.__typestr__
         )
 
+    @min_os_level("10.12")
+    def test_methods10_12(self):
         self.assertResultHasType(
             GameplayKit.GKSphereObstacle.position, simd.vector_float3.__typestr__
         )

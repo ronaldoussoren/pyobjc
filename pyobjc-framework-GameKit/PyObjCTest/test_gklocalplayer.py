@@ -60,7 +60,7 @@ class TestGKLocalPlayer(TestCase):
             GameKit.GKLocalPlayer.loadFriendPlayersWithCompletionHandler_, 0, b"v@@"
         )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def testMethods10_11(self):
         self.assertArgIsBlock(
             GameKit.GKLocalPlayer.loadRecentPlayersWithCompletionHandler_, 0, b"v@@"

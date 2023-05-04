@@ -131,6 +131,7 @@ add_bytes_constant(PyObject* m, const char* name, const char* value)
 }
 
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
 static struct bytes_constants {
@@ -146,7 +147,9 @@ static struct bytes_constants {
     {"XPC_ACTIVITY_PRIORITY_UTILITY", &XPC_ACTIVITY_PRIORITY_UTILITY},
     {"XPC_ACTIVITY_ALLOW_BATTERY", &XPC_ACTIVITY_ALLOW_BATTERY},
     {"XPC_ACTIVITY_REQUIRE_SCREEN_SLEEP", &XPC_ACTIVITY_REQUIRE_SCREEN_SLEEP},
+#if PyObjC_BUILD_RELEASE >= 1200
     {"XPC_ACTIVITY_PREVENT_DEVICE_SLEEP", &XPC_ACTIVITY_PREVENT_DEVICE_SLEEP},
+#endif /* PyObjC_BUILD_RELEASE >= 1200 */
     {"XPC_ERROR_KEY_DESCRIPTION", &XPC_ERROR_KEY_DESCRIPTION},
     {"XPC_EVENT_KEY_NAME", &XPC_EVENT_KEY_NAME},
 
@@ -249,6 +252,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
     if (add_constant(m, "XPC_ERROR_TERMINATION_IMMINENT", @encode(xpc_object_t), &d) != 0)
         goto error;
 
+#if PyObjC_BUILD_RELEASE >= 1200
     if (__builtin_available(macOS 12.0, *)) {
         d = XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT;
         if (add_constant(m, "XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT",
@@ -256,6 +260,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
             != 0)
             goto error;
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1200 */
 
     xpc_type_t t;
     t = XPC_TYPE_NULL;
@@ -314,6 +319,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
     if (add_constant(m, "XPC_TYPE_ERROR", @encode(xpc_type_t), &t) != 0)
         goto error;
 
+#if PyObjC_BUILD_RELEASE >= 1300
     t = XPC_TYPE_SESSION;
     if (add_constant(m, "XPC_TYPE_SESSION", @encode(xpc_type_t), &t) != 0)
         goto error;
@@ -321,6 +327,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
     t = XPC_TYPE_RICH_ERROR;
     if (add_constant(m, "XPC_TYPE_RICH_ERROR", @encode(xpc_type_t), &t) != 0)
         goto error;
+#endif /* PyObjC_BUILD_RELEASE >= 1300 */
 
     xpc_object_t b = XPC_BOOL_TRUE;
     if (add_constant(m, "XPC_BOOL_TRUE", @encode(xpc_object_t), &b) != 0)

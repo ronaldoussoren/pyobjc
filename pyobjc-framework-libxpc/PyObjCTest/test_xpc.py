@@ -63,8 +63,6 @@ class TestXPC(TestCase):
         self.assertIsInstance(xpc.XPC_TYPE_ARRAY, objc.objc_class)
         self.assertIsInstance(xpc.XPC_TYPE_DICTIONARY, objc.objc_class)
         self.assertIsInstance(xpc.XPC_TYPE_ERROR, objc.objc_class)
-        self.assertIsInstance(xpc.XPC_TYPE_SESSION, objc.objc_class)
-        self.assertIsInstance(xpc.XPC_TYPE_RICH_ERROR, objc.objc_class)
 
         self.assertIsInstance(xpc.XPC_BOOL_TRUE, objc.objc_object)
         self.assertIsInstance(xpc.XPC_BOOL_FALSE, objc.objc_object)
@@ -73,6 +71,11 @@ class TestXPC(TestCase):
         self.assertIsInstance(xpc.XPC_EVENT_KEY_NAME, bytes)
 
         self.assertEqual(xpc.XPC_ARRAY_APPEND, 0xFFFFFFFFFFFFFFFF)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(xpc.XPC_TYPE_SESSION, objc.objc_class)
+        self.assertIsInstance(xpc.XPC_TYPE_RICH_ERROR, objc.objc_class)
 
     def test_functions(self):
         self.assertNotHasAttr(xpc, "xpc_retain")
@@ -154,8 +157,6 @@ class TestXPC(TestCase):
         self.assertArgIsIn(xpc.xpc_array_create, 0)
         self.assertArgSizeInArg(xpc.xpc_array_create, 0, 1)
 
-        self.assertResultIsRetained(xpc.xpc_array_create_empty)
-
         xpc.xpc_array_set_value
         xpc.xpc_array_append_value
         xpc.xpc_array_get_count
@@ -223,7 +224,6 @@ class TestXPC(TestCase):
             items, {(b"key1", xpc.XPC_BOOL_TRUE), (b"key2", xpc.XPC_BOOL_FALSE)}
         )
 
-        self.assertResultIsRetained(xpc.xpc_dictionary_create_empty)
         self.assertResultIsRetained(xpc.xpc_dictionary_create_reply)
 
         self.assertArgIsIn(xpc.xpc_dictionary_set_value, 1)
@@ -330,3 +330,8 @@ class TestXPC(TestCase):
     @min_os_level("10.15")
     def test_functions10_15(self):
         self.assertResultIsNullTerminated(xpc.xpc_type_get_name)
+
+    @min_os_level("11.0")
+    def test_functions11_0(self):
+        self.assertResultIsRetained(xpc.xpc_array_create_empty)
+        self.assertResultIsRetained(xpc.xpc_dictionary_create_empty)

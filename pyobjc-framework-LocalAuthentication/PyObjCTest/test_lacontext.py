@@ -136,6 +136,6 @@ class TestLAContext(TestCase):
         )
 
         loop = Foundation.NSRunLoop.currentRunLoop()
-        loop.runUntilDate_(Foundation.NSDate.dateWithTimeIntervalSinceNow_(0.2))
+        loop.runUntilDate_(Foundation.NSDate.dateWithTimeIntervalSinceNow_(1.5))
 
         self.assertTrue(called)

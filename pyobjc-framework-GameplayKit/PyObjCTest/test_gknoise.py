@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameplayKit
 
@@ -6,6 +6,7 @@ from objc import simd
 
 
 class TestGKNoise(TestCase):
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertArgIsBOOL(
             GameplayKit.GKNoise.remapValuesToTerracesWithPeaks_terracesInverted_, 1

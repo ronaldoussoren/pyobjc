@@ -24,6 +24,7 @@ class TestSCNHitTest(TestCase):
     def testConstants10_15(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionIgnoreLightArea, str)
 
+    @min_os_level("10.15")
     def test_methods(self):
         self.assertResultHasType(
             SceneKit.SCNHitTestResult.simdLocalCoordinates, simd.simd_float3.__typestr__

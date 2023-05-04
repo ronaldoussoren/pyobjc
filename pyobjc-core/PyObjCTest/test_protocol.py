@@ -1,6 +1,11 @@
 import objc
 from PyObjCTest.protocol import OC_TestProtocol
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import (
+    TestCase,
+    expectedFailureIf,
+    os_release,
+    os_level_key,
+)
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -427,7 +432,9 @@ class TestFormalProtocols(TestCase):
         ):
             objc.formal_protocol("selectors", None, 42)
 
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.12"))
     def testMethodInfo(self):
+        # Protocol creation bug in at least 10.11
         self.assertCountEqual(
             MyProtocol.instanceMethods(),
             [
@@ -830,7 +837,9 @@ class TestFormalProtocols2(TestCase):
                 ],
             )
 
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.12"))
     def testMethodInfo(self):
+        # Protocol creation bug in at least 10.11
         self.assertCountEqual(
             MyProtocol3.instanceMethods(),
             [

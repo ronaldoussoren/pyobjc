@@ -6,18 +6,20 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
 #endif
 
-#if PyObjC_BUILD_RELEASE >= 1013
-    p = PyObjC_IdToPython(@protocol(MTLArgumentEncoder));
-    Py_XDECREF(p);
+#if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(MTLRenderCommandEncoder));
     Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MTLFence));
+    p = PyObjC_IdToPython(@protocol(MTLComputeCommandEncoder));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLBlitCommandEncoder));
     Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MTLCaptureScope));
+#endif
+#if PyObjC_BUILD_RELEASE >= 1013
+    p = PyObjC_IdToPython(@protocol(MTLArgumentEncoder));
     Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MTLComputeCommandEncoder));
+    p = PyObjC_IdToPython(@protocol(MTLFence));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLCaptureScope));
     Py_XDECREF(p);
 
 #endif

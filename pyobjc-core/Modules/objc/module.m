@@ -1716,15 +1716,20 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
         // LCOV_EXCL_STOP
     }
 
-    if (contains_func) {
-        const char* path = PyUnicode_AsUTF8(object);
-        if (path == NULL) {
-            return NULL;
-        }
+    /* Always fetch the C string to get consistent
+     * behaviour in error cases, even on systems
+     * without this system API.
+     */
+    const char* path = PyUnicode_AsUTF8(object);
+    if (path == NULL) {
+        return NULL;
+    }
 
+    if (contains_func) {
         int result = contains_func(path);
         return PyBool_FromLong(result);
     } else {
+
         Py_INCREF(Py_False);
         return Py_False;
     }

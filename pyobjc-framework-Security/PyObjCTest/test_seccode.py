@@ -36,9 +36,6 @@ class TestSecCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithm, str)
         self.assertIsInstance(Security.kSecCodeInfoIdentifier, str)
         self.assertIsInstance(Security.kSecCodeInfoImplicitDesignatedRequirement, str)
-        self.assertIsInstance(
-            Security.kSecCodeInfoDefaultDesignatedLightweightCodeRequirement, str
-        )
         self.assertIsInstance(Security.kSecCodeInfoMainExecutable, str)
         self.assertIsInstance(Security.kSecCodeInfoPList, str)
         self.assertIsInstance(Security.kSecCodeInfoRequirements, str)
@@ -51,6 +48,7 @@ class TestSecCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoTrust, str)
         self.assertIsInstance(Security.kSecCodeInfoUnique, str)
 
+    @min_os_level("10.12")
     def test_constants_missing(self):
         self.assertIsInstance(Security.kSecGuestAttributeArchitecture, str)
         self.assertIsInstance(Security.kSecGuestAttributeSubarchitecture, str)
@@ -64,6 +62,12 @@ class TestSecCode(TestCase):
     @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecGuestAttributeAudit, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            Security.kSecCodeInfoDefaultDesignatedLightweightCodeRequirement, str
+        )
 
     def test_functions(self):
         self.assertIsInstance(Security.SecCodeGetTypeID(), int)

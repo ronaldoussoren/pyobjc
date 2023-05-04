@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 from unittest import SkipTest
 from PyObjCTest.dateint import OC_DateInt
 from PyObjCTest.pythonset import OC_TestSet
@@ -136,12 +136,16 @@ class TestDateInObjC(TestCase):
                 self.assertEqual(int(v), int(value2 == self.value))
 
     def test_roundtrip_through_keyedarchive(self):
-        (
-            blob,
-            err,
-        ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-            self.value, False, None
-        )
+        try:
+            (
+                blob,
+                err,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                self.value, False, None
+            )
+        except AttributeError:
+            blob = NSKeyedArchiver.archivedDataWithRootObject_(self.value)
+            err = None
         self.assertIs(err, None)
         self.assertIsInstance(blob, NSData)
 
@@ -155,6 +159,7 @@ class TestDateInObjC(TestCase):
         copy = NSUnarchiver.unarchiveObjectWithData_(blob)
         self.assertEqual(copy, self.value)
 
+    @min_os_level("10.13")
     def test_roundtrip_through_secure_keyedarchive(self):
         if (
             type(self.value) in (datetime.date, datetime.datetime)

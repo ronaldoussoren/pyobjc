@@ -117,7 +117,7 @@ class TestICCameraDevice(TestCase):
             b"v@:@@@@^v",
         )
 
-    @min_os_level("10.10")
+    @min_os_level("10.12")
     def test_methods10_10(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.iCloudPhotosEnabled)
 

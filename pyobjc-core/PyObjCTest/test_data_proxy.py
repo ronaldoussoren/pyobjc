@@ -1,4 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from PyObjCTools.TestSupport import (
+    TestCase,
+    pyobjc_options,
+    os_level_key,
+    os_release,
+    min_os_level,
+)
 from PyObjCTest.dataint import OC_DataInt
 from PyObjCTest.pythonset import OC_TestSet
 from itertools import count
@@ -94,12 +100,16 @@ class TestDataReading(TestCase):
     def test_roundtrip_through_keyedarchive(self):
         data = self.bytes_class(b"hello to you too")
 
-        (
-            blob,
-            err,
-        ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-            data, False, None
-        )
+        if os_level_key(os_release()) >= os_level_key("10.13"):
+            (
+                blob,
+                err,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                data, False, None
+            )
+        else:
+            blob = NSKeyedArchiver.archivedDataWithRootObject_(data)
+            err = None
         self.assertIs(err, None)
         self.assertIsInstance(blob, NSData)
 
@@ -203,7 +213,9 @@ class TestMisc(TestCase):
             with self.assertRaisesRegex(RuntimeError, "Cannot encode"):
                 NSKeyedArchiver.archivedDataWithRootObject_(data)
 
+    @min_os_level("10.12")
     def test_decoding_raises(self):
+        # This is a known failure on macOS 10.11 due to behaviour of NSArchiver
         data = SomeBytes(b"world")
 
         def raise_exception(coder, value):
@@ -223,6 +235,7 @@ class TestMisc(TestCase):
         with self.subTest(SomeBytes):
             self.assertIs(OC_TestSet.classOf_(SomeBytes()), OC_PythonData)
 
+    @min_os_level("10.13")
     def test_secure_coding(self):
         for cls in (bytes, bytearray):
             with self.subTest(cls):

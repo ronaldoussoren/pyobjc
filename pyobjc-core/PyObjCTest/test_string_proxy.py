@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from PyObjCTools.TestSupport import TestCase, pyobjc_options, min_os_level
 from PyObjCTest.objectint import OC_ObjectInt
 from PyObjCTest.stringint import OC_StringInt
 
@@ -52,6 +52,7 @@ class TestString(TestCase):
         self.assertEqual(copy, self.test_value)
         self.assertIsInstance(copy, type(self.test_value))
 
+    @min_os_level("10.13")
     def test_secure_keyedarchiving(self):
         (
             blob,
@@ -118,6 +119,15 @@ class TestMisc(TestCase):
             # This should not fail:
             NSKeyedArchiver.archivedDataWithRootObject_("putty")
 
+        blob = NSKeyedArchiver.archivedDataWithRootObject_(MyString("jojo"))
+
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError,
+                "NSInvalidArgumentException - decoding Python objects is not supported",
+            ):
+                NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
+
         with pyobjc_options(_nscoding_encoder=None):
             with self.assertRaisesRegex(
                 ValueError,
@@ -128,14 +138,13 @@ class TestMisc(TestCase):
             # This should not fail:
             NSKeyedArchiver.archivedDataWithRootObject_("putty")
 
+    @min_os_level("10.12")
+    def test_keyedarchiving_raises(self):
+        # Known error on macOS 10.11 due to behaviour of NSCoder
+        def failed(*args, **kwds):
+            raise TypeError("Cannot encode")
+
         blob = NSKeyedArchiver.archivedDataWithRootObject_(MyString("jojo"))
         with pyobjc_options(_nscoding_decoder=failed):
             with self.assertRaisesRegex(TypeError, "Cannot encode"):
-                NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
-
-        with pyobjc_options(_nscoding_decoder=None):
-            with self.assertRaisesRegex(
-                ValueError,
-                "NSInvalidArgumentException - decoding Python objects is not supported",
-            ):
                 NSKeyedUnarchiver.unarchiveObjectWithData_(blob)

@@ -13,15 +13,17 @@ class TestConnection(TestCase):
         self.assertIsInstance(xpc.XPC_ERROR_CONNECTION_INVALID, objc.objc_object)
         self.assertIsInstance(xpc.XPC_ERROR_TERMINATION_IMMINENT, objc.objc_object)
 
+        self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_LISTENER, 1 << 0)
+        self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_PRIVILEGED, 1 << 1)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
         if (
             platform.mac_ver()[0] != "10.16"
         ):  # Skip test on Python's build with pre-11.0 SDK
             self.assertIsInstance(
                 xpc.XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT, objc.objc_object
             )
-
-        self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_LISTENER, 1 << 0)
-        self.assertEqual(xpc.XPC_CONNECTION_MACH_SERVICE_PRIVILEGED, 1 << 1)
 
     def test_functions(self):
         self.assertResultIsRetained(xpc.xpc_connection_create)

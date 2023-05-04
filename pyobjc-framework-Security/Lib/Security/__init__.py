@@ -27,4 +27,42 @@ sys.modules["Security"] = mod = objc.ObjCLazyModule(
 )
 
 
+# The type encoding for older versions of macOS (at least
+# up to 10.11)
+def _fixup(mod):
+    objc.registerCFSignature(
+        "SecAccessControl",
+        b"^{OpaqueSecAccessControl=}",
+        mod.SecAccessControlGetTypeID(),
+    )
+
+    objc.registerCFSignature(
+        "SecTrustedApplicationRef",
+        b"^{OpaqueSecTrustedApplicationRef=}",
+        mod.SecTrustedApplicationGetTypeID(),
+    )
+
+    objc.registerCFSignature(
+        "SecCertificateRef",
+        b"^{OpaqueSecCertificateRef=}",
+        mod.SecCertificateGetTypeID(),
+    )
+
+    objc.registerCFSignature(
+        "SecAccessRef", b"^{OpaqueSecAccessRef=}", mod.SecAccessGetTypeID()
+    )
+
+    objc.registerCFSignature(
+        "SecIdentityRef", b"^{OpaqueSecIdentityRef=}", mod.SecIdentityGetTypeID()
+    )
+
+    objc.registerCFSignature(
+        "SecIdentitySearchRef",
+        b"^{OpaqueSecIdentitySearchRef=}",
+        mod.SecIdentitySearchGetTypeID(),
+    )
+
+
+_fixup(mod)
+
 del sys.modules["Security._metadata"]

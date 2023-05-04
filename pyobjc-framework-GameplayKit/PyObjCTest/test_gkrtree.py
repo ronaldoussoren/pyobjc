@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameplayKit
 from objc import simd
@@ -14,6 +14,7 @@ class TestGKAgent(TestCase):
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyQuadratic, 2)
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyReduceOverlap, 3)
 
+    @min_os_level("10.12")
     def test_methods(self):
         self.assertArgHasType(
             GameplayKit.GKRTree.addElement_boundingRectMin_boundingRectMax_splitStrategy_,

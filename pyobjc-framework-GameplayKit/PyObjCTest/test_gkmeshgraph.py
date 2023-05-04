@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameplayKit
 from objc import simd
@@ -13,6 +13,7 @@ class TestGKMeshGraph(TestCase):
         self.assertEqual(GameplayKit.GKMeshGraphTriangulationModeCenters, 1 << 1)
         self.assertEqual(GameplayKit.GKMeshGraphTriangulationModeEdgeMidpoints, 1 << 2)
 
+    @min_os_level("10.12")
     def test_methods(self):
         self.assertArgHasType(
             GameplayKit.GKMeshGraph.graphWithBufferRadius_minCoordinate_maxCoordinate_nodeClass_,

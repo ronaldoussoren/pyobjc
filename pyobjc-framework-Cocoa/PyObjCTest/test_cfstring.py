@@ -738,6 +738,7 @@ class TestStringEncodingExt(TestCase):
         v = CoreFoundation.CFStringIsHyphenationAvailableForLocale(loc)
         self.assertIsInstance(v, bool)
 
+    @min_os_level("13.0")
     def test_functions13_0(self):
         self.assertArgIsPrintf(
             CoreFoundation.CFStringCreateStringWithValidatedFormat, 3

@@ -6,8 +6,24 @@
 #import <Foundation/Foundation.h>
 
 #import <GameplayKit/GameplayKit.h>
+#if PyObjC_BUILD_RELEASE >= 1013
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #import <ModelIO/ModelIO.h>
+
+#if PyObjC_BULD_RELEASE < 1013
+#define simd_uchar16 vector_uchar16
+#define simd_float2 vector_float2
+#define simd_float3 vector_float3
+#define simd_float4 vector_float4
+#define simd_double2 vector_double2
+#define simd_double3 vector_double3
+#define simd_double4 vector_double4
+#define simd_uint2 vector_uint2
+#define simd_uint3 vector_uint3
+#define simd_int2 vector_int2
+#define simd_int4 vector_int4
+#endif /*  PyObjC_BULD_RELEASE < 1013 */
 
 @interface OC_Vector : NSObject {
     PyObject* values;
@@ -109,17 +125,21 @@ GET_VALUE(getVectorFloat2, simd_float2, ((simd_float2){-9.5, 10.5}))
 GET_VALUE(getVectorFloat3, simd_float3, ((simd_float3){-8.5, 9.5, 12.5}))
 GET_VALUE(getVectorFloat4, simd_float4, ((simd_float4){-7.5, 13.5, 14.5, 16.5}))
 GET_VALUE(getVectorInt2, simd_int2, ((simd_int2){42, 43}))
+#if PyObjC_BUILD_RELEASE >= 1012
 GET_VALUE(getGKBox, GKBox, ((GKBox){{1.5, 2.5, 3.5}, {4.5, 5.5, 6.5}}))
 GET_VALUE(getGKQuad, GKQuad, ((GKQuad){{7.5, 8.5}, {9.5, 10.5}}))
+#endif /*  PyObjC_BUILD_RELEASE >= 1012 */
 GET_VALUE(getMDLAxisAlignedBoundingBox, MDLAxisAlignedBoundingBox,
           ((MDLAxisAlignedBoundingBox){{11.5, 12.5, 13.5}, {14.5, 15.5, 16.5}}))
 GET_VALUE(getMDLVoxelIndexExtent, MDLVoxelIndexExtent,
           ((MDLVoxelIndexExtent){{-1, -2, -3, -4}, {-5, -6, -7, -8}}))
+#if PyObjC_BUILD_RELEASE >= 1013
 GET_VALUE(getMPSAxisAlignedBoundingBox, MPSAxisAlignedBoundingBox,
           ((MPSAxisAlignedBoundingBox){{-1.5, -2.5, -3.5}, {-5.5, -6.5, -7.5}}))
 GET_VALUE(getMPSImageHistogramInfo, MPSImageHistogramInfo,
           ((MPSImageHistogramInfo){
               1ULL << 40, YES, {-8.5, -9.5, -10.5, -11.5}, {-12.5, -13.5, -14.5, -15.5}}))
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 GET_VALUE(getMatrixDouble4x4, matrix_double4x4,
           ((matrix_double4x4){{{-20.5, -21.5, -22.5, -23.5},
                                {-30.5, -31.5, -32.5, -33.5},
@@ -136,12 +156,14 @@ GET_VALUE(getMatrixFloat4x4, matrix_float4x4,
                               {-230.5, -231.5, -232.5, 11.5},
                               {-240.5, -241.5, -242.5, 12.5},
                               {-250.5, -251.5, -252.5, 13.5}}}))
+#if PyObjC_BUILD_RELEASE >= 1013
 GET_VALUE(getSimdFloat4x4, simd_float4x4,
           ((simd_float4x4){{{-320.5, -321.5, -322.5, 1.5},
                             {-330.5, -331.5, -332.5, 2.5},
                             {-340.5, -341.5, -342.5, 3.5},
                             {-350.5, -351.5, -352.5, 4.5}}}))
 GET_VALUE(getSimdQuatf, simd_quatf, ((simd_quatf){{-420.5, -421.5, -422.5}}))
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
 SET_VALUE_VALUE(setVectorFloat3, andFloat3, simd_float3, "<3f>", simd_float3, "<3f>")
 SET_VALUE_VALUE(setVectorFloat3, andInt4, simd_float3, "<3f>", simd_int4, "<4i>")

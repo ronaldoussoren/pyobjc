@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameplayKit
 
@@ -9,6 +9,7 @@ class TestGKAgent(TestCase):
     def testProtocols(self):
         self.assertProtocolExists("GKAgentDelegate")
 
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertResultIsBOOL(GameplayKit.GKAgent3D.rightHanded)
         self.assertArgIsBOOL(GameplayKit.GKAgent3D.setRightHanded_, 0)

@@ -397,7 +397,10 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
         PyGILState_Release(*state);
     }
     @throw exc;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
     __builtin_unreachable();
+#pragma clang diagnostic pop
 }
 
 char* _Nullable PyObjCUtil_Strdup(const char* value)

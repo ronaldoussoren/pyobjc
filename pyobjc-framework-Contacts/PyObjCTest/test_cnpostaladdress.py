@@ -12,5 +12,8 @@ class TestCNPostalAddress(TestCase):
         self.assertIsInstance(Contacts.CNPostalAddressCountryKey, str)
         self.assertIsInstance(Contacts.CNPostalAddressISOCountryCodeKey, str)
 
-        self.assertIsInstance(Contacts.CNPostalAddressSubLocalityKey, str)
         self.assertIsInstance(Contacts.CNPostalAddressSubAdministrativeAreaKey, str)
+
+    @min_os_level("10.12.4")
+    def testConstants10_12_4(self):
+        self.assertIsInstance(Contacts.CNPostalAddressSubLocalityKey, str)

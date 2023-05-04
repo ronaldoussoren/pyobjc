@@ -13,7 +13,13 @@ import tempfile
 from plistlib import loads
 
 import objc
-from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, cast_ulonglong
+from PyObjCTools.TestSupport import (
+    TestCase,
+    os_release,
+    os_level_key,
+    cast_ulonglong,
+    min_os_level,
+)
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -142,17 +148,19 @@ class TestNSKeyedArchivingInterop(TestCase):
                 else:
                     self.assertEqual(converted[0], testval)
 
-        with self.subTest("overflow"):
-            testval = 2**64
-            v = NSArray.arrayWithObject_(testval)
-            data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+    @min_os_level("10.12")
+    def test_interop_int_overflow(self):
+        # Known error on macOS 10.11
+        testval = 2**64
+        v = NSArray.arrayWithObject_(testval)
+        data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+        with tempfile.NamedTemporaryFile() as fp:
+            fp.write(data.bytes())
+            fp.flush()
 
-                with self.assertRaises(subprocess.CalledProcessError):
-                    subprocess.check_output([self.progpath, "keyed", fp.name])
+            with self.assertRaises(subprocess.CalledProcessError):
+                subprocess.check_output([self.progpath, "keyed", fp.name])
 
     def test_interop_data(self):
         for testval in (b"hello world",):

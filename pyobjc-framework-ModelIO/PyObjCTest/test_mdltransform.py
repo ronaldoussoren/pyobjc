@@ -107,13 +107,6 @@ class TestMDLTransform(TestCase):
             ModelIO.MDLTransform.initWithMatrix_, 0, simd.matrix_float4x4.__typestr__
         )
 
-        self.assertArgHasType(
-            ModelIO.MDLTransform.initWithMatrix_resetsTransform_,
-            0,
-            simd.matrix_float4x4.__typestr__,
-        )
-        self.assertArgIsBOOL(ModelIO.MDLTransform.initWithMatrix_resetsTransform_, 1)
-
         self.assertResultHasType(
             ModelIO.MDLTransform.translationAtTime_, simd.vector_float3.__typestr__
         )
@@ -127,9 +120,6 @@ class TestMDLTransform(TestCase):
             ModelIO.MDLTransform.scaleAtTime_, simd.vector_float3.__typestr__
         )
 
-        self.assertArgHasType(
-            ModelIO.MDLTransform.setMatrix_forTime_, 0, simd.matrix_float4x4.__typestr__
-        )
         self.assertArgHasType(
             ModelIO.MDLTransform.setTranslation_forTime_,
             0,
@@ -177,6 +167,15 @@ class TestMDLTransform(TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
+        self.assertArgHasType(
+            ModelIO.MDLTransform.initWithMatrix_resetsTransform_,
+            0,
+            simd.matrix_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            ModelIO.MDLTransform.setMatrix_forTime_, 0, simd.matrix_float4x4.__typestr__
+        )
+        self.assertArgIsBOOL(ModelIO.MDLTransform.initWithMatrix_resetsTransform_, 1)
         self.assertArgIsBOOL(
             ModelIO.MDLTransform.initWithTransformComponent_resetsTransform_, 1
         )

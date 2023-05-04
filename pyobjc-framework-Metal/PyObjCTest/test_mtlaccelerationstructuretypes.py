@@ -1,5 +1,5 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLAccelerationStructureTypes(TestCase):
@@ -23,6 +23,7 @@ class TestMTLAccelerationStructureTypes(TestCase):
         self.assertIsInstance(v.intersectionFunctionTableOffset, int)
         self.assertIsInstance(v.accelerationStructureIndex, int)
 
+    @min_os_level("12.0")
     def test_functions(self):
         v = Metal.MTLPackedFloat3Make(1, 2, 3)
         self.assertIsInstance(v, Metal.MTLPackedFloat3)

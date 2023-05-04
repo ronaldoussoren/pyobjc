@@ -1,10 +1,11 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameplayKit
 from objc import simd
 
 
 class TestGKQuadtree(TestCase):
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertResultHasType(
             GameplayKit.GKQuadtreeNode.quad, GameplayKit.GKQuad.__typestr__

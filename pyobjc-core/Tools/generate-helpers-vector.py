@@ -26,6 +26,11 @@ XXX: Also use this for simple basic methods '-(id)method',
 XXX: Use subtests
 
 XXX: Use jinja2 in code generation
+
+XXX: 'simd_' to 'vector_'
+
+XXX: 'GK..' types are only available on recentisch macOS
+     versions, add guards.
 """
 
 import objc

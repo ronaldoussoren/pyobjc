@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import IOBluetooth
 
@@ -60,13 +60,6 @@ class TestIOBluetoothL2CAPChannel(TestCase):
 
     def test_methods(self):
         self.assertArgIsIn(
-            IOBluetooth.IOBluetoothL2CAPChannel.writeAsyncTrap_length_refcon_, 0
-        )
-        self.assertArgSizeInArg(
-            IOBluetooth.IOBluetoothL2CAPChannel.writeAsyncTrap_length_refcon_, 0, 1
-        )
-
-        self.assertArgIsIn(
             IOBluetooth.IOBluetoothL2CAPChannel.writeAsync_length_refcon_, 0
         )
         self.assertArgSizeInArg(
@@ -79,3 +72,12 @@ class TestIOBluetoothL2CAPChannel(TestCase):
         )
 
         self.assertResultIsBOOL(IOBluetooth.IOBluetoothL2CAPChannel.isIncoming)
+
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertArgIsIn(
+            IOBluetooth.IOBluetoothL2CAPChannel.writeAsyncTrap_length_refcon_, 0
+        )
+        self.assertArgSizeInArg(
+            IOBluetooth.IOBluetoothL2CAPChannel.writeAsyncTrap_length_refcon_, 0, 1
+        )

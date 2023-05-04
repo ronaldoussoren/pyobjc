@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 from objc import simd
 
@@ -358,6 +358,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getVectorInt2(44, 42)
 
+    @min_sdk_level("10.12")
     def test_getGKBox(self):
         self.assertResultHasType(OC_Vector.getGKBox, GKBox.__typestr__)
         oc = OC_Vector.alloc().init()
@@ -370,6 +371,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getGKBox(44, 42)
 
+    @min_sdk_level("10.12")
     def test_getGKQuad(self):
         self.assertResultHasType(OC_Vector.getGKQuad, GKQuad.__typestr__)
         oc = OC_Vector.alloc().init()
@@ -415,6 +417,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getMDLVoxelIndexExtent(44, 42)
 
+    @min_sdk_level("10.13")
     def test_getMPSAxisAlignedBoundingBox(self):
         self.assertResultHasType(
             OC_Vector.getMPSAxisAlignedBoundingBox,
@@ -433,6 +436,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getMPSAxisAlignedBoundingBox(44, 42)
 
+    @min_sdk_level("10.13")
     def test_getMPSImageHistogramInfo(self):
         self.assertResultHasType(
             OC_Vector.getMPSImageHistogramInfo, MPSImageHistogramInfo.__typestr__
@@ -533,6 +537,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getMatrixFloat4x4(44, 42)
 
+    @min_sdk_level("10.13")
     def test_getSimdFloat4x4(self):
         self.assertResultHasType(
             OC_Vector.getSimdFloat4x4, simd.simd_float4x4.__typestr__
@@ -554,6 +559,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getSimdFloat4x4(44, 42)
 
+    @min_sdk_level("10.13")
     def test_getSimdQuatf(self):
         self.assertResultHasType(OC_Vector.getSimdQuatf, simd.simd_quatf.__typestr__)
         oc = OC_Vector.alloc().init()
@@ -567,7 +573,7 @@ class TestMethods(TestCase):
 
     def test_with_unsupported_vector_type(self):
         with self.assertRaisesRegex(
-            NotImplementedError, "^Vector types not supported by libffi caller$"
+            NotImplementedError, "Cannot generate IMP for mymethodWithA:b:c:"
         ):
 
             class OC_VectorProxyUnsupportedA(objc.lookUpClass("NSObject")):
@@ -576,7 +582,7 @@ class TestMethods(TestCase):
                     return 1
 
         with self.assertRaisesRegex(
-            NotImplementedError, "^Vector types not supported by libffi caller$"
+            NotImplementedError, "Cannot generate IMP for mymethodWithA:b:c:"
         ):
 
             class OC_VectorProxyUnsupportedB(objc.lookUpClass("NSObject")):

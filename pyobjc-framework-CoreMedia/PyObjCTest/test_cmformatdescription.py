@@ -507,7 +507,6 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMMetadataFormatDescriptionKey_StructuralDependency, str
         )
-        self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_SetupData, str)
         self.assertIsInstance(
             CoreMedia.kCMMetadataFormatDescription_StructuralDependencyKey_DependencyIsInvalidFlag,
             str,
@@ -516,13 +515,16 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMMetadataFormatDescriptionMetadataSpecificationKey_StructuralDependency,
             str,
         )
+
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        # The first two are documented as available on 10.11, but aren't
+        self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_SetupData, str)
         self.assertIsInstance(
             CoreMedia.kCMMetadataFormatDescriptionMetadataSpecificationKey_SetupData,
             str,
         )
 
-    @min_os_level("10.12")
-    def test_constants10_12(self):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionTransferFunction_SMPTE_ST_428_1, str
         )

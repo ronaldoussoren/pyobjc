@@ -47,6 +47,8 @@ class TestMTLTypes(TestCase):
         v = Metal.MTLRegionMake3D(1, 2, 3, 4, 5, 6)
         self.assertIsInstance(v, Metal.MTLRegion)
 
+    @min_sdk_level("10.13")
+    def test_functions10_13(self):
         v = Metal.MTLSamplePositionMake(0.5, 1.5)
         self.assertIsInstance(v, Metal.MTLSamplePosition)
         self.assertEqual(v, (0.5, 1.5))
