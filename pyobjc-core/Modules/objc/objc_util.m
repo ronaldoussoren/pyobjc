@@ -16,6 +16,7 @@ PyObject* PyObjCExc_BadPrototypeError;
 PyObject* PyObjCExc_UnknownPointerError;
 PyObject* PyObjCExc_DeprecationWarning;
 PyObject* PyObjCExc_ObjCPointerWarning;
+PyObject* PyObjCExc_ObjCSuperWarning;
 
 PyObject* PyObjCNM_insert;
 PyObject* PyObjCNM_append;
@@ -57,6 +58,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_DeprecationWarning, "ApiDeprecationWarning",
             PyExc_DeprecationWarning);
     NEW_EXC(PyObjCExc_ObjCPointerWarning, "ObjCPointerWarning", PyExc_Warning);
+    NEW_EXC(PyObjCExc_ObjCSuperWarning, "ObjCSuperWarning", PyExc_Warning);
 
 #undef NEW_EXC
 

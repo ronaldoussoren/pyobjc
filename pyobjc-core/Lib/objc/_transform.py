@@ -12,6 +12,7 @@ import inspect
 import dis
 import keyword
 import warnings
+import sys
 from ._informal_protocol import _informal_protocol_for_selector
 
 # only public objc_method until the python_method implementation
@@ -46,6 +47,21 @@ def processClassDict(
                 "protocols list contains object that isn't an Objective-C "
                 f"protocol, but type {type(p).__name__}"
             )
+
+    if "__classcell__" in class_dict and "__module__" in class_dict:
+        mod = sys.modules.get(class_dict["__module__"], None)
+        if mod is not None:
+            try:
+                ok = mod.super is objc.super
+            except AttributeError:
+                ok = False
+
+            if not ok:
+                warnings.warn(
+                    "Objective-C subclass uses super(), but super is not objc.super",
+                    category=objc.ObjCSuperWarning,
+                    stacklevel=2,
+                )
 
     super_ivars = set()
     for v in class_object.__dict__.values():

@@ -6,6 +6,29 @@ An overview of the relevant changes in new, and older, releases.
 Version 9.2
 -----------
 
+* :issue:`549`: Added warning ``objc.ObjCSuperWarning`` that is used
+  to warn about classes that use argument-less super without binding that
+  name to ``objc.super``.
+
+  The correct code pattern is:
+
+
+  .. sourcecode:: python3
+
+     from Foundation import NSObject
+     from objc import super
+
+
+     class MyObject(NSObject):
+         def init(self):
+             self = super().init()
+             if self is None:
+                 return None
+
+             ...
+             return self
+
+
 * :issue:`549`: Document that ``objc.super`` must be used instead of
   ``builtin.super`` when calling superclass methods in a Cocoa subclass.
 
@@ -35,6 +58,8 @@ Version 9.2
 * Trying to implement a method with SIMD types as arguments or return value
   will now give a more useful error when the bridge does not support the
   signature.
+
+
 
 Version 9.1.1
 -------------

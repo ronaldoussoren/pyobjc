@@ -2,9 +2,11 @@ import objc
 import sys
 import io
 import warnings
+import builtins
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
 from .objectint import OC_ObjectInt
+from objc import super
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -1100,3 +1102,52 @@ class TestMixin(TestCase):
                 return 1
 
         self.assertResultHasType(MixinUser2.method, b"@")
+
+
+class TestSuperUsage(TestCase):
+    def setUp(self):
+        self.unbound = object()
+        self.globals = globals()
+        self.orig_super = self.globals.get("super", self.unbound)
+
+    def tearDown(self):
+        if self.orig_super is not self.unbound:
+            self.globals["super"] = self.orig_super
+        elif "super" in self.globals:
+            del self.globals["super"]
+
+    def test_bound_super(self):
+        self.globals["super"] = objc.super
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+            class OC_TestSuperUsage1(NSObject):
+                def init(self):
+                    self = super().init()
+                    return self
+
+    def test_unbound_super(self):
+        if "super" in self.globals:
+            del self.globals["super"]
+
+        with warnings.catch_warnings():
+            with self.assertRaises(objc.ObjCSuperWarning):
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                class OC_TestSuperUsage2(NSObject):
+                    def init(self):
+                        self = super().init()
+                        return self
+
+    def test_wrong_super(self):
+        self.globals["super"] = builtins.super
+
+        with warnings.catch_warnings():
+            with self.assertRaises(objc.ObjCSuperWarning):
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                class OC_TestSuperUsage3(NSObject):
+                    def init(self):
+                        self = super().init()
+                        return self

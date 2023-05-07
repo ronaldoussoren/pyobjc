@@ -16,6 +16,7 @@ extern PyObject* PyObjCExc_BadPrototypeError;
 extern PyObject* PyObjCExc_UnknownPointerError;
 extern PyObject* PyObjCExc_DeprecationWarning;
 extern PyObject* PyObjCExc_ObjCPointerWarning;
+extern PyObject* PyObjCExc_ObjCSuperWarning;
 
 extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args,
                                 size_t nargsf);
