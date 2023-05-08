@@ -38,8 +38,8 @@ extensions = [
 ]
 
 extlinks = {
-    "issue": ("https://github.com/ronaldoussoren/pyobjc/issues/%s", "#"),
-    "pr": ("https://github.com/ronaldoussoren/pyobjc/pull/%s", "#"),
+    "issue": ("https://github.com/ronaldoussoren/pyobjc/issues/%s", "#%s"),
+    "pr": ("https://github.com/ronaldoussoren/pyobjc/pull/%s", "#%s"),
 }
 
 # Add any paths that contain templates here, relative to this directory.

@@ -397,10 +397,11 @@ improvements as described below).
   is now always introduced.
 
   There are two reasons for this:
-  1) Adding some methods (such as ``copyWithZone_``) to a class after it was constructed
+
+  1. Adding some methods (such as ``copyWithZone_``) to a class after it was constructed
      caused problems in older version because the intermediate class wasn't present.
 
-  2) Simplifies the code for building a class
+  2. Simplifies the code for building a class
 
   The intermediate class is named ``_PyObjCIntermediate_{NAME}`` where ``{NAME}`` is the name
   of the super class, in previous versions it was named ``_PyObjCCopying_{NAME}``.

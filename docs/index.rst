@@ -53,6 +53,7 @@ General documentation
    core/introspecting
    core/serializing
    core/kvo
+   core/super
    metadata/index
    tutorials/index
    notes/exceptions
