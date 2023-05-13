@@ -12,36 +12,36 @@
       "selector": "addDevice:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o" }
+       "1": { "type_modifier": "o" }
       }
      },
      {
       "selector": "removeDevice:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o" }
+       "1": { "type_modifier": "o" }
       }
      }
     ]
-   }
+   },
    "CMIOExtensionDevice": {
     "methods": [
      {
       "selector": "addStream:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o" }
+       "1": { "type_modifier": "o" }
       }
      },
      {
       "selector": "removeStream:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o" }
+       "1": { "type_modifier": "o" }
       }
      }
     ]
-   }
+   },
    "NSObject": {
     "methods": [
      {
@@ -118,6 +118,7 @@
    "kCMIOPanTiltAbsoluteControlClassID": { "value": 1886675298  }
   },
   "structs": {
+   "CMIOHardwarePlugInInterface": { "ignore": true },
    "CMIOStreamScheduledOutputNotificationProcAndRefCon": {
     "fieldnames": [
      "scheduledOutputNotificationProc",
@@ -189,6 +190,7 @@
     }
    },
    "CMIOObjectCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "3": {}
@@ -221,6 +223,7 @@
     }
    },
    "CMIOObjectPropertiesChanged": {
+    "ignore": true,
     "args": {
      "0": {},
      "3": {}
@@ -270,12 +273,13 @@
    },
    "CMIOObjectSetPropertyData": {
     "args": {
-     "1": {},
-     "3": {},
-     "5": {}
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "5": { "type_modifier": "n", "c_array_length_in_arg": 4 }
     }
    },
    "CMIOObjectsPublishedAndDied": {
+    "ignore": true,
     "args": {
      "0": {},
      "3": {},

@@ -93,3 +93,9 @@ class TestCMIOHardwareObject(TestCase):
             3,
             CMIOObjectPropertyListenerBlock,
         )
+
+        self.assertArgIsIn(CoreMediaIO.CMIOObjectSetPropertyData, 1)
+        self.assertArgIsIn(CoreMediaIO.CMIOObjectSetPropertyData, 3)
+        self.assertArgSizeInArg(CoreMediaIO.CMIOObjectSetPropertyData, 3, 2)
+        self.assertArgIsIn(CoreMediaIO.CMIOObjectSetPropertyData, 5)
+        self.assertArgSizeInArg(CoreMediaIO.CMIOObjectSetPropertyData, 5, 4)

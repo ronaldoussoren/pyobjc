@@ -59,7 +59,10 @@ Version 9.2
   will now give a more useful error when the bridge does not support the
   signature.
 
+* :issue:`554`: Fix incomplete metadata for ``CoreMediaIO.CMIOObjectSetPropertyData``
 
+* Explicitly exclude definitions from ``CMIOHardwarePlugIn.h`` from the CoreMediaIO
+  bindings.
 
 Version 9.1.1
 -------------

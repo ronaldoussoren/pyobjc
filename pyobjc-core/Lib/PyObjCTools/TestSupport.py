@@ -1178,6 +1178,18 @@ class TestCase(_unittest.TestCase):
                             f"{value}: {idx}: byref to empty struct (handle/CFType?): {tp} {class_name or ''}"
                         )
 
+            if not isinstance(value, objc.selector):
+                # This gives too many false positives for selectors (sadly)
+                if tp.startswith(objc._C_PTR) and tp not in (b"^v", b"^?"):
+                    if tp[1:].startswith(objc._C_STRUCT_B):
+                        name, fields = objc.splitStructSignature(tp[1:])
+                        if not fields:
+                            continue
+
+                    self.fail(
+                        f"{value}: {idx}: pointer argument, but no by-ref annotation:{tp} {class_name or ''}"
+                    )
+
     def assertCallableMetadataIsSane(
         self, module, *, exclude_cocoa=True, exclude_attrs=()
     ):
