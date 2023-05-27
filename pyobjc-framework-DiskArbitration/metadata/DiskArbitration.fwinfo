@@ -285,8 +285,8 @@
        }
       }
      },
-     "4": { "type_modifier": "n", "c_array_delimited_by_null": true },
-     "5": {}
+     "4": {},
+     "5": { "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    },
    "DADiskRename": {

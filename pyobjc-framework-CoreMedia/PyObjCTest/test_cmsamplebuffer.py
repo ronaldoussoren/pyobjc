@@ -384,13 +384,13 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgSizeInArg(
             CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 6, 5
         )
-        self.assertArgIsOut(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 7)
-        self.assertArgIsCFRetained(
-            CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 7
+        self.assertArgIsIn(CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 8)
+        self.assertArgSizeInArg(
+            CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler, 8, 7
         )
         self.assertArgIsBlock(
             CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler,
-            8,
+            9,
             b"i^{OpaqueCMSampleBuffer=}",
         )
 

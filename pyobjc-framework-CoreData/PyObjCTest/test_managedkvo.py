@@ -2,6 +2,7 @@
 
 import CoreData
 import Foundation
+from objc import super
 from PyObjCTools.TestSupport import TestCase
 
 

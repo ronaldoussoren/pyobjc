@@ -1088,7 +1088,7 @@
    },
    "NSDataFromGCExtendedGamepadSnapShotDataV100": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n"}
     }
    },
    "NSDataFromGCExtendedGamepadSnapshotData": {

@@ -412,7 +412,7 @@
      },
      "1": { "type_modifier": "n" },
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "type_override": "^I"}
     }
    },
    "DVDResume": {

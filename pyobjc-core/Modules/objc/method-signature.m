@@ -884,6 +884,20 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
+        d = PyDict_GetItemStringWithError(meta, "deref_result_pointer");
+        if (d == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return -1;                       // LCOV_EXCL_LINE
+        } else if (d != NULL && PyObject_IsTrue(d)) {
+            if (descr == NULL || descr->tmpl)
+                return -2;
+
+            descr->ptrType  = PyObjC_kDerefResultPointer;
+            descr->arrayArg = 0;
+            descr->arrayArg = 0;
+        }
+    }
+
+    if (meta) {
         d = PyDict_GetItemStringWithError(meta, "c_array_length_in_arg");
         if (d == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return -1;                       // LCOV_EXCL_LINE
@@ -1795,6 +1809,11 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
         break;
     case PyObjC_kVariableLengthArray:
         r = PyDict_SetItemString(result, "c_array_of_variable_length", Py_True);
+        if (r == -1)    // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+    case PyObjC_kDerefResultPointer:
+        r = PyDict_SetItemString(result, "deref_result_pointer", Py_True);
         if (r == -1)    // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
     }

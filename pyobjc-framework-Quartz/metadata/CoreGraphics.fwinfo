@@ -395,6 +395,7 @@
     "variadic": true
    },
    "CGColorConversionInfoCreateFromListWithArguments": {
+    "ignore": true,
     "retval": {
      "already_cfretained": true
     }
@@ -645,21 +646,25 @@
     }
    },
    "CGDataProviderCreate": {
+    "ignore": true,
     "retval": {
      "already_cfretained": true
     }
    },
    "CGDataProviderCreateDirect": {
+    "ignore": true,
     "retval": {
      "already_cfretained": true
     }
    },
    "CGDataProviderCreateDirectAccess": {
+    "ignore": true,
     "retval": {
      "already_cfretained": true
     }
    },
    "CGDataProviderCreateSequential": {
+    "ignore": true,
     "retval": {
      "already_cfretained": true
     }
@@ -941,13 +946,6 @@
      "1": {},
      "2": {}
     }
-   },
-   "CGDisplayStreamUpdateGetRects": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {}
    },
    "CGDisplaySwitchToMode": {
     "args": {
@@ -1653,15 +1651,6 @@
      "already_cfretained": true
     }
    },
-   "CGImageCreateWithJPEGDataProvider": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGImageCreateWithMask": {
     "args": {
      "0": {},
@@ -1683,7 +1672,7 @@
    "CGImageCreateWithPNGDataProvider": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true}
     },
     "retval": {
      "already_cfretained": true
@@ -1776,7 +1765,7 @@
    "CGImageMaskCreate": {
     "args": {
      "5": {},
-     "6": {}
+     "6": { "type_modifier": "n", "c_array_of_variable_length": true }
     },
     "retval": {
      "already_cfretained": true
@@ -4332,33 +4321,6 @@
      "already_cfretained": true
     }
    },
-   "CGDataProviderCreate": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateDirect": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateDirectAccess": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDataProviderCreateSequential": {
     "args": {
      "0": {},
@@ -5447,7 +5409,7 @@
    "CGImageCreateWithJPEGDataProvider": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
@@ -5466,15 +5428,6 @@
     "args": {
      "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithPNGDataProvider": {
-    "args": {
-     "0": {},
-     "1": {}
     },
     "retval": {
      "already_cfretained": true
@@ -5546,15 +5499,6 @@
    "CGImageIsMask": {
     "args": {
      "0": {}
-    }
-   },
-   "CGImageMaskCreate": {
-    "args": {
-     "5": {},
-     "6": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageRelease": {

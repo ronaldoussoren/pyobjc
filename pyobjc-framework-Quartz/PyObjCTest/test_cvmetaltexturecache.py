@@ -11,6 +11,8 @@ class TestCVMetalTextureCache(TestCase):
     def testFunctions10_11(self):
         self.assertIsInstance(Quartz.CVMetalTextureCacheGetTypeID(), int)
 
-        Quartz.CVMetalTextureCacheCreate
+        self.assertArgIsOut(Quartz.CVMetalTextureCacheCreate, 4)
+        self.assertArgIsCFRetained(Quartz.CVMetalTextureCacheCreate, 4)
         self.assertArgIsOut(Quartz.CVMetalTextureCacheCreateTextureFromImage, 8)
+        self.assertArgIsCFRetained(Quartz.CVMetalTextureCacheCreateTextureFromImage, 8)
         Quartz.CVMetalTextureCacheFlush

@@ -383,15 +383,15 @@ class TestIconsCore(TestCase):
             self.assertArgIsIn(CoreServices.GetIconRefFromIconFamilyPtr, 0)
             self.assertArgIsOut(CoreServices.GetIconRefFromIconFamilyPtr, 2)
 
-            self.assertArgIsOut(CoreServices.GetIconRefFromComponent, 1)
+            # self.assertArgIsOut(CoreServices.GetIconRefFromComponent, 1)
 
             # XXX: Untested for now...
-            CoreServices.RegisterIconRefFromIconFamily
-            CoreServices.RegisterIconRefFromFSRef
-            CoreServices.UnregisterIconRef
-            CoreServices.UpdateIconRef
-            CoreServices.OverrideIconRef
-            CoreServices.RemoveIconRefOverride
+            # CoreServices.RegisterIconRefFromIconFamily
+            # CoreServices.RegisterIconRefFromFSRef
+            # CoreServices.UnregisterIconRef
+            # CoreServices.UpdateIconRef
+            # CoreServices.OverrideIconRef
+            # CoreServices.RemoveIconRefOverride
 
             self.assertArgIsOut(CoreServices.CompositeIconRef, 2)
 
@@ -410,7 +410,7 @@ class TestIconsCore(TestCase):
             )
 
             # Untested...
-            CoreServices.ReadIconFromFSRef
+            # CoreServices.ReadIconFromFSRef
 
         finally:
             err = CoreServices.ReleaseIconRef(icon)

@@ -404,15 +404,15 @@ class TestIconsCore(TestCase):
             self.assertArgIsIn(LaunchServices.GetIconRefFromIconFamilyPtr, 0)
             self.assertArgIsOut(LaunchServices.GetIconRefFromIconFamilyPtr, 2)
 
-            self.assertArgIsOut(LaunchServices.GetIconRefFromComponent, 1)
+            # self.assertArgIsOut(LaunchServices.GetIconRefFromComponent, 1)
 
             # XXX: Untested for now...
-            LaunchServices.RegisterIconRefFromIconFamily
-            LaunchServices.RegisterIconRefFromFSRef
-            LaunchServices.UnregisterIconRef
-            LaunchServices.UpdateIconRef
-            LaunchServices.OverrideIconRef
-            LaunchServices.RemoveIconRefOverride
+            # LaunchServices.RegisterIconRefFromIconFamily
+            # LaunchServices.RegisterIconRefFromFSRef
+            # LaunchServices.UnregisterIconRef
+            # LaunchServices.UpdateIconRef
+            # LaunchServices.OverrideIconRef
+            # LaunchServices.RemoveIconRefOverride
 
             self.assertArgIsOut(LaunchServices.CompositeIconRef, 2)
 
@@ -431,7 +431,7 @@ class TestIconsCore(TestCase):
             )
 
             # Untested...
-            LaunchServices.ReadIconFromFSRef
+            # LaunchServices.ReadIconFromFSRef
 
         finally:
             err = LaunchServices.ReleaseIconRef(icon)

@@ -72,6 +72,9 @@
     "retval": { "already_retained": true }
    },
    "xpc_uuid_create": {
+    "args": {
+     "0": { "c_array_of_fixed_length": 16, "type_modifier": "n" }
+    },
     "retval": { "already_retained": true }
    },
    "xpc_endpoint_create": {
@@ -220,7 +223,7 @@
    },
    "xpc_array_set_uuid": {
     "args": {
-     "2": {}
+     "2": { "type_modifier": "n", "c_array_of_fixed_length": 16 }
     }
    },
    "xpc_connection_create": {
@@ -433,7 +436,7 @@
    "xpc_dictionary_set_uuid": {
     "args": {
      "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
-     "2": {}
+     "2": { "type_modifier": "n", "c_array_of_fixed_length": 16 }
     }
    },
    "xpc_dictionary_set_value": {

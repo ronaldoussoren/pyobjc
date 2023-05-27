@@ -60,7 +60,7 @@
    "VTCompressionSessionBeginPass": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "VTCompressionSessionCompleteFrames": {
@@ -134,7 +134,7 @@
     "args": {
      "0": {},
      "1": { "type_modifier": "o" },
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "VTCompressionSessionGetPixelBufferPool": {

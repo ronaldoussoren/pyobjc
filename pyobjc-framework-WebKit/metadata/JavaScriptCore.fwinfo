@@ -683,7 +683,8 @@
    "JSObjectMakeDeferredPromise": {
     "args": {
      "1": { "type_modifier": "o" },
-     "2": { "type_modifier": "o" }
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
     }
    },
    "JSObjectMakeDate": {
@@ -895,7 +896,7 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     },
     "retval": {
      "already_cfretained": true
@@ -918,7 +919,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "JSValueIsInstanceOfConstructor": {
@@ -926,7 +927,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "JSValueIsNull": {
@@ -1027,14 +1028,14 @@
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "JSValueToObject": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -1042,7 +1043,7 @@
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     },
     "retval": {
      "already_cfretained": true

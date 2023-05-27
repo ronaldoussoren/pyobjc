@@ -100,6 +100,26 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CVMetalTextureCacheCreateFromImage": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "@" },
+     "3": { "type_override": "@" },
+     "4": { "type_override": "Q" },
+     "5": { "type_override": "Q" },
+     "6": { "type_override": "Q" },
+     "7": { "type_override": "^@", "already_cfretained": true, "type_modifier": "o" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "CVBufferCopyAttachment": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    }
+   },
    "CVYCbCrMatrixGetIntegerCodePointForString": {
     "args": {
      "0": { "typestr": "^{__CFString=}" }
@@ -154,11 +174,7 @@
    "CVMetalTextureCacheCreate": {
     "retval": { "typestr": "i" },
     "args": {
-     "0": { "typestr": "@" },
-     "1": { "typestr": "@" },
-     "2": { "typestr": "@" },
-     "3": { "typestr": "@" },
-     "4": { "typestr": "^{__CVBuffer=}" }
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVMetalTextureCacheCreateTextureFromImage": {
@@ -172,7 +188,7 @@
      "5": { "typestr": "L" },
      "6": { "typestr": "L" },
      "7": { "typestr": "L" },
-     "8": { "typestr": "^^{__CVBuffer=}", "type_modifier": "o" }
+     "8": { "typestr": "^^{__CVBuffer=}", "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVDisplayLinkSetOutputHandler": {
@@ -534,7 +550,7 @@
      "2": {},
      "3": {},
      "4": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVOpenGLTextureCacheCreateTextureFromImage": {
@@ -543,7 +559,7 @@
      "1": {},
      "2": {},
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVOpenGLTextureCacheFlush": {
@@ -597,7 +613,7 @@
     "args": {
      "0": {},
      "4": {},
-     "5": {}
+     "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferCreateResolvedAttributesDictionary": {
@@ -658,6 +674,7 @@
     }
    },
    "CVPixelBufferCreateWithPlanarBytes": {
+    "ignore": true,
     "args": {
      "0": {},
      "4": {},
@@ -709,7 +726,7 @@
      },
      "12": {},
      "13": {},
-     "14": {}
+     "14": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferFillExtendedPixels": {

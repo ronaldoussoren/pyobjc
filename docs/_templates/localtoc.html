@@ -1,4 +1,4 @@
-{%- if display_toc %}
+{%- if display_toc and pagename != "apinotes/issue-275" %}
   <h3>{{ _('Table Of Contents') }}</h3>
   {{ toc }}
 {%- endif %}

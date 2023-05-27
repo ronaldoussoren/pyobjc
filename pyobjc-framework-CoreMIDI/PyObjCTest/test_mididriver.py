@@ -11,21 +11,23 @@ class TestMIDIDriver(TestCase):
             self.assertIsInstance(CoreMIDI.kMIDIDriverPropertyUsesSerial, str)
 
     def test_not_exposed(self):
+        self.assertNotHasAttr(CoreMIDI, "kMIDIDriverCreate")
         self.assertNotHasAttr(CoreMIDI, "kMIDIDriverTypeID")
         self.assertNotHasAttr(CoreMIDI, "kMIDIDriverInterfaceID")
         self.assertNotHasAttr(CoreMIDI, "kMIDIDriverInterface2ID")
         self.assertNotHasAttr(CoreMIDI, "kMIDIDriverInterfaceXID")
-
-        self.assertNotHasAttr(CoreMIDI, "MIDIEndpointSetRefCons")
-        self.assertNotHasAttr(CoreMIDI, "MIDIEndpointGetRefCons")
+        self.assertNotHasAttr(CoreMIDI, "MIDIDriverEnableMonitoring")
+        self.assertNotHasAttr(CoreMIDI, "MIDIGetDriverDeviceList")
 
     def test_functions(self):
-        self.assertArgIsOut(CoreMIDI.MIDIDeviceCreate, 4)
+        # self.assertArgIsOut(CoreMIDI.MIDIDeviceCreate, 4)
         CoreMIDI.MIDIDeviceDispose
         CoreMIDI.MIDIDeviceListGetNumberOfDevices
         CoreMIDI.MIDIDeviceListGetDevice
         CoreMIDI.MIDIDeviceListAddDevice
         CoreMIDI.MIDIDeviceListDispose
         CoreMIDI.MIDIGetDriverIORunLoop
-        CoreMIDI.MIDIGetDriverDeviceList
-        self.assertArgIsBOOL(CoreMIDI.MIDIDriverEnableMonitoring, 1)
+        # CoreMIDI.MIDIGetDriverDeviceList
+        # self.assertArgIsBOOL(CoreMIDI.MIDIDriverEnableMonitoring, 1)
+        CoreMIDI.MIDIEndpointSetRefCons
+        CoreMIDI.MIDIEndpointGetRefCons

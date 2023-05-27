@@ -94,6 +94,8 @@ class TestCGContext(TestCase):
                 provider, None, True, Quartz.kCGRenderingIntentDefault
             )
             self.assertIsInstance(image, Quartz.CGImageRef)
+            self.assertArgIsIn(Quartz.CGImageCreateWithJPEGDataProvider, 1)
+            self.assertArgIsVariableSize(Quartz.CGImageCreateWithJPEGDataProvider, 1)
 
             Quartz.CGContextDrawTiledImage(context, ((0, 0), (10, 10)), image)
 

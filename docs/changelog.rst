@@ -61,8 +61,89 @@ Version 9.2
 
 * :issue:`554`: Fix incomplete metadata for ``CoreMediaIO.CMIOObjectSetPropertyData``
 
+* Fix incorrect metadata for
+  ``xpc.xpc_uuid_create``,
+  ``xpc.xpc_dictionary_set_uuid`` ,
+  ``xpc.xpc_array_set_uuid``,
+  ``JavaScriptCore.JSObjectMakeDeferredPromise``,
+  ``JavaScriptCore.JSValueIsEqual``,
+  ``JavaScriptCore.JSValueIsInstanceOfConstructor``,
+  ``JavaScriptCore.JSValueCreateJSONString``,
+  ``JavaScriptCore.JSValueToNumber``,
+  ``JavaScriptCore.JSValueToStringCopy``,
+  ``JavaScriptCore.JSValueToObject``,
+  ``Quartz.CGImageCreateWithJPEGDataProvider``,
+  ``Quartz.CGImageCreateWithPNGDataProvider``,
+  ``Quartz.CGImageMaskCreate``,
+  ``Quartz.CVBufferCopyAttachment``,
+  ``Quartz.CVMetalTextureCacheCreate``,
+  ``Quartz.CVMetalTextureCacheCreateFromImage``,
+  ``Quartz.CVOpenGLTextureCacheCreate``,
+  ``CoreMedia.CMAudioClockCreate``,
+  ``CoreMedia.CMAudioFormatDescriptionCreate``,
+  ``CoreMedia.CMBlockBufferGetDataPointer``,
+  ``CoreMedia.CMBlockBufferAccessDataBytes``,
+  ``CoreMedia.CMBlockBufferGetDataPointer``,
+  ``CoreMedia.CMAudioFormatDescriptionGetMostCompatibleFormat``,
+  ``CoreMedia.CMAudioFormatDescriptionGetRichestDecodableFormat``,
+  ``CoreMedia.CMSampleBufferCreateWithMakeDataReadyHandler``,
+  ``CoreMedia.CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler``,
+  ``CFNetwork.CFNetServiceBrowserSearchForDomains``,
+  ``CFNetwork.CFNetServiceBrowserStopSearch``,
+  ``CFNetwork.CFNetServiceMonitorStop``,
+  ``CFNetwork.CFNetServiceRegister``,
+  ``CFNetwork.CFNetServiceResolve``,
+  ``CoreText.CTFontCreateCopyWithSymbolicTraits``,
+  ``CoreText.CTFontCreateCopyWithFamily``,
+  ``CoreText.CTFontCreateCopyWithAttributes``,
+  ``CoreMIDI.MIDISourceCreateWithProtocol``,
+  ``CoreMIDI.MIDISourceCreate``,
+  ``CoreMIDI.MIDISetupCreate``,
+  ``CoreMIDI.MIDIDestinationCreate``,
+  ``CoreMIDI.MIDIClientCreate``,
+  ``CoreMIDI.MIDIClientCreateWithBlock``,
+  ``CoreMIDI.MIDIOutputPortCreate``,
+  ``CoreMIDI.MIDIObjectGetStringProperty``,
+  ``CoreMIDI.MIDIObjectGetProperties``,
+  ``CoreMIDI.MIDIObjectGetIntegerProperty``,
+  ``CoreMIDI.MIDIObjectGetDictionaryProperty``,
+  ``CoreMIDI.MIDIObjectGetDataProperty``,
+  ``CoreMIDI.MIDIObjectFindByUniqueID``,
+  ``CoreMIDI.MIDIDestinationCreateWithProtocol``,
+  ``CoreMIDI.MIDIEndpointGetEntity``,
+  ``CoreMIDI.MIDIEntityGetDevice``,
+  ``CoreMIDI.MIDIEntityGetRefCons``,
+  ``CoreMIDI.MIDIEntitySetRefCons``,
+  ``DVDPlayback.DVDRegisterEventCallBack``,
+  ``DiskArbitration.DADiskMountWithArguments``,
+  ``GameController.NSDataFromGCExtendedGamepadSnapShotDataV100``,
+  ``HealthKit.HKAppleWalkingSteadinessClassificationForQuantity``,
+  ``IOSurface.IOSurfaceSetPurgeable``,
+  ``Network.nw_ethernet_channel_send``,
+
+* Removed ``Quartz.CGColorConversionInfoCreateFromListWithArguments``. This function
+  was already documented as unsupported, but was still present in the framework
+  wrapper.
+
+* Removed ``Quartz.CVPixelBufferCreateWithPlanarBytes``. This function requires a
+  manual binding, but was still present with a generic (and non-working) binding.
+
+* Removed ``CoreMedia.CMBufferQueueCreate``, ``CoreMedia.CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS``,
+  ``CoreMedia.CMBufferQueueGetCallbacksForUnsortedSampleBuffers``, ``CoreMedia.CMVideoFormatDescriptionGetH264ParameterSetAtIndex``,
+  ``CoreMedia.CMVideoFormatDescriptionGetHVECParameterSetAtIndex``,
+  These functions require a manual binding, but were still present with a generic (and non-working) binding.
+
 * Explicitly exclude definitions from ``CMIOHardwarePlugIn.h`` from the CoreMediaIO
   bindings.
+
+* Added ``deref_result_pointer`` key to the metadata for a return value. Use this
+  when a callable returns a pointer to a single value (for example ``CMAudioFormatDescriptionGetMostCompatibleFormat``)
+
+* Removed unsupported functions from the ApplicationServices bindings (not named individually
+  due to the size of the list). Also fixed annotations for other ApplicationServices bindings.
+
+* Add manual binding for ``CFNetwork.CFNetServiceBrowserCreate``, ``CFNetwork.CFNetServiceSetClient``,
+  and ``CFNetwork.CFNetServiceMonitorCreate``.
 
 Version 9.1.1
 -------------

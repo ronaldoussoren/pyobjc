@@ -141,6 +141,8 @@ class TestXPC(TestCase):
         self.assertResultIsNullTerminated(xpc.xpc_string_get_string_ptr)
 
         self.assertResultIsRetained(xpc.xpc_uuid_create)
+        self.assertArgIsIn(xpc.xpc_uuid_create, 0)
+        self.assertArgIsFixedSize(xpc.xpc_uuid_create, 0, 16)
 
         self.assertResultHasType(xpc.xpc_uuid_get_bytes, b"^v")
         self.assertResultIsFixedSize(xpc.xpc_uuid_get_bytes, 16)
@@ -179,7 +181,9 @@ class TestXPC(TestCase):
         self.assertArgIsIn(xpc.xpc_array_set_string, 2)
         self.assertArgIsNullTerminated(xpc.xpc_array_set_string, 2)
 
-        xpc.xpc_array_set_uuid
+        self.assertArgIsIn(xpc.xpc_array_set_uuid, 2)
+        self.assertArgIsFixedSize(xpc.xpc_array_set_uuid, 2, 16)
+
         xpc.xpc_array_set_fd
         xpc.xpc_array_set_connection
         xpc.xpc_array_get_bool
@@ -265,6 +269,8 @@ class TestXPC(TestCase):
 
         self.assertArgIsIn(xpc.xpc_dictionary_set_uuid, 1)
         self.assertArgIsNullTerminated(xpc.xpc_dictionary_set_uuid, 1)
+        self.assertArgIsIn(xpc.xpc_dictionary_set_uuid, 2)
+        self.assertArgIsFixedSize(xpc.xpc_dictionary_set_uuid, 2, 16)
 
         self.assertArgIsIn(xpc.xpc_dictionary_set_fd, 1)
         self.assertArgIsNullTerminated(xpc.xpc_dictionary_set_fd, 1)

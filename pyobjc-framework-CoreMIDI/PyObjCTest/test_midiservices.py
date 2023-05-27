@@ -48,3 +48,9 @@ class TestMIDIServices(TestCase):
 
         self.assertEqual(CoreMIDI.kMIDIProtocol_1_0, 1)
         self.assertEqual(CoreMIDI.kMIDIProtocol_2_0, 2)
+
+    def test_functions(self):
+        self.assertArgIsOut(CoreMIDI.MIDISourceCreateWithProtocol, 3)
+        self.assertArgIsOut(CoreMIDI.MIDISourceCreate, 2)
+        self.assertArgIsOut(CoreMIDI.MIDISetupCreate, 0)
+        self.assertArgIsOut(CoreMIDI.MIDIDestinationCreate, 4)

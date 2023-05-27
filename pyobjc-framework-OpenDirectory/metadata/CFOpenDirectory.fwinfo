@@ -257,9 +257,11 @@
       "type_override": "^{_ODNode=}"
      },
      "4": {
+      "type_modifier": "o",
       "type_override": "^^{__CFArray}"
      },
      "5": {
+      "type_modifier": "o",
       "type_override": "^^{_ODContext}"
      },
      "6": {

@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "classes": {},
@@ -243,6 +241,7 @@
     }
    },
    "AddIconToSuite": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
@@ -250,26 +249,30 @@
    },
    "CopyProcessName": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "DisposeCIcon": {
+    "ignore": true,
     "args": {
      "0": {}
     }
    },
    "DisposeIconActionUPP": {
+    "ignore": true,
     "args": {
      "0": {}
     }
    },
    "DisposeIconGetterUPP": {
+    "ignore": true,
     "args": {
      "0": {}
     }
    },
    "DisposeIconSuite": {
+    "ignore": true,
     "args": {
      "0": {}
     }
@@ -286,42 +289,48 @@
    },
    "GetCurrentProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "GetFrontProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "GetIcon": {
+    "ignore": true,
     "retval": {}
    },
    "GetIconCacheData": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
     }
    },
    "GetIconCacheProc": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
     }
    },
    "GetIconFamilyData": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {}
     }
    },
    "GetIconFromSuite": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
     }
    },
    "GetIconRefVariant": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {}
@@ -329,12 +338,14 @@
     "retval": {}
    },
    "GetIconSizesFromIconRef": {
+    "ignore": true,
     "args": {
      "1": {},
      "3": {}
     }
    },
    "GetIconSuite": {
+    "ignore": true,
     "args": {
      "0": {}
     }
@@ -346,30 +357,30 @@
    },
    "GetNextProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "GetProcessBundleLocation": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o" }
     }
    },
    "GetProcessForPID": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "GetProcessInformation": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "o" }
     }
    },
    "GetProcessPID": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "n"},
+     "1": { "type_modifier": "o" }
     }
    },
    "GetSuiteLabel": {
@@ -429,7 +440,8 @@
    "HIShapeGetBounds": {
     "args": {
      "1": { "type_modifier": "o" }
-    }
+    },
+    "retval": { "deref_result_pointer": true }
    },
    "HIShapeGetAsQDRgn": { "ignore": true },
    "HIShapeIntersectsRect": {
@@ -496,6 +508,7 @@
     }
    },
    "IconRefContainsCGPoint": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -503,6 +516,7 @@
     }
    },
    "IconRefIntersectsCGRect": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -510,6 +524,7 @@
     }
    },
    "IconRefToHIShape": {
+    "ignore": true,
     "args": {
      "0": {},
      "3": {}
@@ -517,12 +532,14 @@
     "retval": {}
    },
    "IconRefToIconFamily": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {}
     }
    },
    "IconRefToRgn": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -563,12 +580,12 @@
    },
    "IsProcessVisible": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "KillProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "LaunchApplication": { "ignore": true },
@@ -643,38 +660,38 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCopyItemFlavors": {
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "PasteboardCopyName": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCopyPasteLocation": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCreate": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardGetItemCount": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "PasteboardGetItemFlavorFlags": {
@@ -682,13 +699,13 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "PasteboardGetItemIdentifier": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "PasteboardPutItemFlavor": {
@@ -787,8 +804,8 @@
    "PlotIconRefInContext": {
     "args": {
      "0": {},
-     "1": {},
-     "4": {},
+     "1": { "type_modifier": "n" },
+     "4": { "type_modifier": "n" },
      "6": {}
     }
    },
@@ -806,7 +823,7 @@
    },
    "ProcessInformationCopyDictionary": {
     "args": {
-     "0": {}
+     "0": {"type_modifier": "n"}
     },
     "retval": {
      "already_cfretained": true
@@ -867,19 +884,19 @@
    },
    "SameProcess": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": {"type_modifier": "n" },
+     "1": {"type_modifier": "n" },
+     "2": {"type_modifier": "o" }
     }
    },
    "SetFrontProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "SetFrontProcessWithOptions": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "SetIconCacheData": {
@@ -907,12 +924,12 @@
    },
    "ShowHideProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n"}
     }
    },
    "TransformProcessType": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n"}
     }
    },
    "TranslationCopyDestinationType": {
@@ -979,12 +996,19 @@
    },
    "WakeUpProcess": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n"}
     }
    }
   },
   "informal_protocols": {},
   "structs": {
+   "ProcessSerialNumber": {
+    "typestr": "{ProcessSerialNumber=II}",
+    "fieldnames": [
+     "highLongOfPSN",
+     "lowLongOfPSN"
+    ]
+   },
    "LaunchParamBlockRec": { "ignore": true },
    "AppParameters": { "ignore": true },
    "ICDirSpec": { "ignore": true },

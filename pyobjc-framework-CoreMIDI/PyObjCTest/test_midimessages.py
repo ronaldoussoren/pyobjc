@@ -114,8 +114,9 @@ class TestMIDIMessages(TestCase):
 
     @min_sdk_level("12.0")
     def test_functions12_0(self):
-        CoreMIDI.MIDI1UPSysEx
-        CoreMIDI.MIDI1UPSysExArray
+        # These have an API that's not easily reproduced in Python
+        # CoreMIDI.MIDI1UPSysEx
+        # CoreMIDI.MIDI1UPSysExArray
 
         # 'MIDIUniversalMessage' is not available in Python
         self.assertNotHasAttr(CoreMIDI, "MIDIEventListForEachEvent")

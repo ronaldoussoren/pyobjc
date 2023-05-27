@@ -79,8 +79,8 @@ class TestDiskArbitration(TestCase):
             b"v" + DADiskRef + DADissenterRef + b"^v",
             True,
         )
-        self.assertArgIsIn(DiskArbitration.DADiskMountWithArguments, 4)
-        self.assertArgIsNullTerminated(DiskArbitration.DADiskMountWithArguments, 4)
+        self.assertArgIsIn(DiskArbitration.DADiskMountWithArguments, 5)
+        self.assertArgIsNullTerminated(DiskArbitration.DADiskMountWithArguments, 5)
 
         self.assertArgIsFunction(
             DiskArbitration.DARegisterDiskMountApprovalCallback,

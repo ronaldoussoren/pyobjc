@@ -220,16 +220,19 @@ class TestCTFont(TestCase):
 
         self.assertIsInstance(font2, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateCopyWithAttributes)
+        self.assertArgIsIn(CoreText.CTFontCreateCopyWithAttributes, 2)
 
         font2 = CoreText.CTFontCreateCopyWithSymbolicTraits(
             font, 14.0, None, CoreText.kCTFontBoldTrait, CoreText.kCTFontBoldTrait
         )
         self.assertIsInstance(font2, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateCopyWithAttributes)
+        self.assertArgIsIn(CoreText.CTFontCreateCopyWithSymbolicTraits, 2)
 
         font2 = CoreText.CTFontCreateCopyWithFamily(font, 14.0, None, "Lucida Grande")
         self.assertIsInstance(font2, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateCopyWithFamily)
+        self.assertArgIsIn(CoreText.CTFontCreateCopyWithFamily, 2)
 
         font2 = CoreText.CTFontCreateForString(
             font, "hello world", CoreText.CFRange(1, 4)

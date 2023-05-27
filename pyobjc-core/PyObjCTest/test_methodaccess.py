@@ -1,4 +1,5 @@
 import objc
+from objc import super
 import gc
 from .test_ivar import nilObject, NilHelper
 from PyObjCTools.TestSupport import TestCase, expectedFailure

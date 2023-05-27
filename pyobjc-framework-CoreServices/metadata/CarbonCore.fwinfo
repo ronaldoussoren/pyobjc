@@ -6185,6 +6185,12 @@
    "TextChunk": { "ignore": true }
   },
   "functions": {
+   "LocaleOperationCountNames": { "ignore": true },
+   "RegisterIconRefFromIconFamily": { "ignore": true },
+   "GetIconRefFromComponent": { "ignore": true },
+   "RegisterIconRefFromIconFamily": { "ignore": true },
+   "RegisterIconRefFromFSRef": { "ignore": true },
+   "ReadIconFromFSRef": { "ignore": true },
    "ConvertBundlePreLocator": { "ignore": true },
    "PBFlushVolSync": { "ignore": true },
    "PBFlushVolAsync": { "ignore": true },

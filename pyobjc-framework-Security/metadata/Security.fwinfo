@@ -1948,6 +1948,9 @@
   "classes": {
   },
   "functions": {
+   "SecKeychainItemCreateFromContent": { "ignore": true },
+   "SecKeychainGetCSPHandle": { "ignore": true },
+   "SecKeychainGetDLDBHandle": { "ignore": true },
    "SecKeychainFindGenericPassword": { "ignore": true },
    "SecKeychainFindInternetPassword": { "ignore": true },
    "SecCertificateGetAlgorithmID": { "ignore": true },
@@ -3021,12 +3024,10 @@
    "CMSDecoderCopySignerStatus": {
     "retval": { "type_override": "i" },
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "@" },
      "3": { "type_override": "Z" },
-     "4": { "type_override": "o^I" },
-     "5": { "type_override": "o^i" }
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" },
+     "6": { "type_modifier": "o" }
     }
    },
    "CMSDecoderCopySignerEmailAddress": {

@@ -129,6 +129,8 @@ class TestCGImage(TestCase):
             data = fp.read()
         provider = Quartz.CGDataProviderCreateWithCFData(data)
         self.assertResultIsCFRetained(Quartz.CGImageCreateWithPNGDataProvider)
+        self.assertArgIsIn(Quartz.CGImageCreateWithPNGDataProvider, 1)
+        self.assertArgIsVariableSize(Quartz.CGImageCreateWithPNGDataProvider, 1)
         self.assertArgHasType(Quartz.CGImageCreateWithPNGDataProvider, 2, objc._C_BOOL)
         v = Quartz.CGImageCreateWithPNGDataProvider(
             provider, None, True, Quartz.kCGRenderingIntentDefault

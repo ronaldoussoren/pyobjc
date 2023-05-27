@@ -13,7 +13,9 @@ class TestVZLinuxRosettaDirectoryShare(TestCase):
     @min_os_level("13.0")
     @arch_only("arm64")
     def test_methods13_0(self):
-        self.assertArgIsOut(Virtualization.VZLinuxRosettaDirectoryShare.initWithError_)
+        self.assertArgIsOut(
+            Virtualization.VZLinuxRosettaDirectoryShare.initWithError_, 0
+        )
         self.assertArgIsBlock(
             Virtualization.VZLinuxRosettaDirectoryShare.installRosettaWithCompletionHandler_,
             0,

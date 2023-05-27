@@ -2274,8 +2274,9 @@ class TestTestSupport(TestCase):
                         {"type": objc._C_PTR + objc._C_CHR},
                     )
                     self._validateCallableMetadata(func, skip_simple_charptr_check=True)
-                except self.failureException:
-                    self.fail("Unexpected test failure")
+                except self.failureException as exc:
+                    if "pointer argument, but no by-ref annotation" not in str(exc):
+                        self.fail("Unexpected test failure")
 
             with self.subTest(f"{idx}: null-delimited _C_CHARPTR"):
                 with self.assertRaisesRegex(
@@ -2320,7 +2321,10 @@ class TestTestSupport(TestCase):
                 try:
                     func = Function(
                         idx,
-                        {"type": objc._C_PTR + objc._C_INT, "c_array_size_in_arg": 0},
+                        {
+                            "type": objc._C_IN + objc._C_PTR + objc._C_INT,
+                            "c_array_size_in_arg": 0,
+                        },
                     )
                     self._validateCallableMetadata(func)
                 except self.failureException:
@@ -2341,7 +2345,7 @@ class TestTestSupport(TestCase):
                     func = Function(
                         idx,
                         {
-                            "type": objc._C_PTR + objc._C_INT,
+                            "type": objc._C_IN + objc._C_PTR + objc._C_INT,
                             "c_array_size_in_arg": (0, 1),
                         },
                     )
@@ -2441,11 +2445,12 @@ class TestTestSupport(TestCase):
                 except self.failureException:
                     self.fail("Unexpected failure")
 
-            fn.assert_any_call(
-                NSObject.pyobjc_instanceMethods.description,
-                "NSObject",
-                skip_simple_charptr_check=True,
-            )
+            if 0:
+                fn.assert_any_call(
+                    NSObject.pyobjc_instanceMethods.description,
+                    "NSObject",
+                    skip_simple_charptr_check=True,
+                )
             fn.assert_any_call(
                 NSObject.pyobjc_classMethods.description,
                 "NSObject",

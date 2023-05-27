@@ -466,6 +466,7 @@
     }
    },
    "CFNetServiceBrowserCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {
@@ -513,7 +514,7 @@
    "CFNetServiceBrowserSearchForDomains": {
     "args": {
      "0": {},
-     "2": {}
+     "2": {"type_modifier": "o" }
     }
    },
    "CFNetServiceBrowserSearchForServices": {
@@ -527,7 +528,7 @@
    "CFNetServiceBrowserStopSearch": {
     "args": {
      "0": {},
-     "1": {}
+     "1": {"type_modifier": "o" }
     }
    },
    "CFNetServiceBrowserUnscheduleFromRunLoop": {
@@ -632,6 +633,7 @@
     "retval": {}
    },
    "CFNetServiceMonitorCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -683,13 +685,13 @@
    "CFNetServiceMonitorStart": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o"}
     }
    },
    "CFNetServiceMonitorStop": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o"}
     }
    },
    "CFNetServiceMonitorUnscheduleFromRunLoop": {
@@ -702,7 +704,7 @@
    "CFNetServiceRegister": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "CFNetServiceRegisterWithOptions": {
@@ -714,7 +716,7 @@
    "CFNetServiceResolve": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o"}
     }
    },
    "CFNetServiceResolveWithTimeout": {
@@ -731,6 +733,7 @@
     }
    },
    "CFNetServiceSetClient": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {

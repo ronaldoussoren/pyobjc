@@ -559,7 +559,7 @@
    "ODRecordSecondsUntilPasswordExpires": { "ignore": true },
    "ODRecordSetAccountPolicies": { "ignore": true },
    "ODRecordSetPolicies": { "ignore": true },
-   "ODRecordSetPolicy": { "ignore": true },": { "ignore": true },
+   "ODRecordSetPolicy": { "ignore": true },
    "ODRecordWillAuthenticationsExpire": { "ignore": true },
    "ODRecordWillPasswordExpire": { "ignore": true },
    "ODNodeSetPolicy": {"ignore": true },

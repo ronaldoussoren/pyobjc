@@ -40,3 +40,15 @@ API Notes
   The ``context`` argument can be an arbitrary Python object, in particular
   the creation of a ``CFNetServiceClientContext`` is performed by the bridge and
   is not exposed to Python.
+
+* ``CFNetServiceBrowserCreate``
+
+  The ``clientContext``  argument can be an arbitrary python object
+
+* ``CFNetServiceSetClient``
+
+  The ``clientContext``  argument can be an arbitrary python object
+
+* ``CFNetServiceMonitorCreate``
+
+  The ``clientContext``  argument can be an arbitrary python object

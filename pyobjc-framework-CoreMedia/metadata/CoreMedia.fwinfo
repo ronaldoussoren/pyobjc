@@ -66,6 +66,11 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMAudioClockCreate": {
+   "args": {
+    "1": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
   "CMTimebaseCreateWithSourceClock": {
    "args": {
     "2": { "type_modifier": "o", "already_cfretained": true }
@@ -93,6 +98,7 @@
   },
   "CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler": {
    "args": {
+    "4": { "type_modifier": "n" },
     "5": { "type_modifier": "o", "already_cfretained": true },
     "6": {
      "callable": {
@@ -117,8 +123,9 @@
     "4": { "type_override": "l" },
     "5": { "type_override": "l" },
     "6": { "type_modifier": "n", "c_array_length_in_arg": 5, "type_override": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}" },
-    "7": { "type_modifier": "o", "type_override": "^^{opaqueCMSampleBuffer=}", "already_cfretained": true },
-    "8": {
+    "7": { "type_override": "l" },
+    "8": { "type_modifier": "n", "c_array_length_in_arg": 7 },
+    "9": {
      "type_override": "@?",
      "callable": {
       "arguments": {
@@ -232,7 +239,7 @@
    "CMAudioFormatDescriptionCreate": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_modifier": "n" },
      "3": { "type_modifier": "n" },
      "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
      "6": {},
@@ -294,19 +301,19 @@
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "deref_result_pointer": true }
    },
    "CMAudioFormatDescriptionGetRichestDecodableFormat": {
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "deref_result_pointer": true }
    },
    "CMAudioFormatDescriptionGetStreamBasicDescription": {
     "args": {
      "0": {}
     },
-    "retval": {}
+    "retval": { "deref_result_pointer": true }
    },
    "CMAudioSampleBufferCreateReadyWithPacketDescriptions": {
     "args": {
@@ -347,7 +354,7 @@
     "args": {
      "0": {},
      "3": {},
-     "4": { "type_override": "^^v" }
+     "4": { "type_override": "^^v", "type_modifier": "o" }
     }
    },
    "CMBlockBufferAppendBufferReference": {
@@ -419,9 +426,9 @@
    "CMBlockBufferGetDataPointer": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {},
-     "4": { "type_override": "^^v" }
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_override": "^^v", "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
    },
    "CMBlockBufferIsEmpty": {
@@ -467,6 +474,7 @@
     }
    },
    "CMBufferQueueCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {},
@@ -500,9 +508,11 @@
     }
    },
    "CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS": {
+    "ignore": true,
     "retval": {}
    },
    "CMBufferQueueGetCallbacksForUnsortedSampleBuffers": {
+    "ignore": true,
     "retval": {}
    },
    "CMBufferQueueGetDuration": {
@@ -1679,8 +1689,8 @@
    "CMTimebaseGetTimeAndRate": {
     "args": {
      "0": {},
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "CMTimebaseGetTimeWithTimeScale": {
@@ -1806,21 +1816,23 @@
     "retval": {}
    },
    "CMVideoFormatDescriptionGetH264ParameterSetAtIndex": {
+    "ignore": true,
     "args": {
      "0": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {}
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" }
     }
    },
    "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex": {
+    "ignore": true,
     "args": {
      "0": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {}
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" }
     }
    },
    "CMVideoFormatDescriptionGetPresentationDimensions": {

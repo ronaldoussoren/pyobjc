@@ -604,6 +604,7 @@
     }
    },
    "DRGetRefCon": {
+    "ignore": true,
     "retval": {}
    },
    "DRNotificationCenterAddObserver": {
@@ -658,6 +659,7 @@
     }
    },
    "DRSetRefCon": {
+    "ignore": true,
     "args": {
      "1": {},
      "2": {}

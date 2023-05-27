@@ -808,7 +808,7 @@
     "args": {
      "0": {},
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "n"}
     }
    },
    "PMSessionCopyDestinationFormat": {

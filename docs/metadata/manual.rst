@@ -77,6 +77,9 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 
   In python the function is called with the additional arguments after the fixed arguments (just like in C).
 
+* *deref_result_pointer*: If present and this describes a return value: The return value is a pointer to
+  a single value that should be dereferenced to calculate the Python value.
+
 Keys not listed above will be ignored by the bridge.
 
 .. note::

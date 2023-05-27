@@ -89,6 +89,7 @@
     }
    },
    "GetIconRefFromComponent": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": { "type_modifier": "o" }
@@ -592,18 +593,21 @@
     }
    },
    "ReadIconFromFSRef": {
+    "ignore": true,
     "args": {
      "0": { "type_modifier": "n" },
      "1": {}
     }
    },
    "RegisterIconRefFromFSRef": {
+    "ignore": true,
     "args": {
      "2": { "type_modifier": "n" },
      "3": {}
     }
    },
    "RegisterIconRefFromIconFamily": {
+    "ignore": true,
     "args": {
      "2": {},
      "3": {}

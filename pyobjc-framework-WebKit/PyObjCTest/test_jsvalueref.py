@@ -40,10 +40,12 @@ class TestJSValueRef(TestCase):
         self.assertResultHasType(JavaScriptCore.JSValueIsObject, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsObjectOfClass, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsEqual, objc._C_BOOL)
+        self.assertArgIsOut(JavaScriptCore.JSValueIsEqual, 3)
         self.assertResultHasType(JavaScriptCore.JSValueIsStrictEqual, objc._C_BOOL)
         self.assertResultHasType(
             JavaScriptCore.JSValueIsInstanceOfConstructor, objc._C_BOOL
         )
+        self.assertArgIsOut(JavaScriptCore.JSValueIsInstanceOfConstructor, 3)
 
         self.assertResultHasType(
             JavaScriptCore.JSValueMakeUndefined, JavaScriptCore.JSValueRef.__typestr__
@@ -68,15 +70,19 @@ class TestJSValueRef(TestCase):
             JavaScriptCore.JSValueCreateJSONString,
             JavaScriptCore.JSStringRef.__typestr__,
         )
+        self.assertArgIsOut(JavaScriptCore.JSValueCreateJSONString, 3)
 
         self.assertResultHasType(JavaScriptCore.JSValueToBoolean, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueToNumber, objc._C_DBL)
+        self.assertArgIsOut(JavaScriptCore.JSValueToNumber, 2)
         self.assertResultHasType(
             JavaScriptCore.JSValueToStringCopy, JavaScriptCore.JSStringRef.__typestr__
         )
+        self.assertArgIsOut(JavaScriptCore.JSValueToStringCopy, 2)
         self.assertResultHasType(
             JavaScriptCore.JSValueToObject, JavaScriptCore.JSObjectRef.__typestr__
         )
+        self.assertArgIsOut(JavaScriptCore.JSValueToObject, 2)
 
         self.assertArgHasType(
             JavaScriptCore.JSValueProtect, 0, JavaScriptCore.JSContextRef.__typestr__

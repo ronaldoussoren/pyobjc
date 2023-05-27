@@ -557,6 +557,7 @@ class TestJSObjectRef(TestCase):
     def test_functions10_15(self):
         self.assertArgIsOut(JavaScriptCore.JSObjectMakeDeferredPromise, 1)
         self.assertArgIsOut(JavaScriptCore.JSObjectMakeDeferredPromise, 2)
+        self.assertArgIsOut(JavaScriptCore.JSObjectMakeDeferredPromise, 3)
 
         self.assertArgIsOut(JavaScriptCore.JSObjectHasPropertyForKey, 3)
 

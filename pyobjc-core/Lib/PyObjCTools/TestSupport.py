@@ -1180,14 +1180,32 @@ class TestCase(_unittest.TestCase):
 
             if not isinstance(value, objc.selector):
                 # This gives too many false positives for selectors (sadly)
-                if tp.startswith(objc._C_PTR) and tp not in (b"^v", b"^?"):
+                if (
+                    tp.startswith(objc._C_PTR)
+                    and tp not in (b"^v", b"^?")
+                    and tp != b"^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+                    and tp != b"^{_CFArrayCallBacks=q^?^?^?^?}"
+                ):
                     if tp[1:].startswith(objc._C_STRUCT_B):
                         name, fields = objc.splitStructSignature(tp[1:])
                         if not fields:
                             continue
 
+                    if idx == "retval":
+                        if any(
+                            x in meta
+                            for x in {
+                                "deref_result_pointer",
+                                "c_array_delimited_by_null",
+                                "c_array_of_variable_length",
+                                "c_array_length_in_arg",
+                                "c_array_delimited_by_null",
+                                "c_array_size_in_arg",
+                            }
+                        ):
+                            continue
                     self.fail(
-                        f"{value}: {idx}: pointer argument, but no by-ref annotation:{tp} {class_name or ''}"
+                        f"{value}: {idx}: pointer argument, but no by-ref annotation:{tp!r} {class_name or ''}"
                     )
 
     def assertCallableMetadataIsSane(
@@ -1281,7 +1299,9 @@ class TestCase(_unittest.TestCase):
                     module_names.extend(parent.__dict__.keys())
                 else:
                     module_names.extend(dir(module))
-            module_names.sort()
+
+            # The module_names list might contain duplicates
+            module_names = sorted(set(module_names))
         else:
             module_names = sorted(dir(module))
 

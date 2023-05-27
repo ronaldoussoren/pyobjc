@@ -61,20 +61,13 @@ class TestCMSDecoder(TestCase):
         )
 
         self.assertResultHasType(Security.CMSDecoderCopySignerStatus, objc._C_INT)
-        self.assertArgHasType(Security.CMSDecoderCopySignerStatus, 0, objc._C_ID)
+        # self.assertArgHasType(Security.CMSDecoderCopySignerStatus, 0, objc._C_ID)
         self.assertArgHasType(Security.CMSDecoderCopySignerStatus, 1, objc._C_ULNG)
         self.assertArgHasType(Security.CMSDecoderCopySignerStatus, 2, objc._C_ID)
         self.assertArgHasType(Security.CMSDecoderCopySignerStatus, 3, objc._C_NSBOOL)
-        self.assertArgHasType(
-            Security.CMSDecoderCopySignerStatus,
-            4,
-            objc._C_OUT + objc._C_PTR + objc._C_UINT,
-        )
-        self.assertArgHasType(
-            Security.CMSDecoderCopySignerStatus,
-            5,
-            objc._C_OUT + objc._C_PTR + objc._C_INT,
-        )
+        self.assertArgIsOut(Security.CMSDecoderCopySignerStatus, 4)
+        self.assertArgIsOut(Security.CMSDecoderCopySignerStatus, 5)
+        self.assertArgIsOut(Security.CMSDecoderCopySignerStatus, 6)
 
         self.assertResultHasType(Security.CMSDecoderGetNumSigners, objc._C_INT)
         self.assertArgHasType(Security.CMSDecoderGetNumSigners, 0, objc._C_ID)

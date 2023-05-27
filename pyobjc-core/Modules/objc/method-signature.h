@@ -20,6 +20,7 @@ enum _PyObjC_PointerType
     PyObjC_kArrayCountInArg     = 2,
     PyObjC_kFixedLengthArray    = 3,
     PyObjC_kVariableLengthArray = 4,
+    PyObjC_kDerefResultPointer  = 5,
 };
 
 typedef struct _PyObjCMethodSignature PyObjCMethodSignature;

@@ -190,6 +190,7 @@
   },
   "formal_protocols": {},
   "functions": {
+   "MIDI1UPSysExArray": { "ignore": true },
    "MIDIEventListForEachEvent": { "ignore": true },
    "MIDIClientCreate": {
     "args": {
@@ -210,13 +211,13 @@
       }
      },
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o"}
     }
    },
    "MIDIClientCreateWithBlock": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o"}
     }
    },
    "MIDIDestinationCreate": {
@@ -241,19 +242,20 @@
       }
      },
      "3": {},
-     "4": {}
+     "4": {"type_modifier":"o"}
     }
    },
    "MIDIDestinationCreateWithBlock": {
+    "ignore": true,
     "args": {
      "1": {},
-     "2": {}
+     "2": {"type_modifier":"o"}
     }
    },
    "MIDIDestinationCreateWithProtocol": {
     "args": {
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o"}
     }
    },
    "MIDIDeviceAddEntity": {
@@ -263,6 +265,7 @@
     }
    },
    "MIDIDeviceCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -278,24 +281,23 @@
     }
    },
    "MIDIDriverEnableMonitoring": {
+    "ignore": true,
     "args": {
      "0": {}
     }
    },
    "MIDIEndpointGetEntity": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "MIDIEndpointGetRefCons": {
-    "ignore": true,
     "args": {
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIEndpointSetRefCons": {
-    "ignore": true,
     "args": {
      "1": {},
      "2": {}
@@ -303,10 +305,11 @@
    },
    "MIDIEntityGetDevice": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o"}
     }
    },
    "MIDIEventListAdd": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {},
@@ -315,6 +318,7 @@
     "retval": {}
    },
    "MIDIEventListInit": {
+    "ignore": true,
     "args": {
      "0": {}
     },
@@ -335,6 +339,7 @@
     }
    },
    "MIDIGetDriverDeviceList": {
+    "ignore": true,
     "args": {
      "0": {}
     }
@@ -375,54 +380,54 @@
       }
      },
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o" }
     }
    },
    "MIDIInputPortCreateWithBlock": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIInputPortCreateWithProtocol": {
     "args": {
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "MIDIObjectFindByUniqueID": {
     "args": {
-     "1": {},
-     "2": {}
+     "1": { "type_modifier": "o"},
+     "2": { "type_modifier": "o"}
     }
    },
    "MIDIObjectGetDataProperty": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetDictionaryProperty": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetIntegerProperty": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetProperties": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetStringProperty": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectRemoveProperty": {
@@ -456,10 +461,11 @@
    "MIDIOutputPortCreate": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDIPacketListAdd": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {},
@@ -468,6 +474,7 @@
     "retval": {}
    },
    "MIDIPacketListInit": {
+    "ignore": true,
     "args": {
      "0": {}
     },
@@ -485,26 +492,31 @@
     }
    },
    "MIDIReceived": {
+    "ignore": true,
     "args": {
      "1": {}
     }
    },
    "MIDIReceivedEventList": {
+    "ignore": true,
     "args": {
      "1": {}
     }
    },
    "MIDISend": {
+    "ignore": true,
     "args": {
      "2": {}
     }
    },
    "MIDISendEventList": {
+    "ignore": true,
     "args": {
      "2": {}
     }
    },
    "MIDISendSysex": {
+    "ignore": true,
     "args": {
      "0": {}
     }
@@ -517,7 +529,7 @@
    },
    "MIDISetupCreate": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o"}
     }
    },
    "MIDISetupFromData": {
@@ -539,13 +551,13 @@
    "MIDISourceCreate": {
     "args": {
      "1": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "MIDISourceCreateWithProtocol": {
     "args": {
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "MIDIThruConnectionCreate": {

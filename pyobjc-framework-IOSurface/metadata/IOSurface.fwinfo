@@ -124,6 +124,11 @@
   },
   "formal_protocols": {},
   "functions": {
+   "IOSurfaceSetPurgeable": {
+    "args": {
+     "2": { "type_modifier": "o" }
+    }
+   },
    "IOSurfaceGetNumberOfComponentsOfPlane": {
     "args": {
      "0": { "typestr": "^{__IOSurface=}" },

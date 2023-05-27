@@ -1285,6 +1285,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     case PyObjC_kVariableLengthArray:
                         v = PyObjCVarList_New(resttype, *(void**)args[i]);
                         break;
+
+                    case PyObjC_kDerefResultPointer:
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "using 'deref_result_pointer' for an argument");
+                        v = NULL;
+                        break;
                     }
                 }
 
@@ -1355,6 +1361,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
                 case PyObjC_kVariableLengthArray:
                     v = PyObjCVarList_New(gCharEncoding, args[i]);
+                    break;
+                case PyObjC_kDerefResultPointer:
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "using 'deref_result_pointer' for an argument");
+                    v = NULL;
                     break;
                 }
             }
@@ -1499,6 +1510,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                             Py_DECREF(res);
                             goto error;
                         }
+                        break;
+                    case PyObjC_kDerefResultPointer:
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "using 'deref_result_pointer' for python "
+                                        "callable is not supported");
+                        goto error;
                     }
                 }
 
@@ -1673,6 +1690,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         goto error;
                     }
                     break;
+                case PyObjC_kDerefResultPointer:
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "using 'deref_result_pointer' for argument value");
+                    goto error;
                 }
 
                 break;
@@ -1776,6 +1797,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                             *(void**)resp = NULL;
                             break;
                         }
+                    case PyObjC_kDerefResultPointer:
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "'deref_result_pointer' for a callable "
+                                        "implemented in python is not supported ");
+                        goto error;
                     }
                 }
 
@@ -1936,6 +1962,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     goto error;
                 }
                 break;
+            case PyObjC_kDerefResultPointer:
+                PyErr_SetString(PyObjCExc_Error,
+                                "'deref_result_pointer' for an argument value");
+                goto error;
             }
         }
 
@@ -1991,6 +2021,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         goto error;
                     }
                     break;
+                case PyObjC_kDerefResultPointer:
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "'deref_result_pointer' for an argument value");
+                    goto error;
                 }
             }
         }
@@ -2874,6 +2908,10 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
             case PyObjC_kArrayCountInArg:
                 have_counted_array = YES;
                 break;
+            case PyObjC_kDerefResultPointer:
+                PyErr_SetString(PyObjCExc_Error,
+                                "'deref_result_pointer' for an argument value");
+                return -1;
             }
 
         } else {
@@ -3444,6 +3482,11 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                 arglist[i] = &ffi_type_pointer;
                                 values[i]  = byref + i;
                                 break;
+                            case PyObjC_kDerefResultPointer:
+                                PyErr_SetString(
+                                    PyObjCExc_Error,
+                                    "'deref_result_pointer' for an argument value");
+                                return -1;
                             }
                         }
                     }
@@ -3474,6 +3517,11 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             }
                             arglist[i] = &ffi_type_pointer;
                             values[i]  = byref + i;
+                        case PyObjC_kDerefResultPointer:
+                            PyErr_SetString(
+                                PyObjCExc_Error,
+                                "'deref_result_pointer' for an argument value");
+                            return -1;
                         }
                     }
                 }
@@ -3714,6 +3762,19 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                             return NULL;
                         }
                     }
+                    break;
+
+                case PyObjC_kDerefResultPointer:
+                    if (*(void**)pRetval == NULL) {
+                        Py_INCREF(PyObjC_NULL);
+                        objc_result = PyObjC_NULL;
+                    } else {
+                        objc_result = pythonify_c_value(tp + 1, pRetval);
+                        if (objc_result == NULL) {
+                            return NULL;
+                        }
+                    }
+
                     break;
 
                 default:
@@ -3992,6 +4053,11 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                             if (v == NULL)
                                 goto error_cleanup;
                             break;
+                        case PyObjC_kDerefResultPointer:
+                            PyErr_SetString(
+                                PyObjCExc_Error,
+                                "'deref_result_pointer' for an argument value");
+                            goto error_cleanup;
                         }
                     }
 

@@ -1,4 +1,5 @@
 import CoreMedia
+import CoreAudio
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure, fourcc
 import objc
 
@@ -766,3 +767,44 @@ class TestCMFormatDescription(TestCase):
         )
 
         CoreMedia.CMMetadataFormatDescriptionGetIdentifiers
+
+    def no_test_functions_usage(self):
+        # XXX: Test disabled due to periodic crashes in system libraries.
+        asbd = CoreAudio.AudioStreamBasicDescription(
+            mSampleRate=44000.0,
+            mFormatID=1819304813,
+            mFormatFlags=4,
+            mBytesPerPacket=4,
+            mFramesPerPacket=1,
+            mBytesPerFrame=0,
+            mChannelsPerFrame=2,
+            mBitsPerChannel=16,
+            mReserved=0,
+        )
+        ok, fmt = CoreMedia.CMAudioFormatDescriptionCreate(
+            None, asbd, 0, None, 0, None, None, None
+        )
+        self.assertEqual(ok, 0)
+
+        lst, cnt = CoreMedia.CMAudioFormatDescriptionGetFormatList(fmt, None)
+        self.assertEqual(len(lst), cnt)
+
+        result = CoreMedia.CMAudioFormatDescriptionGetMostCompatibleFormat(fmt)
+        self.assertIsInstance(result, CoreAudio.AudioFormatListItem)
+
+        for item in lst:
+            ok, fmt = CoreMedia.CMAudioFormatDescriptionCreate(
+                None, item.mASBD, 0, None, 0, None, None, None
+            )
+            if ok != 0:
+                continue
+
+            result = CoreMedia.CMAudioFormatDescriptionGetRichestDecodableFormat(fmt)
+            if result is None or result is objc.NULL:
+                continue
+            self.assertIsInstance(result, CoreAudio.AudioFormatListItem)
+            break
+        else:
+            # XXX: Seems to return NULL at all times...
+            pass
+            # self.fail("did not find richest format")

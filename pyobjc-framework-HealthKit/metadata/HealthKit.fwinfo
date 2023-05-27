@@ -313,7 +313,7 @@
   "functions": {
    "HKAppleWalkingSteadinessClassificationForQuantity": {
     "args": {
-     "1": {},
+     "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    }

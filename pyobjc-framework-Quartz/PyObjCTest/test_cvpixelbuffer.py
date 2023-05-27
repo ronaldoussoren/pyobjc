@@ -289,6 +289,9 @@ class TestCVPixelBuffer(TestCase):
         rv = Quartz.CVPixelBufferFillExtendedPixels(buf)
         self.assertIsInstance(rv, int)
 
+        self.assertArgIsOut(Quartz.CVPixelBufferCreate, 5)
+        self.assertArgIsCFRetained(Quartz.CVPixelBufferCreate, 5)
+
     @expectedFailure
     def testManual(self):
         self.fail("CVPixelBufferCreate requires manual wrapper")

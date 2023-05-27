@@ -15736,12 +15736,12 @@
    },
    "NSEndHashTableEnumeration": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "N" }
     }
    },
    "NSEndMapTableEnumeration": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "N" }
     }
    },
    "NSGetSizeAndAlignment": {
@@ -15828,8 +15828,8 @@
    "NSMapMember": {
     "args": {
      "1": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
     }
    },
    "NSMapRemove": {
@@ -15839,15 +15839,15 @@
    },
    "NSNextHashEnumeratorItem": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "N" }
     },
     "retval": {}
    },
    "NSNextMapEnumeratorPair": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": { "type_modifier": "N" },
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
     }
    },
    "NSReallocateCollectable": {

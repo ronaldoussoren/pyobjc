@@ -24,8 +24,41 @@ The driver implementation interface is not available from Python.
 The following functions are not available from Python:
 
 * ``MIDIEndpointSetRefCons``
+
 * ``MIDIEndpointGetRefCons``
+
+* ``MIDIDestinationCreateWithBlock``
+
+* ``MIDI1UPSysExArray``
 
 Type ``MIDIUniversalMessage`` is not available from Python at this time
 because it contains a C union. Because of that ``MIDIUniversalMessage``
 is not available either.
+
+Manual bindings needed
+----------------------
+
+The APIs below require manual bindings and are not yet available:
+
+
+* ``MIDIDeviceCreate``
+
+* ``MIDIDriverEnableMonitoring``
+
+* ``MIDIEventListAdd``
+
+* ``MIDIEventListInit``
+
+* ``MIDIPacketListAdd``
+
+* ``MIDIPacketListInit``
+
+* ``MIDIReceived``
+
+* ``MIDIReceivedEventList``
+
+* ``MIDISend``
+
+* ``MIDISendEventList``
+
+* ``MIDISendSysex``

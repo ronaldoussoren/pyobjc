@@ -805,7 +805,7 @@
    },
    "nw_ethernet_channel_send": {
     "args": {
-     "3": {},
+     "3": { "type_modifier": "n", "c_array_of_fixed_size": 6 },
      "4": {
       "callable": {
        "arguments": {

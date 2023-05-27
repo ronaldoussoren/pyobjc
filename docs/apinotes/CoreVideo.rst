@@ -11,3 +11,6 @@ API Notes
 
 * Getting and setting values for ``kCVPixelFormatFillExtendedPixelsCallback``
   is not supported.
+
+* ``CVPixelBufferCreateWithPlanarBytes`` requires a manual binding and is
+  not supported at the moment.

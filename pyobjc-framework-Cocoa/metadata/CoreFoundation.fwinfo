@@ -5621,6 +5621,7 @@
     }
    },
    "CFXMLParserCreate": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -5633,6 +5634,7 @@
     }
    },
    "CFXMLParserCreateWithDataFromURL": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {},
@@ -5644,12 +5646,14 @@
     }
    },
    "CFXMLParserGetCallBacks": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
     }
    },
    "CFXMLParserGetContext": {
+    "ignore": true,
     "args": {
      "0": {},
      "1": {}
