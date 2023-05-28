@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     int code;
     if (PyAnySet_CheckExact(value)) {
-        if (PyFrozenSet_Check(value)) {
+        if (PyFrozenSet_CheckExact(value)) {
             code = 1;
         } else {
             code = 2;

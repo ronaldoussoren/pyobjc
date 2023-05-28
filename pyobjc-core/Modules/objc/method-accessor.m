@@ -421,7 +421,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                 if (!PyObjCClass_Check(c))
                     continue;
 
-                PyObject* dict = ((PyTypeObject*)c)->tp_dict;
+                PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)c);
                 PyObject* v    = PyDict_GetItemWithError(dict, name);
                 if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                     return NULL;                     // LCOV_EXCL_LINE

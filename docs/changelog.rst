@@ -145,6 +145,8 @@ Version 9.2
 * Add manual binding for ``CFNetwork.CFNetServiceBrowserCreate``, ``CFNetwork.CFNetServiceSetClient``,
   and ``CFNetwork.CFNetServiceMonitorCreate``.
 
+* Fix incompatibility with Python 3.12 beta 1.
+
 Version 9.1.1
 -------------
 

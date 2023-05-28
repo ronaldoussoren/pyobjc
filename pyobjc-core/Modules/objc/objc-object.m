@@ -279,7 +279,7 @@ PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* nam
     if (cls == NULL) {
         return NULL;
     }
-    PyObject* dict = ((PyTypeObject*)base)->tp_dict;
+    PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)base);
     Method    m    = class_getInstanceMethod(cls, sel);
     if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
@@ -375,10 +375,11 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
                 return NULL;                                // LCOV_EXCL_LINE
             }
 
-            dict = ((PyTypeObject*)base)->tp_dict;
+            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
 
         } else if (PyType_Check(base)) {
-            dict = ((PyTypeObject*)base)->tp_dict;
+
+            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
 
         } else {
             /* XXX: Can this ever happen? */
@@ -508,7 +509,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr) == -1) {
+                if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)base), name, descr)
+                    == -1) {
                     Py_DECREF(descr);
                     return NULL;
                 }
@@ -1007,7 +1009,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
-    result = PyDict_Keys(Py_TYPE(self)->tp_dict);
+    result = PyDict_Keys(PyObjC_get_tp_dict(Py_TYPE(self)));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }

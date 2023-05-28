@@ -846,7 +846,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             // LCOV_EXCL_STOP
         }
 
-        if (PyDict_Update(metatype->tp_dict, metadict) == -1) { // LCOV_BR_EXCL_LINE
+        if (PyDict_Update( // LCOV_BR_EXCL_LINE
+                PyObjC_get_tp_dict(metatype), metadict)
+            == -1) {
             // LCOV_EXCL_START
             Py_XDECREF(orig_slots);
             Py_DECREF(old_dict);
@@ -1117,7 +1119,7 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
     char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
-    result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
+    result = PyDict_Keys(PyObjC_get_tp_dict((PyTypeObject*)self));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -1233,7 +1235,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
             dict = ((PyTypeObject*)base)->tp_dict;
 
         } else if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
-            dict = ((PyTypeObject*)base)->tp_dict;
+            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+            if (dict == NULL) {
+                continue;
+            }
 
         } else {
             /* Cannot happen: non-class on MRO  */
@@ -1351,7 +1356,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
                 /* add to __dict__ 'cache' */
                 if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                        ((PyTypeObject*)base)->tp_dict, name, descr)
+                        PyObjC_get_tp_dict((PyTypeObject*)base), name, descr)
                     == -1) {
                     // LCOV_EXCL_START
                     Py_DECREF(descr);
@@ -1380,7 +1385,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
 {
     Class     cls;
     Method    m;
-    PyObject* dict = ((PyTypeObject*)base)->tp_dict;
+    PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)base);
 
     Py_BEGIN_ALLOW_THREADS
         @try { /* XXX: Can this raise?, and is it necessary to give up the GIL here? */
@@ -1467,16 +1472,18 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
         if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
-            dict = ((PyTypeObject*)base)->tp_dict;
+            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
 
         } else {
             /* Cannot happen: non-type in MRO */
             return NULL; // LCOV_EXCL_LINE
         }
 
-        descr = PyDict_GetItem(dict, name);
-        if (descr != NULL) {
-            return descr;
+        if (dict != NULL) {
+            descr = PyDict_GetItem(dict, name);
+            if (descr != NULL) {
+                return descr;
+            }
         }
 
         if (PyObjCClass_Check(base)) {
@@ -1680,14 +1687,14 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     }
 
     if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__dict__") == 0) {
-
-        result = ((PyTypeObject*)self)->tp_dict;
+        /* XXX: Is this correct */
+        result = PyObjC_get_tp_dict((PyTypeObject*)self);
         goto done;
     }
 
     if (descr == NULL) {
-        descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self,
-                                      name);
+        descr = _type_lookup_instance(PyObjC_get_tp_dict((PyTypeObject*)self),
+                                      (PyTypeObject*)self, name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
             if (f != NULL) {
@@ -1714,7 +1721,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     }
 
     if (descr == NULL) {
-        descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict,
+        descr = _type_lookup_instance_harder(PyObjC_get_tp_dict((PyTypeObject*)self),
                                              (PyTypeObject*)self, name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
@@ -1757,7 +1764,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     result = PyObjCSelector_FindNative(self, name_bytes);
 
     if (result != NULL) {
-        int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
+        int res = PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)self), name, result);
         PyObjCNativeSelector* x = (PyObjCNativeSelector*)result;
 
         if (x->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
@@ -1921,10 +1928,11 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
 
             } else {
                 if (PyObjCSelector_IsClassMethod(value)) {
-                    r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, value);
+                    r = PyDict_SetItem(PyObjC_get_tp_dict(Py_TYPE(self)), name, value);
 
                 } else {
-                    r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, value);
+                    r = PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)self), name,
+                                       value);
                 }
 
                 Py_DECREF(value);
@@ -2255,7 +2263,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
-    result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
+    result = PyDict_Keys(PyObjC_get_tp_dict((PyTypeObject*)self));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -2964,9 +2972,9 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         PyObject* dict;
 
         if (class_method) {
-            dict = Py_TYPE(c)->tp_dict;
+            dict = PyObjC_get_tp_dict(Py_TYPE(c));
         } else {
-            dict = ((PyTypeObject*)c)->tp_dict;
+            dict = PyObjC_get_tp_dict((PyTypeObject*)c);
         }
 
         PyObject*  value = NULL;
@@ -3122,7 +3130,7 @@ update_convenience_methods(PyObject* cls)
             }
 
         } else {
-            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) {
+            if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)cls), k, v) == -1) {
                 PyErr_Clear();
             }
             continue;
@@ -3350,11 +3358,11 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     PyMem_Free(classMethodsToAdd);
     classMethodsToAdd = NULL;
 
-    r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
+    r = PyDict_Merge(PyObjC_get_tp_dict((PyTypeObject*)classObject), extraDict, 1);
     if (r == -1)                       // LCOV_BR_EXCL_LINE
         goto cleanup_and_return_error; // LCOV_EXCL_LINE
 
-    r = PyDict_Merge(Py_TYPE(classObject)->tp_dict, metaDict, 1);
+    r = PyDict_Merge(PyObjC_get_tp_dict(Py_TYPE(classObject)), metaDict, 1);
     if (r == -1)                       // LCOV_BR_EXCL_LINE
         goto cleanup_and_return_error; // LCOV_EXCL_LINE
 

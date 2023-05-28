@@ -97,10 +97,10 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             }
 
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
-                dict = Py_TYPE(tmp)->tp_dict;
+                dict = PyObjC_get_tp_dict(Py_TYPE(tmp));
 
             } else if (PyType_Check(tmp)) {
-                dict = ((PyTypeObject*)tmp)->tp_dict;
+                dict = PyObjC_get_tp_dict((PyTypeObject*)tmp);
 
             } else {
                 continue;
