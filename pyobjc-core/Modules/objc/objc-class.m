@@ -2580,8 +2580,11 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     /*
      * Support the buffer protocol in the wrappers for NSData and
      * NSMutableData, the only two classes where this makes sense.
+     *
+     * XXX: This changes the 'result' class after it is 'ready', which
+     *      could be problematic.
      */
-    if (strcmp(className, "NSData") == 0) {
+    if (PyObjC_class_isSubclassOf(objc_class, [NSData class])) {
         ((PyTypeObject*)result)->tp_as_buffer = &nsdata_as_buffer;
         PyType_Modified((PyTypeObject*)result);
         PyType_Ready((PyTypeObject*)result);
