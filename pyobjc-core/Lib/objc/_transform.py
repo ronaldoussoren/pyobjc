@@ -547,6 +547,12 @@ def returns_value(func):
             elif prev.opname != "LOAD_CONST":
                 return True
 
+        elif inst.opname == "RETURN_CONST" and inst.arg != 0:
+            # New in Python 3.12.
+            # XXX: This will give a false positive for functions
+            #      that only contain "return None" paths for
+            #      returning a value.
+            return True
         prev = inst
 
     return False

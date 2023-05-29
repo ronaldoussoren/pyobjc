@@ -2282,3 +2282,72 @@ class TestClassDictProcessor(TestCase):
     #      tests in test_protocols.
 
     # XXX: Add tests using mixin classes as a super-class
+
+
+class TestUtilities(TestCase):
+    def test_returns_value(self):
+        with self.subTest("function returns constant value"):
+
+            def func():
+                return 1
+
+            self.assertTrue(_transform.returns_value(func))
+
+        with self.subTest("function returns value"):
+
+            def func():
+                return x**3  # noqa: F821
+
+            self.assertTrue(_transform.returns_value(func))
+
+        with self.subTest("function returns value in multiple paths"):
+
+            def func():
+                if not x:  # noqa: F821
+                    return None
+                else:
+                    return 42 / x  # noqa: F821
+
+            self.assertTrue(_transform.returns_value(func))
+
+        with self.subTest("function returns in multiple paths"):
+
+            def func():
+                if not x:  # noqa: F821
+                    return
+                else:
+                    return 42 / x  # noqa: F821
+
+            self.assertTrue(_transform.returns_value(func))
+
+        with self.subTest("function returns value in nesting"):
+
+            def func():
+                if x == 1:  # noqa: F821
+                    return 1
+
+            self.assertTrue(_transform.returns_value(func))
+
+        with self.subTest("function returns no value"):
+
+            def func():
+                return
+
+            self.assertFalse(_transform.returns_value(func))
+
+        with self.subTest("function without return"):
+
+            def func():
+                if x == 1:  # noqa: F821
+                    y = x * 2  # noqa: F821, F841
+
+            self.assertFalse(_transform.returns_value(func))
+
+    @expectedFailureIf(sys.version_info[:2] >= (3, 12))
+    def test_returns_None(self):
+        with self.subTest("function returns constant value"):
+
+            def func():
+                return None
+
+            self.assertTrue(_transform.returns_value(func))

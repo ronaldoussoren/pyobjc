@@ -35,9 +35,6 @@ Version 9.2
   See `the documentation <(https://pyobjc.readthedocs.io/core/super.html>`_
   for more details.
 
-* The project is now actively tested with Python 3.12 pre-releases and
-  will ship wheels for 3.12 shortly after the first 3.12 beta is released.
-
 * :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
 
   Recent versions of pip give a deprecation warning for projects without
@@ -146,6 +143,22 @@ Version 9.2
   and ``CFNetwork.CFNetServiceMonitorCreate``.
 
 * Fix incompatibility with Python 3.12 beta 1.
+
+  .. warning::
+
+     Due to changes to the bytecode compiler the bridge will (incorrectly)
+     deduce that a method does not return a value (``void`` return in Objective-C)
+     when a method only contains ``return None`` statements and no return
+     statements that return some other value (expressions or constants).
+
+     That is the following method is implied to return ``id`` for Python 3.11 or
+     earlier, but is implied to return ``void`` in Python 3.12.
+
+     .. sourcecode:: python
+
+         def mymethod(self):
+             return None
+
 
 Version 9.1.1
 -------------
