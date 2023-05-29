@@ -139,12 +139,13 @@ PyObjC_returns_value(PyObject* value)
             if (op == RETURN_VALUE && !was_none) {
                 rv = true;
                 break;
+            }
 #if PY_VERSION_HEX >= 0x030c0000
-            } else if (op == RETURN_CONST && ((unsigned char*)buf.buf)[i + 1] != 0) {
+            else if (op == RETURN_CONST && ((unsigned char*)buf.buf)[i + 1] != 0) {
                 rv = true;
                 break;
             }
-#endif
+#endif /* PY_VERSION_HEX >= 0x030c0000 */
 
             was_none = false;
         }
