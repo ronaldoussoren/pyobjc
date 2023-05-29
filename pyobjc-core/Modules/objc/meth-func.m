@@ -57,6 +57,9 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
     return NULL;
 }
 
+/*
+ * XXX: This duplicates code in Lib/objc/_transform.py!
+ */
 bool
 PyObjC_returns_value(PyObject* value)
 {
@@ -136,7 +139,13 @@ PyObjC_returns_value(PyObject* value)
             if (op == RETURN_VALUE && !was_none) {
                 rv = true;
                 break;
+#if PY_VERSION_HEX >= 0x030c0000
+            } else if (op == RETURN_CONST && ((unsigned char*)buf.buf)[i + 1] != 0) {
+                rv = true;
+                break;
             }
+#endif
+
             was_none = false;
         }
     }

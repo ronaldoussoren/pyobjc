@@ -219,6 +219,7 @@ class TransformerHelper(NSObject):
         return "Boo!"
 
     hiddenMethod = objc.selector(hiddenMethod, isHidden=True)
+    assert hiddenMethod.signature == b"@@:", hiddenMethod.signature
 
     def hiddenClassMethod(self):
         return "Hi there!"
@@ -226,6 +227,7 @@ class TransformerHelper(NSObject):
     hiddenClassMethod = objc.selector(
         hiddenClassMethod, isHidden=True, isClassMethod=True
     )
+    assert hiddenClassMethod.signature == b"@@:", hiddenClassMethod.signature
 
 
 class TransformerHelper2(TransformerHelper):
@@ -1171,12 +1173,16 @@ class TestTransformer(TestCase):
             o.hiddenMethod()
 
         self.assertEqual(o.pyobjc_instanceMethods.hiddenMethod(), "Boo!")
+        self.assertEqual(o.pyobjc_instanceMethods.hiddenMethod.signature, b"@@:")
 
         with self.assertRaisesRegex(AttributeError, "hiddenClassMethod"):
             TransformerHelper.hiddenClassMethod()
 
         self.assertEqual(
             TransformerHelper.pyobjc_classMethods.hiddenClassMethod(), "Hi there!"
+        )
+        self.assertEqual(
+            TransformerHelper.pyobjc_classMethods.hiddenClassMethod.signature, b"@@:"
         )
 
         def hiddenMethod(self):

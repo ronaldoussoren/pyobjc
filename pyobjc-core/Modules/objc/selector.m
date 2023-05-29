@@ -1177,6 +1177,11 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
                    int class_method, Class _Nullable cls)
 {
     PyObjCPythonSelector* result;
+
+    /*
+     * XXX: Investigate using the python helper in objc._transform instead of
+     *      replicating part of the logic here.
+     */
     if (signature == NULL && PyObjCPythonSelector_Check(callable)) {
         signature = PyObjCUtil_Strdup(
             ((PyObjCPythonSelector*)callable)->base.sel_python_signature);
