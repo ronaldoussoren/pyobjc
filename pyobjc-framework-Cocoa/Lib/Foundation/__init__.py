@@ -178,6 +178,8 @@ sys.modules["Foundation"] = mod = objc.ObjCLazyModule(
         "NO": objc.NO,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "__file__": globals().get("__file__", None),
+        "__spec__": globals().get("__spec__", None),
     },
     (CoreFoundation,),
 )
@@ -200,6 +202,8 @@ import Foundation._nsindexset  # isort:skip  # noqa: E402
 import Foundation._nsobject  # isort:skip  # noqa: E402
 
 for nm in dir(Foundation._functiondefines):
+    if nm.startswith("_"):
+        continue
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))
 
 
@@ -209,4 +213,6 @@ mod.NSUIntegerMax = (sys.maxsize * 2) + 1
 
 
 for nm in dir(Foundation._context):
+    if nm.startswith("_"):
+        continue
     setattr(mod, nm, getattr(Foundation._context, nm))

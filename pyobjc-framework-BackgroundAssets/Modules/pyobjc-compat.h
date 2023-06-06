@@ -309,6 +309,10 @@ NS_ASSUME_NONNULL_BEGIN
 #define MAC_OS_X_VERSION_13_4 130400
 #endif
 
+#ifndef MAC_OS_X_VERSION_13_5
+#define MAC_OS_X_VERSION_13_5 130500
+#endif
+
 /*
  *
  * End of Cocoa definitions
@@ -506,6 +510,8 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
     do {                                                                                 \
         PyGILState_Release(_GILState);                                                   \
     } while (0)
+
+extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
 NS_ASSUME_NONNULL_END
 

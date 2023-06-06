@@ -20,6 +20,8 @@ sys.modules["CoreFoundation"] = mod = objc.ObjCLazyModule(
         "__doc__": __doc__,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "__file__": globals().get("__file__", None),
+        "__spec__": globals().get("__spec__", None),
     },
     (),
 )
@@ -28,11 +30,15 @@ sys.modules["CoreFoundation"] = mod = objc.ObjCLazyModule(
 import CoreFoundation._CoreFoundation  # isort:skip  # noqa: E402
 
 for nm in dir(CoreFoundation._CoreFoundation):
+    if nm.startswith("_"):
+        continue
     setattr(mod, nm, getattr(CoreFoundation._CoreFoundation, nm))
 
 import CoreFoundation._static  # isort:skip  # noqa: E402
 
 for nm in dir(CoreFoundation._static):
+    if nm.startswith("_"):
+        continue
     setattr(mod, nm, getattr(CoreFoundation._static, nm))
 
 

@@ -21,6 +21,8 @@ mod = objc.ObjCLazyModule(
         "objc": objc,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "__file__": globals().get("__file__", None),
+        "__spec__": globals().get("__spec__", None),
     },
     (AppKit, Foundation),
 )

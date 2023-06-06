@@ -58,6 +58,8 @@ sys.modules["AppKit"] = mod = objc.ObjCLazyModule(
         "NSDictionaryOfVariableBindings": NSDictionaryOfVariableBindings,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
+        "__file__": globals().get("__file__", None),
+        "__spec__": globals().get("__spec__", None),
     },
     (Foundation,),
 )

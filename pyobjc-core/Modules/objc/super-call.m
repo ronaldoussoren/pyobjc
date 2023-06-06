@@ -412,12 +412,27 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
             PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), imp);
 
         if (retval == NULL && PyErr_ExceptionMatches(PyExc_NotImplementedError)) {
-            PyObject* exc = PyErr_Occurred();
+            PyObject* exc       = NULL;
+            PyObject* tp        = NULL;
+            PyObject* traceback = NULL;
+
+            PyErr_Fetch(&tp, &exc, &traceback);
+            PyErr_NormalizeException(&tp, &exc, &traceback);
+
             Py_INCREF(exc);
+            PyErr_Restore(tp, exc, traceback);
 
             PyErr_Format(PyExc_NotImplementedError, "Cannot generate IMP for %s",
                          sel_getName(aSelector));
-            PyException_SetCause(PyErr_Occurred(), exc);
+
+            PyObject* new_exc = NULL;
+
+            PyErr_Fetch(&tp, &new_exc, &traceback);
+            PyErr_NormalizeException(&tp, &new_exc, &traceback);
+            Py_INCREF(new_exc);
+            PyErr_Restore(tp, new_exc, traceback);
+            PyException_SetCause(new_exc, exc);
+            Py_DECREF(new_exc);
         }
 
         return retval;
