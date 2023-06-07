@@ -738,7 +738,6 @@ setup(
         "test": oc_test,
         "egg_info": oc_egg_info,
     },
-    python_requires=">=3.8",
     package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
     options={"egg_info": {"egg_base": "Lib"}},
     **parse_package_metadata(),
