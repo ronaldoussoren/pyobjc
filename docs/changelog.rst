@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.0
+------------
+
+* To be determined
+
 Version 9.2
 -----------
 

@@ -12,7 +12,7 @@ import tarfile
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "9.2"
+VERSION = "10.0a0"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
