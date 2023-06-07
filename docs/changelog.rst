@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 10.0
 ------------
 
-* To be determined
+* PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
 
 Version 9.2
 -----------

@@ -22,7 +22,7 @@ def get_config_var(var):
 
 
 # We need at least Python 3.7
-MIN_PYTHON = (3, 7)
+MIN_PYTHON = (3, 8)
 
 if sys.version_info < MIN_PYTHON:
     vstr = ".".join(map(str, MIN_PYTHON))
@@ -738,6 +738,7 @@ setup(
         "test": oc_test,
         "egg_info": oc_egg_info,
     },
+    python_requires=">=3.8",
     package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
     options={"egg_info": {"egg_base": "Lib"}},
     **parse_package_metadata(),
