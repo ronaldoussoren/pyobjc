@@ -723,7 +723,7 @@ class TestLazyImport(TestCase):
                 (),
             )
 
-        with deprecation_warnings(1003):
+        with deprecation_warnings("10.3"):
             mod = make_mod()
             self.assertIsInstance(mod, objc.ObjCLazyModule)
             self.assertNoDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)
@@ -733,7 +733,7 @@ class TestLazyImport(TestCase):
             self.assertNoDeprecationWarning(lambda: mod.min)
             self.assertNoDeprecationWarning(lambda: mod.max)
 
-        with deprecation_warnings(1005):
+        with deprecation_warnings("10.5"):
             mod = make_mod()
             self.assertIsInstance(mod, objc.ObjCLazyModule)
             self.assertDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)
@@ -743,7 +743,7 @@ class TestLazyImport(TestCase):
             self.assertDeprecationWarning(lambda: mod.min)
             self.assertNoDeprecationWarning(lambda: mod.max)
 
-        with deprecation_warnings(1200):
+        with deprecation_warnings("12"):
             mod = make_mod()
             self.assertIsInstance(mod, objc.ObjCLazyModule)
             self.assertDeprecationWarning(lambda: mod.NSWorkspaceLinkOperation)

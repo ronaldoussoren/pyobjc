@@ -1587,8 +1587,6 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     case 3:
         [object takeValuesFromDictionary:value];
         break;
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
     case 4:
         [object setValue:value forKey:key];
@@ -1599,7 +1597,6 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     case 6:
         [object setValuesForKeysWithDictionary:value];
         break;
-#endif
     }
 }
 
@@ -1607,22 +1604,12 @@ static char* g_charps[] = {"hello", "world", "foobar"};
                         observer:(NSObject*)obj
                          keyPath:(NSString*)path
 {
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     NSObject* o = [[[theClass alloc] init] autorelease];
     [o addObserver:obj
         forKeyPath:path
            options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
            context:0];
     return o;
-#else
-    /* Use arguments */
-    int i;
-    i = (int)&theClass;
-    i = (int)&obj;
-    i = (int)&path;
-    return nil;
-#endif
 }
 @end
 
@@ -1796,9 +1783,6 @@ NSObject (IKnowWhatImDoing)
 }
 @end
 
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
-
 @interface PyObjCTest_KeyValueObserver : NSObject {
     id        observed;
     NSString* key;
@@ -1874,8 +1858,6 @@ NSObject (IKnowWhatImDoing)
 }
 
 @end
-
-#endif /* ! MacOS X 10.3 */
 
 static PyObject*
 pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -2011,19 +1993,11 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl(void)
         return NULL;
     }
 
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
                            PyObjC_IdToPython([PyObjCTest_KeyValueObserver class]))
         < 0) {
         return NULL;
     }
-#else
-    if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver", Py_None) < 0) {
-        return NULL;
-    }
-
-#endif /* ! MacOS X 10.3 */
 
     if (PyModule_AddObject(m, "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
         return NULL;

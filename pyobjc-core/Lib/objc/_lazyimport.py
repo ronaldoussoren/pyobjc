@@ -20,10 +20,17 @@ ModuleType = types.ModuleType
 _name_re = re.compile("^[A-Za-z_][A-Za-z_0-9]*$")
 
 
+def _deprecation_level(value):
+    if isinstance(value, int):
+        return value
+    major, _, minor = value.partition(".")
+    return int(major) * 100 + int(minor)
+
+
 def _check_deprecated(name, deprecation_version):
     if (
-        objc.options.deprecation_warnings
-        and objc.options.deprecation_warnings >= deprecation_version
+        objc.options.deprecation_warnings != "0.0"
+        and _deprecation_level(objc.options.deprecation_warnings) >= deprecation_version
     ):
         warnings.warn(
             "%r is deprecated in macOS %d.%d"

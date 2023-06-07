@@ -139,7 +139,6 @@ BOOL_PROP(structs_indexable, PyObjC_StructsIndexable, YES)
 BOOL_PROP(structs_writable, PyObjC_StructsWritable, YES)
 
 INT_PROP(_nscoding_version, PyObjC_NSCoding_Version, 0)
-INT_PROP(deprecation_warnings, PyObjC_DeprecationVersion, 0)
 SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
 
 /* Private properties */
@@ -171,6 +170,96 @@ bundle_hack_get(PyObject* s __attribute__((__unused__)),
     return PyBool_FromLong([OC_NSBundleHack bundleHackUsed]);
 }
 
+int PyObjC_DeprecationVersion = 0;
+
+static PyObject*
+deprecation_warnings_get(PyObject* s __attribute__((__unused__)),
+                         void*     c __attribute__((__unused__)))
+{
+    return PyUnicode_FromFormat("%d.%d", PyObjC_DeprecationVersion / 100,
+                                PyObjC_DeprecationVersion % 100);
+}
+
+static int
+deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,
+                         void* c __attribute__((__unused__)))
+{
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_AttributeError,
+                        "Cannot delete option 'deprecation_warnings'");
+        return -1;
+    } else if (PyLong_Check(newVal)) {
+        if (PyErr_WarnEx(
+                PyExc_DeprecationWarning,
+                "Setting 'objc.options.deprecation_warnings' to an integer is deprecated",
+                1)
+            < 0) {
+            return -1;
+        }
+        PyObjC_DeprecationVersion = (int)PyLong_AsLong(newVal);
+        if (PyObjC_DeprecationVersion == -1 && PyErr_Occurred()) {
+            return -1;
+        }
+        return 0;
+    } else if (newVal == Py_None) {
+        PyObjC_DeprecationVersion = 0;
+        return 0;
+    } else if (PyUnicode_Check(newVal)) {
+        /* Cast to 'char*' is necessary to get rid of 'const', and that's
+         * needed due to the harebrained interface of strtoul
+         */
+        char* text = (char*)PyUnicode_AsUTF8(newVal);
+        if (text == NULL) {
+            return -1;
+        }
+
+        unsigned long major = 0;
+        unsigned long minor = 0;
+
+        major = strtoul(text, &text, 10);
+        if (major >= 100 || ((major == 0 || major == ULONG_MAX) && errno != 0)) {
+            PyErr_Format(PyExc_ValueError,
+                         "Invalid version for 'objc.options.deprecation_warning': %R",
+                         newVal);
+            return -1;
+        }
+        if (*text != '\0') {
+            if (*text != '.') {
+                PyErr_Format(PyExc_ValueError,
+                             "Invalid version for 'objc.options.deprecation_warning': %R",
+                             newVal);
+                return -1;
+            }
+
+            text++;
+
+            minor = strtoul(text, &text, 10);
+            if (minor >= 100 || ((minor == 0 || minor == ULONG_MAX) && errno != 0)) {
+                PyErr_Format(PyExc_ValueError,
+                             "Invalid version for 'objc.options.deprecation_warning': %R",
+                             newVal);
+                return -1;
+            }
+            if (*text != '\0') {
+                PyErr_Format(PyExc_ValueError,
+                             "Invalid version for 'objc.options.deprecation_warning': %R",
+                             newVal);
+                return -1;
+            }
+        }
+
+        PyObjC_DeprecationVersion = (int)(major * 100 + minor);
+        return 0;
+
+    } else {
+        PyErr_Format(PyExc_TypeError,
+                     "Expecting 'str' value for 'objc.options.deprecation_warnings', got "
+                     "instance of '%s'",
+                     Py_TYPE(newVal)->tp_name);
+        return -1;
+    }
+}
+
 static PyGetSetDef options_getset[] = {
     /* Public properties */
     GETSET(verbose, "If True the bridge is more verbose"),
@@ -200,8 +289,6 @@ static PyGetSetDef options_getset[] = {
     GETSET(_datetime_datetime_type, "Prive config for datetime.datetime"),
     GETSET(_callable_signature,
            "Private helper function for generating __signature__ for selectors"),
-    GETSET(deprecation_warnings,
-           "If not 0 give deprecation warnings for the given SDK version"),
     GETSET(_getKey, "Private helper used for KeyValueCoding support"),
     GETSET(_setKey, "Private helper used for KeyValueCoding support"),
     GETSET(_getKeyPath, "Private helper used for KeyValueCoding support"),
@@ -210,6 +297,12 @@ static PyGetSetDef options_getset[] = {
            "Private helper used for transforming attributes for Objective-C classes"),
     GETSET(_processClassDict,
            "Private helper used for splitting a class dict into parts"),
+    {
+        .name = "deprecation_warnings",
+        .get  = deprecation_warnings_get,
+        .set  = deprecation_warnings_set,
+        .doc  = "If not '0.0.0' give deprecation warnings for the given SDK version",
+    },
     {
         .name = "_bundle_hack_used",
         .get  = bundle_hack_get,

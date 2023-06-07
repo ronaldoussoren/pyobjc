@@ -6,7 +6,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 10.0
 ------------
 
-* PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
+* :issue:`542`: PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
+
+* :issue:`547`: Removed all ``MAC_OS_X_VERSION*`` constants from ``objc``.
+
+  These constants are needed in practice (switch to :func:`objc.available` to
+  check for platform availability), and caused unnecessary code churn.
+
+* The value for ``objc.options.deprecation_warnings`` is now a string
+  instead of an integer.
 
 Version 9.2
 -----------

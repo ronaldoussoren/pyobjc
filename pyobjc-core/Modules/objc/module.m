@@ -54,7 +54,7 @@ static NSOperatingSystemVersion gSystemVersion = {0, 0, 0};
  * 2. Split the legacy code path to a separate function for testing.
  * 3. Only enable the legacy code when the deployment target is 10.9
  */
-static long
+static void
 calc_current_version(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1010
@@ -80,14 +80,14 @@ calc_current_version(void)
                                   @"/System/Library/CoreServices/SystemVersion.plist"];
         if (!plist) {
             NSLog(@"Cannot determine system version");
-            return 0;
+            return;
         }
 
         parts = [[plist valueForKey:@"ProductVersion"] componentsSeparatedByString:@"."];
 
         if (!parts || [parts count] < 2) {
             NSLog(@"Cannot determine system version");
-            return 0;
+            return;
         }
 
         gSystemVersion.majorVersion = [[parts objectAtIndex:0] intValue];
@@ -98,13 +98,6 @@ calc_current_version(void)
         }
 
         [pool release];
-    }
-
-    if (gSystemVersion.majorVersion >= 10 || gSystemVersion.minorVersion >= 10) {
-        return gSystemVersion.majorVersion * 10000 + gSystemVersion.minorVersion * 100
-               + gSystemVersion.patchVersion;
-    } else {
-        return gSystemVersion.majorVersion * 100 + gSystemVersion.minorVersion;
     }
 }
 
@@ -2100,71 +2093,6 @@ struct objc_int_values {
     long  value;
 } objc_int_values[] = {
     // { "NAME", value },
-    {"MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED},
-    {"MAC_OS_X_VERSION_MIN_REQUIRED", MAC_OS_X_VERSION_MIN_REQUIRED},
-    {"MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0},
-    {"MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1},
-    {"MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2},
-    {"MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3},
-    {"MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4},
-    {"MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5},
-    {"MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6},
-    {"MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7},
-    {"MAC_OS_X_VERSION_10_8", MAC_OS_X_VERSION_10_8},
-    {"MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9},
-    {"MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10},
-    {"MAC_OS_X_VERSION_10_10_2", MAC_OS_X_VERSION_10_10_2},
-    {"MAC_OS_X_VERSION_10_10_3", MAC_OS_X_VERSION_10_10_3},
-    {"MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11},
-    {"MAC_OS_X_VERSION_10_11_2", MAC_OS_X_VERSION_10_11_2},
-    {"MAC_OS_X_VERSION_10_11_3", MAC_OS_X_VERSION_10_11_3},
-    {"MAC_OS_X_VERSION_10_11_4", MAC_OS_X_VERSION_10_11_4},
-    {"MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12},
-    {"MAC_OS_X_VERSION_10_12_1", MAC_OS_X_VERSION_10_12_1},
-    {"MAC_OS_X_VERSION_10_12_2", MAC_OS_X_VERSION_10_12_2},
-    {"MAC_OS_X_VERSION_10_12_4", MAC_OS_X_VERSION_10_12_4},
-    {"MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13},
-    {"MAC_OS_X_VERSION_10_13_1", MAC_OS_X_VERSION_10_13_1},
-    {"MAC_OS_X_VERSION_10_13_2", MAC_OS_X_VERSION_10_13_2},
-    {"MAC_OS_X_VERSION_10_13_3", MAC_OS_X_VERSION_10_13_3},
-    {"MAC_OS_X_VERSION_10_13_4", MAC_OS_X_VERSION_10_13_4},
-    {"MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5},
-    {"MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6},
-    {"MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14},
-    {"MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1},
-    {"MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2},
-    {"MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3},
-    {"MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4},
-    {"MAC_OS_X_VERSION_10_14_5", MAC_OS_X_VERSION_10_14_5},
-    {"MAC_OS_X_VERSION_10_14_6", MAC_OS_X_VERSION_10_14_6},
-    {"MAC_OS_X_VERSION_10_15", MAC_OS_X_VERSION_10_15},
-    {"MAC_OS_X_VERSION_10_15_1", MAC_OS_X_VERSION_10_15_1},
-    {"MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2},
-    {"MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3},
-    {"MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4},
-    {"MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5},
-    {"MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6},
-    {"MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16},
-    {"MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0},
-    {"MAC_OS_X_VERSION_11_1", MAC_OS_X_VERSION_11_1},
-    {"MAC_OS_X_VERSION_11_2", MAC_OS_X_VERSION_11_2},
-    {"MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3},
-    {"MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4},
-    {"MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5},
-    {"MAC_OS_X_VERSION_11_6", MAC_OS_X_VERSION_11_6},
-    {"MAC_OS_X_VERSION_12_0", MAC_OS_X_VERSION_12_0},
-    {"MAC_OS_X_VERSION_12_1", MAC_OS_X_VERSION_12_1},
-    {"MAC_OS_X_VERSION_12_2", MAC_OS_X_VERSION_12_2},
-    {"MAC_OS_X_VERSION_12_3", MAC_OS_X_VERSION_12_3},
-    {"MAC_OS_X_VERSION_12_4", MAC_OS_X_VERSION_12_4},
-    {"MAC_OS_X_VERSION_12_5", MAC_OS_X_VERSION_12_5},
-    {"MAC_OS_X_VERSION_12_6", MAC_OS_X_VERSION_12_6},
-    {"MAC_OS_X_VERSION_13_0", MAC_OS_X_VERSION_13_0},
-    {"MAC_OS_X_VERSION_13_1", MAC_OS_X_VERSION_13_1},
-    {"MAC_OS_X_VERSION_13_2", MAC_OS_X_VERSION_13_2},
-    {"MAC_OS_X_VERSION_13_3", MAC_OS_X_VERSION_13_3},
-    {"MAC_OS_X_VERSION_13_4", MAC_OS_X_VERSION_13_4},
-    {"MAC_OS_X_VERSION_13_5", MAC_OS_X_VERSION_13_5},
     {"PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE},
     {"_NSNotFound", NSNotFound},
     {"OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN},
@@ -2281,6 +2209,8 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
         // LCOV_EXCL_STOP
     }
 
+    calc_current_version();
+
     m = PyModule_Create(&mod_module);
     if (m == 0) {    // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE // LCOV_EXCL_LINE
@@ -2365,12 +2295,6 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
     ADD_CONSTANT_TABLE(m, objc_string_values, PyUnicode_FromString);
     ADD_CONSTANT_TABLE(m, objc_typestr_values, bytes_from_char);
     ADD_CONSTANT_TABLE(m, objc_typestr_long_values, PyBytes_FromString);
-
-    if (PyModule_AddIntConstant( // LCOV_BR_EXCL_LINE
-            m, "MAC_OS_X_VERSION_CURRENT", calc_current_version())
-        < 0) {
-        return NULL; // LCOV_EXCL_LINE
-    }
 
     /* XXX: Why is this needed? */
     if (![NSThread isMultiThreaded]) {

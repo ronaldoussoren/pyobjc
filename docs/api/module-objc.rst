@@ -77,15 +77,22 @@ Bridge options
 
    .. data:: objc.options.deprecation_warnings
 
-      When 0 (the default) the bridge will not emit deprecation warnings,
-      otherwise the value should be one of the :data:`MAC_OS_X_VERSION_10_N`
-      constants and the bridge will emit a deprecation warning for APIs
+      When ``"0.0"`` (the default) the bridge will not emit deprecation warnings,
+      otherwise the value should be a platform version in the form
+      of a string (e.g. ``"10.15"``)
+      and the bridge will emit a deprecation warning for APIs
       that were deprecated in the SDK (or earlier).
+
+      Set to :data:`None` or ``"0.0"`` to disable warnings.
 
       Deprecation warnings are emitted using the :mod:`warnings` module,
       using the warning :class:`objc.ApiDeprecationWarning`.
 
       .. versionadded:: 3.3
+
+      .. versionchanged: 10.0
+
+         The value for this option is now a string instead of an integer.
 
   .. data:: objc.options.structs_indexable
 
@@ -1222,44 +1229,10 @@ Constants
    parameters and pass a pointer to that buffer, with :data:`NULL` the
    bridge will always pass a :c:data:`NULL` pointer.
 
-.. data:: MAC_OS_X_VERSION_MAX_ALLOWED
-
-   The value of :c:data:`MAC_OS_X_VERSION_MAX_ALLOWED` when PyObjC was
-   compiled.
-
-.. data:: MAC_OS_X_VERSION_MIN_REQUIRED
-
-   The value of :c:data:`MAC_OS_X_VERSION_MIN_REQUIRED` when PyObjC was
-   compiled.
-
-.. data:: MAC_OS_X_VERSION_CURRENT
-
-   The currently running macOS version in the same format as
-   the various ``MAC_OS_X_VERSION_10_N`` constants.
-
-   The intended use is with API availability checks, more or less like
-   the ``@available`` construct in Objective-C, that is:
-
-   .. sourcecode:: python
-
-      if objc.MAC_OS_X_VERSION_CURRENT >= objc.MAC_OS_X_VERSION_10_14:
-         # Use API introduced in macOS 10.14
-         ...
-
-      else:
-         # Use fallback implementation
-         ...
-
 .. data:: PyObjC_BUILD_RELEASE
 
-   The version number of the SDK used to build PyObjC, in the same format
-   as :data:`MAC_OS_X_VERSION_10_N`
-
-.. data:: MAC_OS_X_VERSION_10_N
-
-   There are currently 6 constants of this form, for ``N`` from 1 to 10,
-   and these have the same value as the Objective-C constant of the same
-   name.
+   The version number of the SDK used to build PyObjC, the value
+   is ``major * 100  + minor`` (e.g. ``1305`` for macOS 13.5).
 
 .. data:: platform
 
