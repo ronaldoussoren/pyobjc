@@ -13,6 +13,7 @@ import objc
 warnings.warn(
     "pyobjc-framework-DictionaryServices is deprecated, use 'import CoreServices' instead",
     DeprecationWarning,
+    stacklevel=2,
 )
 
 sys.modules["DictionaryServices"] = mod = objc.ObjCLazyModule(

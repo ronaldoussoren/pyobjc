@@ -13,6 +13,7 @@ import objc
 warnings.warn(
     "pyobjc-framework-LaunchServices is deprecated, use 'import CoreServices' instead",
     DeprecationWarning,
+    stacklevel=2,
 )
 
 sys.modules["LaunchServices"] = mod = objc.ObjCLazyModule(

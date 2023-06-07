@@ -4,22 +4,22 @@ from objc import options as _options
 
 
 def setVerbose(value):
-    warnings.warn("Set objc.options.verbose instead", DeprecationWarning)
+    warnings.warn("Set objc.options.verbose instead", DeprecationWarning, stacklevel=2)
     _options.verbose = bool(value)
 
 
 def getVerbose():
-    warnings.warn("Read objc.options.verbose instead", DeprecationWarning)
+    warnings.warn("Read objc.options.verbose instead", DeprecationWarning, stacklevel=2)
     return _options.verbose
 
 
 def setUseKVOForSetattr(value):
-    warnings.warn("Set objc.options.use_kvo instead", DeprecationWarning, 2)
+    warnings.warn("Set objc.options.use_kvo instead", DeprecationWarning, stacklevel=2)
     _options.use_kvo = bool(value)
 
 
 def getUseKVOForSetattr():
-    warnings.warn("Read objc.options.use_kvo instead", DeprecationWarning)
+    warnings.warn("Read objc.options.use_kvo instead", DeprecationWarning, stacklevel=2)
     return _options.use_kvo
 
 
@@ -28,6 +28,6 @@ def allocateBuffer(length):
     if not isinstance(length, int) or length <= 0:
         raise TypeError("length must be a positive integer")
 
-    warnings.warn("Use bytearray instead", DeprecationWarning)
+    warnings.warn("Use bytearray instead", DeprecationWarning, stacklevel=2)
 
     return bytearray(length)

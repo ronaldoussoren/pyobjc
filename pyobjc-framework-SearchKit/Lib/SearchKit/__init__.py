@@ -13,6 +13,7 @@ import objc
 warnings.warn(
     "pyobjc-framework-SearchKit is deprecated, use 'import CoreServices' instead",
     DeprecationWarning,
+    stacklevel=2,
 )
 
 

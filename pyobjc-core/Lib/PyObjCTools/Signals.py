@@ -31,6 +31,7 @@ __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
 warnings.warn(
     "PyObjCTools.Signals is deprecated and will be removed in PyObjC 9",
     DeprecationWarning,
+    stacklevel=1,
 )
 
 
