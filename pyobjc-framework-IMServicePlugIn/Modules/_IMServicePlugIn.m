@@ -4,12 +4,16 @@
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
+
+#if PyObjC_BUILD_RELEASE < 1400
 #import <IMServicePlugIn/IMServicePlugIn.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_IMServicePlugIn_protocols.m"
+
+#endif /* PyObjC_BUILD_RELEASE < 1400 */
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */

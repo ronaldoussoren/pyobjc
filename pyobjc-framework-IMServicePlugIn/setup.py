@@ -21,6 +21,7 @@ setup(
     name="pyobjc-framework-IMServicePlugIn",
     description="Wrappers for the framework IMServicePlugIn on macOS",
     min_os_level="10.7",
+    max_os_level="13.9",
     packages=["IMServicePlugIn"],
     ext_modules=[
         Extension(
