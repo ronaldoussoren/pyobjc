@@ -6,6 +6,20 @@ An overview of the relevant changes in new, and older, releases.
 Version 10.0
 ------------
 
+* (TODO) Update bindings for macOS 14
+
+  Symbols newly introduced in macOS 14 were added to the existing bindings,
+  and the following new bindings were introduced:
+
+  * Cinematic
+
+  * MediaExtension
+
+  * SensitiveContentAnalysis
+
+  * Symbols
+
+
 * :issue:`542`: PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
 
 * :issue:`547`: Removed all ``MAC_OS_X_VERSION*`` constants from ``objc``.
