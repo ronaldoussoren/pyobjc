@@ -1369,7 +1369,7 @@ class TestCase(_unittest.TestCase):
         else:
             self._skip_usepool = False
 
-    def run(self, *args):
+    def run(self, *args, **kwds):
         """
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
@@ -1380,7 +1380,7 @@ class TestCase(_unittest.TestCase):
             p = 1
 
         try:
-            _unittest.TestCase.run(self, *args)
+            _unittest.TestCase.run(self, *args, **kwds)
         finally:
             _gc.collect()
             del p

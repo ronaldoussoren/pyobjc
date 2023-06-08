@@ -16,6 +16,8 @@ Version 10.0
 * The value for ``objc.options.deprecation_warnings`` is now a string
   instead of an integer.
 
+* :issue:`555`: Fix unintended incompatibility with pytest in PyObjCTools.TestSupport
+
 Version 9.2
 -----------
 
