@@ -444,7 +444,7 @@ class oc_test(Command):
                     for n in a.body:
                         if isinstance(n, ast.Assign):
                             if n.targets[0].id == "VERSION":
-                                found_version = n.value.s
+                                found_version = n.value.value
 
                 except AttributeError:
                     print("Unexpected setup.py structure in wrapper for %s" % (nm))
