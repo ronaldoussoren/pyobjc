@@ -3,10 +3,8 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <CoreServices/CoreServices.h>
-#if PyObjC_BUILD_RELEASE > 1008
 #import <CFNetwork/CFNetwork.h>
-#endif
+#import <CoreServices/CoreServices.h>
 
 static const void*
 mod_retain(const void* info)
@@ -34,7 +32,6 @@ static CFHostClientContext mod_CFHostClientContext = {0, NULL, mod_retain, mod_r
 static CFNetServiceClientContext mod_CFNetServiceClientContext = {0, NULL, mod_retain,
                                                                   mod_release, 0};
 
-#if PyObjC_BUILD_RELEASE >= 1005
 static void
 m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
                                          CFErrorRef error)
@@ -68,7 +65,6 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
 
     PyGILState_Release(state);
 }
-#endif
 
 static void
 mod_CFNetServiceClientCallBack(CFNetServiceRef service, CFStreamError* error,
@@ -579,17 +575,12 @@ mod_CFNetServiceMonitorCreate(PyObject* mod __attribute__((__unused__)), PyObjec
 }
 
 static PyMethodDef mod_methods[] = {
-#if PyObjC_BUILD_RELEASE >= 1005
     {"CFNetworkExecuteProxyAutoConfigurationScript",
      (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript, METH_VARARGS,
      "CFNetworkExecuteProxyAutoConfigurationScript(arg0, arg1, arg2, arg3)"},
-#endif /* OSX >= 10.5 */
-#if PyObjC_BUILD_RELEASE >= 1005
     {"CFNetworkExecuteProxyAutoConfigurationURL",
      (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationURL, METH_VARARGS,
      "CFNetworkExecuteProxyAutoConfigurationURL(arg0, arg1, arg2, arg3)"},
-#endif /* OSX >= 10.5 */
-
     {"CFHostSetClient", (PyCFunction)m_CFHostSetClient, METH_VARARGS,
      "CFHostSetClient(arg0, arg1, arg2)"},
     {"CFNetServiceBrowserCreate", (PyCFunction)mod_CFNetServiceBrowserCreate,

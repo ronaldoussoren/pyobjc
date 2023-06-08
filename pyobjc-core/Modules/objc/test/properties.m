@@ -25,8 +25,6 @@ typedef NSObject<NSObject> ObjectClass;
     id       _prop12;
 }
 
-#if (PyObjC_BUILD_RELEASE >= 1005)
-
 #pragma clang diagnostic                            push
 #pragma clang diagnostic                            ignored "-Wobjc-property-no-attribute"
 @property int                                       prop1;
@@ -45,13 +43,10 @@ typedef NSObject<NSObject> ObjectClass;
 @property(weak, readonly) ObjectClass*              parent;
 
 #pragma clang diagnostic pop
-#endif
 
 @end
 
 @implementation OCPropertyDefinitions
-
-#if (PyObjC_BUILD_RELEASE >= 1005)
 
 @synthesize prop1  = _prop1;
 @synthesize prop2  = _prop2;
@@ -80,8 +75,6 @@ typedef NSObject<NSObject> ObjectClass;
 
     [super dealloc];
 }
-
-#endif
 
 @end
 

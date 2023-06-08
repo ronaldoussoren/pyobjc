@@ -61,20 +61,12 @@ main(int argc, char** argv)
 
     [path release];
 
-#if PyObjC_BUILD_RELEASE >= 1006
     NSError* error = nil;
     NSData*  data  = [NSPropertyListSerialization
         dataWithPropertyList:value
                       format:NSPropertyListXMLFormat_v1_0
                      options:NSPropertyListMutableContainersAndLeaves
                        error:&error];
-#else  /* PyObjC_BUILD_RELEASE < 1006 */
-    NSString* error = nil;
-    NSData*   data =
-        [NSPropertyListSerialization dataFromPropertyList:value
-                                                   format:NSPropertyListXMLFormat_v1_0
-                                         errorDescription:&error];
-#endif /* PyObjC_BUILD_RELEASE < 1006 */
 
     if (data == nil) {
         /* Some types we test cannot be represented as a plist */

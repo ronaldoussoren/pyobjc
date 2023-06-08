@@ -33,12 +33,10 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVVideoCompositionValidationHandling));
     Py_XDECREF(p);
-#if PyObjC_BUILD_RELEASE >= 1009
     p = PyObjC_IdToPython(@protocol(AVVideoCompositing));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVVideoCompositionInstruction));
     Py_XDECREF(p);
-#endif
 #if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(AVAudioMixing));
     Py_XDECREF(p);

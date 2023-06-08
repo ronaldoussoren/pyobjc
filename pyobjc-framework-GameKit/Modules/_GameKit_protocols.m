@@ -15,11 +15,6 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(GKGameCenterControllerDelegate));
     Py_XDECREF(p);
-
-#if PyObjC_BUILD_RELEASE >= 1012
-    p = PyObjC_IdToPython(@protocol(GKGameSessionEventListener));
-    Py_XDECREF(p);
-#endif
     p = PyObjC_IdToPython(@protocol(GKLeaderboardViewControllerDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(GKLocalPlayerListener));
@@ -42,4 +37,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(GKTurnBasedEventHandlerDelegate));
     Py_XDECREF(p);
+#if PyObjC_BUILD_RELEASE >= 1012
+    p = PyObjC_IdToPython(@protocol(GKGameSessionEventListener));
+    Py_XDECREF(p);
+#endif
 }

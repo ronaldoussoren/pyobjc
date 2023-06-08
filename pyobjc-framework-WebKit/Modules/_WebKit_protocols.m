@@ -11,21 +11,9 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-#if PyObjC_BUILD_RELEASE >= 1011
-    p = PyObjC_IdToPython(@protocol(WebUIDelegate));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebResourceLoadDelegate));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebPolicyDelegate));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebEditingDelegate));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebDownloadDelegate));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(WebFrameLoadDelegate));
-    Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
     p = PyObjC_IdToPython(@protocol(DOMEventListener));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory));
     Py_XDECREF(p);
 #if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(DOMEventTarget));
@@ -46,10 +34,6 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebPolicyDecisionListener));
     Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= 1010 */
-    p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory));
-    Py_XDECREF(p);
-#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(WKNavigationDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandler));
@@ -57,6 +41,20 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WKUIDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
+#if PyObjC_BUILD_RELEASE >= 1011
+    p = PyObjC_IdToPython(@protocol(WebUIDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebResourceLoadDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebPolicyDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebEditingDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebDownloadDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WebFrameLoadDelegate));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1013
 #if WK_API_ENABLED
     p = PyObjC_IdToPython(@protocol(WKHTTPCookieStoreObserver));

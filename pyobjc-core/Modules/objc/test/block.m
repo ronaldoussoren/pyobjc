@@ -5,19 +5,15 @@
 
 static void erase_signature(id _block);
 
-#if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 @interface
 NSObject (IndirectBlockTest)
 - (double)processBlock:(double (^)(double, double))aBlock;
 - (id)optionalBlock:(id (^)(id))aBlock;
 - (void)callWithCompletion:(void (^)(id))aBlock;
 @end
-#endif
 
 @interface OCTestBlock : NSObject {
 }
-
-#if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
 - (int (^)(void))getIntBlock;
 - (double (^)(double, double))getFloatBlock;
@@ -41,13 +37,9 @@ NSObject (IndirectBlockTest)
 - (id)signatureForBlock3:(id (^)(short))block;
 - (id)signatureForBlock4:(char (^)(int, int, float))block;
 
-#endif
-
 @end
 
 @implementation OCTestBlock
-
-#if PyObjC_BUILD_RELEASE >= 1006 && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
 - (NSRect (^)(double, double, double, double))getStructBlock
 {
@@ -217,8 +209,6 @@ signature_for_block(id _block)
 {
     return signature_for_block(block);
 }
-
-#endif
 
 @end
 

@@ -16,17 +16,15 @@
 #endif
 
 static PyObjC_function_map function_map[] = {
+    {"NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake},
+    {"NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType},
+#if PyObjC_BUILD_RELEASE >= 1012
+    {"NSTouchTypeMaskFromType", (PyObjC_Function_Pointer)&NSTouchTypeMaskFromType},
+#endif
 #if PyObjC_BUILD_RELEASE >= 1015
     {"NSDirectionalEdgeInsetsMake",
      (PyObjC_Function_Pointer)&NSDirectionalEdgeInsetsMake},
 #endif
-#if PyObjC_BUILD_RELEASE >= 1012
-    {"NSTouchTypeMaskFromType", (PyObjC_Function_Pointer)&NSTouchTypeMaskFromType},
-#endif
-#if PyObjC_BUILD_RELEASE >= 1008
-    {"NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake},
-#endif
-    {"NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType},
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013

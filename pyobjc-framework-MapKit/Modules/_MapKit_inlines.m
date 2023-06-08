@@ -17,7 +17,6 @@
 #endif
 
 static PyObjC_function_map function_map[] = {
-#if PyObjC_BUILD_RELEASE >= 1009
     {"MKCoordinateSpanMake", (PyObjC_Function_Pointer)&MKCoordinateSpanMake},
     {"MKCoordinateRegionMake", (PyObjC_Function_Pointer)&MKCoordinateRegionMake},
     {"MKMapPointMake", (PyObjC_Function_Pointer)&MKMapPointMake},
@@ -39,7 +38,6 @@ static PyObjC_function_map function_map[] = {
     {"MKStringFromMapPoint", (PyObjC_Function_Pointer)&MKStringFromMapPoint},
     {"MKStringFromMapSize", (PyObjC_Function_Pointer)&MKStringFromMapSize},
     {"MKStringFromMapRect", (PyObjC_Function_Pointer)&MKStringFromMapRect},
-#endif
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013

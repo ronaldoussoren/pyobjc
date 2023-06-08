@@ -59,7 +59,6 @@ static PyObjC_function_map function_map[] = {
      (PyObjC_Function_Pointer)&CFUserNotificationPopUpSelection},
     {"CFUserNotificationSecureTextField",
      (PyObjC_Function_Pointer)&CFUserNotificationSecureTextField},
-#if PyObjC_BUILD_RELEASE >= 1006
     {"CFStringIsSurrogateHighCharacter",
      (PyObjC_Function_Pointer)&CFStringIsSurrogateHighCharacter},
     {"CFStringIsSurrogateLowCharacter",
@@ -68,7 +67,6 @@ static PyObjC_function_map function_map[] = {
      (PyObjC_Function_Pointer)&CFStringGetLongCharacterForSurrogatePair},
     {"CFStringGetSurrogatePairForLongCharacter",
      (PyObjC_Function_Pointer)&CFStringGetSurrogatePairForLongCharacter},
-#endif
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013
