@@ -5,30 +5,34 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import CoreAudio
-import CoreMedia
-import Foundation
-import objc
-from AVFoundation import _metadata
-import AVFoundation._AVFoundation
-from AVFoundation._inlines import _inline_list_
+def _setup():
+    import sys
 
-sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
-    "AVFoundation",
-    "com.apple.avfoundation",
-    objc.pathForFramework("/System/Library/Frameworks/AVFoundation.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,  # noqa: F405
-        "__loader__": globals().get("__loader__", None),
-    },
-    (AVFoundation._AVFoundation, CoreAudio, CoreMedia, Foundation),
-)
+    import CoreAudio
+    import CoreMedia
+    import Foundation
+    import objc
+    from AVFoundation import _metadata
+    import AVFoundation._AVFoundation
+    from AVFoundation._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="AVFoundation",
+        frameworkIdentifier="com.apple.avfoundation",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/AVFoundation.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(AVFoundation._AVFoundation, CoreAudio, CoreMedia, Foundation),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["AVFoundation._metadata"]
 
 
-del sys.modules["AVFoundation._metadata"]
+globals().pop("_setup")()

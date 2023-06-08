@@ -26,16 +26,6 @@ class TestLazyImport(TestCase):
         self.assertIs(objc.ObjCLazyModule, lazyimport.ObjCLazyModule)
         self.assertTrue(issubclass(objc.ObjCLazyModule, type(objc)))
 
-    def test_getattr_map(self):
-        o = lazyimport.GetAttrMap(sys)
-        self.assertEqual(o["path"], sys.path)
-        self.assertEqual(o["version"], sys.version)
-        with self.assertRaisesRegex(KeyError, "nosuchkey"):
-            o["nosuchkey"]
-
-        v = o["CFSTR"]
-        self.assertEqual(v(b"hello"), "hello")
-
     def test_load_bundle(self):
         NSBundle = objc.lookUpClass("NSBundle")
 
@@ -182,10 +172,6 @@ class TestLazyImport(TestCase):
         self.assertEqual(mod.NSWindowWillCloseNotification, 100)
         self.assertNotIn("__doc__", mod.__all__)
 
-        self.assertIn(
-            "NSMachPortDelegateMethods", mod._ObjCLazyModule__informal_protocols
-        )
-
     def test_nameless_enum_label(self):
         # XXX: This tests a workaround for a bug in libdispatch, to
         #      be removed later.
@@ -319,37 +305,6 @@ class TestLazyImport(TestCase):
         self.assertIn("walk", mod.__all__)
         self.assertIn("version", mod.__all__)
         self.assertNotIn("__doc__", mod.__all__)
-
-    def test_all_clearing(self):
-        metadict = {"enums": "$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$"}
-
-        initial_dict = {"__doc__": "AppKit test module"}
-
-        mod = objc.ObjCLazyModule(
-            "AppKit",
-            None,
-            "/System/Library/Frameworks/AppKit.framework",
-            metadict,
-            None,
-            initial_dict,
-            (sys,),
-        )
-        self.assertIsInstance(mod, objc.ObjCLazyModule)
-
-        mod.__all__ = 42
-        self.assertIs(mod.path, sys.path)
-        self.assertNotIn("__all__", mod.__dict__)
-
-        mod.__all__ = 42
-        self.assertEqual(mod.NSAWTEventType, 16)
-        self.assertNotIn("__all__", mod.__dict__)
-
-        mod.__all__ = 42
-        self.assertIs(mod.NSObject, objc.lookUpClass("NSObject"))
-        self.assertNotIn("__all__", mod.__dict__)
-
-        self.assertTrue("NSAWTEventType" in mod.__all__)
-        self.assertTrue("NSAboveBottom" in mod.__all__)
 
     def test_enum_formats(self):
         metadict = {"enums": "$intval@16$floatval@4.5$charval@'1234'$floatval2@1e3$"}

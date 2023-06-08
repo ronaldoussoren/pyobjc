@@ -32,6 +32,15 @@ Version 10.0
 
 * :issue:`555`: Fix unintended incompatibility with pytest in PyObjCTools.TestSupport
 
+* :issue:`295`: The lazy loading machinery by default no longer uses
+  :class:`objc.ObjCLazyModule`, but uses module level ``__dir__`` and
+  ``__getattr__`` instead. The class :class:`objc.ObjCLazyModule` is still
+  available, but is deprecated
+
+* :issue:`295`: Introduce :func:`objc.createFrameworkDirAndGetattr` to
+  create module level ``__dir__`` and ``__getattr__`` for use by
+  framework bindings.
+
 Version 9.2
 -----------
 
