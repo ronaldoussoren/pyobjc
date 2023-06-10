@@ -653,7 +653,6 @@ functions = {
         "",
         {"arguments": {0: {"type_modifier": "n"}}},
     ),
-    "InvokeIconActionUPP": (b"sI^^^c^v^?",),
     "CopyProcessName": (
         b"i^{ProcessSerialNumber=II}^^{__CFString=}",
         "",
@@ -836,7 +835,6 @@ functions = {
         "",
         {"arguments": {0: {"type_modifier": "n"}}},
     ),
-    "InvokeIconGetterUPP": (b"^^cI^v^?",),
     "PasteboardCopyItemFlavorData": (
         b"i^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}",
         "",

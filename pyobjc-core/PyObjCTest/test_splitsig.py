@@ -141,6 +141,7 @@ class SplitSignatureTest(TestCase):
                     b"cksqlcs",
                     b"if",
                     b"pep",
+                    b"ams",
                     b"safari",
                 ) or sel.selector in (
                     b"isNSArray::",

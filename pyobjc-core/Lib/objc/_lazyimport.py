@@ -288,13 +288,12 @@ def createFrameworkDirAndGetattr(
             except AttributeError:
                 all_names.update(dir(p))
 
-        # Add all class names, ignoring names with a dot because
-        # those are not valid attribute names (and in general are private)
+        # Add all class names, ignoring names that aren't valid identifiers
         all_names.update(
-            cls.__name__ for cls in getClassList() if "." not in cls.__name__
+            cls.__name__ for cls in getClassList() if cls.__name__.isidentifier()
         )
 
-        return [v for v in all_names if not v.startswith("_")]
+        return sorted({v for v in all_names if not v.startswith("_")})
 
     def get_constant(name):
         if varmap_dct:

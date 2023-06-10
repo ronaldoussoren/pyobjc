@@ -17,7 +17,7 @@ class TestSCDynamicStoreCopyDHCPInfo(TestCase):
 
         have_ip = False
 
-        for intf in ("en0", "en1", "en2", "en3"):
+        for intf in ("en0", "en1", "en2", "en3", "en4"):
             with os.popen(f"ifconfig {intf} 2>/dev/null| grep inet", "r") as fp:
                 ip = fp.read()
                 if ip.strip():
