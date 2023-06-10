@@ -12,3 +12,32 @@ class TestCallableMetadata(TestCase):
                 ("NSColor", "scn_C3DColorIgnoringColorSpace_success_"),
             },
         )
+
+    def test_framework_identifiers(self):
+        from Quartz import (
+            CoreGraphics,
+            ImageIO,
+            ImageKit,
+            CoreVideo,
+            QuartzCore,
+            PDFKit,
+            QuartzFilters,
+            QuicklookUI,
+            QuartzComposer,
+        )
+
+        for fwk in (
+            CoreGraphics,
+            ImageIO,
+            ImageKit,
+            CoreVideo,
+            QuartzCore,
+            PDFKit,
+            QuartzFilters,
+            QuicklookUI,
+            QuartzComposer,
+        ):
+            with self.subTest(framework=fwk.__name__):
+                self.assertEqual(
+                    fwk.__bundle__.bundleIdentifier(), fwk.__framework_identifier__
+                )

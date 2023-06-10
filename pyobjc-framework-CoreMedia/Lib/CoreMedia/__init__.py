@@ -5,34 +5,34 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from CoreMedia import _CoreMedia, _metadata
+def _setup():
+    import sys
 
-sys.modules["CoreMedia"] = mod = objc.ObjCLazyModule(
-    "CoreMedia",
-    "com.apple.CoreMedia",
-    objc.pathForFramework("/System/Library/Frameworks/CoreMedia.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_CoreMedia, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _macros, _CoreMedia
 
-import sys  # isort: ignore  # noqa: E402
-from CoreMedia import _macros  # isort: ignore  # noqa: E402
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreMedia",
+        frameworkIdentifier="com.apple.CoreMedia",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreMedia.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _macros,
+            _CoreMedia,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
 
-for nm in dir(_macros):
-    if nm == "CoreMedia":
-        continue
-    setattr(mod, nm, getattr(_macros, nm))
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreMedia._metadata"]
 
 
-del sys.modules["CoreMedia._metadata"]
+globals().pop("_setup")()

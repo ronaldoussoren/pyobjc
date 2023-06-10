@@ -4,30 +4,40 @@ Python mapping for the QuickLookUI framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import Cocoa
-import objc
-from Quartz.QuickLookUI import _metadata
-from Quartz.QuickLookUI import _QuickLookUI
-
-sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
-    "Quartz.QuickLookUI",
-    "com.apple.QuickLookUIFramework",
-    objc.pathForFramework(
-        # XXX: This moved to a separate framework in macOS 12
-        "/System/Library/Frameworks/Quartz.framework/Frameworks/QuickLookUI.framework"
-    ),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (_QuickLookUI, Cocoa),
-)
 
 
-del sys.modules["Quartz.QuickLookUI._metadata"]
+def _setup():
+    import sys
+    import os
+
+    import AppKit
+    import objc
+    from . import _metadata, _QuickLookUI
+
+    frameworkPath = "/System/Library/Frameworks/QuickLookUI.framework"
+    frameworkIdentifier = "com.apple.QuickLookUIFramework"
+    if not os.path.exists(frameworkPath):
+        frameworkPath = "/System/Library/Frameworks/Quartz.framework"
+        frameworkIdentifier = "com.apple.Quartz"
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Quartz.QuickLookUI",
+        frameworkIdentifier=frameworkIdentifier,
+        frameworkPath=objc.pathForFramework(frameworkPath),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _QuickLookUI,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    # XXX:
+    del sys.modules["Quartz.QuickLookUI._metadata"]
+
+
+globals().pop("_setup")()

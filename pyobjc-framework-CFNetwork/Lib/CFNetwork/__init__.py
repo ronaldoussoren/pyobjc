@@ -5,13 +5,36 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import os
-import sys
 
-import CFNetwork._manual
-import CoreFoundation
-import objc
-from CFNetwork import _metadata
+def _setup():
+    import sys
+    import os
+
+    import CoreFoundation
+    import objc
+    from . import _metadata, _manual
+
+    frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
+    if not os.path.exists(frameworkPath):
+        frameworkPath = "/System/Library/Frameworks/CoreServices.framework"
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CFNetwork",
+        frameworkIdentifier="com.apple.CFNetwork",
+        frameworkPath=objc.pathForFramework(frameworkPath),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_manual, CoreFoundation),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CFNetwork._metadata"]
+
+
+globals().pop("_setup")()
 
 
 def CFSocketStreamSOCKSGetError(err):
@@ -20,33 +43,3 @@ def CFSocketStreamSOCKSGetError(err):
 
 def CFSocketStreamSOCKSGetErrorSubdomain(err):
     return (err.error >> 16) & 0xFFFF
-
-
-frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
-if not os.path.exists(frameworkPath):
-    frameworkPath = "/System/Library/Frameworks/CoreServices.framework"
-
-
-sys.modules["CFNetwork"] = mod = objc.ObjCLazyModule(
-    "CFNetwork",
-    "com.apple.CFNetwork",
-    objc.pathForFramework(frameworkPath),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "CFSocketStreamSOCKSGetError": CFSocketStreamSOCKSGetError,
-        "CFSocketStreamSOCKSGetErrorSubdomain": CFSocketStreamSOCKSGetErrorSubdomain,
-    },
-    (CoreFoundation,),
-)
-
-
-for nm in dir(CFNetwork._manual):
-    setattr(mod, nm, getattr(CFNetwork._manual, nm))
-
-
-del sys.modules["CFNetwork._metadata"]

@@ -5,30 +5,38 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Cocoa
-import CoreLocation
-import objc
-import Quartz
-from MapKit import _MapKit, _metadata
-from MapKit._inlines import _inline_list_
+def _setup():
+    import sys
 
-sys.modules["MapKit"] = mod = objc.ObjCLazyModule(
-    "MapKit",
-    "com.apple.MapKit",
-    objc.pathForFramework("/System/Library/Frameworks/MapKit.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_MapKit, Cocoa, CoreLocation, Quartz),
-)
+    import AppKit
+    import CoreLocation
+    import Quartz
+    import objc
+    from . import _metadata, _MapKit
+    from ._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="MapKit",
+        frameworkIdentifier="com.apple.MapKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/MapKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(
+            _MapKit,
+            AppKit,
+            CoreLocation,
+            Quartz,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["MapKit._metadata"]
 
 
-del sys.modules["MapKit._metadata"]
-del sys.modules["MapKit._MapKit"]
+globals().pop("_setup")()

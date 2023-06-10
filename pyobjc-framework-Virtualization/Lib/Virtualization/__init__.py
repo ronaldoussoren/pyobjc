@@ -5,28 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from Virtualization import _metadata
+def _setup():
+    import sys
 
-from Virtualization import _Virtualization
+    import Foundation
+    import objc
+    from . import _metadata, _Virtualization
 
-sys.modules["Virtualization"] = mod = objc.ObjCLazyModule(
-    "Virtualization",
-    "com.apple.Virtualization",
-    objc.pathForFramework("/System/Library/Frameworks/Virtualization.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_Virtualization, Foundation),
-)
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Virtualization",
+        frameworkIdentifier="com.apple.Virtualization",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Virtualization.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _Virtualization,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["Virtualization._metadata"]
 
 
-del sys.modules["Virtualization._metadata"]
+globals().pop("_setup")()

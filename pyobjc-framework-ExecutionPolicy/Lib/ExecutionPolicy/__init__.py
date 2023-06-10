@@ -5,26 +5,30 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from ExecutionPolicy import _metadata
+def _setup():
+    import sys
 
-sys.modules["ExecutionPolicy"] = mod = objc.ObjCLazyModule(
-    "ExecutionPolicy",
-    "com.apple.executionpolicy",
-    objc.pathForFramework("/System/Library/Frameworks/ExecutionPolicy.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (Foundation,),
-)
+    import Foundation
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ExecutionPolicy",
+        frameworkIdentifier="com.apple.ExecutionPolicy",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ExecutionPolicy.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ExecutionPolicy._metadata"]
 
 
-del sys.modules["ExecutionPolicy._metadata"]
+globals().pop("_setup")()

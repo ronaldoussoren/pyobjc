@@ -5,26 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from HealthKit import _metadata
-import HealthKit._HealthKit
+def _setup():
+    import sys
 
-sys.modules["HealthKit"] = mod = objc.ObjCLazyModule(
-    "HealthKit",
-    "com.apple.HealthKit",
-    objc.pathForFramework("/System/Library/Frameworks/HealthKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,  # noqa: F405
-        "__loader__": globals().get("__loader__", None),
-    },
-    (HealthKit._HealthKit, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _HealthKit
 
-del sys.modules["HealthKit._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="HealthKit",
+        frameworkIdentifier="com.apple.HealthKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/HealthKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _HealthKit,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["HealthKit._metadata"]
+
+
+globals().pop("_setup")()

@@ -12,8 +12,8 @@ static PyObject*
 m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject*  py_font;
-    CGFontRef  font;
-    CFArrayRef tags;
+    CGFontRef  font = NULL;
+    CFArrayRef tags = NULL;
 
     if (!PyArg_ParseTuple(args, "O", &py_font)) {
         return NULL;
@@ -641,6 +641,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__coregraphics(void)
 {
     PyObject* m = PyModule_Create(&mod_module);
     if (!m)
+        return NULL;
+
+    if (PyObjC_ImportAPI(m) < 0)
         return NULL;
 
     return m;

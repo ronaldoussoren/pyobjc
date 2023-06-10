@@ -4,26 +4,31 @@ Python mapping for the PreferencePanes framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import AppKit
-import objc
-from PreferencePanes import _metadata
-
-sys.modules["PreferencePanes"] = mod = objc.ObjCLazyModule(
-    "PreferencePanes",
-    "com.apple.frameworks.preferencepanes",
-    objc.pathForFramework("/System/Library/Frameworks/PreferencePanes.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (AppKit,),
-)
 
 
-del sys.modules["PreferencePanes._metadata"]
+def _setup():
+    import sys
+
+    import AppKit
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="PreferencePanes",
+        frameworkIdentifier="com.apple.frameworks.preferencepanes",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/PreferencePanes.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(AppKit,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["PreferencePanes._metadata"]
+
+
+globals().pop("_setup")()

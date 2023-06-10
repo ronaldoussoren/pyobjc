@@ -5,26 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from Speech import _metadata, _Speech
+def _setup():
+    import sys
 
-sys.modules["Speech"] = mod = objc.ObjCLazyModule(
-    "Speech",
-    "com.apple.Speech",
-    objc.pathForFramework("/System/Library/Frameworks/Speech.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_Speech, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _Speech
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Speech",
+        frameworkIdentifier="com.apple.Speech",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Speech.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _Speech,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["Speech._metadata"]
 
 
-del sys.modules["Speech._metadata"]
+globals().pop("_setup")()

@@ -137,6 +137,7 @@ def createFrameworkDirAndGetattr(
     if metadict is None:
         metadict = {}
 
+    globals_dict["__framework_identifier__"] = frameworkIdentifier
     globals_dict.update(metadict.get("misc", {}))
 
     varmap = metadict.get("constants")
@@ -169,14 +170,16 @@ def createFrameworkDirAndGetattr(
             return value
 
         # First try parent module, as if we had done
-        # 'from parents import *'
-        for p in parents:
-            try:
-                value = getattr(p, name)
-                globals_dict[name] = value
-                return value
-            except AttributeError:
-                pass
+        # 'from parents import *' (andh hence don't
+        # look for private names in parent modules)
+        if not name.startswith("_"):
+            for p in parents:
+                try:
+                    value = getattr(p, name)
+                    globals_dict[name] = value
+                    return value
+                except AttributeError:
+                    pass
 
         if not _name_re.match(name):
             # Name is not a valid identifier and cannot
@@ -209,95 +212,53 @@ def createFrameworkDirAndGetattr(
 
     def calc_all():
         # Ensure that all dynamic entries get loaded
+        #
+        # The code tries to resolve through 'expressions_mapping'
+        # to avoid code duplication, and to get some edge cases correct
         nonlocal varmap, enummap, inline_list, expressions, aliases
 
         if varmap_dct:
-            dct = {}
-            objc.loadBundleVariables(
-                bundle,
-                dct,
-                [
-                    (nm, varmap_dct[nm].encode())
-                    for nm in varmap_dct
-                    if not varmap_dct[nm].startswith("=")
-                ],
-            )
-            for nm in dct:
-                if nm not in globals_dict:
-                    globals_dict[nm] = dct[nm]
-
-            for nm, tp in varmap_dct.items():
-                if tp.startswith("=="):
-                    try:
-                        globals_dict[nm] = objc._loadConstant(nm, tp[2:], 2)
-                    except AttributeError:
-                        pass
-                elif tp.startswith("="):
-                    try:
-                        globals_dict[nm] = objc._loadConstant(nm, tp[1:], 1)
-                    except AttributeError:
-                        pass
+            for nm in list(varmap_dct):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
 
             varmap_dct.clear()
 
         if varmap:
-            easy = []
-            specials = []
-            for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", varmap):
+            for nm, _tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", varmap):
                 # An empty name can happen if the 'constants' definition
                 # is effectively happened (e.g. "$$").
-                if nm:
-                    if tp and tp.startswith("@="):
-                        specials.append((nm, tp[2:]))
-                    else:
-                        easy.append((nm, b"@" if not tp else tp[1:].encode()))
+                if not nm:
+                    continue
 
-            dct = {}
-            if easy:
-                objc.loadBundleVariables(bundle, dct, easy)
-
-            for nm in dct:
-                if nm not in globals_dict:
-                    globals_dict[nm] = dct[nm]
-
-            for nm, tp in specials:
                 try:
-                    if tp.startswith("="):
-                        globals_dict[nm] = objc._loadConstant(nm, tp[1:], 2)
-                    else:
-                        globals_dict[nm] = objc._loadConstant(nm, tp, 1)
-                except AttributeError:
-                    pass
+                    expressions_mapping[nm]
+                except KeyError:
+                    continue
 
             varmap = ""
 
         if enummap:
-            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", enummap):
-                if nm not in globals_dict:
-                    globals_dict[nm] = _prs_enum(val)
+            for nm, _val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", enummap):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
 
             enummap = ""
 
         if funcmap:
-            func_list = []
-            for nm in funcmap:
-                if nm not in globals_dict:
-                    func_list.append((nm,) + funcmap[nm])
-
-            dct = {}
-            objc.loadBundleFunctions(bundle, dct, func_list)
-            for nm in dct:
-                globals_dict[nm] = dct[nm]
+            for nm in list(funcmap):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
 
             funcmap.clear()
 
-        if inline_list:
-            dct = {}
-            objc.loadFunctionList(inline_list, dct, func_list, skip_undefined=True)
-            for nm in dct:
-                globals_dict[nm] = dct[nm]
-
-            inline_list = None
+        inline_list = None
 
         if expressions:
             for nm in list(expressions):

@@ -37,9 +37,28 @@ Version 10.0
   ``__getattr__`` instead. The class :class:`objc.ObjCLazyModule` is still
   available, but is deprecated
 
+  As a side effect of this ``objc`` is no longer an attribute of framework
+  binding packages (e.g ``Foundation.objc`` is no longer a valid attribute).
+
+  Another side effect of this is that all attributes added by the import system
+  are now correctly present in the packages for framework bindings.
+
+  And a final side effect is that private symbols (prefixed with underscore) are
+  no longer imported from dependencies of framework bindings (more closely matching
+  the ``from dependency import *`` behaviour that the lazy importer emulates.
+
+* Add attribute ``__framework_identifier__`` to all framework bindings with the
+  identifier of the corresponding system framework.
+
 * :issue:`295`: Introduce :func:`objc.createFrameworkDirAndGetattr` to
   create module level ``__dir__`` and ``__getattr__`` for use by
   framework bindings.
+
+* :issue:`561`: Tests now validate the bundle identifier value used in framework bindings.
+
+  This resulted in a number of changes to framework bindings with incorrect
+  bundle identifier values. This shouldn't affect user code because the
+  bundle loader falls back on the framework path when the identifier cannot be found.
 
 Version 9.2
 -----------

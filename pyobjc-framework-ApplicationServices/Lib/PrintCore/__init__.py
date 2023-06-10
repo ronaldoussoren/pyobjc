@@ -4,33 +4,35 @@ Python mapping for the PrintCore framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import functools
-import sys
-
-import Cocoa
-import objc
-from PrintCore import _metadata, _PrintCore
-
-sys.modules["PrintCore"] = mod = objc.ObjCLazyModule(
-    "PrintCore",
-    "com.apple.ApplicationServices",
-    objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (
-        _PrintCore,
-        Cocoa,
-    ),
-)
+from functools import wraps as _wraps
 
 
-del sys.modules["PrintCore._metadata"]
+def _setup():
+    import sys
+
+    import Cocoa
+    import objc
+    from . import _metadata, _PrintCore
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="PrintCore",
+        frameworkIdentifier="com.apple.ApplicationServices",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ApplicationServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_PrintCore, Cocoa),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["PrintCore._metadata"]
+
+
+globals().pop("_setup")()
 
 #
 # PMRetain and PMRelease are "generic" functions
@@ -40,19 +42,21 @@ del sys.modules["PrintCore._metadata"]
 # The code below ensures these functions actually
 # work as expected.
 #
-_PMRetain = mod.PMRetain
-_PMRelease = mod.PMRelease
+
+import PrintCore as _PrintCore  # isort:ignore  # noqa: E402
+
+_PMRetain = _PrintCore.PMRetain
+
+_PMRelease = _PrintCore.PMRelease
+
+del _PrintCore
 
 
-@functools.wraps(_PMRetain)
+@_wraps(_PMRetain)
 def PMRetain(value):
     return _PMRetain(value.__pointer__)
 
 
-@functools.wraps(_PMRelease)
+@_wraps(_PMRelease)
 def PMRelease(value):
     return _PMRelease(value.__pointer__)
-
-
-mod.PMRetain = PMRetain
-mod.PMRelease = PMRelease

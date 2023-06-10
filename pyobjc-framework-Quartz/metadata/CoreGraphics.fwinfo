@@ -5,6 +5,9 @@
   "aliases": {
    "CGColorConverterRef": {
     "alias": "CGColorConversionInfoRef"
+   },
+   "CGSetLocalEventsFilterDuringSupressionState": {
+        "alias": "CGSetLocalEventsFilterDuringSuppressionState"
    }
   },
   "cftypes": {
@@ -1329,6 +1332,7 @@
     }
    },
    "CGFontCopyTableTags": {
+    "ignore": true,
     "args": {
      "0": {}
     },

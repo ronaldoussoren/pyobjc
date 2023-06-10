@@ -5,26 +5,30 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import AppKit
-import objc
-from BusinessChat import _metadata
+def _setup():
+    import sys
 
-sys.modules["BusinessChat"] = mod = objc.ObjCLazyModule(
-    "BusinessChat",
-    "com.apple.icloud.messages.apps.businessframework",
-    objc.pathForFramework("/System/Library/Frameworks/BusinessChat.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (AppKit,),
-)
+    import AppKit
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="BusinessChat",
+        frameworkIdentifier="com.apple.icloud.messages.apps.businessframework",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/BusinessChat.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(AppKit,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["BusinessChat._metadata"]
 
 
-del sys.modules["BusinessChat._metadata"]
+globals().pop("_setup")()

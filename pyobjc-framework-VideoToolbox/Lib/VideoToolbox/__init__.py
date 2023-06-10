@@ -5,29 +5,37 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import CoreMedia
-import Foundation
-import objc
-import Quartz
-import VideoToolbox._VideoToolbox
-from VideoToolbox import _metadata
+def _setup():
+    import sys
 
-sys.modules["VideoToolbox"] = mod = objc.ObjCLazyModule(
-    "VideoToolbox",
-    "com.apple.VideoToolbox",
-    objc.pathForFramework("/System/Library/Frameworks/VideoToolbox.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (VideoToolbox._VideoToolbox, Quartz, CoreMedia, Foundation),
-)
+    import Quartz
+    import CoreMedia
+    import Foundation
+    import objc
+    from . import _metadata, _VideoToolbox
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="VideoToolbox",
+        frameworkIdentifier="com.apple.VideoToolbox",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/VideoToolbox.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _VideoToolbox,
+            Quartz,
+            CoreMedia,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["VideoToolbox._metadata"]
 
 
-del sys.modules["VideoToolbox._metadata"]
+globals().pop("_setup")()

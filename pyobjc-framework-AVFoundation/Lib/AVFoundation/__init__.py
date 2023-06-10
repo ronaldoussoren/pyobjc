@@ -13,9 +13,8 @@ def _setup():
     import CoreMedia
     import Foundation
     import objc
-    from AVFoundation import _metadata
-    import AVFoundation._AVFoundation
-    from AVFoundation._inlines import _inline_list_
+    from . import _AVFoundation, _metadata
+    from ._inlines import _inline_list_
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="AVFoundation",
@@ -25,7 +24,7 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=_inline_list_,
-        parents=(AVFoundation._AVFoundation, CoreAudio, CoreMedia, Foundation),
+        parents=(_AVFoundation, CoreAudio, CoreMedia, Foundation),
         metadict=_metadata.__dict__,
     )
 

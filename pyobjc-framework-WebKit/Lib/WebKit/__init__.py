@@ -4,29 +4,36 @@ Python mapping for the WebKit framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import Foundation
-import objc
-from WebKit import _metadata
-from WebKit import _WebKit
-
-objc.addConvenienceForBasicSequence("WebScriptObject", True)
-
-sys.modules["WebKit"] = mod = objc.ObjCLazyModule(
-    "WebKit",
-    "com.apple.WebKit",
-    objc.pathForFramework("/System/Library/Frameworks/WebKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_WebKit, Foundation),
-)
 
 
-del sys.modules["WebKit._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata, _WebKit
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="WebKit",
+        frameworkIdentifier="com.apple.WebKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/WebKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _WebKit,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["WebKit._metadata"]
+
+    objc.addConvenienceForBasicSequence("WebScriptObject", True)
+
+
+globals().pop("_setup")()

@@ -5,32 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Cocoa
-import objc
-from IMServicePlugIn import _IMServicePlugIn, _metadata
+def _setup():
+    import sys
 
-try:
-    long
-except NameError:
-    long = int
+    import AppKit
+    import objc
+    from . import _metadata, _IMServicePlugIn
 
-sys.modules["IMServicePlugIn"] = mod = objc.ObjCLazyModule(
-    "IMServicePlugIn",
-    "com.apple.GameKit",
-    objc.pathForFramework("/System/Library/Frameworks/GameKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_IMServicePlugIn, Cocoa),
-)
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="IMServicePlugIn",
+        frameworkIdentifier="com.apple.IMServicePlugIn",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/IMServicePlugIn.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _IMServicePlugIn,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["IMServicePlugIn._metadata"]
 
 
-del sys.modules["IMServicePlugIn._metadata"]
-del sys.modules["IMServicePlugIn._IMServicePlugIn"]
+globals().pop("_setup")()

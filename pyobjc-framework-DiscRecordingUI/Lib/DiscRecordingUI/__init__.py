@@ -5,27 +5,30 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import DiscRecording
-import Foundation
-import objc
-from DiscRecordingUI import _metadata
+def _setup():
+    import sys
 
-sys.modules["DiscRecordingUI"] = mod = objc.ObjCLazyModule(
-    "DiscRecordingUI",
-    "com.apple.DiscRecordingUI",
-    objc.pathForFramework("/System/Library/Frameworks/DiscRecordingUI.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (DiscRecording, Foundation),
-)
+    import DiscRecording
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="DiscRecordingUI",
+        frameworkIdentifier="com.apple.DiscRecordingUI",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/DiscRecordingUI.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(DiscRecording,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["DiscRecordingUI._metadata"]
 
 
-del sys.modules["DiscRecordingUI._metadata"]
+globals().pop("_setup")()

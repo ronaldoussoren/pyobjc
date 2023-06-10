@@ -97,6 +97,12 @@
    "NSStackViewVisibilityPriority": { "type": "f" }
   },
   "aliases": {
+   "NSRightTextAlignment": {
+    "alias": "NSTextAlignmentRight"
+   },
+   "NSCenterTextAlignment": {
+    "alias": "NSTextAlignmentCenter"
+   },
    "NSLayoutAttributeLastBaseline": {
     "alias": "NSLayoutAttributeBaseline"
    },
@@ -29054,6 +29060,8 @@
    }
   },
   "enum": {
+   "NSRightTextAlignment": { "ignore": true },
+   "NSCenterTextAlignment": { "ignore": true },
    "NSAppKitVersionNumber10_15": { "value": 1894.0 },
    "NSAppKitVersionNumber10_15_1": { "value": 1894.1 },
    "NSAppKitVersionNumber10_15_2": { "value": 1894.2 },
@@ -30360,9 +30368,6 @@
    "NSTableViewRowActionStyleRegular": {
     "value": 0
    },
-   "NSTextAlignmentCenter": {
-    "value": 2
-   },
    "NSTextAlignmentJustified": {
     "value": 3
    },
@@ -30371,9 +30376,6 @@
    },
    "NSTextAlignmentNatural": {
     "value": 4
-   },
-   "NSTextAlignmentRight": {
-    "value": 1
    },
    "NSTextMovementBacktab": {
     "value": 18

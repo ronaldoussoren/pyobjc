@@ -5,28 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from . import _metadata
-from . import _AutomaticAssessmentConfiguration
+def _setup():
+    import sys
 
-sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
-    "AutomaticAssessmentConfiguration",
-    "com.apple.AutomaticAssessmentConfiguration",
-    objc.pathForFramework(
-        "/System/Library/Frameworks/AutomaticAssessmentConfiguration.framework"
-    ),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_AutomaticAssessmentConfiguration, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _AutomaticAssessmentConfiguration
 
-del sys.modules["AutomaticAssessmentConfiguration._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="AutomaticAssessmentConfiguration",
+        frameworkIdentifier="com.apple.AutomaticAssessmentConfiguration",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/AutomaticAssessmentConfiguration.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _AutomaticAssessmentConfiguration,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["AutomaticAssessmentConfiguration._metadata"]
+
+
+globals().pop("_setup")()

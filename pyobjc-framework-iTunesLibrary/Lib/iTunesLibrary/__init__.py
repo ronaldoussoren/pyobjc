@@ -4,35 +4,35 @@ Python mapping for the iTunesLibrary framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import os
-import sys
 
 
-import Foundation
-import objc
-from iTunesLibrary import _metadata
+def _setup():
+    import sys
+    import os
 
-if os.path.exists("/System/Library/Frameworks/iTunesLibrary.framework"):
-    # macOS 11
-    framework_path = "/System/Library/Frameworks/iTunesLibrary.framework"
-else:
-    # macOS 10.15 or earlier
-    framework_path = "/Library/Frameworks/iTunesLibrary.framework"
+    import Foundation
+    import objc
+    from . import _metadata
 
-sys.modules["iTunesLibrary"] = mod = objc.ObjCLazyModule(
-    "iTunesLibrary",
-    "com.apple.iTunesLibrary",
-    objc.pathForFramework(framework_path),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (Foundation,),
-)
+    frameworkPath = "/System/Library/Frameworks/iTunesLibrary.framework"
+    if not os.path.exists(frameworkPath):
+        # macOS 10.15 or earlier
+        frameworkPath = "/Library/Frameworks/iTunesLibrary.framework"
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="iTunesLibrary",
+        frameworkIdentifier="com.apple.iTunesLibrary",
+        frameworkPath=objc.pathForFramework(frameworkPath),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["iTunesLibrary._metadata"]
 
 
-del sys.modules["iTunesLibrary._metadata"]
+globals().pop("_setup")()

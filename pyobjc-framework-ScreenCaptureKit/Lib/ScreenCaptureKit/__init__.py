@@ -5,28 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import CoreMedia
-import objc
-from . import _metadata, _ScreenCaptureKit
+def _setup():
+    import sys
 
-sys.modules["ScreenCaptureKit"] = mod = objc.ObjCLazyModule(
-    "ScreenCaptureKit",
-    "com.apple.ScreenCaptureKit",
-    objc.pathForFramework("/System/Library/Frameworks/ScreenCaptureKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (
-        _ScreenCaptureKit,
-        CoreMedia,
-    ),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _ScreenCaptureKit
 
-del sys.modules["ScreenCaptureKit._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ScreenCaptureKit",
+        frameworkIdentifier="com.apple.ScreenCaptureKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ScreenCaptureKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _ScreenCaptureKit,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ScreenCaptureKit._metadata"]
+
+
+globals().pop("_setup")()

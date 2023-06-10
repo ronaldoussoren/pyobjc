@@ -5,29 +5,38 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Accounts
-import CoreData
-import CoreLocation
-import Foundation
-import objc
-from CloudKit import _metadata
+def _setup():
+    import sys
 
-sys.modules["CloudKit"] = mod = objc.ObjCLazyModule(
-    "CloudKit",
-    "com.apple.CloudKit",
-    objc.pathForFramework("/System/Library/Frameworks/CloudKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (CoreData, CoreLocation, Accounts, Foundation),
-)
+    import Accounts
+    import CoreData
+    import CoreLocation
+    import Foundation
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CloudKit",
+        frameworkIdentifier="com.apple.cloudkit.CloudKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CloudKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            CoreData,
+            CoreLocation,
+            Accounts,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CloudKit._metadata"]
 
 
-del sys.modules["CloudKit._metadata"]
+globals().pop("_setup")()

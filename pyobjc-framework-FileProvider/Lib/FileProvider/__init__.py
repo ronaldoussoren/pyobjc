@@ -5,30 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from FileProvider import _metadata
-from FileProvider import _FileProvider
+def _setup():
+    import sys
 
-sys.modules["FileProvider"] = mod = objc.ObjCLazyModule(
-    "FileProvider",
-    "com.apple.FileProvider",
-    objc.pathForFramework("/System/Library/Frameworks/FileProvider.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (
-        _FileProvider,
-        Foundation,
-    ),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _FileProvider
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="FileProvider",
+        frameworkIdentifier="com.apple.FileProvider",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/FileProvider.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _FileProvider,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["FileProvider._metadata"]
 
 
-del sys.modules["FileProvider._metadata"]
+globals().pop("_setup")()

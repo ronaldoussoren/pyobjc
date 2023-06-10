@@ -103,6 +103,15 @@ def parse_arguments():
     )
 
     parser.add_argument(
+        "--arch",
+        dest="arch",
+        metavar="ARCH",
+        action="append",
+        default=[],
+        help="Select the system architectures to test (defaults to all)",
+    )
+
+    parser.add_argument(
         "--state-dir",
         dest="state_dir",
         metavar="DIR",
@@ -424,6 +433,9 @@ def main():
 
                 # Then run tests for all supported architectures
                 for arch in ("x86_64", "arm64"):
+                    if options.arch and arch not in options.arch:
+                        continue
+
                     if not supports_arch(interpreter, arch):
                         lg.info(
                             "skipping Python %s (%7s), unsupported architecture",

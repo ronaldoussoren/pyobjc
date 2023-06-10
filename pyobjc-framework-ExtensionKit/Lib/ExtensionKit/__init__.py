@@ -5,26 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import AppKit
-import objc
-from ExtensionKit import _metadata
-import ExtensionKit._ExtensionKit
+def _setup():
+    import sys
 
-sys.modules["ExtensionKit"] = mod = objc.ObjCLazyModule(
-    "ExtensionKit",
-    "com.apple.ExtensionKit",
-    objc.pathForFramework("/System/Library/Frameworks/ExtensionKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,  # noqa: F405
-        "__loader__": globals().get("__loader__", None),
-    },
-    (ExtensionKit._ExtensionKit, AppKit),
-)
+    import AppKit
+    import objc
+    from . import _metadata, _ExtensionKit
 
-del sys.modules["ExtensionKit._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ExtensionKit",
+        frameworkIdentifier="com.apple.ExtensionKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ExtensionKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _ExtensionKit,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ExtensionKit._metadata"]
+
+
+globals().pop("_setup")()

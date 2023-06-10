@@ -4,26 +4,24 @@ Python mapping for the Cocoa framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
 
-import AppKit
-import Foundation
-import objc
 
-mod = objc.ObjCLazyModule(
-    "Cocoa",
-    None,
-    None,
-    {},
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "__file__": globals().get("__file__", None),
-        "__spec__": globals().get("__spec__", None),
-    },
-    (AppKit, Foundation),
-)
-sys.modules["Cocoa"] = mod
+def _setup():
+    import AppKit
+    import objc
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Cocoa",
+        frameworkIdentifier=None,
+        frameworkPath=None,
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(AppKit,),
+        metadict={},
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+
+globals().pop("_setup")()

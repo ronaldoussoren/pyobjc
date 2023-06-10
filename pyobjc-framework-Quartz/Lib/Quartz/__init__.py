@@ -1,110 +1,47 @@
 """
 Helper module that makes it easier to import all of Quartz
 """
-import sys
-
-import AppKit
-import objc
 
 
-def _load():
-    submods = []
-    sys.modules["Quartz"] = mod = objc.ObjCLazyModule(
-        "Quartz",
-        None,
-        None,
-        {},
-        None,
-        {
-            "__doc__": __doc__,
-            "objc": objc,
-            "__path__": __path__,
-            "__loader__": globals().get("__loader__", None),
-        },
-        submods,
+def _setup():
+    import AppKit
+    import objc
+
+    from . import (
+        CoreGraphics,
+        ImageIO,
+        ImageKit,
+        CoreVideo,
+        QuartzCore,
+        PDFKit,
+        QuartzFilters,
+        QuickLookUI,
+        QuartzComposer,
     )
 
-    try:
-        from Quartz import CoreGraphics as m
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Quartz",
+        frameworkIdentifier=None,
+        frameworkPath=None,
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            CoreGraphics,
+            ImageIO,
+            ImageKit,
+            CoreVideo,
+            QuartzCore,
+            PDFKit,
+            QuartzFilters,
+            QuickLookUI,
+            QuartzComposer,
+            AppKit,
+        ),
+        metadict={},
+    )
 
-        submods.append(m)
-        mod.CoreGraphics = m
-    except ImportError:
-        raise
-
-    try:
-        from Quartz import ImageIO as m
-
-        submods.append(m)
-        mod.ImageIO = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import ImageKit as m
-
-        submods.append(m)
-        mod.ImageIO = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import CoreVideo as m
-
-        submods.append(m)
-        mod.CoreVideo = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import QuartzCore as m
-
-        submods.append(m)
-        mod.QuartCore = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import ImageIO as m
-
-        submods.append(m)
-        mod.ImageIO = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import PDFKit as m
-
-        submods.append(m)
-        mod.PDFKit = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import QuartzFilters as m
-
-        submods.append(m)
-        mod.QuartzFilters = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import QuickLookUI as m
-
-        submods.append(m)
-        mod.QuickLookUI = m
-    except ImportError:
-        pass
-
-    try:
-        from Quartz import QuartzComposer as m
-
-        submods.append(m)
-        mod.QuartzComposer = m
-    except ImportError:
-        pass
-
-    submods.append(AppKit)
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
 
 
-_load()
+globals().pop("_setup")()

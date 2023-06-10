@@ -5,30 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from CoreMotion import _metadata
-from CoreMotion import _CoreMotion
+def _setup():
+    import sys
 
-sys.modules["CoreMotion"] = mod = objc.ObjCLazyModule(
-    "CoreMotion",
-    "com.apple.CoreMotion",
-    objc.pathForFramework("/System/Library/Frameworks/CoreMotion.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (
-        _CoreMotion,
-        Foundation,
-    ),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _CoreMotion
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreMotion",
+        frameworkIdentifier="com.apple.coremotion",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreMotion.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _CoreMotion,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreMotion._metadata"]
 
 
-del sys.modules["CoreMotion._metadata"]
+globals().pop("_setup")()

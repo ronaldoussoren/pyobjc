@@ -1221,6 +1221,14 @@ class TestCase(_unittest.TestCase):
         # XXX: exclude_cocoa may exclude too much depending on
         #      import order.
 
+        if hasattr(module, "__bundle__"):
+            with self.subTest("validate framework identifier"):
+                self.assertHasAttr(module, "__framework_identifier__")
+                self.assertEqual(
+                    module.__bundle__.bundleIdentifier(),
+                    module.__framework_identifier__,
+                )
+
         if exclude_cocoa:
             import Cocoa
 

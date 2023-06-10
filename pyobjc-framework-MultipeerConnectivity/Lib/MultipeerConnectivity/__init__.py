@@ -5,28 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from MultipeerConnectivity import _metadata
-from MultipeerConnectivity import _MultipeerConnectivity
+def _setup():
+    import sys
 
-sys.modules["MultipeerConnectivity"] = mod = objc.ObjCLazyModule(
-    "MultipeerConnectivity",
-    "com.apple.MultipeerConnectivity",
-    objc.pathForFramework("/System/Library/Frameworks/MultipeerConnectivity.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_MultipeerConnectivity, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _MultipeerConnectivity
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="MultipeerConnectivity",
+        frameworkIdentifier="com.apple.MultipeerConnectivity",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/MultipeerConnectivity.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _MultipeerConnectivity,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["MultipeerConnectivity._metadata"]
 
 
-del sys.modules["MultipeerConnectivity._metadata"]
-del sys.modules["MultipeerConnectivity._MultipeerConnectivity"]
+globals().pop("_setup")()

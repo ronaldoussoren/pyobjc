@@ -3,7 +3,7 @@ This module defines a number of context managers. These are meant to be used
 in the context of the with statement (introduced in Python 2.5).
 """
 __all__ = ("CGSavedGState", "CGTransparencyLayer", "CGContextPage")
-import Quartz.CoreGraphics as CG
+import Quartz
 
 
 class CGSavedGState:
@@ -28,11 +28,11 @@ class CGSavedGState:
         self.context = context
 
     def __enter__(self):
-        CG.CGContextSaveGState(self.context)
+        Quartz.CGContextSaveGState(self.context)
         return self
 
     def __exit__(self, exc_type, exc_value, exc_tp):
-        CG.CGContextRestoreGState(self.context)
+        Quartz.CGContextRestoreGState(self.context)
         return False
 
 
@@ -61,15 +61,15 @@ class CGTransparencyLayer:
 
     def __enter__(self):
         if self.rect is None:
-            result = CG.CGContextBeginTransparencyLayer(self.context, self.info)
+            result = Quartz.CGContextBeginTransparencyLayer(self.context, self.info)
         else:
-            result = CG.CGContextBeginTransparencyLayerWithRect(
+            result = Quartz.CGContextBeginTransparencyLayerWithRect(
                 self.context, self.rect, self.info
             )
         return result
 
     def __exit__(self, exc_type, exc_value, exc_tp):
-        CG.CGContextEndTransparencyLayer(self.context)
+        Quartz.CGContextEndTransparencyLayer(self.context)
         return False
 
 
@@ -96,9 +96,9 @@ class CGContextPage:
         self.mediaBox = mediaBox
 
     def __enter__(self):
-        mediaRect = CG.CGContextBeginPage(self.context, self.mediaBox)
+        mediaRect = Quartz.CGContextBeginPage(self.context, self.mediaBox)
         return mediaRect
 
     def __exit__(self, exc_type, exc_value, exc_tp):
-        CG.CGContextEndPage(self.context)
+        Quartz.CGContextEndPage(self.context)
         return False

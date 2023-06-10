@@ -4,50 +4,59 @@ Python mapping for the DiscRecording framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-
-import sys
 from math import floor
 
-import Foundation
-import objc
-from DiscRecording import _DiscRecording, _metadata
 
-sys.modules["DiscRecording"] = mod = objc.ObjCLazyModule(
-    "DiscRecording",
-    "com.apple.DiscRecording",
-    objc.pathForFramework("/System/Library/Frameworks/DiscRecording.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_DiscRecording, Foundation),
-)
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata, _DiscRecording
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="DiscRecording",
+        frameworkIdentifier="com.apple.DiscRecording",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/DiscRecording.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _DiscRecording,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["DiscRecording._metadata"]
 
 
-del sys.modules["DiscRecording._metadata"]
+globals().pop("_setup")()
 
 
 def DRDeviceKPSForCDXFactor(xfactor):
-    return float(xfactor) * mod.kDRDeviceBurnSpeedCD1x
+    from . import kDRDeviceBurnSpeedCD1x
+
+    return float(xfactor) * kDRDeviceBurnSpeedCD1x
 
 
 def DRDeviceKPSForDVDXFactor(xfactor):
-    return float(xfactor) * mod.kDRDeviceBurnSpeedDVD1x
+    from . import kDRDeviceBurnSpeedDVD1x
+
+    return float(xfactor) * kDRDeviceBurnSpeedDVD1x
 
 
 def DRDeviceCDXFactorForKPS(kps):
-    return floor(kps / mod.kDRDeviceBurnSpeedCD1x + 0.5)
+    from . import kDRDeviceBurnSpeedCD1x
+
+    return floor(kps / kDRDeviceBurnSpeedCD1x + 0.5)
 
 
 def DRDeviceDVDXFactorForKPS(kps):
-    return floor(kps / mod.kDRDeviceBurnSpeedDVD1x + 0.5)
+    from . import kDRDeviceBurnSpeedDVD1x
 
-
-mod.DRDeviceKPSForCDXFactor = DRDeviceKPSForCDXFactor
-mod.DRDeviceKPSForDVDXFactor = DRDeviceKPSForDVDXFactor
-mod.DRDeviceCDXFactorForKPS = DRDeviceCDXFactorForKPS
-mod.DRDeviceDVDXFactorForKPS = DRDeviceDVDXFactorForKPS
+    return floor(kps / kDRDeviceBurnSpeedDVD1x + 0.5)

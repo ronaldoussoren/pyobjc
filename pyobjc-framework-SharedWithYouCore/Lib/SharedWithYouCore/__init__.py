@@ -5,26 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import AppKit
-import objc
-from SharedWithYouCore import _metadata
-import SharedWithYouCore._SharedWithYouCore
+def _setup():
+    import sys
 
-sys.modules["SharedWithYouCore"] = mod = objc.ObjCLazyModule(
-    "SharedWithYouCore",
-    "com.apple.SharedWithYouCore",
-    objc.pathForFramework("/System/Library/Frameworks/SharedWithYouCore.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,  # noqa: F405
-        "__loader__": globals().get("__loader__", None),
-    },
-    (SharedWithYouCore._SharedWithYouCore, AppKit),
-)
+    import AppKit
+    import objc
+    from . import _metadata, _SharedWithYouCore
 
-del sys.modules["SharedWithYouCore._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="SharedWithYouCore",
+        frameworkIdentifier="com.apple.SharedWithYouCore",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/SharedWithYouCore.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _SharedWithYouCore,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["SharedWithYouCore._metadata"]
+
+
+globals().pop("_setup")()
