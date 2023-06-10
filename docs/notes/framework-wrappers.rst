@@ -332,7 +332,7 @@ The framework name links to API notes for that framework, the python packages li
 |                                                                                      |                                                      |                                         |
 |                                                                                      |                                                      | Removed in macOS 10.13.                 |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`                                   | `pyobjc-framework-IMServicePlugIn`_                  |                                         |
+| :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`                                   | `pyobjc-framework-IMServicePlugIn`_                  | Removed in macOS 14                     |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | IncomingCallNotifications                                                            | -                                                    | No public API on macOS.                 |
 |                                                                                      |                                                      |                                         |
