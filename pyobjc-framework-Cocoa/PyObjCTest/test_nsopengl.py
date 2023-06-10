@@ -131,9 +131,14 @@ class TestNSOpenGL(TestCase):
             AppKit.NSOpenGLPixelFormat.CGLPixelFormatObj, b"^{_CGLPixelFormatObject}"
         )
 
-        self.assertResultHasType(
-            AppKit.NSOpenGLContext.CGLContextObj, b"^{_CGLContextObj}"
-        )
+        # This open codes a variant on assertResultHasType because the type encoding
+        # for CGLObject has changed in macOS 14.
+        # XXX: Need to validate that CGLObject is still usable!
+        tp = AppKit.NSOpenGLContext.CGLContextObj.__metadata__()["retval"]["type"]
+        self.assertStartswith(tp, b"^{_CGLContextObj")
+        # self.assertResultHasType(
+        # AppKit.NSOpenGLContext.CGLContextObj, b"^{_CGLContextObj}"
+        # )
 
         self.assertArgIsIn(AppKit.NSOpenGLContext.setValues_forParameter_, 0)
         self.assertArgIsVariableSize(AppKit.NSOpenGLContext.setValues_forParameter_, 0)

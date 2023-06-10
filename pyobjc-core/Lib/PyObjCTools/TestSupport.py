@@ -1241,6 +1241,7 @@ class TestCase(_unittest.TestCase):
         }
 
         exclude_attrs = set(exclude_attrs)
+        # exclude_attrs.add("FBSSceneClientSettings")
         exclude_attrs.add(("NSColor", "scn_C3DColorIgnoringColorSpace_success_"))
         exclude_attrs.add(
             ("PDFKitPlatformColor", "scn_C3DColorIgnoringColorSpace_success_")
@@ -1281,7 +1282,7 @@ class TestCase(_unittest.TestCase):
         # Calculate all (interesting) names in the module. This pokes into
         # the implementation details of objc.ObjCLazyModule to avoid loading
         # all attributes (which is expensive for larger bindings).
-        if isinstance(module, objc.ObjCLazyModule):
+        if isinstance(module, objc.ObjCLazyModule) and False:
             module_names = []
             module_names.extend(
                 cls.__name__
@@ -1303,7 +1304,7 @@ class TestCase(_unittest.TestCase):
             # The module_names list might contain duplicates
             module_names = sorted(set(module_names))
         else:
-            module_names = sorted(dir(module))
+            module_names = sorted(set(dir(module)))
 
         for _idx, nm in enumerate(module_names):
             # print(f"{_idx}/{len(module_names)} {nm}")

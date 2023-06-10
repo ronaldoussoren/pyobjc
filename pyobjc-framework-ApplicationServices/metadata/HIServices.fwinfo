@@ -560,6 +560,7 @@
     }
    },
    "InvokeIconActionUPP": {
+    "ignore": true,
     "args": {
      "1": {},
      "2": {},
@@ -567,6 +568,7 @@
     }
    },
    "InvokeIconGetterUPP": {
+    'ignore": true,
     "args": {
      "1": {},
      "2": {}

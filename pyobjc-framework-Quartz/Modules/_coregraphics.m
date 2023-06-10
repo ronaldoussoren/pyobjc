@@ -643,5 +643,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__coregraphics(void)
     if (!m)
         return NULL;
 
+    if (PyObjC_ImportAPI(m) < 0)
+        return NULL;
+
     return m;
 }

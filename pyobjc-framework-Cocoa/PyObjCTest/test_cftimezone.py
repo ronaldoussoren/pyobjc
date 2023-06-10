@@ -4,6 +4,9 @@ import CoreFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
+NSData = objc.lookUpClass("NSData")
+NSDictionary = objc.lookUpClass("NSDictionary")
+
 
 class TestTimeZone(TestCase):
     def testTypes(self):
@@ -42,7 +45,7 @@ class TestTimeZone(TestCase):
 
     def testAbbreviationDict(self):
         abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
-        self.assertIsInstance(abbrevs, CoreFoundation.CFDictionaryRef)
+        self.assertIsInstance(abbrevs, NSDictionary)
         for key, value in abbrevs.items():
             self.assertIsInstance(key, str)
             self.assertIsInstance(value, str)
@@ -60,7 +63,7 @@ class TestTimeZone(TestCase):
         self.assertIs(v, None)
         try:
             map2 = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
-            self.assertIsInstance(map2, CoreFoundation.CFDictionaryRef)
+            self.assertIsInstance(map2, NSDictionary)
             self.assertEqual(map2["AAA"], "Europe/Amsterdam")
         finally:
             CoreFoundation.CFTimeZoneSetAbbreviationDictionary(abbrevs)
@@ -84,7 +87,7 @@ class TestTimeZone(TestCase):
         self.assertEqual(name, "Europe/Amsterdam")
 
         data = CoreFoundation.CFTimeZoneGetData(zone)
-        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        self.assertIsInstance(data, NSData)
         abbrev = CoreFoundation.CFTimeZoneCopyAbbreviation(zone, time.time())
         self.assertIsInstance(abbrev, str)
         dt = CoreFoundation.CFGregorianDate(
