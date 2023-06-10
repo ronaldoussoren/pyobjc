@@ -14,7 +14,7 @@ from objc import simd
 try:
     import Quartz  # noqa: F401
 except ImportError:
-    pass
+    Quartz = None
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
@@ -23319,6 +23319,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_idCGColor_CGColor_id_v2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23379,6 +23380,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsidCGColor_CGColor_id_v2i_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23439,6 +23441,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_idCGColor_CGColor_id_v2i__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23514,6 +23517,7 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsidCGColor_CGColor_id_v2i__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -23582,6 +23586,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_idCGColor_CGColor_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -23605,6 +23610,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_idCGColor_CGColor_id_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -26553,6 +26559,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -26710,6 +26717,7 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsidf_id_v2i_i_q_CGColor_CGColor_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -26869,6 +26877,7 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_idf_id_v2i_i_q_CGColor_CGColor__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27053,6 +27062,7 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsidf_id_v2i_i_q_CGColor_CGColor__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -27229,6 +27239,7 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_idf_id_v2i_i_q_CGColor_CGColor_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -27255,6 +27266,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_idf_id_v2i_i_q_CGColor_CGColor__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -32084,6 +32096,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_CGColorv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32125,6 +32138,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsCGColorv3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32166,6 +32180,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_CGColorv3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32216,6 +32231,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsCGColorv3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32265,6 +32281,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_CGColorv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -32280,6 +32297,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_CGColorv3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -32295,6 +32313,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_CGColorv3f_CGColorSpace_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32343,6 +32362,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsCGColorv3f_CGColorSpace_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32393,6 +32413,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_CGColorv3f_CGColorSpace__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32452,6 +32473,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!"
             )
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_clsCGColorv3f_CGColorSpace__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -32510,6 +32532,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_CGColorv3f_CGColorSpace_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -32531,6 +32554,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+    @skipUnless(Quartz is not None, "Test requires installed Quartz bindings")
     def test_imp_CGColorv3f_CGColorSpace__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1

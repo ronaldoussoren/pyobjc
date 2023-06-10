@@ -60,6 +60,9 @@ Version 10.0
   bundle identifier values. This shouldn't affect user code because the
   bundle loader falls back on the framework path when the identifier cannot be found.
 
+* :issue:`559`: Avoid test failures in pyobjc-core when pyobjc-framework-Quartz is
+  not installed.
+
 Version 9.2
 -----------
 
