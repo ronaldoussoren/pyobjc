@@ -63,6 +63,12 @@ Version 10.0
 * :issue:`559`: Avoid test failures in pyobjc-core when pyobjc-framework-Quartz is
   not installed.
 
+Version 9.2.1
+-------------
+
+* :issue:`563`: Fix incompatibility with macOS 14 beta 1
+
+
 Version 9.2
 -----------
 
