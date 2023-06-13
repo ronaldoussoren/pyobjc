@@ -21,7 +21,7 @@ def get_config_var(var):
     return _get_config_var(var) or ""
 
 
-# We need at least Python 3.7
+# We need at least Python 3.8
 MIN_PYTHON = (3, 8)
 
 if sys.version_info < MIN_PYTHON:
