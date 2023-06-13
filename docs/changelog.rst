@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 9.2.1
+-------------
+
+* :issue:`563`: Fix incompatibility with macOS 14 beta 1
+
 Version 9.2
 -----------
 
