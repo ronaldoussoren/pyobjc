@@ -19,6 +19,11 @@ Version 10.0
 
   * Symbols
 
+* The "IMServicePlugIn" bindings are no longer available
+
+  The entire framework was deprecated in macOS 10.13 and removed in macOS 14.
+  The bindings can not be build using the latest SDK, and had (at best) limited
+  use.
 
 * :issue:`542`: PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
 

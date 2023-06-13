@@ -1,3 +1,4 @@
+
 Overview of macOS frameworks and their wrappers
 ===============================================
 
@@ -332,7 +333,8 @@ The framework name links to API notes for that framework, the python packages li
 |                                                                                      |                                                      |                                         |
 |                                                                                      |                                                      | Removed in macOS 10.13.                 |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`                                   | `pyobjc-framework-IMServicePlugIn`_                  | Removed in macOS 14                     |
+| ServicePlugIn                                                                        |                                                      | Removed in macOS 14                     |
+|                                                                                      |                                                      | Bindings removed in PyObjC 10           |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | IncomingCallNotifications                                                            | -                                                    | No public API on macOS.                 |
 |                                                                                      |                                                      |                                         |
@@ -730,7 +732,6 @@ prioritizing work.
 .. _`pyobjc-framework-GameKit`: https://pypi.org/project/pyobjc-framework-GameKit/
 .. _`pyobjc-framework-GameplayKit`: https://pypi.org/project/pyobjc-framework-GameplayKit/
 .. _`pyobjc-framework-HealthKit`: https://pypi.org/project/pyobjc-framework-HealthKit/
-.. _`pyobjc-framework-IMServicePlugIn`: https://pypi.org/project/pyobjc-framework-IMServicePlugIn/
 .. _`pyobjc-framework-IOSurface`: https://pypi.org/project/pyobjc-framework-IOSurface/
 .. _`pyobjc-framework-ImageCaptureCore`: https://pypi.org/project/pyobjc-framework-ImageCaptureCore/
 .. _`pyobjc-framework-InputMethodKit`: https://pypi.org/project/pyobjc-framework-InputMethodKit/

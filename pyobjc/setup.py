@@ -86,7 +86,6 @@ FRAMEWORK_WRAPPERS = [
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
     ("HealthKit", "13.0", None),
-    ("IMServicePlugIn", "10.7", None),
     ("InputMethodKit", "10.5", None),
     ("ImageCaptureCore", "10.6", None),
     ("Intents", "10.12", None),
