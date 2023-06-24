@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 5.3a1
+-------------
+
+* #309: Fix incompatibility with macOS 11 in framework loader
+
 Version 5.3
 -----------
 
