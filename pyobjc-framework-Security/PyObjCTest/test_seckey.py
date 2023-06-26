@@ -287,6 +287,40 @@ class TestSecKey(TestCase):
             str,
         )
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754, str)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA1, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA224, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA256, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA384, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA512, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA1, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA224, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA256, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA384, str
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA512, str
+        )
+
     def test_functions(self):
         self.assertIsInstance(Security.SecKeyGetTypeID(), int)
 

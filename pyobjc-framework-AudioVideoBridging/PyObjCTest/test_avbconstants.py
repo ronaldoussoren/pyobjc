@@ -456,32 +456,64 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateAddKey, 0x0037
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationAddKey, 0x0037
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateDeleteKey, 0x0038
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationDeleteKey, 0x0038
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateGetKeyList, 0x0039
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetKeyList, 0x0039
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateGetKey, 0x003A
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetKey, 0x003A
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateAddKeyToChain, 0x003B
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationAddKeyToChain, 0x003B
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateDeleteKeyFromChain,
             0x003C,
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationDeleteKeyFromChain,
+            0x003C,
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateGetKeychainList, 0x003D
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetKeychainList,
+            0x003D,
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateGetIdentity, 0x003E
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetIdentity, 0x003E
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateAddToken, 0x003F
         )
         self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationAddToken, 0x003F
+        )
+        self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateDeleteToken, 0x0040
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationDeleteToken, 0x0040
         )
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAuthenticate, 0x0041)
         self.assertEqual(
@@ -599,6 +631,12 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetPathLatency, 0x0066
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetNonce, 0x0067
+        )
+        self.assertEqual(
+            AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationAddKeyNonce, 0x0068
         )
 
         self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeRead, 0x00)

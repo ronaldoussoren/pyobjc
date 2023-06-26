@@ -20,6 +20,10 @@ class TestSHMediaItem(TestCase):
         self.assertIsInstance(ShazamKit.SHMediaItemGenres, str)
         self.assertIsInstance(ShazamKit.SHMediaItemISRC, str)
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(ShazamKit.SHMediaItemCreationDate, str)
+
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(ShazamKit.SHMediaItemTimeRanges, str)

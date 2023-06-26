@@ -33,3 +33,11 @@ class TestICCameraFile(TestCase):
             2,
             b"v@@",
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            ImageCaptureCore.ICCameraFile.requestSecurityScopedURLWithCompletion_,
+            0,
+            b"v@@",
+        )

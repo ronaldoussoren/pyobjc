@@ -18,3 +18,8 @@ class TestPrivacyContext(TestCase):
         Network.nw_privacy_context_flush_cache
         Network.nw_privacy_context_disable_logging
         Network.nw_privacy_context_require_encrypted_name_resolution
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        Network.nw_privacy_context_add_proxy
+        Network.nw_privacy_context_clear_proxies

@@ -177,6 +177,10 @@ class TestNSFileManager(TestCase):
             Foundation.NSURLFileProtectionCompleteUntilFirstUserAuthentication, str
         )
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(Foundation.NSFileProtectionCompleteWhenUserInactive, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsOut(

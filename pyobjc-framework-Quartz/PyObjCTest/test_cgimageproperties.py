@@ -880,4 +880,7 @@ class TestCGImageProperties(TestCase):
 
     @min_os_level("13.3")
     def testConstants13_3(self):
+        # kCGImagePropertyOpenEXRCompression is no longer present in the 14.0 SDK,
+        # but wasn't deprecated?
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyAVISDictionary, str)

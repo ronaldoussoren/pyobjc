@@ -12,6 +12,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentType, str)
         self.assertIsTypedEnum(AppKit.NSTextEffectStyle, str)
         self.assertIsTypedEnum(AppKit.NSTextLayoutSectionKey, str)
+        self.assertIsTypedEnum(AppKit.NSAttributedStringFormattingContextKey, str)
 
     def test_enum_types_appkit(self):
         self.assertIsEnumType(AppKit.NSSpellingState)
@@ -324,6 +325,15 @@ class TestNSAttributedString(TestCase):
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(Foundation.NSMarkdownSourcePositionAttributeName, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(Foundation.NSInflectionConceptsKey, str)
+        self.assertIsInstance(
+            Foundation.NSInflectionAgreementArgumentAttributeName, str
+        )
+        self.assertIsInstance(Foundation.NSInflectionAgreementConceptAttributeName, str)
+        self.assertIsInstance(Foundation.NSInflectionReferentConceptAttributeName, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):

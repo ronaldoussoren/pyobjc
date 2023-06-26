@@ -151,3 +151,14 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_PropagatePerFrameHDRDisplayMetadata,
             str,
         )
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_GeneratePerFrameHDRDisplayMetadata,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_RequestedMVHEVCVideoLayerIDs,
+            str,
+        )

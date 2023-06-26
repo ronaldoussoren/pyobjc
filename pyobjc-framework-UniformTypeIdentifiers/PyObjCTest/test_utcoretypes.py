@@ -411,3 +411,9 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(
             UniformTypeIdentifiers.UTTypeMakefile, UniformTypeIdentifiers.UTType
         )
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeAHAP, UniformTypeIdentifiers.UTType
+        )

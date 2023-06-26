@@ -76,6 +76,14 @@ class TestNSMenu(TestCase):
         self.assertIsInstance(AppKit.NSMenuDidBeginTrackingNotification, str)
         self.assertIsInstance(AppKit.NSMenuDidEndTrackingNotification, str)
 
+        self.assertIsEnumType(AppKit.NSMenuPresentationStyle)
+        self.assertEqual(AppKit.NSMenuPresentationStyleRegular, 0)
+
+        self.assertIsEnumType(AppKit.NSMenuSelectionMode)
+        self.assertEqual(AppKit.NSMenuSelectionModeAutomatic, 0)
+        self.assertEqual(AppKit.NSMenuSelectionModeSelectOne, 1)
+        self.assertEqual(AppKit.NSMenuSelectionModeSelectAny, 2)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(
@@ -102,3 +110,14 @@ class TestNSMenu(TestCase):
         self.assertEqual(AppKit.NSMenuPropertyItemImage, 1 << 3)
         self.assertEqual(AppKit.NSMenuPropertyItemEnabled, 1 << 4)
         self.assertEqual(AppKit.NSMenuPropertyItemAccessibilityDescription, 1 << 5)
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            AppKit.NSMenu.paletteMenuWithColors_titles_selectionHandler_, 2, b"v@"
+        )
+        self.assertArgIsBlock(
+            AppKit.NSMenu.paletteMenuWithColors_titles_templateImage_selectionHandler_,
+            2,
+            b"v@",
+        )

@@ -5,6 +5,7 @@ import Vision
 class TestVNClassifyImageRequest(TestCase):
     def test_constants(self):
         self.assertEqual(Vision.VNClassifyImageRequestRevision1, 1)
+        self.assertEqual(Vision.VNClassifyImageRequestRevision2, 2)
 
     @min_os_level("10.15")
     def test_methods(self):

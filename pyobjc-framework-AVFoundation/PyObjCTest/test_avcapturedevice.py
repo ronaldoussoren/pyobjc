@@ -137,6 +137,10 @@ class TestAVCaptureDevice(TestCase):
     def test_constants13_0(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeDeskViewCamera, str)
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeContinuityCamera, str)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
@@ -334,4 +338,11 @@ class TestAVCaptureDevice(TestCase):
         )
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightSupported
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.reactionEffectsEnabled)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.reactionEffectsSupported
         )

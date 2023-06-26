@@ -29,6 +29,10 @@
    "kAudioChannelLayoutTag_CICP_18": { "value": 13697038 },
    "kAudioChannelLayoutTag_CICP_19": { "value": 13762572 },
    "kAudioChannelLayoutTag_CICP_20": { "value": 13828110 },
+   "kAudioChannelLayoutTag_Ogg_5_0": { "value": 13893637},
+   "kAudioChannelLayoutTag_Ogg_5_1": { "value": 13959174 },
+   "kAudioChannelLayoutTag_Ogg_6_1": { "value": 14024711 },
+   "kAudioChannelLayoutTag_Ogg_7_1": { "value": 14090248 },
    "kAudioChannelLayoutTag_Logic_4_0_C": { "value": 12910596 },
    "kAudioChannelLayoutTag_Logic_6_0_B": { "value": 12976134 },
    "kAudioChannelLayoutTag_Logic_6_1_B": { "value": 13041671 },
@@ -75,6 +79,8 @@
    "kAudioFormatMPEGD_USAC": { "value": 1970495843 }
   },
   "aliases": {
+   "kAudioChannelLayoutTag_Ogg_3_0": { "alias": "kAudioChannelLayoutTag_AC3_3_0" },
+   "kAudioChannelLayoutTag_Ogg_4_0": { "alias": "kAudioChannelLayoutTag_WAVE_4_0_B" },
    "kAudioChannelLayoutTag_CICP_1": { "alias": "kAudioChannelLayoutTag_MPEG_1_0" },
    "kAudioChannelLayoutTag_CICP_2": { "alias": "kAudioChannelLayoutTag_MPEG_2_0" },
    "kAudioChannelLayoutTag_CICP_3": { "alias": "kAudioChannelLayoutTag_MPEG_3_0_A" },

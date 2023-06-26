@@ -104,6 +104,7 @@ FRAMEWORK_WRAPPERS = [
     ("MailKit", "12.0", None),
     ("MapKit", "10.9", None),
     ("MediaAccessibility", "10.9", None),
+    ("MediaExtension", "14.0", None),
     ("MediaLibrary", "10.9", None),
     ("MediaPlayer", "10.12", None),
     ("MediaToolbox", "10.9", None),
@@ -156,10 +157,12 @@ FRAMEWORK_WRAPPERS = [
     ("GameKit", "10.8", None),
     ("GameplayKit", "10.11", None),
     ("SceneKit", "10.7", None),
+    ("SensitiveContentAnalysis", "14.0", None),
     ("SharedWithYouCore", "13.0", None),
     ("SharedWithYou", "13.0", None),
     ("SoundAnalysis", "10.15", None),
     ("ScreenCaptureKit", "12.3", None),
+    ("Symbols", "14.0", None),
     ("SystemExtensions", "10.15", None),
     ("ThreadNetwork", "13.0", None),
     ("UniformTypeIdentifiers", "11.0", None),
@@ -169,8 +172,6 @@ FRAMEWORK_WRAPPERS = [
     ("VideoToolbox", "10.8", None),
     ("Virtualization", "11.0", None),
     ("Vision", "10.13", None),
-    # iTunes library is shipped with iTunes, not part of macOS 'core'
-    # Requires iTunes 11 or later, which is not available on 10.5
     ("iTunesLibrary", "10.6", None),
 ]
 

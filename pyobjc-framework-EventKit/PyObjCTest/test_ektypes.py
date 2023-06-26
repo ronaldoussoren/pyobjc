@@ -27,7 +27,12 @@ class TestEKTypes(TestCase):
         self.assertEqual(EventKit.EKAuthorizationStatusNotDetermined, 0)
         self.assertEqual(EventKit.EKAuthorizationStatusRestricted, 1)
         self.assertEqual(EventKit.EKAuthorizationStatusDenied, 2)
-        self.assertEqual(EventKit.EKAuthorizationStatusAuthorized, 3)
+        self.assertEqual(EventKit.EKAuthorizationStatusFullAccess, 3)
+        self.assertEqual(EventKit.EKAuthorizationStatusWriteOnly, 4)
+        self.assertEqual(
+            EventKit.EKAuthorizationStatusAuthorized,
+            EventKit.EKAuthorizationStatusFullAccess,
+        )
 
         self.assertEqual(EventKit.EKWeekdaySunday, 1)
         self.assertEqual(EventKit.EKWeekdayMonday, 2)

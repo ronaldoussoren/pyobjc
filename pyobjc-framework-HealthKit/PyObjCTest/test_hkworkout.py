@@ -92,6 +92,7 @@ class TestHKWorkout(TestCase):
         self.assertEqual(HealthKit.HKWorkoutActivityTypeCooldown, 80)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeSwimBikeRun, 82)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeTransition, 83)
+        self.assertEqual(HealthKit.HKWorkoutActivityTypeUnderwaterDiving, 84)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeOther, 3000)
 
         self.assertIsEnumType(HealthKit.HKWorkoutEventType)

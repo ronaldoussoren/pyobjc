@@ -66,6 +66,10 @@ class TestICDevice(TestCase):
     def testConstants10_15(self):
         self.assertIsInstance(ImageCaptureCore.ICEnumerationChronologicalOrder, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(ImageCaptureCore.ICTransportTypeProximity, str)
+
     def testProtocolObjects(self):
         self.assertProtocolExists("ICDeviceDelegate")
 

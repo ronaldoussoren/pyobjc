@@ -7,3 +7,6 @@ class TestVNGenerateObjectnessBasedSaliencyImageRequest(TestCase):
         self.assertEqual(
             Vision.VNGenerateObjectnessBasedSaliencyImageRequestRevision1, 1
         )
+        self.assertEqual(
+            Vision.VNGenerateObjectnessBasedSaliencyImageRequestRevision2, 2
+        )

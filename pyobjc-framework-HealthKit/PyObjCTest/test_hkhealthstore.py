@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import HealthKit
 
 
@@ -94,4 +94,16 @@ class TestHKHealthStore(TestCase):
             HealthKit.HKHealthStore.recalibrateEstimatesForSampleType_atDate_completion_,
             2,
             b"vZ@",
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBlock(
+            HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            HealthKit.HKHealthStore.setWorkoutSessionMirroringStartHandler_,
+            0,
+            b"v@",
         )

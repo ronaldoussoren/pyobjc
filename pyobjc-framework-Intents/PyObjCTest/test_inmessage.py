@@ -34,3 +34,4 @@ class TestINMessage(TestCase):
         self.assertEqual(Intents.INMessageTypeActivitySnippet, 23)
         self.assertEqual(Intents.INMessageTypeFile, 24)
         self.assertEqual(Intents.INMessageTypeLink, 25)
+        self.assertEqual(Intents.INMessageTypeReaction, 26)

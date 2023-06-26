@@ -30,6 +30,13 @@ class TestCGImageSource(TestCase):
     def testConstants10_11(self):
         self.assertIsInstance(Quartz.kCGImageSourceSubsampleFactor, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(Quartz.kCGImageSourceDecodeRequest, str)
+        self.assertIsInstance(Quartz.kCGImageSourceDecodeToHDR, str)
+        self.assertIsInstance(Quartz.kCGImageSourceDecodeToSDR, str)
+        self.assertIsInstance(Quartz.kCGImageSourceDecodeRequestOptions, str)
+
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)
 

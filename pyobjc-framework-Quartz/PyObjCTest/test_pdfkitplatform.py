@@ -34,6 +34,7 @@ class TestPDFKitPlatform(TestCase):
         )
         self.assertIs(Quartz.PDFKitResponder, Quartz.NSResponder)
         self.assertIs(Quartz.PDFKitTextContentType, Quartz.NSTextContentType)
+        self.assertIs(Quartz.PDFKitPlatformTextContentType, Quartz.NSTextContentType)
         self.assertIs(Quartz.PDFPoint, Quartz.NSPoint)
         self.assertIs(Quartz.PDFRect, Quartz.NSRect)
         self.assertIs(Quartz.PDFSize, Quartz.NSSize)

@@ -38,3 +38,7 @@ class TestNSMenuItem(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSMenuItem.setAllowsAutomaticKeyEquivalentMirroring_, 0
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isSectionHeader)

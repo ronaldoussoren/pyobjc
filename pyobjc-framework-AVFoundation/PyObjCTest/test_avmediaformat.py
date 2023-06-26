@@ -81,6 +81,7 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicUsesWideGamutColorSpace, str
         )
+        self.assertIsInstance(AVFoundation.AVMediaTypeHaptic, str)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
@@ -113,3 +114,20 @@ class TestAVMediaFormat(TestCase):
     def testConstants12_0(self):
         self.assertIsInstance(AVFoundation.AVFileTypeAppleiTT, str)
         self.assertIsInstance(AVFoundation.AVFileTypeSCC, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicEnhancesSpeechIntelligibility, str
+        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicTactileMinimal, str)
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicContainsStereoMultiviewVideo, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicCarriesVideoStereoMetadata, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicIndicatesHorizontalFieldOfView, str
+        )
+        self.assertIsInstance(AVFoundation.AVFileTypeAHAP, str)

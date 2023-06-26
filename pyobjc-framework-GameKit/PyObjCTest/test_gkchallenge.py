@@ -2,6 +2,8 @@ import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 GKChallengeComposeCompletionBlock = b"v@Z@"
+GKChallengeComposeHandler = b"v@Z@"
+GKChallengeComposeHandler = b"v@Z@"
 
 
 class TestGKChallenge(TestCase):
@@ -59,4 +61,45 @@ class TestGKChallenge(TestCase):
             GameKit.GKScore.reportLeaderboardScores_withEligibleChallenges_withCompletionHandler_,
             2,
             b"v@",
+        )
+        self.assertArgIsBlock(
+            GameKit.GKLeaderboardEntry.challengeComposeControllerWithMessage_players_completionHandler_,
+            2,
+            GKChallengeComposeCompletionBlock,
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBlock(
+            GameKit.GKScore.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAchievement.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
+        )
+        self.assertArgIsBlock(
+            GameKit.GKChallenge.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            GameKit.GKScore.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
+        )
+        self.assertArgIsBlock(
+            GameKit.GKLeaderboardEntry.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAchievement.challengeComposeControllerWithMessage_players_completion_,
+            2,
+            GKChallengeComposeHandler,
         )

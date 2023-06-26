@@ -282,6 +282,18 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
+    def setVertexBuffer_offset_attributeStride_atIndex_(self, a, b, c, d):
+        pass
+
+    def setVertexBuffers_offsets_attributeStrides_withRange_(self, a, b, c, d):
+        pass
+
+    def setVertexBufferOffset_attributeStride_atIndex_(self, a, b, c):
+        pass
+
+    def setVertexBytes_length__attributeStride_atIndex_(self, a, b, c):
+        pass
+
 
 class TestMTLRenderCommandEncoder(TestCase):
     def test_enum_types(self):
@@ -2417,4 +2429,103 @@ class TestMTLRenderCommandEncoder2(TestCase):
             TestMTLRenderCommandEncoderHelper.setObjectTextures_withRange_,
             1,
             Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,
+            3,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,
+            4,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            0,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            1,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            1,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            2,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            2,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBuffers_offsets_attributeStrides_withRange_,
+            3,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBufferOffset_attributeStride_atIndex_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBufferOffset_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBufferOffset_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
+            0,
+            b"n^v",
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
+            0,
+            1,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
+            3,
+            objc._C_NSUInteger,
         )

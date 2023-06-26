@@ -47,3 +47,7 @@ class TestSFContentBlockerManager(TestCase):
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(SafariServices.SFExtensionMessageKey, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(SafariServices.SFExtensionProfileKey, str)

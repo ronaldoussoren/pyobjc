@@ -127,6 +127,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLTextureUsageShaderWrite, 0x0002)
         self.assertEqual(Metal.MTLTextureUsageRenderTarget, 0x0004)
         self.assertEqual(Metal.MTLTextureUsagePixelFormatView, 0x0010)
+        self.assertEqual(Metal.MTLTextureUsageShaderAtomic, 0x0020)
 
         self.assertEqual(Metal.MTLTextureCompressionTypeLossless, 0)
         self.assertEqual(Metal.MTLTextureCompressionTypeLossy, 1)

@@ -51,6 +51,16 @@ class TestCBCentralManager(TestCase):
             objc._C_NSInteger,
         )
 
+        self.assertArgHasType(
+            CoreBluetooth.CBCentralManager.centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_,
+            2,
+            objc._C_DBL,
+        )
+        self.assertArgIsBOOL(
+            CoreBluetooth.CBCentralManager.centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_,
+            3,
+        )
+
     @min_os_level("11.0")
     def testMethods11_0(self):
         self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.supportsFeatures_)

@@ -8,6 +8,16 @@ VTDecompressionOutputHandler = (
     + VideoToolbox.CMTime.__typestr__
 )
 
+VTDecompressionOutputMultiImageCallback = (
+    b"vQQiQ^{OpaqueCMTaggedBufferGroup=}"
+    + VideoToolbox.CMTime.__typestr__
+    + VideoToolbox.CMTime.__typestr__
+)
+
+VTDecompressionMultiImageCapableOutputHandler = (
+    b"viQ^{__CVBuffer=}^{OpaqueCMTaggedBufferGroup=}" + VideoToolbox.CMTime.__typestr__
+)
+
 
 class TestVTDecompressionSession(TestCase):
     @expectedFailure
@@ -55,3 +65,26 @@ class TestVTDecompressionSession(TestCase):
     @min_os_level("10.13")
     def test_functions10_13(self):
         self.assertResultIsBOOL(VideoToolbox.VTIsHardwareDecodeSupported)
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        self.assertResultIsBOOL(VideoToolbox.VTIsStereoMVHEVCDecodeSupported)
+
+        self.assertArgIsFunction(
+            VideoToolbox.VTDecompressionSessionSetMultiImageCallback,
+            1,
+            VTDecompressionOutputMultiImageCallback,
+            True,
+        )
+        self.assertArgHasType(
+            VideoToolbox.VTDecompressionSessionSetMultiImageCallback, 2, b"Q"
+        )
+
+        self.assertArgIsOut(
+            VideoToolbox.VTDecompressionSessionDecodeFrameWithMultiImageCapableOutputHandler,
+            3,
+        )
+        self.assertArgIsBlock(
+            VideoToolbox.VTDecompressionSessionDecodeFrameWithMultiImageCapableOutputHandler,
+            4,
+        )

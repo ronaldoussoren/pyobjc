@@ -157,6 +157,10 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLDataTypeIntersectionFunctionTable, 116)
         self.assertEqual(Metal.MTLDataTypePrimitiveAccelerationStructure, 117)
         self.assertEqual(Metal.MTLDataTypeInstanceAccelerationStructure, 118)
+        self.assertEqual(Metal.MTLDataTypeBFloat, 121)
+        self.assertEqual(Metal.MTLDataTypeBFloat2, 122)
+        self.assertEqual(Metal.MTLDataTypeBFloat3, 123)
+        self.assertEqual(Metal.MTLDataTypeBFloat4, 124)
 
         self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
         self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
@@ -169,9 +173,18 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
         self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
 
-        self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
-        self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
-        self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
+        self.assertEqual(Metal.MTLBindingAccessReadOnly, 0)
+        self.assertEqual(Metal.MTLBindingAccessReadWrite, 1)
+        self.assertEqual(Metal.MTLBindingAccessWriteOnly, 2)
+        self.assertEqual(
+            Metal.MTLArgumentAccessReadOnly, Metal.MTLBindingAccessReadOnly
+        )
+        self.assertEqual(
+            Metal.MTLArgumentAccessReadWrite, Metal.MTLBindingAccessReadWrite
+        )
+        self.assertEqual(
+            Metal.MTLArgumentAccessWriteOnly, Metal.MTLBindingAccessWriteOnly
+        )
 
         self.assertEqual(Metal.MTLBindingTypeBuffer, 0)
         self.assertEqual(Metal.MTLBindingTypeThreadgroupMemory, 1)

@@ -3,6 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestASAuthorizationPublicKeyCredentialConstants(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(
+            AuthenticationServices.ASAuthorizationPublicKeyCredentialAttachment
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationPublicKeyCredentialAttachmentPlatform,
+            0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationPublicKeyCredentialAttachmentCrossPlatform,
+            1,
+        )
+
     @min_os_level("12.0")
     def test_constants12_0(self):
         self.assertIsInstance(

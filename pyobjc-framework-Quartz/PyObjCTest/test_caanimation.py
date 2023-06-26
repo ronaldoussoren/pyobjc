@@ -54,3 +54,8 @@ class TestCAAnimation(TestCase):
 
         self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isCumulative)
         self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setCumulative_, 0)
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(Quartz.CAAnimation.allowsOverdamping)
+        self.assertArgIsBOOL(Quartz.CAAnimation.setAllowsOverdamping_, 0)

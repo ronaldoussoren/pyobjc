@@ -63,3 +63,21 @@ class TestVTCompressionSession(TestCase):
             6,
             VTCompressionOutputHandler,
         )
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        self.assertResultIsBOOL(VideoToolbox.VTIsStereoMVHEVCEncodeSupported)
+
+        self.assertArgHasType(
+            VideoToolbox.VTCompressionSessionEncodeMultiImageFrame, 5, b"Q"
+        )
+        self.assertArgIsOut(VideoToolbox.VTCompressionSessionEncodeMultiImageFrame, 6)
+
+        self.assertArgIsOut(
+            VideoToolbox.VTCompressionSessionEncodeMultiImageFrameWithOutputHandler, 5
+        )
+        self.assertArgIsBlock(
+            VideoToolbox.VTCompressionSessionEncodeMultiImageFrameWithOutputHandler,
+            6,
+            VTCompressionOutputHandler,
+        )

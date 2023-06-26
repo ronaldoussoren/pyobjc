@@ -130,6 +130,25 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSDataTypeBool,
             MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit | 8,
         )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeBFloat16,
+            MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit
+            | MetalPerformanceShaders.MPSDataTypeFloat16,
+        )
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeBit)
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignBit, 0x00800000)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSFloatDataTypeExponentBit, 0x007C0000
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSFloatDataTypeMantissaBit, 0x0003FC00
+        )
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeShift)
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignShift, 23)
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeExponentShift, 18)
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeMantissaShift, 10)
 
     def test_structs(self):
         v = MetalPerformanceShaders.MPSOffset()

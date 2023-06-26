@@ -97,6 +97,9 @@ class TestNSURLSessionHelper(Foundation.NSObject):
     def URLSession_task_willBeginDelayedRequest_completionHandler_(self, a, b, c, d):
         pass
 
+    def URLSession_needNewBodyStreamFromOffset_completionHandler_(self, a, b, c):
+        pass
+
 
 class TestNSURLSessionWebSocketDelegateHelper(Foundation.NSObject):
     def URLSession_webSocketTask_didCloseWithCode_reason_(self, a, b, c, d):
@@ -209,6 +212,10 @@ class TestNSURLSession(TestCase):
         self.assertEqual(
             Foundation.NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3
         )
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(Foundation.NSURLSessionUploadTaskResumeData, str)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
@@ -394,6 +401,12 @@ class TestNSURLSession(TestCase):
             b"v" + objc._C_NSInteger + b"@",
         )
 
+        self.assertArgIsBlock(
+            TestNSURLSessionHelper.URLSession_needNewBodyStreamFromOffset_completionHandler_,
+            2,
+            b"v@",
+        )
+
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBlock(
@@ -442,12 +455,25 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods1_0(self):
+    def testMethods13_0(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.requiresDNSSECValidation
         )
         self.assertArgIsBOOL(
             Foundation.NSURLSessionConfiguration.setRequiresDNSSECValidation_, 0
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBlock(
+            Foundation.NSURLSession.uploadTaskWithResumeData_completionHandler_,
+            1,
+            b"v@@@",
+        )
+        self.assertArgIsBlock(
+            Foundation.cancelByProducingResumeData.uploadTaskWithResumeData_completionHandler_,
+            0,
+            b"v@",
         )
 
     @min_sdk_level("10.12")

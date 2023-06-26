@@ -7,6 +7,18 @@ class TestEKEventStore(TestCase):
         self.assertIsEnumType(EventKit.EKSpan)
 
     @min_os_level("10.8")
+    def testConstants10_8(self):
+        self.assertEqual(EventKit.EKSpanThisEvent, 0)
+        self.assertEqual(EventKit.EKSpanFutureEvents, 1)
+
+        self.assertIsInstance(EventKit.EKEventStoreChangedNotification, str)
+
+        self.assertEqual(EventKit.EKAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(EventKit.EKAuthorizationStatusRestricted, 1)
+        self.assertEqual(EventKit.EKAuthorizationStatusDenied, 2)
+        self.assertEqual(EventKit.EKAuthorizationStatusAuthorized, 3)
+
+    @min_os_level("10.8")
     def testBasic(self):
         self.assertTrue(hasattr(EventKit, "EKEventStore"))
 
@@ -62,14 +74,16 @@ class TestEKEventStore(TestCase):
         self.assertResultIsBOOL(EventKit.EKEventStore.removeEvent_span_error_)
         self.assertArgIsOut(EventKit.EKEventStore.removeEvent_span_error_, 2)
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        self.assertEqual(EventKit.EKSpanThisEvent, 0)
-        self.assertEqual(EventKit.EKSpanFutureEvents, 1)
-
-        self.assertIsInstance(EventKit.EKEventStoreChangedNotification, str)
-
-        self.assertEqual(EventKit.EKAuthorizationStatusNotDetermined, 0)
-        self.assertEqual(EventKit.EKAuthorizationStatusRestricted, 1)
-        self.assertEqual(EventKit.EKAuthorizationStatusDenied, 2)
-        self.assertEqual(EventKit.EKAuthorizationStatusAuthorized, 3)
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBlock(
+            EventKit.EKEventStore.requestFullAccessToEventsWithCompletion_, 0, b"vZ@"
+        )
+        self.assertArgIsBlock(
+            EventKit.EKEventStore.requestWriteOnlyAccessToEventsWithCompletion_,
+            0,
+            b"vZ@",
+        )
+        self.assertArgIsBlock(
+            EventKit.EKEventStore.requestFullAccessToRemindersWithCompletion, 0, b"vZ@"
+        )

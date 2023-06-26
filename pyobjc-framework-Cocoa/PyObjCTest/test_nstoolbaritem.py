@@ -10,6 +10,7 @@ class TestNSToolbarItemHelper(AppKit.NSObject):
 class TestNSToolbarItem(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(AppKit.NSToolbarItemVisibilityPriority, int)
+        self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
 
     def testConstants(self):
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityStandard, 0)
@@ -33,6 +34,13 @@ class TestNSToolbarItem(TestCase):
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(AppKit.NSToolbarCloudSharingItemIdentifier, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AppKit.NSToolbarToggleInspectorItemIdentifier, str)
+        self.assertIsInstance(
+            AppKit.NSToolbarInspectorTrackingSeparatorItemIdentifier, str
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isEnabled)

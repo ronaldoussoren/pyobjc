@@ -121,3 +121,9 @@ class TestColorSyncTransform(TestCase):
     @min_os_level("12.0")
     def testConstants11_0_missing(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformProfileSequnce, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(ColorSync.kColorSyncHDRDerivative, str)
+        self.assertIsInstance(ColorSync.kColorSyncPQDerivative, str)
+        self.assertIsInstance(ColorSync.kColorSyncHLGDerivative, str)

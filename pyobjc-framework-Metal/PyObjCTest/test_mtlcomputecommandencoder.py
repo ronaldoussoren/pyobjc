@@ -102,6 +102,18 @@ class TestMTLComputeCommandEncoderHelper(Metal.NSObject):
     def supportIndirectCommandBuffers(self):
         return 1
 
+    def setBuffer_offset_attributeStride_atIndex_(self, a, b, c, d):
+        pass
+
+    def setBuffers_offsets_attributeStrides_withRange_(self, a, b, c, d):
+        pass
+
+    def setBufferOffset_attributeStride_atIndex_(self, a, b, c):
+        pass
+
+    def setBytes_length_attributeStride_atIndex_(self, a, b, c, d):
+        pass
+
 
 class TestMTLComputeCommandEncoder(TestCase):
     def test_structs(self):
@@ -446,4 +458,98 @@ class TestMTLComputeCommandEncoder(TestCase):
 
         self.assertResultIsBOOL(
             TestMTLComputeCommandEncoderHelper.supportIndirectCommandBuffers
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffer_offset_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffer_offset_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffer_offset_attributeStride_atIndex_,
+            3,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            0,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            1,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            1,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            2,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            2,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBuffers_offsets_attributeStrides_withRange_,
+            3,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBufferOffset_attributeStride_atIndex_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBufferOffset_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBufferOffset_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBytes_length_attributeStride_atIndex_,
+            0,
+            b"n^v",
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setBytes_length_attributeStride_atIndex_,
+            0,
+            1,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBytes_length_attributeStride_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBytes_length_attributeStride_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setBytes_length_attributeStride_atIndex_,
+            3,
+            objc._C_NSUInteger,
         )

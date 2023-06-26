@@ -1,8 +1,46 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+
+
+class TestAVCapturePhotoOutputHelper(AVFoundation.NSObject):
+    def readinessCoordinator_captureReadinessDidChange_(self, a, b):
+        pass
 
 
 class TestAVCapturePhotoOutput(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(AVFoundation.AVCapturePhotoOutputCaptureReadiness)
+        self.assertEqual(
+            AVFoundation.AVCapturePhotoOutputCaptureReadinessSessionNotRunning, 0
+        )
+        self.assertEqual(AVFoundation.AVCapturePhotoOutputCaptureReadinessReady, 1)
+        self.assertEqual(
+            AVFoundation.AVCapturePhotoOutputCaptureReadinessNotReadyMomentarily, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePhotoOutputCaptureReadinessNotReadyWaitingForCapture,
+            3,
+        )
+        self.assertEqual(
+            AVFoundation.AVCapturePhotoOutputCaptureReadinessNotReadyWaitingForProcessing,
+            4,
+        )
+
+    @min_sdk_level("10.15")
+    def test_protocols10_15(self):
+        self.assertProtocolExists("AVCapturePhotoCaptureDelegate")
+
+    @min_sdk_level("14.0")
+    def test_protocols14_0(self):
+        self.assertProtocolExists("AVCapturePhotoOutputReadinessCoordinatorDelegate")
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestAVCapturePhotoOutputHelper.readinessCoordinator_captureReadinessDidChange_,
+            1,
+            b"q",
+        )
+
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(
@@ -31,4 +69,22 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoOutput.setPreservesLivePhotoCaptureSuspendedOnSessionStop_,
             0,
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isFastCapturePrioritizationSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isFastCapturePrioritizationEnabled
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isZeroShutterLagEnabled
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isResponsiveCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isResponsiveCaptureEnabled
         )

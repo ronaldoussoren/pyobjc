@@ -34,6 +34,9 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSDeviceSupportsSimdShuffleAndFill, 1 << 11
         )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDeviceSupportsBFloat16Arithmetic, 1 << 12
+        )
         self.assertNotHasAttr(MetalPerformanceShaders, "MPSDeviceCapsLast")
 
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexDestIndex, 0)
@@ -99,6 +102,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         )
 
         self.assertEqual(MetalPerformanceShaders.MPSFunctionConstantNone, -1)
+        self.assertEqual(MetalPerformanceShaders.MPSFunctionConstantNoneArray, (-1, -1))
 
     def test_structs(self):
         v = MetalPerformanceShaders.MPSMatrixOffset()

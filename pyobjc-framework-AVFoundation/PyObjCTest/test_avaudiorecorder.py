@@ -32,5 +32,23 @@ class TestAVAudioRecorder(TestCase):
     def testMethods10_12(self):
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_format_error_, 2)
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioRecorder.setMutedSpeechActivityEventListener_
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioRecorder.setMutedSpeechActivityEventListener_, 0, b"vq"
+        )
+
+        self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_format_error_, 2)
+
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.prepareToRecord)
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.record)
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_)
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordForDuration_)
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_forDuration_)
+        self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.deleteRecording)
+
     def testProtocols(self):
         self.assertProtocolExists("AVAudioRecorderDelegate")

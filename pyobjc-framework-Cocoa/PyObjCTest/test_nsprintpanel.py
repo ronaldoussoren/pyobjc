@@ -25,12 +25,23 @@ class TestNSPrintPanel(TestCase):
 
         self.assertIsInstance(AppKit.NSPrintPhotoJobStyleHint, str)
 
+        self.assertIsEnumType(AppKit.NSPrintPanelResult)
+        self.assertEqual(AppKit.NSPrintPanelResultCancelled, 0)
+        self.assertEqual(AppKit.NSPrintPanelResultPrinted, 1)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(AppKit.NSPrintPanelAccessorySummaryItemNameKey, str)
         self.assertIsInstance(
             AppKit.NSPrintPanelAccessorySummaryItemDescriptionKey, str
         )
+
+    @min_os_level("10.6")
+    def testConstants10_6(self):
+        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
+
+        self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)
+        self.assertIsInstance(AppKit.NSPrintNoPresetsJobStyleHint, str)
 
     def testMethods(self):
         self.assertArgIsSEL(
@@ -44,9 +55,10 @@ class TestNSPrintPanel(TestCase):
             b"^v",
         )
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
-
-        self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)
-        self.assertIsInstance(AppKit.NSPrintNoPresetsJobStyleHint, str)
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            AppKit.NSPrintPanel.beginSheetUsingPrintInfo_onWindow_completionHandler_,
+            2,
+            b"vq",
+        )

@@ -18,6 +18,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMediaType_Subtitle, fourcc(b"sbtl"))
         self.assertEqual(CoreMedia.kCMMediaType_TimeCode, fourcc(b"tmcd"))
         self.assertEqual(CoreMedia.kCMMediaType_Metadata, fourcc(b"meta"))
+        self.assertEqual(CoreMedia.kCMMediaType_TaggedBufferGroup, fourcc(b"tbgr"))
 
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
@@ -205,6 +206,9 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMuxedStreamType_MPEG2Transport, fourcc(b"mp2t"))
         self.assertEqual(CoreMedia.kCMMuxedStreamType_MPEG2Program, fourcc(b"mp2p"))
         self.assertEqual(CoreMedia.kCMMuxedStreamType_DV, fourcc(b"dv  "))
+        self.assertEqual(
+            CoreMedia.kCMMuxedStreamType_EmbeddedDeviceScreenRecording, fourcc(b"isr ")
+        )
 
         self.assertEqual(CoreMedia.kCMClosedCaptionFormatType_CEA608, fourcc(b"c608"))
         self.assertEqual(CoreMedia.kCMClosedCaptionFormatType_CEA708, fourcc(b"c708"))
@@ -259,6 +263,10 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMetadataFormatType_ID3, fourcc(b"id3 "))
         self.assertEqual(CoreMedia.kCMMetadataFormatType_Boxed, fourcc(b"mebx"))
         self.assertEqual(CoreMedia.kCMMetadataFormatType_EMSG, fourcc(b"emsg"))
+
+        self.assertEqual(
+            CoreMedia.kCMTaggedBufferGroupFormatType_TaggedBufferGroup, fourcc(b"tgbr")
+        )
 
     @min_os_level("10.7")
     def test_constants10_7(self):
@@ -595,6 +603,21 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_AmbientViewingEnvironment, str
         )
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ContentColorVolume, str
+        )
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_HeroEye, str)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionHeroEye_Left, str)
+        self.assertIsInstance(CoreMedia.kCMFormatDescriptionHeroEye_Right, str)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_StereoCameraBaseline, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_HorizontalDisparityAdjustment, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)
@@ -767,6 +790,13 @@ class TestCMFormatDescription(TestCase):
         )
 
         CoreMedia.CMMetadataFormatDescriptionGetIdentifiers
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        self.assertArgIsOut(CoreMedia.CMVideoFormatDescriptionCopyTagCollectionArray, 1)
+        self.assertArgIsCFRetained(
+            CoreMedia.CMVideoFormatDescriptionCopyTagCollectionArray, 1
+        )
 
     def no_test_functions_usage(self):
         # XXX: Test disabled due to periodic crashes in system libraries.

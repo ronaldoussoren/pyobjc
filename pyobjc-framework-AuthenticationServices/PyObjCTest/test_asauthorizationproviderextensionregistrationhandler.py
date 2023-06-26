@@ -43,6 +43,10 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsRegistrationRepair,
             1 << 1,
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsRegistrationSharedDeviceKeys,
+            1 << 2,
+        )
 
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionRegistrationResult
@@ -62,6 +66,42 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionRegistrationResultFailedNoRetry,
             3,
+        )
+
+        self.assertIsEnumType(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypes
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesNone,
+            0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesPassword,
+            1 << 0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesJWTBearer,
+            1 << 1,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesSAML1_1,
+            1 << 2,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesSAML2_0,
+            1 << 3,
+        )
+
+        self.assertIsEnumType(
+            AuthenticationServices.ASAuthorizationProviderExtensionPlatformSSOProtocolVersion
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionPlatformSSOProtocolVersion1_0,
+            0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionPlatformSSOProtocolVersion2_0,
+            1,
         )
 
     @min_sdk_level("13.0")

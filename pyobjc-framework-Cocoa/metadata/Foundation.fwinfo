@@ -1838,6 +1838,11 @@
    "NSAttributedString": {
     "methods": [
      {
+      "selector": "initWithFormat:options:locale:context:arguments:",
+      "class_method": false,
+      "suggestion": "Use -initWithFormat:options:locale:context: instead"
+     },
+     {
       "selector": "localizedAttributedStringWithFormat:options:",
       "class_method": true,
       "args": {

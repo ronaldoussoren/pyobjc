@@ -28,6 +28,7 @@ class TestNSAttributeDescription(TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(CoreData.NSObjectIDAttributeType, 2000)
+        self.assertEqual(CoreData.NSCompositeAttributeType, 2100)
 
     @min_os_level("10.7")
     def testMethods10_7(self):

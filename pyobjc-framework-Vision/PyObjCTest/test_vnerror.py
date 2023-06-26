@@ -28,3 +28,5 @@ class TestVNError(TestCase):
         self.assertEqual(Vision.VNErrorTimeStampNotFound, 18)
         self.assertEqual(Vision.VNErrorUnsupportedRequest, 19)
         self.assertEqual(Vision.VNErrorTimeout, 20)
+        self.assertEqual(Vision.VNErrorUnsupportedComputeStage, 21)
+        self.assertEqual(Vision.VNErrorUnsupportedComputeDevice, 22)

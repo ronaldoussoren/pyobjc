@@ -259,6 +259,11 @@ class TestHeader(TestCase):
             AppKit.NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0
         )
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(AppKit.NSView.clipsToBounds)
+        self.assertArgIsSEL(AppKit.NSView.displayLinkWithTarget_selector_, 1, b"v@:@")
+
     def testProtocol(self):
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_,

@@ -11,3 +11,4 @@ class TestLPError(TestCase):
         self.assertEqual(LinkPresentation.LPErrorMetadataFetchFailed, 2)
         self.assertEqual(LinkPresentation.LPErrorMetadataFetchCancelled, 3)
         self.assertEqual(LinkPresentation.LPErrorMetadataFetchTimedOut, 4)
+        self.assertEqual(LinkPresentation.LPErrorMetadataFetchNotAllowed, 5)

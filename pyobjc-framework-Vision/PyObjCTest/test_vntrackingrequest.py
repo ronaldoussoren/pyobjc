@@ -17,3 +17,9 @@ class TestVNRequest(TestCase):
         self.assertArgIsBlock(
             Vision.VNTrackingRequest.initWithCompletionHandler_, 0, b"v@@"
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsOutl(
+            Vision.VNTrackingRequest.supportedNumberOfTrackersAndReturnError_, 0
+        )

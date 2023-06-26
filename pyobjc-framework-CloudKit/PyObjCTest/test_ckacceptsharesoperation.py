@@ -2,19 +2,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 import CloudKit
 
 
-class TestCKAcceptSharesOperation(TestCase):
-    @min_os_level("10.12")
-    def testMethods10_12(self):
-        self.assertArgIsBlock(
-            CloudKit.CKAcceptSharesOperation.setPerShareCompletionBlock_, 0, b"v@@@"
-        )
-        self.assertResultIsBlock(
-            CloudKit.CKAcceptSharesOperation.perShareCompletionBlock, b"v@@@"
-        )
+class TestCKSyncEngineState(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(CloudKit.CKSyncEnginePendingRecordZoneChangeType)
+        self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeSave, 0)
+        self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeDelete, 1)
 
-        self.assertArgIsBlock(
-            CloudKit.CKAcceptSharesOperation.setAcceptSharesCompletionBlock_, 0, b"v@"
-        )
-        self.assertResultIsBlock(
-            CloudKit.CKAcceptSharesOperation.acceptSharesCompletionBlock, b"v@"
+        self.assertIsEnumType(CloudKit.CKSyncEnginePendingDatabaseChangeType)
+        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeSave, 0)
+        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeDelete, 1)
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(CloudKit.CKSyncEngineState.hasPendingUntrackedChanges)
+        self.assertArgIsBOOL(
+            CloudKit.CKSyncEngineState.setHasPendingUntrackedChanges_, 0
         )

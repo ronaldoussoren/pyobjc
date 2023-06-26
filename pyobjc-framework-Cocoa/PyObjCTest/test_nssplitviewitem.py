@@ -11,6 +11,7 @@ class TestNSSplitViewItem(TestCase):
         self.assertEqual(AppKit.NSSplitViewItemBehaviorDefault, 0)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorSidebar, 1)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorContentList, 2)
+        self.assertEqual(AppKit.NSSplitViewItemBehaviorInspector, 3)
 
         self.assertEqual(AppKit.NSSplitViewItemCollapseBehaviorDefault, 0)
         self.assertEqual(
@@ -37,6 +38,11 @@ class TestNSSplitViewItem(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSSplitViewItem.setSpringLoaded_, 0)
+
+    @min_os_level("10.14")
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(AppKit.NSSplitViewItem.canCollapseFromWindowResize)
+        self.assertArgIsBOOL(AppKit.NSSplitViewItem.setCanCollapseFromWindowResize_, 0)
 
     @min_os_level("11.0")
     def testMethods11_0(self):

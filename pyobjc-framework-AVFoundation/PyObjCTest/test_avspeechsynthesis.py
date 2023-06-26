@@ -40,6 +40,31 @@ class TestAVSpeechSynthesis(TestCase):
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkWord, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkSentence, 2)
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkParagraph, 3)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkBookmark, 4)
+
+        self.assertIsEnumType(
+            AVFoundation.AVSpeechSynthesisPersonalVoiceAuthorizationStatus
+        )
+        self.assertEqual(
+            AVFoundation.AVSpeechSynthesisPersonalVoiceAuthorizationStatusNotDetermined,
+            0,
+        )
+        self.assertEqual(
+            AVFoundation.AVSpeechSynthesisPersonalVoiceAuthorizationStatusDenied, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVSpeechSynthesisPersonalVoiceAuthorizationStatusUnsupported, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVSpeechSynthesisPersonalVoiceAuthorizationStatusAuthorized, 3
+        )
+
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceTraits)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceTraitNone, 0)
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceTraitIsNoveltyVoice, 1 << 0)
+        self.assertEqual(
+            AVFoundation.AVSpeechSynthesisVoiceTraitIsPersonalVoice, 1 << 1
+        )
 
     @min_os_level("10.14")
     def testConstants10_14(self):
@@ -59,6 +84,10 @@ class TestAVSpeechSynthesis(TestCase):
         self.assertIsInstance(
             AVFoundation.AVSpeechSynthesisIPANotationAttribute, str
         )  # noqa: B950
+
+        self.assertIsInstance(
+            AVFoundation.AVSpeechSynthesisAvailableVoicesDidChangeNotification, str
+        )
 
     def testMethods(self):
         self.assertArgHasType(
@@ -110,6 +139,14 @@ class TestAVSpeechSynthesis(TestCase):
             AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_toMarkerCallback_,
             2,
             AVSpeechSynthesizerMarkerCallback,
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVSpeechSynthesizer.requestPersonalVoiceAuthorizationWithCompletionHandler_,
+            0,
+            b"vq",
         )
 
     @min_sdk_level("10.14")

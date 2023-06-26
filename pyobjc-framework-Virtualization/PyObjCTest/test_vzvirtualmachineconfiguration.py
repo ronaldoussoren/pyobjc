@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import Virtualization
 
@@ -10,4 +10,14 @@ class TestVZVirtualMachineConfiguration(TestCase):
         )
         self.assertArgIsOut(
             Virtualization.VZVirtualMachineConfiguration.validateWithError_, 0
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            Virtualization.VZVirtualMachineConfiguration.validateSaveRestoreSupportWithError_
+        )
+        self.assertArgIsOut(
+            Virtualization.VZVirtualMachineConfiguration.validateSaveRestoreSupportWithError_,
+            0,
         )

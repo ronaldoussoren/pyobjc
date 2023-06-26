@@ -326,6 +326,12 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLVolumeSubtypeKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeMountFromLocationKey, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(
+            Foundation.NSURLFileProtectionCompleteWhenUserInactive, str
+        )
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(
@@ -371,3 +377,20 @@ class TestNSURL(TestCase):
         self.assertResultIsBOOL(Foundation.NSURL.writeBookmarkData_toURL_options_error_)
         self.assertArgIsOut(Foundation.NSURL.writeBookmarkData_toURL_options_error_, 3)
         self.assertArgIsOut(Foundation.NSURL.bookmarkDataWithContentsOfURL_error_, 1)
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBOOL(
+            Foundation.NSURL.initWithString_encodingInvalidCharacters_, 1
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURL.URLWithString_encodingInvalidCharacters_, 1
+        )
+
+        self.assertArgIsBOOL(
+            Foundation.NSURLComponents.initWithString_encodingInvalidCharacters_, 1
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLComponents.componentsWithString_encodingInvalidCharacters_,
+            1,
+        )

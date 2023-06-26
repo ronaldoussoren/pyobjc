@@ -13,3 +13,12 @@ class TestVZVirtualMachineView(TestCase):
             Virtualization.VZVirtualMachineView.setCapturesSystemKeys_,
             0,
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            Virtualization.VZVirtualMachineView.automaticallyReconfiguresDisplay,
+        )
+        self.assertResultIsBOOL(
+            Virtualization.VZVirtualMachineView.setAutomaticallyReconfiguresDisplay_, 0
+        )

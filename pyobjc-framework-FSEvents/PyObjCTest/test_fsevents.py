@@ -41,6 +41,7 @@ class TestFSEvents(TestCase):
             ("kFSEventStreamEventFlagItemIsLastHardlink", 0x00200000),
             ("kFSEventStreamEventFlagItemCloned", 0x00400000),
             ("kFSEventStreamCreateFlagFullHistory", 0x00000080),
+            ("kFSEventStreamCreateWithDocID", 0x00000100),
         ):
             with self.subTest(k):
                 self.assertHasAttr(FSEvents, k)
@@ -58,6 +59,9 @@ class TestFSEvents(TestCase):
 
         self.assertEqual(FSEvents.kFSEventStreamEventExtendedFileIDKey, "fileID")
         self.assertIsInstance(FSEvents.kFSEventStreamEventExtendedFileIDKey, str)
+
+        self.assertEqual(FSEvents.kFSEventStreamEventExtendedDocIDKey, "docID")
+        self.assertIsInstance(FSEvents.kFSEventStreamEventExtendedDocIDKey, str)
 
     def testFunctions(self):
         def fsevents_callback(

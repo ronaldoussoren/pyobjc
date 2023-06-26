@@ -19,4 +19,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(CIImageProcessorOutput));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
+#if PyObjC_BUILD_RELEASE >= 1400
+    p = PyObjC_IdToPython(@protocol(CAMetalDisplayLinkDelegate));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1400 */
 }

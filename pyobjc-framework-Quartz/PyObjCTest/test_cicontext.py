@@ -67,6 +67,10 @@ class TestCIContext(TestCase):
             Quartz.kCIImageRepresentationSemanticSegmentationSkyMatteImage, str
         )
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(Quartz.kCIContextMemoryLimit, str)
+
     def testMethods(self):
         self.assertArgIsOut(
             Quartz.CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1
@@ -116,4 +120,19 @@ class TestCIContext(TestCase):
         self.assertArgIsOut(
             Quartz.CIContext.writeHEIF10RepresentationOfImage_toURL_colorSpace_options_error_,
             4,
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsOut(
+            Quartz.CIContext.OpenEXRRepresentationOfImage_options_error_,
+            2,
+        )
+
+        self.assertResultIsBOOL(
+            Quartz.CIContext.writeOpenEXRRepresentationOfImage_toURL_options_error_
+        )
+        self.assertArgIsOut(
+            Quartz.CIContext.writeOpenEXRRepresentationOfImage_toURL_options_error_,
+            3,
         )

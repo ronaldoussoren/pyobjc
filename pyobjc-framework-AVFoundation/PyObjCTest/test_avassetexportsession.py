@@ -93,6 +93,11 @@ class TestAVAssetExportSession(TestCase):
     def testConstants12_1(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC7680x4320, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC960x960, str)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC1440x1440, str)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertArgIsBlock(
@@ -138,4 +143,13 @@ class TestAVAssetExportSession(TestCase):
             AVFoundation.AVAssetExportSession.estimateOutputFileLengthWithCompletionHandler_,  # noqa: B950
             0,
             b"vQ@",
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetExportSession.allowsParallelizedExport
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetExportSession.setAllowsParallelizedExport_, 0
         )

@@ -69,6 +69,10 @@ class TestSecCode(TestCase):
             Security.kSecCodeInfoDefaultDesignatedLightweightCodeRequirement, str
         )
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(Security.kSecCodeInfoStapledNotarizationTicket, str)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecCodeGetTypeID(), int)
 

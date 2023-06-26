@@ -107,3 +107,7 @@ class TestPDFAnnotationUtilities(TestCase):
 
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isOpen)
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setOpen_, 0)
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isActivatableTextField)

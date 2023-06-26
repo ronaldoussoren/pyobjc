@@ -42,6 +42,11 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTVideoDecoderReferenceMissingErr, -17694)
         self.assertEqual(VideoToolbox.kVTVideoDecoderCallbackMessagingErr, -17695)
         self.assertEqual(VideoToolbox.kVTVideoDecoderUnknownErr, -17696)
+        self.assertEqual(VideoToolbox.kVTFigAudioSessionInitializationErr, -17697)
+        self.assertEqual(
+            VideoToolbox.kVTVideoEncoderMVHEVCVideoLayerIDsMismatchErr, -17698
+        )
+        self.assertEqual(VideoToolbox.kVTCouldNotOutputTaggedBufferGroupErr, -17699)
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )
@@ -51,5 +56,6 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTDecodeInfo_Asynchronous, 1 << 0)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_FrameDropped, 1 << 1)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_ImageBufferModifiable, 1 << 2)
+        self.assertEqual(VideoToolbox.kVTDecodeInfo_SkippedLeadingFrameDropped, 1 << 3)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_Asynchronous, 1 << 0)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_FrameDropped, 1 << 1)

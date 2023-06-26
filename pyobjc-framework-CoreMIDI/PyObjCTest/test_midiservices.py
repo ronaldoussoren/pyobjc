@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import CoreMIDI
 
 
@@ -49,8 +49,26 @@ class TestMIDIServices(TestCase):
         self.assertEqual(CoreMIDI.kMIDIProtocol_1_0, 1)
         self.assertEqual(CoreMIDI.kMIDIProtocol_2_0, 2)
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyUMPActiveGroupBitmap, str)
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyUMPCanTransmitGroupless, str)
+
     def test_functions(self):
         self.assertArgIsOut(CoreMIDI.MIDISourceCreateWithProtocol, 3)
         self.assertArgIsOut(CoreMIDI.MIDISourceCreate, 2)
         self.assertArgIsOut(CoreMIDI.MIDISetupCreate, 0)
         self.assertArgIsOut(CoreMIDI.MIDIDestinationCreate, 4)
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        self.assertArgIsIn(CoreMIDI.MIDISysexSendRequestUMP, 1)
+        self.assertArgSizeInArg(CoreMIDI.MIDISysexSendRequestUMP, 1, 2)
+        self.assertArgIsBOOL(CoreMIDI.MIDISysexSendRequestUMP, 3)
+        self.assertArgIsFunction(
+            CoreMIDI.MIDISysexSendRequestUMP, 4, b"v^{MIDISysexSendRequestUMP=}"
+        )
+
+        CoreMIDI.MIDISendUMPSysex
+        CoreMIDI.MIDISendUMPSysex8
+        CoreMIDI.MIDIEventPacketSysexBytesForGroup

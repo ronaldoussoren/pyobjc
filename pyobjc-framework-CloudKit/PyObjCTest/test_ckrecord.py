@@ -18,6 +18,11 @@ class TestCKRecord(TestCase):
     @min_os_level("10.10")
     def testConstants(self):
         self.assertIsInstance(CloudKit.CKRecordTypeUserRecord, str)
+        self.assertIsInstance(CloudKit.CKRecordRecordIDKey, str)
+        self.assertIsInstance(CloudKit.CKRecordCreatorUserRecordIDKey, str)
+        self.assertIsInstance(CloudKit.CKRecordCreationDateKey, str)
+        self.assertIsInstance(CloudKit.CKRecordLastModifiedUserRecordIDKey, str)
+        self.assertIsInstance(CloudKit.CKRecordModificationDateKey, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):

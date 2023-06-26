@@ -60,9 +60,13 @@ class TestMTLVertexDescriptor(TestCase):
         self.assertEqual(Metal.MTLVertexFormatUShortNormalized, 51)
         self.assertEqual(Metal.MTLVertexFormatShortNormalized, 52)
         self.assertEqual(Metal.MTLVertexFormatHalf, 53)
+        self.assertEqual(Metal.MTLVertexFormatFloatRG11B10, 54)
+        self.assertEqual(Metal.MTLVertexFormatFloatRGB9E5, 55)
 
         self.assertEqual(Metal.MTLVertexStepFunctionConstant, 0)
         self.assertEqual(Metal.MTLVertexStepFunctionPerVertex, 1)
         self.assertEqual(Metal.MTLVertexStepFunctionPerInstance, 2)
         self.assertEqual(Metal.MTLVertexStepFunctionPerPatch, 3)
         self.assertEqual(Metal.MTLVertexStepFunctionPerPatchControlPoint, 4)
+
+        self.assertEqual(Metal.MTLBufferLayoutStrideDynamic, 0xFF_FF_FF_FF_FF_FF_FF_FF)

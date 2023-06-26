@@ -82,3 +82,17 @@ class TestMTLIndirectCommandBuffer(TestCase):
             .setSupportRayTracing_,
             0,
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .supportDynamicAttributeStride
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setSupportDynamicAttributeStride_,
+            0,
+        )

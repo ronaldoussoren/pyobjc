@@ -411,6 +411,10 @@ class TestNSWindow(TestCase):
             AppKit.NSWindow.transferWindowSharingToWindow_completionHandler_, 1, b"v@"
         )
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsSEL(AppKit.NSWindow.displayLinkWithTarget_selector_, 1, b"v@:@")
+
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSWindowDelegate")

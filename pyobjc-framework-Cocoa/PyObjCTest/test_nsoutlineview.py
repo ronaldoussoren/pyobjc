@@ -121,6 +121,9 @@ class TestNSOutlineViewHelper(AppKit.NSObject):
     def outlineView_didRemoveRowView_forRow_(self, a, b, c):
         pass
 
+    def outlineView_userCanChangeVisibilityOfTableColumn_(self, a, b):
+        return 1
+
 
 class TestNSOutlineView(TestCase):
     @min_os_level("10.9")
@@ -282,4 +285,8 @@ class TestNSOutlineView(TestCase):
             TestNSOutlineViewHelper.outlineView_draggingSession_endedAtPoint_,
             2,
             AppKit.NSPoint.__typestr__,
+        )
+
+        self.assertResultIsBOOL(
+            TestNSOutlineViewHelper.outlineView_userCanChangeVisibilityOfTableColumn_
         )

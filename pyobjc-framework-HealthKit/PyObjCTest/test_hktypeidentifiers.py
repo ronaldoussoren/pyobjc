@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import HealthKit
 
 
@@ -312,3 +312,14 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKWorkoutRouteTypeIdentifier, str)
         self.assertIsInstance(HealthKit.HKDataTypeIdentifierHeartbeatSeries, str)
         self.assertIsInstance(HealthKit.HKVisionPrescriptionTypeIdentifier, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierCyclingCadence, str)
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierCyclingFunctionalThresholdPower, str
+        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierCyclingPower, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierCyclingSpeed, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierPhysicalEffort, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierTimeInDaylight, str)
