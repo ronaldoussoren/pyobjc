@@ -580,7 +580,10 @@
    },
    "CVOpenGLTextureGetCleanTexCoords": {
     "args": {
-     "0": {}
+     "1": { "type_modifier": "n", "c_array_of_fixed_length": 2}
+     "2": { "type_modifier": "n", "c_array_of_fixed_length": 2}
+     "3": { "type_modifier": "n", "c_array_of_fixed_length": 2}
+     "4": { "type_modifier": "n", "c_array_of_fixed_length": 2}
     }
    },
    "CVOpenGLTextureGetName": {
