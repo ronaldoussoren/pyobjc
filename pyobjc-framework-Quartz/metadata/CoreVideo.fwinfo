@@ -201,8 +201,8 @@
 	  "arguments": {
 	   "0": { "type": "^v" },
 	   "1": { "type": "^{__CVDisplayLink=}" },
-	   "2": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "3": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "2": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "3": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
 	   "4": { "type": "Q" },
 	   "5": { "type": "o^Q" }
 	  }
@@ -381,14 +381,14 @@
         },
         {
          "typestr": [
-          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+          "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
           true
          ],
 	 "type_modifier": "n"
         },
         {
          "typestr": [
-          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+          "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
           true
          ],
 	 "type_modifier": "N"

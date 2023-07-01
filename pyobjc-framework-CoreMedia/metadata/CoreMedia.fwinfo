@@ -122,7 +122,7 @@
     "3": { "type_override": "^{OpaqueCMFormatDescription=}" },
     "4": { "type_override": "l" },
     "5": { "type_override": "l" },
-    "6": { "type_modifier": "n", "c_array_length_in_arg": 5, "type_override": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}" },
+    "6": { "type_modifier": "n", "c_array_length_in_arg": 5, "type_override": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}" },
     "7": { "type_override": "l" },
     "8": { "type_modifier": "n", "c_array_length_in_arg": 7 },
     "9": {
@@ -179,7 +179,7 @@
     "args": {
      "0": { "type_override": "@" },
      "1": { "type_override": "I" },
-     "2": { "type_override": "{_CMTime=qiIq}" },
+     "2": { "type_override": "{CMTime=qiIq}" },
      "3": { "type_modifier": "o", "type_override": "^^{opaqueCMBufferQueueTriggerToken=}" },
      "4": {
       "type_override": "@?",

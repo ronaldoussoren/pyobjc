@@ -1133,14 +1133,14 @@
      "buttonX"
     ],
     "pack": 1,
-    "typestr": "{_GCMicroGamepadSnapShotDataV100=SSffff}"
+    "typestr": "{GCMicroGamepadSnapShotDataV100=SSffff}"
    },
    "GCMicroGamepadSnapshotData": {
     "pack": 1,
     "fieldnames": [
      "version", "size", "dpadX", "dpadY", "buttonA", "buttonX"
     ],
-    "typestr": "{_GCMicroGamepadSnapshotData=SSffff}"
+    "typestr": "{GCMicroGamepadSnapshotData=SSffff}"
    }
   }
  }

@@ -660,7 +660,7 @@
      {
       "class_method": false,
       "selector": "time",
-      "retval": { "type_override": "{_CMTime=qiIq}" }
+      "retval": { "type_override": "{CMTime=qiIq}" }
      }
     ]
    },

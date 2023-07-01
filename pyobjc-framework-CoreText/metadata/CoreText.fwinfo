@@ -1261,7 +1261,7 @@
      },
      "4": {
       "type_modifier": "o",
-      "type_override": ["^{_CFRange=ll}", "^{_CFRange=qq}"]
+      "type_override": ["^{CFRange=ll}", "^{CFRange=qq}"]
      }
     }
    },

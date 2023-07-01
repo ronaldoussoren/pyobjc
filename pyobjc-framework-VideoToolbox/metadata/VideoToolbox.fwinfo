@@ -209,8 +209,8 @@
 	"1": { "type": "i" },
 	"2": { "type": "I" },
 	"3": { "type": "^{__CVBuffer=}" },
-	"4": { "type": "{_CMTime=qiIq}" },
-	"5": { "type": "{_CMTime=qiIq}" }
+	"4": { "type": "{CMTime=qiIq}" },
+	"5": { "type": "{CMTime=qiIq}" }
        },
        "retval": { "type": "v" }
       }

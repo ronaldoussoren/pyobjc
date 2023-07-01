@@ -926,9 +926,9 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "1": { "typestr": "{CMTime=qiIq}" },
 	  "2": { "typestr": "^{CGImage=}" },
-	  "3": { "typestr": "{_CMTime=qiIq}" },
+	  "3": { "typestr": "{CMTime=qiIq}" },
 	  "4": { "typestr": ["i", "q"] }
 	 },
 	 "retval": { "typestr": "v" }
@@ -1066,7 +1066,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "1": { "typestr": "{CMTime=qiIq}" },
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -2593,7 +2593,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" }
+	  "1": { "typestr": "{CMTime=qiIq}" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -2831,7 +2831,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" }
+	  "1": { "typestr": "{CMTime=qiIq}" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3361,16 +3361,16 @@
       "selector": "URLSession:aggregateAssetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:forMediaSelection:",
       "class_method": false,
       "args": {
-       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
-       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+       "2": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" },
+       "4": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
       }
      },
      {
       "selector": "URLSession:assetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:",
       "class_method": false,
       "args": {
-       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
-       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+       "2": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" },
+       "4": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
       }
      },
      {

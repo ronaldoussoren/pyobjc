@@ -283,7 +283,7 @@
       "selector": "dispatchThreadsPerTile:",
       "class_method": false,
       "args": {
-       "0": { "type_override": "{_MTLSize=QQQ}" }
+       "0": { "type_override": "{MTLSize=QQQ}" }
       }
      },
      {
@@ -291,7 +291,7 @@
       "class_method": false,
       "retval": { "type_override": "q" },
       "args": {
-       "0": { "type_override": "{_MTLSize=QQQ}" }
+       "0": { "type_override": "{MTLSize=QQQ}" }
       }
      },
      {
@@ -381,7 +381,7 @@
       "selector": "resetTextureAccessCounters:region:mipLevel:slice:",
       "class_method": false,
       "args": {
-       "1":  { "type_override": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}" },
+       "1":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
        "2":  { "type_override": "Q" },
        "3":  { "type_override": "Q" }
       }
@@ -391,7 +391,7 @@
       "class_method": false,
       "args": {
        "1":  { "type_override": "Q" },
-       "2":  { "type_override": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}" },
+       "2":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
        "3":  { "type_override": "Q" },
        "4":  { "type_override": "Q" }
       }
@@ -400,7 +400,7 @@
       "selector": "getTextureAccessCounters:region:mipLevel:slice:resetCounters:countersBuffer:countersBufferOffset:",
       "class_method": false,
       "args": {
-       "1":  { "type_override": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}" },
+       "1":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
        "2":  { "type_override": "Q" },
        "3":  { "type_override": "Q" },
        "4":  { "type_override": "Z" }
@@ -465,9 +465,9 @@
       "selector": "convertSparsePixelRegions:toTileRegions:withTileSize:alignmentMode:numRegions:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
-       "1":  { "type_override": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
-       "2": { "type_override": "{_MTLSize=QQQ}" },
+       "0":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
+       "1":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
+       "2": { "type_override": "{MTLSize=QQQ}" },
        "3":  { "type_override": "Q" },
        "4":  { "type_override": "Q" }
       }
@@ -477,7 +477,7 @@
       "class_method": false,
       "args": {
        "1":  { "type_override": "Q" },
-       "2":  { "type_override": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 5 },
+       "2":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 5 },
        "3":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 5 },
        "4":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 5 },
        "5":  { "type_override": "Q" }
@@ -546,9 +546,9 @@
       "selector": "convertSparseTileRegions:toPixelRegions:withTileSize:numRegions:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "1":  { "type_override": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "2": { "type_override": "{_MTLSize=QQQ}" },
+       "0":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_override": "{MTLSize=QQQ}" },
        "3": { "type_override": "Q" }
       }
      },
@@ -600,7 +600,7 @@
       "class_method": false,
       "args": {
        "0": { "type_override": "Q" },
-       "1": { "type_override": "{_MTLVertexAmplificationViewMapping=II}" }
+       "1": { "type_override": "{MTLVertexAmplificationViewMapping=II}" }
       }
      },
      {
