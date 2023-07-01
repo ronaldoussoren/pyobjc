@@ -5550,7 +5550,7 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
     if (depythonify_c_value("Q", arguments[1], &arg1) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[2], &arg2) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[2], &arg2) == -1) {
         return NULL;
     }
 
@@ -5617,7 +5617,7 @@ mkimp_id_id_Q_matrix_float4x4(PyObject*              callable,
           args[3] = pythonify_c_value("Q", &arg1);
           if (args[3] == NULL)
               goto error;
-          args[4] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg2);
+          args[4] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg2);
           if (args[4] == NULL)
               goto error;
 
@@ -6497,7 +6497,7 @@ static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{matrix_float2x2=[2<2f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6560,7 +6560,7 @@ mkimp_id_id_matrix_float2x2(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &arg1);
+          args[3] = pythonify_c_value("{matrix_float2x2=[2<2f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -6612,7 +6612,7 @@ static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{matrix_float3x3=[3<3f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6675,7 +6675,7 @@ mkimp_id_id_matrix_float3x3(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &arg1);
+          args[3] = pythonify_c_value("{matrix_float3x3=[3<3f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -6727,7 +6727,7 @@ static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6790,7 +6790,7 @@ mkimp_id_id_matrix_float4x4(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg1);
+          args[3] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -8643,7 +8643,7 @@ static PyObject* _Nullable call_id_matrix_float4x4(PyObject* method, PyObject* s
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -8701,7 +8701,7 @@ mkimp_id_matrix_float4x4(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+      args[2] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -8750,7 +8750,7 @@ static PyObject* _Nullable call_id_matrix_float4x4_Z(PyObject* method, PyObject*
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("Z", arguments[1], &arg1) == -1) {
@@ -8813,7 +8813,7 @@ mkimp_id_matrix_float4x4_Z(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+          args[2] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("Z", &arg1);
@@ -11732,7 +11732,7 @@ static PyObject* _Nullable call_v_matrix_double4x4(PyObject* method, PyObject* s
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -11790,7 +11790,7 @@ mkimp_v_matrix_double4x4(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &arg0);
+      args[2] = pythonify_c_value("{matrix_double4x4=[4<4d>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -11838,7 +11838,7 @@ static PyObject* _Nullable call_v_matrix_double4x4_d(PyObject* method, PyObject*
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
@@ -11901,7 +11901,7 @@ mkimp_v_matrix_double4x4_d(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &arg0);
+          args[2] = pythonify_c_value("{matrix_double4x4=[4<4d>]}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("d", &arg1);
@@ -11951,7 +11951,7 @@ static PyObject* _Nullable call_v_matrix_float2x2(PyObject* method, PyObject* se
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float2x2=[2<2f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12009,7 +12009,7 @@ mkimp_v_matrix_float2x2(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &arg0);
+      args[2] = pythonify_c_value("{matrix_float2x2=[2<2f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12056,7 +12056,7 @@ static PyObject* _Nullable call_v_matrix_float3x3(PyObject* method, PyObject* se
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float3x3=[3<3f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12114,7 +12114,7 @@ mkimp_v_matrix_float3x3(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &arg0);
+      args[2] = pythonify_c_value("{matrix_float3x3=[3<3f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12161,7 +12161,7 @@ static PyObject* _Nullable call_v_matrix_float4x4(PyObject* method, PyObject* se
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12219,7 +12219,7 @@ mkimp_v_matrix_float4x4(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+      args[2] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12267,7 +12267,7 @@ static PyObject* _Nullable call_v_matrix_float4x4_d(PyObject* method, PyObject* 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
@@ -12330,7 +12330,7 @@ mkimp_v_matrix_float4x4_d(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+          args[2] = pythonify_c_value("{matrix_float4x4=[4<4f>]}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("d", &arg1);
@@ -13941,7 +13941,7 @@ static PyObject* _Nullable call_matrix_double4x4(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
+    return pythonify_c_value("{matrix_double4x4=[4<4d>]}", &rv);
 }
 
 static IMP
@@ -13967,7 +13967,7 @@ mkimp_matrix_double4x4(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_double4x4 oc_result;
-      if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14050,7 +14050,7 @@ static PyObject* _Nullable call_matrix_double4x4_d(PyObject* method, PyObject* s
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
+    return pythonify_c_value("{matrix_double4x4=[4<4d>]}", &rv);
 }
 
 static IMP
@@ -14079,7 +14079,7 @@ mkimp_matrix_double4x4_d(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_double4x4 oc_result;
-      if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14152,7 +14152,7 @@ static PyObject* _Nullable call_matrix_float2x2(PyObject* method, PyObject* self
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &rv);
+    return pythonify_c_value("{matrix_float2x2=[2<2f>]}", &rv);
 }
 
 static IMP
@@ -14178,7 +14178,7 @@ mkimp_matrix_float2x2(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_float2x2 oc_result;
-      if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_float2x2=[2<2f>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14256,7 +14256,7 @@ static PyObject* _Nullable call_matrix_float3x3(PyObject* method, PyObject* self
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &rv);
+    return pythonify_c_value("{matrix_float3x3=[3<3f>]}", &rv);
 }
 
 static IMP
@@ -14282,7 +14282,7 @@ mkimp_matrix_float3x3(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_float3x3 oc_result;
-      if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_float3x3=[3<3f>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14360,7 +14360,7 @@ static PyObject* _Nullable call_matrix_float4x4(PyObject* method, PyObject* self
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
+    return pythonify_c_value("{matrix_float4x4=[4<4f>]}", &rv);
 }
 
 static IMP
@@ -14386,7 +14386,7 @@ mkimp_matrix_float4x4(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14474,7 +14474,7 @@ static PyObject* _Nullable call_matrix_float4x4_id_d(PyObject* method, PyObject*
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
+    return pythonify_c_value("{matrix_float4x4=[4<4f>]}", &rv);
 }
 
 static IMP
@@ -14507,7 +14507,7 @@ mkimp_matrix_float4x4_id_d(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -14590,7 +14590,7 @@ static PyObject* _Nullable call_matrix_float4x4_d(PyObject* method, PyObject* se
         return NULL;
     }
 
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
+    return pythonify_c_value("{matrix_float4x4=[4<4f>]}", &rv);
 }
 
 static IMP
@@ -14619,7 +14619,7 @@ mkimp_matrix_float4x4_d(PyObject*              callable,
       if (result == NULL)
           goto error;
       matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+      if (depythonify_c_value("{matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -15534,7 +15534,7 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@Q{_matrix_float4x4=[4<4f>]}", call_id_id_Q_matrix_float4x4,
+            "@@:@Q{matrix_float4x4=[4<4f>]}", call_id_id_Q_matrix_float4x4,
             mkimp_id_id_Q_matrix_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
@@ -15587,21 +15587,21 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float2x2=[2<2f>]}", call_id_id_matrix_float2x2,
+            "@@:@{matrix_float2x2=[2<2f>]}", call_id_id_matrix_float2x2,
             mkimp_id_id_matrix_float2x2)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float3x3=[3<3f>]}", call_id_id_matrix_float3x3,
+            "@@:@{matrix_float3x3=[3<3f>]}", call_id_id_matrix_float3x3,
             mkimp_id_id_matrix_float3x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float4x4=[4<4f>]}", call_id_id_matrix_float4x4,
+            "@@:@{matrix_float4x4=[4<4f>]}", call_id_id_matrix_float4x4,
             mkimp_id_id_matrix_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
@@ -15715,21 +15715,21 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}", call_id_matrix_float4x4,
+            "@@:{matrix_float4x4=[4<4f>]}", call_id_matrix_float4x4,
             mkimp_id_matrix_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}Z", call_id_matrix_float4x4_Z,
+            "@@:{matrix_float4x4=[4<4f>]}Z", call_id_matrix_float4x4_Z,
             mkimp_id_matrix_float4x4_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}B", call_id_matrix_float4x4_Z,
+            "@@:{matrix_float4x4=[4<4f>]}B", call_id_matrix_float4x4_Z,
             mkimp_id_matrix_float4x4_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
@@ -15914,42 +15914,42 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_double4x4=[4<4d>]}", call_v_matrix_double4x4,
+            "v@:{matrix_double4x4=[4<4d>]}", call_v_matrix_double4x4,
             mkimp_v_matrix_double4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_double4x4=[4<4d>]}d", call_v_matrix_double4x4_d,
+            "v@:{matrix_double4x4=[4<4d>]}d", call_v_matrix_double4x4_d,
             mkimp_v_matrix_double4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float2x2=[2<2f>]}", call_v_matrix_float2x2,
+            "v@:{matrix_float2x2=[2<2f>]}", call_v_matrix_float2x2,
             mkimp_v_matrix_float2x2)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float3x3=[3<3f>]}", call_v_matrix_float3x3,
+            "v@:{matrix_float3x3=[3<3f>]}", call_v_matrix_float3x3,
             mkimp_v_matrix_float3x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float4x4=[4<4f>]}", call_v_matrix_float4x4,
+            "v@:{matrix_float4x4=[4<4f>]}", call_v_matrix_float4x4,
             mkimp_v_matrix_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float4x4=[4<4f>]}d", call_v_matrix_float4x4_d,
+            "v@:{matrix_float4x4=[4<4f>]}d", call_v_matrix_float4x4_d,
             mkimp_v_matrix_float4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
@@ -16059,46 +16059,45 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_double4x4=[4<4d>]}@:", call_matrix_double4x4,
-            mkimp_matrix_double4x4)
+            "{matrix_double4x4=[4<4d>]}@:", call_matrix_double4x4, mkimp_matrix_double4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_double4x4=[4<4d>]}@:d", call_matrix_double4x4_d,
+            "{matrix_double4x4=[4<4d>]}@:d", call_matrix_double4x4_d,
             mkimp_matrix_double4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float2x2=[2<2f>]}@:", call_matrix_float2x2, mkimp_matrix_float2x2)
+            "{matrix_float2x2=[2<2f>]}@:", call_matrix_float2x2, mkimp_matrix_float2x2)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float3x3=[3<3f>]}@:", call_matrix_float3x3, mkimp_matrix_float3x3)
+            "{matrix_float3x3=[3<3f>]}@:", call_matrix_float3x3, mkimp_matrix_float3x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:", call_matrix_float4x4, mkimp_matrix_float4x4)
+            "{matrix_float4x4=[4<4f>]}@:", call_matrix_float4x4, mkimp_matrix_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:@d", call_matrix_float4x4_id_d,
+            "{matrix_float4x4=[4<4f>]}@:@d", call_matrix_float4x4_id_d,
             mkimp_matrix_float4x4_id_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:d", call_matrix_float4x4_d,
+            "{matrix_float4x4=[4<4f>]}@:d", call_matrix_float4x4_d,
             mkimp_matrix_float4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE

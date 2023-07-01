@@ -22,13 +22,3 @@ class TestCLLocationUpdater(TestCase):
             2,
             b"v@",
         )
-        self.assertArgIsBlock(
-            CoreLocation.CLLocationUpdater.historicalUpdaterWithDateInterval_sampleCount_queue_handler_,
-            3,
-            b"v@",
-        )
-        self.assertArgIsBlock(
-            CoreLocation.CLLocationUpdater.historicalUpdaterWithCenter_radius_dateInterval_sampleCount_queue_handler_,
-            5,
-            b"v@",
-        )

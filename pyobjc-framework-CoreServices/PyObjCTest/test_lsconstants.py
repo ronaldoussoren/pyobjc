@@ -34,6 +34,9 @@ class TestLSConstants(TestCase):
         self.assertEqual(CoreServices.kLSNoExecutableErr, -10827)
         self.assertEqual(CoreServices.kLSNoClassicEnvironmentErr, -10828)
         self.assertEqual(CoreServices.kLSMultipleSessionsNotSupportedErr, -10829)
+        self.assertEqual(
+            CoreServices.kLSLaunchFailedBecauseLaunchConstraintsWereViolated, -10350
+        )
 
         self.assertIsEnumType(CoreServices.LSRolesMask)
         self.assertEqual(CoreServices.kLSRolesNone, 0x00000001)

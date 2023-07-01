@@ -1878,7 +1878,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -1909,7 +1909,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -1953,7 +1953,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "getTimeCallMinimumInterval",
@@ -2008,7 +2008,7 @@
        "readonly"
       ],
       "name": "getTimeCallMinimumInterval",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -2066,11 +2066,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -2093,11 +2093,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -2127,7 +2127,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minFrameDuration",
@@ -2137,7 +2137,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "maxFrameDuration",
@@ -2172,7 +2172,7 @@
        "readonly"
       ],
       "name": "minFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -2181,7 +2181,7 @@
        "readonly"
       ],
       "name": "maxFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -3815,7 +3815,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "numSampleSizeEntries",
@@ -3859,7 +3859,7 @@
      },
      {
       "name": "sampleTiming",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sequenceNumber",
@@ -3983,7 +3983,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMIOStreamClockCreate": {
@@ -4002,7 +4002,7 @@
      },
      {
       "name": "getTimeCallMinimumInterval",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "numberOfEventsForRateSmoothing",
@@ -4037,7 +4037,7 @@
     "args": [
      {
       "name": "eventTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "hostTime",

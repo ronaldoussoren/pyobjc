@@ -42,7 +42,6 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTVideoDecoderReferenceMissingErr, -17694)
         self.assertEqual(VideoToolbox.kVTVideoDecoderCallbackMessagingErr, -17695)
         self.assertEqual(VideoToolbox.kVTVideoDecoderUnknownErr, -17696)
-        self.assertEqual(VideoToolbox.kVTFigAudioSessionInitializationErr, -17697)
         self.assertEqual(
             VideoToolbox.kVTVideoEncoderMVHEVCVideoLayerIDsMismatchErr, -17698
         )

@@ -34,8 +34,8 @@ for nm in BASE.glob("pyobjc-framework-*"):
                     "objective-metadata-tool",
                     f"--ini-section={section}",
                     "scan",
-                    "--arch=x86_64",
-                    "--sdk=11.0",
+                    "--arch=x86_64,arm64",
+                    "--sdk=14.0",
                 ],
                 cwd=nm,
             )

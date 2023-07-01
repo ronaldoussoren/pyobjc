@@ -1059,7 +1059,7 @@
      },
      {
       "name": "inRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "outDocumentsArray",

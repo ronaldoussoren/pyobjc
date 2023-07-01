@@ -1187,7 +1187,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+      "typestr": "^{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
      },
      {
       "name": "data",
@@ -1202,7 +1202,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCGamepadSnapShotDataV100=SSffffffff}"
+      "typestr": "^{GCGamepadSnapShotDataV100=SSffffffff}"
      },
      {
       "name": "data",
@@ -1217,7 +1217,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+      "typestr": "^{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
      }
     ],
     "retval": {
@@ -1228,7 +1228,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCGamepadSnapShotDataV100=SSffffffff}"
+      "typestr": "^{GCGamepadSnapShotDataV100=SSffffffff}"
      }
     ],
     "retval": {
@@ -1259,7 +1259,7 @@
      "rightTrigger"
     ],
     "special": true,
-    "typestr": "{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+    "typestr": "{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
    },
    "GCExtendedGamepadValueChangedHandler": {
     "fieldnames": [
@@ -1275,7 +1275,7 @@
      "rightShoulder"
     ],
     "special": true,
-    "typestr": "{_GCGamepadSnapShotDataV100=SSffffffff}"
+    "typestr": "{GCGamepadSnapShotDataV100=SSffffffff}"
    },
    "GCGamepadSnapShotDataV100": {
     "fieldnames": [
@@ -1291,7 +1291,7 @@
      "rightShoulder"
     ],
     "special": true,
-    "typestr": "{_GCGamepadSnapShotDataV100=SSffffffff}"
+    "typestr": "{GCGamepadSnapShotDataV100=SSffffffff}"
    }
   }
  },

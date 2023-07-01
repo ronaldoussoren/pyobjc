@@ -1544,7 +1544,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "pictureInPictureControllerTimeRangeForPlayback:",
@@ -1573,7 +1573,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMVideoDimensions=ii}",
+        "typestr": "{CMVideoDimensions=ii}",
         "typestr_special": true
        }
       ],
@@ -1593,7 +1593,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {

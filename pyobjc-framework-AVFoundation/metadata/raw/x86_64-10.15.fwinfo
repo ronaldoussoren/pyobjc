@@ -64,7 +64,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "duration",
@@ -124,7 +124,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minimumTimeOffsetFromLive",
@@ -413,7 +413,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "overallDurationHint",
@@ -488,7 +488,7 @@
        "readonly"
       ],
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -542,7 +542,7 @@
        "readonly"
       ],
       "name": "minimumTimeOffsetFromLive",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -694,7 +694,7 @@
        "readonly"
       ],
       "name": "overallDurationHint",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -1159,7 +1159,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -1168,7 +1168,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -1184,7 +1184,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "maxDuration",
@@ -1499,7 +1499,7 @@
        "nonatomic"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -1508,7 +1508,7 @@
        "readonly"
       ],
       "name": "maxDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -1659,11 +1659,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "^{_CMTime=qiIq}",
+        "typestr": "^{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -1832,7 +1832,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "requestedTimeToleranceBefore",
@@ -1841,7 +1841,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -1857,7 +1857,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "requestedTimeToleranceAfter",
@@ -1866,7 +1866,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -1938,7 +1938,7 @@
        "nonatomic"
       ],
       "name": "requestedTimeToleranceBefore",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -1946,7 +1946,7 @@
        "nonatomic"
       ],
       "name": "requestedTimeToleranceAfter",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -2098,7 +2098,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -2107,7 +2107,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -2163,7 +2163,7 @@
        "nonatomic"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -3886,7 +3886,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -3986,7 +3986,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minFrameDuration",
@@ -4005,7 +4005,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -4020,13 +4020,13 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "samplePresentationTimeForTrackTime:",
@@ -4115,7 +4115,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -4264,7 +4264,7 @@
        "readonly"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -4354,7 +4354,7 @@
        "readonly"
       ],
       "name": "minFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -4486,7 +4486,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+       "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
        "typestr_special": true
       },
       "selector": "timeMapping",
@@ -4511,7 +4511,7 @@
        "readonly"
       ],
       "name": "timeMapping",
-      "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+      "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
       "typestr_special": true
      },
      {
@@ -4662,7 +4662,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -4677,7 +4677,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -4863,7 +4863,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "movieFragmentInterval",
@@ -4872,7 +4872,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -4888,7 +4888,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "overallDurationHint",
@@ -4897,7 +4897,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -5062,7 +5062,7 @@
        "nonatomic"
       ],
       "name": "movieFragmentInterval",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -5070,7 +5070,7 @@
        "nonatomic"
       ],
       "name": "overallDurationHint",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -5514,7 +5514,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "preferredMediaChunkDuration",
@@ -5523,7 +5523,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -5845,7 +5845,7 @@
        "nonatomic"
       ],
       "name": "preferredMediaChunkDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -6220,7 +6220,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -6347,7 +6347,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "compositionTime",
@@ -6381,7 +6381,7 @@
        "readonly"
       ],
       "name": "compositionTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -6471,7 +6471,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "compositionTime",
@@ -6515,7 +6515,7 @@
        "readonly"
       ],
       "name": "compositionTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -9877,7 +9877,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -9889,7 +9889,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -16498,7 +16498,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float3x3=[3<3f>]}",
+       "typestr": "{simd_float3x3=[3<3f>]}",
        "typestr_special": true
       },
       "selector": "intrinsicMatrix",
@@ -16518,7 +16518,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x3=[4<3f>]}",
+       "typestr": "{simd_float4x3=[4<3f>]}",
        "typestr_special": true
       },
       "selector": "extrinsicMatrix",
@@ -16573,7 +16573,7 @@
        "readonly"
       ],
       "name": "intrinsicMatrix",
-      "typestr": "{_matrix_float3x3=[3<3f>]}",
+      "typestr": "{simd_float3x3=[3<3f>]}",
       "typestr_special": true
      },
      {
@@ -16591,7 +16591,7 @@
        "readonly"
       ],
       "name": "extrinsicMatrix",
-      "typestr": "{_matrix_float4x3=[4<3f>]}",
+      "typestr": "{simd_float4x3=[4<3f>]}",
       "typestr_special": true
      },
      {
@@ -17526,7 +17526,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "videoMinFrameDuration",
@@ -17535,7 +17535,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -17561,7 +17561,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "videoMaxFrameDuration",
@@ -17570,7 +17570,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -17889,7 +17889,7 @@
        "nonatomic"
       ],
       "name": "videoMinFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -17910,7 +17910,7 @@
        "nonatomic"
       ],
       "name": "videoMaxFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -18550,7 +18550,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "activeVideoMinFrameDuration",
@@ -18559,7 +18559,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -18575,7 +18575,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "activeVideoMaxFrameDuration",
@@ -18584,7 +18584,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -19095,7 +19095,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -19198,7 +19198,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "activeMaxExposureDuration",
@@ -19207,7 +19207,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -19243,7 +19243,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "exposureDuration",
@@ -19342,7 +19342,7 @@
      {
       "args": [
        {
-        "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+        "typestr": "{AVCaptureWhiteBalanceGains=fff}",
         "typestr_special": true
        },
        {
@@ -19361,13 +19361,13 @@
      {
       "args": [
        {
-        "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+        "typestr": "{AVCaptureWhiteBalanceGains=fff}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceChromaticityValues=ff}",
+       "typestr": "{AVCaptureWhiteBalanceChromaticityValues=ff}",
        "typestr_special": true
       },
       "selector": "chromaticityValuesForDeviceWhiteBalanceGains:",
@@ -19376,13 +19376,13 @@
      {
       "args": [
        {
-        "typestr": "{_AVCaptureWhiteBalanceChromaticityValues=ff}",
+        "typestr": "{AVCaptureWhiteBalanceChromaticityValues=ff}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+       "typestr": "{AVCaptureWhiteBalanceGains=fff}",
        "typestr_special": true
       },
       "selector": "deviceWhiteBalanceGainsForChromaticityValues:",
@@ -19391,13 +19391,13 @@
      {
       "args": [
        {
-        "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+        "typestr": "{AVCaptureWhiteBalanceGains=fff}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceTemperatureAndTintValues=ff}",
+       "typestr": "{AVCaptureWhiteBalanceTemperatureAndTintValues=ff}",
        "typestr_special": true
       },
       "selector": "temperatureAndTintValuesForDeviceWhiteBalanceGains:",
@@ -19406,13 +19406,13 @@
      {
       "args": [
        {
-        "typestr": "{_AVCaptureWhiteBalanceTemperatureAndTintValues=ff}",
+        "typestr": "{AVCaptureWhiteBalanceTemperatureAndTintValues=ff}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+       "typestr": "{AVCaptureWhiteBalanceGains=fff}",
        "typestr_special": true
       },
       "selector": "deviceWhiteBalanceGainsForTemperatureAndTintValues:",
@@ -19467,7 +19467,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+       "typestr": "{AVCaptureWhiteBalanceGains=fff}",
        "typestr_special": true
       },
       "selector": "deviceWhiteBalanceGains",
@@ -19477,7 +19477,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+       "typestr": "{AVCaptureWhiteBalanceGains=fff}",
        "typestr_special": true
       },
       "selector": "grayWorldDeviceWhiteBalanceGains",
@@ -19824,7 +19824,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "activeDepthDataMinFrameDuration",
@@ -19833,7 +19833,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -20038,7 +20038,7 @@
        "nonatomic"
       ],
       "name": "activeVideoMinFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -20046,7 +20046,7 @@
        "nonatomic"
       ],
       "name": "activeVideoMaxFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -20364,7 +20364,7 @@
        "nonatomic"
       ],
       "name": "activeMaxExposureDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -20395,7 +20395,7 @@
        "readonly"
       ],
       "name": "exposureDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -20495,7 +20495,7 @@
        "readonly"
       ],
       "name": "deviceWhiteBalanceGains",
-      "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+      "typestr": "{AVCaptureWhiteBalanceGains=fff}",
       "typestr_special": true
      },
      {
@@ -20504,7 +20504,7 @@
        "readonly"
       ],
       "name": "grayWorldDeviceWhiteBalanceGains",
-      "typestr": "{_AVCaptureWhiteBalanceGains=fff}",
+      "typestr": "{AVCaptureWhiteBalanceGains=fff}",
       "typestr_special": true
      },
      {
@@ -20661,7 +20661,7 @@
        "nonatomic"
       ],
       "name": "activeDepthDataMinFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -20924,7 +20924,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minExposureDuration",
@@ -20934,7 +20934,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "maxExposureDuration",
@@ -21179,7 +21179,7 @@
        "readonly"
       ],
       "name": "minExposureDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -21188,7 +21188,7 @@
        "readonly"
       ],
       "name": "maxExposureDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -21453,7 +21453,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "videoMinFrameDurationOverride",
@@ -21462,7 +21462,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -21499,7 +21499,7 @@
        "nonatomic"
       ],
       "name": "videoMinFrameDurationOverride",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -21685,7 +21685,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "recordedDuration",
@@ -21705,7 +21705,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "maxRecordedDuration",
@@ -21714,7 +21714,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -21829,7 +21829,7 @@
        "readonly"
       ],
       "name": "recordedDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -21846,7 +21846,7 @@
        "nonatomic"
       ],
       "name": "maxRecordedDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -22105,7 +22105,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -22125,7 +22125,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "exposureDuration",
@@ -22149,7 +22149,7 @@
        "readonly"
       ],
       "name": "exposureDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -22513,7 +22513,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "movieFragmentInterval",
@@ -22522,7 +22522,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -22577,7 +22577,7 @@
        "nonatomic"
       ],
       "name": "movieFragmentInterval",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -22828,7 +22828,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "timestamp",
@@ -23054,7 +23054,7 @@
        "readonly"
       ],
       "name": "timestamp",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -25609,7 +25609,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "photoProcessingTimeRange",
@@ -25755,7 +25755,7 @@
        "readonly"
       ],
       "name": "photoProcessingTimeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      }
     ],
@@ -25804,7 +25804,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minFrameDuration",
@@ -25813,7 +25813,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -25958,7 +25958,7 @@
        "nonatomic"
       ],
       "name": "minFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -26916,7 +26916,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "timestamp",
@@ -26930,7 +26930,7 @@
        "readonly"
       ],
       "name": "timestamp",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -27401,7 +27401,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minFrameDuration",
@@ -27410,7 +27410,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -27550,7 +27550,7 @@
        "nonatomic"
       ],
       "name": "minFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -28120,7 +28120,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -28239,11 +28239,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -28258,7 +28258,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -28281,11 +28281,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -28300,7 +28300,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -29868,7 +29868,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "maxFrameDuration",
@@ -29878,7 +29878,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "minFrameDuration",
@@ -29908,7 +29908,7 @@
        "readonly"
       ],
       "name": "maxFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -29916,7 +29916,7 @@
        "readonly"
       ],
       "name": "minFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -30923,7 +30923,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "time",
@@ -30933,7 +30933,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "duration",
@@ -31293,7 +31293,7 @@
        "readonly"
       ],
       "name": "time",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -31302,7 +31302,7 @@
        "readonly"
       ],
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -31588,7 +31588,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "time",
@@ -31598,7 +31598,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "duration",
@@ -31632,7 +31632,7 @@
        "readonly"
       ],
       "name": "time",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -31640,7 +31640,7 @@
        "readonly"
       ],
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -32019,7 +32019,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "mediaPresentationTimeRange",
@@ -32029,7 +32029,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "mediaDecodeTimeRange",
@@ -32064,7 +32064,7 @@
        "readonly"
       ],
       "name": "mediaPresentationTimeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -32073,7 +32073,7 @@
        "readonly"
       ],
       "name": "mediaDecodeTimeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -32564,7 +32564,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -32583,7 +32583,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -32769,7 +32769,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -32777,7 +32777,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -32796,7 +32796,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -32811,7 +32811,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -32826,11 +32826,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -32966,7 +32966,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -32974,7 +32974,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -33001,7 +33001,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -33020,7 +33020,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -33035,7 +33035,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -33050,11 +33050,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -33622,7 +33622,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "time",
@@ -33631,7 +33631,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -33647,7 +33647,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "duration",
@@ -33656,7 +33656,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -33857,7 +33857,7 @@
        "readwrite"
       ],
       "name": "time",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -33866,7 +33866,7 @@
        "readwrite"
       ],
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -34187,7 +34187,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -34195,7 +34195,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -34218,7 +34218,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -34233,7 +34233,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -34248,11 +34248,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -34318,7 +34318,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "interleavingPeriod",
@@ -34327,7 +34327,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -34552,7 +34552,7 @@
        "nonatomic"
       ],
       "name": "interleavingPeriod",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -34985,7 +34985,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "preferredMediaChunkDuration",
@@ -34994,7 +34994,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -35034,7 +35034,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -35042,7 +35042,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -35065,7 +35065,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -35080,7 +35080,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -35095,11 +35095,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -35200,11 +35200,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CMTime=qiIq}",
+        "typestr": "^{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "^{_CMTime=qiIq}",
+        "typestr": "^{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -35223,11 +35223,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -35397,7 +35397,7 @@
        "nonatomic"
       ],
       "name": "preferredMediaChunkDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -35428,7 +35428,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -35437,7 +35437,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -35483,7 +35483,7 @@
        "readwrite"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -35576,7 +35576,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "frameDuration",
@@ -35585,7 +35585,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -35833,7 +35833,7 @@
        "nonatomic"
       ],
       "name": "frameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -35926,7 +35926,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -35935,7 +35935,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -36031,7 +36031,7 @@
        "nonatomic"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -36104,7 +36104,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -36123,7 +36123,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36146,7 +36146,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -36165,7 +36165,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36188,7 +36188,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -36207,7 +36207,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36392,7 +36392,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "sourceVideoAverageFrameDuration",
@@ -36401,7 +36401,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36417,7 +36417,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "sourceVideoMinFrameDuration",
@@ -36426,7 +36426,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36491,7 +36491,7 @@
        "nonatomic"
       ],
       "name": "sourceVideoAverageFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -36499,7 +36499,7 @@
        "nonatomic"
       ],
       "name": "sourceVideoMinFrameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -36755,7 +36755,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "currentTime",
@@ -36798,7 +36798,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36813,15 +36813,15 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36836,7 +36836,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -36855,15 +36855,15 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -36886,11 +36886,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -36984,7 +36984,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -37733,7 +37733,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "duration",
@@ -37843,7 +37843,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "configuredTimeOffsetFromLive",
@@ -37852,7 +37852,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -37868,7 +37868,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "recommendedTimeOffsetFromLive",
@@ -37903,7 +37903,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "currentTime",
@@ -37912,7 +37912,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -37931,15 +37931,15 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -38013,7 +38013,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "forwardPlaybackEndTime",
@@ -38022,7 +38022,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -38038,7 +38038,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "reversePlaybackEndTime",
@@ -38047,7 +38047,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -38551,7 +38551,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -38566,15 +38566,15 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -38726,7 +38726,7 @@
        "readonly"
       ],
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -38814,7 +38814,7 @@
      {
       "attributes": [],
       "name": "configuredTimeOffsetFromLive",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -38823,7 +38823,7 @@
        "readonly"
       ],
       "name": "recommendedTimeOffsetFromLive",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -38837,13 +38837,13 @@
      {
       "attributes": [],
       "name": "forwardPlaybackEndTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
       "attributes": [],
       "name": "reversePlaybackEndTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -40329,7 +40329,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "itemTimeForHostTime:",
@@ -40344,7 +40344,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "itemTimeForMachAbsoluteTime:",
@@ -40359,7 +40359,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "itemTimeForCVTimeStamp:",
@@ -40562,7 +40562,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -40577,11 +40577,11 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "^{_CMTime=qiIq}",
+        "typestr": "^{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -40874,7 +40874,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -40916,7 +40916,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -41573,7 +41573,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -42011,7 +42011,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "currentTime",
@@ -42024,7 +42024,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -42093,7 +42093,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -42122,7 +42122,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -42391,7 +42391,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "overrideTime",
@@ -42400,7 +42400,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -42476,7 +42476,7 @@
        "nonatomic"
       ],
       "name": "overrideTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -42539,7 +42539,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -42549,7 +42549,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "stepByDecodeTime:wasPinned:",
@@ -42558,7 +42558,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -42568,7 +42568,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "stepByPresentationTime:wasPinned:",
@@ -42623,7 +42623,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "presentationTimeStamp",
@@ -42633,7 +42633,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "decodeTimeStamp",
@@ -42653,7 +42653,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "currentSampleDuration",
@@ -42663,7 +42663,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorSyncInfo=ZZZ}",
+       "typestr": "{AVSampleCursorSyncInfo=ZZZ}",
        "typestr_special": true
       },
       "selector": "currentSampleSyncInfo",
@@ -42673,7 +42673,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorDependencyInfo=ZZZZZZ}",
+       "typestr": "{AVSampleCursorDependencyInfo=ZZZZZZ}",
        "typestr_special": true
       },
       "selector": "currentSampleDependencyInfo",
@@ -42683,7 +42683,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorAudioDependencyInfo=Zq}",
+       "typestr": "{AVSampleCursorAudioDependencyInfo=Zq}",
        "typestr_special": true
       },
       "selector": "currentSampleAudioDependencyInfo",
@@ -42713,7 +42713,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorStorageRange=qq}",
+       "typestr": "{AVSampleCursorStorageRange=qq}",
        "typestr_special": true
       },
       "selector": "currentChunkStorageRange",
@@ -42723,7 +42723,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorChunkInfo=qZZZ}",
+       "typestr": "{AVSampleCursorChunkInfo=qZZZ}",
        "typestr_special": true
       },
       "selector": "currentChunkInfo",
@@ -42743,7 +42743,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVSampleCursorStorageRange=qq}",
+       "typestr": "{AVSampleCursorStorageRange=qq}",
        "typestr_special": true
       },
       "selector": "currentSampleStorageRange",
@@ -42758,7 +42758,7 @@
        "readonly"
       ],
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -42767,7 +42767,7 @@
        "readonly"
       ],
       "name": "decodeTimeStamp",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -42776,7 +42776,7 @@
        "readonly"
       ],
       "name": "currentSampleDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -42785,7 +42785,7 @@
        "readonly"
       ],
       "name": "currentSampleSyncInfo",
-      "typestr": "{_AVSampleCursorSyncInfo=ZZZ}",
+      "typestr": "{AVSampleCursorSyncInfo=ZZZ}",
       "typestr_special": true
      },
      {
@@ -42794,7 +42794,7 @@
        "readonly"
       ],
       "name": "currentSampleDependencyInfo",
-      "typestr": "{_AVSampleCursorDependencyInfo=ZZZZZZ}",
+      "typestr": "{AVSampleCursorDependencyInfo=ZZZZZZ}",
       "typestr_special": true
      },
      {
@@ -42803,7 +42803,7 @@
        "readonly"
       ],
       "name": "currentSampleAudioDependencyInfo",
-      "typestr": "{_AVSampleCursorAudioDependencyInfo=Zq}",
+      "typestr": "{AVSampleCursorAudioDependencyInfo=Zq}",
       "typestr_special": true
      },
      {
@@ -42830,7 +42830,7 @@
        "readonly"
       ],
       "name": "currentChunkStorageRange",
-      "typestr": "{_AVSampleCursorStorageRange=qq}",
+      "typestr": "{AVSampleCursorStorageRange=qq}",
       "typestr_special": true
      },
      {
@@ -42839,7 +42839,7 @@
        "readonly"
       ],
       "name": "currentChunkInfo",
-      "typestr": "{_AVSampleCursorChunkInfo=qZZZ}",
+      "typestr": "{AVSampleCursorChunkInfo=qZZZ}",
       "typestr_special": true
      },
      {
@@ -42857,7 +42857,7 @@
        "readonly"
       ],
       "name": "currentSampleStorageRange",
-      "typestr": "{_AVSampleCursorStorageRange=qq}",
+      "typestr": "{AVSampleCursorStorageRange=qq}",
       "typestr_special": true
      }
     ],
@@ -44011,7 +44011,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -44042,7 +44042,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -44077,7 +44077,7 @@
        "readonly"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -44305,7 +44305,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "frameDuration",
@@ -44417,7 +44417,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -44451,7 +44451,7 @@
        "readonly"
       ],
       "name": "frameDuration",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -44608,7 +44608,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -44673,7 +44673,7 @@
        "readonly"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -44738,7 +44738,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -44750,7 +44750,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -44765,7 +44765,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -44777,7 +44777,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -44792,7 +44792,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -44804,7 +44804,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -44894,7 +44894,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVPixelAspectRatio=qq}",
+       "typestr": "{AVPixelAspectRatio=qq}",
        "typestr_special": true
       },
       "selector": "pixelAspectRatio",
@@ -44904,7 +44904,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_AVEdgeWidths=dddd}",
+       "typestr": "{AVEdgeWidths=dddd}",
        "typestr_special": true
       },
       "selector": "edgeWidths",
@@ -44966,7 +44966,7 @@
        "readonly"
       ],
       "name": "pixelAspectRatio",
-      "typestr": "{_AVPixelAspectRatio=qq}",
+      "typestr": "{AVPixelAspectRatio=qq}",
       "typestr_special": true
      },
      {
@@ -44975,7 +44975,7 @@
        "readonly"
       ],
       "name": "edgeWidths",
-      "typestr": "{_AVEdgeWidths=dddd}",
+      "typestr": "{AVEdgeWidths=dddd}",
       "typestr_special": true
      },
      {
@@ -45007,7 +45007,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "startCompositionTime",
@@ -45017,7 +45017,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "endCompositionTime",
@@ -45032,7 +45032,7 @@
        "readonly"
       ],
       "name": "startCompositionTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -45041,7 +45041,7 @@
        "readonly"
       ],
       "name": "endCompositionTime",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      }
     ],
@@ -45053,7 +45053,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -45078,7 +45078,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "decodeCMTimeForKey:",
@@ -45087,7 +45087,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        },
        {
@@ -45112,7 +45112,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "decodeCMTimeRangeForKey:",
@@ -45121,7 +45121,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+        "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
         "typestr_special": true
        },
        {
@@ -45146,7 +45146,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+       "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
        "typestr_special": true
       },
       "selector": "decodeCMTimeMappingForKey:",
@@ -45162,7 +45162,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -45177,7 +45177,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -45192,7 +45192,7 @@
      {
       "args": [
        {
-        "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+        "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
         "typestr_special": true
        }
       ],
@@ -45208,7 +45208,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTime=qiIq}",
+       "typestr": "{CMTime=qiIq}",
        "typestr_special": true
       },
       "selector": "CMTimeValue",
@@ -45218,7 +45218,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "CMTimeRangeValue",
@@ -45228,7 +45228,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+       "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
        "typestr_special": true
       },
       "selector": "CMTimeMappingValue",
@@ -45242,7 +45242,7 @@
        "readonly"
       ],
       "name": "CMTimeValue",
-      "typestr": "{_CMTime=qiIq}",
+      "typestr": "{CMTime=qiIq}",
       "typestr_special": true
      },
      {
@@ -45250,7 +45250,7 @@
        "readonly"
       ],
       "name": "CMTimeRangeValue",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -45258,7 +45258,7 @@
        "readonly"
       ],
       "name": "CMTimeMappingValue",
-      "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}",
+      "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}",
       "typestr_special": true
      }
     ],
@@ -46019,7 +46019,7 @@
     "typestr": "@"
    },
    "AVCaptureExposureDurationCurrent": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "AVCaptureExposureTargetBiasCurrent": {
     "typestr": "f"
@@ -46118,7 +46118,7 @@
     "typestr": "@"
    },
    "AVCaptureWhiteBalanceGainsCurrent": {
-    "typestr": "{_AVCaptureWhiteBalanceGains=fff}"
+    "typestr": "{AVCaptureWhiteBalanceGains=fff}"
    },
    "AVChannelLayoutKey": {
     "typestr": "@"
@@ -49326,7 +49326,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -49354,7 +49354,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -49790,11 +49790,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        },
        {
@@ -50264,7 +50264,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTime=qiIq}",
+        "typestr": "{CMTime=qiIq}",
         "typestr_special": true
        }
       ],
@@ -50808,7 +50808,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+       "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
        "typestr_special": true
       },
       "selector": "timeRange",
@@ -50866,7 +50866,7 @@
        "readonly"
       ],
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
       "typestr_special": true
      },
      {
@@ -50939,7 +50939,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         "typestr_special": true
        }
       ],
@@ -51174,7 +51174,7 @@
      "y"
     ],
     "special": true,
-    "typestr": "{_AVCaptureWhiteBalanceChromaticityValues=ff}"
+    "typestr": "{AVCaptureWhiteBalanceChromaticityValues=ff}"
    },
    "AVCaptureWhiteBalanceGains": {
     "fieldnames": [
@@ -51183,7 +51183,7 @@
      "blueGain"
     ],
     "special": true,
-    "typestr": "{_AVCaptureWhiteBalanceGains=fff}"
+    "typestr": "{AVCaptureWhiteBalanceGains=fff}"
    },
    "AVCaptureWhiteBalanceTemperatureAndTintValues": {
     "fieldnames": [
@@ -51191,7 +51191,7 @@
      "tint"
     ],
     "special": true,
-    "typestr": "{_AVCaptureWhiteBalanceTemperatureAndTintValues=ff}"
+    "typestr": "{AVCaptureWhiteBalanceTemperatureAndTintValues=ff}"
    },
    "AVEdgeWidths": {
     "fieldnames": [
@@ -51201,7 +51201,7 @@
      "bottom"
     ],
     "special": true,
-    "typestr": "{_AVEdgeWidths=dddd}"
+    "typestr": "{AVEdgeWidths=dddd}"
    },
    "AVPixelAspectRatio": {
     "fieldnames": [
@@ -51209,7 +51209,7 @@
      "verticalSpacing"
     ],
     "special": true,
-    "typestr": "{_AVPixelAspectRatio=qq}"
+    "typestr": "{AVPixelAspectRatio=qq}"
    },
    "AVSampleCursorAudioDependencyInfo": {
     "fieldnames": [
@@ -51217,7 +51217,7 @@
      "audioSamplePacketRefreshCount"
     ],
     "special": true,
-    "typestr": "{_AVSampleCursorAudioDependencyInfo=Zq}"
+    "typestr": "{AVSampleCursorAudioDependencyInfo=Zq}"
    },
    "AVSampleCursorChunkInfo": {
     "fieldnames": [
@@ -51227,7 +51227,7 @@
      "chunkHasUniformFormatDescriptions"
     ],
     "special": true,
-    "typestr": "{_AVSampleCursorChunkInfo=qZZZ}"
+    "typestr": "{AVSampleCursorChunkInfo=qZZZ}"
    },
    "AVSampleCursorDependencyInfo": {
     "fieldnames": [
@@ -51239,7 +51239,7 @@
      "sampleHasRedundantCoding"
     ],
     "special": true,
-    "typestr": "{_AVSampleCursorDependencyInfo=ZZZZZZ}"
+    "typestr": "{AVSampleCursorDependencyInfo=ZZZZZZ}"
    },
    "AVSampleCursorStorageRange": {
     "fieldnames": [
@@ -51247,7 +51247,7 @@
      "length"
     ],
     "special": true,
-    "typestr": "{_AVSampleCursorStorageRange=qq}"
+    "typestr": "{AVSampleCursorStorageRange=qq}"
    },
    "AVSampleCursorSyncInfo": {
     "fieldnames": [
@@ -51256,7 +51256,7 @@
      "sampleIsDroppable"
     ],
     "special": true,
-    "typestr": "{_AVSampleCursorSyncInfo=ZZZ}"
+    "typestr": "{AVSampleCursorSyncInfo=ZZZ}"
    }
   }
  },

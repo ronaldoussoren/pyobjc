@@ -673,7 +673,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -779,7 +779,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -806,7 +806,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1225,7 +1225,7 @@
          "typestr": "i"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -1259,7 +1259,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1382,7 +1382,7 @@
          "typestr": "@"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -1458,7 +1458,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1481,7 +1481,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1496,7 +1496,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1723,7 +1723,7 @@
          "typestr": "^{__CFData=}"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -1799,7 +1799,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1814,7 +1814,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1848,7 +1848,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1867,7 +1867,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1882,7 +1882,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1901,7 +1901,7 @@
      },
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "retval": {
@@ -1940,7 +1940,7 @@
          "typestr": "^{__CFNetService=}"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -2079,7 +2079,7 @@
      },
      {
       "name": "clientContext",
-      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
+      "typestr": "^{CFStreamClientContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -2118,7 +2118,7 @@
      },
      {
       "name": "clientContext",
-      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
+      "typestr": "^{CFStreamClientContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -2181,7 +2181,7 @@
     "args": [
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "inline": true,
@@ -2193,7 +2193,7 @@
     "args": [
      {
       "name": "error",
-      "typestr": "^{_CFStreamError=qi}"
+      "typestr": "^{CFStreamError=qi}"
      }
     ],
     "inline": true,

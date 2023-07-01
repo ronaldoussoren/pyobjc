@@ -5,6 +5,11 @@ import LocalAuthentication
 class TestLAPublicDefines(TestCase):
     @min_os_level("10.10")
     def testConstants(self):
+        self.assertEqual(LocalAuthentication.kLABiometryTypeNone, 0)
+        self.assertEqual(LocalAuthentication.kLABiometryTypeTouchID, 1 << 0)
+        self.assertEqual(LocalAuthentication.kLABiometryTypeFaceID, 1 << 1)
+        self.assertEqual(LocalAuthentication.kLABiometryTypeOpticID, 1 << 2)
+
         self.assertEqual(LocalAuthentication.kLACredentialTypeApplicationPassword, 0)
         self.assertEqual(LocalAuthentication.kLAErrorNotInteractive, -1004)
 

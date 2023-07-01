@@ -503,7 +503,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_NSAffineTransformStruct=dddddd}",
+       "typestr": "{NSAffineTransformStruct=dddddd}",
        "typestr_special": true
       },
       "selector": "transformStruct",
@@ -512,7 +512,7 @@
      {
       "args": [
        {
-        "typestr": "{_NSAffineTransformStruct=dddddd}",
+        "typestr": "{NSAffineTransformStruct=dddddd}",
         "typestr_special": true
        }
       ],
@@ -530,7 +530,7 @@
      {
       "attributes": [],
       "name": "transformStruct",
-      "typestr": "{_NSAffineTransformStruct=dddddd}",
+      "typestr": "{NSAffineTransformStruct=dddddd}",
       "typestr_special": true
      }
     ],
@@ -16128,7 +16128,7 @@
      {
       "args": [
        {
-        "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+        "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
         "typestr_special": true
        }
       ],
@@ -16215,7 +16215,7 @@
      {
       "args": [
        {
-        "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+        "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
         "typestr_special": true
        }
       ],
@@ -16499,7 +16499,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+       "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
        "typestr_special": true
       },
       "selector": "decimalValue",
@@ -16608,7 +16608,7 @@
        "readonly"
       ],
       "name": "decimalValue",
-      "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+      "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
       "typestr_special": true
      },
      {
@@ -38338,7 +38338,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+       "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
        "typestr_special": true
       },
       "selector": "decimalValue",
@@ -38481,7 +38481,7 @@
        "readonly"
       ],
       "name": "decimalValue",
-      "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}",
+      "typestr": "{NSDecimal=b8b4b1b1b18[8S]}",
       "typestr_special": true
      }
     ],
@@ -47629,7 +47629,7 @@
      {
       "args": [
        {
-        "typestr": "{_NSOperatingSystemVersion=qqq}",
+        "typestr": "{NSOperatingSystemVersion=qqq}",
         "typestr_special": true
        }
       ],
@@ -47790,7 +47790,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_NSOperatingSystemVersion=qqq}",
+       "typestr": "{NSOperatingSystemVersion=qqq}",
        "typestr_special": true
       },
       "selector": "operatingSystemVersion",
@@ -48088,7 +48088,7 @@
        "readonly"
       ],
       "name": "operatingSystemVersion",
-      "typestr": "{_NSOperatingSystemVersion=qqq}",
+      "typestr": "{NSOperatingSystemVersion=qqq}",
       "typestr_special": true
      },
      {
@@ -51323,7 +51323,7 @@
      {
       "args": [
        {
-        "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}",
+        "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}",
         "typestr_special": true
        }
       ],
@@ -84093,22 +84093,22 @@
     "typestr": "@"
    },
    "NSIntHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSIntMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSIntMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSIntegerHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSIntegerMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSIntegerMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSInternalInconsistencyException": {
     "typestr": "@"
@@ -85002,40 +85002,40 @@
     "typestr": "@"
    },
    "NSNonOwnedPointerHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSNonOwnedPointerMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSNonOwnedPointerMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSNonOwnedPointerOrNullMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSNonRetainedObjectHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSNonRetainedObjectMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSNonRetainedObjectMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSOSStatusErrorDomain": {
     "typestr": "@"
    },
    "NSObjectHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSObjectInaccessibleException": {
     "typestr": "@"
    },
    "NSObjectMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSObjectMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSObjectNotAvailableException": {
     "typestr": "@"
@@ -85047,16 +85047,16 @@
     "typestr": "@"
    },
    "NSOwnedObjectIdentityHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSOwnedPointerHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSOwnedPointerMapKeyCallBacks": {
-    "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+    "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
    },
    "NSOwnedPointerMapValueCallBacks": {
-    "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+    "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
    },
    "NSPOSIXErrorDomain": {
     "typestr": "@"
@@ -85092,7 +85092,7 @@
     "typestr": "@"
    },
    "NSPointerToStructHashCallBacks": {
-    "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+    "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
    },
    "NSPortDidBecomeInvalidNotification": {
     "typestr": "@"
@@ -91099,7 +91099,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedDouble=Q}"
+     "typestr": "{NSSwappedDouble=Q}"
     }
    },
    "NSConvertHostFloatToSwapped": {
@@ -91111,14 +91111,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedFloat=I}"
+     "typestr": "{NSSwappedFloat=I}"
     }
    },
    "NSConvertSwappedDoubleToHost": {
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedDouble=Q}"
+      "typestr": "{NSSwappedDouble=Q}"
      }
     ],
     "inline": true,
@@ -91130,7 +91130,7 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedFloat=I}"
+      "typestr": "{NSSwappedFloat=I}"
      }
     ],
     "inline": true,
@@ -91247,7 +91247,7 @@
     "args": [
      {
       "name": "callBacks",
-      "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+      "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
      },
      {
       "name": "capacity",
@@ -91263,7 +91263,7 @@
     "args": [
      {
       "name": "callBacks",
-      "typestr": "{_NSHashTableCallBacks=^?^?^?^?^?}"
+      "typestr": "{NSHashTableCallBacks=^?^?^?^?^?}"
      },
      {
       "name": "capacity",
@@ -91283,11 +91283,11 @@
     "args": [
      {
       "name": "keyCallBacks",
-      "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+      "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
      },
      {
       "name": "valueCallBacks",
-      "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+      "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
      },
      {
       "name": "capacity",
@@ -91303,11 +91303,11 @@
     "args": [
      {
       "name": "keyCallBacks",
-      "typestr": "{_NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
+      "typestr": "{NSMapTableKeyCallBacks=^?^?^?^?^?^v}"
      },
      {
       "name": "valueCallBacks",
-      "typestr": "{_NSMapTableValueCallBacks=^?^?^?}"
+      "typestr": "{NSMapTableValueCallBacks=^?^?^?}"
      },
      {
       "name": "capacity",
@@ -91373,15 +91373,15 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "leftOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "rightOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "roundingMode",
@@ -91396,7 +91396,7 @@
     "args": [
      {
       "name": "number",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      }
     ],
     "retval": {
@@ -91407,11 +91407,11 @@
     "args": [
      {
       "name": "leftOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "rightOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      }
     ],
     "retval": {
@@ -91422,11 +91422,11 @@
     "args": [
      {
       "name": "destination",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "source",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      }
     ],
     "retval": {
@@ -91438,15 +91438,15 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "leftOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "rightOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "roundingMode",
@@ -91461,7 +91461,7 @@
     "args": [
      {
       "name": "dcm",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      }
     ],
     "inline": true,
@@ -91473,15 +91473,15 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "leftOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "rightOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "roundingMode",
@@ -91496,11 +91496,11 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "number",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "power",
@@ -91519,11 +91519,11 @@
     "args": [
      {
       "name": "number1",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "number2",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "roundingMode",
@@ -91538,11 +91538,11 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "number",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "power",
@@ -91561,11 +91561,11 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "number",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "scale",
@@ -91584,7 +91584,7 @@
     "args": [
      {
       "name": "dcm",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "locale",
@@ -91599,15 +91599,15 @@
     "args": [
      {
       "name": "result",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "leftOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "rightOperand",
-      "typestr": "^{_NSDecimal=b8b4b1b1b18[8S]}"
+      "typestr": "^{NSDecimal=b8b4b1b1b18[8S]}"
      },
      {
       "name": "roundingMode",
@@ -91710,7 +91710,7 @@
     "args": [
      {
       "name": "enumerator",
-      "typestr": "^{_NSHashEnumerator=QQ^v}"
+      "typestr": "^{NSHashEnumerator=QQ^v}"
      }
     ],
     "retval": {
@@ -91721,7 +91721,7 @@
     "args": [
      {
       "name": "enumerator",
-      "typestr": "^{_NSMapEnumerator=QQ^v}"
+      "typestr": "^{NSMapEnumerator=QQ^v}"
      }
     ],
     "retval": {
@@ -91736,7 +91736,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_NSHashEnumerator=QQ^v}"
+     "typestr": "{NSHashEnumerator=QQ^v}"
     }
    },
    "NSEnumerateMapTable": {
@@ -91747,7 +91747,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_NSMapEnumerator=QQ^v}"
+     "typestr": "{NSMapEnumerator=QQ^v}"
     }
    },
    "NSEqualPoints": {
@@ -92530,7 +92530,7 @@
     "args": [
      {
       "name": "enumerator",
-      "typestr": "^{_NSHashEnumerator=QQ^v}"
+      "typestr": "^{NSHashEnumerator=QQ^v}"
      }
     ],
     "retval": {
@@ -92541,7 +92541,7 @@
     "args": [
      {
       "name": "enumerator",
-      "typestr": "^{_NSMapEnumerator=QQ^v}"
+      "typestr": "^{NSMapEnumerator=QQ^v}"
      },
      {
       "name": "key",
@@ -93034,7 +93034,7 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedDouble=Q}"
+      "typestr": "{NSSwappedDouble=Q}"
      }
     ],
     "inline": true,
@@ -93046,7 +93046,7 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedFloat=I}"
+      "typestr": "{NSSwappedFloat=I}"
      }
     ],
     "inline": true,
@@ -93106,24 +93106,24 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedDouble=Q}"
+      "typestr": "{NSSwappedDouble=Q}"
      }
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedDouble=Q}"
+     "typestr": "{NSSwappedDouble=Q}"
     }
    },
    "NSSwapFloat": {
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedFloat=I}"
+      "typestr": "{NSSwappedFloat=I}"
      }
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedFloat=I}"
+     "typestr": "{NSSwappedFloat=I}"
     }
    },
    "NSSwapHostDoubleToBig": {
@@ -93135,7 +93135,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedDouble=Q}"
+     "typestr": "{NSSwappedDouble=Q}"
     }
    },
    "NSSwapHostDoubleToLittle": {
@@ -93147,7 +93147,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedDouble=Q}"
+     "typestr": "{NSSwappedDouble=Q}"
     }
    },
    "NSSwapHostFloatToBig": {
@@ -93159,7 +93159,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedFloat=I}"
+     "typestr": "{NSSwappedFloat=I}"
     }
    },
    "NSSwapHostFloatToLittle": {
@@ -93171,7 +93171,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_NSSwappedFloat=I}"
+     "typestr": "{NSSwappedFloat=I}"
     }
    },
    "NSSwapHostIntToBig": {
@@ -93286,7 +93286,7 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedDouble=Q}"
+      "typestr": "{NSSwappedDouble=Q}"
      }
     ],
     "inline": true,
@@ -93298,7 +93298,7 @@
     "args": [
      {
       "name": "x",
-      "typestr": "{_NSSwappedFloat=I}"
+      "typestr": "{NSSwappedFloat=I}"
      }
     ],
     "inline": true,
@@ -95845,7 +95845,7 @@
      "tY"
     ],
     "special": true,
-    "typestr": "{_NSAffineTransformStruct=dddddd}"
+    "typestr": "{NSAffineTransformStruct=dddddd}"
    },
    "NSDecimal": {
     "fieldnames": [
@@ -95857,7 +95857,7 @@
      "_mantissa"
     ],
     "special": true,
-    "typestr": "{_NSDecimal=b8b4b1b1b18[8S]}"
+    "typestr": "{NSDecimal=b8b4b1b1b18[8S]}"
    },
    "NSEdgeInsets": {
     "fieldnames": [
@@ -95886,7 +95886,7 @@
      "_bs"
     ],
     "special": true,
-    "typestr": "{_NSHashEnumerator=QQ^v}"
+    "typestr": "{NSHashEnumerator=QQ^v}"
    },
    "NSMapEnumerator": {
     "fieldnames": [
@@ -95895,7 +95895,7 @@
      "_bs"
     ],
     "special": true,
-    "typestr": "{_NSMapEnumerator=QQ^v}"
+    "typestr": "{NSMapEnumerator=QQ^v}"
    },
    "NSOperatingSystemVersion": {
     "fieldnames": [
@@ -95904,7 +95904,7 @@
      "patchVersion"
     ],
     "special": true,
-    "typestr": "{_NSOperatingSystemVersion=qqq}"
+    "typestr": "{NSOperatingSystemVersion=qqq}"
    },
    "NSPoint": {
     "fieldnames": [
@@ -95943,14 +95943,14 @@
      "v"
     ],
     "special": true,
-    "typestr": "{_NSSwappedDouble=Q}"
+    "typestr": "{NSSwappedDouble=Q}"
    },
    "NSSwappedFloat": {
     "fieldnames": [
      "v"
     ],
     "special": true,
-    "typestr": "{_NSSwappedFloat=I}"
+    "typestr": "{NSSwappedFloat=I}"
    },
    "NSZone": {
     "fieldnames": [],

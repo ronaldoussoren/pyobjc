@@ -19,16 +19,13 @@ class TestMKMapViewHelper(MapKit.NSObject):
 
 
 class TestMKMapView(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(MapKit.MKOverlayLevel)
+    def test_constants(self):
         self.assertIsEnumType(MapKit.MKUserTrackingMode)
-
-    @min_os_level("10.9")
-    def testConstants(self):
         self.assertEqual(MapKit.MKUserTrackingModeNone, 0)
         self.assertEqual(MapKit.MKUserTrackingModeFollow, 1)
         self.assertEqual(MapKit.MKUserTrackingModeFollowWithHeading, 2)
 
+        self.assertIsEnumType(MapKit.MKOverlayLevel)
         self.assertEqual(MapKit.MKOverlayLevelAboveRoads, 0)
         self.assertEqual(MapKit.MKOverlayLevelAboveLabels, 1)
 

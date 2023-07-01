@@ -5957,7 +5957,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+        "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
         "typestr_special": true
        }
       ],
@@ -5984,7 +5984,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+        "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
         "typestr_special": true
        }
       ],
@@ -6496,7 +6496,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+        "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
         "typestr_special": true
        }
       ],

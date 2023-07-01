@@ -6276,7 +6276,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -6291,7 +6291,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -6315,7 +6315,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "sampleCount",
@@ -6325,7 +6325,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maxSampleCount",
@@ -6374,7 +6374,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -6395,7 +6395,7 @@
        "readonly"
       ],
       "name": "sampleCount",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -6404,7 +6404,7 @@
        "readonly"
       ],
       "name": "maxSampleCount",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -6449,7 +6449,7 @@
        "readwrite"
       ],
       "name": "sampleCount",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -6464,7 +6464,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -6479,7 +6479,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -6498,7 +6498,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -6566,7 +6566,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "screenSize",
@@ -6575,7 +6575,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -6639,7 +6639,7 @@
        "nonatomic"
       ],
       "name": "screenSize",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -7093,7 +7093,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLClearColor=dddd}",
+       "typestr": "{MTLClearColor=dddd}",
        "typestr_special": true
       },
       "selector": "clearColor",
@@ -7102,7 +7102,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLClearColor=dddd}",
+        "typestr": "{MTLClearColor=dddd}",
         "typestr_special": true
        }
       ],
@@ -7122,7 +7122,7 @@
        "nonatomic"
       ],
       "name": "clearColor",
-      "typestr": "{_MTLClearColor=dddd}",
+      "typestr": "{MTLClearColor=dddd}",
       "typestr_special": true
      }
     ],
@@ -7264,7 +7264,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLSamplePosition=ff}",
+        "typestr": "^{MTLSamplePosition=ff}",
         "typestr_special": true
        },
        {
@@ -7283,7 +7283,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLSamplePosition=ff}",
+        "typestr": "^{MTLSamplePosition=ff}",
         "typestr_special": true
        },
        {
@@ -11551,7 +11551,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+       "typestr": "{MTLTextureSwizzleChannels=CCCC}",
        "typestr_special": true
       },
       "selector": "swizzle",
@@ -11560,7 +11560,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+        "typestr": "{MTLTextureSwizzleChannels=CCCC}",
         "typestr_special": true
        }
       ],
@@ -11707,7 +11707,7 @@
        "readwrite"
       ],
       "name": "swizzle",
-      "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+      "typestr": "{MTLTextureSwizzleChannels=CCCC}",
       "typestr_special": true
      }
     ],
@@ -14765,11 +14765,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -14785,7 +14785,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -14817,7 +14817,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -14833,7 +14833,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -14865,7 +14865,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -14881,7 +14881,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        },
        {
@@ -14913,11 +14913,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -14961,11 +14961,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -15173,7 +15173,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -15213,7 +15213,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -16994,7 +16994,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -17030,11 +17030,11 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -17058,7 +17058,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -17074,11 +17074,11 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -17338,7 +17338,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -17787,7 +17787,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSizeAndAlign=QQ}",
+       "typestr": "{MTLSizeAndAlign=QQ}",
        "typestr_special": true
       },
       "selector": "heapTextureSizeAndAlignWithDescriptor:",
@@ -17807,7 +17807,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSizeAndAlign=QQ}",
+       "typestr": "{MTLSizeAndAlign=QQ}",
        "typestr_special": true
       },
       "selector": "heapBufferSizeAndAlignWithLength:options:",
@@ -18680,7 +18680,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLSamplePosition=ff}",
+        "typestr": "^{MTLSamplePosition=ff}",
         "typestr_special": true
        },
        {
@@ -18825,7 +18825,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "sparseTileSizeWithTextureType:pixelFormat:sampleCount:",
@@ -18834,15 +18834,15 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -18866,15 +18866,15 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -19037,7 +19037,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLAccelerationStructureSizes=QQQ}",
+       "typestr": "{MTLAccelerationStructureSizes=QQQ}",
        "typestr_special": true
       },
       "selector": "accelerationStructureSizesWithDescriptor:",
@@ -19102,7 +19102,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maxThreadsPerThreadgroup",
@@ -19527,7 +19527,7 @@
        "readonly"
       ],
       "name": "maxThreadsPerThreadgroup",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -21161,11 +21161,11 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -21181,11 +21181,11 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -21274,7 +21274,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -22218,7 +22218,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "physicalSizeForLayer:",
@@ -22227,7 +22227,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLCoordinate2D=ff}",
+        "typestr": "{MTLSamplePosition=ff}",
         "typestr_special": true
        },
        {
@@ -22238,7 +22238,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLCoordinate2D=ff}",
+       "typestr": "{MTLSamplePosition=ff}",
        "typestr_special": true
       },
       "selector": "mapScreenToPhysicalCoordinates:forLayer:",
@@ -22247,7 +22247,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLCoordinate2D=ff}",
+        "typestr": "{MTLSamplePosition=ff}",
         "typestr_special": true
        },
        {
@@ -22258,7 +22258,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLCoordinate2D=ff}",
+       "typestr": "{MTLSamplePosition=ff}",
        "typestr_special": true
       },
       "selector": "mapPhysicalToScreenCoordinates:forLayer:",
@@ -22291,7 +22291,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "screenSize",
@@ -22302,7 +22302,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "physicalGranularity",
@@ -22324,7 +22324,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLSizeAndAlign=QQ}",
+       "typestr": "{MTLSizeAndAlign=QQ}",
        "typestr_special": true
       },
       "selector": "parameterBufferSizeAndAlign",
@@ -22353,7 +22353,7 @@
        "readonly"
       ],
       "name": "screenSize",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -22361,7 +22361,7 @@
        "readonly"
       ],
       "name": "physicalGranularity",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -22377,7 +22377,7 @@
        "readonly"
       ],
       "name": "parameterBufferSizeAndAlign",
-      "typestr": "{_MTLSizeAndAlign=QQ}",
+      "typestr": "{MTLSizeAndAlign=QQ}",
       "typestr_special": true
      }
     ]
@@ -22734,7 +22734,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLViewport=dddddd}",
+        "typestr": "{MTLViewport=dddddd}",
         "typestr_special": true
        }
       ],
@@ -22750,7 +22750,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLViewport=dddddd}",
+        "typestr": "^{MTLViewport=dddddd}",
         "typestr_special": true
        },
        {
@@ -22790,7 +22790,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MTLVertexAmplificationViewMapping=II}",
+        "typestr": "^{MTLVertexAmplificationViewMapping=II}",
         "typestr_special": true
        }
       ],
@@ -22862,7 +22862,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLScissorRect=QQQQ}",
+        "typestr": "{MTLScissorRect=QQQQ}",
         "typestr_special": true
        }
       ],
@@ -22878,7 +22878,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MTLScissorRect=QQQQ}",
+        "typestr": "^{MTLScissorRect=QQQQ}",
         "typestr_special": true
        },
        {
@@ -24281,7 +24281,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -24664,7 +24664,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -25127,7 +25127,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25163,7 +25163,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25403,7 +25403,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25427,7 +25427,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25471,7 +25471,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25491,7 +25491,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -25606,7 +25606,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+        "typestr": "{MTLTextureSwizzleChannels=CCCC}",
         "typestr_special": true
        }
       ],
@@ -25899,7 +25899,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+       "typestr": "{MTLTextureSwizzleChannels=CCCC}",
        "typestr_special": true
       },
       "selector": "swizzle",
@@ -26121,7 +26121,7 @@
        "readonly"
       ],
       "name": "swizzle",
-      "typestr": "{_MTLTextureSwizzleChannels=CCCC}",
+      "typestr": "{MTLTextureSwizzleChannels=CCCC}",
       "typestr_special": true
      }
     ]
@@ -26198,7 +26198,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLClearColor=dddd}"
+     "typestr": "{MTLClearColor=dddd}"
     }
    },
    "MTLCoordinate2DMake": {
@@ -26214,7 +26214,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLCoordinate2D=ff}"
+     "typestr": "{MTLSamplePosition=ff}"
     }
    },
    "MTLCopyAllDevices": {
@@ -26270,7 +26270,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLIndirectCommandBufferExecutionRange=II}"
+     "typestr": "{MTLIndirectCommandBufferExecutionRange=II}"
     }
    },
    "MTLOriginMake": {
@@ -26290,7 +26290,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLOrigin=QQQ}"
+     "typestr": "{MTLOrigin=QQQ}"
     }
    },
    "MTLPackedFloat3Make": {
@@ -26326,7 +26326,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"
+     "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"
     }
    },
    "MTLRegionMake2D": {
@@ -26350,7 +26350,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"
+     "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"
     }
    },
    "MTLRegionMake3D": {
@@ -26382,7 +26382,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"
+     "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"
     }
    },
    "MTLRemoveDeviceObserver": {
@@ -26409,7 +26409,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLSamplePosition=ff}"
+     "typestr": "{MTLSamplePosition=ff}"
     }
    },
    "MTLSizeMake": {
@@ -26429,7 +26429,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLSize=QQQ}"
+     "typestr": "{MTLSize=QQQ}"
     }
    },
    "MTLTextureSwizzleChannelsMake": {
@@ -26453,7 +26453,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MTLTextureSwizzleChannels=CCCC}"
+     "typestr": "{MTLTextureSwizzleChannels=CCCC}"
     }
    }
   },
@@ -26469,7 +26469,7 @@
      "accelerationStructureIndex"
     ],
     "special": true,
-    "typestr": "{_MTLAccelerationStructureInstanceDescriptor={_MTLPackedFloat4x3=[4{_MTLPackedFloat3=[3f]}]}IIII}"
+    "typestr": "{MTLAccelerationStructureInstanceDescriptor={_MTLPackedFloat4x3=[4{_MTLPackedFloat3=[3f]}]}IIII}"
    },
    "MTLAccelerationStructureMotionInstanceDescriptor": {
     "fieldnames": [
@@ -26486,7 +26486,7 @@
      "motionEndTime"
     ],
     "special": true,
-    "typestr": "{_MTLAccelerationStructureMotionInstanceDescriptor=IIIIIIIIIff}"
+    "typestr": "{MTLAccelerationStructureMotionInstanceDescriptor=IIIIIIIIIff}"
    },
    "MTLAccelerationStructureSizes": {
     "fieldnames": [
@@ -26495,7 +26495,7 @@
      "refitScratchBufferSize"
     ],
     "special": true,
-    "typestr": "{_MTLAccelerationStructureSizes=QQQ}"
+    "typestr": "{MTLAccelerationStructureSizes=QQQ}"
    },
    "MTLAccelerationStructureUserIDInstanceDescriptor": {
     "fieldnames": [
@@ -26507,7 +26507,7 @@
      "userID"
     ],
     "special": true,
-    "typestr": "{_MTLAccelerationStructureUserIDInstanceDescriptor={_MTLPackedFloat4x3=[4{_MTLPackedFloat3=[3f]}]}IIIII}"
+    "typestr": "{MTLAccelerationStructureUserIDInstanceDescriptor={_MTLPackedFloat4x3=[4{_MTLPackedFloat3=[3f]}]}IIIII}"
    },
    "MTLAxisAlignedBoundingBox": {
     "fieldnames": [
@@ -26525,7 +26525,7 @@
      "alpha"
     ],
     "special": true,
-    "typestr": "{_MTLClearColor=dddd}"
+    "typestr": "{MTLClearColor=dddd}"
    },
    "MTLCoordinate2D": {
     "fieldnames": [
@@ -26533,7 +26533,7 @@
      "y"
     ],
     "special": true,
-    "typestr": "{_MTLCoordinate2D=ff}"
+    "typestr": "{MTLSamplePosition=ff}"
    },
    "MTLCounterResultStageUtilization": {
     "fieldnames": [
@@ -26545,7 +26545,7 @@
      "renderTargetCycles"
     ],
     "special": true,
-    "typestr": "{_MTLCounterResultStageUtilization=QQQQQQ}"
+    "typestr": "{MTLCounterResultStageUtilization=QQQQQQ}"
    },
    "MTLCounterResultStatistic": {
     "fieldnames": [
@@ -26559,21 +26559,21 @@
      "computeKernelInvocations"
     ],
     "special": true,
-    "typestr": "{_MTLCounterResultStatistic=QQQQQQQQ}"
+    "typestr": "{MTLCounterResultStatistic=QQQQQQQQ}"
    },
    "MTLCounterResultTimestamp": {
     "fieldnames": [
      "timestamp"
     ],
     "special": true,
-    "typestr": "{_MTLCounterResultTimestamp=Q}"
+    "typestr": "{MTLCounterResultTimestamp=Q}"
    },
    "MTLDispatchThreadgroupsIndirectArguments": {
     "fieldnames": [
      "threadgroupsPerGrid"
     ],
     "special": true,
-    "typestr": "{_MTLDispatchThreadgroupsIndirectArguments=[3I]}"
+    "typestr": "{MTLDispatchThreadgroupsIndirectArguments=[3I]}"
    },
    "MTLDrawIndexedPrimitivesIndirectArguments": {
     "fieldnames": [
@@ -26584,7 +26584,7 @@
      "baseInstance"
     ],
     "special": true,
-    "typestr": "{_MTLDrawIndexedPrimitivesIndirectArguments=IIIiI}"
+    "typestr": "{MTLDrawIndexedPrimitivesIndirectArguments=IIIiI}"
    },
    "MTLDrawPatchIndirectArguments": {
     "fieldnames": [
@@ -26594,7 +26594,7 @@
      "baseInstance"
     ],
     "special": true,
-    "typestr": "{_MTLDrawPatchIndirectArguments=IIII}"
+    "typestr": "{MTLDrawPatchIndirectArguments=IIII}"
    },
    "MTLDrawPrimitivesIndirectArguments": {
     "fieldnames": [
@@ -26604,7 +26604,7 @@
      "baseInstance"
     ],
     "special": true,
-    "typestr": "{_MTLDrawPrimitivesIndirectArguments=IIII}"
+    "typestr": "{MTLDrawPrimitivesIndirectArguments=IIII}"
    },
    "MTLIndirectCommandBufferExecutionRange": {
     "fieldnames": [
@@ -26612,7 +26612,7 @@
      "length"
     ],
     "special": true,
-    "typestr": "{_MTLIndirectCommandBufferExecutionRange=II}"
+    "typestr": "{MTLIndirectCommandBufferExecutionRange=II}"
    },
    "MTLMapIndirectArguments": {
     "fieldnames": [
@@ -26635,7 +26635,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_MTLOrigin=QQQ}"
+    "typestr": "{MTLOrigin=QQQ}"
    },
    "MTLPackedFloat3": {
     "fieldnames": [],
@@ -26655,7 +26655,7 @@
      "insideTessellationFactor"
     ],
     "special": true,
-    "typestr": "{_MTLQuadTessellationFactorsHalf=[4S][2S]}"
+    "typestr": "{MTLQuadTessellationFactorsHalf=[4S][2S]}"
    },
    "MTLRegion": {
     "fieldnames": [
@@ -26663,7 +26663,7 @@
      "size"
     ],
     "special": true,
-    "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"
+    "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"
    },
    "MTLSamplePosition": {
     "fieldnames": [
@@ -26671,7 +26671,7 @@
      "y"
     ],
     "special": true,
-    "typestr": "{_MTLSamplePosition=ff}"
+    "typestr": "{MTLSamplePosition=ff}"
    },
    "MTLScissorRect": {
     "fieldnames": [
@@ -26681,7 +26681,7 @@
      "height"
     ],
     "special": true,
-    "typestr": "{_MTLScissorRect=QQQQ}"
+    "typestr": "{MTLScissorRect=QQQQ}"
    },
    "MTLSize": {
     "fieldnames": [
@@ -26690,7 +26690,7 @@
      "depth"
     ],
     "special": true,
-    "typestr": "{_MTLSize=QQQ}"
+    "typestr": "{MTLSize=QQQ}"
    },
    "MTLSizeAndAlign": {
     "fieldnames": [
@@ -26698,7 +26698,7 @@
      "align"
     ],
     "special": true,
-    "typestr": "{_MTLSizeAndAlign=QQ}"
+    "typestr": "{MTLSizeAndAlign=QQ}"
    },
    "MTLStageInRegionIndirectArguments": {
     "fieldnames": [
@@ -26706,7 +26706,7 @@
      "stageInSize"
     ],
     "special": true,
-    "typestr": "{_MTLStageInRegionIndirectArguments=[3I][3I]}"
+    "typestr": "{MTLStageInRegionIndirectArguments=[3I][3I]}"
    },
    "MTLTextureSwizzleChannels": {
     "fieldnames": [
@@ -26716,7 +26716,7 @@
      "alpha"
     ],
     "special": true,
-    "typestr": "{_MTLTextureSwizzleChannels=CCCC}"
+    "typestr": "{MTLTextureSwizzleChannels=CCCC}"
    },
    "MTLTriangleTessellationFactorsHalf": {
     "fieldnames": [
@@ -26724,7 +26724,7 @@
      "insideTessellationFactor"
     ],
     "special": true,
-    "typestr": "{_MTLTriangleTessellationFactorsHalf=[3S]S}"
+    "typestr": "{MTLTriangleTessellationFactorsHalf=[3S]S}"
    },
    "MTLVertexAmplificationViewMapping": {
     "fieldnames": [
@@ -26732,7 +26732,7 @@
      "renderTargetArrayIndexOffset"
     ],
     "special": true,
-    "typestr": "{_MTLVertexAmplificationViewMapping=II}"
+    "typestr": "{MTLVertexAmplificationViewMapping=II}"
    },
    "MTLViewport": {
     "fieldnames": [
@@ -26744,7 +26744,7 @@
      "zfar"
     ],
     "special": true,
-    "typestr": "{_MTLViewport=dddddd}"
+    "typestr": "{MTLViewport=dddddd}"
    }
   }
  },

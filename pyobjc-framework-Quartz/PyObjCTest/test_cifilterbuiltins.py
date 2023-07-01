@@ -988,6 +988,7 @@ class TestCIFilterBuiltins(TestCase):
         self.assertProtocolExists("CIRoundedRectangleStrokeGenerator")
         self.assertProtocolExists("CICannyEdgeDetector")
         self.assertProtocolExists("CISobelGradients")
+        self.assertProtocolExists("CIBlurredRectangleGenerator")
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)
@@ -1995,3 +1996,10 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CISobelGradients"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+
+        with self.subTest("CIBlurredRectangleGenerator"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "sigma", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)

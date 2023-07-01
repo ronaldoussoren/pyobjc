@@ -27,8 +27,3 @@ class TestCKSyncEngineEvent(TestCase):
         self.assertEqual(CloudKit.CKSyncEngineZoneDeletionReasonDeleted, 0)
         self.assertEqual(CloudKit.CKSyncEngineZoneDeletionReasonPurged, 1)
         self.assertEqual(CloudKit.CKSyncEngineZoneDeletionReasonEncryptedDataReset, 2)
-
-        self.assertIsEnumType(CloudKit.CKSyncEngineZoneDeletionType)
-        self.assertEqual(CloudKit.CKSyncEngineZoneDeletionTypeDeleted, 0)
-        self.assertEqual(CloudKit.CKSyncEngineZoneDeletionTypeUserDeleted, 1)
-        self.assertEqual(CloudKit.CKSyncEngineZoneDeletionTypeEncryptedDataReset, 2)

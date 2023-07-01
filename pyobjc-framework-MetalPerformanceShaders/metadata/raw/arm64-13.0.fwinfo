@@ -546,7 +546,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -561,7 +561,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -577,7 +577,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "primaryOffset",
@@ -586,7 +586,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -602,7 +602,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "secondaryOffset",
@@ -611,7 +611,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -677,7 +677,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRect",
@@ -686,7 +686,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -707,7 +707,7 @@
        "readwrite"
       ],
       "name": "primaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -716,7 +716,7 @@
        "readwrite"
       ],
       "name": "secondaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -743,7 +743,7 @@
        "readwrite"
       ],
       "name": "clipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -3807,7 +3807,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "primaryOffset",
@@ -3816,7 +3816,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -3832,7 +3832,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "secondaryOffset",
@@ -3841,7 +3841,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -3857,7 +3857,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRect",
@@ -3866,7 +3866,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -4312,7 +4312,7 @@
        "readwrite"
       ],
       "name": "primaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -4321,7 +4321,7 @@
        "readwrite"
       ],
       "name": "secondaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -4330,7 +4330,7 @@
        "readwrite"
       ],
       "name": "clipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -8483,7 +8483,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -8619,7 +8619,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maskStrideInPixels",
@@ -8652,7 +8652,7 @@
        "readonly"
       ],
       "name": "maskStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -8711,7 +8711,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -8747,7 +8747,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maskStrideInPixels",
@@ -8780,7 +8780,7 @@
        "readonly"
       ],
       "name": "maskStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -8813,7 +8813,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -8848,7 +8848,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -8884,7 +8884,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maskStrideInPixels",
@@ -8917,7 +8917,7 @@
        "readonly"
       ],
       "name": "maskStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -9039,7 +9039,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -9066,7 +9066,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -9102,7 +9102,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "maskStrideInPixels",
@@ -9135,7 +9135,7 @@
        "readonly"
       ],
       "name": "maskStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -11182,7 +11182,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "offset",
@@ -11191,7 +11191,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -11207,7 +11207,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRect",
@@ -11216,7 +11216,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -11467,7 +11467,7 @@
        "readwrite"
       ],
       "name": "offset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -11476,7 +11476,7 @@
        "readwrite"
       ],
       "name": "clipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -13169,7 +13169,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -13195,7 +13195,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "size",
@@ -13269,7 +13269,7 @@
        "readonly"
       ],
       "name": "size",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -13648,7 +13648,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -13675,7 +13675,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        },
        {
@@ -13860,7 +13860,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "offsetAtIndex:",
@@ -13869,7 +13869,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        },
        {
@@ -14501,7 +14501,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRect",
@@ -14510,7 +14510,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -14635,7 +14635,7 @@
        "readwrite"
       ],
       "name": "clipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -17710,7 +17710,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "sourceSize",
@@ -17719,7 +17719,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -17740,7 +17740,7 @@
        "readwrite"
       ],
       "name": "sourceSize",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      }
     ],
@@ -21952,11 +21952,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MPSImageReadWriteParams=QQ}",
+        "typestr": "{MPSImageReadWriteParams=QQ}",
         "typestr_special": true
        },
        {
@@ -21987,11 +21987,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MPSImageReadWriteParams=QQ}",
+        "typestr": "{MPSImageReadWriteParams=QQ}",
         "typestr_special": true
        },
        {
@@ -22030,11 +22030,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MPSImageReadWriteParams=QQ}",
+        "typestr": "{MPSImageReadWriteParams=QQ}",
         "typestr_special": true
        },
        {
@@ -22069,11 +22069,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MPSImageReadWriteParams=QQ}",
+        "typestr": "{MPSImageReadWriteParams=QQ}",
         "typestr_special": true
        },
        {
@@ -22108,11 +22108,11 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
-        "typestr": "{_MPSImageReadWriteParams=QQ}",
+        "typestr": "{MPSImageReadWriteParams=QQ}",
         "typestr_special": true
        },
        {
@@ -22713,7 +22713,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "primaryStrideInPixels",
@@ -22722,7 +22722,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -22738,7 +22738,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLSize=QQQ}",
+       "typestr": "{MTLSize=QQQ}",
        "typestr_special": true
       },
       "selector": "secondaryStrideInPixels",
@@ -22747,7 +22747,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -22845,7 +22845,7 @@
        "readwrite"
       ],
       "name": "primaryStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -22854,7 +22854,7 @@
        "readwrite"
       ],
       "name": "secondaryStrideInPixels",
-      "typestr": "{_MTLSize=QQQ}",
+      "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
      },
      {
@@ -23532,7 +23532,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "destinationMatrixOrigin",
@@ -23541,7 +23541,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -23597,7 +23597,7 @@
        "readwrite"
       ],
       "name": "destinationMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -24235,7 +24235,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -24244,7 +24244,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -24425,7 +24425,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -24591,7 +24591,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MPSImageKeypointRangeInfo=Qf}",
+        "typestr": "^{MPSImageKeypointRangeInfo=Qf}",
         "typestr_special": true
        }
       ],
@@ -24648,7 +24648,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        },
        {
@@ -24684,7 +24684,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSImageKeypointRangeInfo=Qf}",
+       "typestr": "{MPSImageKeypointRangeInfo=Qf}",
        "typestr_special": true
       },
       "selector": "keypointRangeInfo",
@@ -24699,7 +24699,7 @@
        "readonly"
       ],
       "name": "keypointRangeInfo",
-      "typestr": "{_MPSImageKeypointRangeInfo=Qf}",
+      "typestr": "{MPSImageKeypointRangeInfo=Qf}",
       "typestr_special": true
      }
     ],
@@ -25114,7 +25114,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MPSImageHistogramInfo=QZ<4f><4f>}",
+        "typestr": "^{MPSImageHistogramInfo=QZ<4f><4f>}",
         "typestr_special": true
        }
       ],
@@ -25191,7 +25191,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -25200,7 +25200,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -25266,7 +25266,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+       "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
        "typestr_special": true
       },
       "selector": "histogramInfo",
@@ -25281,7 +25281,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -25308,7 +25308,7 @@
        "readonly"
       ],
       "name": "histogramInfo",
-      "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+      "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
       "typestr_special": true
      }
     ],
@@ -25325,7 +25325,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MPSImageHistogramInfo=QZ<4f><4f>}",
+        "typestr": "^{MPSImageHistogramInfo=QZ<4f><4f>}",
         "typestr_special": true
        }
       ],
@@ -25387,7 +25387,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+       "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
        "typestr_special": true
       },
       "selector": "histogramInfo",
@@ -25402,7 +25402,7 @@
        "readonly"
       ],
       "name": "histogramInfo",
-      "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+      "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
       "typestr_special": true
      }
     ],
@@ -25419,7 +25419,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MPSImageHistogramInfo=QZ<4f><4f>}",
+        "typestr": "^{MPSImageHistogramInfo=QZ<4f><4f>}",
         "typestr_special": true
        }
       ],
@@ -25489,7 +25489,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+       "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
        "typestr_special": true
       },
       "selector": "histogramInfo",
@@ -25504,7 +25504,7 @@
        "readonly"
       ],
       "name": "histogramInfo",
-      "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+      "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
       "typestr_special": true
      }
     ],
@@ -25862,7 +25862,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "^{_MPSImageHistogramInfo=QZ<4f><4f>}",
+        "typestr": "^{MPSImageHistogramInfo=QZ<4f><4f>}",
         "typestr_special": true
        }
       ],
@@ -25943,7 +25943,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -25952,7 +25952,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -25993,7 +25993,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+       "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
        "typestr_special": true
       },
       "selector": "histogramInfo",
@@ -26008,7 +26008,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -26026,7 +26026,7 @@
        "readonly"
       ],
       "name": "histogramInfo",
-      "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}",
+      "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}",
       "typestr_special": true
      }
     ],
@@ -26375,7 +26375,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -26384,7 +26384,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -26405,7 +26405,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -26613,7 +26613,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -26622,7 +26622,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -26643,7 +26643,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -26691,7 +26691,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -26700,7 +26700,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -26721,7 +26721,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -26769,7 +26769,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -26778,7 +26778,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -26799,7 +26799,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -29729,7 +29729,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "primarySourceMatrixOrigin",
@@ -29738,7 +29738,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -29754,7 +29754,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "secondarySourceMatrixOrigin",
@@ -29763,7 +29763,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -29779,7 +29779,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "resultMatrixOrigin",
@@ -29788,7 +29788,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -29859,7 +29859,7 @@
        "readwrite"
       ],
       "name": "primarySourceMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -29868,7 +29868,7 @@
        "readwrite"
       ],
       "name": "secondarySourceMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -29877,7 +29877,7 @@
        "readwrite"
       ],
       "name": "resultMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -30121,7 +30121,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MPSMatrixCopyOffsets=IIII}",
+        "typestr": "{MPSMatrixCopyOffsets=IIII}",
         "typestr_special": true
        }
       ],
@@ -30167,7 +30167,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MPSMatrixCopyOffsets=IIII}",
+        "typestr": "{MPSMatrixCopyOffsets=IIII}",
         "typestr_special": true
        }
       ],
@@ -30313,7 +30313,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "sourceMatrixOrigin",
@@ -30322,7 +30322,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -30378,7 +30378,7 @@
        "readwrite"
       ],
       "name": "sourceMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -31770,7 +31770,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "resultMatrixOrigin",
@@ -31779,7 +31779,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -31795,7 +31795,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "leftMatrixOrigin",
@@ -31804,7 +31804,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -31820,7 +31820,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "rightMatrixOrigin",
@@ -31829,7 +31829,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -31900,7 +31900,7 @@
        "readwrite"
       ],
       "name": "resultMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -31909,7 +31909,7 @@
        "readwrite"
       ],
       "name": "leftMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -31918,7 +31918,7 @@
        "readwrite"
       ],
       "name": "rightMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -33835,7 +33835,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "resultMatrixOrigin",
@@ -33844,7 +33844,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -33931,7 +33931,7 @@
        "readwrite"
       ],
       "name": "resultMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -33972,7 +33972,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "sourceMatrixOrigin",
@@ -33981,7 +33981,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -33997,7 +33997,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLOrigin=QQQ}",
+       "typestr": "{MTLOrigin=QQQ}",
        "typestr_special": true
       },
       "selector": "resultMatrixOrigin",
@@ -34006,7 +34006,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -34077,7 +34077,7 @@
        "readwrite"
       ],
       "name": "sourceMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -34086,7 +34086,7 @@
        "readwrite"
       ],
       "name": "resultMatrixOrigin",
-      "typestr": "{_MTLOrigin=QQQ}",
+      "typestr": "{MTLOrigin=QQQ}",
       "typestr_special": true
      },
      {
@@ -34810,7 +34810,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "primaryOffsets",
@@ -34830,7 +34830,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "primaryKernelSizes",
@@ -34840,7 +34840,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "primaryStrides",
@@ -34850,7 +34850,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "primaryDilationRates",
@@ -34860,7 +34860,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "secondaryOffsets",
@@ -34880,7 +34880,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "secondaryKernelSizes",
@@ -34890,7 +34890,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "secondaryStrides",
@@ -34900,7 +34900,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "secondaryDilationRates",
@@ -34915,7 +34915,7 @@
        "readonly"
       ],
       "name": "primaryOffsets",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -34933,7 +34933,7 @@
        "readonly"
       ],
       "name": "primaryKernelSizes",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      },
      {
@@ -34942,7 +34942,7 @@
        "readonly"
       ],
       "name": "primaryStrides",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -34951,7 +34951,7 @@
        "readonly"
       ],
       "name": "primaryDilationRates",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      },
      {
@@ -34960,7 +34960,7 @@
        "readonly"
       ],
       "name": "secondaryOffsets",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -34978,7 +34978,7 @@
        "readonly"
       ],
       "name": "secondaryKernelSizes",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      },
      {
@@ -34987,7 +34987,7 @@
        "readonly"
       ],
       "name": "secondaryStrides",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -34996,7 +34996,7 @@
        "readonly"
       ],
       "name": "secondaryDilationRates",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      }
     ],
@@ -35687,7 +35687,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "offsetsAtSourceIndex:",
@@ -35717,7 +35717,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "kernelSizesForSourceIndex:",
@@ -35732,7 +35732,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "stridesForSourceIndex:",
@@ -35747,7 +35747,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "dilationRatesForSourceIndex:",
@@ -36202,7 +36202,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "strides",
@@ -36211,7 +36211,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSNDArrayOffsets=[16q]}",
+        "typestr": "{MPSNDArrayOffsets=[16q]}",
         "typestr_special": true
        }
       ],
@@ -36232,7 +36232,7 @@
        "readwrite"
       ],
       "name": "strides",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      }
     ],
@@ -36527,7 +36527,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "offsets",
@@ -36547,7 +36547,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "kernelSizes",
@@ -36557,7 +36557,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArrayOffsets=[16q]}",
+       "typestr": "{MPSNDArrayOffsets=[16q]}",
        "typestr_special": true
       },
       "selector": "strides",
@@ -36567,7 +36567,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSNDArraySizes=[16Q]}",
+       "typestr": "{MPSNDArraySizes=[16Q]}",
        "typestr_special": true
       },
       "selector": "dilationRates",
@@ -36582,7 +36582,7 @@
        "readonly"
       ],
       "name": "offsets",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -36600,7 +36600,7 @@
        "readonly"
       ],
       "name": "kernelSizes",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      },
      {
@@ -36609,7 +36609,7 @@
        "readonly"
       ],
       "name": "strides",
-      "typestr": "{_MPSNDArrayOffsets=[16q]}",
+      "typestr": "{MPSNDArrayOffsets=[16q]}",
       "typestr_special": true
      },
      {
@@ -36618,7 +36618,7 @@
        "readonly"
       ],
       "name": "dilationRates",
-      "typestr": "{_MPSNDArraySizes=[16Q]}",
+      "typestr": "{MPSNDArraySizes=[16Q]}",
       "typestr_special": true
      }
     ],
@@ -43987,7 +43987,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "primarySourceClipRect",
@@ -43996,7 +43996,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -44012,7 +44012,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "secondarySourceClipRect",
@@ -44021,7 +44021,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -44037,7 +44037,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "primaryOffset",
@@ -44046,7 +44046,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -44062,7 +44062,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "secondaryOffset",
@@ -44071,7 +44071,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -44092,7 +44092,7 @@
        "readwrite"
       ],
       "name": "primarySourceClipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -44101,7 +44101,7 @@
        "readwrite"
       ],
       "name": "secondarySourceClipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -44110,7 +44110,7 @@
        "readwrite"
       ],
       "name": "primaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -44119,7 +44119,7 @@
        "readwrite"
       ],
       "name": "secondaryOffset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      }
     ],
@@ -44910,7 +44910,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -44919,7 +44919,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -44935,7 +44935,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "offset",
@@ -44944,7 +44944,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -44965,7 +44965,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -44974,7 +44974,7 @@
        "readwrite"
       ],
       "name": "offset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      }
     ],
@@ -45674,7 +45674,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -45697,7 +45697,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -45716,7 +45716,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -45739,7 +45739,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -45975,7 +45975,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRectSource",
@@ -45984,7 +45984,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -46005,7 +46005,7 @@
        "readwrite"
       ],
       "name": "clipRectSource",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      }
     ],
@@ -47807,7 +47807,7 @@
         "typestr_special": true
        },
        {
-        "typestr": "{_MTLOrigin=QQQ}",
+        "typestr": "{MTLOrigin=QQQ}",
         "typestr_special": true
        }
       ],
@@ -51606,7 +51606,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLSize=QQQ}",
+        "typestr": "{MTLSize=QQQ}",
         "typestr_special": true
        }
       ],
@@ -51622,7 +51622,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MPSOffset=qqq}",
+       "typestr": "{MPSOffset=qqq}",
        "typestr_special": true
       },
       "selector": "offset",
@@ -51631,7 +51631,7 @@
      {
       "args": [
        {
-        "typestr": "{_MPSOffset=qqq}",
+        "typestr": "{MPSOffset=qqq}",
         "typestr_special": true
        }
       ],
@@ -51647,7 +51647,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+       "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
        "typestr_special": true
       },
       "selector": "clipRect",
@@ -51656,7 +51656,7 @@
      {
       "args": [
        {
-        "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+        "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
         "typestr_special": true
        }
       ],
@@ -51702,7 +51702,7 @@
        "readwrite"
       ],
       "name": "offset",
-      "typestr": "{_MPSOffset=qqq}",
+      "typestr": "{MPSOffset=qqq}",
       "typestr_special": true
      },
      {
@@ -51711,7 +51711,7 @@
        "readwrite"
       ],
       "name": "clipRect",
-      "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+      "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}",
       "typestr_special": true
      },
      {
@@ -52560,7 +52560,7 @@
   "expressions": {},
   "externs": {
    "MPSRectNoClip": {
-    "typestr": "{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"
+    "typestr": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"
    }
   },
   "formal_protocols": {
@@ -53932,7 +53932,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MPSIntegerDivisionParams=SSSS}"
+     "typestr": "{MPSIntegerDivisionParams=SSSS}"
     }
    },
    "MPSGetCustomKernelBatchedDestinationIndex": {
@@ -54222,7 +54222,7 @@
      "idiv"
     ],
     "special": true,
-    "typestr": "{_MPSCustomKernelInfo=<4S><4S>SSSSSS{_MPSIntegerDivisionParams=SSSS}}"
+    "typestr": "{MPSCustomKernelInfo=<4S><4S>SSSSSS{MPSIntegerDivisionParams=SSSS}}"
    },
    "MPSCustomKernelSourceInfo": {
     "fieldnames": [
@@ -54238,7 +54238,7 @@
      "imageArraySize"
     ],
     "special": true,
-    "typestr": "{_MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}"
+    "typestr": "{MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}"
    },
    "MPSDimensionSlice": {
     "fieldnames": [
@@ -54265,7 +54265,7 @@
      "maxPixelValue"
     ],
     "special": true,
-    "typestr": "{_MPSImageHistogramInfo=QZ<4f><4f>}"
+    "typestr": "{MPSImageHistogramInfo=QZ<4f><4f>}"
    },
    "MPSImageKeypointData": {
     "fieldnames": [
@@ -54273,7 +54273,7 @@
      "keypointColorValue"
     ],
     "special": true,
-    "typestr": "{_MPSImageKeypointData=<2S>f}"
+    "typestr": "{MPSImageKeypointData=<2S>f}"
    },
    "MPSImageKeypointRangeInfo": {
     "fieldnames": [
@@ -54281,7 +54281,7 @@
      "minimumThresholdValue"
     ],
     "special": true,
-    "typestr": "{_MPSImageKeypointRangeInfo=Qf}"
+    "typestr": "{MPSImageKeypointRangeInfo=Qf}"
    },
    "MPSImageReadWriteParams": {
     "fieldnames": [
@@ -54289,7 +54289,7 @@
      "numberOfFeatureChannelsToReadWrite"
     ],
     "special": true,
-    "typestr": "{_MPSImageReadWriteParams=QQ}"
+    "typestr": "{MPSImageReadWriteParams=QQ}"
    },
    "MPSImageRegion": {
     "fieldnames": [
@@ -54307,14 +54307,14 @@
      "shift"
     ],
     "special": true,
-    "typestr": "{_MPSIntegerDivisionParams=SSSS}"
+    "typestr": "{MPSIntegerDivisionParams=SSSS}"
    },
    "MPSIntersectionDistance": {
     "fieldnames": [
      "distance"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistance=f}"
+    "typestr": "{MPSIntersectionDistance=f}"
    },
    "MPSIntersectionDistancePrimitiveIndex": {
     "fieldnames": [
@@ -54322,7 +54322,7 @@
      "primitiveIndex"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndex=fI}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndex=fI}"
    },
    "MPSIntersectionDistancePrimitiveIndexBufferIndex": {
     "fieldnames": [
@@ -54331,7 +54331,7 @@
      "bufferIndex"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexBufferIndex=fII}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexBufferIndex=fII}"
    },
    "MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates": {
     "fieldnames": [
@@ -54341,7 +54341,7 @@
      "coordinates"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}"
    },
    "MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex": {
     "fieldnames": [
@@ -54351,7 +54351,7 @@
      "instanceIndex"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex=fIII}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex=fIII}"
    },
    "MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates": {
     "fieldnames": [
@@ -54362,7 +54362,7 @@
      "coordinates"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}"
    },
    "MPSIntersectionDistancePrimitiveIndexCoordinates": {
     "fieldnames": [
@@ -54371,7 +54371,7 @@
      "coordinates"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>}"
    },
    "MPSIntersectionDistancePrimitiveIndexInstanceIndex": {
     "fieldnames": [
@@ -54380,7 +54380,7 @@
      "instanceIndex"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexInstanceIndex=fII}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexInstanceIndex=fII}"
    },
    "MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates": {
     "fieldnames": [
@@ -54390,7 +54390,7 @@
      "coordinates"
     ],
     "special": true,
-    "typestr": "{_MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}"
+    "typestr": "{MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}"
    },
    "MPSMatrixCopyOffsets": {
     "fieldnames": [
@@ -54400,7 +54400,7 @@
      "destinationColumnOffset"
     ],
     "special": true,
-    "typestr": "{_MPSMatrixCopyOffsets=IIII}"
+    "typestr": "{MPSMatrixCopyOffsets=IIII}"
    },
    "MPSMatrixOffset": {
     "fieldnames": [
@@ -54408,21 +54408,21 @@
      "columnOffset"
     ],
     "special": true,
-    "typestr": "{_MPSMatrixOffset=II}"
+    "typestr": "{MPSMatrixOffset=II}"
    },
    "MPSNDArrayOffsets": {
     "fieldnames": [
      "dimensions"
     ],
     "special": true,
-    "typestr": "{_MPSNDArrayOffsets=[16q]}"
+    "typestr": "{MPSNDArrayOffsets=[16q]}"
    },
    "MPSNDArraySizes": {
     "fieldnames": [
      "dimensions"
     ],
     "special": true,
-    "typestr": "{_MPSNDArraySizes=[16Q]}"
+    "typestr": "{MPSNDArraySizes=[16Q]}"
    },
    "MPSOffset": {
     "fieldnames": [
@@ -54431,7 +54431,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_MPSOffset=qqq}"
+    "typestr": "{MPSOffset=qqq}"
    },
    "MPSOrigin": {
     "fieldnames": [
@@ -54453,7 +54453,7 @@
      "direction"
     ],
     "special": true,
-    "typestr": "{_MPSRayOriginDirection=<3f><3f>}"
+    "typestr": "{MPSRayOriginDirection=<3f><3f>}"
    },
    "MPSRayOriginMaskDirectionMaxDistance": {
     "fieldnames": [
@@ -54463,7 +54463,7 @@
      "maxDistance"
     ],
     "special": true,
-    "typestr": "{_MPSRayOriginMaskDirectionMaxDistance={_MPSPackedFloat3=fff}I{_MPSPackedFloat3=fff}f}"
+    "typestr": "{MPSRayOriginMaskDirectionMaxDistance={_MPSPackedFloat3=fff}I{_MPSPackedFloat3=fff}f}"
    },
    "MPSRayOriginMinDistanceDirectionMaxDistance": {
     "fieldnames": [
@@ -54473,7 +54473,7 @@
      "maxDistance"
     ],
     "special": true,
-    "typestr": "{_MPSRayOriginMinDistanceDirectionMaxDistance={_MPSPackedFloat3=fff}f{_MPSPackedFloat3=fff}f}"
+    "typestr": "{MPSRayOriginMinDistanceDirectionMaxDistance={_MPSPackedFloat3=fff}f{_MPSPackedFloat3=fff}f}"
    },
    "MPSRayPackedOriginDirection": {
     "fieldnames": [
@@ -54481,7 +54481,7 @@
      "direction"
     ],
     "special": true,
-    "typestr": "{_MPSRayPackedOriginDirection={_MPSPackedFloat3=fff}{_MPSPackedFloat3=fff}}"
+    "typestr": "{MPSRayPackedOriginDirection={_MPSPackedFloat3=fff}{_MPSPackedFloat3=fff}}"
    },
    "MPSRegion": {
     "fieldnames": [

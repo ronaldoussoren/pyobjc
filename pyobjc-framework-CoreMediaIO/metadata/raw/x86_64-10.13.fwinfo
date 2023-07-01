@@ -873,7 +873,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "numSampleSizeEntries",
@@ -917,7 +917,7 @@
      },
      {
       "name": "sampleTiming",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sequenceNumber",
@@ -1041,7 +1041,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMIOStreamClockCreate": {
@@ -1060,7 +1060,7 @@
      },
      {
       "name": "getTimeCallMinimumInterval",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "numberOfEventsForRateSmoothing",
@@ -1095,7 +1095,7 @@
     "args": [
      {
       "name": "eventTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "hostTime",

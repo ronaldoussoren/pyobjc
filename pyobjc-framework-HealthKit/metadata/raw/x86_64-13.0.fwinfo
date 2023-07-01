@@ -7911,7 +7911,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_NSOperatingSystemVersion=qqq}",
+        "typestr": "{NSOperatingSystemVersion=qqq}",
         "typestr_special": true
        }
       ],
@@ -7986,7 +7986,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_NSOperatingSystemVersion=qqq}",
+       "typestr": "{NSOperatingSystemVersion=qqq}",
        "typestr_special": true
       },
       "selector": "operatingSystemVersion",
@@ -8026,7 +8026,7 @@
        "readonly"
       ],
       "name": "operatingSystemVersion",
-      "typestr": "{_NSOperatingSystemVersion=qqq}",
+      "typestr": "{NSOperatingSystemVersion=qqq}",
       "typestr_special": true
      }
     ],
@@ -14010,7 +14010,7 @@
     "typestr": "@"
    },
    "HKSourceRevisionAnyOperatingSystem": {
-    "typestr": "{_NSOperatingSystemVersion=qqq}"
+    "typestr": "{NSOperatingSystemVersion=qqq}"
    },
    "HKSourceRevisionAnyProductType": {
     "typestr": "@"

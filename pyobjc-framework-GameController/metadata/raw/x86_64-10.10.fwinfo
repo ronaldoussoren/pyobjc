@@ -1261,7 +1261,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_GCAcceleration=ddd}",
+       "typestr": "{GCAcceleration=ddd}",
        "typestr_special": true
       },
       "selector": "gravity",
@@ -1271,7 +1271,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_GCAcceleration=ddd}",
+       "typestr": "{GCAcceleration=ddd}",
        "typestr_special": true
       },
       "selector": "userAcceleration",
@@ -1291,7 +1291,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_GCRotationRate=ddd}",
+       "typestr": "{GCRotationRate=ddd}",
        "typestr_special": true
       },
       "selector": "rotationRate",
@@ -1323,7 +1323,7 @@
        "readonly"
       ],
       "name": "gravity",
-      "typestr": "{_GCAcceleration=ddd}",
+      "typestr": "{GCAcceleration=ddd}",
       "typestr_special": true
      },
      {
@@ -1332,7 +1332,7 @@
        "readonly"
       ],
       "name": "userAcceleration",
-      "typestr": "{_GCAcceleration=ddd}",
+      "typestr": "{GCAcceleration=ddd}",
       "typestr_special": true
      },
      {
@@ -1350,7 +1350,7 @@
        "readonly"
       ],
       "name": "rotationRate",
-      "typestr": "{_GCRotationRate=ddd}",
+      "typestr": "{GCRotationRate=ddd}",
       "typestr_special": true
      }
     ],
@@ -1377,7 +1377,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+      "typestr": "^{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
      },
      {
       "name": "data",
@@ -1392,7 +1392,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCGamepadSnapShotDataV100=SSffffffff}"
+      "typestr": "^{GCGamepadSnapShotDataV100=SSffffffff}"
      },
      {
       "name": "data",
@@ -1407,7 +1407,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+      "typestr": "^{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
      }
     ],
     "retval": {
@@ -1418,7 +1418,7 @@
     "args": [
      {
       "name": "snapshotData",
-      "typestr": "^{_GCGamepadSnapShotDataV100=SSffffffff}"
+      "typestr": "^{GCGamepadSnapShotDataV100=SSffffffff}"
      }
     ],
     "retval": {
@@ -1436,7 +1436,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_GCAcceleration=ddd}"
+    "typestr": "{GCAcceleration=ddd}"
    },
    "GCExtendedGamepadSnapShotDataV100": {
     "fieldnames": [
@@ -1458,7 +1458,7 @@
      "rightTrigger"
     ],
     "special": true,
-    "typestr": "{_GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
+    "typestr": "{GCExtendedGamepadSnapShotDataV100=SSffffffffffffff}"
    },
    "GCGamepadSnapShotDataV100": {
     "fieldnames": [
@@ -1474,7 +1474,7 @@
      "rightShoulder"
     ],
     "special": true,
-    "typestr": "{_GCGamepadSnapShotDataV100=SSffffffff}"
+    "typestr": "{GCGamepadSnapShotDataV100=SSffffffff}"
    },
    "GCQuaternion": {
     "fieldnames": [
@@ -1493,7 +1493,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_GCRotationRate=ddd}"
+    "typestr": "{GCRotationRate=ddd}"
    }
   }
  },

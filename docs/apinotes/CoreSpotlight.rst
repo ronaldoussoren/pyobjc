@@ -18,3 +18,8 @@ API Notes
 .. note::
 
    This framework is only available on macOS 10.13 and later.
+
+``CoreSpotlightAPIVersion``
+...........................
+
+This value is not available in Python.

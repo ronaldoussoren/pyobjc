@@ -4152,7 +4152,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float3x3=[3<3f>]}",
+       "typestr": "{simd_float3x3=[3<3f>]}",
        "typestr_special": true
       },
       "selector": "warpTransform",
@@ -4168,7 +4168,7 @@
        "readonly"
       ],
       "name": "warpTransform",
-      "typestr": "{_matrix_float3x3=[3<3f>]}",
+      "typestr": "{simd_float3x3=[3<3f>]}",
       "typestr_special": true
      }
     ],

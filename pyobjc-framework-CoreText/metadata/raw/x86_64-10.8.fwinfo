@@ -1245,7 +1245,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2321,7 +2321,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "origins",
@@ -2362,7 +2362,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CTFrameGetTypeID": {
@@ -2384,7 +2384,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CTFramesetterCreateFrame": {
@@ -2395,7 +2395,7 @@
      },
      {
       "name": "stringRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "path",
@@ -2453,7 +2453,7 @@
      },
      {
       "name": "stringRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "frameAttributes",
@@ -2465,7 +2465,7 @@
      },
      {
       "name": "fitRange",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2771,7 +2771,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CTLineGetTrailingWhitespaceWidth": {
@@ -2893,7 +2893,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2908,7 +2908,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -2960,7 +2960,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -2994,7 +2994,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -3009,7 +3009,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -3050,7 +3050,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -3080,7 +3080,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CTRunGetTextMatrix": {
@@ -3113,7 +3113,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "ascent",
@@ -3204,7 +3204,7 @@
      },
      {
       "name": "stringRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -3220,7 +3220,7 @@
      },
      {
       "name": "stringRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "offset",

@@ -44,3 +44,4 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFRectZero, Quartz.NSZeroRect)
         self.assertIs(Quartz.PDFEdgeInsetsZero, Quartz.NSEdgeInsetsZero)
         self.assertIs(Quartz.PDFTrackingRunLoopMode, Quartz.NSEventTrackingRunLoopMode)
+        self.assertIs(Quartz.DFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular)

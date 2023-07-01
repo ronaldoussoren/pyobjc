@@ -4598,7 +4598,7 @@
      },
      {
       "name": "dst_format",
-      "typestr": "{_CGColorDataFormat=I@IQQi^d}"
+      "typestr": "{CGColorDataFormat=I@IQQi^d}"
      },
      {
       "name": "src_data",
@@ -4606,7 +4606,7 @@
      },
      {
       "name": "src_format",
-      "typestr": "{_CGColorDataFormat=I@IQQi^d}"
+      "typestr": "{CGColorDataFormat=I@IQQi^d}"
      },
      {
       "name": "options",
@@ -12132,7 +12132,7 @@
      "decode"
     ],
     "special": true,
-    "typestr": "{_CGColorDataFormat=I@IQQi^d}"
+    "typestr": "{CGColorDataFormat=I@IQQi^d}"
    },
    "CGDeviceColor": {
     "fieldnames": [
