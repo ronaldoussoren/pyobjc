@@ -1560,7 +1560,7 @@
           }
          },
          "retval": {
-          "type": "v"
+          "type": "@"
          }
         },
         "typestr": "@?",
@@ -1604,7 +1604,7 @@
           }
          },
          "retval": {
-          "type": "v"
+          "type": "@"
          }
         },
         "typestr": "@?",
@@ -1923,6 +1923,9 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "@"
           }
          },
          "retval": {
@@ -2062,7 +2065,7 @@
           }
          },
          "retval": {
-          "type": "v"
+          "type": "@"
          }
         },
         "typestr": "@?",

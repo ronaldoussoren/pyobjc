@@ -36,7 +36,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
         )
         self.assertResultHasType(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerTimeRangeForPlayback_,  # noqa: B950
-            b"{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+            b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         )
         self.assertResultIsBOOL(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerIsPlaybackPaused_
@@ -44,12 +44,12 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
         self.assertArgHasType(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_didTransitionToRenderSize_,  # noqa: B950
             1,
-            b"{_CMVideoDimensions=ii}",
+            b"{CMVideoDimensions=ii}",
         )
         self.assertArgHasType(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipInterval_completionHandler_,  # noqa: B950
             1,
-            b"{_CMTime=qiIq}",
+            b"{CMTime=qiIq}",
         )
         self.assertArgIsBlock(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipInterval_completionHandler_,  # noqa: B950

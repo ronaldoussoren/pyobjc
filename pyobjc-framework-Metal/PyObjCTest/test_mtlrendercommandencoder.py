@@ -291,7 +291,7 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setVertexBufferOffset_attributeStride_atIndex_(self, a, b, c):
         pass
 
-    def setVertexBytes_length__attributeStride_atIndex_(self, a, b, c):
+    def setVertexBytes_length_attributeStride_atIndex_(self, a, b, c, d):
         pass
 
 
@@ -2448,7 +2448,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,
-            4,
+            3,
             objc._C_NSUInteger,
         )
 

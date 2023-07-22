@@ -21,5 +21,5 @@ class TestVNDetectBarcodesRequest(TestCase):
             Vision.VNDetectBarcodesRequest.coalesceCompositeSymbologies
         )
         self.assertArgIsBOOL(
-            Vision.VNDetectBarcodesRequest.setCoalesceCompositeSymbologies_, 1
+            Vision.VNDetectBarcodesRequest.setCoalesceCompositeSymbologies_, 0
         )

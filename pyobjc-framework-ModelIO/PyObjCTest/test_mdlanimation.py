@@ -12,10 +12,10 @@ class TestMDLAnimation(TestCase):
     def test_methods(self):
         self.assertResultHasType(
             ModelIO.MDLAnimationBindComponent.geometryBindTransform,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.MDLAnimationBindComponent.setGeometryBindTransform_,
             0,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )

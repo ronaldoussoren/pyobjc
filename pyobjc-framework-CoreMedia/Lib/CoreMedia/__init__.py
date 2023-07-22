@@ -12,6 +12,7 @@ def _setup():
     import Foundation
     import objc
     from . import _metadata, _macros, _CoreMedia
+    from ._inlines import _inline_list_
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="CoreMedia",
@@ -20,7 +21,7 @@ def _setup():
             "/System/Library/Frameworks/CoreMedia.framework"
         ),
         globals_dict=globals(),
-        inline_list=None,
+        inline_list=_inline_list_,
         parents=(
             _macros,
             _CoreMedia,

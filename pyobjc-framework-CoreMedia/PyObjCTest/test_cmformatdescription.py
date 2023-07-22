@@ -265,7 +265,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMetadataFormatType_EMSG, fourcc(b"emsg"))
 
         self.assertEqual(
-            CoreMedia.kCMTaggedBufferGroupFormatType_TaggedBufferGroup, fourcc(b"tgbr")
+            CoreMedia.kCMTaggedBufferGroupFormatType_TaggedBufferGroup, fourcc(b"tbgr")
         )
 
     @min_os_level("10.7")

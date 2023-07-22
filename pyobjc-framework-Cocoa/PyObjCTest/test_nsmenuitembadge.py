@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSMenuBadge(TestCase):
     def test_constants(self):
-        self.assertIsTypedEnum(AppKit.NSMenuItemBadgeType)
+        self.assertIsEnumType(AppKit.NSMenuItemBadgeType)
         self.assertEqual(AppKit.NSMenuItemBadgeTypeNone, 0)
         self.assertEqual(AppKit.NSMenuItemBadgeTypeUpdates, 1)
         self.assertEqual(AppKit.NSMenuItemBadgeTypeNewItems, 2)

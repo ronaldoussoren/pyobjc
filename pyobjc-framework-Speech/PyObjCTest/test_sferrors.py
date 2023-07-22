@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestSFErrors(TestCase):
     def test_constants(self):
-        self.assertIsInstance(Speech.SFSpeechErrorDomain)
+        self.assertIsInstance(Speech.SFSpeechErrorDomain, str)
 
         self.assertIsEnumType(Speech.SFSpeechErrorCode)
         self.assertEqual(Speech.SFSpeechErrorCodeInternalServiceError, 1)

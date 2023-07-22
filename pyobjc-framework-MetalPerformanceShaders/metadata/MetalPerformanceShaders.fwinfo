@@ -1404,14 +1404,27 @@
     "value": "MPSDeviceCapsIndex-8"
    },
    "MPSNDArrayConstantMultiDestDstAddressingIndex": {
+    "value": "MPSDeviceCapsIndex-11"
+   },
+   "MPSNDArrayConstantMultiDestIndex0": {
+    "value": "MPSDeviceCapsIndex-8"
+   },
+   "MPSNDArrayConstantMultiDestIndex1": {
     "value": "MPSDeviceCapsIndex-9"
    },
-   "MPSUserAvailableFunctionConstantStartIndex": {
+   "MPSNDArrayConstantMultiDestSrcAddressingIndex": {
     "value": "MPSDeviceCapsIndex-10"
+   },
+   "MPSUserAvailableFunctionConstantStartIndex": {
+    "value": "MPSDeviceCapsIndex-12"
    },
    "MPSUserConstantIndex": {
     "value": "MPSDeviceCapsIndex-3"
+   },
+   "MPSFunctionConstantNoneArray": {
+    "value": "(-1, -1)"
    }
+
   },
   "formal_protocols": {
    "MPSCNNBatchNormalizationDataSource": {

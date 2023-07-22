@@ -162,12 +162,12 @@ class TestMEFormatReader(TestCase):
         self.assertArgIsBlock(
             MediaExtension.MEByteSource.readDataOfLength_fromOffset_toDestination_completionHandler_,
             3,
-            b"Q@",
+            b"vQ@",
         )
         self.assertArgIsBlock(
             MediaExtension.MEByteSource.readDataOfLength_fromOffset_completionHandler_,
             2,
-            b"@@",
+            b"v@@",
         )
 
         self.assertResultIsBOOL(
@@ -188,7 +188,9 @@ class TestMEFormatReader(TestCase):
 
     def test_protocol_methods(self):
         self.assertArgHasType(
-            TestMEFormatReaderHelper.formatReaderWithByteSource_options_error_, 2, "o^@"
+            TestMEFormatReaderHelper.formatReaderWithByteSource_options_error_,
+            2,
+            b"o^@",
         )
 
         self.assertArgIsBlock(
@@ -238,7 +240,7 @@ class TestMEFormatReader(TestCase):
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.loadTotalSampleDataLengthWithCompletionHandler_,
             0,
-            b"vQ@",
+            b"vq@",
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.loadEstimatedDataRateWithCompletionHandler_,
@@ -260,29 +262,30 @@ class TestMEFormatReader(TestCase):
             MediaExtension.CMTime.__typestr__,
         )
         self.assertResultHasType(
-            TestMEFormatReaderHelper.currentSampleFormatDescription, objc._C_ID
+            TestMEFormatReaderHelper.currentSampleFormatDescription,
+            b"^{opaqueCMFormatDescription=}",
         )
 
         self.assertArgHasType(
             TestMEFormatReaderHelper.stepInDecodeOrderByCount_completionHandler_,
             0,
-            b"Q",
+            b"q",
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepInDecodeOrderByCount_completionHandler_,
             1,
-            b"vQ@",
+            b"vq@",
         )
 
         self.assertArgHasType(
             TestMEFormatReaderHelper.stepInPresentationOrderByCount_completionHandler_,
             0,
-            b"Q",
+            b"q",
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepInPresentationOrderByCount_completionHandler_,
             1,
-            b"vQ@",
+            b"vq@",
         )
 
         self.assertArgHasType(
@@ -307,9 +310,13 @@ class TestMEFormatReader(TestCase):
             b"v" + MediaExtension.CMTime.__typestr__ + b"Z@",
         )
 
-        self.assertResultHasType(TestMEFormatReaderHelper.syncInfo, objc._C_NSUInteger)
         self.assertResultHasType(
-            TestMEFormatReaderHelper.dependencyInfo, objc._C_NSUInteger
+            TestMEFormatReaderHelper.syncInfo,
+            MediaExtension.AVSampleCursorSyncInfo.__typestr__,
+        )
+        self.assertResultHasType(
+            TestMEFormatReaderHelper.dependencyInfo,
+            MediaExtension.AVSampleCursorDependencyInfo.__typestr__,
         )
         self.assertResultHasType(
             TestMEFormatReaderHelper.hevcDependencyInfo, objc._C_ID
@@ -363,8 +370,8 @@ class TestMEFormatReader(TestCase):
             b"o^@",
         )
 
-        self.assertIsBlock(
+        self.assertArgIsBlock(
             TestMEFormatReaderHelper.loadSampleBufferContainingSamplesToEndCursor_completionHandler_,
             1,
-            b"v@@",
+            b"v^{opaqueCMSampleBuffer=}@",
         )

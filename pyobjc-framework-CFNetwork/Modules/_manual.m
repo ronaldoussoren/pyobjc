@@ -82,7 +82,7 @@ mod_CFNetServiceClientCallBack(CFNetServiceRef service, CFStreamError* error,
         PyObjCErr_ToObjCWithGILState(&state);
         return;
     }
-    PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=qi}", (void*)error);
+    PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
     if (py_error == NULL) {
         Py_DECREF(py_service);
         PyObjCErr_ToObjCWithGILState(&state);
@@ -144,7 +144,7 @@ mod_CFNetServiceMonitorClientCallBack(CFNetServiceMonitorRef  monitor,
         return;
     }
 
-    PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=qi}", (void*)error);
+    PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
     if (py_error == NULL) {
         Py_DECREF(py_monitor);
         Py_DECREF(py_service);
@@ -189,7 +189,7 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
         return;
     }
 
-    PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=qi}", (void*)error);
+    PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
     if (py_error == NULL) {
         Py_DECREF(py_host);
         Py_DECREF(py_info);

@@ -11,7 +11,9 @@
    "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
    "MTLResourceCPUCacheModeMask": { "value": "0xf << MTLResourceCPUCacheModeShift" },
    "MTLResourceStorageModeMask": { "value": "0xf << MTLResourceStorageModeShift" },
-   "MTLResourceHazardTrackingModeMask": { "value": "0x3 << MTLResourceHazardTrackingModeShift" }
+   "MTLResourceHazardTrackingModeMask": { "value": "0x3 << MTLResourceHazardTrackingModeShift" },
+   "MTLBufferLayoutStrideDynamic": { "value": "NSUIntegerMax" },
+   "MTLAttributeStrideStatic": { "value": "NSUIntegerMax" }
   },
   "enum": {
    "MTLSparseTextureMappingModeMap": { "value": 0 },
@@ -115,6 +117,38 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "setBytes:length:attributeStride:atIndex:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setVertexBytes:length:attributeStride:atIndex:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setVertexBuffers:offsets:attributeStrides:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "setBuffers:offsets:attributeStrides:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
      {
       "selector": "setMeshSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
       "class_method": false,

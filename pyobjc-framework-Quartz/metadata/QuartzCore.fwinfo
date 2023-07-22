@@ -89,6 +89,7 @@
    "kCIInputDisableGamutMapKey": { "typestr": "@" },
    "kCIContextCacheIntermediates": { "typestr": "@" },
    "kCIContextPriorityRequestLow": { "typestr": "@" },
+   "kCIContextMemoryLimit": { "typestr": "@" },
    "kCIContextOutputPremultiplied": { "typestr": "@" },
    "kCAEmitterBehaviorSimpleAttractor": { "typestr": "@" },
    "kCIContextHighQualityDownsample": { "typestr": "@" },
@@ -105,7 +106,14 @@
    "kCIInputVersionKey": { "typestr": "@" },
    "CIDetectorTypeText": { "typestr": "@" },
    "CIDetectorNumberOfAngles": { "typestr": "@" },
+   "kCIImageExpandToHDR": { "typestr": "@" },
+   "kCIImageCacheImmediately": { "typestr": "@" },
+   "kCIImageAuxiliaryHDRGainMap": { "typestr": "@" },
    "kCIFormatL8": { "typestr": "i" },
+   "kCIFormatRGBX16": { "typestr": "i" },
+   "kCIFormatRGBXh": { "typestr": "i" },
+   "kCIFormatRGBXf": { "typestr": "i" },
+   "kCIFormatRGB10": { "typestr": "i" },
    "kCIFormatL16": { "typestr": "i" },
    "kCIFormatLh": { "typestr": "i" },
    "kCIFormatLf": { "typestr": "i" },
@@ -752,6 +760,21 @@
    "CIContext": {
     "methods": [
      {
+      "selector": "writeOpenEXRRepresentationOfImage:toURL:options:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "OpenEXRRepresentationOfImage:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "HEIF10RepresentationOfImage:colorSpace:options:error:",
       "class_method": false,
       "args": {
@@ -1290,11 +1313,67 @@
    "NSObject": {
     "methods": [
      {
-      "retval": { "type_override": [
-         "{CGRect={CGPoint=ff}{CGSize=ff}}",
-	 "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       ]
-      },
+      "selector": "thresholdLow",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setThresholdLow:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "thresholdHigh",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setThresholdHigh:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "sigma",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setSigma:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "hysteresisPasses",
+      "class_method": false,
+      "retval": { "type_override": "q" }
+     },
+     {
+      "selector": "setHysteresisPasses:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "q" }
+      }
+     },
+     {
+      "selector": "gaussianSigma",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setGaussianSigma:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "retval": { "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
       "selector": "region",
       "class_method": false
      },
@@ -1304,7 +1383,7 @@
       "class_method": false
      },
      {
-      "retval": { "type_override": ["i", "q"] },
+      "retval": { "type_override": "q" },
       "selector": "format",
       "class_method": false
      },

@@ -9,10 +9,10 @@ class TestSCScreenshotManager(TestCase):
         self.assertArgIsBlock(
             ScreenCaptureKit.SCScreenshotManager.captureSampleBufferWithFilter_configuration_completionHandler_,
             2,
-            b"v@@",
+            b"v^{opaqueCMSampleBuffer=}@",
         )
         self.assertArgIsBlock(
             ScreenCaptureKit.SCScreenshotManager.captureImageWithFilter_configuration_completionHandler_,
             2,
-            b"v@@",
+            b"v^{CGImage=}@",
         )

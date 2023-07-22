@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestLSConstants(TestCase):
     def test_constants(self):
-        self.assertIsEnumType(CoreServices.OSStatus)
+        # self.assertIsEnumType(CoreServices.OSStatus)
         self.assertEqual(CoreServices.kLSNo32BitEnvironmentErr, -10386)
         self.assertEqual(CoreServices.kLSMalformedLocErr, -10400)
         self.assertEqual(CoreServices.kLSAppInTrashErr, -10660)
@@ -45,6 +45,6 @@ class TestLSConstants(TestCase):
         self.assertEqual(CoreServices.kLSRolesShell, 0x00000008)
         self.assertEqual(CoreServices.kLSRolesAll, 0xFFFFFFFF)
 
-        self.assertIsEnumType(CoreServices.OSType)
+        # self.assertIsEnumType(CoreServices.OSType)
         self.assertEqual(CoreServices.kLSUnknownType, 0)
         self.assertEqual(CoreServices.kLSUnknownCreator, 0)

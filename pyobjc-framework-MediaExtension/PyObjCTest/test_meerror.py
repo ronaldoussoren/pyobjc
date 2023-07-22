@@ -5,7 +5,7 @@ import MediaExtension
 
 class TestMEError(TestCase):
     def test_constants(self):
-        self.assertIsInstance(MediaExtension.MediaExtensionErrorDomain)
+        self.assertIsInstance(MediaExtension.MediaExtensionErrorDomain, str)
 
         self.assertIsEnumType(MediaExtension.MEError)
         self.assertEqual(MediaExtension.MEErrorUnsupportedFeature, -19320)

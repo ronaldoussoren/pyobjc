@@ -74,17 +74,17 @@ class TestAVCapturePhotoOutput(TestCase):
     @min_os_level("14.0")
     def test_methods14_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isFastCapturePrioritizationSupported
+            AVFoundation.AVCapturePhotoOutput.isFastCapturePrioritizationSupported
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isFastCapturePrioritizationEnabled
+            AVFoundation.AVCapturePhotoOutput.isFastCapturePrioritizationEnabled
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isZeroShutterLagEnabled
+            AVFoundation.AVCapturePhotoOutput.isZeroShutterLagEnabled
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isResponsiveCaptureSupported
+            AVFoundation.AVCapturePhotoOutput.isResponsiveCaptureSupported
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isResponsiveCaptureEnabled
+            AVFoundation.AVCapturePhotoOutput.isResponsiveCaptureEnabled
         )

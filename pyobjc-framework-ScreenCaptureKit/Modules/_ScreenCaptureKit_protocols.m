@@ -5,7 +5,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(SCStreamOutput));
     Py_XDECREF(p);
-#if Py_BUILD_RELEASE >= 1400
+#if PyObjC_BUILD_RELEASE >= 1400
     p = PyObjC_IdToPython(@protocol(SCContentSharingPickerObserver));
     Py_XDECREF(p);
 #endif

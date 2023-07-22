@@ -6,7 +6,7 @@ import NaturalLanguage
 class TestNLScript(TestCase):
     @min_os_level("14.0")
     def test_constants(self):
-        self.assertIsTypedEnum(NaturalLanguage.NLScript)
+        self.assertIsTypedEnum(NaturalLanguage.NLScript, str)
 
         self.assertIsInstance(NaturalLanguage.NLScriptUndetermined, str)
         self.assertIsInstance(NaturalLanguage.NLScriptArabic, str)

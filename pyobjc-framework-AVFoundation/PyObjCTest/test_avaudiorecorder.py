@@ -35,10 +35,10 @@ class TestAVAudioRecorder(TestCase):
     @min_os_level("14.0")
     def testMethods14_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVAudioRecorder.setMutedSpeechActivityEventListener_
+            AVFoundation.AVAudioInputNode.setMutedSpeechActivityEventListener_
         )
         self.assertArgIsBlock(
-            AVFoundation.AVAudioRecorder.setMutedSpeechActivityEventListener_, 0, b"vq"
+            AVFoundation.AVAudioInputNode.setMutedSpeechActivityEventListener_, 0, b"vq"
         )
 
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_format_error_, 2)

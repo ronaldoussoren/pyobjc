@@ -8,4 +8,4 @@ class TestPKContentVersion(TestCase):
         self.assertIsEnumType(PencilKit.PKContentVersion)
         self.assertEqual(PencilKit.PKContentVersion1, 1)
         self.assertEqual(PencilKit.PKContentVersion2, 2)
-        self.assertNotHasattr(PencilKit, "PKContentVersionLatest")
+        self.assertNotHasAttr(PencilKit, "PKContentVersionLatest")

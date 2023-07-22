@@ -24,10 +24,11 @@ class TestAVSampleBufferVideoRenderer(TestCase):
         )
 
         self.assertArgIsBOOL(
-            AVFoundation.AVSampleBufferVideoRenderer.removeDisplayedImage_completion_, 0
+            AVFoundation.AVSampleBufferVideoRenderer.flushWithRemovalOfDisplayedImage_completionHandler_,
+            0,
         )
         self.assertArgIsBlock(
-            AVFoundation.AVSampleBufferVideoRenderer.removeDisplayedImage_completion_,
+            AVFoundation.AVSampleBufferVideoRenderer.flushWithRemovalOfDisplayedImage_completionHandler_,
             1,
             b"v",
         )

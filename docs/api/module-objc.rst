@@ -322,10 +322,20 @@ Accessing classes and protocols
    :raise: :exc:`objc.nosuchclass_error` when the class does not exist
 
 
-.. function:: getClassList()
+.. function:: getClassList([ignore_invalid_identifiers]
 
    :return: a list of a classes known to the Objective-C runtime
 
+
+   When ``ignore_invalid_identifiers`` is false (the default) all
+   classes known to the Objective-C runtime are returned, if it is true
+   only the classes whose's full name is a valid Python identifier are
+   returned as well as a number of names that are known to be problematic
+   (FB12286520)
+
+   .. versionchanged: 10.0
+
+      Added the *ignore_invalid_identifiers* argument.
 
 .. function:: protocolsForClass(cls)
 

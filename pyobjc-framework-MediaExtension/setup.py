@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import setup, Extension  # noqa: E402
 
 VERSION = "10.0a0"
 
@@ -21,6 +21,19 @@ setup(
     description="Wrappers for the framework MediaExtension on macOS",
     min_os_level="14.0",
     packages=["MediaExtension"],
+    ext_modules=[
+        Extension(
+            "MediaExtension._MediaExtension",
+            ["Modules/_MediaExtension.m"],
+            extra_link_args=["-framework", "MediaExtension"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_MediaExtension")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
@@ -31,4 +44,5 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
+    options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

@@ -132,6 +132,25 @@ Version 10.0
   ``CKUserIdentity``,
   ``CKUserIdentityLookupInfo``.
 
+* The encoding of a number of basic types changes, in particular those
+  of CoreFoundation struct types and SIMD struct types. None of this
+  should affect user code.
+
+* ``objc.getClassList`` now has an optional positional argument to
+  ignore classes with a name that aren't identifiers.
+
+* Some of the functionality in CoreFoundation was rewritten in Swift
+  in macOS 14, with Swift subclasses of ``NSArray`` and ``NSDictionary``.
+  Those classes break an invariant of PyObjC: the superclass of the root
+  of the Swift class hierarchy changes when the class is instantiated
+  for the first time (from ``NSObject`` to the correct superclass).
+
+  PyObjC 10 contains a workaround for this by ignoring these classes
+  unless they are needed to create a proxy for an instance (FB12286520).
+
+* Fix crash when the method signature retrieved from the Objective-C runtime
+  contains the class name for a method returning ``id``.
+
 Version 9.2.1
 -------------
 

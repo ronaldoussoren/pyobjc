@@ -1607,10 +1607,16 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "Z"
+          },
+          "2": {
+           "type": "@"
           }
          },
          "retval": {
-          "type": "@?"
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -1632,10 +1638,16 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "Z"
+          },
+          "2": {
+           "type": "@"
           }
          },
          "retval": {
-          "type": "@?"
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -1657,10 +1669,16 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "Z"
+          },
+          "2": {
+           "type": "@"
           }
          },
          "retval": {
-          "type": "@?"
+          "type": "v"
          }
         },
         "typestr": "@?",

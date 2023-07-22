@@ -47,21 +47,6 @@ misc.update(
             b"{AudioStreamRangedDescription={AudioStreamBasicDescription=dIIIIIIII}{AudioValueRange=dd}}",
             ["mFormat", "mSampleRateRange"],
         ),
-        "AudioChannelDescription": objc.createStructType(
-            "CoreAudio.AudioChannelDescription",
-            b"{AudioChannelDescription=II[3f]}",
-            ["mChannelLabel", "mChannelFlags", "mCoordinates"],
-        ),
-        "AudioChannelLayout": objc.createStructType(
-            "CoreAudio.AudioChannelLayout",
-            b"{AudioChannelLayout=III[1{AudioChannelDescription=II[3f]}]}",
-            [
-                "mChannelLayoutTag",
-                "mChannelBitmap",
-                "mNumberChannelDescriptions",
-                "mChannelDescriptions",
-            ],
-        ),
         "AudioFormatListItem": objc.createStructType(
             "CoreAudio.AudioFormatListItem",
             b"{AudioFormatListItem={AudioStreamBasicDescription=dIIIIIIII}I}",

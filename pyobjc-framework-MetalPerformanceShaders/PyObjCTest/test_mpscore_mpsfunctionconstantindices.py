@@ -55,17 +55,3 @@ class TestMPSCore_MPSFunctionConstantIndices(TestCase):
             MetalPerformanceShaders.MPSUserAvailableFunctionConstantStartIndex,
             MetalPerformanceShaders.MPSDeviceCapsIndex - 12,
         )
-
-        # Removed in macOS 14:
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNDArrayConstantMultiDestSrcAddressingIndex,
-            MetalPerformanceShaders.MPSDeviceCapsIndex - 8,
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNDArrayConstantMultiDestDstAddressingIndex,
-            MetalPerformanceShaders.MPSDeviceCapsIndex - 9,
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSUserAvailableFunctionConstantStartIndex,
-            MetalPerformanceShaders.MPSDeviceCapsIndex - 10,
-        )

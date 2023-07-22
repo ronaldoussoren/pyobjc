@@ -317,7 +317,7 @@ def os_level_between(min_release, max_release):
 _poolclass = objc.lookUpClass("NSAutoreleasePool")
 
 # NOTE: On at least OSX 10.8 there are multiple proxy classes for CFTypeRef...
-_nscftype = tuple(cls for cls in objc.getClassList() if "NSCFType" in cls.__name__)
+_nscftype = tuple(cls for cls in objc.getClassList(1) if "NSCFType" in cls.__name__)
 
 _typealias = {}
 
@@ -1249,8 +1249,12 @@ class TestCase(_unittest.TestCase):
         }
 
         exclude_attrs = set(exclude_attrs)
-        # exclude_attrs.add("FBSSceneClientSettings")
+        exclude_attrs.add("FBSMutableSceneClientSettings")
+        exclude_attrs.add("FBSSceneClientSettings")
         exclude_attrs.add(("NSColor", "scn_C3DColorIgnoringColorSpace_success_"))
+        exclude_attrs.add(
+            ("AVKitPlatformColorClass", "scn_C3DColorIgnoringColorSpace_success_")
+        )
         exclude_attrs.add(
             ("PDFKitPlatformColor", "scn_C3DColorIgnoringColorSpace_success_")
         )

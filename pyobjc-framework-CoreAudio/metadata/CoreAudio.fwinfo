@@ -135,7 +135,9 @@
   },
   "structs": {
    "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioChannelDescription": { "ignore": true, "comment": "Manual wrapper" },
    "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioChannelLayout": { "ignore": true, "comment": "Manual wrapper" },
    "AudioValueTranslation": { "ignore": true, "comment": "Manual wrapper" },
    "AudioFormatListItem": {
     "fieldnames": [

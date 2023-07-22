@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 import Cinematic
 
 
-class TEstCNDetection(TestCase):
+class TestCNDetection(TestCase):
     def test_constants(self):
         self.assertIsEnumType(Cinematic.CNDetectionType)
         self.assertEqual(Cinematic.CNDetectionTypeUnknown, 0)

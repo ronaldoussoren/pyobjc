@@ -396,11 +396,16 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
 }
 
 PyDoc_STRVAR(getClassList_doc,
-             "getClassList()\n" CLINIC_SEP "\n"
+             "getClassList(ignore_invalid_identifiers=False)\n" CLINIC_SEP "\n"
              "Return a list with all Objective-C classes known to the runtime.\n");
-static PyObject* _Nullable getClassList(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable getClassList(PyObject* self __attribute__((__unused__)),
+                                        PyObject* args)
 {
-    return PyObjC_GetClassList();
+    int ignore_invalid_identifiers = 0;
+    if (!PyArg_ParseTuple(args, "|p", &ignore_invalid_identifiers)) {
+        return NULL;
+    }
+    return PyObjC_GetClassList(ignore_invalid_identifiers);
 }
 
 PyDoc_STRVAR(currentBundle_doc, "currentBundle()\n" CLINIC_SEP "\n"
@@ -505,7 +510,7 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         return pythonify_c_value(@encode(NSBundle*), &bundle);
     }
 
-    class_list = PyObjC_GetClassList();
+    class_list = PyObjC_GetClassList(1);
     if (class_list == NULL) {
         return NULL;
     }
@@ -1832,7 +1837,7 @@ static PyMethodDef mod_methods[] = {
      .ml_doc   = currentBundle_doc},
     {.ml_name  = "getClassList",
      .ml_meth  = (PyCFunction)getClassList,
-     .ml_flags = METH_NOARGS,
+     .ml_flags = METH_VARARGS,
      .ml_doc   = getClassList_doc},
     {.ml_name  = "recycleAutoreleasePool",
      .ml_meth  = (PyCFunction)recycle_autorelease_pool,

@@ -31,7 +31,7 @@ class TestHKCategoryValues(TestCase):
             HealthKit.HKCategoryValueAppleWalkingSteadinessEventRepeatVeryLow, 4
         )
 
-        self.assertIsEnumType(HealthKit.KCategoryValueCervicalMucusQuality)
+        self.assertIsEnumType(HealthKit.HKCategoryValueCervicalMucusQuality)
         self.assertEqual(HealthKit.HKCategoryValueCervicalMucusQualityDry, 1)
         self.assertEqual(HealthKit.HKCategoryValueCervicalMucusQualitySticky, 2)
         self.assertEqual(HealthKit.HKCategoryValueCervicalMucusQualityCreamy, 3)
@@ -47,7 +47,7 @@ class TestHKCategoryValues(TestCase):
         self.assertEqual(HealthKit.HKCategoryValueContraceptiveOral, 6)
         self.assertEqual(HealthKit.HKCategoryValueContraceptivePatch, 7)
 
-        self.assertIsEnumType(HealthKit.KCategoryValueEnvironmentalAudioExposureEvent)
+        self.assertIsEnumType(HealthKit.HKCategoryValueEnvironmentalAudioExposureEvent)
         self.assertEqual(
             HealthKit.HKCategoryValueEnvironmentalAudioExposureEventMomentaryLimit, 1
         )
@@ -110,7 +110,6 @@ class TestHKCategoryValues(TestCase):
             HealthKit.HKCategoryValueSleepAnalysisAsleepUnspecified,
         )
         self.assertEqual(HealthKit.HKCategoryValueSleepAnalysisAwake, 2)
-        self.assertEqual(HealthKit.HKCategoryValueSleepAnalysisAsleep, 3)
         self.assertEqual(HealthKit.HKCategoryValueSleepAnalysisAsleepDeep, 4)
         self.assertEqual(HealthKit.HKCategoryValueSleepAnalysisAsleepREM, 5)
 

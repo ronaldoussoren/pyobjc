@@ -8,7 +8,7 @@ class TestCoreSpotlight(TestCase):
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionNumber, float)
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionString, bytes)
 
-        self.assertNotHasAtrr(CoreSpotlight, "CoreSpotlightAPIVersion")
+        self.assertNotHasAttr(CoreSpotlight, "CoreSpotlightAPIVersion")
 
 
 class TestCallableMetadata(TestCase):

@@ -98,12 +98,15 @@ class TestHKHealthStore(TestCase):
 
     @min_os_level("14.0")
     def test_methods14_0(self):
-        self.assertResultIsBlock(
-            HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
-            b"v@",
-        )
-        self.assertArgIsBlock(
-            HealthKit.HKHealthStore.setWorkoutSessionMirroringStartHandler_,
-            0,
-            b"v@",
-        )
+        with self.subTest("workoutSessionMirroringStartHandler"):
+            self.assertResultIsBlock(
+                HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
+                b"v@",
+            )
+
+        with self.subTest("setWorkoutSessionMirroringStartHandler:"):
+            self.assertArgIsBlock(
+                HealthKit.HKHealthStore.setWorkoutSessionMirroringStartHandler_,
+                0,
+                b"v@",
+            )

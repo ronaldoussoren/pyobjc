@@ -17,6 +17,6 @@ class TestVNDetectHumanBodyPose3DRequest(TestCase):
         )
 
         self.assertArgIsOut(
-            Vision.VNDetectHumanBodyPose3DRequest.supportedJointsGroupNamesAndReturnError,
+            Vision.VNDetectHumanBodyPose3DRequest.supportedJointsGroupNamesAndReturnError_,
             0,
         )

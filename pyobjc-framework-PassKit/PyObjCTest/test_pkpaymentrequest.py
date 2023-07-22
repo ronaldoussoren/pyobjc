@@ -42,13 +42,13 @@ class TestPKPaymentRequest(TestCase):
         self.assertEqual(PassKit.PKShippingContactEditingModeStorePickup, 2)
         self.assertEqual(
             PassKit.PKShippingContactEditingModeEnabled,
-            PassKit.PassKit.PKShippingContactEditingModeAvailable,
+            PassKit.PKShippingContactEditingModeAvailable,
         )
 
         self.assertIsEnumType(PassKit.PKApplePayLaterAvailability)
-        self.asertEqual(PassKit.PKApplePayLaterAvailable, 0)
-        self.asertEqual(PassKit.PKApplePayLaterUnavailableItemIneligible, 1)
-        self.asertEqual(PassKit.PKApplePayLaterUnavailableRecurringTransaction, 2)
+        self.assertEqual(PassKit.PKApplePayLaterAvailable, 0)
+        self.assertEqual(PassKit.PKApplePayLaterUnavailableItemIneligible, 1)
+        self.assertEqual(PassKit.PKApplePayLaterUnavailableRecurringTransaction, 2)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

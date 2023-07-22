@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
-class TestINEditMessageIntentHelper(Intents.NSObjet):
+class TestINEditMessageIntentHelper(Intents.NSObject):
     def handleEditMessage_completion_(self, a, b):
         pass
 

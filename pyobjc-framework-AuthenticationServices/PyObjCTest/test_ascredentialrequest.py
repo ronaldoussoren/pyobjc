@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
-class TestASCredentialRequestHelper(AuthenticationServices.NSObjevt):
+class TestASCredentialRequestHelper(AuthenticationServices.NSObject):
     def type(self):  # noqa: A003
         return 1
 
@@ -23,8 +23,5 @@ class TestASCredentialRequest(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("ASCredentialRequest")
 
-    def test_prptovol_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestASCredentialRequestHelper.type, objc._C_NSInteger)
-        self.assertArgHasType(
-            TestASCredentialRequestHelper.setType_, 0, objc._C_NSInteger
-        )

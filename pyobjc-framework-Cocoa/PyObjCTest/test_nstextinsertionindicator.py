@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSTextInsertionIndicator(TestCase):
     def test_constants(self):
-        self.assertIsEnumType(AppKit.NSInsertionIndicatorDisplayMode)
+        self.assertIsEnumType(AppKit.NSTextInsertionIndicatorDisplayMode)
         self.assertEqual(AppKit.NSTextInsertionIndicatorDisplayModeAutomatic, 0)
         self.assertEqual(AppKit.NSTextInsertionIndicatorDisplayModeHidden, 1)
         self.assertEqual(AppKit.NSTextInsertionIndicatorDisplayModeVisible, 2)

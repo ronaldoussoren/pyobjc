@@ -47,16 +47,16 @@ class TestASCredentialIdentityStore(TestCase):
     def test_methods14_0(self):
         self.assertArgIsBlock(
             AuthenticationServices.ASCredentialIdentityStore.saveCredentialIdentityEntries_completion_,
-            0,
+            1,
             b"vZ@",
         )
         self.assertArgIsBlock(
             AuthenticationServices.ASCredentialIdentityStore.removeCredentialIdentityEntries_completion_,
-            0,
+            1,
             b"vZ@",
         )
         self.assertArgIsBlock(
             AuthenticationServices.ASCredentialIdentityStore.replaceCredentialIdentityEntries_completion_,
-            0,
+            1,
             b"vZ@",
         )

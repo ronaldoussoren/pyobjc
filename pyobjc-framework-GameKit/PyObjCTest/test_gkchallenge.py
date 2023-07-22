@@ -81,7 +81,7 @@ class TestGKChallenge(TestCase):
             GKChallengeComposeHandler,
         )
         self.assertArgIsBlock(
-            GameKit.GKChallenge.challengeComposeControllerWithMessage_players_completion_,
+            GameKit.GKLeaderboardEntry.challengeComposeControllerWithMessage_players_completion_,
             2,
             GKChallengeComposeHandler,
         )

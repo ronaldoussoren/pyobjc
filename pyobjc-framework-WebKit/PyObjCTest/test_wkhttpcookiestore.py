@@ -22,10 +22,10 @@ class TestWKError(TestCase):
     @min_os_level("14.0")
     def test_methods14_0(self):
         self.assertArgIsBlock(
-            WebKit.WKHTTPCookieStore.setCookiePolicy_completionHandler_, 0, b"v"
+            WebKit.WKHTTPCookieStore.setCookiePolicy_completionHandler_, 1, b"v"
         )
         self.assertArgIsBlock(
-            WebKit.WKHTTPCookieStore.getCookiePolicy_completionHandler_,
+            WebKit.WKHTTPCookieStore.getCookiePolicy_,
             0,
             b"v" + objc._C_NSInteger,
         )

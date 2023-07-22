@@ -85,5 +85,5 @@ class TestEKEventStore(TestCase):
             b"vZ@",
         )
         self.assertArgIsBlock(
-            EventKit.EKEventStore.requestFullAccessToRemindersWithCompletion, 0, b"vZ@"
+            EventKit.EKEventStore.requestFullAccessToRemindersWithCompletion_, 0, b"vZ@"
         )

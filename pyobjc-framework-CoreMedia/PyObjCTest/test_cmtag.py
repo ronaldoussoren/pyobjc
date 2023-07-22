@@ -10,7 +10,7 @@ class TestCMTag(TestCase):
 
         self.assertIsEnumType(CoreMedia.CMTagCategory)
         self.assertEqual(CoreMedia.kCMTagCategory_Undefined, 0)
-        self.assertEqual(CoreMedia.kCMTagCategory_MediaType.fourcc(b"mdia"))
+        self.assertEqual(CoreMedia.kCMTagCategory_MediaType, fourcc(b"mdia"))
         self.assertEqual(CoreMedia.kCMTagCategory_MediaSubType, fourcc(b"msub"))
         self.assertEqual(CoreMedia.kCMTagCategory_TrackID, fourcc(b"trak"))
         self.assertEqual(CoreMedia.kCMTagCategory_ChannelID, fourcc(b"vchn"))
@@ -112,8 +112,8 @@ class TestCMTag(TestCase):
         CoreMedia.CMTagCompare
         self.assertResultIsBOOL(CoreMedia.CMTagCategoryValueEqualToValue)
         CoreMedia.CMTagHash
-        self.assertIsCFRetained(CoreMedia.CMTagCopyDescription)
-        self.assertIsCFRetained(CoreMedia.CMTagCopyAsDictionary)
+        self.assertResultIsCFRetained(CoreMedia.CMTagCopyDescription)
+        self.assertResultIsCFRetained(CoreMedia.CMTagCopyAsDictionary)
         CoreMedia.CMTagMakeFromDictionary
 
         CoreMedia.CMTAG_IS_VALID

@@ -51,8 +51,12 @@ class TestMIDIServices(TestCase):
 
     @min_os_level("14.0")
     def test_constants14_0(self):
-        self.assertIsInstance(CoreMIDI.kMIDIPropertyUMPActiveGroupBitmap, str)
-        self.assertIsInstance(CoreMIDI.kMIDIPropertyUMPCanTransmitGroupless, str)
+        self.assertIsInstance(
+            CoreMIDI.kMIDIPropertyUMPActiveGroupBitmap, (str, type(None))
+        )
+        self.assertIsInstance(
+            CoreMIDI.kMIDIPropertyUMPCanTransmitGroupless, (str, type(None))
+        )
 
     def test_functions(self):
         self.assertArgIsOut(CoreMIDI.MIDISourceCreateWithProtocol, 3)
@@ -62,13 +66,10 @@ class TestMIDIServices(TestCase):
 
     @min_os_level("14.0")
     def test_functions14_0(self):
-        self.assertArgIsIn(CoreMIDI.MIDISysexSendRequestUMP, 1)
-        self.assertArgSizeInArg(CoreMIDI.MIDISysexSendRequestUMP, 1, 2)
-        self.assertArgIsBOOL(CoreMIDI.MIDISysexSendRequestUMP, 3)
-        self.assertArgIsFunction(
-            CoreMIDI.MIDISysexSendRequestUMP, 4, b"v^{MIDISysexSendRequestUMP=}"
-        )
+        self.assertNotHasAttr(CoreMIDI, "MIDISysexSendRequestUMP")
+        self.assertNotHasAttr(CoreMIDI, "MIDISendUMPSysex")
+        self.assertNotHasAttr(CoreMIDI, "MIDISendUMPSysex8")
 
-        CoreMIDI.MIDISendUMPSysex
-        CoreMIDI.MIDISendUMPSysex8
-        CoreMIDI.MIDIEventPacketSysexBytesForGroup
+        self.assertArgIsIn(CoreMIDI.MIDIEventPacketSysexBytesForGroup, 0)
+        self.assertArgIsOut(CoreMIDI.MIDIEventPacketSysexBytesForGroup, 2)
+        self.assertArgIsCFRetained(CoreMIDI.MIDIEventPacketSysexBytesForGroup, 2)

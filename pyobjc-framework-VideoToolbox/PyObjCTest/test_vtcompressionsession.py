@@ -3,7 +3,7 @@ import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 VTCompressionOutputCallback = b"v^v^viI^{opaqueCMSampleBuffer=}"
-VTCompressionOutputHandler = b"vi@^{opaqueCMSampleBuffer=}"
+VTCompressionOutputHandler = b"viQ^{opaqueCMSampleBuffer=}"
 
 
 class TestVTCompressionSession(TestCase):
@@ -69,7 +69,7 @@ class TestVTCompressionSession(TestCase):
         self.assertResultIsBOOL(VideoToolbox.VTIsStereoMVHEVCEncodeSupported)
 
         self.assertArgHasType(
-            VideoToolbox.VTCompressionSessionEncodeMultiImageFrame, 5, b"Q"
+            VideoToolbox.VTCompressionSessionEncodeMultiImageFrame, 5, b"^v"
         )
         self.assertArgIsOut(VideoToolbox.VTCompressionSessionEncodeMultiImageFrame, 6)
 

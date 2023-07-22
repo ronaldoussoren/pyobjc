@@ -50,7 +50,7 @@ class TestMTLTypes(TestCase):
     @min_sdk_level("10.13")
     def test_functions10_13(self):
         v = Metal.MTLSamplePositionMake(0.5, 1.5)
-        self.assertIsInstance(v, Metal.MTLSamplePosition)
+        self.assertIsInstance(v, Metal.MTLCoordinate2D)
         self.assertEqual(v, (0.5, 1.5))
 
     @min_sdk_level("10.15")

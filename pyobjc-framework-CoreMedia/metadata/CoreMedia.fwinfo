@@ -8,6 +8,14 @@
    "CMBufferQueueTriggerToken": { "typestr": "^{opaqueCMBufferQueueTriggerToken=}" }
   },
   "cftypes": {
+   "CMTaggedBufferGroupRef": {
+    "typestr": "^{OpaqueCMTaggedBufferGroup=}",
+    "gettypeid_func": "CMTaggedBufferGroupGetTypeID"
+   },
+   "CMTagCollectionRef": {
+    "typestr": "^{OpaqueCMTagCollection=}",
+    "gettypeid_func": "CMTagCollectionGetTypeID"
+   },
    "CMBlockBufferRef": {
     "typestr": "^{OpaqueCMBlockBuffer=}",
     "gettypeid_func": "CMBlockBufferGetTypeID"
@@ -52,7 +60,8 @@
   "aliases": {
    "kCMTimebaseFarFutureCFAbsoluteTime": {  "alias": "kCMTimebaseVeryLongCFTimeInterval" },
    "CMVideoFormatDescriptionGetCodecType": {  "alias": "CMFormatDescriptionGetMediaSubType" },
-   "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" }
+   "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" },
+   "CMMutableTagCollectionRef": {  "alias": "CMTagCollectionRef" }
   },
   "enum": {
    "kCMVideoCodecType_DolbyVisionHEVC": { "value": 1685481521 },
@@ -66,6 +75,140 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMTagCollectionCopyTagsOfCategories": {
+   "args": {
+    "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+    "4": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionGetTagsWithCategory": {
+   "args": {
+    "2": { "type_modifier": "o", "c_array_length_in_arg": [3, 4] },
+    "4": { "type_modifier": "o" }
+   }
+  },
+  "CMTagCollectionGetTags": {
+   "args": {
+    "1": { "type_modifier": "o", "c_array_length_in_arg": [2, 3] },
+    "3": { "type_modifier": "o" }
+   }
+  },
+  "CMTagCollectionAddTagsFromArray": {
+   "args": {
+    "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+   }
+  },
+  "CMTagCollectionContainsSpecifiedTags": {
+   "args": {
+    "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+   }
+  },
+  "CMTagCollectionCreate": {
+   "args": {
+    "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+    "3": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateFromData": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateFromDictionary": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateIntersection": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateExclusiveOr": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateDifference": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateUnion": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroup": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateCopy": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateMutableCopy": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupGetCMSampleBufferForTagCollection": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupGetCMSampleBufferForTag": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMSampleBufferCreateForTaggedBufferGroup": {
+   "args": {
+    "5": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupCreate": {
+   "args": {
+    "3": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupCreateCombined": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionCreateMutable": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTaggedBufferGroupGetCVPixelBufferForTag": {
+   "args": {
+    "2": { "type_modifier": "o" }
+   }
+  },
+  "CMTaggedBufferGroupGetCVPixelBufferForTagCollection": {
+   "args": {
+    "2": { "type_modifier": "o" }
+   }
+  },
+  "CMTagCollectionCreateMutable": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMVideoFormatDescriptionCopyTagCollectionArray": {
+   "args": {
+    "1": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMVideoFormatDescriptionCopyTagCollectionArray": {
+   "args": {
+    "1": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
   "CMAudioClockCreate": {
    "args": {
     "1": { "type_modifier": "o", "already_cfretained": true }
@@ -79,6 +222,64 @@
   "CMTimebaseCreateWithSourceTimebase": {
    "args": {
     "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTagCollectionApplyUntil": {
+   "args": {
+    "1": {
+     "callable_retained": false,
+     "callable": {
+      "arguments": {
+       "0": { "type": "{CMTag=IIQ}" },
+       "1": { "type": "^v" }
+      },
+      "retval": { "type": "v" }
+     }
+    }
+   }
+  },
+  "CMTagCollectionApply": {
+   "args": {
+    "1": {
+     "callable_retained": false,
+     "callable": {
+      "arguments": {
+       "0": { "type": "{CMTag=IIQ}" },
+       "1": { "type": "^v" }
+      },
+      "retval": { "type": "v" }
+     }
+    }
+   }
+  },
+  "CMTagCollectionCountTagsWithFilterFunction": {
+   "args": {
+    "1": {
+     "callable_retained": false,
+     "callable": {
+      "arguments": {
+       "0": { "type": "{CMTag=IIQ}" },
+       "1": { "type": "^v" }
+      },
+      "retval": { "type": "Z" }
+     }
+    }
+   }
+  },
+  "CMTagCollectionGetTagsWithFilterFunction": {
+   "args": {
+    "1": { "type_modifier": "o", "c_array_length_in_arg": [2, 3] },
+    "3": { "type_modifier": "o" },
+    "4": {
+     "callable_retained": false,
+     "callable": {
+      "arguments": {
+       "0": { "type": "{CMTag=IIQ}" },
+       "1": { "type": "^v" }
+      },
+      "retval": { "type": "Z" }
+     }
+    }
    }
   },
   "CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler": {

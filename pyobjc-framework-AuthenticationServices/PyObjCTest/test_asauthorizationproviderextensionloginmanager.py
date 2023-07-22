@@ -80,7 +80,7 @@ class TestASAuthorizationProviderExtensionLoginManager(TestCase):
         self.assertResultIsBOOL(
             AuthenticationServices.ASAuthorizationProviderExtensionLoginManager.saveUserLoginConfiguration_error_
         )
-        self.asserArgIsOut(
+        self.assertArgIsOut(
             AuthenticationServices.ASAuthorizationProviderExtensionLoginManager.saveUserLoginConfiguration_error_,
             1,
         )

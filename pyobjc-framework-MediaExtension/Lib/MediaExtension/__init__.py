@@ -15,7 +15,7 @@ def _setup():
     import AVFoundation
     import VideoToolbox
     import Quartz
-    from . import _metadata
+    from . import _metadata, _MediaExtension
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="MediaExtension",
@@ -25,7 +25,14 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(Foundation, CoreMedia, AVFoundation, VideoToolbox, Quartz),
+        parents=(
+            _MediaExtension,
+            Foundation,
+            CoreMedia,
+            AVFoundation,
+            VideoToolbox,
+            Quartz,
+        ),
         metadict=_metadata.__dict__,
     )
 

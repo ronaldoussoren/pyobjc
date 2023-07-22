@@ -575,6 +575,17 @@ extract_count(const char* type, void* pvalue)
             == 0) {
             return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
         }
+        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                    "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
+            == 0) {
+            return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
+        }
+
+        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                    "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
+            == 0) {
+            return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
+        }
 
         /* Fall through: */
     }
@@ -588,13 +599,13 @@ extract_count(const char* type, void* pvalue)
     }
 
     if (strncmp(type, // LCOV_BR_EXCL_LINE
-                "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1)
+                "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
         == 0) {
         return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }
 
     if (strncmp(type, // LCOV_BR_EXCL_LINE
-                "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1)
+                "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
         == 0) {
         return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }

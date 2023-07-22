@@ -19,6 +19,6 @@ class TestVZVirtualMachineView(TestCase):
         self.assertResultIsBOOL(
             Virtualization.VZVirtualMachineView.automaticallyReconfiguresDisplay,
         )
-        self.assertResultIsBOOL(
+        self.assertArgIsBOOL(
             Virtualization.VZVirtualMachineView.setAutomaticallyReconfiguresDisplay_, 0
         )

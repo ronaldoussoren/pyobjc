@@ -57,5 +57,5 @@ class TestCAAnimation(TestCase):
 
     @min_os_level("14.0")
     def test_methods14_0(self):
-        self.assertResultIsBOOL(Quartz.CAAnimation.allowsOverdamping)
-        self.assertArgIsBOOL(Quartz.CAAnimation.setAllowsOverdamping_, 0)
+        self.assertResultIsBOOL(Quartz.CASpringAnimation.allowsOverdamping)
+        self.assertArgIsBOOL(Quartz.CASpringAnimation.setAllowsOverdamping_, 0)

@@ -43,5 +43,6 @@ class TestMPSGraphExecutable(TestCase):
         )
 
         self.assertArgIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraphExecutableSerializationDescriptor.setAppend_
+            MetalPerformanceShadersGraph.MPSGraphExecutableSerializationDescriptor.setAppend_,
+            0,
         )

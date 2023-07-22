@@ -3589,21 +3589,6 @@
   "enum_type": {
    "ODFrameworkErrors": {
     "type": "I"
-   },
-   "enum (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework/Headers/CFOpenDirectoryConstants.h:122:1)": {
-    "type": "I"
-   },
-   "enum (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework/Headers/CFOpenDirectoryConstants.h:155:1)": {
-    "type": "I"
-   },
-   "enum (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework/Headers/CFOpenDirectoryConstants.h:3460:1)": {
-    "type": "i"
-   },
-   "enum (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/OpenDirectory.framework/Headers/ODConfiguration.h:27:1)": {
-    "type": "I"
-   },
-   "enum (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/OpenDirectory.framework/Headers/ODConfiguration.h:33:1)": {
-    "type": "I"
    }
   },
   "expressions": {},

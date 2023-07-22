@@ -11,7 +11,8 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata, _dispatch
+    from . import _metadata
+    from . import _dispatch
     from ._inlines import _inline_list_
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(

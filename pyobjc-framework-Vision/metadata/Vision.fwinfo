@@ -10,7 +10,12 @@
    "VNHumanHandPoseObservationJointName": { "type": "@", "type_name": "NSString" },
    "VNHumanHandPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" },
    "VNHumanBodyPoseObservationJointName": { "type": "@", "type_name": "NSString" },
-   "VNHumanBodyPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" }
+   "VNHumanBodyPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" },
+   "VNAnimalBodyPoseObservationJointName": { "type": "@", "type_name": "NSString" },
+   "VNAnimalBodyPoseObservationJointsGroupName": { "type": "@", "type_name": "NSString" },
+   "VNHumanBodyPose3DObservationJointName": { "type": "@", "type_name": "NSString" },
+   "VNHumanBodyPose3DObservationJointsGroupName": { "type": "@", "type_name": "NSString" },
+   "VNComputeStage": { "type": "@", "type_name": "NSString" }
   },
   "externs": {
    "VNAnimalDetectorDog": { "typestr": "@" },
@@ -110,9 +115,34 @@
    "VNErrorInvalidImage": { "value": 13 },
    "VNErrorInvalidArgument": { "value": 14 },
    "VNErrorInvalidModel": { "value": 15 },
-   "VNErrorUnsupportedRevision": { "value": 16 }
+   "VNErrorUnsupportedRevision": { "value": 16 },
+   "VNGenerateImageFeaturePrintRequestRevision2": { "value": 2 },
+   "VNGenerateAttentionBasedSaliencyImageRequestRevision2": { "value": 2 },
+   "VNClassifyImageRequestRevision2": { "value": 2 },
+   "VNDetectBarcodesRequestRevision4": { "value": 4 },
+   "VNDetectHumanBodyPose3DRequestRevision1": { "value": 1 },
+   "VNTrackHomographicImageRegistrationRequestRevision1": { "value": 1 },
+   "VNDetectAnimalBodyPoseRequestRevision1": { "value": 1 },
+   "VNGenerateForegroundInstanceMaskRequestRevision1": { "value": 1 },
+   "VNDetectFaceCaptureQualityRequestRevision3": { "value": 3 },
+   "VNTrackTranslationalImageRegistrationRequestRevision1": { "value": 1 },
+   "VNTrackOpticalFlowRequestRevision1": { "value": 1 },
+   "VNGeneratePersonInstanceMaskRequestRevision1": { "value": 1 },
+   "VNGenerateObjectnessBasedSaliencyImageRequestRevision2": { "value": 2 }
   },
   "classes": {
+    "VNHumanBodyPose3DObservation": {
+     "methods": [
+      {
+       "selector": "getCameraRelativePosition:forJointName:error:",
+       "class_method": false,
+       "args": {
+        "0": { "type_modifier": "o" },
+        "2": { "type_modifier": "o" }
+       }
+      }
+     ]
+    },
     "VNContour": {
      "methods": [
      {

@@ -45,12 +45,12 @@ class TestMDLTransformHelper(ModelIO.NSObject):
 class TestMDLTransform(TestCase):
     def testMethods(self):
         self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.matrix, simd.matrix_float4x4.__typestr__
+            ModelIO.TestMDLTransformHelper.matrix, simd.simd_float4x4.__typestr__
         )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setMatrix_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
 
         self.assertResultIsBOOL(ModelIO.TestMDLTransformHelper.resetsTransform)
@@ -73,7 +73,7 @@ class TestMDLTransform(TestCase):
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 1, objc._C_DBL
@@ -82,12 +82,12 @@ class TestMDLTransform(TestCase):
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setLocalTransform_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
 
         self.assertResultHasType(
             ModelIO.TestMDLTransformHelper.localTransformAtTime_,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.localTransformAtTime_, 0, objc._C_DBL
@@ -95,7 +95,7 @@ class TestMDLTransform(TestCase):
 
         self.assertResultHasType(
             ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
@@ -104,7 +104,7 @@ class TestMDLTransform(TestCase):
         )
 
         self.assertArgHasType(
-            ModelIO.MDLTransform.initWithMatrix_, 0, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLTransform.initWithMatrix_, 0, simd.simd_float4x4.__typestr__
         )
 
         self.assertResultHasType(
@@ -136,7 +136,7 @@ class TestMDLTransform(TestCase):
         )
 
         self.assertResultHasType(
-            ModelIO.MDLTransform.rotationMatrixAtTime_, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLTransform.rotationMatrixAtTime_, simd.simd_float4x4.__typestr__
         )
 
         self.assertResultHasType(
@@ -170,10 +170,10 @@ class TestMDLTransform(TestCase):
         self.assertArgHasType(
             ModelIO.MDLTransform.initWithMatrix_resetsTransform_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertArgHasType(
-            ModelIO.MDLTransform.setMatrix_forTime_, 0, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLTransform.setMatrix_forTime_, 0, simd.simd_float4x4.__typestr__
         )
         self.assertArgIsBOOL(ModelIO.MDLTransform.initWithMatrix_resetsTransform_, 1)
         self.assertArgIsBOOL(

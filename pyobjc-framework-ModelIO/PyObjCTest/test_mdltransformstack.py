@@ -30,19 +30,19 @@ class TestMDLTransformStack(TestCase):
     def test_protocol_methods(self):
         self.assertResultHasType(
             TestMDLTransformStackHelper.float4x4AtTime_,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             TestMDLTransformStackHelper.double4x4AtTime_,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )
 
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertResultHasType(
-            ModelIO.MDLTransformStack.float4x4AtTime_, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLTransformStack.float4x4AtTime_, simd.simd_float4x4.__typestr__
         )
         self.assertResultHasType(
             ModelIO.MDLTransformStack.double4x4AtTime_,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )

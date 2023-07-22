@@ -190,6 +190,14 @@
   },
   "formal_protocols": {},
   "functions": {
+   "MIDISendUMPSysex": { "ignore": true },
+   "MIDISendUMPSysex8": { "ignore": true },
+   "MIDIEventPacketSysexBytesForGroup": {
+    "args": {
+     "0": { "type_modifier": "n" },
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "MIDI1UPSysExArray": { "ignore": true },
    "MIDIEventListForEachEvent": { "ignore": true },
    "MIDIClientCreate": {

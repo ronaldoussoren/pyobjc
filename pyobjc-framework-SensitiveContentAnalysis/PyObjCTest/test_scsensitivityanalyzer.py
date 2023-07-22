@@ -34,5 +34,7 @@ class TestSCSensitivityAnalyzer(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            SensitiveContentAnalysis.SCSensitivityAnalyzer.analyzeVideoFile, 1, b"v@@"
+            SensitiveContentAnalysis.SCSensitivityAnalyzer.analyzeVideoFile_completionHandler_,
+            1,
+            b"v@@",
         )

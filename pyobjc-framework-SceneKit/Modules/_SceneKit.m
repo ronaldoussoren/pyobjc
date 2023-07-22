@@ -82,7 +82,7 @@ m_SCNMatrix4ToMat4(PyObject* module __attribute__((__unused__)), PyObject* vecto
 
     result = SCNMatrix4ToMat4(arg);
 
-    return PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &result);
+    return PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &result);
 }
 
 static PyObject*
@@ -91,7 +91,7 @@ m_SCNMatrix4FromMat4(PyObject* module __attribute__((__unused__)), PyObject* vec
     SCNMatrix4      result;
     matrix_float4x4 arg;
 
-    if (PyObjC_PythonToObjC("{_simd_float4x4=[4<4f>]}", vector, &arg) == -1) {
+    if (PyObjC_PythonToObjC("{simd_float4x4=[4<4f>]}", vector, &arg) == -1) {
         return NULL;
     }
 

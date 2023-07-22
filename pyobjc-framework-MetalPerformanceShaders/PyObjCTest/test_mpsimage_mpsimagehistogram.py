@@ -9,7 +9,7 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         # Vector types:
         self.assertEqual(
             MetalPerformanceShaders.MPSImageHistogramInfo.__typestr__,
-            b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
+            b"{MPSImageHistogramInfo=QZ<4f><4f>}",
         )
         v = MetalPerformanceShaders.MPSImageHistogramInfo()
         self.assertIsInstance(v.numberOfHistogramEntries, int)

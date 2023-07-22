@@ -2,7 +2,38 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "accessibilityCustomContentBlock",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" }
+        },
+        "retval": { "type": "@" }
+       }
+      }
+     },
+     {
+      "selector": "setAccessibilityCustomContentBlock",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {
    "AXNameFromColor": {

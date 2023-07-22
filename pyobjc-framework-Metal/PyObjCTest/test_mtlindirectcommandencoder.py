@@ -264,31 +264,31 @@ class TestMTLIndirectCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             2,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             3,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             2,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             3,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )

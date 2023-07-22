@@ -103,6 +103,33 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;
 
+    /*
+     * Register a number of struct pointer types that are actually Objective-C objects
+     */
+    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0)
+        if (PyObjCPointerWrapper_RegisterID("dispatch_queue_t", "^{dispatch_queue_s=}")
+            < 0)
+            goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0)
+        goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}") < 0)
+        goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_queue_attr_t",
+                                        "^{dispatch_queue_attr_s=}")
+        < 0)
+        goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t",
+                                        "^{dispatch_semaphore_s=}")
+        < 0)
+        goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t", "^{dispatch_source_type_s=}")
+        < 0)
+        goto error;
+
+    /*
+     * Register constants
+     */
+
     id v = (id)DISPATCH_QUEUE_CONCURRENT;
     if (add_constant(m, "DISPATCH_QUEUE_CONCURRENT", @encode(id), &v) != 0)
         goto error;
@@ -177,27 +204,6 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
     s = DISPATCH_SOURCE_TYPE_WRITE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_WRITE", @encode(dispatch_source_type_t), &s)
         != 0)
-        goto error;
-
-    /*
-     * Register a number of struct pointer types that are actually Objective-C objects
-     */
-    if (PyObjCPointerWrapper_RegisterID("dispatch_queue_t", "^{dispatch_queue_s=}") < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}") < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_queue_attr_t",
-                                        "^{dispatch_queue_attr_s=}")
-        < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t",
-                                        "^{dispatch_semaphore_s=}")
-        < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t", "^{dispatch_source_type_s=}")
-        < 0)
         goto error;
 
     return m;

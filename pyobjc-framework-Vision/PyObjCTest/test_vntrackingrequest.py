@@ -20,6 +20,6 @@ class TestVNRequest(TestCase):
 
     @min_os_level("14.0")
     def testMethods14_0(self):
-        self.assertArgIsOutl(
+        self.assertArgIsOut(
             Vision.VNTrackingRequest.supportedNumberOfTrackersAndReturnError_, 0
         )

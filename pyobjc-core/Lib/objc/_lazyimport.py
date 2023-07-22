@@ -290,7 +290,7 @@ def createFrameworkDirAndGetattr(
 
         # Add all class names, ignoring names that aren't valid identifiers
         all_names.update(
-            cls.__name__ for cls in getClassList() if cls.__name__.isidentifier()
+            cls.__name__ for cls in getClassList(True) if cls.__name__.isidentifier()
         )
 
         return sorted({v for v in all_names if not v.startswith("_")})

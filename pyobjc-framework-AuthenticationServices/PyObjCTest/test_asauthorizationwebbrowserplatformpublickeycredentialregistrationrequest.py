@@ -2,7 +2,7 @@ import AuthenticationServices
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
-class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequestHelper(
+class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequestHelper(
     AuthenticationServices.NSObject
 ):
     def shouldShowHybridTransport(self):
@@ -23,9 +23,9 @@ class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationReques
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(
-            TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequestHelper.shouldShowHybridTransport
+            TestASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequestHelper.shouldShowHybridTransport
         )
         self.assertArgIsBOOL(
-            TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequestHelper.setShouldShowHybridTransport_,
+            TestASAuthorizationWebBrowserPlatformPublicKeyCredentialRegistrationRequestHelper.setShouldShowHybridTransport_,
             0,
         )

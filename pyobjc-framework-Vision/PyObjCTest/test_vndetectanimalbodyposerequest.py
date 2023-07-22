@@ -12,6 +12,6 @@ class TestVNDetectAnimalBodyPoseRequest(TestCase):
             Vision.VNDetectAnimalBodyPoseRequest.supportedJointNamesAndReturnError_, 0
         )
         self.assertArgIsOut(
-            Vision.VNDetectAnimalBodyPoseRequest.supportedJointsGroupNamesAndReturnError,
+            Vision.VNDetectAnimalBodyPoseRequest.supportedJointsGroupNamesAndReturnError_,
             0,
         )

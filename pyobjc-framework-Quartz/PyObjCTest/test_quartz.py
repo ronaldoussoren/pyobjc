@@ -22,7 +22,7 @@ class TestCallableMetadata(TestCase):
             QuartzCore,
             PDFKit,
             QuartzFilters,
-            QuicklookUI,
+            QuickLookUI,
             QuartzComposer,
         )
 
@@ -34,7 +34,7 @@ class TestCallableMetadata(TestCase):
             QuartzCore,
             PDFKit,
             QuartzFilters,
-            QuicklookUI,
+            QuickLookUI,
             QuartzComposer,
         ):
             with self.subTest(framework=fwk.__name__):

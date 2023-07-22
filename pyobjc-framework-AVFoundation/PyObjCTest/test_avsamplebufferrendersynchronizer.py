@@ -8,7 +8,7 @@ class TestAVSampleBufferRenderSynchronizer(TestCase):
         self.assertArgIsBlock(
             AVFoundation.AVSampleBufferRenderSynchronizer.addPeriodicTimeObserverForInterval_queue_usingBlock_,  # noqa: B950
             2,
-            b"v{_CMTime=qiIq}",
+            b"v{CMTime=qiIq}",
         )
         self.assertArgIsBlock(
             AVFoundation.AVSampleBufferRenderSynchronizer.addBoundaryTimeObserverForTimes_queue_usingBlock_,  # noqa: B950

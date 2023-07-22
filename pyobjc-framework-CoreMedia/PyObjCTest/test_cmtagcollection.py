@@ -1,7 +1,7 @@
 import CoreMedia
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
-CMTagCollectionTagFilterFunction = b"Z" + CoreMedia.CMTag.__typstr__ + b"^v"
+CMTagCollectionTagFilterFunction = b"Z" + CoreMedia.CMTag.__typestr__ + b"^v"
 CMTagCollectionApplierFunction = b"v" + CoreMedia.CMTag.__typestr__ + b"^v"
 
 
@@ -52,7 +52,7 @@ class TestCMTagCollection(TestCase):
         self.assertArgIsOut(CoreMedia.CMTagCollectionCreateMutableCopy, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCreateMutableCopy, 2)
 
-        self.assertIsCFRetained(CoreMedia.CMTagCollectionCopyDescription)
+        self.assertResultIsCFRetained(CoreMedia.CMTagCollectionCopyDescription)
 
         self.assertResultIsBOOL(CoreMedia.CMTagCollectionContainsTagsOfCollection)
 
@@ -69,7 +69,7 @@ class TestCMTagCollection(TestCase):
         self.assertArgIsOut(CoreMedia.CMTagCollectionGetTags, 3)
 
         self.assertArgIsOut(CoreMedia.CMTagCollectionGetTagsWithCategory, 2)
-        self.assertArgSizeInArg(CoreMedia.CMTagCollectionGetTagsWithCategory, 1, (3, 4))
+        self.assertArgSizeInArg(CoreMedia.CMTagCollectionGetTagsWithCategory, 2, (3, 4))
         self.assertArgIsOut(CoreMedia.CMTagCollectionGetTagsWithCategory, 4)
 
         self.assertArgIsFunction(
@@ -93,8 +93,8 @@ class TestCMTagCollection(TestCase):
 
         self.assertArgIsIn(CoreMedia.CMTagCollectionCopyTagsOfCategories, 2)
         self.assertArgSizeInArg(CoreMedia.CMTagCollectionCopyTagsOfCategories, 2, 3)
-        self.assertArgIsOut(CoreMedia.CMTagCollectionCopyTagsOfCategories, 3)
-        self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCopyTagsOfCategories, 3)
+        self.assertArgIsOut(CoreMedia.CMTagCollectionCopyTagsOfCategories, 4)
+        self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCopyTagsOfCategories, 4)
 
         self.assertArgIsFunction(
             CoreMedia.CMTagCollectionApply, 1, CMTagCollectionApplierFunction, False
@@ -115,7 +115,7 @@ class TestCMTagCollection(TestCase):
         self.assertArgIsOut(CoreMedia.CMTagCollectionCreateUnion, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCreateUnion, 2)
 
-        self.assertArgIsOut(CoreMedia.CMTagCollectionCreateDifferenc3, 2)
+        self.assertArgIsOut(CoreMedia.CMTagCollectionCreateDifference, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCreateDifference, 2)
 
         self.assertArgIsOut(CoreMedia.CMTagCollectionCreateExclusiveOr, 2)
@@ -134,12 +134,12 @@ class TestCMTagCollection(TestCase):
         self.assertArgIsIn(CoreMedia.CMTagCollectionAddTagsFromArray, 1)
         self.assertArgSizeInArg(CoreMedia.CMTagCollectionAddTagsFromArray, 1, 2)
 
-        self.assertIsCFRetained(CoreMedia.CMTagCollectionCopyAsDictionary)
+        self.assertResultIsCFRetained(CoreMedia.CMTagCollectionCopyAsDictionary)
 
         self.assertArgIsOut(CoreMedia.CMTagCollectionCreateFromDictionary, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCreateFromDictionary, 2)
 
-        self.assertIsCFRetained(CoreMedia.CMTagCollectionCopyAsData)
+        self.assertResultIsCFRetained(CoreMedia.CMTagCollectionCopyAsData)
 
         self.assertArgIsOut(CoreMedia.CMTagCollectionCreateFromData, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTagCollectionCreateFromData, 2)

@@ -29,7 +29,7 @@ class TestCMTaggedBufferGroup(TestCase):
 
         CoreMedia.CMTaggedBufferGroupGetCVPixelBufferAtIndex
 
-        CoreMedia.CMTaggedBufferGroupGetCVPixelBufferForTag
+        self.assertArgIsOut(CoreMedia.CMTaggedBufferGroupGetCVPixelBufferForTag, 2)
 
         self.assertArgIsOut(
             CoreMedia.CMTaggedBufferGroupGetCVPixelBufferForTagCollection, 2

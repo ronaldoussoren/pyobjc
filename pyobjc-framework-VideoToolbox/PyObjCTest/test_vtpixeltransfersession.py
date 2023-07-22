@@ -1,9 +1,9 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTPixelTransferSession(TestCase):
-    @expectedFailure
+    # @expectedFailure
     @min_os_level("10.10")
     def test_types(self):
         self.assertIsCFType(VideoToolbox.VTPixelTransferSessionRef)

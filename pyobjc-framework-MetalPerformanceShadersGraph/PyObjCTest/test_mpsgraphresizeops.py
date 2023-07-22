@@ -124,10 +124,10 @@ class TestMPSGraphResizeOps(TestCase):
         )
 
         self.assertArgIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraph.resizeBilinearWithTensor_sizeTensor_nearestRoundingMode_centerResult_alignCorners_name_,
-            3,
+            MetalPerformanceShadersGraph.MPSGraph.resizeBilinearWithTensor_sizeTensor_centerResult_alignCorners_name_,
+            2,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraph.resizeBilinearWithTensor_sizeTensor_nearestRoundingMode_centerResult_alignCorners_name_,
-            4,
+            MetalPerformanceShadersGraph.MPSGraph.resizeBilinearWithTensor_sizeTensor_centerResult_alignCorners_name_,
+            3,
         )

@@ -95,21 +95,24 @@ class TestAVAudioSession(TestCase):
 
     @min_os_level("11.0")
     def test_constants11_0(self):
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionInterruptionNotification")
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionRouteChangeNotification")
-        self.assertNotHasattr(
-            AVFoundation, "AVAudioSessionMediaServicesWereLostNotification"
+        # XXX: Removed in 14.0 SDK
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionNotification, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionMediaServicesWereLostNotification, str
         )
-        self.assertNotHasattr(
-            AVFoundation, "AVAudioSessionMediaServicesWereResetNotification"
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionMediaServicesWereResetNotification, str
         )
-        self.assertNotHasattr(
-            AVFoundation, "AVAudioSessionSilenceSecondaryAudioHintNotification"
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintNotification, str
         )
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionInterruptionTypeKey")
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionInterruptionOptionKey")
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionRouteChangeReasonKey")
-        self.assertNotHasattr(AVFoundation, "AVAudioSessionRouteChangePreviousRouteKey")
-        self.assertNotHasattr(
-            AVFoundation, "AVAudioSessionSilenceSecondaryAudioHintTypeKey"
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionTypeKey, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionOptionKey, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeReasonKey, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionRouteChangePreviousRouteKey, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeKey, str
         )

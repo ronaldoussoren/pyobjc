@@ -471,7 +471,7 @@ class TestNSURLSession(TestCase):
             b"v@@@",
         )
         self.assertArgIsBlock(
-            Foundation.cancelByProducingResumeData.uploadTaskWithResumeData_completionHandler_,
+            Foundation.NSURLSessionDownloadTask.cancelByProducingResumeData_,
             0,
             b"v@",
         )

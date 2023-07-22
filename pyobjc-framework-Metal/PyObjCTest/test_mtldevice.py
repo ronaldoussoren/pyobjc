@@ -748,7 +748,7 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.getDefaultSamplePositions_count_,
             0,
-            b"o^{_MTLSamplePosition=ff}",
+            b"o^{MTLSamplePosition=ff}",
         )
         self.assertArgSizeInArg(
             TestMTLDeviceHelper.getDefaultSamplePositions_count_, 0, 1
@@ -1032,7 +1032,7 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,
             1,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,

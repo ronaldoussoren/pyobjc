@@ -119,7 +119,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSCustomKernelSourceInfo.__typestr__,
-            b"{_MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}",
+            b"{MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}",
         )
         v = MetalPerformanceShaders.MPSCustomKernelSourceInfo()
         self.assertIs(v.kernelOrigin, None)
@@ -135,7 +135,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSCustomKernelInfo.__typestr__,
-            b"{_MPSCustomKernelInfo=<4S><4S>SSSSSS"
+            b"{MPSCustomKernelInfo=<4S><4S>SSSSSS"
             + MetalPerformanceShaders.MPSIntegerDivisionParams.__typestr__
             + b"}",
         )

@@ -13,5 +13,10 @@ class TestNSMediaLibraryBrowserController(TestCase):
 
     @min_os_level("10.9")
     def testMethods(self):
-        self.assertResultIsBOOL(AppKit.NSMediaLibraryBrowserController.isVisible)
-        self.assertArgIsBOOL(AppKit.NSMediaLibraryBrowserController.setVisible_, 0)
+        self.assertResultIsBOOL(
+            AppKit.NSMediaLibraryBrowserController.sharedMediaLibraryBrowserController().isVisible
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSMediaLibraryBrowserController.sharedMediaLibraryBrowserController().setVisible_,
+            0,
+        )

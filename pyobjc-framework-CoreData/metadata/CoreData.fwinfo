@@ -42,6 +42,82 @@
    "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
   },
   "classes": {
+   "NSCustomMigrationStage": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" },
+	      "3": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setWillMigrateHandler:"
+     },
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" },
+	      "3": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+       },
+       "class_method": false,
+       "selector": "willMigrateHandler"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" },
+	      "3": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setDidMigrateHandler:"
+     },
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" },
+	      "2": { "typestr": "@" },
+	      "3": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+       },
+       "class_method": false,
+       "selector": "didMigrateHandler"
+     }
+    ]
+   },
    "NSPersistentCloudKitContainer": {
     "methods": [
      {

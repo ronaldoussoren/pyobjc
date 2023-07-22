@@ -6,7 +6,7 @@ import PencilKit
 class TestPKInkType(TestCase):
     @min_os_level("10.15")
     def test_constants(self):
-        self.assertIsTypedEnum(PencilKit.PKInkType)
+        self.assertIsTypedEnum(PencilKit.PKInkType, str)
 
         self.assertIsInstance(PencilKit.PKInkTypePen, str)
         self.assertIsInstance(PencilKit.PKInkTypePencil, str)

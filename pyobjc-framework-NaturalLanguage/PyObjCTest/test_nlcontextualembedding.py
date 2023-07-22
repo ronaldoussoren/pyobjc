@@ -5,7 +5,7 @@ import NaturalLanguage
 class TestNLContextualEmbedding(TestCase):
     @min_os_level("14.0")
     def test_constants(self):
-        self.assertTypedEnum(NaturalLanguage.NLContextualEmbeddingKey, str)
+        self.assertIsTypedEnum(NaturalLanguage.NLContextualEmbeddingKey, str)
 
         self.assertIsInstance(NaturalLanguage.NLContextualEmbeddingKeyLanguages, str)
         self.assertIsInstance(NaturalLanguage.NLContextualEmbeddingKeyScripts, str)

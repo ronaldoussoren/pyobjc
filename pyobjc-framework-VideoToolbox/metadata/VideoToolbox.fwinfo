@@ -52,6 +52,46 @@
   },
   "formal_protocols": {},
   "functions": {
+   "VTCompressionSessionEncodeMultiImageFrameWithOutputHandler": {
+    "args": {
+     "5": { "type_modifier": "o" },
+     "6": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "Q" },
+        "3": { "type": "^{opaqueCMSampleBuffer=}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "VTCompressionSessionEncodeMultiImageFrame": {
+    "args": {
+     "6": { "type_modifier": "o" }
+    }
+   },
+   "VTDecompressionSessionDecodeFrameWithMultiImageCapableOutputHandler": {
+    "args": {
+     "3": { "type_modifier": "o", "already_cfretained": true },
+     "4": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "Q" },
+        "3": { "type": "^{__CVBuffer=}" },
+        "4": { "type": "^{OpaqueCMTaggedBufferGroup=}" },
+	"5": { "type": "{CMTime=qiIq}" },
+	"6": { "type": "{CMTime=qiIq}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "VTPixelRotationSessionCreate": {
     "args": {
      "1": { "type_modifier": "o", "already_cfretained": true }
@@ -122,7 +162,7 @@
        "arguments": {
         "0": { "type": "^v" },
         "1": { "type": "i" },
-        "2": { "type": ["I", "Q"] },
+        "2": { "type": "Q" },
         "3": { "type": "^{opaqueCMSampleBuffer=}" }
        },
        "retval": { "type": "v" }
@@ -248,6 +288,37 @@
         "1": { "type": "^{opaqueCMSampleBuffer=}" }
        },
        "retval": { "type": "i" }
+      }
+     }
+    }
+   },
+   "VTDecompressionSessionSetMultiImageCallback": {
+    "args": {
+     "1": {
+      "callable_retained": true,
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "i"
+        },
+        {
+         "typestr": "Q"
+        },
+        {
+         "typestr": "^{OpaqueCMTaggedBufferGroup=}"
+        },
+	{ "type": "{CMTime=qiIq}" },
+	{ "type": "{CMTime=qiIq}" }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
       }
      }
     }

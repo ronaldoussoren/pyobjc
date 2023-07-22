@@ -110,7 +110,7 @@ class TestAVVideoComposition(TestCase):
         self.assertArgHasType(
             TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_,  # noqa: B950
             1,
-            b"{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+            b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         )
         self.assertResultIsBOOL(
             TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_  # noqa: B950

@@ -130,8 +130,8 @@ class TestPHImageManager(TestCase):
     @min_os_level("14.0")
     def testMethods14_0(self):
         self.assertResultIsBOOL(
-            Photos.PHLivePhotoRequestOptions.allowSecondaryDegradedImage
+            Photos.PHImageRequestOptions.allowSecondaryDegradedImage
         )
         self.assertArgIsBOOL(
-            Photos.PHLivePhotoRequestOptions.setAllowSecondaryDegradedImage_, 0
+            Photos.PHImageRequestOptions.setAllowSecondaryDegradedImage_, 0
         )

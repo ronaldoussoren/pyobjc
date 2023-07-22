@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  *     This function returns a list containing the wrappers for all classes
  *     in the Objective-C runtime.
  */
-PyObject* _Nullable PyObjC_GetClassList(void);
+PyObject* _Nullable PyObjC_GetClassList(bool ignore_invalid_identifiers);
 
 NS_ASSUME_NONNULL_END
 

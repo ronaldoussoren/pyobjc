@@ -15,12 +15,12 @@ class TestSKTransformNode(TestCase):
         )
 
         self.assertResultHasType(
-            SpriteKit.SKTransformNode.rotationMatrix, simd.matrix_float3x3.__typestr__
+            SpriteKit.SKTransformNode.rotationMatrix, simd.simd_float3x3.__typestr__
         )
         self.assertArgHasType(
             SpriteKit.SKTransformNode.setRotationMatrix_,
             0,
-            simd.matrix_float3x3.__typestr__,
+            simd.simd_float3x3.__typestr__,
         )
 
         self.assertResultHasType(

@@ -15,10 +15,10 @@ class TestGKAgent(TestCase):
         self.assertArgIsBOOL(GameplayKit.GKAgent3D.setRightHanded_, 0)
 
         self.assertResultHasType(
-            GameplayKit.GKAgent3D.rotation, simd.matrix_float3x3.__typestr__
+            GameplayKit.GKAgent3D.rotation, simd.simd_float3x3.__typestr__
         )
         self.assertArgHasType(
-            GameplayKit.GKAgent3D.setRotation_, 0, simd.matrix_float3x3.__typestr__
+            GameplayKit.GKAgent3D.setRotation_, 0, simd.simd_float3x3.__typestr__
         )
 
         self.assertResultHasType(

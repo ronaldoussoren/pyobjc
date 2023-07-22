@@ -28,7 +28,7 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
-    del sys.modules["AVRouting._metadata"]
+    del sys.modules["AuthenticationServices._metadata"]
 
 
 globals().pop("_setup")()

@@ -9,13 +9,15 @@ VTDecompressionOutputHandler = (
 )
 
 VTDecompressionOutputMultiImageCallback = (
-    b"vQQiQ^{OpaqueCMTaggedBufferGroup=}"
+    b"v^v^viQ^{OpaqueCMTaggedBufferGroup=}"
     + VideoToolbox.CMTime.__typestr__
     + VideoToolbox.CMTime.__typestr__
 )
 
 VTDecompressionMultiImageCapableOutputHandler = (
-    b"viQ^{__CVBuffer=}^{OpaqueCMTaggedBufferGroup=}" + VideoToolbox.CMTime.__typestr__
+    b"viQ^{__CVBuffer=}^{OpaqueCMTaggedBufferGroup=}"
+    + VideoToolbox.CMTime.__typestr__
+    + VideoToolbox.CMTime.__typestr__
 )
 
 
@@ -77,7 +79,7 @@ class TestVTDecompressionSession(TestCase):
             True,
         )
         self.assertArgHasType(
-            VideoToolbox.VTDecompressionSessionSetMultiImageCallback, 2, b"Q"
+            VideoToolbox.VTDecompressionSessionSetMultiImageCallback, 2, b"^v"
         )
 
         self.assertArgIsOut(
@@ -87,4 +89,5 @@ class TestVTDecompressionSession(TestCase):
         self.assertArgIsBlock(
             VideoToolbox.VTDecompressionSessionDecodeFrameWithMultiImageCapableOutputHandler,
             4,
+            VTDecompressionMultiImageCapableOutputHandler,
         )

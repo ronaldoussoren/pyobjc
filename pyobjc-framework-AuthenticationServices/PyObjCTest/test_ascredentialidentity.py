@@ -19,5 +19,5 @@ class TestASCredentialIdentity(TestCase):
     def test_protocol_methods(self):
         self.assertResultHasType(TestASCredentialIdentityHelper.rank, objc._C_NSInteger)
         self.assertArgHasType(
-            TestASCredentialIdentityHelper.setRank_, 1, objc._C_NSInteger
+            TestASCredentialIdentityHelper.setRank_, 0, objc._C_NSInteger
         )

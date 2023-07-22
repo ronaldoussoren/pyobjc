@@ -31,7 +31,7 @@ else:
 
 misc = {}
 constants = """$PKAppleDrawingTypeIdentifier$PKInkTypeCrayon$PKInkTypeFountainPen$PKInkTypeMarker$PKInkTypeMonoline$PKInkTypePen$PKInkTypePencil$PKInkTypeWatercolor$"""
-enums = """$PKContentVersion1@1$PKContentVersion2@2$PKContentVersionLatest@2$PKEraserTypeBitmap@1$PKEraserTypeFixedWidthBitmap@2$PKEraserTypeVector@0$"""
+enums = """$PKContentVersion1@1$PKContentVersion2@2$PKEraserTypeBitmap@1$PKEraserTypeFixedWidthBitmap@2$PKEraserTypeVector@0$"""
 misc.update(
     {
         "PKContentVersion": NewType("PKContentVersion", int),
@@ -40,7 +40,7 @@ misc.update(
 )
 misc.update({"PKInkType": NewType("PKInkType", str)})
 misc.update({})
-aliases = {"PKContentVersionLatest": "PKContentVersion2"}
+aliases = {}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:

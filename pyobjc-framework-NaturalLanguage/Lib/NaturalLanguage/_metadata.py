@@ -50,6 +50,8 @@ misc.update(
         "NLTagScheme": NewType("NLTagScheme", str),
         "NLLanguage": NewType("NLLanguage", str),
         "NLTag": NewType("NLTag", str),
+        "NLScript": NewType("NLTag", str),
+        "NLContextualEmbeddingKey": NewType("NLTag", str),
     }
 )
 misc.update({})

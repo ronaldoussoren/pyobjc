@@ -37,5 +37,5 @@ class TestCKSyncEngine(TestCase):
             CloudKit.CKSyncEngine.sendChangesWithOptions_completionHandler_, 1, b"v@"
         )
         self.assertArgIsBlock(
-            CloudKit.CKSyncEngine.cancelOperationsWithCompletionHandler_, 0, b"v@"
+            CloudKit.CKSyncEngine.cancelOperationsWithCompletionHandler_, 0, b"v"
         )

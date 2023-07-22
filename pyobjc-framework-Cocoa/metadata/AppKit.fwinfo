@@ -4,6 +4,7 @@
    "NSFontWidth": { "type": "d" },
    "NSControlStateValue": { "type": "q" },
    "NSToolbarUserInfoKey": { "type": "@", "type_name": "NSString" },
+   "NSAttributedStringFormattingContextKey": { "type": "@", "type_name": "NSString" },
    "NSTextEffectStyle": { "type": "@", "type_name": "NSString" },
    "NSAttributedStringDocumentType": { "type": "@", "type_name": "NSString" },
    "NSTextLayoutSectionKey": { "type": "@", "type_name": "NSString" },
@@ -120,6 +121,50 @@
    }
   },
   "classes": {
+   "NSTextInsertionIndicator": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         }
+        },
+        "retval": {
+         "type": "v"
+        }
+       }
+      },
+      "selector": "effectsViewInserter"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "selector": "setEffectsViewInserter:"
+     }
+    ]
+   },
    "NSComboButton": {
     "methods": [
      {
@@ -19698,6 +19743,16 @@
    "NSScreen": {
     "methods": [
      {
+      "args": {
+       "1": {
+        "sel_of_type": "v@:@",
+        "type_override": ":"
+       }
+      },
+      "class_method": false,
+      "selector": "displayLinkWithTarget:selector:"
+     },
+     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -25721,6 +25776,16 @@
     "methods": [
      {
       "args": {
+       "1": {
+        "sel_of_type": "v@:@",
+        "type_override": ":"
+       }
+      },
+      "class_method": false,
+      "selector": "displayLinkWithTarget:selector:"
+     },
+     {
+      "args": {
        "0": {
         "type_override": [
          "^^{_NSRect}",
@@ -27167,6 +27232,16 @@
    },
    "NSWindow": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "sel_of_type": "v@:@",
+        "type_override": ":"
+       }
+      },
+      "class_method": false,
+      "selector": "displayLinkWithTarget:selector:"
+     },
      {
       "args": {
        "1": {

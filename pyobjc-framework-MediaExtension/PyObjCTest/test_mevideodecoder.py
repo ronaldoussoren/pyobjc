@@ -56,11 +56,11 @@ class TestMEVideoDecoderExtension(TestCase):
         self.assertArgHasType(
             TestMEVideoDecoderExtensionHelper.videoDecoderWithCodecType_videoFormatDescription_videoDecoderSpecifications_extensionDecoderPixelBufferManager_error_,
             0,
-            b"Q",
+            b"I",
         )
         self.assertArgHasType(
             TestMEVideoDecoderExtensionHelper.videoDecoderWithCodecType_videoFormatDescription_videoDecoderSpecifications_extensionDecoderPixelBufferManager_error_,
-            0,
+            4,
             b"o^@",
         )
 
@@ -98,7 +98,7 @@ class TestMEVideoDecoderExtension(TestCase):
         self.assertArgIsBlock(
             TestMEVideoDecoderExtensionHelper.decodeFrameFromSampleBuffer_options_completionHandler_,
             2,
-            b"v@Q@",
+            b"v^{__CVBuffer=}Q@",
         )
 
         self.assertResultIsBOOL(

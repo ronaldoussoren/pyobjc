@@ -17,15 +17,15 @@ class TestAVAssetVariant(TestCase):
 
         self.assertArgIsBOOL(
             AVFoundation.AVAssetVariantQualifier.predicateForBinauralAudio_mediaSelectionOption_,
-            1,
+            0,
         )
         self.assertArgIsBOOL(
             AVFoundation.AVAssetVariantQualifier.predicateForImmersiveAudio_mediaSelectionOption_,
-            1,
+            0,
         )
         self.assertArgIsBOOL(
             AVFoundation.AVAssetVariantQualifier.predicateForDownmixAudio_mediaSelectionOption_,
-            1,
+            0,
         )
 
         self.assertResultIsBOOL(

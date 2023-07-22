@@ -11,15 +11,15 @@ class TestProxyConfig(TestCase):
         self.assertResultIsRetained(Network.nw_relay_hop_create)
 
         self.assertArgHasType(
-            Network.nw_relay_hop_add_additional_http_header_field, 1, "n^t"
+            Network.nw_relay_hop_add_additional_http_header_field, 1, b"n^t"
         )
-        self.assertArgIsNullDelimited(
+        self.assertArgIsNullTerminated(
             Network.nw_relay_hop_add_additional_http_header_field, 1
         )
         self.assertArgHasType(
-            Network.nw_relay_hop_add_additional_http_header_field, 2, "n^t"
+            Network.nw_relay_hop_add_additional_http_header_field, 2, b"n^t"
         )
-        self.assertArgIsNullDelimited(
+        self.assertArgIsNullTerminated(
             Network.nw_relay_hop_add_additional_http_header_field, 2
         )
 
@@ -30,9 +30,9 @@ class TestProxyConfig(TestCase):
             Network.nw_proxy_config_create_oblivious_http, objc._C_ID
         )
         self.assertResultIsRetained(Network.nw_proxy_config_create_oblivious_http)
-        self.assertArgHasType(Network.nw_proxy_config_create_oblivious_http, 1, "n^t")
-        self.assertArgIsNullDelimited(Network.nw_proxy_config_create_oblivious_http, 1)
-        self.assertArgHasType(Network.nw_proxy_config_create_oblivious_http, 2, "n^v")
+        self.assertArgHasType(Network.nw_proxy_config_create_oblivious_http, 1, b"n^t")
+        self.assertArgIsNullTerminated(Network.nw_proxy_config_create_oblivious_http, 1)
+        self.assertArgHasType(Network.nw_proxy_config_create_oblivious_http, 2, b"n^v")
         self.assertArgSizeInArg(Network.nw_proxy_config_create_oblivious_http, 2, 3)
 
         self.assertResultHasType(
@@ -44,15 +44,15 @@ class TestProxyConfig(TestCase):
         self.assertResultIsRetained(Network.nw_proxy_config_create_socksv5)
 
         self.assertArgHasType(
-            Network.nw_proxy_config_set_username_and_password, 1, "n^t"
+            Network.nw_proxy_config_set_username_and_password, 1, b"n^t"
         )
-        self.assertArgIsNullDelimited(
+        self.assertArgIsNullTerminated(
             Network.nw_proxy_config_set_username_and_password, 1
         )
         self.assertArgHasType(
-            Network.nw_proxy_config_set_username_and_password, 2, "n^t"
+            Network.nw_proxy_config_set_username_and_password, 2, b"n^t"
         )
-        self.assertArgIsNullDelimited(
+        self.assertArgIsNullTerminated(
             Network.nw_proxy_config_set_username_and_password, 2
         )
 

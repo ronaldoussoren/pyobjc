@@ -854,10 +854,17 @@
     "methods": [
       {
        "args": {
-          "0": { "type_modifier": "o" }
+          "0": { "type_modifier": "o", "c_array_of_fixed_length": 16, "type_override": "^t" }
        },
        "class_method": false,
        "selector": "getUUIDBytes:"
+      },
+      {
+       "args": {
+          "0": { "type_modifier": "n", "c_array_of_fixed_length": 16, "type_override": "^t" }
+       },
+       "class_method": false,
+       "selector": "initWithUUIDBytes:"
       }
      ]
    },
@@ -7449,6 +7456,22 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "URLSession:needNewBodyStreamFromOffset:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+         "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
      {
       "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
       "class_method": false,

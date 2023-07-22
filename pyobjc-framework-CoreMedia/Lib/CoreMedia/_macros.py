@@ -1,6 +1,14 @@
 import CoreMedia as _CoreMedia
 
 
+def CMTAG_IS_VALID(tag):
+    return tag.dataType != _CoreMedia.kCMTagDataType_Invalid
+
+
+def CMTAG_IS_INVALID(tag):
+    return tag.dataType == _CoreMedia.kCMTagDataType_Invalid
+
+
 def CMTIMERANGE_IS_VALID(aRange):
     return (
         CMTIME_IS_VALID(aRange.start)

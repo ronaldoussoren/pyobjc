@@ -4,6 +4,48 @@ import objc
 
 
 class TestCIBuiltinFilterHelper(Quartz.NSObject):
+    def hysteresisPasses(self):
+        return 1
+
+    def setHysteresisPasses_(self, a):
+        pass
+
+    def color(self):
+        return 1
+
+    def setColor_(self, a):
+        pass
+
+    def inputImage(self):
+        return 1
+
+    def setInputImage_(self, a):
+        pass
+
+    def thresholdHigh(self):
+        return 1
+
+    def setThresholdHigh_(self, a):
+        pass
+
+    def thresholdLow(self):
+        return 1
+
+    def setThresholdLow_(self, a):
+        pass
+
+    def sigma(self):
+        return 1
+
+    def setSigma_(self, a):
+        pass
+
+    def gaussianSigma(self):
+        return 1
+
+    def setGaussianSigma_(self, a):
+        pass
+
     def periodicity(self):
         return 1
 
@@ -1978,7 +2020,7 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CIRoundedRectangleStrokeGenerator"):
             self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "extend", Quartz.CGRect.__typestr__
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)

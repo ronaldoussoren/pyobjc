@@ -19,7 +19,7 @@ class TestVNObservation(TestCase):
     def test_methods10_13(self):
         self.assertResultHasType(
             Vision.VNImageHomographicAlignmentObservation.warpTransform,
-            simd.matrix_float3x3.__typestr__,
+            simd.simd_float3x3.__typestr__,
         )
 
     @min_os_level("10.15")

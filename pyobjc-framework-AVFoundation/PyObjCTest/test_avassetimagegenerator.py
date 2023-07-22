@@ -42,7 +42,7 @@ class TestAVAssetImageGenerator(TestCase):
         )
 
         AVAssetImageGeneratorCompletionHandler = (
-            b"v{_CMTime=qiIq}^{CGImage=}{_CMTime=qiIq}" + objc._C_NSInteger
+            b"v{CMTime=qiIq}^{CGImage=}{CMTime=qiIq}" + objc._C_NSInteger
         )
 
         self.assertArgIsBlock(

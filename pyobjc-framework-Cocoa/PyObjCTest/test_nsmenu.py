@@ -118,6 +118,6 @@ class TestNSMenu(TestCase):
         )
         self.assertArgIsBlock(
             AppKit.NSMenu.paletteMenuWithColors_titles_templateImage_selectionHandler_,
-            2,
+            3,
             b"v@",
         )

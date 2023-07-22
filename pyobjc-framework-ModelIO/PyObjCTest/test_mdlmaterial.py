@@ -86,7 +86,7 @@ class TestMDLCamera(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.initWithName_semantic_matrix4x4_,
             2,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
 
         self.assertResultHasType(
@@ -102,7 +102,7 @@ class TestMDLCamera(TestCase):
             ModelIO.MDLMaterialProperty.float4Value, simd.vector_float4.__typestr__
         )
         self.assertResultHasType(
-            ModelIO.MDLMaterialProperty.matrix4x4, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLMaterialProperty.matrix4x4, simd.simd_float4x4.__typestr__
         )
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.setFloat2Value_,
@@ -122,7 +122,7 @@ class TestMDLCamera(TestCase):
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.setMatrix4x4_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
 
     @min_os_level("10.12")

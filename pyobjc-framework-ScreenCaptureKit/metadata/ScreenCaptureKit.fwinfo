@@ -5,6 +5,11 @@
   "typed_enum": {
    "SCStreamFrameInfo": { "type": "@", "type_name": "NSString" }
   },
+  "enum": {
+   "RP_REPORTING_SUMMARY_EVENT": { "value": 1 },
+   "RP_REPORTING_END_REASON_SUMMARY_EVENT": { "value": 2 },
+   "RP_REPORTING_SCREENSHOT_EVENT": { "value": 3 }
+  },
   "classes": {
    "SCStream": {
     "methods": [

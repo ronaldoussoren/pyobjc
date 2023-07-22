@@ -18,6 +18,47 @@
   },
   "formal_protocols": {},
   "functions": {
+   "nw_proxy_config_create_socksv5": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_proxy_config_create_http_connect": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_relay_hop_create": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_proxy_config_create_relay": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_proxy_config_set_username_and_password": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "nw_proxy_config_create_oblivious_http": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 3 }
+    },
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_relay_hop_add_additional_http_header_field": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
    "nw_path_monitor_create_for_ethernet_channel": {
     "retval": { "already_retained": true }
    },

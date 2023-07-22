@@ -156,5 +156,5 @@ class TestAVCaptureSession(TestCase):
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureConnection.isVideoRotationAngleSupported
+            AVFoundation.AVCaptureConnection.isVideoRotationAngleSupported_
         )

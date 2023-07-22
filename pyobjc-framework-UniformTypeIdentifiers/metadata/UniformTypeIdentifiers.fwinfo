@@ -2,7 +2,37 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "NSItemProvider": {
+    "methods": [
+     {
+      "selector": "registerDataRepresentationForContentType:visibility:loadHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": {
+           "type": "@?",
+           "callable": {
+            "arguments": {
+             "0": { "type": "^v" },
+             "1": { "type": "@" },
+             "2": { "type": "@" }
+            },
+            "retval": { "type": "v" }
+           }
+          }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {},
