@@ -109,10 +109,7 @@
     }
 
 #define GET_VALUE(name, type, value)                                                     \
-    -(type)name                                                                          \
-    {                                                                                    \
-        return value;                                                                    \
-    }
+    -(type)name { return value; }
 
 SET_VALUE(setVectorFloat2, simd_float2, "<2f>")
 SET_VALUE(setVectorFloat3, simd_float3, "<3f>")

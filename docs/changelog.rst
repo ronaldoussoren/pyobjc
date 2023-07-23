@@ -1405,7 +1405,7 @@ of test coverage for the C code in pyobjc-core.
 * The proxy for python's :class:`bytearray` (and other writable buffers) now
   supports the ``mutableBytes`` method in Objective-C.
 
-  As a side effect of this ``OC_PythonData`` is now a sublcass of
+  As a side effect of this ``OC_PythonData`` is now a subclass of
   ``NSMutableData`` instead of ``NSData``.
 
 * Fixed retrieving an :class:`bytearray` value from a Cocoa archive

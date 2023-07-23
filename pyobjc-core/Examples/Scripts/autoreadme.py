@@ -27,11 +27,11 @@ class NotificationHandler(NSObject):
         # Find the path to the just inserted volume
         path = aNotification.userInfo()["NSDevicePath"]
 
-        for aFile in os.listdir(path):
-            if readTheseFiles.match(aFile):
+        for fname in os.listdir(path):
+            if readTheseFiles.match(fname):
                 # Found a readme file, try to open it using the Workspace API
 
-                fullPath = os.path.join(path, aFile)
+                fullPath = os.path.join(path, fname)
                 success, app, _ = workspace.getInfoForFile_application_type_(fullPath)
                 if not success:
                     NSLog("Failed to find application to open file %s", fullPath)

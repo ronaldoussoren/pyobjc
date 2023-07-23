@@ -36,7 +36,7 @@ Accessor functions
 
    * Accessor method or attribute ``key``
 
-   * Accessor meethod or attribute ``isKey``
+   * Accessor method or attribute ``isKey``
 
    * Attribute ``_key``
 
