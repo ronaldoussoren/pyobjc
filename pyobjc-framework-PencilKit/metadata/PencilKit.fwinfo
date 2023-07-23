@@ -9,7 +9,7 @@
    "PKContentVersionLatest":  { "ignore": true }
   },
   "alias": {
-   "PKContentVersionLatest': { "ignore": true }
+   "PKContentVersionLatest": { "ignore": true }
   },
   "classes": {
    "PKDrawing": {

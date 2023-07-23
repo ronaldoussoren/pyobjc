@@ -3,8 +3,8 @@
   "typed_enum": {
    "NLTagScheme": { "type": "@", "type_name": "NSString" },
    "NLTag": { "type": "@", "type_name": "NSString" },
-   "NLLanguage": { "type": "@", "type_name": "NSString" }
-   "NLScript": { "type": "@", "type_name": "NSString" }
+   "NLLanguage": { "type": "@", "type_name": "NSString" },
+   "NLScript": { "type": "@", "type_name": "NSString" },
    "NLContextualEmbeddingKey": { "type": "@", "type_name": "NSString" }
   },
   "enum": {
