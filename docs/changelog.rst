@@ -151,6 +151,8 @@ Version 10.0
 * Fix crash when the method signature retrieved from the Objective-C runtime
   contains the class name for a method returning ``id``.
 
+* Remove old 32-bit support in metadata override files.
+
 Version 9.2.1
 -------------
 
