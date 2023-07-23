@@ -1,1 +1,0 @@
-CFStringCreateArrayWithFindResults: needs manual wrapper

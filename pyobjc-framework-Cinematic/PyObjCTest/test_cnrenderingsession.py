@@ -17,3 +17,10 @@ class TestCNRenderingSession(TestCase):
             1,
             b"v@@",
         )
+
+        self.assertResultIsBOOL(
+            Cinematic.CNRenderingSession.encodeRenderToCommandBuffer_frameAttributes_sourceImage_sourceDisparity_destinationImage_
+        )
+        self.assertResultIsBOOL(
+            Cinematic.CNRenderingSession.encodeRenderToCommandBuffer_frameAttributes_sourceImage_sourceDisparity_destinationRGBA_
+        )

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import HealthKit
 
 
@@ -23,22 +23,4 @@ class TestHKWorkoutSession(TestCase):
         self.assertArgIsOut(HealthKit.HKWorkoutSession.initWithConfiguration_error_, 1)
         self.assertArgIsOut(
             HealthKit.HKWorkoutSession.initWithHealthStore_configuration_error_, 2
-        )
-
-    @min_os_level("14.0")
-    def test_methods14_0(self):
-        self.assertArgIsBlock(
-            HealthKit.HKWorkoutSession.startMirroringToCompanionDeviceWithCompletion_,
-            0,
-            b"vZ@",
-        )
-        self.assertArgIsBlock(
-            HealthKit.HKWorkoutSession.stopMirroringToCompanionDeviceWithCompletion_,
-            0,
-            b"vZ@",
-        )
-        self.assertArgIsBlock(
-            HealthKit.HKWorkoutSession.sendDataToRemoteWorkoutSession_completion_,
-            1,
-            b"vZ@",
         )

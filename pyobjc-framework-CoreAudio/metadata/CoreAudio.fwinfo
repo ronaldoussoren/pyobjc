@@ -8,6 +8,7 @@
    }
   },
   "enum": {
+   "kAudio_NoError": { "value": 0 },
    "kAudioChannelLabel_LeftSideSurround": { "value": 55 },
    "kAudioChannelLabel_RightSideSurround": { "value": 56 },
    "kAudioChannelLabel_LeftBottom": { "value": 57 },

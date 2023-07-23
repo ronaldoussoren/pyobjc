@@ -58,3 +58,20 @@ class TestProxyConfig(TestCase):
 
         Network.nw_proxy_config_set_failover_allowed
         Network.nw_proxy_config_get_failover_allowed
+
+        self.assertArgHasType(Network.nw_proxy_config_add_match_domain, 1, b"n^t")
+        self.assertArgIsNullTerminated(Network.nw_proxy_config_add_match_domain, 1)
+
+        Network.nw_proxy_config_clear_match_domains
+
+        self.assertArgHasType(Network.nw_proxy_config_add_excluded_domain, 1, b"n^t")
+        self.assertArgIsNullTerminated(Network.nw_proxy_config_add_excluded_domain, 1)
+
+        Network.nw_proxy_config_clear_excluded_domains
+
+        self.assertArgIsBlock(
+            Network.nw_proxy_config_enumerate_match_domains, 1, b"vn^t"
+        )
+        self.assertArgIsBlock(
+            Network.nw_proxy_config_enumerate_excluded_domains, 1, b"vn^t"
+        )

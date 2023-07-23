@@ -195,16 +195,10 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        },
        "1": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": false,
@@ -213,16 +207,10 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        },
        "1": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": false,
@@ -12443,6 +12431,11 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "selectionRect",
+      "class_method": false,
+      "retval":  { "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
+     },
+     {
       "selector": "processEditingForTextStorage:edited:range:changeInLength:invalidateRange:",
       "class_method": false,
       "args": {
@@ -12715,10 +12708,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        },
        "2": {
         "type_override": [

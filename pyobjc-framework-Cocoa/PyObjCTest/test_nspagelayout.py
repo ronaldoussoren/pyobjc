@@ -24,7 +24,7 @@ class TestNSPageLayout(TestCase):
     @min_os_level("14.0")
     def test_methods14_0(self):
         self.assertArgIsBlock(
-            AppKit.NSPageLayout.beginSheetUsingPrintInfo_on_completionHandler_,
+            AppKit.NSPageLayout.beginSheetUsingPrintInfo_onWindow_completionHandler_,
             2,
             objc._C_VOID + objc._C_NSInteger,
         )

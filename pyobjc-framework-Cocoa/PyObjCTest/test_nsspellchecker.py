@@ -123,6 +123,12 @@ class TestNSSpellChecker(TestCase):
             b"v" + objc._C_NSInteger + b"@",
         )
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSSpellChecker.isAutomaticInlinePredictionEnabled
+        )
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(AppKit.NSTextCheckingOrthographyKey, str)
@@ -175,4 +181,10 @@ class TestNSSpellChecker(TestCase):
         )
         self.assertIsInstance(
             AppKit.NSSpellCheckerDidChangeAutomaticTextCompletionNotification, str
+        )
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(
+            AppKit.NSSpellCheckerDidChangeAutomaticInlinePredictionNotification, str
         )

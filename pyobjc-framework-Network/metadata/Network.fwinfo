@@ -18,6 +18,54 @@
   },
   "formal_protocols": {},
   "functions": {
+  "nw_proxy_config_add_match_domain": {
+   "args": {
+    "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }
+   }
+  },
+  "nw_proxy_config_add_excluded_domain": {
+   "args": {
+    "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }
+   }
+  },
+  "nw_proxy_config_enumerate_match_domains": {
+   "args": {
+    "1": {
+     "callable": {
+      "arguments": {
+       "0": {
+        "type": "^v"
+       },
+       "1": {
+        "type": "n^t", "c_array_delimited_by_null": true
+       }
+      },
+      "retval": {
+       "type": "v"
+      }
+     }
+    }
+   }
+  },
+  "nw_proxy_config_enumerate_excluded_domains": {
+   "args": {
+    "1": {
+     "callable": {
+      "arguments": {
+       "0": {
+        "type": "^v"
+       },
+       "1": {
+        "type": "n^t", "c_array_delimited_by_null": true
+       }
+      },
+      "retval": {
+       "type": "v"
+      }
+     }
+    }
+   }
+  },
    "nw_proxy_config_create_socksv5": {
     "retval": {
      "already_retained": true
