@@ -153,6 +153,10 @@ Version 10.0
 
 * Remove old 32-bit support in metadata override files.
 
+* Restructure ``objc.simd``: The matrix types are now named ``simd_float3x3``
+  instead of ``matrix_float3x3``, with the older name as an alias (to match
+  older system headers).
+
 Version 9.2.1
 -------------
 
