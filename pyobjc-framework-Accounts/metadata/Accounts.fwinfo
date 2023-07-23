@@ -70,7 +70,7 @@
 	         "callable": {
 		    "arguments": {
 		      "0": { "typestr": "^v" },
-		      "1": { "typestr": ["i", "q"] },
+		      "1": { "typestr": "q"},
 		      "2": {  "typestr": "@" }
 		    },
 		    "retval": { "typestr": "v" }

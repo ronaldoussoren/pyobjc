@@ -228,7 +228,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [ "f", "d" ]
+           "typestr": "d"
           }
          },
          "retval": {

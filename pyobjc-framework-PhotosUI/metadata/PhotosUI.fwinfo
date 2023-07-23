@@ -14,10 +14,7 @@
       },
       "args": {
        "1": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        }
       },
       "class_method": false,
@@ -26,10 +23,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        }
       },
       "class_method": false,
@@ -38,10 +32,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        }
       },
       "class_method": false,

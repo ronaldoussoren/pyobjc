@@ -37,7 +37,7 @@
   "externs": {
    "PDFDocumentFoundSelectionKey": { "typestr": "@" },
    "PDFDocumentPageIndexKey": { "typestr": "@" },
-   "kPDFDestinationUnspecifiedValue": { "typestr": [ "f", "d" ] },
+   "kPDFDestinationUnspecifiedValue": { "typestr": "d" },
    "PDFAppearanceCharacteristicsKeyBackgroundColor": { "typestr": "@" },
    "PDFAppearanceCharacteristicsKeyBorderColor": { "typestr": "@" },
    "PDFAppearanceCharacteristicsKeyRotation": { "typestr": "@" },

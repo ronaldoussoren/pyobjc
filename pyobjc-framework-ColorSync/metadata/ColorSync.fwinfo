@@ -212,17 +212,17 @@
    "ColorSyncCMMGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncProfileGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncTransformGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncCMMCreate": {
     "retval": { "typestr": "^{ColorSyncCMM=}", "already_cfretained": true },

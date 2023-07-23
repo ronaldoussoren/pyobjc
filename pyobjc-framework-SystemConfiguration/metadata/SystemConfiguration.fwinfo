@@ -392,38 +392,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__SCDynamicStore=}",
-          false
-         ]
+         "typestr": "^{__SCDynamicStore=}"
         },
         {
-         "typestr": [
-          "^{__CFArray=}",
-          false
-         ]
+         "typestr": "^{__CFArray=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "3": {
-      "type_override": [
-       "^{?=i^v^?^?^?}",
-       "^{?=q^v^?^?^?}"
-      ]
+      "type_override": "^{?=q^v^?^?^?}"
      }
     },
     "retval": {
@@ -460,38 +445,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__SCDynamicStore=}",
-          false
-         ]
+         "typestr": "^{__SCDynamicStore=}"
         },
         {
-         "typestr": [
-          "^{__CFArray=}",
-          false
-         ]
+         "typestr": "^{__CFArray=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "4": {
-      "type_override": [
-       "^{?=i^v^?^?^?}",
-       "^{?=q^v^?^?^?}"
-      ]
+      "type_override": "^{?=q^v^?^?^?}"
      }
     },
     "retval": {
@@ -810,38 +780,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__SCNetworkConnection=}",
-          false
-         ]
+         "typestr": "^{__SCNetworkConnection=}"
         },
         {
-         "typestr": [
-          "i",
-          false
-         ]
+         "typestr": "i"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "3": {
-      "type_override": [
-       "^{?=i^v^?^?^?}",
-       "^{?=q^v^?^?^?}"
-      ]
+      "type_override": "^{?=q^v^?^?^?}"
      }
     },
     "retval": {
@@ -1263,38 +1218,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__SCNetworkReachability=}",
-          false
-         ]
+         "typestr": "^{__SCNetworkReachability=}"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "2": {
-      "type_override": [
-       "^{?=i^v^?^?^?}",
-       "^{?=q^v^?^?^?}"
-      ]
+      "type_override": "^{?=q^v^?^?^?}"
      }
     }
    },
@@ -1834,38 +1774,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__SCPreferences=}",
-          false
-         ]
+         "typestr": "^{__SCPreferences=}"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "2": {
-      "type_override": [
-       "^{?=i^v^?^?^?}",
-       "^{?=q^v^?^?^?}"
-      ]
+      "type_override": "^{?=q^v^?^?^?}"
      }
     }
    },

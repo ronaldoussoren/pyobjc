@@ -404,15 +404,15 @@
       "class_method": false,
       "selector": "controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:",
       "args": {
-       "3": { "type_override": [ "I", "Q" ] }
+       "3": { "type_override": "Q" }
       }
      },
      {
       "class_method": false,
       "selector": "controller:didChangeSection:atIndex:forChangeType:",
       "args": {
-       "2": { "type_override": [ "I", "Q" ] },
-       "3": { "type_override": [ "I", "Q" ] }
+       "2": { "type_override": "Q" },
+       "3": { "type_override": "Q" }
       }
      }
     ]

@@ -540,10 +540,7 @@
      },
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      }
     },
     "retval": {
@@ -558,10 +555,7 @@
      },
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      }
     },
     "retval": {
@@ -576,10 +570,7 @@
      },
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      },
      "3": {
       "type_override": "^{__CTFontDescriptor=}"
@@ -597,10 +588,7 @@
      },
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      }
     },
     "retval": {
@@ -615,10 +603,7 @@
      },
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      }
     },
     "retval": {
@@ -630,10 +615,7 @@
     "args": {
      "2": {
       "type_modifier": "n",
-      "type_override": [
-       "^{CGAffineTransform=ffffff}",
-       "^{CGAffineTransform=dddddd}"
-      ]
+      "type_override": "^{CGAffineTransform=dddddd}"
      },
      "3": {
       "type_override": "^{__CTFontDescriptor=}"
@@ -807,10 +789,7 @@
      "3": {
       "c_array_length_in_arg": 4,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSSize=ff}",
-       "^{CGSize=dd}"
-      ]
+      "type_override": "^{CGSize=dd}"
      }
     }
    },
@@ -841,10 +820,7 @@
      "3": {
       "c_array_length_in_arg": 4,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
+      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
      }
     }
    },
@@ -858,10 +834,7 @@
      "2": {
       "c_array_length_in_arg": 3,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
+      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
      }
     }
    },
@@ -1007,10 +980,7 @@
      "2": {
       "c_array_length_in_arg": 3,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSSize=ff}",
-       "^{CGSize=dd}"
-      ]
+      "type_override": "^{CGSize=dd}"
      }
     }
    },
@@ -1172,10 +1142,7 @@
      "2": {
       "c_array_length_in_arg": 1,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSPoint=ff}",
-       "^{CGPoint=dd}"
-      ]
+      "type_override": "^{CGPoint=dd}"
      }
     }
    },
@@ -1261,7 +1228,7 @@
      },
      "4": {
       "type_modifier": "o",
-      "type_override": ["^{CFRange=ll}", "^{CFRange=qq}"]
+      "type_override": "^{CFRange=qq}"
      }
     }
    },
@@ -1411,10 +1378,7 @@
      },
      "2": {
       "type_modifier": "o",
-      "type_override": [
-       "^f",
-       "^d"
-      ]
+      "type_override": "^d"
      }
     }
    },
@@ -1453,24 +1417,15 @@
      },
      "1": {
       "type_modifier": "o",
-      "type_override": [
-       "^f",
-       "^d"
-      ]
+      "type_override": "^d"
      },
      "2": {
       "type_modifier": "o",
-      "type_override": [
-       "^f",
-       "^d"
-      ]
+      "type_override": "^d"
      },
      "3": {
       "type_modifier": "o",
-      "type_override": [
-       "^f",
-       "^d"
-      ]
+      "type_override": "^d"
      }
     }
    },
@@ -1479,10 +1434,7 @@
      "0": {
       "c_array_length_in_arg": 1,
       "type_modifier": "n",
-      "type_override": [
-       "^{CTParagraphStyleSetting=II^v}",
-       "^{CTParagraphStyleSetting=IQ^v}"
-      ]
+      "type_override": "^{CTParagraphStyleSetting=IQ^v}"
      }
     },
     "retval": {
@@ -1531,10 +1483,7 @@
      "2": {
       "c_array_length_in_arg": 1,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSSize=ff}",
-       "^{CGSize=dd}"
-      ]
+      "type_override": "^{CGSize=dd}"
      }
     }
    },
@@ -1604,10 +1553,7 @@
      "2": {
       "c_array_length_in_arg": 1,
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSPoint=ff}",
-       "^{CGPoint=dd}"
-      ]
+      "type_override": "^{CGPoint=dd}"
      }
     }
    },
@@ -1619,10 +1565,7 @@
     },
     "retval": {
      "c_array_of_variable_length": true,
-     "type_override": [
-      "r^{_NSPoint=ff}",
-      "r^{CGPoint=dd}"
-     ]
+     "type_override": "r^{CGPoint=dd}"
     }
    },
    "CTRunGetStatus": {
@@ -1645,10 +1588,7 @@
     },
     "retval": {
      "c_array_of_variable_length": true,
-     "type_override": [
-      "r^i",
-      "r^q"
-     ]
+     "type_override": "r^q"
     }
    },
    "CTRunGetStringRange": {

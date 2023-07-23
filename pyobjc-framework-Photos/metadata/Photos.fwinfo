@@ -319,7 +319,7 @@
         "callable": {
          "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": ["i", "q"] }
+	  "1": { "typestr": "q"}
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -650,12 +650,12 @@
      {
       "class_method": false,
       "selector": "renderScale",
-      "retval": { "type_override": [ "f", "d" ] }
+      "retval": { "type_override": "d" }
      },
      {
       "class_method": false,
       "selector": "type",
-      "retval": { "type_override": [ "i", "q" ] }
+      "retval": { "type_override": "q" }
      },
      {
       "class_method": false,
@@ -676,7 +676,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": ["I", "Q"] },
+	  "2": { "typestr": "Q"},
 	  "3": { "typestr": "o^Z" }
 	 }
 	}
@@ -693,7 +693,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": ["I", "Q"] },
+	  "2": { "typestr": "Q"},
 	  "3": { "typestr": "o^Z" }
 	 }
 	}
@@ -715,7 +715,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": ["I", "Q"] },
+	  "2": { "typestr": "Q"},
 	  "3": { "typestr": "o^Z" }
 	 }
 	}

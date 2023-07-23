@@ -495,7 +495,7 @@
       "selector": "writeData:timeout:completionHandler:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "f", "d" ] },
+       "1": { "type_override": "d" },
        "2": {
         "type_override": "@?",
 	"callable": {
@@ -512,9 +512,9 @@
       "selector": "readDataOfMinLength:maxLength:timeout:completionHandler:",
       "class_method": false,
       "args": {
-       "0": { "type_override": [ "I", "Q" ] },
-       "1": { "type_override": [ "I", "Q" ] },
-       "2": { "type_override": [ "f", "d" ] },
+       "0": { "type_override": "Q" },
+       "1": { "type_override": "Q" },
+       "2": { "type_override": "d" },
        "3": {
         "type_override": "@?",
 	"callable": {
@@ -776,7 +776,7 @@
         "callable": {
 	 "arguments": {
 	   "0": { "typestr": "^v" },
-	   "1": { "typestr": [ "i", "q" ] }
+	   "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -873,10 +873,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{NSAffineTransformStruct=ffffff}",
-         "{NSAffineTransformStruct=dddddd}"
-        ]
+        "type_override": "{NSAffineTransformStruct=dddddd}"
        }
       },
       "class_method": false,
@@ -885,46 +882,31 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSPoint=ff}",
-        "{CGPoint=dd}"
-       ]
+       "type_override": "{CGPoint=dd}"
       },
       "selector": "transformPoint:"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSSize=ff}",
-         "{CGSize=dd}"
-        ]
+        "type_override": "{CGSize=dd}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSSize=ff}",
-        "{CGSize=dd}"
-       ]
+       "type_override": "{CGSize=dd}"
       },
       "selector": "transformSize:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{NSAffineTransformStruct=ffffff}",
-        "{NSAffineTransformStruct=dddddd}"
-       ]
+       "type_override": "{NSAffineTransformStruct=dddddd}"
       },
       "selector": "transformStruct"
      }
@@ -1166,10 +1148,7 @@
         "type_modifier": "o"
        },
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1389,10 +1368,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1420,10 +1396,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1451,10 +1424,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1482,10 +1452,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1513,10 +1480,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1544,10 +1508,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1575,10 +1536,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1606,10 +1564,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1637,10 +1592,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -1738,10 +1690,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1750,10 +1699,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1778,10 +1724,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1894,10 +1837,7 @@
         "type_modifier": "o"
        },
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1909,10 +1849,7 @@
         "type_modifier": "o"
        },
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -1930,10 +1867,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
@@ -1961,10 +1895,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
@@ -1983,10 +1914,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -2197,30 +2125,21 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "maximumRangeOfUnit:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "minimumRangeOfUnit:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfUnit:inUnit:forDate:"
      }
@@ -2277,10 +2196,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -2513,10 +2429,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSPoint=ff}",
-        "{CGPoint=dd}"
-       ]
+       "type_override": "{CGPoint=dd}"
       },
       "selector": "decodePoint"
      },
@@ -2528,20 +2441,14 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSPoint=ff}",
-        "{CGPoint=dd}"
-       ]
+       "type_override": "{CGPoint=dd}"
       },
       "selector": "decodePointForKey:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-        "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       ]
+       "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
       },
       "selector": "decodeRect"
      },
@@ -2553,20 +2460,14 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-        "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       ]
+       "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
       },
       "selector": "decodeRectForKey:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSSize=ff}",
-        "{CGSize=dd}"
-       ]
+       "type_override": "{CGSize=dd}"
       },
       "selector": "decodeSize"
      },
@@ -2578,10 +2479,7 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSSize=ff}",
-        "{CGSize=dd}"
-       ]
+       "type_override": "{CGSize=dd}"
       },
       "selector": "decodeSizeForKey:"
      },
@@ -2597,10 +2495,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        }
       },
       "class_method": false,
@@ -2609,10 +2504,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        }
       },
       "class_method": false,
@@ -2621,10 +2513,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": false,
@@ -2633,10 +2522,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": false,
@@ -2645,10 +2531,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSSize=ff}",
-         "{CGSize=dd}"
-        ]
+        "type_override": "{CGSize=dd}"
        }
       },
       "class_method": false,
@@ -2657,10 +2540,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSSize=ff}",
-         "{CGSize=dd}"
-        ]
+        "type_override": "{CGSize=dd}"
        }
       },
       "class_method": false,
@@ -2804,7 +2684,7 @@
 	   "type_modifier": "n"
           },
           "2": {
-           "typestr": [ "I", "Q" ]
+           "typestr": "Q"
           }
          },
          "retval": {
@@ -2830,7 +2710,7 @@
 	   "type_modifier": "n"
           },
           "2": {
-           "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
@@ -2868,10 +2748,7 @@
         "type_modifier": "o"
        },
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -3025,10 +2902,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfData:options:range:"
      },
@@ -3042,10 +2916,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -3119,10 +2990,7 @@
        },
        "2": {
         "type_modifier": "N",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        },
        "3": {
         "type_modifier": "o"
@@ -3476,10 +3344,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -3726,10 +3591,7 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "*",
-         "[1{?=II^v^v}]"
-        ]
+        "type_override": "[1{?=II^v^v}]"
        }
       },
       "class_method": true,
@@ -4909,10 +4771,7 @@
         "type_modifier": "N"
        },
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "4": {
         "type_modifier": "o"
@@ -5324,10 +5183,7 @@
        "0": {
         "c_array_of_variable_length": true,
         "type_modifier": "o",
-        "type_override": [
-         "^I",
-         "^Q"
-        ]
+        "type_override": "^Q"
        }
       },
       "class_method": false,
@@ -5339,10 +5195,7 @@
        "0": {
         "c_array_length_in_arg": 1,
         "type_modifier": "o",
-        "type_override": [
-         "^I",
-         "^Q"
-        ]
+        "type_override": "^Q"
        }
       },
       "class_method": false,
@@ -5385,10 +5238,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -5400,10 +5250,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -5412,10 +5259,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -5424,10 +5268,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -5436,10 +5277,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -5464,10 +5302,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5492,10 +5327,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5514,10 +5346,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
         "callable": {
@@ -5526,10 +5355,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5554,10 +5380,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5582,10 +5405,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5604,10 +5424,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
         "callable": {
@@ -5616,10 +5433,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5644,10 +5458,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5672,10 +5483,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5694,10 +5502,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
         "callable": {
@@ -5706,10 +5511,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "2": {
            "type_modifier": "o",
@@ -5734,10 +5536,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
@@ -5762,10 +5561,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
@@ -5784,10 +5580,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
         "callable": {
@@ -5796,10 +5589,7 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
@@ -5839,10 +5629,7 @@
 	"type_modifier": "o"
        },
        "1": {
-        "type_override": [
-         "^I",
-         "^Q"
-        ],
+        "type_override": "^Q",
 	"type_modifier": "o"
        }
       },
@@ -6174,7 +5961,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ]},
+	  "2": { "typestr": "{_NSRange=QQ}" },
 	  "3": { "typestr": "o^Z" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -6191,7 +5978,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": [ "{_NSRange=II}", "{_NSRange=QQ}" ] },
+	  "2": { "typestr": "{_NSRange=QQ}" },
 	  "3": { "typestr": "o^Z" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -6205,10 +5992,7 @@
       "args": {
        "1": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6218,17 +6002,11 @@
       "args": {
        "2": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        },
        "3": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6247,17 +6025,11 @@
       "args": {
        "2": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        },
        "3": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        },
        "4": {
         "type_modifier": "o"
@@ -6278,16 +6050,10 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
@@ -6356,7 +6122,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": [ "I", "Q" ] },
+	  "2": { "typestr": "Q" },
 	  "3": { "typestr": "o^Z" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -6373,7 +6139,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" },
-	  "2": { "typestr": [ "I", "Q" ] },
+	  "2": { "typestr": "Q" },
 	  "3": { "typestr": "o^Z" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -6533,10 +6299,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -6560,10 +6323,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -6596,10 +6356,7 @@
         "type_override": "@"
        },
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6608,10 +6365,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6620,10 +6374,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6632,10 +6383,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6644,10 +6392,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6656,16 +6401,10 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6685,10 +6424,7 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6697,10 +6433,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6709,10 +6442,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6721,10 +6451,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6733,10 +6460,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6745,10 +6469,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6757,10 +6478,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6773,10 +6491,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6785,10 +6500,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6833,10 +6545,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "1": {
         "c_array_length_in_arg": 0,
@@ -6849,10 +6558,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "1": {
         "c_array_length_in_arg": 2,
@@ -6865,10 +6571,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6881,10 +6584,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6893,10 +6593,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -6942,10 +6639,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -6969,10 +6663,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -6996,10 +6687,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -7033,10 +6721,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -7045,10 +6730,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -7057,10 +6739,7 @@
      {
       "args": {
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -7475,12 +7154,12 @@
      {
       "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
       "class_method": false,
-      "retval": { "type_override": ["i", "q"] }
+      "retval": { "type_override": "q" }
      },
      {
       "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
       "class_method": false,
-      "retval": { "type_override": ["i", "q"] }
+      "retval": { "type_override": "q"}
      },
      {
       "selector": "objectWithItemProviderData:typeIdentifier:error:",
@@ -7522,7 +7201,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": ["i", "q"] },
+	  "1": { "typestr": "q"},
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -7553,7 +7232,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "I", "Q" ] }
+	  "1": { "typestr": "Q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -7583,7 +7262,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "I", "Q" ] },
+	  "1": { "typestr": "Q" },
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -7614,7 +7293,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "I", "Q" ] },
+	  "1": { "typestr": "Q" },
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -7746,10 +7425,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
         "sel_of_type": "v@:Z^v"
@@ -7907,10 +7583,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "^{?=L^@^L[5L]}",
-         "^{?=Q^@^Q[5Q]}"
-        ]
+        "type_override": "^{?=Q^@^Q[5Q]}"
        },
        "1": {
         "type_override": "^@"
@@ -8109,10 +7782,7 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "spellServer:checkGrammarInString:language:details:"
      },
@@ -8120,10 +7790,7 @@
       "args": {
        "3": {
         "type_modifier": "o",
-        "type_override": [
-         "^i",
-         "^q"
-        ]
+        "type_override": "^q"
        },
        "4": {
         "type_override": "Z"
@@ -8131,10 +7798,7 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "spellServer:findMisspelledWordInString:language:wordCount:countOnly:"
      },
@@ -8404,7 +8068,7 @@
      {
       "args": {
        "2": {
-        "type_override": ["I", "Q"]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -8479,10 +8143,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -8522,10 +8183,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "L",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "classCode"
      },
@@ -8715,10 +8373,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -8780,7 +8435,7 @@
         "type_override": ":"
        },
        "1": {
-        "type_override": ["I", "Q"]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -8939,10 +8594,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "hash"
      },
@@ -8956,10 +8608,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -9392,10 +9041,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -9407,10 +9053,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -9434,17 +9077,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "retainCount"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": ["I", "Q"]
+       "type_override": "Q"
       },
       "selector": "roundingMode"
      },
@@ -9563,10 +9203,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        }
       },
       "class_method": true,
@@ -9578,23 +9215,14 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        },
        "6": {
         "type_modifier": "o",
-        "type_override": [
-         "^i",
-         "^q"
-        ]
+        "type_override": "^q"
        }
       },
       "class_method": false,
@@ -9617,10 +9245,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -9629,10 +9254,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -9742,10 +9364,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -9754,10 +9373,7 @@
      {
       "class_method": true,
       "retval": {
-       "type_override": [
-        "i",
-        "q"
-       ]
+       "type_override": "q"
       },
       "selector": "version"
      },
@@ -10057,10 +9673,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10088,10 +9701,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10119,10 +9729,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10150,10 +9757,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10181,10 +9785,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10212,10 +9813,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10243,10 +9841,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10274,10 +9869,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10305,10 +9897,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10340,10 +9929,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "i",
-           "q"
-          ]
+          "typestr": "q"
          }
         }
        }
@@ -10367,7 +9953,7 @@
           }
          },
          "retval": {
-          "typestr": [ "i", "q" ]
+          "typestr": "q"
          }
         }
        }
@@ -10391,7 +9977,7 @@
           }
          },
          "retval": {
-          "typestr": ["i", "q" ]
+          "typestr": "q"
          }
         }
        }
@@ -10501,10 +10087,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -10828,10 +10411,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "*",
-         "[1{?=II^v^v}]"
-        ]
+        "type_override": "[1{?=II^v^v}]"
        }
       },
       "class_method": true,
@@ -11217,10 +10797,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "I",
-            "Q"
-           ]
+           "typestr": "Q"
           },
           "3": {
            "type_modifier": "o",
@@ -12250,10 +11827,7 @@
         "type_override": "^T"
        },
        "1": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -12285,10 +11859,7 @@
         "type_modifier": "o"
        },
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -12309,10 +11880,7 @@
         "type_modifier": "o"
        },
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -12356,23 +11924,14 @@
        },
        "2": {
         "type_modifier": "o",
-        "type_override": [
-         "^I",
-         "^Q"
-        ]
+        "type_override": "^Q"
        },
        "5": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "6": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -12394,10 +11953,7 @@
       "class_method": true,
       "retval": {
        "c_array_delimited_by_null": true,
-       "type_override": [
-        "r^I",
-        "r^Q"
-       ]
+       "type_override": "r^Q"
       },
       "selector": "availableStringEncodings"
      },
@@ -12480,10 +12036,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "*",
-         "[1{?=II^v^v}]"
-        ]
+        "type_override": "[1{?=II^v^v}]"
        }
       },
       "class_method": false,
@@ -12504,10 +12057,7 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "*",
-         "[1{?=II^v^v}]"
-        ]
+        "type_override": "[1{?=II^v^v}]"
        }
       },
       "class_method": false,
@@ -12645,10 +12195,7 @@
       "args": {
        "1": {
         "type_modifier": "o",
-        "type_override": [
-         "r^I",
-         "r^Q"
-        ]
+        "type_override": "r^Q"
        },
        "2": {
         "type_modifier": "o"
@@ -12661,10 +12208,7 @@
       "args": {
        "1": {
         "type_modifier": "o",
-        "type_override": [
-         "r^I",
-         "r^Q"
-        ]
+        "type_override": "r^Q"
        },
        "2": {
         "type_modifier": "o"
@@ -12677,10 +12221,7 @@
       "args": {
        "1": {
         "type_modifier": "o",
-        "type_override": [
-         "r^I",
-         "r^Q"
-        ]
+        "type_override": "r^Q"
        },
        "2": {
         "type_modifier": "o"
@@ -12693,10 +12234,7 @@
       "args": {
        "1": {
         "type_modifier": "o",
-        "type_override": [
-         "r^I",
-         "r^Q"
-        ]
+        "type_override": "r^Q"
        },
        "2": {
         "type_modifier": "o"
@@ -12785,10 +12323,7 @@
        },
        "3": {
         "type_modifier": "o",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -12936,16 +12471,10 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
@@ -12964,10 +12493,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        },
        "2": {
         "callable": {
@@ -12979,16 +12505,10 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
@@ -13053,10 +12573,7 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -13065,10 +12582,7 @@
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -13130,168 +12644,114 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "lineRangeForRange:"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "paragraphRangeForRange:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfCharacterFromSet:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfCharacterFromSet:options:"
      },
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfCharacterFromSet:options:range:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfComposedCharacterSequenceAtIndex:"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfComposedCharacterSequencesForRange:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfString:"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfString:options:"
      },
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfString:options:range:"
      },
      {
       "args": {
        "2": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeOfString:options:range:locale:"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -13300,10 +12760,7 @@
      {
       "args": {
        "3": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -13312,10 +12769,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": false,
@@ -13357,16 +12811,10 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": [
-            "{_NSRange=II}",
-            "{_NSRange=QQ}"
-           ]
+           "typestr": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
@@ -13478,10 +12926,7 @@
        "0": {
         "c_array_length_in_arg": 1,
         "type_modifier": "n",
-        "type_override": [
-         "^{_NSRange=II}",
-         "^{_NSRange=QQ}"
-        ]
+        "type_override": "^{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13490,10 +12935,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13502,10 +12944,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13514,10 +12953,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13526,10 +12962,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13538,10 +12971,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13550,10 +12980,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13562,10 +12989,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13574,10 +12998,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13586,10 +13007,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13598,10 +13016,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13610,10 +13025,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13622,10 +13034,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -13634,10 +13043,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -14917,50 +14323,35 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSPoint=ff}",
-        "{CGPoint=dd}"
-       ]
+       "type_override": "{CGPoint=dd}"
       },
       "selector": "pointValue"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "rangeValue"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-        "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       ]
+       "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
       },
       "selector": "rectValue"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSSize=ff}",
-        "{CGSize=dd}"
-       ]
+       "type_override": "{CGSize=dd}"
       },
       "selector": "sizeValue"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        }
       },
       "class_method": true,
@@ -14969,10 +14360,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRange=II}",
-         "{_NSRange=QQ}"
-        ]
+        "type_override": "{_NSRange=QQ}"
        }
       },
       "class_method": true,
@@ -14981,10 +14369,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}"
-        ]
+        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": true,
@@ -14993,10 +14378,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "{_NSSize=ff}",
-         "{CGSize=dd}"
-        ]
+        "type_override": "{CGSize=dd}"
        }
       },
       "class_method": true,
@@ -15436,10 +14818,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "^{?=L^@^L[5L]}",
-         "^{?=Q^@^Q[5Q]}"
-        ]
+        "type_override": "^{?=Q^@^Q[5Q]}"
        },
        "1": {
         "type_override": "^@"
@@ -15546,10 +14925,7 @@
       "args": {
        "3": {
         "type_modifier": "o",
-        "type_override": [
-         "^i",
-         "^q"
-        ]
+        "type_override": "^q"
        },
        "4": {
         "type_override": "Z"
@@ -15557,10 +14933,7 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "spellServer:findMisspelledWordInString:language:wordCount:countOnly:"
      },
@@ -15573,33 +14946,21 @@
       },
       "class_method": false,
       "retval": {
-       "type_override": [
-        "{_NSRange=II}",
-        "{_NSRange=QQ}"
-       ]
+       "type_override": "{_NSRange=QQ}"
       },
       "selector": "spellServer:checkGrammarInString:language:details:"
      },
      {
       "args": {
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
-        "type_override": [
-         "i",
-         "q"
-        ]
+        "type_override": "q"
        },
        "6": {
         "type_modifier": "o",
-        "type_override": [
-         "^i",
-         "^q"
-        ]
+        "type_override": "^q"
        }
       },
       "class_method": false,
@@ -15993,10 +15354,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
         "sel_of_type": "v@:Z^v"

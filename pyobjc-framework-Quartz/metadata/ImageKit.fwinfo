@@ -24,10 +24,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "3": {}
       },
@@ -37,10 +34,7 @@
      {
       "args": {
        "3": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "4": {}
       },
@@ -54,10 +48,7 @@
      {
       "args": {
        "1": {
-        "sel_of_type": [
-         "v@:@I^v",
-         "v@:@Q^v"
-        ]
+        "sel_of_type": "v@:@Q^v"
        }
       },
       "class_method": false,
@@ -66,10 +57,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": [
-         "v@:@I^v",
-         "v@:@Q^v"
-        ]
+        "sel_of_type": "v@:@Q^v"
        }
       },
       "class_method": false,
@@ -98,10 +86,7 @@
      {
       "args": {
        "1": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "2": {}
       },
@@ -111,10 +96,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "3": {}
       },
@@ -124,10 +106,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "3": {}
       },

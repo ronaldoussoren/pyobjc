@@ -59,6 +59,11 @@ repos:
       pass_filenames: false
       types: [c, objective-c]
       entry: ./development-support/validate-lcov.sh
+    - id: fwinfo-valid-json
+      name: fwinfo-valid-json
+      language: python
+      language_version: python3.10
+      entry: ./development-support/validate-fwinfo
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'

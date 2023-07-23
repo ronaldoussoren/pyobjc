@@ -359,7 +359,7 @@
    "args": {
     "0": { "type_override": "@" },
     "1": { "type_override": "I" },
-    "2": { "type_override": [ "i", "q" ] },
+    "2": { "type_override": "q" },
     "3": { "type_modifier": "o", "type_override": "^^{opaqueCMBufferQueueTriggerToken=}" },
     "4": {
      "type_override": "@?",

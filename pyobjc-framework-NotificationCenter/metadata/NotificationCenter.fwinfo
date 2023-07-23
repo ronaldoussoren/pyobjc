@@ -65,7 +65,7 @@
 	"callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": ["I", "Q"] }
+	  "1": { "typestr": "Q"}
 	 },
 	 "retval": { "type": "v" }
 	}
@@ -77,7 +77,7 @@
       "class_method": false,
       "args": {
        "2": {
-        "type_override": [ "I", "Q" ]
+        "type_override": "Q"
        }
       }
      },

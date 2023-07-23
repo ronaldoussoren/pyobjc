@@ -89,22 +89,13 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "1": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        },
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
         "type_modifier": "o",
@@ -141,22 +132,13 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "1": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        },
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -168,22 +150,13 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "1": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        },
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -201,22 +174,13 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "1": {
-        "type_override": [
-         "{_NSPoint=ff}",
-         "{CGPoint=dd}"
-        ]
+        "type_override": "{CGPoint=dd}"
        },
        "2": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        },
        "3": {
         "type_modifier": "o",

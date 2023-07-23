@@ -3129,7 +3129,7 @@
     }
    },
    "CGColorConversionInfoGetTypeID": {
-    "retval": { "type_override": [ "I", "Q" ] },
+    "retval": { "type_override": "Q" },
     "args": {
     }
    },
@@ -3226,23 +3226,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -4350,29 +4341,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
+         "typestr": "Q"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -4549,29 +4528,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -4584,29 +4551,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -4951,35 +4906,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CGEventTapProxy=}",
-          false
-         ]
+         "typestr": "^{__CGEventTapProxy=}"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^{__CGEvent=}",
-          false
-         ]
+         "typestr": "^{__CGEvent=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__CGEvent=}",
-         false
-        ]
+        "typestr": "^{__CGEvent=}"
        }
       }
      },
@@ -4996,35 +4936,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CGEventTapProxy=}",
-          false
-         ]
+         "typestr": "^{__CGEventTapProxy=}"
         },
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^{__CGEvent=}",
-          false
-         ]
+         "typestr": "^{__CGEvent=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__CGEvent=}",
-         false
-        ]
+        "typestr": "^{__CGEvent=}"
        }
       }
      },
@@ -5999,23 +5924,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{CGPDFScanner=}",
-          false
-         ]
+         "typestr": "^{CGPDFScanner=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -6381,23 +6297,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^{CGPathElement=i^{CGPoint=dd}}",
-          false
-         ]
+         "typestr": "^{CGPathElement=i^{CGPoint=dd}}"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -6599,29 +6506,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^{CGRect={CGPoint=dd}{CGSize=dd}}",
-          false
-         ]
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -6639,35 +6534,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "{CGScreenUpdateMoveDelta=ii}",
-          false
-         ]
+         "typestr": "{CGScreenUpdateMoveDelta=ii}"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
+         "typestr": "Q"
         },
         {
-         "typestr": [
-          "^{CGRect={CGPoint=dd}{CGSize=dd}}",
-          false
-         ]
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -6680,35 +6560,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "{CGScreenUpdateMoveDelta=ii}",
-          false
-         ]
+         "typestr": "{CGScreenUpdateMoveDelta=ii}"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
+         "typestr": "Q"
         },
         {
-         "typestr": [
-          "^{CGRect={CGPoint=dd}{CGSize=dd}}",
-          false
-         ]
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -6780,29 +6645,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "I",
-          false
-         ]
+         "typestr": "I"
         },
         {
-         "typestr": [
-          "^{CGRect={CGPoint=dd}{CGSize=dd}}",
-          false
-         ]
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },

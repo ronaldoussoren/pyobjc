@@ -47,14 +47,14 @@
 		"args": [
 		],
 		"retval": {
-			"typestr": ["L", "Q"]
+			"typestr": "Q"
 		}
 	},
 	"LSSharedFileListGetTypeID": {
 		"args": [
 		],
 		"retval": {
-			"typestr": ["L", "Q"]
+			"typestr": "Q"
 		}
 	},
 

@@ -179,7 +179,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": ["i", "q"] },
+	  "1": { "type": "q"},
 	  "2": { "type": "@" }
 	 },
 	 "retval": { "type": "v" }
@@ -195,7 +195,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": ["i", "q"] },
+	  "1": { "type": "q"},
 	  "2": { "type": "@" }
 	 },
 	 "retval": { "type": "v" }
@@ -308,7 +308,7 @@
 	"arguments": {
 	 "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["i", "q"] }
+	 "2": { "type": "q"}
 	},
 	"retval": { "type": "v" }
        }
@@ -323,7 +323,7 @@
 	 "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["i", "q"] }
+	  "2": { "type": "q"}
 	 },
 	 "retval": { "type": "v" }
 	}
@@ -338,7 +338,7 @@
 	"arguments": {
 	 "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["i", "q"] }
+	 "2": { "type": "q"}
 	},
 	"retval": { "type": "v" }
        }
@@ -353,7 +353,7 @@
 	 "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["i", "q"] }
+	  "2": { "type": "q"}
 	 },
 	 "retval": { "type": "v" }
 	}
@@ -1363,7 +1363,7 @@
 	"arguments": {
 	 "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["i", "q"] }
+	 "2": { "type": "q"}
 	},
 	"retval": { "type": "v" }
        }
@@ -1378,7 +1378,7 @@
 	 "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["i", "q"] }
+	  "2": { "type": "q"}
 	 },
 	 "retval": { "type": "v" }
         }
@@ -1393,7 +1393,7 @@
 	"arguments": {
 	 "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["i", "q"] }
+	 "2": { "type": "q"}
 	},
 	"retval": { "type": "v" }
        }
@@ -1408,7 +1408,7 @@
 	 "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["i", "q"] }
+	  "2": { "type": "q"}
 	 },
 	 "retval": { "type": "v" }
         }

@@ -178,7 +178,7 @@
       "class_method": false,
       "args": {
        "2": {
-        "type_override": [ "I", "Q" ]
+        "type_override": "Q"
        }
       }
      },
@@ -187,7 +187,7 @@
       "class_method": false,
       "args": {
        "2": {
-        "type_override": [ "I", "Q" ]
+        "type_override": "Q"
        }
       }
      },
@@ -196,7 +196,7 @@
       "class_method": false,
       "args": {
        "2": {
-        "type_override": [ "I", "Q" ]
+        "type_override": "Q"
        }
       }
      },
@@ -244,7 +244,7 @@
       "class_method": false,
       "args": {
        "2": {
-        "type_override": [ "I", "Q" ]
+        "type_override": "Q"
        }
       }
      }
@@ -809,7 +809,7 @@
         "arguments": {
 	 "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": [ "I", "Q" ] }
+	 "2": { "type": "Q" }
 	},
 	"retval": {
 	 "type": "v"
@@ -827,7 +827,7 @@
          "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": [ "I", "Q" ] }
+	  "2": { "type": "Q" }
 	 },
 	 "retval": {
 	  "type": "v"
@@ -1623,7 +1623,7 @@
 	  "1": { "type": "@" },
 	  "2": { "type": "@" },
 	  "3": { "type": "@" },
-	  "4": { "type": [ "I", "Q" ] },
+	  "4": { "type": "Q" },
 	  "5": { "type": "@" }
 	 },
 	 "retval": {
@@ -1761,7 +1761,7 @@
         "callable": {
          "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": [ "i", "q" ] },
+	  "1": { "type": "q" },
 	  "2": { "type": "@" }
 	 },
 	 "retval": {
@@ -1855,7 +1855,7 @@
         "callable": {
          "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": [ "i", "q" ] },
+	  "1": { "type": "q" },
 	  "2": { "type": "@" }
 	 },
 	 "retval": {
@@ -1975,7 +1975,7 @@
          "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["I", "Q"] }
+	  "2": { "type": "Q"}
 	 },
 	 "retval": {
 	  "type": "v"
@@ -1993,7 +1993,7 @@
         "arguments": {
          "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["I", "Q"] }
+	 "2": { "type": "Q"}
 	},
 	"retval": {
 	 "type": "v"
@@ -2011,7 +2011,7 @@
          "arguments": {
 	  "0": { "type": "^v" },
 	  "1": { "type": "@" },
-	  "2": { "type": ["I", "Q"] }
+	  "2": { "type": "Q"}
 	 },
 	 "retval": {
 	  "type": "v"
@@ -2029,7 +2029,7 @@
         "arguments": {
          "0": { "type": "^v" },
 	 "1": { "type": "@" },
-	 "2": { "type": ["I", "Q"] }
+	 "2": { "type": "Q"}
 	},
 	"retval": {
 	 "type": "v"

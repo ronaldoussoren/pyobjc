@@ -1200,13 +1200,9 @@
          "arguments": {
           "0": { "type": "^v" },
 	  "1": { "type": "i" },
-	  "2": { "type": [
-           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
-	  ] }
+	  "2": { "type": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
 	 },
-	 "retval": { "typestr": [
-           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
-	 ] }
+	 "retval": { "type": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
 	}
        }
       }
@@ -1245,13 +1241,9 @@
          "arguments": {
           "0": { "type": "^v" },
 	  "1": { "type": "i" },
-	  "2": { "type": [
-           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
-	  ] }
+	  "2": { "type": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
 	 },
-	 "retval": { "typestr": [
-           "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", "{CGRect={CGPoint=dd}{CGSize=dd}}"
-	 ] }
+	 "retval": { "type": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
 	}
        }
       }
@@ -1259,10 +1251,7 @@
      {
       "args": {
        "0": {
-        "sel_of_type": [
-         "{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@",
-         "{CGRect={CGPoint=dd}{CGSize=dd}}@:i{CGRect={CGPoint=dd}{CGSize=dd}}@"
-        ]
+        "sel_of_type": "{CGRect={CGPoint=dd}{CGSize=dd}}@:i{CGRect={CGPoint=dd}{CGSize=dd}}@"
        }
       },
       "class_method": false,

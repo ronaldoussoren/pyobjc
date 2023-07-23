@@ -159,19 +159,19 @@
          "typestr": "I"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"
@@ -223,19 +223,19 @@
          "typestr": "I"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"
@@ -310,19 +310,19 @@
          "typestr": "I"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
         {
-         "typestr": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ]
+         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
         {
          "typestr": "^v"

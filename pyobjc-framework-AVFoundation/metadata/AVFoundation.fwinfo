@@ -943,7 +943,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "I" },
-	  "2": { "typestr": [ "o^i", "o^q" ] }
+	  "2": { "typestr": "o^q" }
 	 }
         }
        }
@@ -1041,7 +1041,7 @@
 	  "1": { "typestr": "{CMTime=qiIq}" },
 	  "2": { "typestr": "^{CGImage=}" },
 	  "3": { "typestr": "{CMTime=qiIq}" },
-	  "4": { "typestr": ["i", "q"] }
+	  "4": { "typestr": "q"}
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -1466,7 +1466,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "i", "q" ] },
+	  "3": { "typestr": "q" },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
@@ -1484,7 +1484,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "i", "q" ] },
+	  "3": { "typestr": "q" },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
@@ -1496,7 +1496,7 @@
       "class_method": false,
       "retval": {
        "callable": {
-        "retval": { "typestr": [ "i", "q" ] },
+        "retval": { "typestr": "q" },
 	"arguments": {
 	 "0": { "typestr": "^v" },
 	 "1": { "typestr": "I" },
@@ -3360,7 +3360,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3375,7 +3375,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3390,7 +3390,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3405,7 +3405,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3505,7 +3505,7 @@
       "selector": "speechSynthesizer:willSpeakRangeOfSpeechString:utterance:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+       "1": { "type_override": "{_NSRange=QQ}" }
       }
      },
      {
@@ -3556,20 +3556,20 @@
      },
      {
       "args": {
-       "1": { "type_override": ["I", "Q"] }
+       "1": { "type_override": "Q" }
       },
       "class_method": false,
       "selector": "destinationForMixer:bus:"
      },
      {
       "args": {
-       "0": { "type_override": ["i", "q"] }
+       "0": { "type_override": "q" }
       },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      },
      {
-      "retval": { "type_override": ["i", "q"] },
+      "retval": { "type_override": "q" },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      }
