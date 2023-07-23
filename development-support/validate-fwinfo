@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+"""
+Basic validation for *.fwinfo files for use
+by pre-commit.
+
+This script currently does nothing beyond checking
+that the payload can be parsed as JSON.
+"""
+
 import sys
 import json
 
