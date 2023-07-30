@@ -23,3 +23,7 @@ class TestINSearchForMessagesIntentResponse(TestCase):
         self.assertEqual(
             Intents.INSearchForMessagesIntentResponseCodeFailureMessageTooManyResults, 7
         )
+        self.assertEqual(
+            Intents.INSearchForMessagesIntentResponseCodeFailureRequiringInAppAuthentication,
+            8,
+        )

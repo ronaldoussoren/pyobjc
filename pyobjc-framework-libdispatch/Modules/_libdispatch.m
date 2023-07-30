@@ -144,6 +144,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
                      &DISPATCH_DATA_DESTRUCTOR_MUNMAP)
         != 0)
         goto error;
+
     s = DISPATCH_SOURCE_TYPE_DATA_ADD;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_ADD", @encode(dispatch_source_type_t),
                      &s)

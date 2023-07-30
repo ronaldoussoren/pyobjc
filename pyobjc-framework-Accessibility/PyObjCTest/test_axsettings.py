@@ -9,7 +9,11 @@ class TestAXSettings(TestCase):
         self.assertIsInstance(
             Accessibility.AXAnimatedImagesEnabledDidChangeNotification, str
         )
+        self.assertIsInstance(
+            Accessibility.AXPrefersHorizontalTextLayoutDidChangeNotification, str
+        )
 
     @min_os_level("14.0")
     def test_functions(self):
         self.assertResultIsBOOL(Accessibility.AXAnimatedImagesEnabled)
+        self.assertResultIsBOOL(Accessibility.AXPrefersHorizontalTextLayout)

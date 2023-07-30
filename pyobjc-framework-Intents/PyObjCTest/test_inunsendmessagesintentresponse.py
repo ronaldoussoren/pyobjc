@@ -29,3 +29,7 @@ class TestINUnsendMessagesIntentResponse(TestCase):
             Intents.INUnsendMessagesIntentResponseCodeFailureMessageServiceNotAvailable,
             10,
         )
+        self.assertEqual(
+            Intents.INUnsendMessagesIntentResponseCodeFailureRequiringInAppAuthentication,
+            11,
+        )

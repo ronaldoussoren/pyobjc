@@ -35,7 +35,28 @@ class TestLSConstants(TestCase):
         self.assertEqual(CoreServices.kLSNoClassicEnvironmentErr, -10828)
         self.assertEqual(CoreServices.kLSMultipleSessionsNotSupportedErr, -10829)
         self.assertEqual(
-            CoreServices.kLSLaunchFailedBecauseLaunchConstraintsWereViolated, -10350
+            CoreServices.kLSLaunchFailedBecauseLaunchConstraintsWereViolatedErr, -10350
+        )
+        self.assertEqual(CoreServices.kLSTemplateApplicationIsCorruptErr, -10401)
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationDataVaultIsCorruptErr, -10402
+        )
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationDataVaultInformationIsCorruptErr, -10403
+        )
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationTeamIdentifierMismatchErr, -10404
+        )
+        self.assertEqual(CoreServices.kLSTemplateApplicationSignatureFailureErr, -10410)
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationSignatureNotFoundErr, -10411
+        )
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationUnableToContactServerErr, -10420
+        )
+        self.assertEqual(CoreServices.kLSTemplateApplicationUnknownErr, -10421)
+        self.assertEqual(
+            CoreServices.kLSTemplateApplicationOperationRequiresEntitlementErr, -10422
         )
 
         self.assertIsEnumType(CoreServices.LSRolesMask)

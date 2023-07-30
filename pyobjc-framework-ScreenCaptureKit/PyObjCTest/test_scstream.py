@@ -43,6 +43,11 @@ class TestSCStream(TestCase):
         self.assertEqual(ScreenCaptureKit.SCCaptureResolutionBest, 1)
         self.assertEqual(ScreenCaptureKit.SCCaptureResolutionNominal, 2)
 
+        self.assertIsEnumType(ScreenCaptureKit.SCPresenterOverlayAlertSetting)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingSystem, 0)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingNever, 1)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingAlways, 2)
+
     @min_os_level("13.1")
     def test_constants13_1(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoScreenRect, str)

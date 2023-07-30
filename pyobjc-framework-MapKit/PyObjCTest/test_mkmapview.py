@@ -102,3 +102,8 @@ class TestMKMapView(TestCase):
     def testClasses10_15(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsPointsOfInterest)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsPointsOfInterest_, 0)
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(MapKit.MKMapView.showsUserTrackingButton)
+        self.assertArgIsBOOL(MapKit.MKMapView.setShowsUserTrackingButton_, 0)

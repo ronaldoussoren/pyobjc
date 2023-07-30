@@ -209,6 +209,13 @@ class TestCMIOSampleBuffer(TestCase):
             str,
         )
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(
+            CoreMediaIO.kCMIOSampleBufferAttachmentKey_PixelBufferOverlaidByStaticImage,
+            str,
+        )
+
     def testFunctions(self):
         self.assertArgIsIn(CoreMediaIO.CMIOSampleBufferCreate, 5)
         self.assertArgSizeInArg(CoreMediaIO.CMIOSampleBufferCreate, 5, 4)

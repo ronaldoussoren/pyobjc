@@ -28,3 +28,7 @@ class INEditMessageIntentResponse(TestCase):
         self.assertEqual(
             Intents.INEditMessageIntentResponseCodeFailureMessageServiceNotAvailable, 10
         )
+        self.assertEqual(
+            Intents.INEditMessageIntentResponseCodeFailureRequiringInAppAuthentication,
+            11,
+        )

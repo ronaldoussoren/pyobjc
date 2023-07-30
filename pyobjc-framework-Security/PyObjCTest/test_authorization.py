@@ -46,6 +46,7 @@ class TestAuthorization(TestCase):
         self.assertEqual(Security.kAuthorizationFlagPartialRights, 1 << 2)
         self.assertEqual(Security.kAuthorizationFlagDestroyRights, 1 << 3)
         self.assertEqual(Security.kAuthorizationFlagPreAuthorize, 1 << 4)
+        self.assertEqual(Security.kAuthorizationFlagSkipInternalAuth, 1 << 9)
 
         self.assertEqual(Security.kAuthorizationFlagNoData, 1 << 20)
 

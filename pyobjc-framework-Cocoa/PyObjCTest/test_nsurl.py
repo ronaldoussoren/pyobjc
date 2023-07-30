@@ -331,6 +331,7 @@ class TestNSURL(TestCase):
         self.assertIsInstance(
             Foundation.NSURLFileProtectionCompleteWhenUserInactive, str
         )
+        self.assertIsInstance(Foundation.NSURLDirectoryEntryCountKey, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):

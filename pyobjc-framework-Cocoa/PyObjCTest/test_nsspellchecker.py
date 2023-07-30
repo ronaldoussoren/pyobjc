@@ -188,3 +188,4 @@ class TestNSSpellChecker(TestCase):
         self.assertIsInstance(
             AppKit.NSSpellCheckerDidChangeAutomaticInlinePredictionNotification, str
         )
+        self.assertIsInstance(AppKit.NSTextCheckingGenerateInlinePredictionsKey, str)

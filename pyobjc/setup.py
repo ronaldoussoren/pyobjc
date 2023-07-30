@@ -105,7 +105,6 @@ FRAMEWORK_WRAPPERS = [
     ("MailKit", "12.0", None),
     ("MapKit", "10.9", None),
     ("MediaAccessibility", "10.9", None),
-    ("MediaExtension", "14.0", None),
     ("MediaLibrary", "10.9", None),
     ("MediaPlayer", "10.12", None),
     ("MediaToolbox", "10.9", None),

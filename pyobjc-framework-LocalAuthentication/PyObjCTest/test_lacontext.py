@@ -57,6 +57,10 @@ class TestLAContext(TestCase):
             LocalAuthentication.LABiometryTypeFaceID,
             LocalAuthentication.kLABiometryTypeFaceID,
         )
+        self.assertEqual(
+            LocalAuthentication.LABiometryTypeOpticID,
+            LocalAuthentication.kLABiometryTypeOpticID,
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):
