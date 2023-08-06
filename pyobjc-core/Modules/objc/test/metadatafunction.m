@@ -462,9 +462,8 @@ getOldDoubleFunc(void)
 static void
 raiseFunc(void)
 {
-    @throw [NSException exceptionWithName:@"ExceptionName"
-                                   reason:@"No Reason"
-                                 userInfo:nil];
+    [[NSException exceptionWithName:@"ExceptionName" reason:@"No Reason"
+                           userInfo:nil] raise];
 }
 
 static void
