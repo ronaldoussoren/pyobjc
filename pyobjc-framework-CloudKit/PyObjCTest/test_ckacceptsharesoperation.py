@@ -5,12 +5,14 @@ import CloudKit
 class TestCKSyncEngineState(TestCase):
     def test_constants(self):
         self.assertIsEnumType(CloudKit.CKSyncEnginePendingRecordZoneChangeType)
-        self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeSave, 0)
-        self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeDelete, 1)
+        self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeSaveRecord, 0)
+        self.assertEqual(
+            CloudKit.CKSyncEnginePendingRecordZoneChangeTypeDeleteRecord, 1
+        )
 
         self.assertIsEnumType(CloudKit.CKSyncEnginePendingDatabaseChangeType)
-        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeSave, 0)
-        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeDelete, 1)
+        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeSaveZone, 0)
+        self.assertEqual(CloudKit.CKSyncEnginePendingDatabaseChangeTypeDeleteZone, 1)
 
     @min_os_level("14.0")
     def test_methods14_0(self):

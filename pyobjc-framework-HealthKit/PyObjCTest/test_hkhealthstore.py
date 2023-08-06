@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 import HealthKit
 
 
@@ -98,15 +98,18 @@ class TestHKHealthStore(TestCase):
 
     @min_os_level("14.0")
     def test_methods14_0(self):
-        with self.subTest("workoutSessionMirroringStartHandler"):
-            self.assertResultIsBlock(
-                HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
-                b"v@",
-            )
-
         with self.subTest("setWorkoutSessionMirroringStartHandler:"):
             self.assertArgIsBlock(
                 HealthKit.HKHealthStore.setWorkoutSessionMirroringStartHandler_,
                 0,
+                b"v@",
+            )
+
+    @min_os_level("14.0")
+    @expectedFailure
+    def test_methods14_0_missing(self):
+        with self.subTest("workoutSessionMirroringStartHandler"):
+            self.assertResultIsBlock(
+                HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
                 b"v@",
             )

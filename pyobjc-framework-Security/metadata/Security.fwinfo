@@ -1156,6 +1156,7 @@
    "kAuthorizationFlagNoData": { "value": 1048576 },
    "kAuthorizationFlagPartialRights": { "value": 4 },
    "kAuthorizationFlagPreAuthorize": { "value": 16 },
+   "kAuthorizationFlagSkipInternalAuth": { "value": 512 },
    "kAuthorizationResultAllow": { "value": 0 },
    "kAuthorizationResultDeny": { "value": 1 },
    "kAuthorizationResultUndefined": { "value": 2 },

@@ -1,6 +1,11 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    max_os_level,
+    expectedFailure,
+)
 
 
 class TestITMediaItem(TestCase):
@@ -116,14 +121,17 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyTotalTime, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyTrackNumber, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocationType, str)
-        self.assertIsInstance(
-            iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str
-        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVolumeAdjustment, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyYear, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMediaKind, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocation, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyArtwork, str)
+
+    @max_os_level("13.99")
+    def test_constants_removed_in_14_0(self):
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):

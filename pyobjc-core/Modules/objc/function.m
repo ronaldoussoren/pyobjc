@@ -358,8 +358,8 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     Py_BEGIN_ALLOW_THREADS
         @try {
             ffi_call(self->cif, FFI_FN(self->function), argbuf, values);
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (id localException) {
+            PyObjCErr_FromObjC((NSObject*)localException);
         }
     Py_END_ALLOW_THREADS
 

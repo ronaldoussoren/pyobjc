@@ -3,6 +3,9 @@
 {
  "definitions": {
   "aliases": {
+   "LABiometryTypeOpticID": {
+    "alias": "kLABiometryTypeOpticID"
+   },
    "LACredentialTypeSmartCardPIN": {
     "alias": "kLACredentialSmartCardPIN"
    },
