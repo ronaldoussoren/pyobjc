@@ -1827,10 +1827,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float2(9.0, 10.0),
-            objc.simd.vector_float2(11.0, 12.0),
-        )
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
 
     def GKTriangleQ_(self, arg0):
         self.argvalues = (arg0,)
@@ -3118,10 +3115,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return (
-            objc.simd.vector_float2(9.0, 10.0),
-            objc.simd.vector_float2(11.0, 12.0),
-        )
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
 
     @classmethod
     def GKTriangleQ_(self, arg0):
@@ -7729,8 +7723,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -7751,8 +7743,6 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -7950,8 +7940,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -7966,8 +7954,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.idv2fOn_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -8371,8 +8357,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -8395,8 +8379,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -8652,8 +8634,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -8674,8 +8654,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -8873,8 +8851,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -8889,8 +8865,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.idv2iOn_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -9156,8 +9130,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -9180,8 +9152,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -9621,8 +9591,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -9646,8 +9614,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -9845,8 +9811,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -9861,8 +9825,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.idv3fOn_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -10570,8 +10532,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -10597,8 +10557,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -11210,8 +11168,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -11236,8 +11192,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -11737,8 +11691,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -11762,8 +11714,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -12355,8 +12305,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -12381,8 +12329,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -12794,8 +12740,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -12818,8 +12762,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -13327,8 +13269,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -13352,8 +13292,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -13861,8 +13799,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -13886,8 +13822,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -14595,8 +14529,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -14622,8 +14554,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -14987,8 +14917,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -15011,8 +14939,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -15212,8 +15138,6 @@ class TestVectorCall(TestCase):
             value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -15230,8 +15154,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -15755,8 +15677,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -15780,8 +15700,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -16005,8 +15923,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -16027,8 +15943,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -16252,8 +16166,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -16274,8 +16186,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -16499,8 +16409,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -16521,8 +16429,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -16767,8 +16673,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -16790,8 +16694,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -17079,8 +16981,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -17103,8 +17003,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -17354,8 +17252,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -17377,8 +17273,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -17652,8 +17546,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -17675,8 +17567,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -17974,8 +17864,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -17997,8 +17885,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -18558,8 +18444,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -18588,8 +18472,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -19401,8 +19283,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -19429,8 +19309,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -20138,8 +20016,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -20165,8 +20041,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -20978,8 +20852,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -21006,8 +20878,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -21379,8 +21249,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -21404,8 +21272,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -21753,8 +21619,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -21778,8 +21642,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -22275,8 +22137,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -22301,8 +22161,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -22706,8 +22564,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -22733,8 +22589,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -23186,8 +23040,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -23214,8 +23066,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -23691,8 +23541,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -23720,8 +23568,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -24009,8 +23855,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -24031,8 +23875,6 @@ class TestVectorCall(TestCase):
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -24396,8 +24238,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -24419,8 +24259,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -24708,8 +24546,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -24732,8 +24568,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -25061,8 +24895,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -25084,8 +24916,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -25529,8 +25359,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -25553,8 +25381,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -26366,8 +26192,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -26394,8 +26218,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -27103,8 +26925,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -27130,8 +26950,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -27651,8 +27469,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -27677,8 +27493,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -28382,8 +28196,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -28409,8 +28221,6 @@ class TestVectorCall(TestCase):
                 "color!",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -28726,8 +28536,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -28750,8 +28558,6 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -29067,8 +28873,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -29091,8 +28895,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -29404,8 +29206,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -29428,8 +29228,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -29821,8 +29619,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -29846,8 +29642,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -30135,8 +29929,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -30159,8 +29951,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -30528,8 +30318,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -30553,8 +30341,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -30878,8 +30664,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -30902,8 +30686,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -31303,8 +31085,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -31331,8 +31111,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -31844,8 +31622,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -31873,8 +31649,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -32272,8 +32046,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -32297,8 +32069,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -32882,8 +32652,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -32908,8 +32676,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -33211,8 +32977,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -33236,8 +33000,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -33435,8 +33197,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, "color!")
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
 
-        return  # See #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -33451,8 +33211,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.CGColorv3fOn_(value)
         self.assertEqual(result, "color!")
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
-
-        return  # See #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -33690,8 +33448,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -33712,8 +33468,6 @@ class TestVectorCall(TestCase):
                 "colorspace!",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -33911,8 +33665,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, 2500000000.0)
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -33927,8 +33679,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.fv2fOn_(value)
         self.assertEqual(result, 2500000000.0)
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -34126,8 +33876,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(result, 2500000000.0)
         self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -34142,8 +33890,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.fv2iOn_(value)
         self.assertEqual(result, 2500000000.0)
         self.assertEqual(value.argvalues, (objc.simd.vector_int2(0, 1),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -34341,8 +34087,6 @@ class TestVectorCall(TestCase):
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_double2(0.0, 1.5),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -34357,8 +34101,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.vv2dOn_(value)
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_double2(0.0, 1.5),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -34582,8 +34324,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -34604,8 +34344,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -34803,8 +34541,6 @@ class TestVectorCall(TestCase):
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -34819,8 +34555,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.vv2fOn_(value)
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_float2(0.0, 1.5),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -35044,8 +34778,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -35066,8 +34798,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -35265,8 +34995,6 @@ class TestVectorCall(TestCase):
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_double3(0.0, 1.5, 3.0),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -35281,8 +35009,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.vv3dOn_(value)
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_double3(0.0, 1.5, 3.0),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -35510,8 +35236,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -35532,8 +35256,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -35731,8 +35453,6 @@ class TestVectorCall(TestCase):
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -35747,8 +35467,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.vv3fOn_(value)
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_float3(0.0, 1.5, 3.0),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -36024,8 +35742,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -36046,8 +35762,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -36419,8 +36133,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -36442,8 +36154,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -36671,8 +36381,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -36693,8 +36401,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -36930,8 +36636,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -36952,8 +36656,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -37153,8 +36855,6 @@ class TestVectorCall(TestCase):
             value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -37171,8 +36871,6 @@ class TestVectorCall(TestCase):
         self.assertEqual(
             value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -37408,8 +37106,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -37430,8 +37126,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -37629,8 +37323,6 @@ class TestVectorCall(TestCase):
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -37645,8 +37337,6 @@ class TestVectorCall(TestCase):
         result = OC_VectorCallInvoke.vv4iOn_(value)
         self.assertIs(result, None)
         self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -37974,8 +37664,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -37997,8 +37685,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -38402,8 +38088,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -38426,8 +38110,6 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -38651,8 +38333,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -38673,8 +38353,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int2(0, 1),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -39002,8 +38680,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -39026,8 +38702,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -39435,8 +39109,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -39460,8 +39132,6 @@ class TestVectorCall(TestCase):
                 False,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -39861,8 +39531,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -39889,8 +39557,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -40404,8 +40070,6 @@ class TestVectorCall(TestCase):
 
         # Test raising an exception
         value.shouldRaise = True
-        return  # see #568
-
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
                 OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
@@ -40431,8 +40095,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -40768,8 +40430,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -40794,8 +40454,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -41175,8 +40833,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -41202,8 +40858,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -41603,8 +41257,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -41631,8 +41283,6 @@ class TestVectorCall(TestCase):
                 ),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -42144,8 +41794,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -42173,8 +41821,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -42458,8 +42104,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -42480,8 +42124,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -42701,8 +42343,6 @@ class TestVectorCall(TestCase):
             (simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -42720,8 +42360,6 @@ class TestVectorCall(TestCase):
             value.argvalues,
             (simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -43005,8 +42643,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -43027,8 +42663,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -43312,8 +42946,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -43334,8 +42966,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -43529,8 +43159,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -43551,8 +43179,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -43731,8 +43357,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -43750,8 +43374,6 @@ class TestVectorCall(TestCase):
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -43994,8 +43616,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (35184372088832,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -44019,8 +43639,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertEqual(value.argvalues, (35184372088832,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -44226,8 +43844,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -44248,8 +43864,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -44493,8 +44107,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -44515,8 +44127,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertEqual(value.argvalues, (objc.simd.vector_int4(0, 1, 2, 3),))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -44756,8 +44366,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -44778,8 +44386,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -44981,8 +44587,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -45003,8 +44607,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -45226,8 +44828,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -45252,8 +44852,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -45509,8 +45107,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -45535,8 +45131,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -45729,8 +45323,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -45750,8 +45342,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -45964,8 +45554,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -45989,8 +45577,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -46208,8 +45794,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -46234,8 +45818,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -46517,8 +46099,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -46549,8 +46129,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -46806,8 +46384,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -46832,8 +46408,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -47403,8 +46977,6 @@ class TestVectorCall(TestCase):
             ),
         )
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -47442,8 +47014,6 @@ class TestVectorCall(TestCase):
                 "hello",
             ),
         )
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -47651,8 +47221,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -47669,8 +47237,6 @@ class TestVectorCall(TestCase):
             result, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -47844,8 +47410,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -47862,8 +47426,6 @@ class TestVectorCall(TestCase):
             result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -48071,8 +47633,6 @@ class TestVectorCall(TestCase):
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -48089,8 +47649,6 @@ class TestVectorCall(TestCase):
             result, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
         self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -48279,8 +47837,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -48300,8 +47856,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -48515,8 +48069,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -48539,8 +48091,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
@@ -48746,8 +48296,6 @@ class TestVectorCall(TestCase):
         )
         self.assertIs(value.argvalues, None)
 
-        return  # see #568
-
         # Test raising an exception
         value.shouldRaise = True
         try:
@@ -48768,8 +48316,6 @@ class TestVectorCall(TestCase):
             ),
         )
         self.assertIs(value.argvalues, None)
-
-        return  # see #568
 
         # Test raising an exception
         value.shouldRaise = True
