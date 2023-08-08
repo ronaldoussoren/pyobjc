@@ -52,6 +52,10 @@ class TestSCStream(TestCase):
     def test_constants13_1(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoScreenRect, str)
 
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoBoundingRect, str)
+
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.scalesToFit)
         self.assertArgIsBOOL(ScreenCaptureKit.SCStreamConfiguration.setScalesToFit_, 0)

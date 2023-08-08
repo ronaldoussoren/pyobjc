@@ -39,3 +39,9 @@ class TestNERelayManager(TestCase):
 
         self.assertResultIsBOOL(NetworkExtension.NERelayManager.isEnabled)
         self.assertArgIsBOOL(NetworkExtension.NERelayManager.setEnabled_, 0)
+
+        self.assertArgIsBlock(
+            NetworkExtension.NERelayManager.loadAllManagersFromPreferencesWithCompletionHandler_,
+            0,
+            b"v@@",
+        )

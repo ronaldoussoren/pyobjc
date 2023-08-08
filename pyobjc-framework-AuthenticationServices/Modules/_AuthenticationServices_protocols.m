@@ -34,5 +34,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(ASCredentialRequest));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(ASCredentialIdentity));
+    Py_XDECREF(p);
 #endif
 }
