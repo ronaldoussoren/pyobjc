@@ -157,6 +157,12 @@ Version 10.0
   instead of ``matrix_float3x3``, with the older name as an alias (to match
   older system headers).
 
+* Fix crash when loading the libdispatch bindings on recent macOS versions
+  (at least macOS 13, possibly earlier)
+
+* ``dispatch.dispatch_source_t`` is renamed to ``dispatch.dispatch_source_type_t``
+  to match the type name in C code.
+
 Version 9.2.1
 -------------
 

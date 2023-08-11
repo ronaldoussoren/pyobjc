@@ -112,6 +112,8 @@ struct pyobjc_api {
                                   size_t max_args, size_t nargsf);
     int (*_Nonnull checknokwnames)(PyObject* _Nonnull callable,
                                    PyObject* _Nullable kwnames);
+
+    PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*, const char*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -153,6 +155,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjCMemView_GetBuffer (PyObjC_API->memview_getbuffer)
 #define PyObjC_CheckArgCount (PyObjC_API->checkargcount)
 #define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
+#define PyObjCCreateOpaquePointerType (PyObjC_API->createopaquepointertype)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

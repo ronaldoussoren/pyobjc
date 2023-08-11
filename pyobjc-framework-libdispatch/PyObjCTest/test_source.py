@@ -5,42 +5,42 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestSourceAPI(TestCase):
     def test_types(self):
-        self.assertIsOpaquePointer(dispatch.dispatch_source_t)
+        self.assertIsOpaquePointer(dispatch.dispatch_source_type_t)
 
     def test_constants(self):
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_DATA_ADD, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_DATA_ADD, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_DATA_OR, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_DATA_OR, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_MACH_SEND, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_MACH_SEND, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_MACH_RECV, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_MACH_RECV, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
             dispatch.DISPATCH_SOURCE_TYPE_MEMORYPRESSURE,
-            dispatch.dispatch_source_t,
+            dispatch.dispatch_source_type_t,
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_PROC, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_PROC, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_READ, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_READ, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_SIGNAL, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_SIGNAL, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_TIMER, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_TIMER, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_VNODE, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_VNODE, dispatch.dispatch_source_type_t
         )
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_WRITE, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_WRITE, dispatch.dispatch_source_type_t
         )
 
         self.assertEqual(dispatch.DISPATCH_MACH_SEND_DEAD, 0x1)
@@ -67,7 +67,7 @@ class TestSourceAPI(TestCase):
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(
-            dispatch.DISPATCH_SOURCE_TYPE_DATA_REPLACE, dispatch.dispatch_source_t
+            dispatch.DISPATCH_SOURCE_TYPE_DATA_REPLACE, dispatch.dispatch_source_type_t
         )
 
     @min_os_level("10.6")
@@ -77,7 +77,7 @@ class TestSourceAPI(TestCase):
         self.assertArgHasType(
             dispatch.dispatch_source_create,
             0,
-            dispatch.dispatch_source_t.__typestr__,
+            dispatch.dispatch_source_type_t.__typestr__,
         )
         self.assertArgHasType(dispatch.dispatch_source_create, 1, objc._C_ULNG)
         self.assertArgHasType(dispatch.dispatch_source_create, 2, objc._C_ULNG)
