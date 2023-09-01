@@ -20,6 +20,7 @@ class TestHKDefines(TestCase):
         self.assertEqual(HealthKit.HKErrorNoData, 11)
         self.assertEqual(HealthKit.HKErrorWorkoutActivityNotAllowed, 12)
         self.assertEqual(HealthKit.HKErrorDataSizeExceeded, 13)
+        self.assertEqual(HealthKit.HKErrorBackgroundWorkoutSessionNotAllowed, 14)
 
         self.assertIsEnumType(HealthKit.HKUpdateFrequency)
         self.assertEqual(HealthKit.HKUpdateFrequencyImmediate, 1)
