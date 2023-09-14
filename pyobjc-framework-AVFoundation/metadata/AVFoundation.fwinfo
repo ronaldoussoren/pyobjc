@@ -457,6 +457,17 @@
    "AVFrameRateRange": "AVFrameRateRange_Tundra"
   },
   "classes": {
+   "AVExternalStorageDevice": {
+    "methods": [
+     {
+      "selector": "nextAvailableURLsWithPathExtensions:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVPlayerLayer": {
     "methods": [
      {

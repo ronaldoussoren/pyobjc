@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 10.0
 ------------
 
-* (TODO) Update bindings for macOS 14
+* Update bindings for macOS 14
 
   Symbols newly introduced in macOS 14 were added to the existing bindings,
   and the following new bindings were introduced:
