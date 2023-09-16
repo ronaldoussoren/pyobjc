@@ -92,8 +92,8 @@ CFLAGS = [
     # "-O0",
     "-g",
     # "-O0",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
     "-UNDEBUG",
 ]
@@ -575,6 +575,16 @@ class oc_build_ext(build_ext.build_ext):
             if "-DNO_OBJC2_RUNTIME" not in CFLAGS:
                 CFLAGS.append("-DNO_OBJC2_RUNTIME")
                 EXT_CFLAGS.append("-DNO_OBJC2_RUNTIME")
+
+        lines = subprocess.check_output(
+            ["xcodebuild", "-version"], text=True
+        ).splitlines()
+        if lines[0].startswith("Xcode"):
+            xcode_vers = int(lines[0].split()[-1].split(".")[0])
+            if xcode_vers >= 15:
+                for var in (OBJC_LDFLAGS,):
+                    print("Use old linker with Xcode 15 or later")
+                    var.append("-Wl,-ld_classic")
 
     def run(self):
         verify_platform()

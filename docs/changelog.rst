@@ -163,6 +163,9 @@ Version 10.0
 * ``dispatch.dispatch_source_t`` is renamed to ``dispatch.dispatch_source_type_t``
   to match the type name in C code.
 
+* :issue:`569`: Xcode 15 has a bug when using weak symbols and targeting older macOS
+  versions. Switch to the old linker when detecting Xcode 15.
+
 Version 9.2.1
 -------------
 

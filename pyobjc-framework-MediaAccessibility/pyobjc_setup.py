@@ -510,6 +510,15 @@ def Extension(*args, **kwds):
             % (tuple(map(int, os_level.split(".")[:2])))
         )
 
+    # XCode 15 has a bug w.r.t. weak linking for older macOS versions,
+    # fall back to older linker when using that compiler.
+    # XXX: This should be in _fixup_compiler but doesn't work there...
+    lines = subprocess.check_output(["xcodebuild", "-version"], text=True).splitlines()
+    if lines[0].startswith("Xcode"):
+        xcode_vers = int(lines[0].split()[-1].split(".")[0])
+        if xcode_vers >= 15:
+            ldflags.append("-Wl,-ld_classic")
+
     if os_level == "10.4":
         cflags.append("-DNO_OBJC2_RUNTIME")
 
