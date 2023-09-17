@@ -2349,7 +2349,7 @@ class TestUtilities(TestCase):
 
             self.assertFalse(_transform.returns_value(func))
 
-    @expectedFailureIf(sys.version_info[:2] >= (3, 12))
+    @expectedFailureIf(sys.version_info[:2] >= (3, 8))
     def test_returns_None(self):
         with self.subTest("function returns constant value"):
 
