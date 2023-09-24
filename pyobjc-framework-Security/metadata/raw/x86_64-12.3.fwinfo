@@ -3879,7 +3879,7 @@
      },
      {
       "name": "algid",
-      "typestr": "^^{_SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}"
+      "typestr": "^^{SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}"
      }
     ],
     "retval": {
@@ -8530,7 +8530,7 @@
      "parameters"
     ],
     "special": true,
-    "typestr": "{_SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}"
+    "typestr": "{SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}"
    },
    "SecAsn1Item": {
     "fieldnames": [
@@ -8554,7 +8554,7 @@
      "subjectPublicKey"
     ],
     "special": true,
-    "typestr": "{_SecAsn1PubKeyInfo={_SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}{cssm_data=Q^C}}"
+    "typestr": "{SecAsn1PubKeyInfo={SecAsn1AlgId={cssm_data=Q^C}{cssm_data=Q^C}}{cssm_data=Q^C}}"
    },
    "SecAsn1Template": {
     "fieldnames": [

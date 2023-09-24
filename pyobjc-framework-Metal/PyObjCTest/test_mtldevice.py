@@ -323,6 +323,12 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def heapAccelerationStructureSizeAndAlignWithDescriptor_(self, a):
         return 1
 
+    def newIOFileHandleWithURL_error_(self, a, b):
+        return 1
+
+    def newIOFileHandleWithURL_compressionMethod_error_(self, a, b, c):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_typed_enum(self):
@@ -392,6 +398,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple6, 1006)
         self.assertEqual(Metal.MTLGPUFamilyApple7, 1007)
         self.assertEqual(Metal.MTLGPUFamilyApple8, 1008)
+        self.assertEqual(Metal.MTLGPUFamilyApple9, 1009)
 
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
@@ -742,7 +749,7 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.getDefaultSamplePositions_count_,
             0,
-            b"o^{_MTLSamplePosition=ff}",
+            b"o^{MTLSamplePosition=ff}",
         )
         self.assertArgSizeInArg(
             TestMTLDeviceHelper.getDefaultSamplePositions_count_, 0, 1
@@ -1018,4 +1025,18 @@ class TestMTLDevice(TestCase):
         self.assertResultHasType(
             TestMTLDeviceHelper.heapAccelerationStructureSizeAndAlignWithDescriptor_,
             Metal.MTLSizeAndAlign.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newIOFileHandleWithURL_error_, 1, b"o^@"
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,
+            2,
+            b"o^@",
         )

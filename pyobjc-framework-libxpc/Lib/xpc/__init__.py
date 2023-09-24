@@ -5,25 +5,28 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions.
 """
 
-import sys
 
-import objc
-from xpc import _metadata
-from xpc import _xpc
+def _setup():
+    import sys
 
-sys.modules["xpc"] = mod = objc.ObjCLazyModule(
-    "xpc",
-    None,
-    None,
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_xpc,),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _xpc
 
-del sys.modules["xpc._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="xpc",
+        frameworkIdentifier=None,
+        frameworkPath=None,
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_xpc, Foundation),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["xpc._metadata"]
+
+
+globals().pop("_setup")()

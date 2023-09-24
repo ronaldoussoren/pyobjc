@@ -4,26 +4,16 @@ import objc
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
+NSCalendar = objc.lookUpClass("NSCalendar")
+NSLocale = objc.lookUpClass("NSLocale")
+
 
 class TestCFCalendarVariadic(TestCase):
-    def testTypes(self):
-        cls = None
-        try:
-            cls = objc.lookUpClass("NSCFCalendar")
-        except objc.error:
-            cls = objc.lookUpClass("__NSCFCalendar")
-
-        if cls is None:
-            self.assertIsCFType(CoreFoundation.CFCalendarRef)
-
-        else:
-            self.assertIs(CoreFoundation.CFCalendarRef, cls)
-
     def testCFCalendarComposeAbsoluteTime(self):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
-        self.assertIsInstance(calendar, CoreFoundation.CFCalendarRef)
+        self.assertIsInstance(calendar, NSCalendar)
 
         success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(calendar, None, b"")
         self.assertEqual(success, True)
@@ -39,7 +29,7 @@ class TestCFCalendarVariadic(TestCase):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
-        self.assertIsInstance(calendar, CoreFoundation.CFCalendarRef)
+        self.assertIsInstance(calendar, NSCalendar)
 
         success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0
@@ -113,21 +103,21 @@ class TestCFCalendarVariadic(TestCase):
 
     def testCreation(self):
         cal = CoreFoundation.CFCalendarCopyCurrent()
-        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
+        self.assertIsInstance(cal, NSCalendar)
         cal = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFBuddhistCalendar
         )
-        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
+        self.assertIsInstance(cal, NSCalendar)
 
     def testInspection(self):
         cal = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
-        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
+        self.assertIsInstance(cal, NSCalendar)
         name = CoreFoundation.CFCalendarGetIdentifier(cal)
         self.assertEqual(name, CoreFoundation.kCFGregorianCalendar)
         locale = CoreFoundation.CFCalendarCopyLocale(cal)
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, NSLocale)
         timezone = CoreFoundation.CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(timezone, CoreFoundation.CFTimeZoneRef)
         weekday = CoreFoundation.CFCalendarGetFirstWeekday(cal)
@@ -189,15 +179,15 @@ class TestCFCalendarVariadic(TestCase):
         )
 
         loc = CoreFoundation.CFLocaleCreate(None, "mr_IN")
-        self.assertIsInstance(loc, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(loc, NSLocale)
         id1 = CoreFoundation.CFLocaleGetIdentifier(loc)
 
         orig_loc = CoreFoundation.CFCalendarCopyLocale(cal)
-        self.assertIsInstance(orig_loc, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(orig_loc, NSLocale)
         orig_id = CoreFoundation.CFLocaleGetIdentifier(orig_loc)
         CoreFoundation.CFCalendarSetLocale(cal, loc)
         new_loc = CoreFoundation.CFCalendarCopyLocale(cal)
-        self.assertIsInstance(new_loc, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(new_loc, NSLocale)
         new_id = CoreFoundation.CFLocaleGetIdentifier(new_loc)
 
         self.assertEqual(new_id, id1)

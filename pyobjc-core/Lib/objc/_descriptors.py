@@ -262,7 +262,9 @@ def typedAccessor(typeSignature):
 
 
 def Accessor(func):
-    warnings.warn("Use objc.accessor instead of objc.Accessor", DeprecationWarning)
+    warnings.warn(
+        "Use objc.accessor instead of objc.Accessor", DeprecationWarning, stacklevel=2
+    )
     return accessor(func)
 
 
@@ -407,7 +409,9 @@ def signature(signature, **kw):
             return 0
     """
     warnings.warn(
-        "Usage objc.typedSelector instead of objc.signature", DeprecationWarning
+        "Usage objc.typedSelector instead of objc.signature",
+        DeprecationWarning,
+        stacklevel=2,
     )
     kw["signature"] = signature
 

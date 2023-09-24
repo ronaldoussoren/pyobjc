@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, arch_only
 
 import Virtualization
 
@@ -16,6 +16,8 @@ class TestVZVirtualMachine(TestCase):
         self.assertEqual(Virtualization.VZVirtualMachineStatePausing, 5)
         self.assertEqual(Virtualization.VZVirtualMachineStateResuming, 6)
         self.assertEqual(Virtualization.VZVirtualMachineStateStopping, 7)
+        self.assertEqual(Virtualization.VZVirtualMachineStateSaving, 8)
+        self.assertEqual(Virtualization.VZVirtualMachineStateRestoring, 9)
 
     def test_methods(self):
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.isSupported)
@@ -49,6 +51,20 @@ class TestVZVirtualMachine(TestCase):
     def test_methods13_0(self):
         self.assertArgIsBlock(
             Virtualization.VZVirtualMachine.startWithOptions_completionHandler_,
+            1,
+            b"v@",
+        )
+
+    @arch_only("arm64")
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            Virtualization.VZVirtualMachine.restoreMachineStateFromURL_completionHandler_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            Virtualization.VZVirtualMachine.saveMachineStateToURL_completionHandler_,
             1,
             b"v@",
         )

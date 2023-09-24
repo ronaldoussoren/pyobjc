@@ -45,6 +45,10 @@ class TestINIntentErrors(TestCase):
         self.assertEqual(Intents.INIntentErrorEncodingGeneric, 8000)
         self.assertEqual(Intents.INIntentErrorEncodingFailed, 8001)
         self.assertEqual(Intents.INIntentErrorDecodingGeneric, 9000)
+        self.assertEqual(
+            Intents.INIntentErrorUnableToCreateAppIntentRepresentation, 10000
+        )
+        self.assertEqual(Intents.INIntentErrorNoAppIntent, 10001)
 
     @min_os_level("11.0")
     def testConstants11_0(self):

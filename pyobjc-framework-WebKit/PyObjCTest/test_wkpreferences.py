@@ -3,6 +3,12 @@ import WebKit
 
 
 class TestWKPreferences(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(WebKit.WKInactiveSchedulingPolicy)
+        self.assertEqual(WebKit.WKInactiveSchedulingPolicySuspend, 0)
+        self.assertEqual(WebKit.WKInactiveSchedulingPolicyThrottle, 1)
+        self.assertEqual(WebKit.WKInactiveSchedulingPolicyNone, 2)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.javaScriptEnabled)

@@ -430,6 +430,15 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
 
     /* Skip return-type */
     cur = PyObjCRT_SkipTypeSpec(signature);
+    if (cur && *cur == '"') {
+        cur++;
+        while (*cur != '\0' && *cur != '"') {
+            cur++;
+        }
+        cur++;
+        while (isdigit(*cur))
+            cur++;
+    }
 
     nargs = 0;
     while (cur && *cur) {
@@ -528,7 +537,16 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     }
     PyObjC_Assert(retval->rettype->type != NULL, NULL);
 
-    cur   = PyObjCRT_SkipTypeSpec(retval->signature);
+    cur = PyObjCRT_SkipTypeSpec(retval->signature);
+    if (cur && *cur == '"') {
+        cur++;
+        while (*cur != '\0' && *cur != '"') {
+            cur++;
+        }
+        cur++;
+        while (isdigit(*cur))
+            cur++;
+    }
     nargs = 0;
     while (cur && *cur) {
         if (unlikely(*cur == _C_CONST)) {

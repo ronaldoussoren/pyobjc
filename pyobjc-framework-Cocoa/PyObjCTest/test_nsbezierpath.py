@@ -146,6 +146,12 @@ class TestNSBezierPath(TestCase):
         self.assertEqual(AppKit.NSBezierPathElementLineTo, 1)
         self.assertEqual(AppKit.NSBezierPathElementCurveTo, 2)
         self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
+        self.assertEqual(AppKit.NSBezierPathElementCubicCurveTo, 2)
+        self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
+        self.assertEqual(AppKit.NSBezierPathElementQuadraticCurveTo, 4)
+        self.assertEqual(
+            AppKit.NSBezierPathElementCurveTo, AppKit.NSBezierPathElementCubicCurveTo
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSBezierPath.isEmpty)

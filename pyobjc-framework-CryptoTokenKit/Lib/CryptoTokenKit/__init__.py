@@ -5,27 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from CryptoTokenKit import _metadata
-from CryptoTokenKit import _CryptoTokenKit
+def _setup():
+    import sys
 
-sys.modules["CryptoTokenKit"] = mod = objc.ObjCLazyModule(
-    "CryptoTokenKit",
-    "com.apple.CryptoTokenKit",
-    objc.pathForFramework("/System/Library/Frameworks/CryptoTokenKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_CryptoTokenKit, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _CryptoTokenKit
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CryptoTokenKit",
+        frameworkIdentifier="com.apple.CryptoTokenKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CryptoTokenKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _CryptoTokenKit,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CryptoTokenKit._metadata"]
 
 
-del sys.modules["CryptoTokenKit._metadata"]
+globals().pop("_setup")()

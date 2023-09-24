@@ -5,64 +5,80 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from Security import _metadata, _Security
+def _setup():
+    import sys
 
-sys.modules["Security"] = mod = objc.ObjCLazyModule(
-    "Security",
-    "com.apple.security",
-    objc.pathForFramework("/System/Library/Frameworks/Security.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_Security, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _Security
 
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Security",
+        frameworkIdentifier="com.apple.security",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Security.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _Security,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
 
-# The type encoding for older versions of macOS (at least
-# up to 10.11)
-def _fixup(mod):
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["Security._metadata"]
+
+    # The type encoding for older versions of macOS (at least
+    # up to 10.11)
+
+    from . import SecAccessControlGetTypeID  # isort:skip
+
     objc.registerCFSignature(
         "SecAccessControl",
         b"^{OpaqueSecAccessControl=}",
-        mod.SecAccessControlGetTypeID(),
+        SecAccessControlGetTypeID(),
     )
+
+    from . import SecTrustedApplicationGetTypeID  # isort:skip
 
     objc.registerCFSignature(
         "SecTrustedApplicationRef",
         b"^{OpaqueSecTrustedApplicationRef=}",
-        mod.SecTrustedApplicationGetTypeID(),
+        SecTrustedApplicationGetTypeID(),
     )
+
+    from . import SecCertificateGetTypeID  # isort:skip
 
     objc.registerCFSignature(
         "SecCertificateRef",
         b"^{OpaqueSecCertificateRef=}",
-        mod.SecCertificateGetTypeID(),
+        SecCertificateGetTypeID(),
     )
 
-    objc.registerCFSignature(
-        "SecAccessRef", b"^{OpaqueSecAccessRef=}", mod.SecAccessGetTypeID()
-    )
+    from . import SecAccessGetTypeID  # isort:skip
 
     objc.registerCFSignature(
-        "SecIdentityRef", b"^{OpaqueSecIdentityRef=}", mod.SecIdentityGetTypeID()
+        "SecAccessRef", b"^{OpaqueSecAccessRef=}", SecAccessGetTypeID()
     )
+
+    from . import SecIdentityGetTypeID  # isort:skip
+
+    objc.registerCFSignature(
+        "SecIdentityRef", b"^{OpaqueSecIdentityRef=}", SecIdentityGetTypeID()
+    )
+
+    from . import SecIdentitySearchGetTypeID  # isort:skip
 
     objc.registerCFSignature(
         "SecIdentitySearchRef",
         b"^{OpaqueSecIdentitySearchRef=}",
-        mod.SecIdentitySearchGetTypeID(),
+        SecIdentitySearchGetTypeID(),
     )
 
 
-_fixup(mod)
-
-del sys.modules["Security._metadata"]
+globals().pop("_setup")()

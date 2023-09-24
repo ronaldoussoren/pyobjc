@@ -95,6 +95,7 @@ class TestAVAudioSession(TestCase):
 
     @min_os_level("11.0")
     def test_constants11_0(self):
+        # XXX: Removed in 14.0 SDK
         self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionNotification, str)
         self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeNotification, str)
         self.assertIsInstance(
@@ -108,3 +109,10 @@ class TestAVAudioSession(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionTypeKey, str)
         self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionOptionKey, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeReasonKey, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionRouteChangePreviousRouteKey, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeKey, str
+        )

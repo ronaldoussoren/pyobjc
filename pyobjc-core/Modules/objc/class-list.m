@@ -7,7 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 PyObject*
-PyObjC_GetClassList(void)
+PyObjC_GetClassList(bool ignore_invalid_identifiers)
 {
     PyObject* result    = NULL;
     Class*    buffer    = NULL;
@@ -48,7 +48,7 @@ PyObjC_GetClassList(void)
     }
     bufferLen = neededLen;
 
-    result = PyTuple_New(bufferLen);
+    result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         goto error;       // LCOV_EXCL_LINE
     }
@@ -56,17 +56,41 @@ PyObjC_GetClassList(void)
     for (i = 0; i < bufferLen; i++) {
         PyObject* pyclass;
 
+        if (ignore_invalid_identifiers) {
+            const char* name = class_getName(buffer[i]);
+
+            if (strncmp(name, "__SwiftNative", 12) == 0) {
+                /* FB12286520 */
+                continue;
+            }
+
+            int skip = 0;
+            while (*name != '\0') {
+                if (!isalnum(*name) && *name != '_') {
+                    skip = 1;
+                    break;
+                }
+                name++;
+            }
+            if (skip) {
+                continue;
+            }
+        }
         pyclass = PyObjCClass_New(buffer[i]);
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
             goto error;        // LCOV_EXCL_LINE
         }
-        PyTuple_SET_ITEM(result, i, pyclass);
+        if (PyList_Append(result, pyclass) == -1) { // LCOV_BR_EXCL_LINE
+            goto error;                             // LCOV_EXCL_LINE
+        }
     }
 
     PyMem_Free(buffer);
     buffer = NULL;
 
-    return result;
+    PyObject* tmp = PyList_AsTuple(result);
+    Py_DECREF(result);
+    return tmp;
 
 error:
     // LCOV_EXCL_START

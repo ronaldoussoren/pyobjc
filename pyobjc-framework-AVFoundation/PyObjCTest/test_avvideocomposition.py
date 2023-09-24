@@ -25,6 +25,21 @@ class TestAVVideoCompositionHelper(AVFoundation.NSObject):
 
 
 class TestAVVideoComposition(TestCase):
+    def test_constants(self):
+        self.assertIsTypedEnum(
+            AVFoundation.AVVideoCompositionPerFrameHDRDisplayMetadataPolicy, str
+        )
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVVideoCompositionPerFrameHDRDisplayMetadataPolicyPropagate,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVVideoCompositionPerFrameHDRDisplayMetadataPolicyGenerate, str
+        )
+
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(
@@ -95,7 +110,7 @@ class TestAVVideoComposition(TestCase):
         self.assertArgHasType(
             TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_,  # noqa: B950
             1,
-            b"{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+            b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
         )
         self.assertResultIsBOOL(
             TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_  # noqa: B950

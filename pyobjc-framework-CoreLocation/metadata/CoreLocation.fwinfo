@@ -3,12 +3,44 @@
 {
  "definitions": {
   "enum": {
-    "kCLErrorGeocodeFoundNoResult": { "ignore": true },
-    "kCLErrorGeocodeCanceled": { "ignore": true },
     "CLActivityTypeAirborne": { "value": 5 },
     "kCLAuthorizationStatusAuthorizedAlways": { "value": 3 }
   },
   "classes": {
+   "CLMonitorConfiguration": {
+    "methods": [
+     {
+      "selector": "eventHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "@" },
+         "2": { "type": "@" }
+        },
+        "retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "configWithMonitorName:queue:eventHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "CLGeocoder": {
      "methods": [
         {

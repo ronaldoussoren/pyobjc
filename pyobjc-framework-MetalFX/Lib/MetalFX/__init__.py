@@ -5,26 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Metal
-import objc
-from MetalFX import _metadata
-import MetalFX._MetalFX
+def _setup():
+    import sys
 
-sys.modules["MetalFX"] = mod = objc.ObjCLazyModule(
-    "MetalFX",
-    "com.apple.MetalFX",
-    objc.pathForFramework("/System/Library/Frameworks/MetalFX.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,  # noqa: F405
-        "__loader__": globals().get("__loader__", None),
-    },
-    (MetalFX._MetalFX, Metal),
-)
+    import Metal
+    import objc
+    from . import _metadata, _MetalFX
 
-del sys.modules["MetalFX._metadata"]
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="MetalFX",
+        frameworkIdentifier="com.apple.MetalFX",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/MetalFX.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _MetalFX,
+            Metal,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["MetalFX._metadata"]
+
+
+globals().pop("_setup")()

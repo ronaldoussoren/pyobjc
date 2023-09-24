@@ -19,7 +19,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         v = MetalPerformanceShaders.MPSRayOriginMinDistanceDirectionMaxDistance()
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSRayOriginMinDistanceDirectionMaxDistance={_MPSPackedFloat3=fff}f{_MPSPackedFloat3=fff}f}",
+            b"{MPSRayOriginMinDistanceDirectionMaxDistance={_MPSPackedFloat3=fff}f{_MPSPackedFloat3=fff}f}",
         )
         self.assertEqual(v.origin, MetalPerformanceShaders.MPSPackedFloat3())
         self.assertEqual(v.minDistance, 0.0)
@@ -29,7 +29,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         v = MetalPerformanceShaders.MPSRayOriginMaskDirectionMaxDistance()
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSRayOriginMaskDirectionMaxDistance={_MPSPackedFloat3=fff}I{_MPSPackedFloat3=fff}f}",
+            b"{MPSRayOriginMaskDirectionMaxDistance={_MPSPackedFloat3=fff}I{_MPSPackedFloat3=fff}f}",
         )
         self.assertEqual(v.direction, MetalPerformanceShaders.MPSPackedFloat3())
         self.assertEqual(v.mask, 0)
@@ -39,7 +39,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         v = MetalPerformanceShaders.MPSRayPackedOriginDirection()
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSRayPackedOriginDirection={_MPSPackedFloat3=fff}{_MPSPackedFloat3=fff}}",
+            b"{MPSRayPackedOriginDirection={_MPSPackedFloat3=fff}{_MPSPackedFloat3=fff}}",
         )
         self.assertEqual(v.direction, MetalPerformanceShaders.MPSPackedFloat3())
         self.assertEqual(v.origin, MetalPerformanceShaders.MPSPackedFloat3())
@@ -55,7 +55,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
 
         v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexCoordinates()
         self.assertEqual(
-            v.__typestr__, b"{_MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>}"
+            v.__typestr__, b"{MPSIntersectionDistancePrimitiveIndexCoordinates=fI<2f>}"
         )
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
@@ -72,7 +72,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         )
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}",
+            b"{MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}",
         )
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
@@ -90,7 +90,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         )
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}",
+            b"{MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}",
         )
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
@@ -110,7 +110,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         )
         self.assertEqual(
             v.__typestr__,
-            b"{_MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}",
+            b"{MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}",
         )
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)

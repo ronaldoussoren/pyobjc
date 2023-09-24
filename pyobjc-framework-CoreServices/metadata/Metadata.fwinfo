@@ -381,7 +381,7 @@
         }
        ],
        "retval": {
-        "typestr": ["i", "q"]
+        "typestr": "q"
        }
       }
      },
@@ -398,7 +398,7 @@
         "1": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true },
         "2": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true }
        },
-       "retval": { "type": ["i", "q"] }
+       "retval": { "type": "q" }
       }
      }
     }

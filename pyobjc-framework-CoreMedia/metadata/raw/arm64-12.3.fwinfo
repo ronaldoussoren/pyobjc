@@ -1172,13 +1172,13 @@
     "typestr": "^{__CFString=}"
    },
    "kCMTimeIndefinite": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "kCMTimeInvalid": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "kCMTimeMappingInvalid": {
-    "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+    "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
    },
    "kCMTimeMappingSourceKey": {
     "typestr": "^{__CFString=}"
@@ -1187,22 +1187,22 @@
     "typestr": "^{__CFString=}"
    },
    "kCMTimeNegativeInfinity": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "kCMTimePositiveInfinity": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "kCMTimeRangeDurationKey": {
     "typestr": "^{__CFString=}"
    },
    "kCMTimeRangeInvalid": {
-    "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+    "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
    },
    "kCMTimeRangeStartKey": {
     "typestr": "^{__CFString=}"
    },
    "kCMTimeRangeZero": {
-    "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+    "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
    },
    "kCMTimeScaleKey": {
     "typestr": "^{__CFString=}"
@@ -1211,7 +1211,7 @@
     "typestr": "^{__CFString=}"
    },
    "kCMTimeZero": {
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "kCMTimebaseNotificationKey_EventTime": {
     "typestr": "^{__CFString=}"
@@ -1223,7 +1223,7 @@
     "typestr": "^{__CFString=}"
    },
    "kCMTimingInfoInvalid": {
-    "typestr": "{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+    "typestr": "{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
    }
   },
   "formal_protocols": {},
@@ -1609,7 +1609,7 @@
      },
      {
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "packetDescriptions",
@@ -1670,7 +1670,7 @@
      },
      {
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "packetDescriptions",
@@ -1710,7 +1710,7 @@
      },
      {
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "packetDescriptions",
@@ -1804,7 +1804,7 @@
      },
      {
       "name": "customBlockSource",
-      "typestr": "^{_CMBlockBufferCustomBlockSource=I^?^?^v}"
+      "typestr": "^{CMBlockBufferCustomBlockSource=I^?^?^v}"
      },
      {
       "name": "offsetToData",
@@ -1874,7 +1874,7 @@
      },
      {
       "name": "customBlockSource",
-      "typestr": "^{_CMBlockBufferCustomBlockSource=I^?^?^v}"
+      "typestr": "^{CMBlockBufferCustomBlockSource=I^?^?^v}"
      },
      {
       "name": "offsetToData",
@@ -1974,7 +1974,7 @@
      },
      {
       "name": "customBlockSource",
-      "typestr": "^{_CMBlockBufferCustomBlockSource=I^?^?^v}"
+      "typestr": "^{CMBlockBufferCustomBlockSource=I^?^?^v}"
      },
      {
       "name": "offsetToData",
@@ -2292,7 +2292,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetEndPresentationTimeStamp": {
@@ -2303,7 +2303,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetFirstDecodeTimeStamp": {
@@ -2314,7 +2314,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetFirstPresentationTimeStamp": {
@@ -2325,7 +2325,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetHead": {
@@ -2347,7 +2347,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetMinDecodeTimeStamp": {
@@ -2358,7 +2358,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetMinPresentationTimeStamp": {
@@ -2369,7 +2369,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMBufferQueueGetTotalSize": {
@@ -2427,7 +2427,7 @@
      },
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "triggerTokenOut",
@@ -2450,7 +2450,7 @@
      },
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "triggerTokenOut",
@@ -2696,7 +2696,7 @@
     "args": [
      {
       "name": "hostTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -2711,11 +2711,11 @@
      },
      {
       "name": "clockTimeOut",
-      "typestr": "^{_CMTime=qiIq}"
+      "typestr": "^{CMTime=qiIq}"
      },
      {
       "name": "referenceClockTimeOut",
-      "typestr": "^{_CMTime=qiIq}"
+      "typestr": "^{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -2741,7 +2741,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMClockGetTypeID": {
@@ -2774,7 +2774,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMClockMightDrift": {
@@ -3649,7 +3649,7 @@
      },
      {
       "name": "sampleRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "sampleBufferOut",
@@ -3710,7 +3710,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "numSampleSizeEntries",
@@ -3766,7 +3766,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sampleBufferOut",
@@ -3819,7 +3819,7 @@
      },
      {
       "name": "sampleTiming",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sampleBufferOut",
@@ -3851,7 +3851,7 @@
      },
      {
       "name": "sampleTiming",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sampleBufferOut",
@@ -3891,7 +3891,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "numSampleSizeEntries",
@@ -3927,7 +3927,7 @@
      },
      {
       "name": "sampleTiming",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "sampleBufferOut",
@@ -3967,7 +3967,7 @@
      },
      {
       "name": "sampleTimingArray",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "numSampleSizeEntries",
@@ -4102,7 +4102,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetDuration": {
@@ -4113,7 +4113,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetFormatDescription": {
@@ -4157,7 +4157,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetOutputDuration": {
@@ -4168,7 +4168,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetOutputPresentationTimeStamp": {
@@ -4179,7 +4179,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetOutputSampleTimingInfoArray": {
@@ -4194,7 +4194,7 @@
      },
      {
       "name": "timingArrayOut",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "timingArrayEntriesNeededOut",
@@ -4213,7 +4213,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSampleBufferGetSampleAttachmentsArray": {
@@ -4281,7 +4281,7 @@
      },
      {
       "name": "timingInfoOut",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -4300,7 +4300,7 @@
      },
      {
       "name": "timingArrayOut",
-      "typestr": "^{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "timingArrayEntriesNeededOut",
@@ -4504,7 +4504,7 @@
      },
      {
       "name": "outputPresentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -4853,7 +4853,7 @@
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "fromClockOrTimebase",
@@ -4865,7 +4865,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSyncGetRelativeRate": {
@@ -4899,11 +4899,11 @@
      },
      {
       "name": "outOfClockOrTimebaseAnchorTime",
-      "typestr": "^{_CMTime=qiIq}"
+      "typestr": "^{CMTime=qiIq}"
      },
      {
       "name": "outRelativeToClockOrTimebaseAnchorTime",
-      "typestr": "^{_CMTime=qiIq}"
+      "typestr": "^{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -4918,7 +4918,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMSyncMightDrift": {
@@ -5135,41 +5135,41 @@
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeAdd": {
     "args": [
      {
       "name": "lhs",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "rhs",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeClampToRange": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": {
@@ -5208,7 +5208,7 @@
      },
      {
       "name": "frameDuration",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "frameQuanta",
@@ -5292,7 +5292,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeCodeFormatDescriptionGetFrameQuanta": {
@@ -5321,11 +5321,11 @@
     "args": [
      {
       "name": "time1",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "time2",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -5336,7 +5336,7 @@
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "newTimescale",
@@ -5348,14 +5348,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeCopyAsDictionary": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "allocator",
@@ -5375,7 +5375,7 @@
      },
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -5387,22 +5387,22 @@
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "foldRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeGetSeconds": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -5421,7 +5421,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMakeFromDictionary": {
@@ -5432,7 +5432,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMakeWithEpoch": {
@@ -5451,7 +5451,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMakeWithSeconds": {
@@ -5466,52 +5466,52 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMapDurationFromRangeToRange": {
     "args": [
      {
       "name": "dur",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "fromRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "toRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMapTimeFromRangeToRange": {
     "args": [
      {
       "name": "t",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "fromRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "toRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMappingCopyAsDictionary": {
     "args": [
      {
       "name": "mapping",
-      "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+      "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
      },
      {
       "name": "allocator",
@@ -5531,7 +5531,7 @@
      },
      {
       "name": "mapping",
-      "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+      "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
      }
     ],
     "retval": {
@@ -5543,26 +5543,26 @@
     "args": [
      {
       "name": "source",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "target",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+     "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
     }
    },
    "CMTimeMappingMakeEmpty": {
     "args": [
      {
       "name": "target",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+     "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
     }
    },
    "CMTimeMappingMakeFromDictionary": {
@@ -5573,14 +5573,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+     "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
     }
    },
    "CMTimeMappingShow": {
     "args": [
      {
       "name": "mapping",
-      "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+      "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
      }
     ],
     "retval": {
@@ -5591,37 +5591,37 @@
     "args": [
      {
       "name": "time1",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "time2",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMinimum": {
     "args": [
      {
       "name": "time1",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "time2",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMultiply": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "multiplier",
@@ -5629,14 +5629,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMultiplyByFloat64": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "multiplier",
@@ -5644,14 +5644,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeMultiplyByRatio": {
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "multiplier",
@@ -5663,18 +5663,18 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeRangeContainsTime": {
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -5685,11 +5685,11 @@
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "otherRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -5700,7 +5700,7 @@
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "allocator",
@@ -5720,7 +5720,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -5732,11 +5732,11 @@
     "args": [
      {
       "name": "range1",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "range2",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -5747,71 +5747,71 @@
     "args": [
      {
       "name": "start",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "end",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+     "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
     }
    },
    "CMTimeRangeGetEnd": {
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimeRangeGetIntersection": {
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "otherRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+     "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
     }
    },
    "CMTimeRangeGetUnion": {
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "otherRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+     "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
     }
    },
    "CMTimeRangeMake": {
     "args": [
      {
       "name": "start",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+     "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
     }
    },
    "CMTimeRangeMakeFromDictionary": {
@@ -5822,14 +5822,14 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+     "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
     }
    },
    "CMTimeRangeShow": {
     "args": [
      {
       "name": "range",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -5840,7 +5840,7 @@
     "args": [
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -5851,15 +5851,15 @@
     "args": [
      {
       "name": "lhs",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "rhs",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimebaseAddTimer": {
@@ -6141,7 +6141,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimebaseGetTimeAndRate": {
@@ -6152,7 +6152,7 @@
      },
      {
       "name": "timeOut",
-      "typestr": "^{_CMTime=qiIq}"
+      "typestr": "^{CMTime=qiIq}"
      },
      {
       "name": "rateOut",
@@ -6179,7 +6179,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMTime=qiIq}"
+     "typestr": "{CMTime=qiIq}"
     }
    },
    "CMTimebaseGetTypeID": {
@@ -6253,11 +6253,11 @@
      },
      {
       "name": "timebaseTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "immediateSourceTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -6321,11 +6321,11 @@
      },
      {
       "name": "timebaseTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "immediateSourceTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -6372,7 +6372,7 @@
      },
      {
       "name": "time",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -6391,7 +6391,7 @@
      },
      {
       "name": "fireTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "flags",
@@ -6429,7 +6429,7 @@
      },
      {
       "name": "fireTime",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "flags",
@@ -6686,7 +6686,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CMVideoDimensions=ii}"
+     "typestr": "{CMVideoDimensions=ii}"
     }
    },
    "CMVideoFormatDescriptionGetExtensionKeysCommonWithImageBuffers": {
@@ -6807,7 +6807,7 @@
      "decodeTimeStamp"
     ],
     "special": true,
-    "typestr": "{_CMSampleTimingInfo={_CMTime=qiIq}{_CMTime=qiIq}{_CMTime=qiIq}}"
+    "typestr": "{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}"
    },
    "CMTime": {
     "fieldnames": [
@@ -6817,7 +6817,7 @@
      "epoch"
     ],
     "special": true,
-    "typestr": "{_CMTime=qiIq}"
+    "typestr": "{CMTime=qiIq}"
    },
    "CMTimeMapping": {
     "fieldnames": [
@@ -6825,7 +6825,7 @@
      "target"
     ],
     "special": true,
-    "typestr": "{_CMTimeMapping={_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}}"
+    "typestr": "{CMTimeMapping={CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}}"
    },
    "CMTimeRange": {
     "fieldnames": [
@@ -6833,7 +6833,7 @@
      "duration"
     ],
     "special": true,
-    "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+    "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
    },
    "CMVideoDimensions": {
     "fieldnames": [
@@ -6841,7 +6841,7 @@
      "height"
     ],
     "special": true,
-    "typestr": "{_CMVideoDimensions=ii}"
+    "typestr": "{CMVideoDimensions=ii}"
    }
   }
  },

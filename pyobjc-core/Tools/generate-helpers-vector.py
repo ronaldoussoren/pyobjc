@@ -56,7 +56,6 @@ MKIMP_PREFIX = "mkimp"
 
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 ALL_SIGNATURES = [
-    b"<16C>@:",
     b"<2d>@:",
     b"<2d>@:d",
     b"<2f>@:",
@@ -76,6 +75,8 @@ ALL_SIGNATURES = [
     b"<4f>@:",
     b"<4f>@:d",
     b"<4i>@:<3f>",
+    b"@@:<2d>@",
+    b"@@:<2d>q",
     b"@@:<2f>",
     b"@@:<2f><2I>q@",
     b"@@:<2f><2f>",
@@ -102,16 +103,18 @@ ALL_SIGNATURES = [
     b"@@:@Q<2f>",
     b"@@:@Q<3f>",
     b"@@:@Q<4f>",
-    b"@@:@Q{_matrix_float4x4=[4<4f>]}",
+    b"@@:@Q{simd_float4x4=[4<4f>]}",
     b"@@:@Z@<2i>qQqZ",
     b"@@:@q<2i>ffff",
     b"@@:@q<2i>fffff",
     b"@@:@{GKBox=<3f><3f>}",
     b"@@:@{GKQuad=<2f><2f>}",
-    b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f",
-    b"@@:@{_matrix_float2x2=[2<2f>]}",
-    b"@@:@{_matrix_float3x3=[3<3f>]}",
-    b"@@:@{_matrix_float4x4=[4<4f>]}",
+    b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f",
+    b"@@:@{simd_float2x2=[2<2f>]}",
+    b"@@:@{simd_float3x3=[3<3f>]}",
+    b"@@:@{simd_float4x4=[4<4f>]}",
+    b"@@:@{simd_quatf=<4f>}",
+    b"@@:@{simd_quatf=<4f>}@",
     b"@@:^{CGColor=}^{CGColor=}@<2i>",
     b"@@:f<2f><2f>",
     b"@@:f<2f><2f>#",
@@ -125,9 +128,9 @@ ALL_SIGNATURES = [
     b"@@:{GKBox=<3f><3f>}f",
     b"@@:{GKQuad=<2f><2f>}",
     b"@@:{GKQuad=<2f><2f>}f",
-    b"@@:{_MDLVoxelIndexExtent=<4i><4i>}",
-    b"@@:{_matrix_float4x4=[4<4f>]}",
-    b"@@:{_matrix_float4x4=[4<4f>]}Z",
+    b"@@:{MDLVoxelIndexExtent=<4i><4i>}",
+    b"@@:{simd_float4x4=[4<4f>]}",
+    b"@@:{simd_float4x4=[4<4f>]}Z",
     b"Z@:<2i>@@@@",
     b"Z@:<2i>qf@@@",
     b"Z@:<4i>ZZZZ",
@@ -135,6 +138,7 @@ ALL_SIGNATURES = [
     b"^{CGColor=}@:<3f>^{CGColorSpace=}",
     b"f@:<2f>",
     b"f@:<2i>",
+    b"v@:<2d>",
     b"v@:<2d>d",
     b"v@:<2f>",
     b"v@:<2f>d",
@@ -151,40 +155,39 @@ ALL_SIGNATURES = [
     b"v@:@<2f><2f>",
     b"v@:@<2f><2f>q",
     b"v@:f<2i>",
-    b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}",
-    b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z",
-    b"v@:{_matrix_double4x4=[4<4d>]}",
-    b"v@:{_matrix_double4x4=[4<4d>]}d",
-    b"v@:{_matrix_float2x2=[2<2f>]}",
-    b"v@:{_matrix_float3x3=[3<3f>]}",
-    b"v@:{_matrix_float4x4=[4<4f>]}",
-    b"v@:{_matrix_float4x4=[4<4f>]}d",
-    b"v@:{_simd_float4x4=[4<4f>]}",
-    b"v@:{_simd_quatd=<4d>}d",
-    b"v@:{_simd_quatf=<4f>}",
-    b"v@:{_simd_quatf=<4f>}<3f>",
-    b"v@:{_simd_quatf=<4f>}d",
+    b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}",
+    b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z",
+    b"v@:{simd_double4x4=[4<4d>]}",
+    b"v@:{simd_double4x4=[4<4d>]}d",
+    b"v@:{simd_float2x2=[2<2f>]}",
+    b"v@:{simd_float3x3=[3<3f>]}",
+    b"v@:{simd_float4x4=[4<4f>]}",
+    b"v@:{simd_float4x4=[4<4f>]}d",
+    b"v@:{simd_quatd=<4d>}d",
+    b"v@:{simd_quatf=<4f>}",
+    b"v@:{simd_quatf=<4f>}<3f>",
+    b"v@:{simd_quatf=<4f>}d",
     b"{GKBox=<3f><3f>}@:",
     b"{GKQuad=<2f><2f>}@:",
     b"{GKTriangle=[3<3f>]}@:Q",
-    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:",
-    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
-    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d",
-    b"{_MDLVoxelIndexExtent=<4i><4i>}@:",
+    b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:",
+    b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
+    b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d",
+    b"{MDLVoxelIndexExtent=<4i><4i>}@:",
+    b"{simd_double4x4=[4<4d>]}@:",
+    b"{simd_double4x4=[4<4d>]}@:d",
+    b"{simd_float2x2=[2<2f>]}@:",
+    b"{simd_float3x3=[3<3f>]}@:",
+    b"{simd_float4x4=[4<4f>]}@:",
+    b"{simd_float4x4=[4<4f>]}@:@d",
+    b"{simd_float4x4=[4<4f>]}@:d",
+    b"{simd_float4x4=[4<4f>]}@:{simd_float4x4=[4<4f>]}@",
+    b"{simd_quatd=<4d>}@:d",
+    b"{simd_quatf=<4f>}@:",
+    b"{simd_quatf=<4f>}@:d",
+    b"<16C>@:",
+    b"{MPSImageHistogramInfo=QZ<4f><4f>}@:",
     b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:",
-    b"{_MPSImageHistogramInfo=QZ<4f><4f>}@:",
-    b"{_matrix_double4x4=[4<4d>]}@:",
-    b"{_matrix_double4x4=[4<4d>]}@:d",
-    b"{_matrix_float2x2=[2<2f>]}@:",
-    b"{_matrix_float3x3=[3<3f>]}@:",
-    b"{_matrix_float4x4=[4<4f>]}@:",
-    b"{_matrix_float4x4=[4<4f>]}@:@d",
-    b"{_matrix_float4x4=[4<4f>]}@:d",
-    b"{_simd_float4x4=[4<4f>]}@:",
-    b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@",
-    b"{_simd_quatd=<4d>}@:d",
-    b"{_simd_quatf=<4f>}@:",
-    b"{_simd_quatf=<4f>}@:d",
 ]
 
 HELPER_PREFIX = """\
@@ -199,6 +202,25 @@ HELPER_PREFIX = """\
 #import <GameplayKit/GameplayKit.h>
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+
+#if PyObjC_BUILD_RELEASE >= 1013
+#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#endif
+
+#if PyObjC_BULD_RELEASE < 1013
+#define simd_uchar16 vector_uchar16
+#define simd_float2 vector_float2
+#define simd_float3 vector_float3
+#define simd_float4 vector_float4
+#define simd_double2 vector_double2
+#define simd_double3 vector_double3
+#define simd_double4 vector_double4
+#define simd_uint2 vector_uint2
+#define simd_uint3 vector_uint3
+#define simd_int2 vector_int2
+#define simd_int4 vector_int4
+#endif /*  PyObjC_BULD_RELEASE < 1013 */
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -490,6 +512,11 @@ class TestVectorCall(TestCase):
         self.addTypeEqualityFunc(simd.simd_quatf, "assertMatrixEqual")
         self.addTypeEqualityFunc(simd.simd_quatd, "assertMatrixEqual")
         self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float2x2, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float3x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_double4x4, "assertMatrixEqual")
 
     def assertMatrixEqual(self, first, second, msg=None):
         self.assertEqual(type(first), type(second))
@@ -829,9 +856,22 @@ def generate_setup_function(stream: typing.IO[str]):
     )
     print("{", file=stream)
 
-    for signature in ALL_SIGNATURES:
+    seen_call = {}
+    seen_mkimp = {}
+    for idx, signature in enumerate(ALL_SIGNATURES):
+        if b"GKBox" in signature:
+            print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
         call_name = function_name(CALL_PREFIX, signature)
         mkimp_name = function_name(MKIMP_PREFIX, signature)
+
+        if call_name in seen_call:
+            raise RuntimeError(f"{call_name}: {idx!r} {seen_call[call_name]!r}")
+        if mkimp_name in seen_call:
+            raise RuntimeError(f"{mkimp_name}: {idx!r} {seen_mkimp[mkimp_name]!r}")
+
+        seen_call[call_name] = idx
+        seen_mkimp[mkimp_name] = idx
+
         print("", file=stream)
         print(
             "    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE", file=stream
@@ -856,6 +896,9 @@ def generate_setup_function(stream: typing.IO[str]):
             print(f"        {mkimp_name}) == -1) {{", file=stream)
             print("            return -1; // LCOV_EXCL_LINE", file=stream)
             print("    }", file=stream)
+
+        if b"GKBox" in signature:
+            print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
 
     print("", file=stream)
     print("    return 0;", file=stream)
@@ -1144,7 +1187,7 @@ VALUES = {
         (simd.vector_float2(9, 10), simd.vector_float2(11, 12)),
         None,
     ),
-    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}": (
+    b"{MDLAxisAlignedBoundingBox=<3f><3f>}": (
         (simd.vector_float3(-8, -9, -10), simd.vector_float3(-11, -12, -13)),
         None,
     ),
@@ -1156,7 +1199,7 @@ VALUES = {
         LiteralRepr("'colorspace!'", '(CGColorSpaceRef)@"colorspace!"'),
         LiteralRepr("NoObjCValueObject"),
     ),
-    b"{_MDLVoxelIndexExtent=<4i><4i>}": (
+    b"{MDLVoxelIndexExtent=<4i><4i>}": (
         (simd.vector_int4(100, 101, 102, 103), simd.vector_int4(-20, -21, -22, -23)),
         None,
     ),
@@ -1170,7 +1213,7 @@ VALUES = {
         ),
         None,
     ),
-    b"{_MPSImageHistogramInfo=QZ<4f><4f>}": (
+    b"{MPSImageHistogramInfo=QZ<4f><4f>}": (
         (
             2**42,
             True,
@@ -1205,7 +1248,7 @@ def valid_value(typestr):
 
     if typestr.startswith(objc._C_STRUCT_B):
         name, elem = objc.splitStructSignature(typestr)
-        matrix = getattr(simd, name[1:], None)
+        matrix = getattr(simd, name, None)
         if matrix is not None:
             assert len(elem) == 1
             elemtp = elem[0][-1]
@@ -1218,14 +1261,14 @@ def valid_value(typestr):
 
                 value = (valid_value(elemtp),) * int(cnt)
                 return LiteralRepr(
-                    f"simd.{name[1:]}({value!r})",
-                    f"({name[1:]}){{{{{', '.join(as_objc_literal(elemtp, v) for v in value)}}}}}",
+                    f"simd.{name}({value!r})",
+                    f"({name}){{{{{', '.join(as_objc_literal(elemtp, v) for v in value)}}}}}",
                 )
             else:
                 value = valid_value(elemtp)
                 return LiteralRepr(
-                    f"simd.{name[1:]}({value!r})",
-                    f"({name[1:]}){{{as_objc_literal(elemtp, value)}}}",
+                    f"simd.{name}({value!r})",
+                    f"({name}){{{as_objc_literal(elemtp, value)}}}",
                 )
 
     return VALUES[typestr][0]
@@ -1467,8 +1510,13 @@ def main():
     with open(HELPER_FILE, "w") as stream:
         print(HELPER_PREFIX, file=stream)
         for signature in ALL_SIGNATURES:
+            if b"GKBox" in signature:
+                print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
+
             generate_call(stream, signature)
             generate_mkimp(stream, signature)
+            if b"GKBox" in signature:
+                print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
         generate_setup_function(stream)
         print("NS_ASSUME_NONNULL_END", file=stream)
 

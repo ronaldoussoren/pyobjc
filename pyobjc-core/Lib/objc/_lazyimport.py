@@ -4,7 +4,7 @@ Helper module that will enable lazy imports of Cocoa wrapper items.
 This improves startup times and memory usage, at the cost
 of not being able to use 'from Cocoa import *'
 """
-__all__ = ("ObjCLazyModule",)
+__all__ = ("ObjCLazyModule", "createFrameworkDirAndGetattr")
 
 import re
 import struct
@@ -13,17 +13,38 @@ import warnings
 
 import objc
 import types
+from collections import ChainMap
 from objc import getClassList, loadBundle, lookUpClass, nosuchclass_error
 
 ModuleType = types.ModuleType
 
 _name_re = re.compile("^[A-Za-z_][A-Za-z_0-9]*$")
 
+_DEFAULT_ALIASES = {
+    "ULONG_MAX": (sys.maxsize * 2) + 1,
+    "LONG_MAX": sys.maxsize,
+    "LONG_MIN": -sys.maxsize - 1,
+    "DBL_MAX": sys.float_info.max,
+    "DBL_MIN": sys.float_info.min,
+    "DBL_EPSILON": sys.float_info.epsilon,
+    "FLT_MAX": objc._FLT_MAX,
+    "FLT_MIN": objc._FLT_MIN,
+    "objc.NULL": objc.NULL,
+    "UINT32_MAX": 0xFFFFFFFF,
+}
+
+
+def _deprecation_level(value):
+    if isinstance(value, int):
+        return value
+    major, _, minor = value.partition(".")
+    return int(major) * 100 + int(minor)
+
 
 def _check_deprecated(name, deprecation_version):
     if (
-        objc.options.deprecation_warnings
-        and objc.options.deprecation_warnings >= deprecation_version
+        objc.options.deprecation_warnings != "0.0"
+        and _deprecation_level(objc.options.deprecation_warnings) >= deprecation_version
     ):
         warnings.warn(
             "%r is deprecated in macOS %d.%d"
@@ -31,6 +52,19 @@ def _check_deprecated(name, deprecation_version):
             objc.ApiDeprecationWarning,
             stacklevel=2,
         )
+
+
+def _prs_enum(val):
+    if val.startswith("'"):
+        (val,) = struct.unpack(">l", val[1:-1].encode("latin1"))
+
+    elif "." in val or "e" in val:
+        val = float(val)
+
+    else:
+        val = int(val)
+
+    return val
 
 
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
@@ -56,124 +90,96 @@ def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     return bundle
 
 
-class GetAttrMap:
-    __slots__ = ("_container",)
+class _GetAttrMap:
+    __slots__ = ("_getattr",)
 
-    def __init__(self, container):
-        self._container = container
+    def __init__(self, getattr_func):
+        self._getattr = getattr_func
 
     def __getitem__(self, key):
         if key == "CFSTR":
-            return lambda v: v.decode("utf-8")
+            return lambda v: v.decode()
         try:
-            return getattr(self._container, key)
+            return self._getattr(key)
         except AttributeError:
             raise KeyError(key)
 
 
-class ObjCLazyModule(ModuleType):
+def createFrameworkDirAndGetattr(
+    *,
+    name,
+    frameworkIdentifier,
+    frameworkPath,
+    globals_dict,
+    metadict,
+    inline_list,
+    parents,
+):
     """
-    A module type that loads PyObjC metadata lazily, that is constants, global
-    variables and functions are created from the metadata as needed. This
-    reduces the resource usage of PyObjC (both in time and memory), as most
-    symbols exported by frameworks are never used in programs.
+    Load the specified framework and return ``__dir__`` and ``__getattr__`` for the
+    framework bindings.
 
-    The loading code assumes that the metadata dictionary is valid, and invalid
-    metadata may cause exceptions other than AttributeError when accessing module
-    attributes.
+    The result should be assigned to module constants, e.g. in SomeFramework.py use:
+
+       __dir__, __getattr__ = objc.createFrameworkDirAndGetattr("SomeFramework", "...", "...", globals(), ...)
     """
 
-    # Define slots for all attributes, that way they don't end up it __dict__.
-    __slots__ = (
-        "_ObjCLazyModule__bundle",
-        "_ObjCLazyModule__enummap",
-        "_ObjCLazyModule__funcmap",
-        "_ObjCLazyModule__parents",
-        "_ObjCLazyModule__varmap",
-        "_ObjCLazyModule__inlinelist",
-        "_ObjCLazyModule__aliases",
-        "_ObjCLazyModule__informal_protocols",
-    )
+    # XXX: Implementation can be cleaned up, I've basically moved the old implementation
+    #      from ObjCLazyModule into this function with minor touch ups.
 
-    def __init__(
-        self,
-        name,
-        frameworkIdentifier,
-        frameworkPath,
-        metadict=None,
-        inline_list=None,
-        initialdict=None,
-        parents=(),
-    ):
-        super().__init__(name)
+    if frameworkIdentifier is not None or frameworkPath is not None:
+        bundle = globals_dict["__bundle__"] = _loadBundle(
+            name, frameworkIdentifier, frameworkPath
+        )
+    else:
+        bundle = None
 
-        if frameworkIdentifier is not None or frameworkPath is not None:
-            self.__bundle = self.__dict__["__bundle__"] = _loadBundle(
-                name, frameworkIdentifier, frameworkPath
-            )
-        else:
-            self.__bundle = None
+    if metadict is None:
+        metadict = {}
 
-        pfx = name + "."
-        for nm in list(sys.modules.keys()):
-            # See issue #95: there can be objects that aren't strings in
-            # sys.modules.
-            if hasattr(nm, "startswith") and nm.startswith(pfx):
-                rest = nm[len(pfx) :]  # noqa: E203
-                if "." in rest:
-                    continue
-                if sys.modules[nm] is not None:
-                    self.__dict__[rest] = sys.modules[nm]
+    globals_dict["__framework_identifier__"] = frameworkIdentifier
+    globals_dict.update(metadict.get("misc", {}))
 
-        if metadict is None:
-            metadict = {}
+    varmap = metadict.get("constants")
+    varmap_deprecated = metadict.get("deprecated_constants", {})
+    varmap_dct = metadict.get("constants_dict", {})
+    enummap = metadict.get("enums")
+    enum_deprecated = metadict.get("deprecated_enums", {})
+    funcmap = metadict.get("functions")
+    aliases = metadict.get("aliases")
+    aliases_deprecated = metadict.get("deprecated_aliases", {})
 
-        if initialdict:
-            self.__dict__.update(initialdict)
-        self.__dict__.update(metadict.get("misc", {}))
-        self.__parents = parents
-        self.__varmap = metadict.get("constants")
-        self.__varmap_deprecated = metadict.get("deprecated_constants", {})
-        self.__varmap_dct = metadict.get("constants_dict", {})
-        self.__enummap = metadict.get("enums")
-        self.__enum_deprecated = metadict.get("deprecated_enums", {})
-        self.__funcmap = metadict.get("functions")
-        self.__aliases = metadict.get("aliases")
-        self.__aliases_deprecated = metadict.get("deprecated_aliases", {})
-        self.__inlinelist = inline_list
+    # XXX: informal protocols are not exposed, but added here
+    # for completeness sake.
+    # informal_protocols = metadict.get("protocols")
 
-        # informal protocols are not exposed, but added here
-        # for completeness sake.
-        self.__informal_protocols = metadict.get("protocols")
+    expressions = metadict.get("expressions")
 
-        self.__expressions = metadict.get("expressions")
-        self.__expressions_mapping = GetAttrMap(self)
+    def __dir__():
+        if "__all__" in globals_dict:
+            return globals_dict["__all__"]
 
-        self.__load_cftypes(metadict.get("cftypes"))
+        globals_dict["__all__"] = calc_all()
+        return globals_dict["__all__"]
 
-    def __dir__(self):
-        return self.__all__
-
-    def __getattr__(self, name):
+    def __getattr__(name):
         if name == "__all__":
             # Load everything immediately
-            value = self.__calc_all()
-            self.__dict__[name] = value
+            value = calc_all()
+            globals_dict[name] = value
             return value
 
         # First try parent module, as if we had done
-        # 'from parents import *'
-        for p in self.__parents:
-            try:
-                value = getattr(p, name)
-            except AttributeError:
-                pass
-
-            else:
-                self.__dict__[name] = value
-                if "__all__" in self.__dict__:
-                    del self.__dict__["__all__"]
-                return value
+        # 'from parents import *' (andh hence don't
+        # look for private names in parent modules)
+        if not name.startswith("_"):
+            for p in parents:
+                try:
+                    value = getattr(p, name)
+                    globals_dict[name] = value
+                    return value
+                except AttributeError:
+                    pass
 
         if not _name_re.match(name):
             # Name is not a valid identifier and cannot
@@ -183,13 +189,12 @@ class ObjCLazyModule(ModuleType):
         # Check if the name is a constant from
         # the metadata files
         try:
-            value = self.__get_constant(name)
+            value = get_constant(name)
         except AttributeError:
             pass
+
         else:
-            self.__dict__[name] = value
-            if "__all__" in self.__dict__:
-                del self.__dict__["__all__"]
+            globals_dict[name] = value
             return value
 
         # Then check if the name is class
@@ -199,158 +204,101 @@ class ObjCLazyModule(ModuleType):
             pass
 
         else:
-            self.__dict__[name] = value
-            if "__all__" in self.__dict__:
-                del self.__dict__["__all__"]
+            globals_dict[name] = value
             return value
 
         # Finally give up and raise AttributeError
         raise AttributeError(name)
 
-    def __calc_all(self):
+    def calc_all():
         # Ensure that all dynamic entries get loaded
-        if self.__varmap_dct:
-            dct = {}
-            objc.loadBundleVariables(
-                self.__bundle,
-                dct,
-                [
-                    (nm, self.__varmap_dct[nm].encode("ascii"))
-                    for nm in self.__varmap_dct
-                    if not self.__varmap_dct[nm].startswith("=")
-                ],
-            )
-            for nm in dct:
-                if nm not in self.__dict__:
-                    self.__dict__[nm] = dct[nm]
+        #
+        # The code tries to resolve through 'expressions_mapping'
+        # to avoid code duplication, and to get some edge cases correct
+        nonlocal varmap, enummap, inline_list, expressions, aliases
 
-            for nm, tp in self.__varmap_dct.items():
-                if tp.startswith("=="):
-                    try:
-                        self.__dict__[nm] = objc._loadConstant(nm, tp[2:], 2)
-                    except AttributeError:
-                        pass
-                elif tp.startswith("="):
-                    try:
-                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], 1)
-                    except AttributeError:
-                        pass
+        if varmap_dct:
+            for nm in list(varmap_dct):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
 
-            self.__varmap_dct = {}
+            varmap_dct.clear()
 
-        if self.__varmap:
-            varmap = []
-            specials = []
-            for nm, tp in re.findall(
-                r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap
-            ):
+        if varmap:
+            for nm, _tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", varmap):
                 # An empty name can happen if the 'constants' definition
                 # is effectively happened (e.g. "$$").
-                if nm:
-                    if tp and tp.startswith("@="):
-                        specials.append((nm, tp[2:]))
-                    else:
-                        varmap.append((nm, b"@" if not tp else tp[1:].encode("ascii")))
+                if not nm:
+                    continue
 
-            dct = {}
-            if varmap:
-                objc.loadBundleVariables(self.__bundle, dct, varmap)
-
-            for nm in dct:
-                if nm not in self.__dict__:
-                    self.__dict__[nm] = dct[nm]
-
-            for nm, tp in specials:
                 try:
-                    if tp.startswith("="):
-                        self.__dict__[nm] = objc._loadConstant(nm, tp[1:], 2)
-                    else:
-                        self.__dict__[nm] = objc._loadConstant(nm, tp, 1)
-                except AttributeError:
+                    expressions_mapping[nm]
+                except KeyError:
+                    continue
+
+            varmap = ""
+
+        if enummap:
+            for nm, _val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", enummap):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
                     pass
 
-            self.__varmap = ""
+            enummap = ""
 
-        if self.__enummap:
-            for nm, val in re.findall(
-                r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap
-            ):
-                if nm not in self.__dict__:
-                    self.__dict__[nm] = self.__prs_enum(val)
-
-            self.__enummap = ""
-
-        if self.__funcmap:
-            func_list = []
-            for nm in self.__funcmap:
-                if nm not in self.__dict__:
-                    func_list.append((nm,) + self.__funcmap[nm])
-
-            dct = {}
-            objc.loadBundleFunctions(self.__bundle, dct, func_list)
-            for nm in dct:
-                self.__dict__[nm] = dct[nm]
-
-        if self.__inlinelist:
-            dct = {}
-            objc.loadFunctionList(
-                self.__inlinelist, dct, func_list, skip_undefined=True
-            )
-            for nm in dct:
-                self.__dict__[nm] = dct[nm]
-
-            self.__inlinelist = None
-
-        if self.__expressions:
-            for nm in list(self.__expressions):
+        if funcmap:
+            for nm in list(funcmap):
                 try:
-                    getattr(self, nm)
-                except AttributeError:
+                    expressions_mapping[nm]
+                except KeyError:
                     pass
 
-        if self.__aliases:
-            for nm in list(self.__aliases):
+            funcmap.clear()
+
+        inline_list = None
+
+        if expressions:
+            for nm in list(expressions):
                 try:
-                    getattr(self, nm)
-                except AttributeError:
+                    expressions_mapping[nm]
+                except KeyError:
                     pass
+            expressions = []
+
+        if aliases:
+            for nm in list(aliases):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
+            aliases = []
 
         all_names = set()
 
-        # Add all names that are already in our __dict__
-        all_names.update(self.__dict__)
+        # Add all names that are already globals_dict__
+        all_names.update(globals_dict)
 
         # Merge __all__of parents ('from parent import *')
-        for p in self.__parents:
+        for p in parents:
             try:
                 all_names.update(p.__all__)
             except AttributeError:
                 all_names.update(dir(p))
 
-        # Add all class names, ignoring names with a dot because
-        # those are not valid attribute names (and in general are private)
+        # Add all class names, ignoring names that aren't valid identifiers
         all_names.update(
-            cls.__name__ for cls in getClassList() if cls.__name__.isidentifier()
+            cls.__name__ for cls in getClassList(True) if cls.__name__.isidentifier()
         )
 
-        return [v for v in all_names if not v.startswith("_")]
+        return sorted({v for v in all_names if not v.startswith("_")})
 
-    def __prs_enum(self, val):
-        if val.startswith("'"):
-            (val,) = struct.unpack(">l", val[1:-1].encode("latin1"))
-
-        elif "." in val or "e" in val:
-            val = float(val)
-
-        else:
-            val = int(val)
-
-        return val
-
-    def __get_constant(self, name):
-        if self.__varmap_dct:
-            if name in self.__varmap_dct:
-                tp = self.__varmap_dct[name]
+    def get_constant(name):
+        if varmap_dct:
+            if name in varmap_dct:
+                tp = varmap_dct[name]
                 if tp.startswith("=="):
                     tp = tp[2:]
                     magic = 2
@@ -360,14 +308,14 @@ class ObjCLazyModule(ModuleType):
                 else:
                     magic = 0
                 result = objc._loadConstant(name, tp, magic)
-                self.__varmap_dct.pop(name)
-                if name in self.__varmap_deprecated:
-                    _check_deprecated(name, self.__varmap_deprecated[name])
+                varmap_dct.pop(name)
+                if name in varmap_deprecated:
+                    _check_deprecated(name, varmap_deprecated[name])
 
                 return result
 
-        if self.__varmap:
-            m = re.search(rf"\${name}(@[^$]*)?\$", self.__varmap)
+        if varmap:
+            m = re.search(rf"\${name}(@[^$]*)?\$", varmap)
             if m is not None:
                 tp = m.group(1)
                 if not tp:
@@ -387,86 +335,68 @@ class ObjCLazyModule(ModuleType):
 
                 result = objc._loadConstant(name, tp, magic)
 
-                if name in self.__varmap_deprecated:
-                    _check_deprecated(name, self.__varmap_deprecated[name])
+                if name in varmap_deprecated:
+                    _check_deprecated(name, varmap_deprecated[name])
 
                 return result
 
-        if self.__enummap:
-            m = re.search(rf"\${name}@([^$]*)\$", self.__enummap)
+        if enummap:
+            m = re.search(rf"\${name}@([^$]*)\$", enummap)
             if m is not None:
-                result = self.__prs_enum(m.group(1))
-                if name in self.__enum_deprecated:
-                    _check_deprecated(name, self.__enum_deprecated[name])
+                result = _prs_enum(m.group(1))
+                if name in enum_deprecated:
+                    _check_deprecated(name, enum_deprecated[name])
                 return result
 
-        if self.__funcmap:
-            if name in self.__funcmap:
-                info = self.__funcmap[name]
+        if funcmap:
+            if name in funcmap:
+                info = funcmap[name]
 
                 func_list = [(name,) + info]
 
                 d = {}
-                objc.loadBundleFunctions(self.__bundle, d, func_list)
+                objc.loadBundleFunctions(bundle, d, func_list)
                 if name in d:
-                    self.__funcmap.pop(name)
+                    funcmap.pop(name)
                     return d[name]
 
-                if self.__inlinelist is not None:
+                if inline_list is not None:
                     objc.loadFunctionList(
-                        self.__inlinelist, d, func_list, skip_undefined=True
+                        inline_list, d, func_list, skip_undefined=True
                     )
                     if name in d:
                         return d[name]
 
-        if self.__expressions:
-            if name in self.__expressions:
-                # NOTE: 'name' is popped because it is no longer needed
-                #       in the metadata and popping should slightly reduce
-                #       memory usage.
-                info = self.__expressions[name]
+        if expressions:
+            if name in expressions:
+                info = expressions[name]
                 try:
-                    result = eval(info, {}, self.__expressions_mapping)
-                    self.__expressions.pop(name)
+                    result = eval(info, {}, expressions_mapping)
+                    expressions.pop(name)
                     return result
                 except:  # noqa: E722, B001. Ignore all errors in evaluation the expression.
                     pass
 
-        if self.__aliases:
-            if name in self.__aliases:
-                alias = self.__aliases[name]
-                if alias == "ULONG_MAX":
-                    result = (sys.maxsize * 2) + 1
-                elif alias == "LONG_MAX":
-                    result = sys.maxsize
-                elif alias == "LONG_MIN":
-                    result = -sys.maxsize - 1
-                elif alias == "DBL_MAX":
-                    result = sys.float_info.max
-                elif alias == "DBL_MIN":
-                    result = sys.float_info.min
-                elif alias == "DBL_EPSILON":
-                    result = sys.float_info.epsilon
-                elif alias == "FLT_MAX":
-                    result = objc._FLT_MAX
-                elif alias == "FLT_MIN":
-                    result = objc._FLT_MIN
-                elif alias == "objc.NULL":
-                    result = objc.NULL
-                elif alias == "UINT32_MAX":
-                    result = 0xFFFFFFFF
+        if aliases:
+            if name in aliases:
+                alias = aliases[name]
+                aliases.pop(name)
+
+                if alias in _DEFAULT_ALIASES:
+                    result = _DEFAULT_ALIASES[alias]
                 else:
-                    result = getattr(self, alias)
+                    try:
+                        result = expressions_mapping[alias]
+                    except KeyError:
+                        raise AttributeError(name)
 
-                self.__aliases.pop(name)
-
-                if name in self.__aliases_deprecated:
-                    _check_deprecated(name, self.__aliases_deprecated[name])
+                if name in aliases_deprecated:
+                    _check_deprecated(name, aliases_deprecated[name])
                 return result
 
         raise AttributeError(name)
 
-    def __load_cftypes(self, cftypes):
+    def load_cftypes(cftypes):
         if not cftypes:
             return
 
@@ -482,7 +412,7 @@ class ObjCLazyModule(ModuleType):
                         break
                 try:
                     v = objc.registerCFSignature(name, typestr, None, tollfree)
-                    self.__dict__[name] = v
+                    globals_dict[name] = v
                     continue
                 except objc.nosuchclass_error:
                     pass
@@ -492,8 +422,8 @@ class ObjCLazyModule(ModuleType):
 
             else:
                 try:
-                    func = getattr(self, gettypeid_func)
-                except AttributeError:
+                    func = expressions_mapping[gettypeid_func]
+                except KeyError:
                     func = None
 
             if func is None:
@@ -503,9 +433,67 @@ class ObjCLazyModule(ModuleType):
                 # function. Proxy using the generic CFType
                 if tollfree is None:
                     v = objc.registerCFSignature(name, typestr, None, "NSCFType")
-                    self.__dict__[name] = v
+                    globals_dict[name] = v
 
                 continue
 
             v = objc.registerCFSignature(name, typestr, func())
-            self.__dict__[name] = v
+            globals_dict[name] = v
+
+    expressions_mapping = ChainMap(globals_dict, _GetAttrMap(__getattr__))
+    load_cftypes(metadict.get("cftypes"))
+
+    return __dir__, __getattr__
+
+
+class ObjCLazyModule(ModuleType):
+    """
+    A module type that loads PyObjC metadata lazily, that is constants, global
+    variables and functions are created from the metadata as needed. This
+    reduces the resource usage of PyObjC (both in time and memory), as most
+    symbols exported by frameworks are never used in programs.
+
+    The loading code assumes that the metadata dictionary is valid, and invalid
+    metadata may cause exceptions other than AttributeError when accessing module
+    attributes.
+    """
+
+    def __init__(
+        self,
+        name,
+        frameworkIdentifier,
+        frameworkPath,
+        metadict=None,
+        inline_list=None,
+        initialdict=None,
+        parents=(),
+    ):
+        # warnings.warn(
+        #    "'ObjCLazyModule' is deprecated, use 'createFrameworkDirAndGetattr' instead",
+        #    DeprecationWarning,
+        #    stacklevel=2,
+        # )
+        super().__init__(name)
+        self.__dir__, self.__getattr__ = createFrameworkDirAndGetattr(
+            name=name,
+            frameworkIdentifier=frameworkIdentifier,
+            frameworkPath=frameworkPath,
+            globals_dict=self.__dict__,
+            inline_list=inline_list,
+            parents=parents,
+            metadict=metadict,
+        )
+
+        pfx = name + "."
+        for nm in list(sys.modules.keys()):
+            # See issue #95: there can be objects that aren't strings in
+            # sys.modules.
+            if hasattr(nm, "startswith") and nm.startswith(pfx):
+                rest = nm[len(pfx) :]  # noqa: E203
+                if "." in rest:
+                    continue
+                if sys.modules[nm] is not None:
+                    self.__dict__[rest] = sys.modules[nm]
+
+        if initialdict:
+            self.__dict__.update(initialdict)

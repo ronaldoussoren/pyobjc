@@ -99,6 +99,9 @@ class TestNSTableViewHelper(AppKit.NSObject):
     def tableView_pasteboardWriterForRow_(self, tv, r):
         return 1
 
+    def tableView_userCanChangeVisibilityOfTableColumn_(self, a, b):
+        return 1
+
 
 class TestNSTableView(TestCase):
     def test_enum_types(self):
@@ -473,11 +476,13 @@ class TestNSTableView(TestCase):
             AppKit.NSPoint.__typestr__,
         )
 
-    @min_os_level("10.11")
-    def testProtococols10_11(self):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_rowActionsForRow_edge_, 1, objc._C_NSInteger
         )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_rowActionsForRow_edge_, 2, objc._C_NSInteger
+        )
+
+        self.assertResultIsBOOL(
+            TestNSTableViewHelper.tableView_userCanChangeVisibilityOfTableColumn_
         )

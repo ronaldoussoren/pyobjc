@@ -565,24 +565,36 @@ simd_ushort4 = vector_ushort4
 simd_uchar16 = vector_uchar16
 
 
-matrix_float2x2 = objc.createStructType(
-    "matrix_float2x2", b"{_matrix_float2x2=[2<2f>]}", ["columns"]
-)
-matrix_float3x3 = objc.createStructType(
-    "matrix_float3x3", b"{_matrix_float3x3=[3<3f>]}", ["columns"]
-)
-matrix_float4x3 = objc.createStructType(
-    "matrix_float4x3", b"{_matrix_float4x3=[4<3f>]}", ["columns"]
-)
-matrix_float4x4 = objc.createStructType(
-    "matrix_float4x4", b"{_matrix_float4x4=[4<4f>]}", ["columns"]
-)
-matrix_double4x4 = objc.createStructType(
-    "matrix_double4x4", b"{_matrix_double4x4=[4<4d>]}", ["columns"]
-)
-simd_quatf = objc.createStructType("simd_quatf", b"{_simd_quatf=<4f>}", ["vector"])
-simd_quatd = objc.createStructType("simd_quatd", b"{_simd_quatd=<4d>}", ["vector"])
+simd_quatf = objc.createStructType("simd_quatf", b"{simd_quatf=<4f>}", ["vector"])
+simd_quatd = objc.createStructType("simd_quatd", b"{simd_quatd=<4d>}", ["vector"])
 
-simd_float4x4 = objc.createStructType(
-    "simd_float4x4", b"{_simd_float4x4=[4<4f>]}", ["columns"]
+simd_float2x2 = objc.createStructType(
+    "simd_float2x2", b"{simd_float2x2=[2<2f>]}", ["columns"]
 )
+simd_float3x3 = objc.createStructType(
+    "simd_float3x3", b"{simd_float3x3=[3<3f>]}", ["columns"]
+)
+simd_float4x4 = objc.createStructType(
+    "simd_float4x4", b"{simd_float4x4=[4<4f>]}", ["columns"]
+)
+simd_float4x3 = objc.createStructType(
+    "simd_float4x3", b"{simd_float4x3=[4<3f>]}", ["columns"]
+)
+simd_double4x4 = objc.createStructType(
+    "simd_double4x4", b"{simd_double4x4=[4<4d>]}", ["columns"]
+)
+simd_double3x3 = objc.createStructType(
+    "simd_double3x3", b"{simd_double3x3=[3<3d>]}", ["columns"]
+)
+simd_double4x3 = objc.createStructType(
+    "simd_double4x3", b"{simd_double4x3=[4<3d>]}", ["columns"]
+)
+
+# Aliases for compatibility with system headers:
+matrix_float2x2 = simd_float2x2
+matrix_float3x3 = simd_float3x3
+matrix_float4x3 = simd_float4x3
+matrix_float4x4 = simd_float4x4
+matrix_double3x3 = simd_double3x3
+matrix_double4x4 = simd_double4x4
+matrix_double4x3 = simd_double4x3

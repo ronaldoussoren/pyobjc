@@ -1878,7 +1878,7 @@
      {
       "args": [],
       "class_method": false,
-      "required": true,
+      "required": false,
       "retval": {
        "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}",
        "typestr_special": false
@@ -1894,7 +1894,7 @@
        }
       ],
       "class_method": false,
-      "required": true,
+      "required": false,
       "retval": {
        "typestr": "v",
        "typestr_special": false
@@ -1905,7 +1905,7 @@
      {
       "args": [],
       "class_method": false,
-      "required": true,
+      "required": false,
       "retval": {
        "typestr": "@?",
        "typestr_special": false
@@ -1931,7 +1931,7 @@
        }
       ],
       "class_method": false,
-      "required": true,
+      "required": false,
       "retval": {
        "typestr": "v",
        "typestr_special": false

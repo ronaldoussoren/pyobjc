@@ -1156,6 +1156,7 @@
    "kAuthorizationFlagNoData": { "value": 1048576 },
    "kAuthorizationFlagPartialRights": { "value": 4 },
    "kAuthorizationFlagPreAuthorize": { "value": 16 },
+   "kAuthorizationFlagSkipInternalAuth": { "value": 512 },
    "kAuthorizationResultAllow": { "value": 0 },
    "kAuthorizationResultDeny": { "value": 1 },
    "kAuthorizationResultUndefined": { "value": 2 },
@@ -1359,6 +1360,17 @@
   "externs": {
    "kSecSubjectItemAttr": { "ignore": true },
    "kSecUseDataProtectionKeychain": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureDigestRFC4754SHA512": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA1": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA224": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA256": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA384": { "typestr": "@" },
+   "kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA512": { "typestr": "@" },
    "kSecTransformActionCanExecute": { "typestr": "@" },
    "kSecTransformActionStartingExecution": { "typestr": "@" },
    "kSecTransformActionFinalize": { "typestr": "@" },
@@ -2454,7 +2466,7 @@
     }
    },
    "SecTrustGetCertificateCount": {
-    "retval": { "type_override": ["i", "q"] },
+    "retval": { "type_override": "q"},
     "args": {
      "0": { "type_override": "@" }
     }
@@ -2463,7 +2475,7 @@
     "retval": { "type_override": "@" },
     "args": {
      "0": { "type_override": "@" },
-     "1": { "type_override": ["i", "q"] }
+     "1": { "type_override": "q"}
     }
    },
    "SecTrustGetTrustResult": {
@@ -3478,7 +3490,7 @@
     "args":  {
      "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
      "1": { "type_override": "@" },
-     "2": { "type_override": ["i", "q"] }
+     "2": { "type_override": "q"}
     },
     "retval": { "type_override": "@" }
    },
@@ -3486,7 +3498,7 @@
     "args":  {
      "0": { "type_override": "^{OpaqueSecTransformImplementation=}" },
      "1": { "type_override": "@" },
-     "2": { "type_override": ["i", "q"] },
+     "2": { "type_override": "q"},
      "3": { "type_override": "@" }
     },
     "retval": { "type_override": "@" }
@@ -3521,7 +3533,7 @@
    "SecDigestTransformCreate": {
     "args":  {
      "0": { "type_override": "@" },
-     "1": { "type_override": ["i", "q"] },
+     "1": { "type_override": "q"},
      "2": { "type_override": "o^@" }
     },
     "retval": { "type_override": "@", "already_cfretained": true }
@@ -3537,7 +3549,7 @@
     "args":  {
      "0": { "type_override": "@" },
      "1": { "type_override": "@" },
-     "2": { "type_override": ["I", "Q"] },
+     "2": { "type_override": "Q"},
      "3": { "type_override": "o^@" }
     },
     "retval": { "type_override": "@", "already_cfretained": true }
@@ -3658,7 +3670,7 @@
    "SecKeyIsAlgorithmSupported": {
     "args": {
      "0": { "type_override": "@" },
-     "1": { "type_override": [ "i", "q" ] },
+     "1": { "type_override": "q" },
      "2": { "type_override": "@" }
     },
     "retval": {
@@ -3677,7 +3689,7 @@
    },
    "SecPolicyCreateRevocation": {
     "args": {
-     "0": { "type_override": ["I", "Q"] }
+     "0": { "type_override": "Q"}
     },
     "retval": {
      "type_override": "@",
@@ -3877,21 +3889,21 @@
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecRequirementGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecTaskGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecTaskCopySigningIdentifier": {
@@ -3949,147 +3961,147 @@
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecStaticCodeGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecKeyGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecPolicyGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecTransformGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecGroupTransformGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecIdentityGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecTrustedApplicationGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecAccessControlGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecDigestTransformGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecDecryptTransformGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecEncryptTransformGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "CMSDecoderGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "CMSEncoderGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SSLContextGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecCodeGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecCertificateGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecKeychainItemGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecKeychainGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecTrustGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecAccessGetTypeID": {
     "args": {
     },
     "retval": {
-     "type_override": [ "I", "Q" ]
+     "type_override": "Q"
     }
    },
    "SecureDownloadCreateWithTicket": {

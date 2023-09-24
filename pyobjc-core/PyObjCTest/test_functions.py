@@ -247,24 +247,24 @@ class TestFunctions(TestCase):
             NSClassFromString.__metadata__()["deprecated"], 1005  # noqa: F821
         )
 
-        with deprecation_warnings(1004):
+        with deprecation_warnings("10.4"):
             self.assertNoDeprecationWarning(
                 lambda: NSClassFromString("NSObject")  # noqa: F821
             )
 
-        with deprecation_warnings(1005):
+        with deprecation_warnings("10.5"):
             self.assertDeprecationWarning(
                 lambda: NSClassFromString("NSObject")  # noqa: F821
             )
 
-        with deprecation_warnings(1008):
+        with deprecation_warnings("10.8"):
             self.assertDeprecationWarning(
                 lambda: NSClassFromString("NSObject")  # noqa: F821
             )
 
         with warnings.catch_warnings():
             warnings.simplefilter("error")
-            with deprecation_warnings(1008):
+            with deprecation_warnings("10.8"):
                 with self.assertRaisesRegex(
                     objc.ApiDeprecationWarning,
                     r"NSClassFromString\(\) is a deprecated API \(macOS 10.5\)",
@@ -272,18 +272,18 @@ class TestFunctions(TestCase):
                     NSClassFromString("NSObject")  # noqa: F821
 
         func = getOldDoubleFunc()
-        with deprecation_warnings(1004):
+        with deprecation_warnings("10.4"):
             self.assertNoDeprecationWarning(lambda: func(2))
 
-        with deprecation_warnings(1005):
+        with deprecation_warnings("10.5"):
             self.assertDeprecationWarning(lambda: func(2))
 
-        with deprecation_warnings(1008):
+        with deprecation_warnings("10.8"):
             self.assertDeprecationWarning(lambda: func(2))
 
         with warnings.catch_warnings():
             warnings.simplefilter("error")
-            with deprecation_warnings(1008):
+            with deprecation_warnings("10.8"):
                 with self.assertRaisesRegex(
                     objc.ApiDeprecationWarning,
                     r"objc.function instance\(\) is a deprecated API \(macOS 10.5\)",
@@ -291,31 +291,31 @@ class TestFunctions(TestCase):
                     func(2)
 
         func = getGetter()
-        with deprecation_warnings(1004):
+        with deprecation_warnings("10.4"):
             self.assertNoDeprecationWarning(lambda: func(None, None))
 
-        with deprecation_warnings(1005):
+        with deprecation_warnings("10.5"):
             self.assertDeprecationWarning(lambda: func(None, None))
 
-        with deprecation_warnings(1008):
+        with deprecation_warnings("10.8"):
             self.assertDeprecationWarning(lambda: func(None, None))
 
         with warnings.catch_warnings():
             warnings.simplefilter("error")
-            with deprecation_warnings(1008):
+            with deprecation_warnings("10.8"):
                 with self.assertRaisesRegex(
                     objc.ApiDeprecationWarning,
                     r"objc.function instance\(\) is a deprecated API \(macOS 10.5\)",
                 ):
                     func(None, None)
 
-        with deprecation_warnings(1004):
+        with deprecation_warnings("10.4"):
             self.assertNoDeprecationWarning(lambda: oldDoubleFunc(2))
 
-        with deprecation_warnings(1005):
+        with deprecation_warnings("10.5"):
             self.assertDeprecationWarning(lambda: oldDoubleFunc(2))
 
-        with deprecation_warnings(1008):
+        with deprecation_warnings("10.8"):
             self.assertDeprecationWarning(lambda: oldDoubleFunc(2))
 
     def test_function_raises(self):

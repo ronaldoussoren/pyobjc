@@ -9,6 +9,13 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSExternalRecordImportError, 134_200)
         self.assertEqual(CoreData.NSPersistentHistoryTokenExpiredError, 134_301)
 
+        self.assertEqual(CoreData.NSPersistentHistoryTokenExpiredError, 134301)
+        self.assertEqual(CoreData.NSManagedObjectModelReferenceNotFoundError, 134504)
+        self.assertEqual(
+            CoreData.NSStagedMigrationFrameworkVersionMismatchError, 134505
+        )
+        self.assertEqual(CoreData.NSStagedMigrationBackwardMigrationError, 134506)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(CoreData.NSSQLiteErrorDomain, str)

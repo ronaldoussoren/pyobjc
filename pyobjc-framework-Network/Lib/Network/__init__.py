@@ -5,33 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import Network._Network as _manual
-import objc
-from Network import _metadata
+def _setup():
+    import sys
 
-sys.modules["Network"] = mod = objc.ObjCLazyModule(
-    "Network",
-    "com.apple.Network",
-    objc.pathForFramework("/System/Library/Frameworks/Network.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (Foundation,),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _Network
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Network",
+        frameworkIdentifier="com.apple.Network",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Network.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _Network,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["Network._metadata"]
 
 
-del sys.modules["Network._metadata"]
-
-
-for nm in dir(_manual):
-    if nm.startswith("__"):
-        continue
-    setattr(mod, nm, getattr(_manual, nm))
+globals().pop("_setup")()

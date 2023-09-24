@@ -38,6 +38,27 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertIsInstance(v.motionEndTime, float)
         self.assertPickleRoundTrips(v)
 
+        v = Metal.MTLIndirectAccelerationStructureInstanceDescriptor()
+        self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.mask, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.userID, int)
+        self.assertIsInstance(v.accelerationStructureID, Metal.MTLResourceID)
+
+        v = Metal.MTLIndirectAccelerationStructureMotionInstanceDescriptor()
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.mask, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.userID, int)
+        self.assertIsInstance(v.accelerationStructureID, Metal.MTLResourceID)
+        self.assertIsInstance(v.motionTransformsStartIndex, int)
+        self.assertIsInstance(v.motionTransformsCount, int)
+        self.assertIsInstance(v.motionStartBorderMode, int)
+        self.assertIsInstance(v.motionEndBorderMode, int)
+        self.assertIsInstance(v.motionStartTime, float)
+        self.assertIsInstance(v.motionEndTime, float)
+
     def test_constants(self):
         self.assertEqual(Metal.MTLAccelerationStructureUsageNone, 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
@@ -62,6 +83,27 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeDefault, 0)
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeUserID, 1)
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeMotion, 2)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirect, 3
+        )
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirectMotion, 4
+        )
+
+        self.assertIsEnumType(Metal.MTLCurveType)
+        self.assertEqual(Metal.MTLCurveTypeRound, 0)
+        self.assertEqual(Metal.MTLCurveTypeFlat, 1)
+
+        self.assertIsEnumType(Metal.MTLCurveBasis)
+        self.assertEqual(Metal.MTLCurveBasisBSpline, 0)
+        self.assertEqual(Metal.MTLCurveBasisCatmullRom, 1)
+        self.assertEqual(Metal.MTLCurveBasisLinear, 2)
+        self.assertEqual(Metal.MTLCurveBasisBezier, 3)
+
+        self.assertIsEnumType(Metal.MTLCurveEndCaps)
+        self.assertEqual(Metal.MTLCurveEndCapsNone, 0)
+        self.assertEqual(Metal.MTLCurveEndCapsDisk, 1)
+        self.assertEqual(Metal.MTLCurveEndCapsSphere, 2)
 
     @min_os_level("11.0")
     def test_methods11_0(self):

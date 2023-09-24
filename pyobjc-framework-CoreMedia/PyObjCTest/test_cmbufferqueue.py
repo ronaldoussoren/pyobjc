@@ -152,3 +152,7 @@ class TestCMBufferQueue(TestCase):
         )
 
         self.assertArgIsBlock(CoreMedia.CMBufferQueueSetValidationHandler, 1, b"v@@")
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        self.assertResultIsCFRetained(CoreMedia.CMBufferQueueCopyHead)

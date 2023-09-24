@@ -13,7 +13,7 @@ class TestMDLCamera(TestCase):
 
     def testMethods(self):
         self.assertResultHasType(
-            ModelIO.MDLCamera.projectionMatrix, simd.matrix_float4x4.__typestr__
+            ModelIO.MDLCamera.projectionMatrix, simd.simd_float4x4.__typestr__
         )
 
         self.assertArgHasType(
@@ -85,17 +85,17 @@ class TestMDLCamera(TestCase):
 
         self.assertResultHasType(
             ModelIO.MDLStereoscopicCamera.leftViewMatrix,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             ModelIO.MDLStereoscopicCamera.rightViewMatrix,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             ModelIO.MDLStereoscopicCamera.leftProjectionMatrix,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             ModelIO.MDLStereoscopicCamera.rightProjectionMatrix,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )

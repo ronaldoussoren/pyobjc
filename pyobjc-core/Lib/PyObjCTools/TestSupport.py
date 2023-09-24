@@ -317,7 +317,7 @@ def os_level_between(min_release, max_release):
 _poolclass = objc.lookUpClass("NSAutoreleasePool")
 
 # NOTE: On at least OSX 10.8 there are multiple proxy classes for CFTypeRef...
-_nscftype = tuple(cls for cls in objc.getClassList() if "NSCFType" in cls.__name__)
+_nscftype = tuple(cls for cls in objc.getClassList(1) if "NSCFType" in cls.__name__)
 
 _typealias = {}
 
@@ -1221,6 +1221,14 @@ class TestCase(_unittest.TestCase):
         # XXX: exclude_cocoa may exclude too much depending on
         #      import order.
 
+        if hasattr(module, "__bundle__"):
+            with self.subTest("validate framework identifier"):
+                self.assertHasAttr(module, "__framework_identifier__")
+                self.assertEqual(
+                    module.__bundle__.bundleIdentifier(),
+                    module.__framework_identifier__,
+                )
+
         if exclude_cocoa:
             import Cocoa
 
@@ -1241,7 +1249,12 @@ class TestCase(_unittest.TestCase):
         }
 
         exclude_attrs = set(exclude_attrs)
+        exclude_attrs.add("FBSMutableSceneClientSettings")
+        exclude_attrs.add("FBSSceneClientSettings")
         exclude_attrs.add(("NSColor", "scn_C3DColorIgnoringColorSpace_success_"))
+        exclude_attrs.add(
+            ("AVKitPlatformColorClass", "scn_C3DColorIgnoringColorSpace_success_")
+        )
         exclude_attrs.add(
             ("PDFKitPlatformColor", "scn_C3DColorIgnoringColorSpace_success_")
         )
@@ -1281,7 +1294,7 @@ class TestCase(_unittest.TestCase):
         # Calculate all (interesting) names in the module. This pokes into
         # the implementation details of objc.ObjCLazyModule to avoid loading
         # all attributes (which is expensive for larger bindings).
-        if isinstance(module, objc.ObjCLazyModule):
+        if isinstance(module, objc.ObjCLazyModule) and False:
             module_names = []
             module_names.extend(
                 cls.__name__
@@ -1303,7 +1316,7 @@ class TestCase(_unittest.TestCase):
             # The module_names list might contain duplicates
             module_names = sorted(set(module_names))
         else:
-            module_names = sorted(dir(module))
+            module_names = sorted(set(dir(module)))
 
         for _idx, nm in enumerate(module_names):
             # print(f"{_idx}/{len(module_names)} {nm}")
@@ -1369,7 +1382,7 @@ class TestCase(_unittest.TestCase):
         else:
             self._skip_usepool = False
 
-    def run(self, *args):
+    def run(self, *args, **kwds):
         """
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
@@ -1380,7 +1393,7 @@ class TestCase(_unittest.TestCase):
             p = 1
 
         try:
-            _unittest.TestCase.run(self, *args)
+            _unittest.TestCase.run(self, *args, **kwds)
         finally:
             _gc.collect()
             del p

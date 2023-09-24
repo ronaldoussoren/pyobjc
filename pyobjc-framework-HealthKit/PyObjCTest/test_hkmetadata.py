@@ -198,6 +198,37 @@ class TestHKMetadata(TestCase):
             HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
         )
 
+        self.assertIsEnumType(HealthKit.HKWaterSalinity)
+        self.assertEqual(HealthKit.HKWaterSalinityFreshWater, 1)
+        self.assertEqual(HealthKit.HKWaterSalinitySaltWater, 2)
+
+        self.assertIsEnumType(HealthKit.HKCyclingFunctionalThresholdPowerTestType)
+        self.assertEqual(
+            HealthKit.HKCyclingFunctionalThresholdPowerTestTypeMaxExercise60Minute, 1
+        )
+        self.assertEqual(
+            HealthKit.HKCyclingFunctionalThresholdPowerTestTypeMaxExercise20Minute, 2
+        )
+        self.assertEqual(HealthKit.HKCyclingFunctionalThresholdPowerTestTypeRampTest, 3)
+        self.assertEqual(
+            HealthKit.HKCyclingFunctionalThresholdPowerTestTypePredictionExercise, 4
+        )
+
+        self.assertIsEnumType(HealthKit.HKPhysicalEffortEstimationType)
+        self.assertEqual(HealthKit.HKPhysicalEffortEstimationTypeActivityLookup, 1)
+        self.assertEqual(HealthKit.HKPhysicalEffortEstimationTypeDeviceSensed, 2)
+
     @min_os_level("13.3")
     def test_constants13_3(self):
         self.assertIsInstance(HealthKit.HKMetadataKeyHeadphoneGain, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(HealthKit.HKMetadataKeyAppleFitnessPlusSession, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWaterSalinity, str)
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyCyclingFunctionalThresholdPowerTestType, str
+        )
+        self.assertIsInstance(HealthKit.HKMetadataKeyActivityType, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyPhysicalEffortEstimationType, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyMaximumLightIntensity, str)

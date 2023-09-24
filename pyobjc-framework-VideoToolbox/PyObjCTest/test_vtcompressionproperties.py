@@ -302,3 +302,42 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_PreserveAlphaChannel,
             str,
         )
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_RecommendedParallelizationLimit,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_RecommendedParallelizedSubdivisionMinimumFrameCount,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_RecommendedParallelizedSubdivisionMinimumDuration,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MVHEVCVideoLayerIDs,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MVHEVCViewIDs,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MVHEVCLeftAndRightViewIDs,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HeroEye,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_StereoCameraBaseline,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HorizontalDisparityAdjustment,
+            str,
+        )

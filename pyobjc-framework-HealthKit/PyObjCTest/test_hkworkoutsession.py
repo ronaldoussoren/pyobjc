@@ -12,6 +12,10 @@ class TestHKWorkoutSession(TestCase):
         self.assertEqual(HealthKit.HKWorkoutSessionStatePrepared, 5)
         self.assertEqual(HealthKit.HKWorkoutSessionStateStopped, 6)
 
+        self.assertIsEnumType(HealthKit.HKWorkoutSessionType)
+        self.assertEqual(HealthKit.HKWorkoutSessionTypePrimary, 0)
+        self.assertEqual(HealthKit.HKWorkoutSessionTypeMirrored, 1)
+
     def test_protocols(self):
         self.assertProtocolExists("HKWorkoutSessionDelegate")
 

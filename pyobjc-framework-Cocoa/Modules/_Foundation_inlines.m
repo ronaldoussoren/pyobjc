@@ -80,12 +80,8 @@ static PyObjC_function_map function_map[] = {
     {"NSSwapLongLong", (PyObjC_Function_Pointer)&NSSwapLongLong},
     {"NSSwapShort", (PyObjC_Function_Pointer)&NSSwapShort},
     {"NSWidth", (PyObjC_Function_Pointer)&NSWidth},
-#if PyObjC_BUILD_RELEASE >= 1007
     {"CFBridgingRetain", (PyObjC_Function_Pointer)&CFBridgingRetain},
     {"CFBridgingRelease", (PyObjC_Function_Pointer)&CFBridgingRelease},
-#endif
-
-#ifndef NO_OBJC2_RUNTIME
     {"NSMakeCollectable", (PyObjC_Function_Pointer)&NSMakeCollectable},
     {"NSPointFromCGPoint", (PyObjC_Function_Pointer)&NSPointFromCGPoint},
     {"NSPointToCGPoint", (PyObjC_Function_Pointer)&NSPointToCGPoint},
@@ -93,7 +89,6 @@ static PyObjC_function_map function_map[] = {
     {"NSRectToCGRect", (PyObjC_Function_Pointer)&NSRectToCGRect},
     {"NSSizeFromCGSize", (PyObjC_Function_Pointer)&NSSizeFromCGSize},
     {"NSSizeToCGSize", (PyObjC_Function_Pointer)&NSSizeToCGSize},
-#endif
 
     {0, 0}};
 

@@ -423,7 +423,7 @@
          "typestr": "^{__HIShape=}"
         },
         {
-         "typestr": [ "^{CGRect={CGPoint=ff}{CGSize=ff}}", "^{CGRect={CGPoint=dd}{CGSize=dd}}"  ],
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}" ,
 	 "type_modifier": "n"
         },
         {
@@ -560,6 +560,7 @@
     }
    },
    "InvokeIconActionUPP": {
+    "ignore": true,
     "args": {
      "1": {},
      "2": {},
@@ -567,6 +568,7 @@
     }
    },
    "InvokeIconGetterUPP": {
+    "ignore": true,
     "args": {
      "1": {},
      "2": {}

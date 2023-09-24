@@ -5,27 +5,34 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from CoreMIDI import _metadata
-from CoreMIDI import _CoreMIDI, _inlines
+def _setup():
+    import sys
 
-sys.modules["CoreMIDI"] = mod = objc.ObjCLazyModule(
-    "CoreMIDI",
-    "com.apple.audio.midi.CoreMIDI",
-    "/System/Library/Frameworks/CoreMIDI.framework",
-    _metadata.__dict__,
-    _inlines._inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_CoreMIDI, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _CoreMIDI
+    from ._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreMIDI",
+        frameworkIdentifier="com.apple.audio.midi.CoreMIDI",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreMIDI.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(
+            _CoreMIDI,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreMIDI._metadata"]
 
 
-del sys.modules["CoreMIDI._metadata"]
+globals().pop("_setup")()

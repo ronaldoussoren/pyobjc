@@ -134,16 +134,16 @@ class TestOptions(TestCase):
 
     def test_deprecation_warnings(self):
         orig = objc.options.deprecation_warnings
-        self.assertEqual(objc.options.deprecation_warnings, 0)
+        self.assertEqual(objc.options.deprecation_warnings, "0.0")
         try:
-            objc.options.deprecation_warnings = 2
-            self.assertEqual(objc.options.deprecation_warnings, 2)
+            objc.options.deprecation_warnings = "10.2"
+            self.assertEqual(objc.options.deprecation_warnings, "10.2")
 
             with self.assertRaisesRegex(
                 TypeError,
-                r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
+                r"Expecting 'str' value for 'objc.options.deprecation_warnings', got instance of 'float'",
             ):
-                objc.options.deprecation_warnings = ""
+                objc.options.deprecation_warnings = 43.5
 
             with self.assertRaisesRegex(
                 AttributeError, "Cannot delete option 'deprecation_warnings'"

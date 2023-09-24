@@ -2,35 +2,27 @@ import CoreFoundation
 import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
+NSLocale = objc.lookUpClass("NSLocale")
+NSArray = objc.lookUpClass("NSArray")
+
 
 class TestLocale(TestCase):
-    def testTypes(self):
-        try:
-            cls = objc.lookUpClass("__NSCFLocale")
-            self.assertIs(CoreFoundation.CFLocaleRef, cls)
-        except objc.error:
-            try:
-                cls = objc.lookUpClass("NSCFLocale")
-                self.assertIs(CoreFoundation.CFLocaleRef, cls)
-            except objc.error:
-                self.assertIsCFType(CoreFoundation.CFLocaleRef)
-
     def testGetTypeID(self):
         self.assertIsInstance(CoreFoundation.CFLocaleGetTypeID(), int)
 
     def testInspection(self):
         locale = CoreFoundation.CFLocaleGetSystem()
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, NSLocale)
         locale = CoreFoundation.CFLocaleCopyCurrent()
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, NSLocale)
         idents = CoreFoundation.CFLocaleCopyAvailableLocaleIdentifiers()
-        self.assertIsInstance(idents, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(idents, NSArray)
         codes = CoreFoundation.CFLocaleCopyISOLanguageCodes()
-        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(codes, NSArray)
         codes = CoreFoundation.CFLocaleCopyISOCountryCodes()
-        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(codes, NSArray)
         codes = CoreFoundation.CFLocaleCopyISOCurrencyCodes()
-        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(codes, NSArray)
         val = CoreFoundation.CFLocaleCreateCanonicalLanguageIdentifierFromString(
             None, "de_DE"
         )
@@ -54,9 +46,9 @@ class TestLocale(TestCase):
         self.assertEqual(val, "nl_NL")
 
         locale = CoreFoundation.CFLocaleCreate(None, "nl_NL")
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, NSLocale)
         locale = CoreFoundation.CFLocaleCreateCopy(None, locale)
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, NSLocale)
         ident = CoreFoundation.CFLocaleGetIdentifier(locale)
         self.assertEqual(ident, "nl_NL")
         v = CoreFoundation.CFLocaleGetValue(
@@ -97,9 +89,9 @@ class TestLocale(TestCase):
     @min_os_level("10.5")
     def testFunctions10_5(self):
         codes = CoreFoundation.CFLocaleCopyCommonISOCurrencyCodes()
-        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(codes, NSArray)
         codes = CoreFoundation.CFLocaleCopyPreferredLanguages()
-        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        self.assertIsInstance(codes, NSArray)
 
     @min_os_level("10.5")
     def testConstants10_5(self):

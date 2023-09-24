@@ -1423,7 +1423,7 @@ static PyObject* _Nullable
     pysel_call(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwargs)
 #else
     pysel_vectorcall(PyObject* _self, PyObject* _Nonnull const* _Nonnull args,
-                     size_t nargsf, PyObject* _Nullable kwnames)
+                     size_t    nargsf, PyObject* _Nullable kwnames)
 #endif
 {
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
@@ -1500,11 +1500,11 @@ static PyObject* _Nullable
 
         if (nargsf & PY_VECTORCALL_ARGUMENTS_OFFSET) {
             /* We're allowed to use args[-1]; */
-            PyObject* tmp = args[-1];
+            PyObject* tmp          = args[-1];
             ((PyObject**)args)[-1] = self->base.sel_self;
 
-            result = PyObject_Vectorcall(self->callable, args - 1,
-                                         PyVectorcall_NARGS(nargsf) + 1, kwnames);
+            result                 = PyObject_Vectorcall(self->callable, args - 1,
+                                                         PyVectorcall_NARGS(nargsf) + 1, kwnames);
             ((PyObject**)args)[-1] = tmp;
         } else {
             /* Need to insert the self argument, but cannot use the args array for that

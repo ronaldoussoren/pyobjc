@@ -11,10 +11,19 @@
     ],
     "special": false,
     "typestr": "{_AVBeatRange=dd}"
+   },
+   "AVAudioVoiceProcessingOtherAudioDuckingConfiguration": {
+    "fieldnames": [
+     "enableAdvancedDucking",
+     "duckingLevel"
+    ],
+    "special": false,
+    "typestr": "{_AVAudioVoiceProcessingOtherAudioDuckingConfiguration=Zq}"
    }
   },
   "typed_enum": {
    "AVAudioSequencerInfoDictionaryKey": { "type": "@", "type_name": "NSString" },
+   "AVCaptureReactionType": { "type": "@", "type_name": "NSString" },
    "AVPlayerInterstitialEventCue": { "type": "@", "type_name": "NSString" },
    "AVAssetWriterInputMediaDataLocation": { "type": "@", "type_name": "NSString" },
    "AVAssetImageGeneratorApertureMode": { "type": "@", "type_name": "NSString" },
@@ -42,9 +51,22 @@
    "AVCaptureSystemPressureLevel": { "type": "@", "type_name": "NSString" },
    "AVMetadataObjectType": { "type": "@", "type_name": "NSString" },
    "AVCaptureDeviceType": { "type": "@", "type_name": "NSString" },
-   "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" }
+   "AVCaptionSettingsKey": { "type": "@", "type_name": "NSString" },
+   "AVVideoCompositionPerFrameHDRDisplayMetadataPolicy": { "type": "@", "type_name": "NSString" }
   },
   "enum_type": {
+   "AVAudioVoiceProcessingOtherAudioDuckingLevel": {
+    "type": "Q"
+   },
+   "AVSpeechSynthesisVoiceTraits": {
+    "type": "Q"
+   },
+   "AVAudioVoiceProcessingSpeechActivityEvent": {
+    "type": "q"
+   },
+   "AVAudioApplicationRecordPermission": {
+    "type": "q"
+   },
    "AVPlayerInterstitialEventAssetListResponseStatus": {
     "type": "q"
    },
@@ -167,10 +189,23 @@
    },
    "AVAudioConverterInputStatus": {
     "type": "q"
+   },
+   "AVSpeechSynthesisPersonalVoiceAuthorizationStatus": {
+    "type": "Q"
    }
   },
   "enum": {
+   "AVAudioApplicationRecordPermissionUndetermined": { "value":  1970168948 },
+   "AVAudioVoiceProcessingOtherAudioDuckingLevelDefault": { "value":  0 },
+   "AVAudioVoiceProcessingOtherAudioDuckingLevelMin": { "value":  10 },
+   "AVAudioVoiceProcessingOtherAudioDuckingLevelMid": { "value":  20 },
+   "AVAudioVoiceProcessingOtherAudioDuckingLevelMax": { "value":  30 },
+   "AVAudioApplicationRecordPermissionDenied": { "value":  1684369017 },
+   "AVAudioApplicationRecordPermissionGranted": { "value":  1735552628 },
    "AVMIDIControlChangeMessageTypeBankSelect": { "value": 0 },
+   "AVSpeechSynthesisMarkerMarkBookmark": { "value": 4 },
+   "AVAudioVoiceProcessingSpeechActivityStarted": { "value": 0 },
+   "AVAudioVoiceProcessingSpeechActivityEnded": { "value": 1 },
    "AVMIDIControlChangeMessageTypeModWheel": { "value": 1 },
    "AVMIDIControlChangeMessageTypeBreath": { "value": 2 },
    "AVMIDIControlChangeMessageTypeFoot": { "value": 4 },
@@ -260,9 +295,23 @@
    "AVErrorAirPlayReceiverRequiresInternet": { "value": -11857 },
    "AVCaptureAutoFocusRangeRestrictionFar": { "value": 2 },
    "AVCaptureAutoFocusRangeRestrictionNear": { "value": 1 },
+   "AVSpeechSynthesisPersonalVoiceAuthorizationStatusNotDetermined": { "value": 0 },
+   "AVSpeechSynthesisPersonalVoiceAuthorizationStatusDenied": { "value": 1 },
+   "AVSpeechSynthesisPersonalVoiceAuthorizationStatusUnsupported": { "value": 2 },
+   "AVSpeechSynthesisPersonalVoiceAuthorizationStatusAuthorized": { "value": 3 },
+   "AVSpeechSynthesisVoiceTraitNone": { "value": 0 },
+   "AVSpeechSynthesisVoiceTraitIsNoveltyVoice": { "value": 1 },
+   "AVSpeechSynthesisVoiceTraitIsPersonalVoice": { "value": 2 },
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVAudioApplicationInputMuteStateChangeNotification": { "typestr": "@" },
+   "AVAudioApplicationMuteStateKey": { "typestr": "@" },
+   "AVCaptureDeviceTypeContinuityCamera,": { "typestr": "@" },
+   "AVAudioApplicationInputMuteStateChangeNotification": { "typestr": "@" },
+   "AVCaptureDeviceTypeContinuityCamera": { "typestr": "@" },
+   "AVCaptureReactionType": { "typestr": "I" },
+   "AVSpeechSynthesisAvailableVoicesDidChangeNotification": { "typestr": "@" },
    "AVExtendedNoteOnEventDefaultInstrument": { "typestr": "I" },
    "AVAudioSequencerInfoDictionaryKeyAlbum": { "typestr": "@" },
    "AVAudioSequencerInfoDictionaryKeyApproximateDurationInSeconds": { "typestr": "@" },
@@ -408,6 +457,17 @@
    "AVFrameRateRange": "AVFrameRateRange_Tundra"
   },
   "classes": {
+   "AVExternalStorageDevice": {
+    "methods": [
+     {
+      "selector": "nextAvailableURLsWithPathExtensions:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVPlayerLayer": {
     "methods": [
      {
@@ -592,6 +652,54 @@
      }
     ]
    },
+   "AVAudioApplication": {
+    "methods": [
+     {
+      "selector": "isInputMuted",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setInputMuteStateChangeHandler:error:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "typestr": "Z" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 }
+        }
+       },
+       "1":  { "type_modifier": "o" }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "requestRecordPermissionWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 }
+        }
+       }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     }
+    ]
+   },
    "AVSpeechSynthesizer": {
     "methods": [
      {
@@ -613,6 +721,21 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" }
+	 }
+        }
+       }
+      }
+     },
+     {
+      "selector": "requestPersonalVoiceAuthorizationWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" }
 	 }
         }
        }
@@ -831,7 +954,7 @@
 	 "arguments": {
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "I" },
-	  "2": { "typestr": [ "o^i", "o^q" ] }
+	  "2": { "typestr": "o^q" }
 	 }
         }
        }
@@ -926,10 +1049,10 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "1": { "typestr": "{CMTime=qiIq}" },
 	  "2": { "typestr": "^{CGImage=}" },
-	  "3": { "typestr": "{_CMTime=qiIq}" },
-	  "4": { "typestr": ["i", "q"] }
+	  "3": { "typestr": "{CMTime=qiIq}" },
+	  "4": { "typestr": "q"}
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -1066,7 +1189,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" },
+	  "1": { "typestr": "{CMTime=qiIq}" },
 	  "2": { "typestr": "@" }
 	 },
 	 "retval": { "typestr": "v" }
@@ -1354,7 +1477,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "i", "q" ] },
+	  "3": { "typestr": "q" },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
@@ -1372,7 +1495,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "q" },
 	  "2": { "typestr": "C" },
-	  "3": { "typestr": [ "i", "q" ] },
+	  "3": { "typestr": "q" },
 	  "4": { "typestr": "n^v", "c_array_length_in_arg": 3 }
 	 }
 	}
@@ -1384,7 +1507,7 @@
       "class_method": false,
       "retval": {
        "callable": {
-        "retval": { "typestr": [ "i", "q" ] },
+        "retval": { "typestr": "q" },
 	"arguments": {
 	 "0": { "typestr": "^v" },
 	 "1": { "typestr": "I" },
@@ -1543,6 +1666,22 @@
    },
    "AVAudioInputNode": {
     "methods": [
+     {
+      "selector": "setMutedSpeechActivityEventListener:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "q" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "setManualRenderingInputPCMFormat:inputBlock:",
       "class_method": false,
@@ -2593,7 +2732,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" }
+	  "1": { "typestr": "{CMTime=qiIq}" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -2831,7 +2970,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_CMTime=qiIq}" }
+	  "1": { "typestr": "{CMTime=qiIq}" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3232,7 +3371,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3247,7 +3386,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3262,7 +3401,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3277,7 +3416,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "i", "q" ] }
+	  "1": { "typestr": "q" }
 	 },
 	 "retval": { "typestr": "v" }
 	}
@@ -3361,23 +3500,23 @@
       "selector": "URLSession:aggregateAssetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:forMediaSelection:",
       "class_method": false,
       "args": {
-       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
-       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+       "2": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" },
+       "4": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
       }
      },
      {
       "selector": "URLSession:assetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:",
       "class_method": false,
       "args": {
-       "2": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" },
-       "4": { "type_override": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}" }
+       "2": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" },
+       "4": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
       }
      },
      {
       "selector": "speechSynthesizer:willSpeakRangeOfSpeechString:utterance:",
       "class_method": false,
       "args": {
-       "1": { "type_override": [ "{_NSRange=II}", "{_NSRange=QQ}" ] }
+       "1": { "type_override": "{_NSRange=QQ}" }
       }
      },
      {
@@ -3428,20 +3567,20 @@
      },
      {
       "args": {
-       "1": { "type_override": ["I", "Q"] }
+       "1": { "type_override": "Q" }
       },
       "class_method": false,
       "selector": "destinationForMixer:bus:"
      },
      {
       "args": {
-       "0": { "type_override": ["i", "q"] }
+       "0": { "type_override": "q" }
       },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      },
      {
-      "retval": { "type_override": ["i", "q"] },
+      "retval": { "type_override": "q" },
       "class_method": false,
       "selector": "setRenderingAlgorithm:"
      }

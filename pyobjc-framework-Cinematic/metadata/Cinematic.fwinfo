@@ -1,0 +1,100 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CNCompositionInfo": {
+    "methods": [
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "insertTimeRange:ofCinematicAssetInfo:atTime:error:"
+     }
+    ]
+   },
+   "CNDetection": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "disparityInNormalizedRect:sourceDisparity:detectionType:priorDisparity:"
+     }
+    ]
+   },
+   "CNObjectTracker": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "findObjectAtPoint:sourceImage:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "startTrackingAt:within:sourceImage:sourceDisparity:"
+     },
+     {
+      "args": {
+       "1": {},
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "continueTrackingAt:sourceImage:sourceDisparity:"
+     }
+    ]
+   },
+   "CNRenderingSession": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "encodeRenderToCommandBuffer:frameAttributes:sourceImage:sourceDisparity:destinationImage:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeRenderToCommandBuffer:frameAttributes:sourceImage:sourceDisparity:destinationRGBA:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeRenderToCommandBuffer:frameAttributes:sourceImage:sourceDisparity:destinationLuma:destinationChroma:"
+     }
+    ]
+   },
+   "CNRenderingSessionFrameAttributes": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithSampleBuffer:sessionAttributes:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

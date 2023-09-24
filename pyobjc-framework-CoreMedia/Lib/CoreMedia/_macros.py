@@ -1,4 +1,12 @@
-import CoreMedia
+import CoreMedia as _CoreMedia
+
+
+def CMTAG_IS_VALID(tag):
+    return tag.dataType != _CoreMedia.kCMTagDataType_Invalid
+
+
+def CMTAG_IS_INVALID(tag):
+    return tag.dataType == _CoreMedia.kCMTagDataType_Invalid
 
 
 def CMTIMERANGE_IS_VALID(aRange):
@@ -21,7 +29,7 @@ def CMTIMERANGE_IS_INDEFINITE(aRange):
 
 
 def CMTIMERANGE_IS_EMPTY(aRange):
-    return CMTIMERANGE_IS_VALID(aRange) and aRange.duration == CoreMedia.kCMTimeZero
+    return CMTIMERANGE_IS_VALID(aRange) and aRange.duration == _CoreMedia.kCMTimeZero
 
 
 def CMTIMEMAPPING_IS_VALID(mapping):
@@ -39,16 +47,16 @@ def CMTIMEMAPPING_IS_EMPTY(mapping):
 
 
 def CMSimpleQueueGetFullness(queue):
-    if CoreMedia.CMSimpleQueueGetCapacity(queue):
-        return CoreMedia.CMSimpleQueueGetCount(
+    if _CoreMedia.CMSimpleQueueGetCapacity(queue):
+        return _CoreMedia.CMSimpleQueueGetCount(
             queue
-        ) / CoreMedia.CMSimpleQueueGetCapacity(queue)
+        ) / _CoreMedia.CMSimpleQueueGetCapacity(queue)
     else:
         return 0.0
 
 
 def CMTIME_IS_VALID(time):
-    return (time.flags & CoreMedia.kCMTimeFlags_Valid) != 0
+    return (time.flags & _CoreMedia.kCMTimeFlags_Valid) != 0
 
 
 def CMTIME_IS_INVALID(time):
@@ -58,32 +66,35 @@ def CMTIME_IS_INVALID(time):
 def CMTIME_IS_POSITIVE_INFINITY(time):
     return (
         CMTIME_IS_VALID(time)
-        and (time.flags & CoreMedia.kCMTimeFlags_PositiveInfinity) != 0
+        and (time.flags & _CoreMedia.kCMTimeFlags_PositiveInfinity) != 0
     )
 
 
 def CMTIME_IS_NEGATIVE_INFINITY(time):
     return (
         CMTIME_IS_VALID(time)
-        and (time.flags & CoreMedia.kCMTimeFlags_NegativeInfinity) != 0
+        and (time.flags & _CoreMedia.kCMTimeFlags_NegativeInfinity) != 0
     )
 
 
 def CMTIME_IS_INDEFINITE(time):
     return (
-        CMTIME_IS_VALID(time) and (time.flags & CoreMedia.kCMTimeFlags_Indefinite) != 0
+        CMTIME_IS_VALID(time) and (time.flags & _CoreMedia.kCMTimeFlags_Indefinite) != 0
     )
 
 
 def CMTIME_IS_NUMERIC(time):
     return (
         time.flags
-        & (CoreMedia.kCMTimeFlags_Valid | CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask)
-    ) == CoreMedia.kCMTimeFlags_Valid
+        & (
+            _CoreMedia.kCMTimeFlags_Valid
+            | _CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask
+        )
+    ) == _CoreMedia.kCMTimeFlags_Valid
 
 
 def CMTIME_HAS_BEEN_ROUNDED(time):
     return (
         CMTIME_IS_NUMERIC(time)
-        and (time.flags & CoreMedia.kCMTimeFlags_HasBeenRounded) != 0
+        and (time.flags & _CoreMedia.kCMTimeFlags_HasBeenRounded) != 0
     )

@@ -39,3 +39,7 @@ class TestNSScreen(TestCase):
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(AppKit.NSScreen.canRepresentDisplayGamut_)
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsSEL(AppKit.NSScreen.displayLinkWithTarget_selector_, 1, b"v@:@")

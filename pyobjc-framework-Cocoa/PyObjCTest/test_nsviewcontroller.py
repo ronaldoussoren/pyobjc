@@ -32,6 +32,13 @@ class TestNSViewController(TestCase):
             b"v",
         )
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBOOL(
+            AppKit.NSViewController.presentViewController_asPopoverRelativeToRect_ofView_preferredEdge_behavior_hasFullSizeContent_,
+            5,
+        )
+
     @min_os_level("10.10")
     def testProtocols10_10(self):
         self.assertProtocolExists("NSViewControllerPresentationAnimator")

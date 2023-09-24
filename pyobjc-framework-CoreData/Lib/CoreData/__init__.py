@@ -5,28 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from CoreData import _metadata
-from CoreData import _CoreData
+def _setup():
+    import sys
 
-sys.modules["CoreData"] = objc.ObjCLazyModule(
-    "CoreData",
-    "com.apple.CoreData",
-    objc.pathForFramework("/System/Library/Frameworks/CoreData.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (_CoreData, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _CoreData
 
-from CoreData import _convenience  # isort: ignore  # noqa: E402, F401
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreData",
+        frameworkIdentifier="com.apple.CoreData",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreData.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _CoreData,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
 
-del sys.modules["CoreData._metadata"]
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreData._metadata"]
+
+
+globals().pop("_setup")()

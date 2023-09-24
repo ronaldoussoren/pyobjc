@@ -53,3 +53,14 @@ class TestAVB17221AECPInterface(TestCase):
         self.assertArgIsBOOL(
             AudioVideoBridging.AVB17221AECPAEMMessage.setControllerRequest_, 0
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            AudioVideoBridging.AVB17221AECPInterface.sendVendorUniqueCommand_toMACAddress_expectResponseWithinTimeout_completionHandler_
+        )
+        self.assertArgIsBlock(
+            AudioVideoBridging.AVB17221AECPInterface.sendVendorUniqueCommand_toMACAddress_expectResponseWithinTimeout_completionHandler_,
+            3,
+            AVB17221AECPInterfaceCompletion,
+        )

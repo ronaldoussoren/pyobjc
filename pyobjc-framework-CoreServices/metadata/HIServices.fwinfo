@@ -394,7 +394,7 @@
          "typestr": "^{__HIShape=}"
         },
         {
-         "typestr": [ "^{CGRect={CGPoint=ff}{CGSize=ff}}", "^{CGRect={CGPoint=dd}{CGSize=dd}}"  ],
+         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"  ,
 	 "type_modifier": "n"
         },
         {

@@ -95,6 +95,9 @@ class TestAudioHardware(TestCase):
         )
         self.assertEqual(CoreAudio.kAudioHardwarePropertyUserIDChanged, fourcc(b"euid"))
         self.assertEqual(
+            CoreAudio.kAudioHardwarePropertyProcessInputMute, fourcc(b"pmin")
+        )
+        self.assertEqual(
             CoreAudio.kAudioHardwarePropertyProcessIsAudible, fourcc(b"pmut")
         )
         self.assertEqual(
@@ -273,6 +276,13 @@ class TestAudioHardware(TestCase):
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertySubMute, fourcc(b"smut"))
 
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionEnable, fourcc(b"vAd+")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionState, fourcc(b"vAdS")
+        )
+
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b"aagg"))
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceUIDKey, b"uid")
@@ -408,6 +418,12 @@ class TestAudioHardware(TestCase):
         self.assertArgIsOut(CoreAudio.AudioDeviceTranslateTime, 2)
 
         self.assertArgIsInOut(CoreAudio.AudioDeviceGetNearestStartTime, 1)
+
+        self.assertEqual(CoreAudio.kAudioAggregateDriftCompensationMinQuality, 0)
+        self.assertEqual(CoreAudio.kAudioAggregateDriftCompensationLowQuality, 0x20)
+        self.assertEqual(CoreAudio.kAudioAggregateDriftCompensationMediumQuality, 0x40)
+        self.assertEqual(CoreAudio.kAudioAggregateDriftCompensationHighQuality, 0x60)
+        self.assertEqual(CoreAudio.kAudioAggregateDriftCompensationMaxQuality, 0x7F)
 
     @min_os_level("10.11")
     def test_functions10_11(self):

@@ -42,6 +42,12 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
     def setImageblockWidth_height_(self, a, b):
         pass
 
+    def setVertexBuffer_offset_attributeStride_atIndex_(self, a, b, c, d):
+        pass
+
+    def setKernelBuffer_offset_attributeStride_atIndex_(self, a, b, c, d):
+        pass
+
 
 class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
@@ -253,4 +259,36 @@ class TestMTLIndirectCommandEncoder(TestCase):
             TestMTLIndirectCommandEncoderHelper.setImageblockWidth_height_,  # noqa: B950
             1,
             objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            3,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
+            3,
+            objc._C_NSUInteger,
         )

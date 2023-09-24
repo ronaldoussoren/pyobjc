@@ -8,13 +8,12 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
-#if PyObjC_BUILD_RELEASE >= 1005
 static PyObject*
 m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject*  py_font;
-    CGFontRef  font;
-    CFArrayRef tags;
+    CGFontRef  font = NULL;
+    CFArrayRef tags = NULL;
 
     if (!PyArg_ParseTuple(args, "O", &py_font)) {
         return NULL;
@@ -262,7 +261,6 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
     CFRelease(image);
     return rv;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1005*/
 
 static PyObject*
 m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -356,7 +354,6 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     return rv;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1006
 static void
 m_releasecallback(void* releaseInfo, void* data)
 {
@@ -494,7 +491,6 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     CFRelease(ctx);
     return rv;
 }
-#endif
 
 static PyObject*
 m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -647,46 +643,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__coregraphics(void)
     if (!m)
         return NULL;
 
-#if PyObjC_BUILD_RELEASE >= 1005
-    PyObject* d = PyModule_GetDict(m);
-    if (!d)
-        return NULL;
-#endif
-
     if (PyObjC_ImportAPI(m) < 0)
         return NULL;
-
-#if PyObjC_BUILD_RELEASE >= 1005                                                         \
-    && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
-    if (CGFontCopyTableTags == NULL) {
-        if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
-            return NULL;
-        }
-    }
-
-    if (CGWindowListCreate == NULL) {
-        if (PyDict_DelItemString(d, "CGWindowListCreate") < 0) {
-            return NULL;
-        }
-    }
-
-    if (CGWindowListCreateDescriptionFromArray == NULL) {
-        if (PyDict_DelItemString(d, "CGWindowListCreateDescriptionFromArray") < 0) {
-            return NULL;
-        }
-    }
-
-    if (CGWindowListCreateImageFromArray == NULL) {
-        if (PyDict_DelItemString(d, "CGWindowListCreateImageFromArray") < 0) {
-            return NULL;
-        }
-    }
-#endif
-
-#if (PyObjC_BUILD_RELEASE >= 1006)                                                       \
-    && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
-    CHECK_WEAK_LINK_10_6(m, CGBitmapContextCreateWithData);
-#endif
 
     return m;
 }

@@ -4,6 +4,9 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "typed_enum":  {
+   "MAFlashingLightsProcessorOptionKey": { "type": "@", "type_name": "NSString" }
+  },
   "functions": {
    "MAAudibleMediaCopyPreferredCharacteristics": {
     "variadic": false

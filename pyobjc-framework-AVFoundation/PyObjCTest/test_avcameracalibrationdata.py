@@ -8,9 +8,9 @@ class TestAVCameraCalibrationData(TestCase):
     def testMethods_vector(self):
         self.assertResultHasType(
             AVFoundation.AVCameraCalibrationData.intrinsicMatrix,
-            simd.matrix_float3x3.__typestr__,
+            simd.simd_float3x3.__typestr__,
         )
         self.assertResultHasType(
             AVFoundation.AVCameraCalibrationData.extrinsicMatrix,
-            simd.matrix_float4x3.__typestr__,
+            simd.simd_float4x3.__typestr__,
         )

@@ -12,7 +12,7 @@ import tarfile
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "9.2.1"
+VERSION = "10.0"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -44,6 +44,7 @@ FRAMEWORK_WRAPPERS = [
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
     ("CallKit", "11.0", None),
+    ("Cinematic", "14.0", None),
     ("ClassKit", "11.0", None),
     ("CloudKit", "10.10", None),
     ("Cocoa", None, None),
@@ -86,7 +87,6 @@ FRAMEWORK_WRAPPERS = [
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
     ("HealthKit", "13.0", None),
-    ("IMServicePlugIn", "10.7", None),
     ("InputMethodKit", "10.5", None),
     ("ImageCaptureCore", "10.6", None),
     ("Intents", "10.12", None),
@@ -157,10 +157,12 @@ FRAMEWORK_WRAPPERS = [
     ("GameKit", "10.8", None),
     ("GameplayKit", "10.11", None),
     ("SceneKit", "10.7", None),
+    ("SensitiveContentAnalysis", "14.0", None),
     ("SharedWithYouCore", "13.0", None),
     ("SharedWithYou", "13.0", None),
     ("SoundAnalysis", "10.15", None),
     ("ScreenCaptureKit", "12.3", None),
+    ("Symbols", "14.0", None),
     ("SystemExtensions", "10.15", None),
     ("ThreadNetwork", "13.0", None),
     ("UniformTypeIdentifiers", "11.0", None),
@@ -170,8 +172,6 @@ FRAMEWORK_WRAPPERS = [
     ("VideoToolbox", "10.8", None),
     ("Virtualization", "11.0", None),
     ("Vision", "10.13", None),
-    # iTunes library is shipped with iTunes, not part of macOS 'core'
-    # Requires iTunes 11 or later, which is not available on 10.5
     ("iTunesLibrary", "10.6", None),
 ]
 
@@ -194,6 +194,7 @@ MACOS_TO_DARWIN = {
     "12.0": "21.0",
     "12.3": "21.4",
     "13.0": "22.0",
+    "14.0": "23.0",
 }
 
 
@@ -264,11 +265,11 @@ Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
-Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
+Programming Language :: Python :: 3.12
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -443,7 +444,7 @@ class oc_test(Command):
                     for n in a.body:
                         if isinstance(n, ast.Assign):
                             if n.targets[0].id == "VERSION":
-                                found_version = n.value.s
+                                found_version = n.value.value
 
                 except AttributeError:
                     print("Unexpected setup.py structure in wrapper for %s" % (nm))
@@ -640,7 +641,7 @@ setup(
     extras_require={
         "allbindings": BASE_REQUIRES + framework_requires(include_all=True)
     },
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     setup_requires=[],
     classifiers=CLASSIFIERS,
     license="MIT License",

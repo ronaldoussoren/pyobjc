@@ -535,10 +535,14 @@ def returns_value(func):
     # returns are of the form "return" or "return None". The
     # latter is a false negative, but cannot be avoided with
     # bytecode inspection.
+    # XXX: This will give a false positive for functions
+    #      that only contain "return None" paths for
+    #      returning a value.
     if not isinstance(func.__code__, types.CodeType):
         return True
 
     prev = None
+
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":
             assert prev is not None
@@ -549,9 +553,6 @@ def returns_value(func):
 
         elif inst.opname == "RETURN_CONST" and inst.arg != 0:
             # New in Python 3.12.
-            # XXX: This will give a false positive for functions
-            #      that only contain "return None" paths for
-            #      returning a value.
             return True
         prev = inst
 

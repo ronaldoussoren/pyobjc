@@ -122,6 +122,18 @@ class TestNSPersistentStoreCoordinator(TestCase):
             CoreData.NSPersistentStoreRemoteChangeNotificationPostOptionKey, str
         )
 
+    @min_os_level("11.0")
+    def testConstants11_0(self):
+        self.assertIsInstance(
+            CoreData.NSPersistentStoreDeferredLightweightMigrationOptionKey, str
+        )
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(
+            CoreData.NSPersistentStoreStagedMigrationManagerOptionKey, str
+        )
+
     def testMethods(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_,
@@ -224,4 +236,21 @@ class TestNSPersistentStoreCoordinator(TestCase):
             CoreData.NSPersistentStoreCoordinator.addPersistentStoreWithDescription_completionHandler_,
             1,
             b"v@@",
+        )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigration_
+        )
+        self.assertArgIsOut(
+            CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigration_, 0
+        )
+
+        self.assertResultIsBOOL(
+            CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigrationTask_
+        )
+        self.assertArgIsOut(
+            CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigrationTask_,
+            0,
         )

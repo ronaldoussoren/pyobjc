@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "9.2.1"
+VERSION = "10.0"
 
 setup(
     name="pyobjc-framework-AVKit",

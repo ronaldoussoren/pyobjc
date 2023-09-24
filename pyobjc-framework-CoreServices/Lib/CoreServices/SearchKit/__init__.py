@@ -4,31 +4,34 @@ Python mapping for the SearchKit framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import CoreFoundation
-import objc
-from CoreServices.SearchKit import _metadata
-
-mod = objc.ObjCLazyModule(
-    "SearchKit",
-    "com.apple.SearchKit",
-    objc.pathForFramework(
-        "/System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework"
-    ),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (CoreFoundation,),
-)
 
 
-del sys.modules["CoreServices.SearchKit._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="SearchKit",
+        frameworkIdentifier="com.apple.CoreServices",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreServices.SearchKit._metadata"]
+
+
+globals().pop("_setup")()
 
 
 # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
@@ -37,8 +40,10 @@ del sys.modules["CoreServices.SearchKit._metadata"]
 # See also radar:6525606.
 #
 # UPDATE 20151123: The workaround is still necessary on OSX 10.11
-def workaround():
+def _workaround():
     from Foundation import NSMutableData, NSAutoreleasePool
+    import CoreServices.SearchKit as mod
+    import objc
 
     pool = NSAutoreleasePool.alloc().init()
     try:
@@ -118,39 +123,19 @@ def workaround():
         "SKDocumentRef", b"@", mod.SKDocumentGetTypeID()
     )
 
-    return (
-        SKIndexGetTypeID,
-        indexType,
-        SKIndexDocumentIteratorGetTypeID,
-        iterType,
-        SKSearchGroupGetTypeID,
-        groupType,
-        SKSearchResultsGetTypeID,
-        resultType,
-        SKSummaryGetTypeID,
-        summaryType,
-        iterType,
-        SKDocumentRef,
-        searchref,
-    )
+    globals()["SKIndexGetTypeID"] = SKIndexGetTypeID
+    globals()["SKIndexRef"] = indexType
+    globals()["SKIndexDocumentIteratorGetTypeID"] = SKIndexDocumentIteratorGetTypeID
+    globals()["SKIndexDocumentRef"] = iterType
+    globals()["SKSearchGroupGetTypeID"] = SKSearchGroupGetTypeID
+    globals()["SKSearchGroupRef"] = groupType
+    globals()["SKSearchResultsGetTypeID"] = SKSearchResultsGetTypeID
+    globals()["SKSearchResultsRef"] = resultType
+    globals()["SKSummaryGetTypeID"] = SKSummaryGetTypeID
+    globals()["SKSummaryRef"] = summaryType
+    globals()["SKIndexDocumentIteratorRef"] = iterType
+    globals()["SKDocumentRef"] = SKDocumentRef
+    globals()["SKSearchRef"] = searchref
 
 
-(
-    mod.SKIndexGetTypeID,
-    mod.SKIndexRef,
-    mod.SKIndexDocumentIteratorGetTypeID,
-    mod.SKIndexDocumentRef,
-    mod.SKSearchGroupGetTypeID,
-    mod.SKSearchGroupRef,
-    mod.SKSearchResultsGetTypeID,
-    mod.SKSearchResultsRef,
-    mod.SKSummaryGetTypeID,
-    mod.SKSummaryRef,
-    mod.SKIndexDocumentIteratorRef,
-    mod.SKDocumentRef,
-    mod.SKSearchRef,
-) = workaround()
-
-del workaround
-
-sys.modules["CoreServices.SearchKit"] = mod
+globals().pop("_workaround")()

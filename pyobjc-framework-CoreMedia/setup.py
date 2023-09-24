@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "9.2.1"
+VERSION = "10.0"
 
 setup(
     name="pyobjc-framework-CoreMedia",
@@ -23,10 +23,16 @@ setup(
     packages=["CoreMedia"],
     ext_modules=[
         Extension(
+            "CoreMedia._inlines",
+            ["Modules/_CoreMedia_inlines.m"],
+            extra_link_args=["-framework", "CoreMedia"],
+            py_limited_api=True,
+        ),
+        Extension(
             "CoreMedia._CoreMedia",
             ["Modules/_CoreMedia.m"],
             extra_link_args=["-framework", "CoreMedia"],
-        )
+        ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

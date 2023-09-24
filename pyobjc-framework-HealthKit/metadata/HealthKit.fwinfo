@@ -261,6 +261,34 @@
       },
       "class_method": false,
       "selector": "activityMoveModeWithError:"
+     },
+     {
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "@" }
+        },
+        "retval": { "type": "v" }
+       }
+      },
+      "class_method": false,
+      "selector": "workoutSessionMirroringStartHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setWorkoutSessionMirroringStartHandler:"
      }
     ]
    },

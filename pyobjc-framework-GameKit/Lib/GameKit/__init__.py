@@ -5,27 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Cocoa
-import objc
-from GameKit import _metadata
-from GameKit import _GameKit
+def _setup():
+    import sys
 
-sys.modules["GameKit"] = mod = objc.ObjCLazyModule(
-    "GameKit",
-    "com.apple.GameKit",
-    objc.pathForFramework("/System/Library/Frameworks/GameKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_GameKit, Cocoa),
-)
+    import AppKit
+    import objc
+    from . import _metadata, _GameKit
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="GameKit",
+        frameworkIdentifier="com.apple.GameKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/GameKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _GameKit,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["GameKit._metadata"]
 
 
-del sys.modules["GameKit._metadata"]
+globals().pop("_setup")()

@@ -16,10 +16,6 @@
 #endif
 
 static PyObjC_function_map function_map[] = {
-#if PyObjC_BUILD_RELEASE >= 1200
-    {"MIDI1UPSysEx", (PyObjC_Function_Pointer)&MIDI1UPSysEx},
-    {"MIDI1UPSysExArray", (PyObjC_Function_Pointer)&MIDI1UPSysExArray},
-#endif
 #if PyObjC_BUILD_RELEASE >= 1100
     {"MIDIMessageTypeForUPWord", (PyObjC_Function_Pointer)&MIDIMessageTypeForUPWord},
     {"MIDI1UPChannelVoiceMessage", (PyObjC_Function_Pointer)&MIDI1UPChannelVoiceMessage},
@@ -44,6 +40,10 @@ static PyObjC_function_map function_map[] = {
     {"MIDI2ChannelPressure", (PyObjC_Function_Pointer)&MIDI2ChannelPressure},
     {"MIDI2PitchBend", (PyObjC_Function_Pointer)&MIDI2PitchBend},
     {"MIDI2PerNotePitchBend", (PyObjC_Function_Pointer)&MIDI2PerNotePitchBend},
+#endif
+#if PyObjC_BUILD_RELEASE >= 1200
+    {"MIDI1UPSysEx", (PyObjC_Function_Pointer)&MIDI1UPSysEx},
+    {"MIDI1UPSysExArray", (PyObjC_Function_Pointer)&MIDI1UPSysExArray},
 #endif
     {0, 0}};
 

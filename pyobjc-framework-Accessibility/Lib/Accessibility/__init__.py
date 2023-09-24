@@ -5,37 +5,41 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Quartz
-import objc
-from . import _metadata
-from . import _Accessibility
+def _setup():
+    import sys
 
-sys.modules["Accessibility"] = mod = objc.ObjCLazyModule(
-    "Accessibility",
-    "com.apple.Accessibility",
-    objc.pathForFramework("/System/Library/Frameworks/Accessibility.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_Accessibility, Quartz),
-)
+    import objc
+    import Quartz
+    from . import _metadata, _Accessibility
 
-for cls in (
-    "AXNumericDataAxisDescriptor",
-    "AXDataPointValue",
-    "AXDataPoint",
-    "AXChartDescriptor",
-):
-    try:
-        getattr(mod, cls).__objc_final__ = True
-    except AttributeError:
-        pass
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Accessibility",
+        frameworkIdentifier="com.apple.Accessibility",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Accessibility.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_Accessibility, Quartz),
+        metadict=_metadata.__dict__,
+    )
 
-del sys.modules["Accessibility._metadata"]
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    for cls in (
+        "AXNumericDataAxisDescriptor",
+        "AXDataPointValue",
+        "AXDataPoint",
+        "AXChartDescriptor",
+    ):
+        try:
+            objc.lookUpClass(cls).__objc_final__ = True
+        except objc.error:
+            pass
+
+    del sys.modules["Accessibility._metadata"]
+
+
+globals().pop("_setup")()

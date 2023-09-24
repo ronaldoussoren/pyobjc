@@ -61,6 +61,8 @@ class MTLStageInputOutputDescriptor(TestCase):
         self.assertEqual(Metal.MTLAttributeFormatUShortNormalized, 51)
         self.assertEqual(Metal.MTLAttributeFormatShortNormalized, 52)
         self.assertEqual(Metal.MTLAttributeFormatHalf, 53)
+        self.assertEqual(Metal.MTLAttributeFormatFloatRG11B10, 54)
+        self.assertEqual(Metal.MTLAttributeFormatFloatRGB9E5, 55)
 
         self.assertEqual(Metal.MTLIndexTypeUInt16, 0)
         self.assertEqual(Metal.MTLIndexTypeUInt32, 1)

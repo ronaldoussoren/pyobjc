@@ -92,10 +92,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": [
-         "v@:@i^v",
-         "v@:@q^v"
-        ]
+        "sel_of_type": "v@:@q^v"
        },
        "3": {
         "type_override": "^v"

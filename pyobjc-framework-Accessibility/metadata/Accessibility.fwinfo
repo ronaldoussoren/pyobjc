@@ -2,7 +2,57 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "AXBrailleMap": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "presentImage:"
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "type": "^v"
+         }
+        },
+        "retval": {
+         "type": "@"
+        }
+       }
+      },
+      "selector": "accessibilityCustomContentBlock"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "@"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setAccessibilityCustomContentBlock"
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {
    "AXNameFromColor": {

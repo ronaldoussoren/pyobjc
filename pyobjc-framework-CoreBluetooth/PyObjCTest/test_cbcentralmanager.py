@@ -7,6 +7,11 @@ class TestCBCentralManagerHelper(CoreBluetooth.NSObject):
     def centralManager_connectionEventDidOccur_forPeripheral_(self, a, b, c):
         pass
 
+    def centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_(
+        self, a, b, c, d, e
+    ):
+        pass
+
 
 class TestCBCentralManager(TestCase):
     def test_enum_types(self):
@@ -46,9 +51,19 @@ class TestCBCentralManager(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgHasType(
-            CoreBluetooth.TestCBCentralManagerHelper.centralManager_connectionEventDidOccur_forPeripheral_,  # noqa: B950
+            TestCBCentralManagerHelper.centralManager_connectionEventDidOccur_forPeripheral_,  # noqa: B950
             1,
             objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestCBCentralManagerHelper.centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_,
+            2,
+            objc._C_DBL,
+        )
+        self.assertArgIsBOOL(
+            TestCBCentralManagerHelper.centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_,
+            3,
         )
 
     @min_os_level("11.0")

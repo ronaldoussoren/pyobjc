@@ -3,6 +3,13 @@ import ScreenCaptureKit
 
 
 class TestSCShareableContent(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(ScreenCaptureKit.SCShareableContentStyle)
+        self.assertEqual(ScreenCaptureKit.SCShareableContentStyleNone, 0)
+        self.assertEqual(ScreenCaptureKit.SCShareableContentStyleWindow, 1)
+        self.assertEqual(ScreenCaptureKit.SCShareableContentStyleDisplay, 2)
+        self.assertEqual(ScreenCaptureKit.SCShareableContentStyleApplication, 3)
+
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCWindow.isOnScreen)
 

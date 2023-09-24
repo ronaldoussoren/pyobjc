@@ -1066,7 +1066,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_ColorSyncMD5=[16C]}"
+     "typestr": "{ColorSyncMD5=[16C]}"
     }
    },
    "ColorSyncProfileGetTypeID": {
@@ -1440,7 +1440,7 @@
      "digest"
     ],
     "special": true,
-    "typestr": "{_ColorSyncMD5=[16C]}"
+    "typestr": "{ColorSyncMD5=[16C]}"
    }
   }
  },

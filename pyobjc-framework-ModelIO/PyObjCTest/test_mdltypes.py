@@ -65,7 +65,7 @@ class TestMDLTypes(TestCase):
     def testStructs(self):
         self.assertEqual(
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         v = ModelIO.MDLAxisAlignedBoundingBox()
         self.assertIs(v.maxBounds, None)

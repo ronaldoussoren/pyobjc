@@ -3,11 +3,11 @@
  *
  *     ** DO NOT EDIT **
  */
-// LCOV_EXCL_START
 #import "pyobjc.h"
 #include <simd/simd.h>
 
 #import <GameplayKit/GameplayKit.h>
+#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
 
 #if PyObjC_BUILD_RELEASE >= 1013
@@ -142,105 +142,6 @@ adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags,
         PyObjCObject_ClearObject(self);
     }
     return result;
-}
-
-static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
-                                     PyObject* const* arguments
-                                     __attribute__((__unused__)),
-                                     size_t nargs)
-{
-    struct objc_super super;
-    simd_uchar16      rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("<16C>", &rv);
-}
-
-static IMP
-mkimp_v16C(PyObject*              callable,
-           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_uchar16 oc_result;
-      if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
 }
 
 static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
@@ -2228,6 +2129,234 @@ mkimp_v4i_v3f(PyObject*              callable,
       }
       PyObjCErr_ToObjCWithGILState(&state);
     };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_id_v2d_id(PyObject* method, PyObject* self,
+                                          PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    id                rv;
+    simd_double2      arg0;
+    id                arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<2d>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("@", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((id(*)(id, SEL, simd_double2, id))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv =
+                    ((id(*)(struct objc_super*, SEL, simd_double2, id))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+}
+
+static IMP
+mkimp_id_v2d_id(PyObject*              callable,
+                PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    id (^block)(id, simd_double2, id) = ^(id _Nullable self, simd_double2 arg0, id arg1) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[4] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("<2d>", &arg0);
+      if (args[2] == NULL)
+          goto error;
+      args[3] = pythonify_c_value("@", &arg1);
+      if (args[3] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      id oc_result;
+      if (depythonify_c_value("@", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_id_v2d_q(PyObject* method, PyObject* self,
+                                         PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    id                rv;
+    simd_double2      arg0;
+    long long         arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<2d>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("q", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv =
+                    ((id(*)(id, SEL, simd_double2, long long))(PyObjCIMP_GetIMP(method)))(
+                        self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((id(*)(struct objc_super*, SEL, simd_double2,
+                             long long))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+}
+
+static IMP
+mkimp_id_v2d_q(PyObject*              callable,
+               PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    id (^block)(id, simd_double2, long long) =
+        ^(id _Nullable self, simd_double2 arg0, long long arg1) {
+          PyGILState_STATE state = PyGILState_Ensure();
+
+          int       cookie;
+          PyObject* args[4] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
+
+          args[1] = pyself;
+          args[2] = pythonify_c_value("<2d>", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("q", &arg1);
+          if (args[3] == NULL)
+              goto error;
+
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          id oc_result;
+          if (depythonify_c_value("@", result, &oc_result) == -1) {
+              Py_DECREF(result);
+              goto error;
+          }
+
+          Py_DECREF(result);
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+          PyGILState_Release(state);
+          return oc_result;
+
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
 
     return imp_implementationWithBlock(block);
 }
@@ -5531,15 +5660,15 @@ mkimp_id_id_Q_v4f(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObject* self,
-                                                        PyObject* const* arguments,
-                                                        size_t           nargs)
+static PyObject* _Nullable call_id_id_Q_simd_float4x4(PyObject* method, PyObject* self,
+                                                      PyObject* const* arguments,
+                                                      size_t           nargs)
 {
     struct objc_super  super;
     id                 rv;
     id                 arg0;
     unsigned long long arg1;
-    matrix_float4x4    arg2;
+    simd_float4x4      arg2;
 
     if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
         return NULL;
@@ -5550,7 +5679,7 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
     if (depythonify_c_value("Q", arguments[1], &arg1) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[2], &arg2) == -1) {
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[2], &arg2) == -1) {
         return NULL;
     }
 
@@ -5568,7 +5697,7 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, unsigned long long, matrix_float4x4))(
+                rv = ((id(*)(id, SEL, id, unsigned long long, simd_float4x4))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
 
@@ -5577,7 +5706,7 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
                 super.super_class = super_class;
 
                 rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long,
-                             matrix_float4x4))objc_msgSendSuper)(
+                             simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
             }
 
@@ -5594,13 +5723,13 @@ static PyObject* _Nullable call_id_id_Q_matrix_float4x4(PyObject* method, PyObje
 }
 
 static IMP
-mkimp_id_id_Q_matrix_float4x4(PyObject*              callable,
-                              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_id_Q_simd_float4x4(PyObject*              callable,
+                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, id, unsigned long long, matrix_float4x4) =
-        ^(id _Nullable self, id arg0, unsigned long long arg1, matrix_float4x4 arg2) {
+    id (^block)(id, id, unsigned long long, simd_float4x4) =
+        ^(id _Nullable self, id arg0, unsigned long long arg1, simd_float4x4 arg2) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -5617,7 +5746,7 @@ mkimp_id_id_Q_matrix_float4x4(PyObject*              callable,
           args[3] = pythonify_c_value("Q", &arg1);
           if (args[3] == NULL)
               goto error;
-          args[4] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg2);
+          args[4] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg2);
           if (args[4] == NULL)
               goto error;
 
@@ -6131,8 +6260,8 @@ mkimp_id_id_q_v2i_f_f_f_f_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
                                             PyObject* const* arguments, size_t nargs)
 {
@@ -6244,6 +6373,7 @@ mkimp_id_id_GKBox(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
@@ -6356,7 +6486,6 @@ mkimp_id_id_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /*  PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
@@ -6373,7 +6502,7 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[1], &arg1)
+    if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[1], &arg1)
         == -1) {
         return NULL;
     }
@@ -6442,7 +6571,7 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
+          args[3] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
           if (args[3] == NULL)
               goto error;
           args[4] = pythonify_c_value("f", &arg2);
@@ -6482,14 +6611,14 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject* self,
-                                                      PyObject* const* arguments,
-                                                      size_t           nargs)
+static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments,
+                                                    size_t           nargs)
 {
     struct objc_super super;
     id                rv;
     id                arg0;
-    matrix_float2x2   arg1;
+    simd_float2x2     arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
@@ -6497,7 +6626,7 @@ static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{simd_float2x2=[2<2f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6515,15 +6644,15 @@ static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, matrix_float2x2))(PyObjCIMP_GetIMP(method)))(
+                rv = ((id(*)(id, SEL, id, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id,
-                             matrix_float2x2))objc_msgSendSuper)(
+                rv = ((
+                    id(*)(struct objc_super*, SEL, id, simd_float2x2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -6540,13 +6669,13 @@ static PyObject* _Nullable call_id_id_matrix_float2x2(PyObject* method, PyObject
 }
 
 static IMP
-mkimp_id_id_matrix_float2x2(PyObject*              callable,
-                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_id_simd_float2x2(PyObject*              callable,
+                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, id, matrix_float2x2) =
-        ^(id _Nullable self, id arg0, matrix_float2x2 arg1) {
+    id (^block)(id, id, simd_float2x2) =
+        ^(id _Nullable self, id arg0, simd_float2x2 arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -6560,7 +6689,7 @@ mkimp_id_id_matrix_float2x2(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &arg1);
+          args[3] = pythonify_c_value("{simd_float2x2=[2<2f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -6597,14 +6726,14 @@ mkimp_id_id_matrix_float2x2(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject* self,
-                                                      PyObject* const* arguments,
-                                                      size_t           nargs)
+static PyObject* _Nullable call_id_id_simd_float3x3(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments,
+                                                    size_t           nargs)
 {
     struct objc_super super;
     id                rv;
     id                arg0;
-    matrix_float3x3   arg1;
+    simd_float3x3     arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
@@ -6612,7 +6741,7 @@ static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{simd_float3x3=[3<3f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6630,15 +6759,15 @@ static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, matrix_float3x3))(PyObjCIMP_GetIMP(method)))(
+                rv = ((id(*)(id, SEL, id, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id,
-                             matrix_float3x3))objc_msgSendSuper)(
+                rv = ((
+                    id(*)(struct objc_super*, SEL, id, simd_float3x3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -6655,13 +6784,13 @@ static PyObject* _Nullable call_id_id_matrix_float3x3(PyObject* method, PyObject
 }
 
 static IMP
-mkimp_id_id_matrix_float3x3(PyObject*              callable,
-                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_id_simd_float3x3(PyObject*              callable,
+                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, id, matrix_float3x3) =
-        ^(id _Nullable self, id arg0, matrix_float3x3 arg1) {
+    id (^block)(id, id, simd_float3x3) =
+        ^(id _Nullable self, id arg0, simd_float3x3 arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -6675,7 +6804,7 @@ mkimp_id_id_matrix_float3x3(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &arg1);
+          args[3] = pythonify_c_value("{simd_float3x3=[3<3f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -6712,14 +6841,14 @@ mkimp_id_id_matrix_float3x3(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject* self,
-                                                      PyObject* const* arguments,
-                                                      size_t           nargs)
+static PyObject* _Nullable call_id_id_simd_float4x4(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments,
+                                                    size_t           nargs)
 {
     struct objc_super super;
     id                rv;
     id                arg0;
-    matrix_float4x4   arg1;
+    simd_float4x4     arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
@@ -6727,7 +6856,7 @@ static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject
     if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
         return NULL;
     }
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[1], &arg1) == -1) {
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -6745,15 +6874,15 @@ static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, matrix_float4x4))(PyObjCIMP_GetIMP(method)))(
+                rv = ((id(*)(id, SEL, id, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id,
-                             matrix_float4x4))objc_msgSendSuper)(
+                rv = ((
+                    id(*)(struct objc_super*, SEL, id, simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
@@ -6770,13 +6899,13 @@ static PyObject* _Nullable call_id_id_matrix_float4x4(PyObject* method, PyObject
 }
 
 static IMP
-mkimp_id_id_matrix_float4x4(PyObject*              callable,
-                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_id_simd_float4x4(PyObject*              callable,
+                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, id, matrix_float4x4) =
-        ^(id _Nullable self, id arg0, matrix_float4x4 arg1) {
+    id (^block)(id, id, simd_float4x4) =
+        ^(id _Nullable self, id arg0, simd_float4x4 arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -6790,7 +6919,7 @@ mkimp_id_id_matrix_float4x4(PyObject*              callable,
           args[2] = pythonify_c_value("@", &arg0);
           if (args[2] == NULL)
               goto error;
-          args[3] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg1);
+          args[3] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg1);
           if (args[3] == NULL)
               goto error;
 
@@ -6819,6 +6948,240 @@ mkimp_id_id_matrix_float4x4(PyObject*              callable,
           }
 
           for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* self,
+                                                 PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    id                rv;
+    id                arg0;
+    simd_quatf        arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("{simd_quatf=<4f>}", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((id(*)(id, SEL, id, simd_quatf))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((id(*)(struct objc_super*, SEL, id, simd_quatf))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+}
+
+static IMP
+mkimp_id_id_simd_quatf(PyObject*              callable,
+                       PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    id (^block)(id, id, simd_quatf) = ^(id _Nullable self, id arg0, simd_quatf arg1) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[4] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("@", &arg0);
+      if (args[2] == NULL)
+          goto error;
+      args[3] = pythonify_c_value("{simd_quatf=<4f>}", &arg1);
+      if (args[3] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      id oc_result;
+      if (depythonify_c_value("@", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments,
+                                                    size_t           nargs)
+{
+    struct objc_super super;
+    id                rv;
+    id                arg0;
+    simd_quatf        arg1;
+    id                arg2;
+
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("{simd_quatf=<4f>}", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("@", arguments[2], &arg2) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((id(*)(id, SEL, id, simd_quatf, id))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((
+                    id(*)(struct objc_super*, SEL, id, simd_quatf, id))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+}
+
+static IMP
+mkimp_id_id_simd_quatf_id(PyObject*              callable,
+                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    id (^block)(id, id, simd_quatf, id) =
+        ^(id _Nullable self, id arg0, simd_quatf arg1, id arg2) {
+          PyGILState_STATE state = PyGILState_Ensure();
+
+          int       cookie;
+          PyObject* args[5] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
+
+          args[1] = pyself;
+          args[2] = pythonify_c_value("@", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("{simd_quatf=<4f>}", &arg1);
+          if (args[3] == NULL)
+              goto error;
+          args[4] = pythonify_c_value("@", &arg2);
+          if (args[4] == NULL)
+              goto error;
+
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          id oc_result;
+          if (depythonify_c_value("@", result, &oc_result) == -1) {
+              Py_DECREF(result);
+              goto error;
+          }
+
+          Py_DECREF(result);
+          for (size_t i = 2; i < 5; i++) {
+              Py_CLEAR(args[i]);
+          }
+
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+          PyGILState_Release(state);
+          return oc_result;
+
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 5; i++) {
               Py_CLEAR(args[i]);
           }
           PyObjCErr_ToObjCWithGILState(&state);
@@ -8086,8 +8449,8 @@ mkimp_id_f_f_id_v2i(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
                                          PyObject* const* arguments, size_t nargs)
 {
@@ -8192,6 +8555,8 @@ mkimp_id_GKBox(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
+#if PyObjC_BUILD_RELEASE >= 1012
 
 static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
                                            PyObject* const* arguments, size_t nargs)
@@ -8304,6 +8669,7 @@ mkimp_id_GKBox_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
                                           PyObject* const* arguments, size_t nargs)
@@ -8521,7 +8887,6 @@ mkimp_id_GKQuad_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /*  PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
                                                        PyObject* const* arguments,
@@ -8534,7 +8899,7 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_MDLVoxelIndexExtent=<4i><4i>}", arguments[0], &arg0)
+    if (depythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", arguments[0], &arg0)
         == -1) {
         return NULL;
     }
@@ -8595,7 +8960,7 @@ mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_MDLVoxelIndexExtent=<4i><4i>}", &arg0);
+          args[2] = pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &arg0);
           if (args[2] == NULL)
               goto error;
 
@@ -8632,18 +8997,17 @@ mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_matrix_float4x4(PyObject* method, PyObject* self,
-                                                   PyObject* const* arguments,
-                                                   size_t           nargs)
+static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* self,
+                                                 PyObject* const* arguments, size_t nargs)
 {
     struct objc_super super;
     id                rv;
-    matrix_float4x4   arg0;
+    simd_float4x4     arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -8661,14 +9025,14 @@ static PyObject* _Nullable call_id_matrix_float4x4(PyObject* method, PyObject* s
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, matrix_float4x4))(PyObjCIMP_GetIMP(method)))(
+                rv = ((id(*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, matrix_float4x4))objc_msgSendSuper)(
+                rv = ((id(*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -8685,12 +9049,12 @@ static PyObject* _Nullable call_id_matrix_float4x4(PyObject* method, PyObject* s
 }
 
 static IMP
-mkimp_id_matrix_float4x4(PyObject*              callable,
-                         PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_simd_float4x4(PyObject*              callable,
+                       PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, matrix_float4x4) = ^(id _Nullable self, matrix_float4x4 arg0) {
+    id (^block)(id, simd_float4x4) = ^(id _Nullable self, simd_float4x4 arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -8701,7 +9065,7 @@ mkimp_id_matrix_float4x4(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+      args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -8738,19 +9102,19 @@ mkimp_id_matrix_float4x4(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_id_matrix_float4x4_Z(PyObject* method, PyObject* self,
-                                                     PyObject* const* arguments,
-                                                     size_t           nargs)
+static PyObject* _Nullable call_id_simd_float4x4_Z(PyObject* method, PyObject* self,
+                                                   PyObject* const* arguments,
+                                                   size_t           nargs)
 {
     struct objc_super super;
     id                rv;
-    matrix_float4x4   arg0;
+    simd_float4x4     arg0;
     BOOL              arg1;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("Z", arguments[1], &arg1) == -1) {
@@ -8771,14 +9135,14 @@ static PyObject* _Nullable call_id_matrix_float4x4_Z(PyObject* method, PyObject*
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, matrix_float4x4, BOOL))(PyObjCIMP_GetIMP(method)))(
+                rv = ((id(*)(id, SEL, simd_float4x4, BOOL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, matrix_float4x4,
+                rv = ((id(*)(struct objc_super*, SEL, simd_float4x4,
                              BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
@@ -8796,13 +9160,13 @@ static PyObject* _Nullable call_id_matrix_float4x4_Z(PyObject* method, PyObject*
 }
 
 static IMP
-mkimp_id_matrix_float4x4_Z(PyObject*              callable,
-                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_id_simd_float4x4_Z(PyObject*              callable,
+                         PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    id (^block)(id, matrix_float4x4, BOOL) =
-        ^(id _Nullable self, matrix_float4x4 arg0, BOOL arg1) {
+    id (^block)(id, simd_float4x4, BOOL) =
+        ^(id _Nullable self, simd_float4x4 arg0, BOOL arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -8813,7 +9177,7 @@ mkimp_id_matrix_float4x4_Z(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
+          args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("Z", &arg1);
@@ -9691,6 +10055,110 @@ mkimp_f_v2i(PyObject*              callable,
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_v_v2d(PyObject* method, PyObject* self,
+                                      PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_double2      arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<2d>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, simd_double2))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                ((void (*)(struct objc_super*, SEL, simd_double2))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static IMP
+mkimp_v_v2d(PyObject*              callable,
+            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    void (^block)(id, simd_double2) = ^(id _Nullable self, simd_double2 arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("<2d>", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      if (result != Py_None) {
+          Py_DECREF(result);
+          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
+                       callable);
+          goto error;
+      }
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return;
 
   error:
       if (pyself) {
@@ -11509,7 +11977,7 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[0], &arg0)
+    if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[0], &arg0)
         == -1) {
         return NULL;
     }
@@ -11569,7 +12037,7 @@ mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* met
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+          args[2] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
           if (args[2] == NULL)
               goto error;
 
@@ -11618,7 +12086,7 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[0], &arg0)
+    if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", arguments[0], &arg0)
         == -1) {
         return NULL;
     }
@@ -11682,7 +12150,7 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* m
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+          args[2] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("Z", &arg1);
@@ -11722,17 +12190,125 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* m
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_v_matrix_double4x4(PyObject* method, PyObject* self,
+static PyObject* _Nullable call_v_simd_double4x4(PyObject* method, PyObject* self,
+                                                 PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_double4x4    arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{simd_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, simd_double4x4))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                ((void (*)(struct objc_super*, SEL, simd_double4x4))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static IMP
+mkimp_v_simd_double4x4(PyObject*              callable,
+                       PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    void (^block)(id, simd_double4x4) = ^(id _Nullable self, simd_double4x4 arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("{simd_double4x4=[4<4d>]}", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      if (result != Py_None) {
+          Py_DECREF(result);
+          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
+                       callable);
+          goto error;
+      }
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_v_simd_double4x4_d(PyObject* method, PyObject* self,
                                                    PyObject* const* arguments,
                                                    size_t           nargs)
 {
     struct objc_super super;
-    matrix_double4x4  arg0;
+    simd_double4x4    arg0;
+    double            arg1;
 
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
         return NULL;
     }
 
@@ -11750,15 +12326,16 @@ static PyObject* _Nullable call_v_matrix_double4x4(PyObject* method, PyObject* s
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, matrix_double4x4))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+                ((void (*)(id, SEL, simd_double4x4, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                ((void (*)(struct objc_super*, SEL, matrix_double4x4))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
+                ((void (*)(struct objc_super*, SEL, simd_double4x4,
+                           double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -11774,123 +12351,13 @@ static PyObject* _Nullable call_v_matrix_double4x4(PyObject* method, PyObject* s
 }
 
 static IMP
-mkimp_v_matrix_double4x4(PyObject*              callable,
+mkimp_v_simd_double4x4_d(PyObject*              callable,
                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    void (^block)(id, matrix_double4x4) = ^(id _Nullable self, matrix_double4x4 arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      if (result != Py_None) {
-          Py_DECREF(result);
-          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
-                       callable);
-          goto error;
-      }
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_v_matrix_double4x4_d(PyObject* method, PyObject* self,
-                                                     PyObject* const* arguments,
-                                                     size_t           nargs)
-{
-    struct objc_super super;
-    matrix_double4x4  arg0;
-    double            arg1;
-
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                ((void (*)(id, SEL, matrix_double4x4, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                ((void (*)(struct objc_super*, SEL, matrix_double4x4,
-                           double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    Py_RETURN_NONE;
-}
-
-static IMP
-mkimp_v_matrix_double4x4_d(PyObject*              callable,
-                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    void (^block)(id, matrix_double4x4, double) =
-        ^(id _Nullable self, matrix_double4x4 arg0, double arg1) {
+    void (^block)(id, simd_double4x4, double) =
+        ^(id _Nullable self, simd_double4x4 arg0, double arg1) {
           PyGILState_STATE state = PyGILState_Ensure();
 
           int       cookie;
@@ -11901,7 +12368,7 @@ mkimp_v_matrix_double4x4_d(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &arg0);
+          args[2] = pythonify_c_value("{simd_double4x4=[4<4d>]}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("d", &arg1);
@@ -11941,17 +12408,16 @@ mkimp_v_matrix_double4x4_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_v_matrix_float2x2(PyObject* method, PyObject* self,
-                                                  PyObject* const* arguments,
-                                                  size_t           nargs)
+static PyObject* _Nullable call_v_simd_float2x2(PyObject* method, PyObject* self,
+                                                PyObject* const* arguments, size_t nargs)
 {
     struct objc_super super;
-    matrix_float2x2   arg0;
+    simd_float2x2     arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_float2x2=[2<2f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -11969,14 +12435,14 @@ static PyObject* _Nullable call_v_matrix_float2x2(PyObject* method, PyObject* se
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, matrix_float2x2))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                ((void (*)(struct objc_super*, SEL, matrix_float2x2))objc_msgSendSuper)(
+                ((void (*)(struct objc_super*, SEL, simd_float2x2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -11993,12 +12459,12 @@ static PyObject* _Nullable call_v_matrix_float2x2(PyObject* method, PyObject* se
 }
 
 static IMP
-mkimp_v_matrix_float2x2(PyObject*              callable,
-                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_v_simd_float2x2(PyObject*              callable,
+                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    void (^block)(id, matrix_float2x2) = ^(id _Nullable self, matrix_float2x2 arg0) {
+    void (^block)(id, simd_float2x2) = ^(id _Nullable self, simd_float2x2 arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -12009,7 +12475,7 @@ mkimp_v_matrix_float2x2(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &arg0);
+      args[2] = pythonify_c_value("{simd_float2x2=[2<2f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12046,17 +12512,16 @@ mkimp_v_matrix_float2x2(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_v_matrix_float3x3(PyObject* method, PyObject* self,
-                                                  PyObject* const* arguments,
-                                                  size_t           nargs)
+static PyObject* _Nullable call_v_simd_float3x3(PyObject* method, PyObject* self,
+                                                PyObject* const* arguments, size_t nargs)
 {
     struct objc_super super;
-    matrix_float3x3   arg0;
+    simd_float3x3     arg0;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_float3x3=[3<3f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12074,14 +12539,14 @@ static PyObject* _Nullable call_v_matrix_float3x3(PyObject* method, PyObject* se
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                ((void (*)(id, SEL, matrix_float3x3))(PyObjCIMP_GetIMP(method)))(
+                ((void (*)(id, SEL, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                ((void (*)(struct objc_super*, SEL, matrix_float3x3))objc_msgSendSuper)(
+                ((void (*)(struct objc_super*, SEL, simd_float3x3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
             }
 
@@ -12098,12 +12563,12 @@ static PyObject* _Nullable call_v_matrix_float3x3(PyObject* method, PyObject* se
 }
 
 static IMP
-mkimp_v_matrix_float3x3(PyObject*              callable,
-                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+mkimp_v_simd_float3x3(PyObject*              callable,
+                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);
 
-    void (^block)(id, matrix_float3x3) = ^(id _Nullable self, matrix_float3x3 arg0) {
+    void (^block)(id, simd_float3x3) = ^(id _Nullable self, simd_float3x3 arg0) {
       PyGILState_STATE state = PyGILState_Ensure();
 
       int       cookie;
@@ -12114,7 +12579,7 @@ mkimp_v_matrix_float3x3(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &arg0);
+      args[2] = pythonify_c_value("{simd_float3x3=[3<3f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12151,226 +12616,6 @@ mkimp_v_matrix_float3x3(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static PyObject* _Nullable call_v_matrix_float4x4(PyObject* method, PyObject* self,
-                                                  PyObject* const* arguments,
-                                                  size_t           nargs)
-{
-    struct objc_super super;
-    matrix_float4x4   arg0;
-
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                ((void (*)(id, SEL, matrix_float4x4))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                ((void (*)(struct objc_super*, SEL, matrix_float4x4))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    Py_RETURN_NONE;
-}
-
-static IMP
-mkimp_v_matrix_float4x4(PyObject*              callable,
-                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    void (^block)(id, matrix_float4x4) = ^(id _Nullable self, matrix_float4x4 arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      if (result != Py_None) {
-          Py_DECREF(result);
-          PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
-                       callable);
-          goto error;
-      }
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_v_matrix_float4x4_d(PyObject* method, PyObject* self,
-                                                    PyObject* const* arguments,
-                                                    size_t           nargs)
-{
-    struct objc_super super;
-    matrix_float4x4   arg0;
-    double            arg1;
-
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                ((void (*)(id, SEL, matrix_float4x4, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                ((void (*)(struct objc_super*, SEL, matrix_float4x4,
-                           double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    Py_RETURN_NONE;
-}
-
-static IMP
-mkimp_v_matrix_float4x4_d(PyObject*              callable,
-                          PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    void (^block)(id, matrix_float4x4, double) =
-        ^(id _Nullable self, matrix_float4x4 arg0, double arg1) {
-          PyGILState_STATE state = PyGILState_Ensure();
-
-          int       cookie;
-          PyObject* args[4] = {NULL};
-          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
-
-          args[1] = pyself;
-          args[2] = pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
-          args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
-
-          PyObject* result = PyObject_Vectorcall(
-              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-          if (result == NULL)
-              goto error;
-          if (result != Py_None) {
-              Py_DECREF(result);
-              PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
-                           callable);
-              goto error;
-          }
-          Py_DECREF(result);
-          for (size_t i = 2; i < 4; i++) {
-              Py_CLEAR(args[i]);
-          }
-
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-          PyGILState_Release(state);
-          return;
-
-      error:
-          if (pyself) {
-              PyObjCObject_ReleaseTransient(pyself, cookie);
-          }
-
-          for (size_t i = 2; i < 4; i++) {
-              Py_CLEAR(args[i]);
-          }
-          PyObjCErr_ToObjCWithGILState(&state);
-        };
-
-    return imp_implementationWithBlock(block);
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self,
                                                 PyObject* const* arguments, size_t nargs)
 {
@@ -12380,7 +12625,7 @@ static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12438,7 +12683,7 @@ mkimp_v_simd_float4x4(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_simd_float4x4=[4<4f>]}", &arg0);
+      args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12475,6 +12720,120 @@ mkimp_v_simd_float4x4(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
+static PyObject* _Nullable call_v_simd_float4x4_d(PyObject* method, PyObject* self,
+                                                  PyObject* const* arguments,
+                                                  size_t           nargs)
+{
+    struct objc_super super;
+    simd_float4x4     arg0;
+    double            arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                ((void (*)(id, SEL, simd_float4x4, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                ((void (*)(struct objc_super*, SEL, simd_float4x4,
+                           double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static IMP
+mkimp_v_simd_float4x4_d(PyObject*              callable,
+                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    void (^block)(id, simd_float4x4, double) =
+        ^(id _Nullable self, simd_float4x4 arg0, double arg1) {
+          PyGILState_STATE state = PyGILState_Ensure();
+
+          int       cookie;
+          PyObject* args[4] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
+
+          args[1] = pyself;
+          args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("d", &arg1);
+          if (args[3] == NULL)
+              goto error;
+
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          if (result != Py_None) {
+              Py_DECREF(result);
+              PyErr_Format(PyExc_ValueError, "%R: void return, but did return a value",
+                           callable);
+              goto error;
+          }
+          Py_DECREF(result);
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+          PyGILState_Release(state);
+          return;
+
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
+
+    return imp_implementationWithBlock(block);
+}
+
 static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
                                                PyObject* const* arguments, size_t nargs)
 {
@@ -12485,7 +12844,7 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_simd_quatd=<4d>}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_quatd=<4d>}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
@@ -12548,7 +12907,7 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_simd_quatd=<4d>}", &arg0);
+          args[2] = pythonify_c_value("{simd_quatd=<4d>}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("d", &arg1);
@@ -12597,7 +12956,7 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
         return NULL;
     }
 
@@ -12655,7 +13014,7 @@ mkimp_v_simd_quatf(PyObject*              callable,
       }
 
       args[1] = pyself;
-      args[2] = pythonify_c_value("{_simd_quatf=<4f>}", &arg0);
+      args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
       if (args[2] == NULL)
           goto error;
 
@@ -12702,7 +13061,7 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("<3f>", arguments[1], &arg1) == -1) {
@@ -12765,7 +13124,7 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_simd_quatf=<4f>}", &arg0);
+          args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("<3f>", &arg1);
@@ -12815,7 +13174,7 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
-    if (depythonify_c_value("{_simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
+    if (depythonify_c_value("{simd_quatf=<4f>}", arguments[0], &arg0) == -1) {
         return NULL;
     }
     if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
@@ -12878,7 +13237,7 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
           }
 
           args[1] = pyself;
-          args[2] = pythonify_c_value("{_simd_quatf=<4f>}", &arg0);
+          args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
           if (args[2] == NULL)
               goto error;
           args[3] = pythonify_c_value("d", &arg1);
@@ -12917,9 +13276,8 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
                                       PyObject* const* arguments
                                       __attribute__((__unused__)),
@@ -13022,6 +13380,7 @@ mkimp_GKBox(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
                                        PyObject* const* arguments
@@ -13233,7 +13592,6 @@ mkimp_GKTriangle_Q(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
@@ -13287,7 +13645,7 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
         return NULL;
     }
 
-    return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
+    return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 
 static IMP
@@ -13313,7 +13671,7 @@ mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
       if (result == NULL)
           goto error;
       MDLAxisAlignedBoundingBox oc_result;
-      if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
+      if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
           == -1) {
           Py_DECREF(result);
           goto error;
@@ -13398,7 +13756,7 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
         return NULL;
     }
 
-    return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
+    return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 
 static IMP
@@ -13428,7 +13786,7 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* m
       if (result == NULL)
           goto error;
       MDLAxisAlignedBoundingBox oc_result;
-      if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
+      if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
           == -1) {
           Py_DECREF(result);
           goto error;
@@ -13513,7 +13871,7 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
         return NULL;
     }
 
-    return pythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
+    return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 
 static IMP
@@ -13542,7 +13900,7 @@ mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* met
       if (result == NULL)
           goto error;
       MDLAxisAlignedBoundingBox oc_result;
-      if (depythonify_c_value("{_MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
+      if (depythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
           == -1) {
           Py_DECREF(result);
           goto error;
@@ -13621,7 +13979,7 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
         return NULL;
     }
 
-    return pythonify_c_value("{_MDLVoxelIndexExtent=<4i><4i>}", &rv);
+    return pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &rv);
 }
 
 static IMP
@@ -13647,7 +14005,7 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
       if (result == NULL)
           goto error;
       MDLVoxelIndexExtent oc_result;
-      if (depythonify_c_value("{_MDLVoxelIndexExtent=<4i><4i>}", result, &oc_result)
+      if (depythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", result, &oc_result)
           == -1) {
           Py_DECREF(result);
           goto error;
@@ -13676,7 +14034,1396 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-#if PyObjC_BUILD_RELEASE >= 1013
+static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
+                                               PyObject* const* arguments
+                                               __attribute__((__unused__)),
+                                               size_t nargs)
+{
+    struct objc_super super;
+    simd_double4x4    rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_double4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv =
+                    ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                        &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
+}
+
+static IMP
+mkimp_simd_double4x4(PyObject*              callable,
+                     PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_double4x4 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_double4x4 oc_result;
+      if (depythonify_c_value("{simd_double4x4=[4<4d>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_double4x4_d(PyObject* method, PyObject* self,
+                                                 PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_double4x4    rv;
+    double            arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_double4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_double4x4(*)(struct objc_super*, SEL,
+                                         double))objc_msgSendSuper_stret)(
+#else
+                rv = ((
+                    simd_double4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
+}
+
+static IMP
+mkimp_simd_double4x4_d(PyObject*              callable,
+                       PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_double4x4 (^block)(id, double) = ^(id _Nullable self, double arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("d", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_double4x4 oc_result;
+      if (depythonify_c_value("{simd_double4x4=[4<4d>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float2x2(PyObject* method, PyObject* self,
+                                              PyObject* const* arguments
+                                              __attribute__((__unused__)),
+                                              size_t nargs)
+{
+    struct objc_super super;
+    simd_float2x2     rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float2x2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((simd_float2x2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float2x2=[2<2f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float2x2(PyObject*              callable,
+                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float2x2 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float2x2 oc_result;
+      if (depythonify_c_value("{simd_float2x2=[2<2f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float3x3(PyObject* method, PyObject* self,
+                                              PyObject* const* arguments
+                                              __attribute__((__unused__)),
+                                              size_t nargs)
+{
+    struct objc_super super;
+    simd_float3x3     rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float3x3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float3x3=[3<3f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float3x3(PyObject*              callable,
+                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float3x3 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float3x3 oc_result;
+      if (depythonify_c_value("{simd_float3x3=[3<3f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
+                                              PyObject* const* arguments
+                                              __attribute__((__unused__)),
+                                              size_t nargs)
+{
+    struct objc_super super;
+    simd_float4x4     rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x4(PyObject*              callable,
+                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x4 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float4x4 oc_result;
+      if (depythonify_c_value("{simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float4x4_id_d(PyObject* method, PyObject* self,
+                                                   PyObject* const* arguments,
+                                                   size_t           nargs)
+{
+    struct objc_super super;
+    simd_float4x4     rv;
+    id                arg0;
+    double            arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float4x4(*)(id, SEL, id, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL, id,
+                                        double))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL, id,
+                                        double))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x4_id_d(PyObject*              callable,
+                         PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x4 (^block)(id, id, double) = ^(id _Nullable self, id arg0, double arg1) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[4] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("@", &arg0);
+      if (args[2] == NULL)
+          goto error;
+      args[3] = pythonify_c_value("d", &arg1);
+      if (args[3] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float4x4 oc_result;
+      if (depythonify_c_value("{simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 4; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float4x4_d(PyObject* method, PyObject* self,
+                                                PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_float4x4     rv;
+    double            arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL,
+                                        double))objc_msgSendSuper_stret)(
+#else
+                rv = ((
+                    simd_float4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x4_d(PyObject*              callable,
+                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x4 (^block)(id, double) = ^(id _Nullable self, double arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("d", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float4x4 oc_result;
+      if (depythonify_c_value("{simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        method,
+                                                               PyObject*        self,
+                                                               PyObject* const* arguments,
+                                                               size_t           nargs)
+{
+    struct objc_super super;
+    simd_float4x4     rv;
+    simd_float4x4     arg0;
+    id                arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("@", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_float4x4(*)(id, SEL, simd_float4x4, id))(PyObjCIMP_GetIMP(
+                    method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
+                                        id))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
+                                        id))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* methinfo
+                                     __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x4 (^block)(id, simd_float4x4, id) =
+        ^(id _Nullable self, simd_float4x4 arg0, id arg1) {
+          PyGILState_STATE state = PyGILState_Ensure();
+
+          int       cookie;
+          PyObject* args[4] = {NULL};
+          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+          if (pyself == NULL) {
+              goto error;
+          }
+
+          args[1] = pyself;
+          args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
+          if (args[2] == NULL)
+              goto error;
+          args[3] = pythonify_c_value("@", &arg1);
+          if (args[3] == NULL)
+              goto error;
+
+          PyObject* result = PyObject_Vectorcall(
+              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          if (result == NULL)
+              goto error;
+          simd_float4x4 oc_result;
+          if (depythonify_c_value("{simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
+              Py_DECREF(result);
+              goto error;
+          }
+
+          Py_DECREF(result);
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+          PyGILState_Release(state);
+          return oc_result;
+
+      error:
+          if (pyself) {
+              PyObjCObject_ReleaseTransient(pyself, cookie);
+          }
+
+          for (size_t i = 2; i < 4; i++) {
+              Py_CLEAR(args[i]);
+          }
+          PyObjCErr_ToObjCWithGILState(&state);
+        };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
+                                             PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_quatd        rv;
+    double            arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_quatd(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((simd_quatd(*)(struct objc_super*, SEL,
+                                     double))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_quatd=<4d>}", &rv);
+}
+
+static IMP
+mkimp_simd_quatd_d(PyObject*              callable,
+                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_quatd (^block)(id, double) = ^(id _Nullable self, double arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("d", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_quatd oc_result;
+      if (depythonify_c_value("{simd_quatd=<4d>}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
+                                           PyObject* const* arguments
+                                           __attribute__((__unused__)),
+                                           size_t nargs)
+{
+    struct objc_super super;
+    simd_quatf        rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((simd_quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_quatf=<4f>}", &rv);
+}
+
+static IMP
+mkimp_simd_quatf(PyObject*              callable,
+                 PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_quatf (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_quatf oc_result;
+      if (depythonify_c_value("{simd_quatf=<4f>}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
+                                             PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    simd_quatf        rv;
+    double            arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0);
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((simd_quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{simd_quatf=<4f>}", &rv);
+}
+
+static IMP
+mkimp_simd_quatf_d(PyObject*              callable,
+                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_quatf (^block)(id, double) = ^(id _Nullable self, double arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("d", &arg0);
+      if (args[2] == NULL)
+          goto error;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_quatf oc_result;
+      if (depythonify_c_value("{simd_quatf=<4f>}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
+                                     PyObject* const* arguments
+                                     __attribute__((__unused__)),
+                                     size_t nargs)
+{
+    struct objc_super super;
+    simd_uchar16      rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("<16C>", &rv);
+}
+
+static IMP
+mkimp_v16C(PyObject*              callable,
+           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_uchar16 oc_result;
+      if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
+                                                      PyObject* const* arguments
+                                                      __attribute__((__unused__)),
+                                                      size_t nargs)
+{
+    struct objc_super     super;
+    MPSImageHistogramInfo rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+#ifdef __x86_64__
+                rv = ((MPSImageHistogramInfo(*)(struct objc_super*,
+                                                SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((
+                    MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
+            }
+
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);
+        } // LCOV_EXCL_LINE
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
+
+    return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
+}
+
+static IMP
+mkimp_MPSImageHistogramInfo(PyObject*              callable,
+                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) {
+          goto error;
+      }
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      MPSImageHistogramInfo oc_result;
+      if (depythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result)
+          == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 2; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
 static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
                                                           PyObject* const* arguments
@@ -13783,1419 +15530,9 @@ mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
 
     return imp_implementationWithBlock(block);
 }
-
-static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
-                                                      PyObject* const* arguments
-                                                      __attribute__((__unused__)),
-                                                      size_t nargs)
-{
-    struct objc_super     super;
-    MPSImageHistogramInfo rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((MPSImageHistogramInfo(*)(struct objc_super*,
-                                                SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((
-                    MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
-}
-
-static IMP
-mkimp_MPSImageHistogramInfo(PyObject*              callable,
-                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      MPSImageHistogramInfo oc_result;
-      if (depythonify_c_value("{_MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result)
-          == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-static PyObject* _Nullable call_matrix_double4x4(PyObject* method, PyObject* self,
-                                                 PyObject* const* arguments
-                                                 __attribute__((__unused__)),
-                                                 size_t nargs)
-{
-    struct objc_super super;
-    matrix_double4x4  rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_double4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((
-                    matrix_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_double4x4(PyObject*              callable,
-                       PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_double4x4 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_double4x4 oc_result;
-      if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_double4x4_d(PyObject* method, PyObject* self,
-                                                   PyObject* const* arguments,
-                                                   size_t           nargs)
-{
-    struct objc_super super;
-    matrix_double4x4  rv;
-    double            arg0;
-
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_double4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((matrix_double4x4(*)(struct objc_super*, SEL,
-                                           double))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_double4x4(*)(struct objc_super*, SEL,
-                                           double))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method), arg0);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_double4x4=[4<4d>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_double4x4_d(PyObject*              callable,
-                         PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_double4x4 (^block)(id, double) = ^(id _Nullable self, double arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_double4x4 oc_result;
-      if (depythonify_c_value("{_matrix_double4x4=[4<4d>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_float2x2(PyObject* method, PyObject* self,
-                                                PyObject* const* arguments
-                                                __attribute__((__unused__)),
-                                                size_t nargs)
-{
-    struct objc_super super;
-    matrix_float2x2   rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_float2x2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                rv = ((matrix_float2x2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_float2x2=[2<2f>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_float2x2(PyObject*              callable,
-                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_float2x2 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_float2x2 oc_result;
-      if (depythonify_c_value("{_matrix_float2x2=[2<2f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_float3x3(PyObject* method, PyObject* self,
-                                                PyObject* const* arguments
-                                                __attribute__((__unused__)),
-                                                size_t nargs)
-{
-    struct objc_super super;
-    matrix_float3x3   rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_float3x3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((
-                    matrix_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_float3x3=[3<3f>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_float3x3(PyObject*              callable,
-                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_float3x3 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_float3x3 oc_result;
-      if (depythonify_c_value("{_matrix_float3x3=[3<3f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_float4x4(PyObject* method, PyObject* self,
-                                                PyObject* const* arguments
-                                                __attribute__((__unused__)),
-                                                size_t nargs)
-{
-    struct objc_super super;
-    matrix_float4x4   rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_float4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((
-                    matrix_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_float4x4(PyObject*              callable,
-                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_float4x4 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_float4x4_id_d(PyObject* method, PyObject* self,
-                                                     PyObject* const* arguments,
-                                                     size_t           nargs)
-{
-    struct objc_super super;
-    matrix_float4x4   rv;
-    id                arg0;
-    double            arg1;
-
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("d", arguments[1], &arg1) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv =
-                    ((matrix_float4x4(*)(id, SEL, id, double))(PyObjCIMP_GetIMP(method)))(
-                        self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((matrix_float4x4(*)(struct objc_super*, SEL, id,
-                                          double))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_float4x4(*)(struct objc_super*, SEL, id,
-                                          double))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_float4x4_id_d(PyObject*              callable,
-                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_float4x4 (^block)(id, id, double) = ^(id _Nullable self, id arg0,
-                                                 double arg1) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[4] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
-      args[3] = pythonify_c_value("d", &arg1);
-      if (args[3] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 4; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_matrix_float4x4_d(PyObject* method, PyObject* self,
-                                                  PyObject* const* arguments,
-                                                  size_t           nargs)
-{
-    struct objc_super super;
-    matrix_float4x4   rv;
-    double            arg0;
-
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((matrix_float4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((matrix_float4x4(*)(struct objc_super*, SEL,
-                                          double))objc_msgSendSuper_stret)(
-#else
-                rv = ((matrix_float4x4(*)(struct objc_super*, SEL,
-                                          double))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method), arg0);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_matrix_float4x4=[4<4f>]}", &rv);
-}
-
-static IMP
-mkimp_matrix_float4x4_d(PyObject*              callable,
-                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    matrix_float4x4 (^block)(id, double) = ^(id _Nullable self, double arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      matrix_float4x4 oc_result;
-      if (depythonify_c_value("{_matrix_float4x4=[4<4f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
-                                              PyObject* const* arguments
-                                              __attribute__((__unused__)),
-                                              size_t nargs)
-{
-    struct objc_super super;
-    simd_float4x4     rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_simd_float4x4=[4<4f>]}", &rv);
-}
-
-static IMP
-mkimp_simd_float4x4(PyObject*              callable,
-                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_float4x4 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_float4x4 oc_result;
-      if (depythonify_c_value("{_simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        method,
-                                                               PyObject*        self,
-                                                               PyObject* const* arguments,
-                                                               size_t           nargs)
-{
-    struct objc_super super;
-    simd_float4x4     rv;
-    simd_float4x4     arg0;
-    id                arg1;
-
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("{_simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("@", arguments[1], &arg1) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL, simd_float4x4, id))(PyObjCIMP_GetIMP(
-                    method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
-                                        id))objc_msgSendSuper_stret)(
-#else
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
-                                        id))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_simd_float4x4=[4<4f>]}", &rv);
-}
-
-static IMP
-mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* methinfo
-                                     __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_float4x4 (^block)(id, simd_float4x4, id) =
-        ^(id _Nullable self, simd_float4x4 arg0, id arg1) {
-          PyGILState_STATE state = PyGILState_Ensure();
-
-          int       cookie;
-          PyObject* args[4] = {NULL};
-          PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
-
-          args[1] = pyself;
-          args[2] = pythonify_c_value("{_simd_float4x4=[4<4f>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
-          args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
-
-          PyObject* result = PyObject_Vectorcall(
-              callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-          if (result == NULL)
-              goto error;
-          simd_float4x4 oc_result;
-          if (depythonify_c_value("{_simd_float4x4=[4<4f>]}", result, &oc_result) == -1) {
-              Py_DECREF(result);
-              goto error;
-          }
-
-          Py_DECREF(result);
-          for (size_t i = 2; i < 4; i++) {
-              Py_CLEAR(args[i]);
-          }
-
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-          PyGILState_Release(state);
-          return oc_result;
-
-      error:
-          if (pyself) {
-              PyObjCObject_ReleaseTransient(pyself, cookie);
-          }
-
-          for (size_t i = 2; i < 4; i++) {
-              Py_CLEAR(args[i]);
-          }
-          PyObjCErr_ToObjCWithGILState(&state);
-        };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
-                                             PyObject* const* arguments, size_t nargs)
-{
-    struct objc_super super;
-    simd_quatd        rv;
-    double            arg0;
-
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_quatd(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((simd_quatd(*)(struct objc_super*, SEL,
-                                     double))objc_msgSendSuper_stret)(
-#else
-                rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method), arg0);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_simd_quatd=<4d>}", &rv);
-}
-
-static IMP
-mkimp_simd_quatd_d(PyObject*              callable,
-                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_quatd (^block)(id, double) = ^(id _Nullable self, double arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_quatd oc_result;
-      if (depythonify_c_value("{_simd_quatd=<4d>}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
-                                           PyObject* const* arguments
-                                           __attribute__((__unused__)),
-                                           size_t nargs)
-{
-    struct objc_super super;
-    simd_quatf        rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                rv = ((simd_quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_simd_quatf=<4f>}", &rv);
-}
-
-static IMP
-mkimp_simd_quatf(PyObject*              callable,
-                 PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_quatf (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_quatf oc_result;
-      if (depythonify_c_value("{_simd_quatf=<4f>}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
-                                             PyObject* const* arguments, size_t nargs)
-{
-    struct objc_super super;
-    simd_quatf        rv;
-    double            arg0;
-
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("d", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0);
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                rv = ((simd_quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_simd_quatf=<4f>}", &rv);
-}
-
-static IMP
-mkimp_simd_quatf_d(PyObject*              callable,
-                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_quatf (^block)(id, double) = ^(id _Nullable self, double arg0) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[3] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-      args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_quatf oc_result;
-      if (depythonify_c_value("{_simd_quatf=<4f>}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 3; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE > 1013 */
-
 int
 PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "<16C>@:", call_v16C, mkimp_v16C)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "<2d>@:", call_v2d, mkimp_v2d)
@@ -15307,6 +15644,18 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "<4i>@:<3f>", call_v4i_v3f, mkimp_v4i_v3f)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "@@:<2d>@", call_id_v2d_id, mkimp_id_v2d_id)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "@@:<2d>q", call_id_v2d_q, mkimp_id_v2d_q)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -15534,8 +15883,8 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@Q{_matrix_float4x4=[4<4f>]}", call_id_id_Q_matrix_float4x4,
-            mkimp_id_id_Q_matrix_float4x4)
+            "@@:@Q{simd_float4x4=[4<4f>]}", call_id_id_Q_simd_float4x4,
+            mkimp_id_id_Q_simd_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -15563,23 +15912,23 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{GKBox=<3f><3f>}", call_id_id_GKBox, mkimp_id_id_GKBox)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{GKQuad=<2f><2f>}", call_id_id_GKQuad, mkimp_id_id_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f",
+            "@@:@{GKQuad=<2f><2f>}", call_id_id_GKQuad, mkimp_id_id_GKQuad)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f",
             call_id_id_MDLAxisAlignedBoundingBox_f,
             mkimp_id_id_MDLAxisAlignedBoundingBox_f)
         == -1) {
@@ -15587,22 +15936,34 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float2x2=[2<2f>]}", call_id_id_matrix_float2x2,
-            mkimp_id_id_matrix_float2x2)
+            "@@:@{simd_float2x2=[2<2f>]}", call_id_id_simd_float2x2,
+            mkimp_id_id_simd_float2x2)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float3x3=[3<3f>]}", call_id_id_matrix_float3x3,
-            mkimp_id_id_matrix_float3x3)
+            "@@:@{simd_float3x3=[3<3f>]}", call_id_id_simd_float3x3,
+            mkimp_id_id_simd_float3x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:@{_matrix_float4x4=[4<4f>]}", call_id_id_matrix_float4x4,
-            mkimp_id_id_matrix_float4x4)
+            "@@:@{simd_float4x4=[4<4f>]}", call_id_id_simd_float4x4,
+            mkimp_id_id_simd_float4x4)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "@@:@{simd_quatf=<4f>}", call_id_id_simd_quatf, mkimp_id_id_simd_quatf)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "@@:@{simd_quatf=<4f>}@", call_id_id_simd_quatf_id, mkimp_id_id_simd_quatf_id)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -15680,19 +16041,22 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKBox=<3f><3f>}", call_id_GKBox, mkimp_id_GKBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
+#if PyObjC_BUILD_RELEASE >= 1012
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKBox=<3f><3f>}f", call_id_GKBox_f, mkimp_id_GKBox_f)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKQuad=<2f><2f>}", call_id_GKQuad, mkimp_id_GKQuad)
@@ -15705,32 +16069,30 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_MDLVoxelIndexExtent=<4i><4i>}", call_id_MDLVoxelIndexExtent,
+            "@@:{MDLVoxelIndexExtent=<4i><4i>}", call_id_MDLVoxelIndexExtent,
             mkimp_id_MDLVoxelIndexExtent)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}", call_id_matrix_float4x4,
-            mkimp_id_matrix_float4x4)
+            "@@:{simd_float4x4=[4<4f>]}", call_id_simd_float4x4, mkimp_id_simd_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}Z", call_id_matrix_float4x4_Z,
-            mkimp_id_matrix_float4x4_Z)
+            "@@:{simd_float4x4=[4<4f>]}Z", call_id_simd_float4x4_Z,
+            mkimp_id_simd_float4x4_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "@@:{_matrix_float4x4=[4<4f>]}B", call_id_matrix_float4x4_Z,
-            mkimp_id_matrix_float4x4_Z)
+            "@@:{simd_float4x4=[4<4f>]}B", call_id_simd_float4x4_Z,
+            mkimp_id_simd_float4x4_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -15792,6 +16154,12 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "f@:<2i>", call_f_v2i, mkimp_f_v2i)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "v@:<2d>", call_v_v2d, mkimp_v_v2d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -15893,106 +16261,95 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}", call_v_MDLAxisAlignedBoundingBox,
+            "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}", call_v_MDLAxisAlignedBoundingBox,
             mkimp_v_MDLAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z",
+            "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z",
             call_v_MDLAxisAlignedBoundingBox_Z, mkimp_v_MDLAxisAlignedBoundingBox_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}B",
+            "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}B",
             call_v_MDLAxisAlignedBoundingBox_Z, mkimp_v_MDLAxisAlignedBoundingBox_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_double4x4=[4<4d>]}", call_v_matrix_double4x4,
-            mkimp_v_matrix_double4x4)
+            "v@:{simd_double4x4=[4<4d>]}", call_v_simd_double4x4, mkimp_v_simd_double4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_double4x4=[4<4d>]}d", call_v_matrix_double4x4_d,
-            mkimp_v_matrix_double4x4_d)
+            "v@:{simd_double4x4=[4<4d>]}d", call_v_simd_double4x4_d,
+            mkimp_v_simd_double4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float2x2=[2<2f>]}", call_v_matrix_float2x2,
-            mkimp_v_matrix_float2x2)
+            "v@:{simd_float2x2=[2<2f>]}", call_v_simd_float2x2, mkimp_v_simd_float2x2)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float3x3=[3<3f>]}", call_v_matrix_float3x3,
-            mkimp_v_matrix_float3x3)
+            "v@:{simd_float3x3=[3<3f>]}", call_v_simd_float3x3, mkimp_v_simd_float3x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float4x4=[4<4f>]}", call_v_matrix_float4x4,
-            mkimp_v_matrix_float4x4)
+            "v@:{simd_float4x4=[4<4f>]}", call_v_simd_float4x4, mkimp_v_simd_float4x4)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_matrix_float4x4=[4<4f>]}d", call_v_matrix_float4x4_d,
-            mkimp_v_matrix_float4x4_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1013
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_simd_float4x4=[4<4f>]}", call_v_simd_float4x4, mkimp_v_simd_float4x4)
+            "v@:{simd_float4x4=[4<4f>]}d", call_v_simd_float4x4_d,
+            mkimp_v_simd_float4x4_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_simd_quatd=<4d>}d", call_v_simd_quatd_d, mkimp_v_simd_quatd_d)
+            "v@:{simd_quatd=<4d>}d", call_v_simd_quatd_d, mkimp_v_simd_quatd_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_simd_quatf=<4f>}", call_v_simd_quatf, mkimp_v_simd_quatf)
+            "v@:{simd_quatf=<4f>}", call_v_simd_quatf, mkimp_v_simd_quatf)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_simd_quatf=<4f>}<3f>", call_v_simd_quatf_v3f, mkimp_v_simd_quatf_v3f)
+            "v@:{simd_quatf=<4f>}<3f>", call_v_simd_quatf_v3f, mkimp_v_simd_quatf_v3f)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "v@:{_simd_quatf=<4f>}d", call_v_simd_quatf_d, mkimp_v_simd_quatf_d)
+            "v@:{simd_quatf=<4f>}d", call_v_simd_quatf_d, mkimp_v_simd_quatf_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /*  PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKBox=<3f><3f>}@:", call_GKBox, mkimp_GKBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKQuad=<2f><2f>}@:", call_GKQuad, mkimp_GKQuad)
@@ -16005,37 +16362,123 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /*  PyObjC_BUILD_RELEASE >= 1012 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MDLAxisAlignedBoundingBox=<3f><3f>}@:", call_MDLAxisAlignedBoundingBox,
+            "{MDLAxisAlignedBoundingBox=<3f><3f>}@:", call_MDLAxisAlignedBoundingBox,
             mkimp_MDLAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
+            "{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
             call_MDLAxisAlignedBoundingBox_v4i, mkimp_MDLAxisAlignedBoundingBox_v4i)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d", call_MDLAxisAlignedBoundingBox_d,
+            "{MDLAxisAlignedBoundingBox=<3f><3f>}@:d", call_MDLAxisAlignedBoundingBox_d,
             mkimp_MDLAxisAlignedBoundingBox_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MDLVoxelIndexExtent=<4i><4i>}@:", call_MDLVoxelIndexExtent,
+            "{MDLVoxelIndexExtent=<4i><4i>}@:", call_MDLVoxelIndexExtent,
             mkimp_MDLVoxelIndexExtent)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 
-#if PyObjC_BUILD_RELEASE >= 1013
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_double4x4=[4<4d>]}@:", call_simd_double4x4, mkimp_simd_double4x4)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_double4x4=[4<4d>]}@:d", call_simd_double4x4_d, mkimp_simd_double4x4_d)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float2x2=[2<2f>]}@:", call_simd_float2x2, mkimp_simd_float2x2)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float3x3=[3<3f>]}@:", call_simd_float3x3, mkimp_simd_float3x3)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float4x4=[4<4f>]}@:", call_simd_float4x4, mkimp_simd_float4x4)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float4x4=[4<4f>]}@:@d", call_simd_float4x4_id_d,
+            mkimp_simd_float4x4_id_d)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float4x4=[4<4f>]}@:d", call_simd_float4x4_d, mkimp_simd_float4x4_d)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float4x4=[4<4f>]}@:{simd_float4x4=[4<4f>]}@",
+            call_simd_float4x4_simd_float4x4_id, mkimp_simd_float4x4_simd_float4x4_id)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_quatd=<4d>}@:d", call_simd_quatd_d, mkimp_simd_quatd_d)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_quatf=<4f>}@:", call_simd_quatf, mkimp_simd_quatf)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_quatf=<4f>}@:d", call_simd_quatf_d, mkimp_simd_quatf_d)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "<16C>@:", call_v16C, mkimp_v16C)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo,
+            mkimp_MPSImageHistogramInfo)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo,
+            mkimp_MPSImageHistogramInfo)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox,
             mkimp_MPSAxisAlignedBoundingBox)
@@ -16043,101 +16486,6 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo,
-            mkimp_MPSImageHistogramInfo)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo,
-            mkimp_MPSImageHistogramInfo)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_double4x4=[4<4d>]}@:", call_matrix_double4x4,
-            mkimp_matrix_double4x4)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_double4x4=[4<4d>]}@:d", call_matrix_double4x4_d,
-            mkimp_matrix_double4x4_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float2x2=[2<2f>]}@:", call_matrix_float2x2, mkimp_matrix_float2x2)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float3x3=[3<3f>]}@:", call_matrix_float3x3, mkimp_matrix_float3x3)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:", call_matrix_float4x4, mkimp_matrix_float4x4)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:@d", call_matrix_float4x4_id_d,
-            mkimp_matrix_float4x4_id_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_matrix_float4x4=[4<4f>]}@:d", call_matrix_float4x4_d,
-            mkimp_matrix_float4x4_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1013
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_simd_float4x4=[4<4f>]}@:", call_simd_float4x4, mkimp_simd_float4x4)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@",
-            call_simd_float4x4_simd_float4x4_id, mkimp_simd_float4x4_simd_float4x4_id)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_simd_quatd=<4d>}@:d", call_simd_quatd_d, mkimp_simd_quatd_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_simd_quatf=<4f>}@:", call_simd_quatf, mkimp_simd_quatf)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_simd_quatf=<4f>}@:d", call_simd_quatf_d, mkimp_simd_quatf_d)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
     return 0;
 }
 NS_ASSUME_NONNULL_END
-// LCOV_EXCL_STOP

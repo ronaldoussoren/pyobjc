@@ -12,7 +12,7 @@ class TestMPSImage_MPSImageHistogram(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSImageKeypointData.__typestr__,
-            b"{_MPSImageKeypointData=<2S>f}",
+            b"{MPSImageKeypointData=<2S>f}",
         )
         v = MetalPerformanceShaders.MPSImageKeypointData()
         self.assertIs(v.keypointCoordinate, None)

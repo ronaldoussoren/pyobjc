@@ -5,6 +5,12 @@
   "typed_enum": {
    "PKInkType": { "type": "@", "type_name": "NSString" }
   },
+  "enum": {
+   "PKContentVersionLatest":  { "ignore": true }
+  },
+  "alias": {
+   "PKContentVersionLatest": { "ignore": true }
+  },
   "classes": {
    "PKDrawing": {
     "methods": [

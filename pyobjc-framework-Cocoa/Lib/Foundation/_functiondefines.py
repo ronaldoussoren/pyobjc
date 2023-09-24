@@ -1,15 +1,19 @@
 """
 Port of "function defines".
 """
-from Foundation import NSBundle
+import Foundation as _Foundation
 
 
 def NSLocalizedString(key, comment):
-    return NSBundle.mainBundle().localizedStringForKey_value_table_(key, "", None)
+    return _Foundation.NSBundle.mainBundle().localizedStringForKey_value_table_(
+        key, "", None
+    )
 
 
 def NSLocalizedStringFromTable(key, tbl, comment):
-    return NSBundle.mainBundle().localizedStringForKey_value_table_(key, "", tbl)
+    return _Foundation.NSBundle.mainBundle().localizedStringForKey_value_table_(
+        key, "", tbl
+    )
 
 
 def NSLocalizedStringFromTableInBundle(key, tbl, bundle, comment):
@@ -21,13 +25,15 @@ def NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment):
 
 
 def NSLocalizedAttributedString(key, comment):
-    return NSBundle.mainBundle().localizedAttributedStringForKey_value_table_(
-        key, "", None
+    return (
+        _Foundation.NSBundle.mainBundle().localizedAttributedStringForKey_value_table_(
+            key, "", None
+        )
     )
 
 
 def NSLocalizedAttributedStringFromTable(key, tbl, comment):
-    return NSBundle.mainBundle.localizedAttributedStringForKey_value_table_(
+    return _Foundation.NSBundle.mainBundle.localizedAttributedStringForKey_value_table_(
         key, "", tbl
     )
 

@@ -16,9 +16,7 @@
 #endif
 
 static PyObjC_function_map function_map[] = {
-#if PyObjC_BUILD_RELEASE >= 1009
     {"CGVectorMake", (PyObjC_Function_Pointer)&CGVectorMake},
-#endif
     {"CGPointMake", (PyObjC_Function_Pointer)&CGPointMake},
     {"CGRectMake", (PyObjC_Function_Pointer)&CGRectMake},
     {"CGSizeMake", (PyObjC_Function_Pointer)&CGSizeMake},

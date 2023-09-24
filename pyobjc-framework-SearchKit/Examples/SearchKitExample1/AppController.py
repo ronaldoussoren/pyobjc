@@ -132,13 +132,13 @@ class AppController(Cocoa.NSObject):
         # process every file in your home directory and beneath.
 
         listOfFiles = fm.directoryContentsAtPath_(self.directoryToIndex)
-        for aFile in listOfFiles:
+        for fname in listOfFiles:
             # the particular function we'll use like to get an NSURL
             # object, so we'll create one and pass it over.
 
             # create the URL with the filename
             fileURL = Cocoa.NSURL.fileURLWithPath_(
-                os.path.join(self.directoryToIndex, aFile)
+                os.path.join(self.directoryToIndex, fname)
             )
 
             # invoke a helper method to add this file into our index

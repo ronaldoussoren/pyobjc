@@ -7,25 +7,31 @@ documentation for details on how to use these functions and classes.
 Note that PyObjC only wrappers the non-deprecated parts of the CoreServices
 framework.
 """
-import sys
-
-import objc
-from CoreServices.Metadata import _metadata
-
-sys.modules["CoreServices.Metadata"] = mod = objc.ObjCLazyModule(
-    "CoreServices.Metadata",
-    "com.apple.Metadata",
-    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (),
-)
 
 
-del sys.modules["CoreServices.Metadata._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreServices.Metadata",
+        frameworkIdentifier="com.apple.CoreServices",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreServices.Metadata._metadata"]
+
+
+globals().pop("_setup")()

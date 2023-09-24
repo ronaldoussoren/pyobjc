@@ -117,7 +117,7 @@ int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
 /*!
  * @function PyObjC_FindRegisteredStruct
  * @param signature   An Objective-C signature for a struct type
- * @param len         Length of the sigature string
+ * @param len         Length of the signature string
  * @result A type registered with PyObjC_CreateRegisteredStruct or
  * PyObjC_RegisterStructAlias, or NULL when such a type cannot be found.
  *

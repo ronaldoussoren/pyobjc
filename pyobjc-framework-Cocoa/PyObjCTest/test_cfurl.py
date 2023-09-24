@@ -825,6 +825,10 @@ class TestURL(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLVolumeSubtypeKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeMountFromLocationKey, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(CoreFoundation.kCFURLDirectoryEntryCountKey, str)
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

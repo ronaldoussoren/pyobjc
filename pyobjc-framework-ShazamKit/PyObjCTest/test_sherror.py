@@ -15,3 +15,4 @@ class TestSHError(TestCase):
         self.assertEqual(ShazamKit.SHErrorCodeCustomCatalogInvalidURL, 301)
         self.assertEqual(ShazamKit.SHErrorCodeMediaLibrarySyncFailed, 400)
         self.assertEqual(ShazamKit.SHErrorCodeInternalError, 500)
+        self.assertEqual(ShazamKit.SHErrorCodeMediaItemFetchFailed, 600)

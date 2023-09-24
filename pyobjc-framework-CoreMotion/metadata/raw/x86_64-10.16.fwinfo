@@ -16,7 +16,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMAcceleration=ddd}",
+       "typestr": "{CMAcceleration=ddd}",
        "typestr_special": true
       },
       "selector": "acceleration",
@@ -31,7 +31,7 @@
        "readonly"
       ],
       "name": "acceleration",
-      "typestr": "{_CMAcceleration=ddd}",
+      "typestr": "{CMAcceleration=ddd}",
       "typestr_special": true
      }
     ],
@@ -206,7 +206,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMRotationMatrix=ddddddddd}",
+       "typestr": "{CMRotationMatrix=ddddddddd}",
        "typestr_special": true
       },
       "selector": "rotationMatrix",
@@ -216,7 +216,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMQuaternion=dddd}",
+       "typestr": "{CMQuaternion=dddd}",
        "typestr_special": true
       },
       "selector": "quaternion",
@@ -258,7 +258,7 @@
        "readonly"
       ],
       "name": "rotationMatrix",
-      "typestr": "{_CMRotationMatrix=ddddddddd}",
+      "typestr": "{CMRotationMatrix=ddddddddd}",
       "typestr_special": true
      },
      {
@@ -267,7 +267,7 @@
        "readonly"
       ],
       "name": "quaternion",
-      "typestr": "{_CMQuaternion=dddd}",
+      "typestr": "{CMQuaternion=dddd}",
       "typestr_special": true
      }
     ],
@@ -294,7 +294,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMRotationRate=ddd}",
+       "typestr": "{CMRotationRate=ddd}",
        "typestr_special": true
       },
       "selector": "rotationRate",
@@ -304,7 +304,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMAcceleration=ddd}",
+       "typestr": "{CMAcceleration=ddd}",
        "typestr_special": true
       },
       "selector": "gravity",
@@ -314,7 +314,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMAcceleration=ddd}",
+       "typestr": "{CMAcceleration=ddd}",
        "typestr_special": true
       },
       "selector": "userAcceleration",
@@ -324,7 +324,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMCalibratedMagneticField={_CMMagneticField=ddd}i}",
+       "typestr": "{CMCalibratedMagneticField={CMMagneticField=ddd}i}",
        "typestr_special": true
       },
       "selector": "magneticField",
@@ -368,7 +368,7 @@
        "readonly"
       ],
       "name": "rotationRate",
-      "typestr": "{_CMRotationRate=ddd}",
+      "typestr": "{CMRotationRate=ddd}",
       "typestr_special": true
      },
      {
@@ -377,7 +377,7 @@
        "readonly"
       ],
       "name": "gravity",
-      "typestr": "{_CMAcceleration=ddd}",
+      "typestr": "{CMAcceleration=ddd}",
       "typestr_special": true
      },
      {
@@ -386,7 +386,7 @@
        "readonly"
       ],
       "name": "userAcceleration",
-      "typestr": "{_CMAcceleration=ddd}",
+      "typestr": "{CMAcceleration=ddd}",
       "typestr_special": true
      },
      {
@@ -395,7 +395,7 @@
        "readonly"
       ],
       "name": "magneticField",
-      "typestr": "{_CMCalibratedMagneticField={_CMMagneticField=ddd}i}",
+      "typestr": "{CMCalibratedMagneticField={CMMagneticField=ddd}i}",
       "typestr_special": true
      },
      {
@@ -518,7 +518,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMRotationRate=ddd}",
+       "typestr": "{CMRotationRate=ddd}",
        "typestr_special": true
       },
       "selector": "rotationRate",
@@ -533,7 +533,7 @@
        "readonly"
       ],
       "name": "rotationRate",
-      "typestr": "{_CMRotationRate=ddd}",
+      "typestr": "{CMRotationRate=ddd}",
       "typestr_special": true
      }
     ],
@@ -746,7 +746,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMMagneticField=ddd}",
+       "typestr": "{CMMagneticField=ddd}",
        "typestr_special": true
       },
       "selector": "magneticField",
@@ -761,7 +761,7 @@
        "readonly"
       ],
       "name": "magneticField",
-      "typestr": "{_CMMagneticField=ddd}",
+      "typestr": "{CMMagneticField=ddd}",
       "typestr_special": true
      }
     ],
@@ -2376,7 +2376,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_CMRotationRate=ddd}",
+       "typestr": "{CMRotationRate=ddd}",
        "typestr_special": true
       },
       "selector": "rotationRate",
@@ -2391,7 +2391,7 @@
        "readonly"
       ],
       "name": "rotationRate",
-      "typestr": "{_CMRotationRate=ddd}",
+      "typestr": "{CMRotationRate=ddd}",
       "typestr_special": true
      }
     ],
@@ -2844,7 +2844,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_CMAcceleration=ddd}"
+    "typestr": "{CMAcceleration=ddd}"
    },
    "CMCalibratedMagneticField": {
     "fieldnames": [
@@ -2852,7 +2852,7 @@
      "accuracy"
     ],
     "special": true,
-    "typestr": "{_CMCalibratedMagneticField={_CMMagneticField=ddd}i}"
+    "typestr": "{CMCalibratedMagneticField={CMMagneticField=ddd}i}"
    },
    "CMMagneticField": {
     "fieldnames": [
@@ -2861,7 +2861,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_CMMagneticField=ddd}"
+    "typestr": "{CMMagneticField=ddd}"
    },
    "CMQuaternion": {
     "fieldnames": [
@@ -2871,7 +2871,7 @@
      "w"
     ],
     "special": true,
-    "typestr": "{_CMQuaternion=dddd}"
+    "typestr": "{CMQuaternion=dddd}"
    },
    "CMRotationMatrix": {
     "fieldnames": [
@@ -2886,7 +2886,7 @@
      "m33"
     ],
     "special": true,
-    "typestr": "{_CMRotationMatrix=ddddddddd}"
+    "typestr": "{CMRotationMatrix=ddddddddd}"
    },
    "CMRotationRate": {
     "fieldnames": [
@@ -2895,7 +2895,7 @@
      "z"
     ],
     "special": true,
-    "typestr": "{_CMRotationRate=ddd}"
+    "typestr": "{CMRotationRate=ddd}"
    }
   }
  },

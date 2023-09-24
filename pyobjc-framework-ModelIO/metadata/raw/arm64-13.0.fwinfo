@@ -15,7 +15,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -34,7 +34,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_double4x4=[4<4d>]}",
+        "typestr": "{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        },
        {
@@ -59,7 +59,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "float4x4AtTime:",
@@ -74,7 +74,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_double4x4=[4<4d>]}",
+       "typestr": "{simd_double4x4=[4<4d>]}",
        "typestr_special": true
       },
       "selector": "double4x4AtTime:",
@@ -83,7 +83,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_float4x4=[4<4f>]}",
+        "typestr": "^{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -106,7 +106,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_double4x4=[4<4d>]}",
+        "typestr": "^{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        },
        {
@@ -129,7 +129,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_float4x4=[4<4f>]}",
+        "typestr": "^{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -148,7 +148,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_double4x4=[4<4d>]}",
+        "typestr": "^{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        },
        {
@@ -176,7 +176,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -195,7 +195,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatd=<4d>}",
+        "typestr": "{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -220,7 +220,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatf=<4f>}",
+       "typestr": "{simd_quatf=<4f>}",
        "typestr_special": true
       },
       "selector": "floatQuaternionAtTime:",
@@ -235,7 +235,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatd=<4d>}",
+       "typestr": "{simd_quatd=<4d>}",
        "typestr_special": true
       },
       "selector": "doubleQuaternionAtTime:",
@@ -244,7 +244,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -267,7 +267,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -290,7 +290,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -309,7 +309,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -352,7 +352,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -375,7 +375,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -398,7 +398,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -421,7 +421,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -444,7 +444,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -471,7 +471,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -498,7 +498,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatf=<4f>}",
+        "typestr": "^{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -517,7 +517,7 @@
      {
       "args": [
        {
-        "typestr": "^{_simd_quatd=<4d>}",
+        "typestr": "^{simd_quatd=<4d>}",
         "typestr_special": true
        },
        {
@@ -1920,7 +1920,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_double4x4=[4<4d>]}",
+       "typestr": "{simd_double4x4=[4<4d>]}",
        "typestr_special": true
       },
       "selector": "geometryBindTransform",
@@ -1929,7 +1929,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_double4x4=[4<4d>]}",
+        "typestr": "{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        }
       ],
@@ -1976,7 +1976,7 @@
        "nonatomic"
       ],
       "name": "geometryBindTransform",
-      "typestr": "{_matrix_double4x4=[4<4d>]}",
+      "typestr": "{simd_double4x4=[4<4d>]}",
       "typestr_special": true
      }
     ],
@@ -2300,7 +2300,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBoxAtTime:",
@@ -2370,7 +2370,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -2648,7 +2648,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+      "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -2837,7 +2837,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+        "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        },
        {
@@ -2925,7 +2925,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "projectionMatrix",
@@ -3490,7 +3490,7 @@
        "readonly"
       ],
       "name": "projectionMatrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -4630,7 +4630,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -5028,7 +5028,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "matrix4x4",
@@ -5037,7 +5037,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -5181,7 +5181,7 @@
        "nonatomic"
       ],
       "name": "matrix4x4",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -5539,7 +5539,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_float4x4=[4<4f>]}",
+        "typestr": "^{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -5558,7 +5558,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_double4x4=[4<4d>]}",
+        "typestr": "^{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        },
        {
@@ -5577,7 +5577,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_float4x4=[4<4f>]}",
+        "typestr": "^{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -5596,7 +5596,7 @@
      {
       "args": [
        {
-        "typestr": "^{_matrix_double4x4=[4<4d>]}",
+        "typestr": "^{simd_double4x4=[4<4d>]}",
         "typestr_special": true
        },
        {
@@ -5769,7 +5769,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -6959,7 +6959,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+      "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -7490,7 +7490,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBoxAtTime:",
@@ -9505,7 +9505,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "leftViewMatrix",
@@ -9515,7 +9515,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "rightViewMatrix",
@@ -9525,7 +9525,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "leftProjectionMatrix",
@@ -9535,7 +9535,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "rightProjectionMatrix",
@@ -9586,7 +9586,7 @@
        "readonly"
       ],
       "name": "leftViewMatrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -9595,7 +9595,7 @@
        "readonly"
       ],
       "name": "rightViewMatrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -9604,7 +9604,7 @@
        "readonly"
       ],
       "name": "leftProjectionMatrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -9613,7 +9613,7 @@
        "readonly"
       ],
       "name": "rightProjectionMatrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      }
     ],
@@ -11223,7 +11223,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -11238,7 +11238,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -11327,7 +11327,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -11428,7 +11428,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "rotationMatrixAtTime:",
@@ -12123,7 +12123,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "float4x4AtTime:",
@@ -12138,7 +12138,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_double4x4=[4<4d>]}",
+       "typestr": "{simd_double4x4=[4<4d>]}",
        "typestr_special": true
       },
       "selector": "double4x4AtTime:",
@@ -13000,7 +13000,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+        "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        },
        {
@@ -13112,7 +13112,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
+        "typestr": "{MDLVoxelIndexExtent=<4i><4i>}",
         "typestr_special": true
        }
       ],
@@ -13318,7 +13318,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "voxelBoundingBoxAtIndex:",
@@ -13388,7 +13388,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
+       "typestr": "{MDLVoxelIndexExtent=<4i><4i>}",
        "typestr_special": true
       },
       "selector": "voxelIndexExtent",
@@ -13398,7 +13398,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -13482,7 +13482,7 @@
        "readonly"
       ],
       "name": "voxelIndexExtent",
-      "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}",
+      "typestr": "{MDLVoxelIndexExtent=<4i><4i>}",
       "typestr_special": true
      },
      {
@@ -13491,7 +13491,7 @@
        "readonly"
       ],
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+      "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -13889,7 +13889,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+       "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
        "typestr_special": true
       },
       "selector": "boundingBox",
@@ -13898,7 +13898,7 @@
      {
       "args": [
        {
-        "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+        "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
         "typestr_special": true
        }
       ],
@@ -13942,7 +13942,7 @@
     "properties": [
      {
       "name": "boundingBox",
-      "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+      "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}",
       "typestr_special": true
      },
      {
@@ -14405,7 +14405,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -14425,7 +14425,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -14448,7 +14448,7 @@
       "class_method": false,
       "required": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "localTransformAtTime:",
@@ -14468,7 +14468,7 @@
       "class_method": true,
       "required": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "globalTransformWithObject:atTime:",
@@ -14479,7 +14479,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "matrix",
@@ -14488,7 +14488,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -14569,7 +14569,7 @@
        "nonatomic"
       ],
       "name": "matrix",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -14624,7 +14624,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "float4x4AtTime:",
@@ -14640,7 +14640,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_matrix_double4x4=[4<4d>]}",
+       "typestr": "{simd_double4x4=[4<4d>]}",
        "typestr_special": true
       },
       "selector": "double4x4AtTime:",
@@ -14693,7 +14693,7 @@
      "minBounds"
     ],
     "special": true,
-    "typestr": "{_MDLAxisAlignedBoundingBox=<3f><3f>}"
+    "typestr": "{MDLAxisAlignedBoundingBox=<3f><3f>}"
    },
    "MDLVoxelIndexExtent": {
     "fieldnames": [
@@ -14701,7 +14701,7 @@
      "maximumExtent"
     ],
     "special": true,
-    "typestr": "{_MDLVoxelIndexExtent=<4i><4i>}"
+    "typestr": "{MDLVoxelIndexExtent=<4i><4i>}"
    }
   },
   "typedefs": {

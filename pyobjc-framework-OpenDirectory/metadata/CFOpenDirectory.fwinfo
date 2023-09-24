@@ -360,35 +360,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__ODQuery=}",
-          false
-         ]
+         "typestr": "^{__ODQuery=}"
         },
         {
-         "typestr": [
-          "@",
-          false
-         ]
+         "typestr": "@"
         },
         {
-         "typestr": [
-          "^{__CFError=}",
-          false
-         ]
+         "typestr": "^{__CFError=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"

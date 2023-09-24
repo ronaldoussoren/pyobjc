@@ -5,32 +5,34 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import CoreAudio._CoreAudio
-import Foundation
-import objc
-from CoreAudio import _metadata
-from CoreAudio._inlines import _inline_list_
+def _setup():
+    import sys
 
-sys.modules["CoreAudio"] = mod = objc.ObjCLazyModule(
-    "CoreAudio",
-    "com.apple.CoreAudio",
-    objc.pathForFramework("/System/Library/Frameworks/CoreAudio.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (Foundation,),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _CoreAudio
+    from ._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreAudio",
+        frameworkIdentifier="com.apple.audio.CoreAudio",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreAudio.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(
+            _CoreAudio,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreAudio._metadata"]
 
 
-del sys.modules["CoreAudio._metadata"]
-
-
-for nm in dir(CoreAudio._CoreAudio):
-    setattr(mod, nm, getattr(CoreAudio._CoreAudio, nm))
+globals().pop("_setup")()

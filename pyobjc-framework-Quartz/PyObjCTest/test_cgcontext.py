@@ -616,3 +616,7 @@ class TestCGContext(TestCase):
 
     def testFunctions_n(self):
         Quartz.CGContextResetClip
+
+    @min_os_level("14.0")
+    def test_functions14_0(self):
+        Quartz.CGContextDrawConicGradient

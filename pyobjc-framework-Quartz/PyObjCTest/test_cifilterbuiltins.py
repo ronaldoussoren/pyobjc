@@ -4,6 +4,48 @@ import objc
 
 
 class TestCIBuiltinFilterHelper(Quartz.NSObject):
+    def hysteresisPasses(self):
+        return 1
+
+    def setHysteresisPasses_(self, a):
+        pass
+
+    def color(self):
+        return 1
+
+    def setColor_(self, a):
+        pass
+
+    def inputImage(self):
+        return 1
+
+    def setInputImage_(self, a):
+        pass
+
+    def thresholdHigh(self):
+        return 1
+
+    def setThresholdHigh_(self, a):
+        pass
+
+    def thresholdLow(self):
+        return 1
+
+    def setThresholdLow_(self, a):
+        pass
+
+    def sigma(self):
+        return 1
+
+    def setSigma_(self, a):
+        pass
+
+    def gaussianSigma(self):
+        return 1
+
+    def setGaussianSigma_(self, a):
+        pass
+
     def periodicity(self):
         return 1
 
@@ -982,6 +1024,13 @@ class TestCIFilterBuiltins(TestCase):
         self.assertProtocolExists("CIHistogramDisplay")
         self.assertProtocolExists("CIKMeans")
         self.assertProtocolExists("CIRowAverage")
+
+    @min_sdk_level("14.0")
+    def test_protocols14_0(self):
+        self.assertProtocolExists("CIRoundedRectangleStrokeGenerator")
+        self.assertProtocolExists("CICannyEdgeDetector")
+        self.assertProtocolExists("CISobelGradients")
+        self.assertProtocolExists("CIBlurredRectangleGenerator")
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)
@@ -1968,3 +2017,31 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CIRowAverage"):
             pass
+
+        with self.subTest("CIRoundedRectangleStrokeGenerator"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)
+
+        with self.subTest("CICannyEdgeDetector"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "gaussianSigma", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "perceptual", objc._C_BOOL)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "thresholdHigh", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "thresholdLow", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "hysteresisPasses", objc._C_NSInteger
+            )
+
+        with self.subTest("CISobelGradients"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+
+        with self.subTest("CIBlurredRectangleGenerator"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "sigma", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)

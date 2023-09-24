@@ -39,7 +39,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -62,7 +62,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        }
       ],
@@ -78,7 +78,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatf=<4f>}",
+       "typestr": "{simd_quatf=<4f>}",
        "typestr_special": true
       },
       "selector": "orientation",
@@ -103,7 +103,7 @@
        "readonly"
       ],
       "name": "orientation",
-      "typestr": "{_simd_quatf=<4f>}",
+      "typestr": "{simd_quatf=<4f>}",
       "typestr_special": true
      },
      {
@@ -4541,7 +4541,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "transform",
@@ -4550,7 +4550,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -4566,7 +4566,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "worldTransform",
@@ -4575,7 +4575,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -4640,7 +4640,7 @@
        "nonatomic"
       ],
       "name": "transform",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -4649,7 +4649,7 @@
        "nonatomic"
       ],
       "name": "worldTransform",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      }
     ],

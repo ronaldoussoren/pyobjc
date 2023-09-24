@@ -5,28 +5,31 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import AppKit
-import Contacts
-import objc
-from ContactsUI import _metadata
-from ContactsUI import _ContactsUI
+def _setup():
+    import sys
 
-sys.modules["ContactsUI"] = mod = objc.ObjCLazyModule(
-    "ContactsUI",
-    "com.apple.ContactsUI.framework",
-    objc.pathForFramework("/System/Library/Frameworks/ContactsUI.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_ContactsUI, AppKit, Contacts),
-)
+    import AppKit
+    import Contacts
+    import objc
+    from . import _metadata, _ContactsUI
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ContactsUI",
+        frameworkIdentifier="com.apple.ContactsUI",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ContactsUI.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_ContactsUI, Contacts, AppKit),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ContactsUI._metadata"]
 
 
-del sys.modules["ContactsUI._metadata"]
+globals().pop("_setup")()

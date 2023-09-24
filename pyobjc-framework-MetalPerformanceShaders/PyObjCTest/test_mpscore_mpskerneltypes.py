@@ -34,6 +34,9 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSDeviceSupportsSimdShuffleAndFill, 1 << 11
         )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDeviceSupportsBFloat16Arithmetic, 1 << 12
+        )
         self.assertNotHasAttr(MetalPerformanceShaders, "MPSDeviceCapsLast")
 
         self.assertEqual(MetalPerformanceShaders.MPSCustomKernelIndexDestIndex, 0)
@@ -99,6 +102,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         )
 
         self.assertEqual(MetalPerformanceShaders.MPSFunctionConstantNone, -1)
+        self.assertEqual(MetalPerformanceShaders.MPSFunctionConstantNoneArray, (-1, -1))
 
     def test_structs(self):
         v = MetalPerformanceShaders.MPSMatrixOffset()
@@ -115,7 +119,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSCustomKernelSourceInfo.__typestr__,
-            b"{_MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}",
+            b"{MPSCustomKernelSourceInfo=<2s><2S><2S><2s><2S><2S>SSSS}",
         )
         v = MetalPerformanceShaders.MPSCustomKernelSourceInfo()
         self.assertIs(v.kernelOrigin, None)
@@ -131,7 +135,7 @@ class TestMPSCore_MPSKernelTypes(TestCase):
 
         self.assertEqual(
             MetalPerformanceShaders.MPSCustomKernelInfo.__typestr__,
-            b"{_MPSCustomKernelInfo=<4S><4S>SSSSSS"
+            b"{MPSCustomKernelInfo=<4S><4S>SSSSSS"
             + MetalPerformanceShaders.MPSIntegerDivisionParams.__typestr__
             + b"}",
         )

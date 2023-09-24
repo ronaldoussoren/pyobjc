@@ -54,6 +54,11 @@ class TestNSPopover(TestCase):
         self.assertResultIsBOOL(AppKit.NSPopover.isDetached)
         # self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(AppKit.NSPopover.hasFullSizeContent)
+        self.assertArgIsBOOL(AppKit.NSPopover.setHasFullSizeContent_, 0)
+
     @min_os_level("10.7")
     def testProtocols10_7(self):
         self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)

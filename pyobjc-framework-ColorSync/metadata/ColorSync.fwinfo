@@ -25,7 +25,7 @@
     "fieldnames": [
      "digest"
     ],
-    "typestr": "{_ColorSyncMD5=[8C]}"
+    "typestr": "{ColorSyncMD5=[8C]}"
    }
   },
   "enum": {
@@ -212,17 +212,17 @@
    "ColorSyncCMMGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncProfileGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncTransformGetTypeID": {
     "args": {
     },
-    "retval": { "typestr": ["I", "Q"] }
+    "retval": { "typestr": "Q"}
    },
    "ColorSyncCMMCreate": {
     "retval": { "typestr": "^{ColorSyncCMM=}", "already_cfretained": true },
@@ -391,7 +391,7 @@
     }
    },
    "ColorSyncProfileGetMD5": {
-    "retval": { "typestr": "{_ColorSyncMD5=[8C]}" },
+    "retval": { "typestr": "{ColorSyncMD5=[8C]}" },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" }
     }

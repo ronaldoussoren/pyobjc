@@ -7,3 +7,6 @@ class TestVNGenerateAttentionBasedSaliencyImageRequest(TestCase):
         self.assertEqual(
             Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision1, 1
         )
+        self.assertEqual(
+            Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision2, 2
+        )

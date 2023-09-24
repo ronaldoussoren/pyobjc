@@ -3,15 +3,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#if defined(MAC_OS_X_VERSION_10_5)                                                       \
-    && MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_6
-/* For some reason the CoreLocation headers don't work properly when
- *   * the deployment target is 10.5 (using the 10.11 SDK).
- *     */
-#undef NS_ENUM_AVAILABLE
-#define NS_ENUM_AVAILABLE(a, b)
-#endif
-
 #import <MapKit/MapKit.h>
 
 /*
@@ -26,7 +17,6 @@
 #endif
 
 static PyObjC_function_map function_map[] = {
-#if PyObjC_BUILD_RELEASE >= 1009
     {"MKCoordinateSpanMake", (PyObjC_Function_Pointer)&MKCoordinateSpanMake},
     {"MKCoordinateRegionMake", (PyObjC_Function_Pointer)&MKCoordinateRegionMake},
     {"MKMapPointMake", (PyObjC_Function_Pointer)&MKMapPointMake},
@@ -48,7 +38,6 @@ static PyObjC_function_map function_map[] = {
     {"MKStringFromMapPoint", (PyObjC_Function_Pointer)&MKStringFromMapPoint},
     {"MKStringFromMapSize", (PyObjC_Function_Pointer)&MKStringFromMapSize},
     {"MKStringFromMapRect", (PyObjC_Function_Pointer)&MKStringFromMapRect},
-#endif
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013

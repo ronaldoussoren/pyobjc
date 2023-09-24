@@ -35,3 +35,13 @@ class TestMLModel(TestCase):
         self.assertArgIsBlock(
             CoreML.MLModel.loadModelAsset_configuration_completionHandler_, 2, b"v@@"
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsBlock(
+            CoreML.MLModel.predictionFromFeatures_completionHandler_, 1, b"v@@"
+        )
+
+        self.assertArgIsBlock(
+            CoreML.MLModel.predictionFromFeatures_options_completionHandler_, 2, b"v@@"
+        )

@@ -58,7 +58,9 @@ def numberWrapper(obj):
         import warnings
 
         warnings.warn(
-            f"NSNumber instance doesn't implement objCType? {obj!r}", RuntimeWarning
+            f"NSNumber instance doesn't implement objCType? {obj!r}",
+            RuntimeWarning,
+            stacklevel=2,
         )
         return obj
 

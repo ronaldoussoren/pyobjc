@@ -254,7 +254,7 @@
 	  "0": { "typestr": "^v" },
 	  "1": { "typestr": "@" }
 	 },
-	 "retval": { "typestr": [ "i", "q" ] }
+	 "retval": { "typestr": "q" }
 	}
        }
       }
@@ -348,7 +348,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": [ "{CGSize=ff}", "{CGSize=dd}" ] }
+	  "1": { "typestr": "{CGSize=dd}" }
 	 },
 	 "retval": { "typestr": "@" }
 	}

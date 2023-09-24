@@ -1,6 +1,7 @@
 import CoreFoundation
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestDateFormatter(TestCase):
@@ -130,7 +131,7 @@ class TestDateFormatter(TestCase):
 
     def testInspection(self):
         locale = CoreFoundation.CFLocaleCopyCurrent()
-        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        self.assertIsInstance(locale, objc.lookUpClass("NSLocale"))
 
         date = CoreFoundation.CFDateCreate(
             None, CoreFoundation.CFAbsoluteTimeGetCurrent()

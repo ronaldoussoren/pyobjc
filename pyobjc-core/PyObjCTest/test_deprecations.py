@@ -82,7 +82,7 @@ class TestDeprecationWarnings(TestCase):
 
     def test_disabled_warnings(self):
         o = OCTestDeprecations.alloc().init()
-        with deprecation_warnings(0):
+        with deprecation_warnings(None):
             self.assertNoDeprecationWarning(o.method1)
             self.assertNoDeprecationWarning(o.method2)
             self.assertNoDeprecationWarning(func1)  # noqa: F821
@@ -91,7 +91,7 @@ class TestDeprecationWarnings(TestCase):
     def test_enabled_warnings(self):
         o = OCTestDeprecations.alloc().init()
 
-        with deprecation_warnings(1006):
+        with deprecation_warnings("10.6"):
             self.assertNoDeprecationWarning(o.method1)
             self.assertDeprecationWarning(o.method2)
             self.assertDeprecationWarning(o.method4)
@@ -110,7 +110,7 @@ class TestDeprecationWarnings(TestCase):
         with warnings.catch_warnings():
             warnings.simplefilter("error")
 
-            with deprecation_warnings(1006):
+            with deprecation_warnings("10.6"):
                 with self.assertRaisesRegex(
                     objc.ApiDeprecationWarning,
                     r"-\[OCTestDeprecations method2\] is a deprecated API \(macOS 10\.4\)",

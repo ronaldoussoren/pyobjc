@@ -201,8 +201,8 @@
 	  "arguments": {
 	   "0": { "type": "^v" },
 	   "1": { "type": "^{__CVDisplayLink=}" },
-	   "2": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "3": { "type_modifier": "n", "type": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "2": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	   "3": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
 	   "4": { "type": "Q" },
 	   "5": { "type": "o^Q" }
 	  }
@@ -374,50 +374,29 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CVDisplayLink=}",
-          false
-         ]
+         "typestr": "^{__CVDisplayLink=}"
         },
         {
-         "typestr": [
-          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
-          true
-         ],
+         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
 	 "type_modifier": "n"
         },
         {
-         "typestr": [
-          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
-          true
-         ],
+         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
 	 "type_modifier": "N"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
+         "typestr": "Q"
         },
         {
-         "typestr": [
-          "^Q",
-          false
-         ],
+         "typestr": "^Q",
 	 "type_modifier": "o"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "i",
-         false
-        ]
+        "typestr": "i"
        }
       }
      },
@@ -580,7 +559,10 @@
    },
    "CVOpenGLTextureGetCleanTexCoords": {
     "args": {
-     "0": {}
+     "1": { "type_modifier": "n", "c_array_of_fixed_length": 2},
+     "2": { "type_modifier": "n", "c_array_of_fixed_length": 2},
+     "3": { "type_modifier": "n", "c_array_of_fixed_length": 2},
+     "4": { "type_modifier": "n", "c_array_of_fixed_length": 2}
     }
    },
    "CVOpenGLTextureGetName": {
@@ -631,23 +613,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -686,41 +659,22 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v" },
+        {
+         "typestr": "Q"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
+         "typestr": "Q"
         },
         {
-         "typestr": [
-          "Q",
-          false
-         ]
-        },
-        {
-         "typestr": [
-          "^^v",
-          false
-         ]
+         "typestr": "^^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },

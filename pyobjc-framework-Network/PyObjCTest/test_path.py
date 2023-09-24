@@ -17,6 +17,7 @@ class TestPath(TestCase):
         self.assertEqual(Network.nw_path_unsatisfied_reason_cellular_denied, 1)
         self.assertEqual(Network.nw_path_unsatisfied_reason_wifi_denied, 2)
         self.assertEqual(Network.nw_path_unsatisfied_reason_local_network_denied, 3)
+        self.assertEqual(Network.nw_path_unsatisfied_reason_vpn_inactive, 4)
 
     def test_functions(self):
         Network.nw_path_get_status

@@ -4,35 +4,34 @@ Python mapping for the ScriptingBridge framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import Foundation
-
-# Override the default behaviour of the bridge to ensure that we
-# make the minimal amount of AppleScript calls.
-import objc
-from ScriptingBridge import _metadata
-from ScriptingBridge import _ScriptingBridge
-
-sys.modules["ScriptingBridge"] = mod = objc.ObjCLazyModule(
-    "ScriptingBridge",
-    "com.apple.ScriptingBridge",
-    objc.pathForFramework("/System/Library/Frameworks/ScriptingBridge.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (_ScriptingBridge, Foundation),
-)
 
 
-del sys.modules["ScriptingBridge._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata, _ScriptingBridge
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ScriptingBridge",
+        frameworkIdentifier="com.apple.ScriptingBridge",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ScriptingBridge.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _ScriptingBridge,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ScriptingBridge._metadata"]
 
 
-objc.addConvenienceForClass(
-    "SBElementArray", [("__iter__", lambda self: iter(self.objectEnumerator()))]
-)
+globals().pop("_setup")()

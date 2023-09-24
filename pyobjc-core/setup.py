@@ -21,8 +21,8 @@ def get_config_var(var):
     return _get_config_var(var) or ""
 
 
-# We need at least Python 3.7
-MIN_PYTHON = (3, 7)
+# We need at least Python 3.8
+MIN_PYTHON = (3, 8)
 
 if sys.version_info < MIN_PYTHON:
     vstr = ".".join(map(str, MIN_PYTHON))
@@ -95,6 +95,7 @@ CFLAGS = [
     "-O3",
     "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
+    "-UNDEBUG",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -115,6 +116,7 @@ OBJC_LDFLAGS = [
     "-g",
     "-O3",
     "-flto=thin",
+    "-fexceptions",
 ]
 
 
@@ -573,6 +575,16 @@ class oc_build_ext(build_ext.build_ext):
             if "-DNO_OBJC2_RUNTIME" not in CFLAGS:
                 CFLAGS.append("-DNO_OBJC2_RUNTIME")
                 EXT_CFLAGS.append("-DNO_OBJC2_RUNTIME")
+
+        lines = subprocess.check_output(
+            ["xcodebuild", "-version"], text=True
+        ).splitlines()
+        if lines[0].startswith("Xcode"):
+            xcode_vers = int(lines[0].split()[-1].split(".")[0])
+            if xcode_vers >= 15:
+                for var in (OBJC_LDFLAGS,):
+                    print("Use old linker with Xcode 15 or later")
+                    var.append("-Wl,-ld_classic")
 
     def run(self):
         verify_platform()

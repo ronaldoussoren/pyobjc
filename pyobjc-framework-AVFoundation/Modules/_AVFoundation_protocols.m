@@ -33,12 +33,10 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVVideoCompositionValidationHandling));
     Py_XDECREF(p);
-#if PyObjC_BUILD_RELEASE >= 1009
     p = PyObjC_IdToPython(@protocol(AVVideoCompositing));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVVideoCompositionInstruction));
     Py_XDECREF(p);
-#endif
 #if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(AVAudioMixing));
     Py_XDECREF(p);
@@ -65,6 +63,8 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1015
     // p = PyObjC_IdToPython(@protocol(AVAssetDownloadDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVCapturePhotoCaptureDelegate));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1016
     p = PyObjC_IdToPython(@protocol(AVAssetWriterDelegate));
@@ -74,6 +74,10 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVAssetReaderCaptionValidationHandling));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVPlaybackCoordinatorPlaybackControlDelegate));
+    Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1200
+    p = PyObjC_IdToPython(@protocol(AVCapturePhotoOutputReadinessCoordinatorDelegate));
     Py_XDECREF(p);
 #endif
 }

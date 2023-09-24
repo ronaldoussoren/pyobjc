@@ -3,64 +3,46 @@
 {
  "definitions": {
   "aliases": {
-   "kLAErrorBiometryNotAvailable": { "alias": "kLAErrorTouchIDNotAvailable" },
-   "kLAErrorBiometryNotEnrolled": { "alias": "kLAErrorTouchIDNotEnrolled" },
-   "kLAErrorBiometryLockout": { "alias": "kLAErrorTouchIDLockout" },
-   "LAErrorBiometryNotAvailable": { "alias": "kLAErrorBiometryNotAvailable" },
-   "LAErrorBiometryNotEnrolled": { "alias": "kLAErrorBiometryNotEnrolled" },
-   "LAErrorBiometryLockout": { "alias": "kLAErrorBiometryLockout" },
-   "LACredentialTypeSmartCardPIN": { "alias": "kLACredentialSmartCardPIN" }
-  },
-  "literals": {
-   "kLAErrorDomain": {
-    "unicode": true
+   "LABiometryTypeOpticID": {
+    "alias": "kLABiometryTypeOpticID"
+   },
+   "LACredentialTypeSmartCardPIN": {
+    "alias": "kLACredentialSmartCardPIN"
+   },
+   "LAErrorBiometryLockout": {
+    "alias": "kLAErrorBiometryLockout"
+   },
+   "LAErrorBiometryNotAvailable": {
+    "alias": "kLAErrorBiometryNotAvailable"
+   },
+   "LAErrorBiometryNotEnrolled": {
+    "alias": "kLAErrorBiometryNotEnrolled"
+   },
+   "kLAErrorBiometryLockout": {
+    "alias": "kLAErrorTouchIDLockout"
+   },
+   "kLAErrorBiometryNotAvailable": {
+    "alias": "kLAErrorTouchIDNotAvailable"
+   },
+   "kLAErrorBiometryNotEnrolled": {
+    "alias": "kLAErrorTouchIDNotEnrolled"
    }
-  },
-  "externs": {
-     "LATouchIDAuthenticationMaximumAllowableReuseDuration": { "typestr": "d" }
-  },
-  "enum": {
-   "LAErrorBiometryNotPaired": { "value": -12 },
-   "LAErrorBiometryDisconnected": { "value": -13 },
-   "kLAErrorBiometryNotPaired": { "value": -12 },
-   "kLAErrorBiometryDisconnected": { "value": -13 },
-   "kLACredentialSmartCardPIN": { "value": -3 },
-   "LABiometryTypeNone": { "value": 0 },
-   "LABiometryNone": { "value": 0 },
-   "LABiometryTypeTouchID": { "value": 1 },
-   "LAAccessControlOperationUseKeyDecrypt": { "value": 4 },
-   "LAAccessControlOperationUseKeyKeyExchange": { "value": 5 },
-   "kLACredentialTypePasscode": { "value": -1 },
-   "kLACredentialTypePassphrase": { "value": -2 },
-   "kLACredentialCTKPIN": { "value": -3 },
-   "LAPolicyDeviceOwnerAuthentication": { "value": 2 },
-   "kLAPolicyDeviceOwnerAuthentication": { "value": 2 },
-   "LACredentialTypeApplicationPassword": { "value": 0 },
-   "LAAccessControlOperationCreateItem": { "value": 0 },
-   "LAAccessControlOperationUseItem": { "value": 1 },
-   "LAAccessControlOperationCreateKey": { "value": 2 },
-   "LAAccessControlOperationUseKeySign": { "value": 3 },
-   "kLACredentialTypeApplicationPassword": { "value": 0 },
-   "LAErrorNotInteractive": { "value":  -1004 },
-   "kLAErrorNotInteractive": { "value":  -1004 },
-   "kLAErrorInvalidContext": { "value": -10 },
-   "kLAErrorAppCancel": { "value": -9 },
-   "kLAErrorTouchIDLockout": { "value": -8 },
-   "LAErrorInvalidContext": { "value": -10 },
-   "LAErrorAppCancel": { "value": -9 },
-   "LAErrorTouchIDLockout": { "value": -8 }
   },
   "classes": {
    "LAContext": {
     "methods": [
      {
-      "retval": { "type_override": "Z"  },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "interactionNotAllowed"
      },
      {
       "args": {
-       "0": { "type_override": "Z"  }
+       "0": {
+        "type_override": "Z"
+       }
       },
       "class_method": false,
       "selector": "setInteractionNotAllowed:"
@@ -69,13 +51,21 @@
       "args": {
        "3": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" },
-	  "2": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
       },
       "class_method": false,
@@ -85,13 +75,21 @@
       "args": {
        "2": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" },
-	  "2": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
       },
       "class_method": false,
@@ -99,50 +97,257 @@
      },
      {
       "args": {
-       "1": { "type_modifier": "o" }
+       "1": {
+        "type_modifier": "o"
+       }
       },
       "class_method": false,
       "selector": "canEvaluatePolicy:error:"
      },
      {
       "args": {
-       "0": { "type_override": "Z" }
+       "0": {
+        "type_override": "Z"
+       }
       },
       "class_method": false,
       "selector": "setCancelButtonVisible:"
      },
      {
       "args": {
-       "0": { "type_override": "Z" }
+       "0": {
+        "type_override": "Z"
+       }
       },
       "class_method": false,
       "selector": "setFallbackButtonVisible:"
      },
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isCredentialSet:"
      },
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "setCredential:type:"
      },
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isCancelButtonVisible"
      },
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isFallbackButtonVisible"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "evaluateAccessControl:operation:localizedReason:reply:"
+     }
+    ]
+   },
+   "LAPrivateKey": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "signData:secKeyAlgorithm:completion:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canSignUsingSecKeyAlgorithm:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "decryptData:secKeyAlgorithm:completion:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canDecryptUsingSecKeyAlgorithm:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "exchangeKeysWithPublicKey:secKeyAlgorithm:secKeyParameters:completion:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canExchangeKeysUsingSecKeyAlgorithm:"
+     }
+    ]
+   },
+   "LAPublicKey": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "encryptData:secKeyAlgorithm:completion:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canEncryptUsingSecKeyAlgorithm:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "verifyData:signature:secKeyAlgorithm:completion:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canVerifyUsingSecKeyAlgorithm:"
      }
     ]
    }
   },
+  "enum": {
+   "LAAccessControlOperationCreateItem": {
+    "value": 0
+   },
+   "LAAccessControlOperationCreateKey": {
+    "value": 2
+   },
+   "LAAccessControlOperationUseItem": {
+    "value": 1
+   },
+   "LAAccessControlOperationUseKeyDecrypt": {
+    "value": 4
+   },
+   "LAAccessControlOperationUseKeyKeyExchange": {
+    "value": 5
+   },
+   "LAAccessControlOperationUseKeySign": {
+    "value": 3
+   },
+   "LABiometryNone": {
+    "value": 0
+   },
+   "LABiometryTypeNone": {
+    "value": 0
+   },
+   "LABiometryTypeTouchID": {
+    "value": 1
+   },
+   "LACredentialTypeApplicationPassword": {
+    "value": 0
+   },
+   "LAErrorAppCancel": {
+    "value": -9
+   },
+   "LAErrorBiometryDisconnected": {
+    "value": -13
+   },
+   "LAErrorBiometryNotPaired": {
+    "value": -12
+   },
+   "LAErrorInvalidContext": {
+    "value": -10
+   },
+   "LAErrorNotInteractive": {
+    "value": -1004
+   },
+   "LAErrorTouchIDLockout": {
+    "value": -8
+   },
+   "LAPolicyDeviceOwnerAuthentication": {
+    "value": 2
+   },
+   "kLABiometryTypeFaceID": {
+    "value": 2
+   },
+   "kLABiometryTypeOpticID": {
+    "value": 4
+   },
+   "kLABiometryTypeTouchID": {
+    "value": 1
+   },
+   "kLACredentialCTKPIN": {
+    "value": -3
+   },
+   "kLACredentialSmartCardPIN": {
+    "value": -3
+   },
+   "kLACredentialTypeApplicationPassword": {
+    "value": 0
+   },
+   "kLACredentialTypePasscode": {
+    "value": -1
+   },
+   "kLACredentialTypePassphrase": {
+    "value": -2
+   },
+   "kLAErrorAppCancel": {
+    "value": -9
+   },
+   "kLAErrorBiometryDisconnected": {
+    "value": -13
+   },
+   "kLAErrorBiometryNotPaired": {
+    "value": -12
+   },
+   "kLAErrorInvalidContext": {
+    "value": -10
+   },
+   "kLAErrorNotInteractive": {
+    "value": -1004
+   },
+   "kLAErrorTouchIDLockout": {
+    "value": -8
+   },
+   "kLAPolicyDeviceOwnerAuthentication": {
+    "value": 2
+   }
+  },
+  "externs": {
+   "LATouchIDAuthenticationMaximumAllowableReuseDuration": {
+    "typestr": "d"
+   }
+  },
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "literals": {
+   "kLAErrorDomain": {
+    "unicode": true
+   }
+  }
  }
 }

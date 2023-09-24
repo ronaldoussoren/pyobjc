@@ -731,13 +731,13 @@
     "typestr": "^{__CFString=}"
    },
    "kCFCopyStringBagCallBacks": {
-    "typestr": "{_CFBagCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFBagCallBacks=q^?^?^?^?^?}"
    },
    "kCFCopyStringDictionaryKeyCallBacks": {
-    "typestr": "{_CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
    },
    "kCFCopyStringSetCallBacks": {
-    "typestr": "{_CFSetCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFSetCallBacks=q^?^?^?^?^?}"
    },
    "kCFCoreFoundationVersionNumber": {
     "typestr": "d"
@@ -1163,7 +1163,7 @@
     "typestr": "^{__CFString=}"
    },
    "kCFStringBinaryHeapCallBacks": {
-    "typestr": "{_CFBinaryHeapCallBacks=q^?^?^?^?}"
+    "typestr": "{CFBinaryHeapCallBacks=q^?^?^?^?}"
    },
    "kCFStringTransformFullwidthHalfwidth": {
     "typestr": "^{__CFString=}"
@@ -1217,19 +1217,19 @@
     "typestr": "^{__CFString=}"
    },
    "kCFTypeArrayCallBacks": {
-    "typestr": "{_CFArrayCallBacks=q^?^?^?^?}"
+    "typestr": "{CFArrayCallBacks=q^?^?^?^?}"
    },
    "kCFTypeBagCallBacks": {
-    "typestr": "{_CFBagCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFBagCallBacks=q^?^?^?^?^?}"
    },
    "kCFTypeDictionaryKeyCallBacks": {
-    "typestr": "{_CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
    },
    "kCFTypeDictionaryValueCallBacks": {
-    "typestr": "{_CFDictionaryValueCallBacks=q^?^?^?^?}"
+    "typestr": "{CFDictionaryValueCallBacks=q^?^?^?^?}"
    },
    "kCFTypeSetCallBacks": {
-    "typestr": "{_CFSetCallBacks=q^?^?^?^?^?}"
+    "typestr": "{CFSetCallBacks=q^?^?^?^?^?}"
    },
    "kCFURLAddedToDirectoryDateKey": {
     "typestr": "^{__CFString=}"
@@ -1644,7 +1644,7 @@
      },
      {
       "name": "units",
-      "typestr": "{_CFGregorianUnits=iiiiid}"
+      "typestr": "{CFGregorianUnits=iiiiid}"
      }
     ],
     "retval": {
@@ -1712,7 +1712,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFGregorianUnits=iiiiid}"
+     "typestr": "{CFGregorianUnits=iiiiid}"
     }
    },
    "CFAbsoluteTimeGetGregorianDate": {
@@ -1727,7 +1727,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFGregorianDate=iccccd}"
+     "typestr": "{CFGregorianDate=iccccd}"
     }
    },
    "CFAbsoluteTimeGetWeekOfYear": {
@@ -1897,7 +1897,7 @@
      },
      {
       "name": "otherRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -1927,7 +1927,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "function": {
@@ -1963,7 +1963,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -2006,7 +2006,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -2033,7 +2033,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFArrayCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFArrayCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -2069,7 +2069,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFArrayCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFArrayCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -2135,7 +2135,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -2154,7 +2154,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -2173,7 +2173,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -2218,7 +2218,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "values",
@@ -2282,7 +2282,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "newValues",
@@ -2324,7 +2324,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "function": {
@@ -2450,7 +2450,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2485,7 +2485,7 @@
      },
      {
       "name": "effectiveRange",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2508,11 +2508,11 @@
      },
      {
       "name": "inRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "longestEffectiveRange",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2531,7 +2531,7 @@
      },
      {
       "name": "effectiveRange",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2550,11 +2550,11 @@
      },
      {
       "name": "inRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "longestEffectiveRange",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -2613,7 +2613,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "attrName",
@@ -2632,7 +2632,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "replacement",
@@ -2651,7 +2651,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "replacement",
@@ -2670,7 +2670,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "attrName",
@@ -2693,7 +2693,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "replacement",
@@ -2797,7 +2797,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFBagCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFBagCallBacks=q^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -2833,7 +2833,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFBagCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFBagCallBacks=q^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -3077,11 +3077,11 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFBinaryHeapCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFBinaryHeapCallBacks=q^?^?^?^?}"
      },
      {
       "name": "compareContext",
-      "typestr": "^{_CFBinaryHeapCompareContext=q^v^?^?^?}"
+      "typestr": "^{CFBinaryHeapCompareContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -3217,7 +3217,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -3323,7 +3323,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -3353,7 +3353,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "bytes",
@@ -3383,7 +3383,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -3402,7 +3402,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -3421,7 +3421,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -3485,7 +3485,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "value",
@@ -4480,7 +4480,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFCalendarGetMinimumDaysInFirstWeek": {
@@ -4506,7 +4506,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFCalendarGetOrdinalityOfUnit": {
@@ -4552,7 +4552,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFCalendarGetTimeRangeOfUnit": {
@@ -4661,7 +4661,7 @@
      },
      {
       "name": "theRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -4783,7 +4783,7 @@
      },
      {
       "name": "theRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -4923,7 +4923,7 @@
      },
      {
       "name": "theRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -4969,14 +4969,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_CFSwappedFloat64=Q}"
+     "typestr": "{CFSwappedFloat64=Q}"
     }
    },
    "CFConvertDoubleSwappedToHost": {
     "args": [
      {
       "name": "arg",
-      "typestr": "{_CFSwappedFloat64=Q}"
+      "typestr": "{CFSwappedFloat64=Q}"
      }
     ],
     "inline": true,
@@ -4993,14 +4993,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_CFSwappedFloat32=I}"
+     "typestr": "{CFSwappedFloat32=I}"
     }
    },
    "CFConvertFloat32SwappedToHost": {
     "args": [
      {
       "name": "arg",
-      "typestr": "{_CFSwappedFloat32=I}"
+      "typestr": "{CFSwappedFloat32=I}"
      }
     ],
     "inline": true,
@@ -5017,14 +5017,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_CFSwappedFloat64=Q}"
+     "typestr": "{CFSwappedFloat64=Q}"
     }
    },
    "CFConvertFloat64SwappedToHost": {
     "args": [
      {
       "name": "arg",
-      "typestr": "{_CFSwappedFloat64=Q}"
+      "typestr": "{CFSwappedFloat64=Q}"
      }
     ],
     "inline": true,
@@ -5041,14 +5041,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_CFSwappedFloat32=I}"
+     "typestr": "{CFSwappedFloat32=I}"
     }
    },
    "CFConvertFloatSwappedToHost": {
     "args": [
      {
       "name": "arg",
-      "typestr": "{_CFSwappedFloat32=I}"
+      "typestr": "{CFSwappedFloat32=I}"
      }
     ],
     "inline": true,
@@ -5215,7 +5215,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -5234,7 +5234,7 @@
      },
      {
       "name": "searchRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "compareOptions",
@@ -5242,7 +5242,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFDataGetBytePtr": {
@@ -5264,7 +5264,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -5331,7 +5331,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "newBytes",
@@ -5476,7 +5476,7 @@
      },
      {
       "name": "rangep",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -5536,7 +5536,7 @@
      },
      {
       "name": "rangep",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      },
      {
       "name": "atp",
@@ -5777,11 +5777,11 @@
      },
      {
       "name": "keyCallBacks",
-      "typestr": "^{_CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
      },
      {
       "name": "valueCallBacks",
-      "typestr": "^{_CFDictionaryValueCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFDictionaryValueCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -5817,11 +5817,11 @@
      },
      {
       "name": "keyCallBacks",
-      "typestr": "^{_CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFDictionaryKeyCallBacks=q^?^?^?^?^?}"
      },
      {
       "name": "valueCallBacks",
-      "typestr": "^{_CFDictionaryValueCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFDictionaryValueCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -6206,7 +6206,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFFileDescriptorContext=q^v^?^?^?}"
+      "typestr": "^{CFFileDescriptorContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -6272,7 +6272,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFFileDescriptorContext=q^v^?^?^?}"
+      "typestr": "^{CFFileDescriptorContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -6597,7 +6597,7 @@
     "args": [
      {
       "name": "gdate",
-      "typestr": "{_CFGregorianDate=iccccd}"
+      "typestr": "{CFGregorianDate=iccccd}"
      },
      {
       "name": "tz",
@@ -6612,7 +6612,7 @@
     "args": [
      {
       "name": "gdate",
-      "typestr": "{_CFGregorianDate=iccccd}"
+      "typestr": "{CFGregorianDate=iccccd}"
      },
      {
       "name": "unitFlags",
@@ -6982,7 +6982,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFMachPortContext=q^v^?^?^?}"
+      "typestr": "^{CFMachPortContext=q^v^?^?^?}"
      },
      {
       "name": "shouldFreeInfo",
@@ -7049,7 +7049,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFMachPortContext=q^v^?^?^?}"
+      "typestr": "^{CFMachPortContext=q^v^?^?^?}"
      },
      {
       "name": "shouldFreeInfo",
@@ -7069,7 +7069,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFMachPortContext=q^v^?^?^?}"
+      "typestr": "^{CFMachPortContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -7205,7 +7205,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFMessagePortContext=q^v^?^?^?}"
+      "typestr": "^{CFMessagePortContext=q^v^?^?^?}"
      },
      {
       "name": "shouldFreeInfo",
@@ -7261,7 +7261,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFMessagePortContext=q^v^?^?^?}"
+      "typestr": "^{CFMessagePortContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -7718,7 +7718,7 @@
      },
      {
       "name": "rangep",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      },
      {
       "name": "options",
@@ -7849,7 +7849,7 @@
      },
      {
       "name": "rangep",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      },
      {
       "name": "numberType",
@@ -8843,7 +8843,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFReadStreamClose": {
@@ -8964,7 +8964,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFStreamError=qi}"
+     "typestr": "{CFStreamError=qi}"
     }
    },
    "CFReadStreamGetStatus": {
@@ -9081,7 +9081,7 @@
      },
      {
       "name": "clientContext",
-      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
+      "typestr": "^{CFStreamClientContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -9415,7 +9415,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopObserverContext=q^v^?^?^?}"
+      "typestr": "^{CFRunLoopObserverContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -9494,7 +9494,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopObserverContext=q^v^?^?^?}"
+      "typestr": "^{CFRunLoopObserverContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -9674,7 +9674,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopSourceContext=q^v^?^?^?^?^?^?^?^?}"
+      "typestr": "^{CFRunLoopSourceContext=q^v^?^?^?^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -9690,7 +9690,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopSourceContext=q^v^?^?^?^?^?^?^?^?}"
+      "typestr": "^{CFRunLoopSourceContext=q^v^?^?^?^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -9804,7 +9804,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopTimerContext=q^v^?^?^?}"
+      "typestr": "^{CFRunLoopTimerContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -9873,7 +9873,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFRunLoopTimerContext=q^v^?^?^?}"
+      "typestr": "^{CFRunLoopTimerContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -10076,7 +10076,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFSetCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFSetCallBacks=q^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -10112,7 +10112,7 @@
      },
      {
       "name": "callBacks",
-      "typestr": "^{_CFSetCallBacks=q^?^?^?^?^?}"
+      "typestr": "^{CFSetCallBacks=q^?^?^?^?^?}"
      }
     ],
     "retval": {
@@ -10351,7 +10351,7 @@
     "args": [
      {
       "name": "nameServerSignature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "timeout",
@@ -10363,7 +10363,7 @@
      },
      {
       "name": "signature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "nameServerAddress",
@@ -10379,7 +10379,7 @@
     "args": [
      {
       "name": "nameServerSignature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "timeout",
@@ -10453,7 +10453,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFSocketContext=q^v^?^?^?}"
+      "typestr": "^{CFSocketContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -10469,7 +10469,7 @@
      },
      {
       "name": "signature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "callBackTypes",
@@ -10503,7 +10503,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFSocketContext=q^v^?^?^?}"
+      "typestr": "^{CFSocketContext=q^v^?^?^?}"
      },
      {
       "name": "timeout",
@@ -10577,7 +10577,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFSocketContext=q^v^?^?^?}"
+      "typestr": "^{CFSocketContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -10593,7 +10593,7 @@
      },
      {
       "name": "signature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "callBackTypes",
@@ -10627,7 +10627,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFSocketContext=q^v^?^?^?}"
+      "typestr": "^{CFSocketContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -10673,7 +10673,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFSocketContext=q^v^?^?^?}"
+      "typestr": "^{CFSocketContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -10750,7 +10750,7 @@
     "args": [
      {
       "name": "nameServerSignature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "timeout",
@@ -10762,7 +10762,7 @@
      },
      {
       "name": "signature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      }
     ],
     "retval": {
@@ -10773,7 +10773,7 @@
     "args": [
      {
       "name": "nameServerSignature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "timeout",
@@ -10860,7 +10860,7 @@
     "args": [
      {
       "name": "nameServerSignature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "timeout",
@@ -10907,7 +10907,7 @@
      },
      {
       "name": "signature",
-      "typestr": "^{_CFSocketSignature=iii^{__CFData=}}"
+      "typestr": "^{CFSocketSignature=iii^{__CFData=}}"
      },
      {
       "name": "readStream",
@@ -11138,7 +11138,7 @@
      },
      {
       "name": "rangeToCompare",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "compareOptions",
@@ -11161,7 +11161,7 @@
      },
      {
       "name": "rangeToCompare",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "compareOptions",
@@ -11278,7 +11278,7 @@
      },
      {
       "name": "rangeToSearch",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "compareOptions",
@@ -11701,7 +11701,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -11717,7 +11717,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -11740,7 +11740,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFStringFindAndReplace": {
@@ -11759,7 +11759,7 @@
      },
      {
       "name": "rangeToSearch",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "compareOptions",
@@ -11782,7 +11782,7 @@
      },
      {
       "name": "rangeToSearch",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "searchOptions",
@@ -11790,7 +11790,7 @@
      },
      {
       "name": "result",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -11809,7 +11809,7 @@
      },
      {
       "name": "rangeToSearch",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "searchOptions",
@@ -11817,7 +11817,7 @@
      },
      {
       "name": "result",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -11836,7 +11836,7 @@
      },
      {
       "name": "rangeToSearch",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "searchOptions",
@@ -11848,7 +11848,7 @@
      },
      {
       "name": "result",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
@@ -11882,7 +11882,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "encoding",
@@ -11970,7 +11970,7 @@
     "args": [
      {
       "name": "buf",
-      "typestr": "^{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{_CFRange=qq}qq}"
+      "typestr": "^{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{CFRange=qq}qq}"
      },
      {
       "name": "idx",
@@ -11990,7 +11990,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "buffer",
@@ -12065,7 +12065,7 @@
      },
      {
       "name": "limitRange",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "options",
@@ -12114,7 +12114,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "lineBeginIndex",
@@ -12216,7 +12216,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "parBeginIndex",
@@ -12285,7 +12285,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFStringGetSmallestEncoding": {
@@ -12375,11 +12375,11 @@
      },
      {
       "name": "buf",
-      "typestr": "^{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{_CFRange=qq}qq}"
+      "typestr": "^{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{CFRange=qq}qq}"
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "inline": true,
@@ -12513,7 +12513,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "replacement",
@@ -12582,7 +12582,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -12618,7 +12618,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      },
      {
       "name": "options",
@@ -12642,7 +12642,7 @@
      },
      {
       "name": "ranges",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      },
      {
       "name": "maxRangeLength",
@@ -12665,7 +12665,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFStringTokenizerGetTypeID": {
@@ -12706,7 +12706,7 @@
      },
      {
       "name": "range",
-      "typestr": "{_CFRange=qq}"
+      "typestr": "{CFRange=qq}"
      }
     ],
     "retval": {
@@ -12721,7 +12721,7 @@
      },
      {
       "name": "range",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      },
      {
       "name": "transform",
@@ -13278,7 +13278,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFTreeContext=q^v^?^?^?}"
+      "typestr": "^{CFTreeContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -13346,7 +13346,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFTreeContext=q^v^?^?^?}"
+      "typestr": "^{CFTreeContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -13457,7 +13457,7 @@
      },
      {
       "name": "context",
-      "typestr": "^{_CFTreeContext=q^v^?^?^?}"
+      "typestr": "^{CFTreeContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -14561,11 +14561,11 @@
      },
      {
       "name": "rangeIncludingSeparators",
-      "typestr": "^{_CFRange=qq}"
+      "typestr": "^{CFRange=qq}"
      }
     ],
     "retval": {
-     "typestr": "{_CFRange=qq}"
+     "typestr": "{CFRange=qq}"
     }
    },
    "CFURLGetBytes": {
@@ -14872,7 +14872,7 @@
      },
      {
       "name": "bytes",
-      "typestr": "{_CFUUIDBytes=CCCCCCCCCCCCCCCC}"
+      "typestr": "{CFUUIDBytes=CCCCCCCCCCCCCCCC}"
      }
     ],
     "retval": {
@@ -15066,7 +15066,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFUUIDBytes=CCCCCCCCCCCCCCCC}"
+     "typestr": "{CFUUIDBytes=CCCCCCCCCCCCCCCC}"
     }
    },
    "CFUserNotificationCancel": {
@@ -15476,7 +15476,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CFStreamError=qi}"
+     "typestr": "{CFStreamError=qi}"
     }
    },
    "CFWriteStreamGetStatus": {
@@ -15563,7 +15563,7 @@
      },
      {
       "name": "clientContext",
-      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
+      "typestr": "^{CFStreamClientContext=q^v^?^?^?}"
      }
     ],
     "retval": {
@@ -16202,7 +16202,7 @@
      "second"
     ],
     "special": true,
-    "typestr": "{_CFGregorianDate=iccccd}"
+    "typestr": "{CFGregorianDate=iccccd}"
    },
    "CFGregorianUnits": {
     "fieldnames": [
@@ -16214,7 +16214,7 @@
      "seconds"
     ],
     "special": true,
-    "typestr": "{_CFGregorianUnits=iiiiid}"
+    "typestr": "{CFGregorianUnits=iiiiid}"
    },
    "CFRange": {
     "fieldnames": [
@@ -16222,7 +16222,7 @@
      "length"
     ],
     "special": true,
-    "typestr": "{_CFRange=qq}"
+    "typestr": "{CFRange=qq}"
    },
    "CFSocketSignature": {
     "fieldnames": [
@@ -16232,7 +16232,7 @@
      "address"
     ],
     "special": true,
-    "typestr": "{_CFSocketSignature=iii^{__CFData=}}"
+    "typestr": "{CFSocketSignature=iii^{__CFData=}}"
    },
    "CFStreamError": {
     "fieldnames": [
@@ -16240,7 +16240,7 @@
      "error"
     ],
     "special": true,
-    "typestr": "{_CFStreamError=qi}"
+    "typestr": "{CFStreamError=qi}"
    },
    "CFStringInlineBuffer": {
     "fieldnames": [
@@ -16253,21 +16253,21 @@
      "bufferedRangeEnd"
     ],
     "special": true,
-    "typestr": "{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{_CFRange=qq}qq}"
+    "typestr": "{_CFStringInlineBuffer=[64T]^{__CFString=}^T^c{CFRange=qq}qq}"
    },
    "CFSwappedFloat32": {
     "fieldnames": [
      "v"
     ],
     "special": true,
-    "typestr": "{_CFSwappedFloat32=I}"
+    "typestr": "{CFSwappedFloat32=I}"
    },
    "CFSwappedFloat64": {
     "fieldnames": [
      "v"
     ],
     "special": true,
-    "typestr": "{_CFSwappedFloat64=Q}"
+    "typestr": "{CFSwappedFloat64=Q}"
    },
    "CFUUIDBytes": {
     "fieldnames": [
@@ -16289,7 +16289,7 @@
      "byte15"
     ],
     "special": true,
-    "typestr": "{_CFUUIDBytes=CCCCCCCCCCCCCCCC}"
+    "typestr": "{CFUUIDBytes=CCCCCCCCCCCCCCCC}"
    },
    "CFXMLAttributeDeclarationInfo": {
     "fieldnames": [
@@ -16298,7 +16298,7 @@
      "defaultString"
     ],
     "special": true,
-    "typestr": "{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}"
+    "typestr": "{CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}"
    },
    "CFXMLAttributeListDeclarationInfo": {
     "fieldnames": [
@@ -16306,7 +16306,7 @@
      "attributes"
     ],
     "special": true,
-    "typestr": "{_CFXMLAttributeListDeclarationInfo=q^{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}"
+    "typestr": "{CFXMLAttributeListDeclarationInfo=q^{CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}"
    },
    "CFXMLDocumentInfo": {
     "fieldnames": [
@@ -16314,14 +16314,14 @@
      "encoding"
     ],
     "special": true,
-    "typestr": "{_CFXMLDocumentInfo=^{__CFURL=}I}"
+    "typestr": "{CFXMLDocumentInfo=^{__CFURL=}I}"
    },
    "CFXMLDocumentTypeInfo": {
     "fieldnames": [
      "externalID"
     ],
     "special": true,
-    "typestr": "{_CFXMLDocumentTypeInfo={_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}"
+    "typestr": "{CFXMLDocumentTypeInfo={CFXMLExternalID=^{__CFURL=}^{__CFString=}}}"
    },
    "CFXMLElementInfo": {
     "fieldnames": [
@@ -16331,14 +16331,14 @@
      "_reserved"
     ],
     "special": true,
-    "typestr": "{_CFXMLElementInfo=^{__CFDictionary=}^{__CFArray=}Z[3c]}"
+    "typestr": "{CFXMLElementInfo=^{__CFDictionary=}^{__CFArray=}Z[3c]}"
    },
    "CFXMLElementTypeDeclarationInfo": {
     "fieldnames": [
      "contentDescription"
     ],
     "special": true,
-    "typestr": "{_CFXMLElementTypeDeclarationInfo=^{__CFString=}}"
+    "typestr": "{CFXMLElementTypeDeclarationInfo=^{__CFString=}}"
    },
    "CFXMLEntityInfo": {
     "fieldnames": [
@@ -16348,14 +16348,14 @@
      "notationName"
     ],
     "special": true,
-    "typestr": "{_CFXMLEntityInfo=q^{__CFString=}{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}^{__CFString=}}"
+    "typestr": "{CFXMLEntityInfo=q^{__CFString=}{CFXMLExternalID=^{__CFURL=}^{__CFString=}}^{__CFString=}}"
    },
    "CFXMLEntityReferenceInfo": {
     "fieldnames": [
      "entityType"
     ],
     "special": true,
-    "typestr": "{_CFXMLEntityReferenceInfo=q}"
+    "typestr": "{CFXMLEntityReferenceInfo=q}"
    },
    "CFXMLExternalID": {
     "fieldnames": [
@@ -16363,21 +16363,21 @@
      "publicID"
     ],
     "special": true,
-    "typestr": "{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}"
+    "typestr": "{CFXMLExternalID=^{__CFURL=}^{__CFString=}}"
    },
    "CFXMLNotationInfo": {
     "fieldnames": [
      "externalID"
     ],
     "special": true,
-    "typestr": "{_CFXMLNotationInfo={_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}"
+    "typestr": "{CFXMLNotationInfo={CFXMLExternalID=^{__CFURL=}^{__CFString=}}}"
    },
    "CFXMLProcessingInstructionInfo": {
     "fieldnames": [
      "dataString"
     ],
     "special": true,
-    "typestr": "{_CFXMLProcessingInstructionInfo=^{__CFString=}}"
+    "typestr": "{CFXMLProcessingInstructionInfo=^{__CFString=}}"
    }
   }
  },

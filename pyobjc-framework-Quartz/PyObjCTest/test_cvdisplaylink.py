@@ -13,7 +13,7 @@ class TestCVDisplayLink(TestCase):
         self.assertArgIsBlock(
             Quartz.CVDisplayLinkSetOutputHandler,
             1,
-            b"i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q",  # noqa: B950
+            b"i^{__CVDisplayLink=}n^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q",  # noqa: B950
         )
 
     def testFunctions(self):
@@ -61,7 +61,7 @@ class TestCVDisplayLink(TestCase):
         self.assertArgIsFunction(
             Quartz.CVDisplayLinkSetOutputCallback,
             1,
-            b"i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v",  # noqa: B950
+            b"i^{__CVDisplayLink=}n^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v",  # noqa: B950
             True,
         )
         self.assertArgHasType(Quartz.CVDisplayLinkSetOutputCallback, 2, b"^v")

@@ -33,6 +33,12 @@ class TestVNRequest(TestCase):
         )
         self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)
 
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertArgIsOut(
+            Vision.VNRequest.supportedComputeStageDevicesAndReturnError_, 0
+        )
+
     def test_constants(self):
         self.assertEqual(Vision.VNRequestRevisionUnspecified, 0)
 

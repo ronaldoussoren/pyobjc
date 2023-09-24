@@ -33,4 +33,10 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(INAnswerCallIntentHandling));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1400
+    p = PyObjC_IdToPython(@protocol(INUnsendMessagesIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INEditMessageIntentHandling));
+    Py_XDECREF(p);
+#endif
 }

@@ -12,6 +12,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(buf.nbytes, size)
 
     def testConstants(self):
+        self.assertEqual(CoreAudio.kAudio_NoError, 0)
         self.assertEqual(CoreAudio.kAudio_UnimplementedError, -4)
         self.assertEqual(CoreAudio.kAudio_FileNotFoundError, -43)
         self.assertEqual(CoreAudio.kAudio_FilePermissionError, -54)

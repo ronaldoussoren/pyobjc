@@ -31,3 +31,9 @@ class TestNSRunningApplication(TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(AppKit.NSRunningApplication.ownsMenuBar)
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSRunningApplication.activateFromApplication_options_
+        )

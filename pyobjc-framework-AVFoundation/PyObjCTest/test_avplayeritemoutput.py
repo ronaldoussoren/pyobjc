@@ -50,7 +50,7 @@ class TestAVPlayerOutput(TestCase):
         self.assertArgHasType(
             TestAVPlayerOutputHelper.legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_,  # noqa: B950
             3,
-            b"{_CMTime=qiIq}",
+            b"{CMTime=qiIq}",
         )
 
     def testProtocols(self):

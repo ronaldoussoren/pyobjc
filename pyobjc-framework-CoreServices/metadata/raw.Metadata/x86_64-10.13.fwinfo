@@ -1176,7 +1176,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_MDQueryBatchingParams=QQQQQQ}"
+     "typestr": "{MDQueryBatchingParams=QQQQQQ}"
     }
    },
    "MDQueryGetCountOfResultsWithAttributeValue": {
@@ -1284,7 +1284,7 @@
      },
      {
       "name": "params",
-      "typestr": "{_MDQueryBatchingParams=QQQQQQ}"
+      "typestr": "{MDQueryBatchingParams=QQQQQQ}"
      }
     ],
     "retval": {
@@ -1323,7 +1323,7 @@
      },
      {
       "name": "cb",
-      "typestr": "^{_CFArrayCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFArrayCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -1366,7 +1366,7 @@
      },
      {
       "name": "cb",
-      "typestr": "^{_CFArrayCallBacks=q^?^?^?^?}"
+      "typestr": "^{CFArrayCallBacks=q^?^?^?^?}"
      }
     ],
     "retval": {
@@ -1605,7 +1605,7 @@
      "update_max_ms"
     ],
     "special": true,
-    "typestr": "{_MDQueryBatchingParams=QQQQQQ}"
+    "typestr": "{MDQueryBatchingParams=QQQQQQ}"
    }
   }
  },

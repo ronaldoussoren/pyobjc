@@ -208,11 +208,11 @@ Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3 :: Only
-Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
+Programming Language :: Python :: 3.12
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -510,6 +510,15 @@ def Extension(*args, **kwds):
             % (tuple(map(int, os_level.split(".")[:2])))
         )
 
+    # XCode 15 has a bug w.r.t. weak linking for older macOS versions,
+    # fall back to older linker when using that compiler.
+    # XXX: This should be in _fixup_compiler but doesn't work there...
+    lines = subprocess.check_output(["xcodebuild", "-version"], text=True).splitlines()
+    if lines[0].startswith("Xcode"):
+        xcode_vers = int(lines[0].split()[-1].split(".")[0])
+        if xcode_vers >= 15:
+            ldflags.append("-Wl,-ld_classic")
+
     if os_level == "10.4":
         cflags.append("-DNO_OBJC2_RUNTIME")
 
@@ -661,7 +670,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,
-        python_requires=">=3.7",
+        python_requires=">=3.8",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         **k,
     )

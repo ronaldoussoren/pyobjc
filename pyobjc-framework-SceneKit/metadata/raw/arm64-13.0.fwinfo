@@ -8209,7 +8209,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdModelTransform",
@@ -8341,7 +8341,7 @@
        "readonly"
       ],
       "name": "simdModelTransform",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      }
     ],
@@ -13077,7 +13077,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -13087,7 +13087,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdConvertTransform:toNode:",
@@ -13096,7 +13096,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        },
        {
@@ -13106,7 +13106,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdConvertTransform:fromNode:",
@@ -13168,7 +13168,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        }
       ],
@@ -13183,7 +13183,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        },
        {
@@ -13203,7 +13203,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdTransform",
@@ -13212,7 +13212,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -13278,7 +13278,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatf=<4f>}",
+       "typestr": "{simd_quatf=<4f>}",
        "typestr_special": true
       },
       "selector": "simdOrientation",
@@ -13287,7 +13287,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        }
       ],
@@ -13353,7 +13353,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdPivot",
@@ -13362,7 +13362,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -13403,7 +13403,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatf=<4f>}",
+       "typestr": "{simd_quatf=<4f>}",
        "typestr_special": true
       },
       "selector": "simdWorldOrientation",
@@ -13412,7 +13412,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        }
       ],
@@ -13428,7 +13428,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "simdWorldTransform",
@@ -13437,7 +13437,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -13949,7 +13949,7 @@
        "nonatomic"
       ],
       "name": "simdTransform",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -13973,7 +13973,7 @@
        "nonatomic"
       ],
       "name": "simdOrientation",
-      "typestr": "{_simd_quatf=<4f>}",
+      "typestr": "{simd_quatf=<4f>}",
       "typestr_special": true
      },
      {
@@ -13997,7 +13997,7 @@
        "nonatomic"
       ],
       "name": "simdPivot",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -14013,7 +14013,7 @@
        "nonatomic"
       ],
       "name": "simdWorldOrientation",
-      "typestr": "{_simd_quatf=<4f>}",
+      "typestr": "{simd_quatf=<4f>}",
       "typestr_special": true
      },
      {
@@ -14021,7 +14021,7 @@
        "nonatomic"
       ],
       "name": "simdWorldTransform",
-      "typestr": "{_simd_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {
@@ -28455,7 +28455,7 @@
     "args": [
      {
       "name": "m",
-      "typestr": "{_simd_float4x4=[4<4f>]}"
+      "typestr": "{simd_float4x4=[4<4f>]}"
      }
     ],
     "inline": true,
@@ -28633,7 +28633,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_simd_float4x4=[4<4f>]}"
+     "typestr": "{simd_float4x4=[4<4f>]}"
     }
    },
    "SCNMatrix4Translate": {

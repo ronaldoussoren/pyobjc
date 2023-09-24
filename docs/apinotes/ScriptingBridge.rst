@@ -33,4 +33,5 @@ API Notes
 ``-[SBObject sendEvent:id:parameters]``
 .......................................
 
-This method is not supported at the moment.
+This method is not supported at the moment. Please file an issue if you have
+a use-case for directly calling this method.

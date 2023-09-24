@@ -96,6 +96,17 @@ class TestCIImage(TestCase):
     def testConstants11_1(self):
         self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationSkyMatte, str)
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(Quartz.kCIFormatRGBX16, int)
+        self.assertIsInstance(Quartz.kCIFormatRGBXh, int)
+        self.assertIsInstance(Quartz.kCIFormatRGBXf, int)
+        self.assertIsInstance(Quartz.kCIFormatRGB10, int)
+
+        self.assertIsInstance(Quartz.kCIImageExpandToHDR, str)
+        self.assertIsInstance(Quartz.kCIImageCacheImmediately, str)
+        self.assertIsInstance(Quartz.kCIImageAuxiliaryHDRGainMap, str)
+
     def testMethods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2

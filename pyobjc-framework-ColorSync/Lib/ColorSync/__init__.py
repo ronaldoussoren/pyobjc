@@ -4,26 +4,31 @@ Python mapping for the ColorSync framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import CoreFoundation
-import objc
-from ColorSync import _metadata
-
-sys.modules["ColorSync"] = mod = objc.ObjCLazyModule(
-    "ColorSync",
-    "com.apple.ColorSync",
-    objc.pathForFramework("/System/Library/Frameworks/ColorSync.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (CoreFoundation,),
-)
 
 
-del sys.modules["ColorSync._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ColorSync",
+        frameworkIdentifier="com.apple.ColorSync",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ColorSync.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ColorSync._metadata"]
+
+
+globals().pop("_setup")()

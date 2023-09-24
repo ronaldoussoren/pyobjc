@@ -1,6 +1,9 @@
 from PyObjCTools.TestSupport import TestCase
 
 import Cocoa
+import AppKit
+import Foundation
+import CoreFoundation
 
 
 class TestCallableMetadata(TestCase):
@@ -37,3 +40,10 @@ class TestCallableMetadata(TestCase):
                 "IOBluetoothDeviceInquiry",
             },
         )
+
+    def test_bundle_identifiers(self):
+        for mod in (CoreFoundation, Foundation, AppKit):
+            with self.subTest(mod=mod.__name__):
+                self.assertEqual(
+                    mod.__bundle__.bundleIdentifier(), mod.__framework_identifier__
+                )

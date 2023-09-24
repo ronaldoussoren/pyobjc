@@ -29,4 +29,10 @@ class TestDictionaryServices(TestCase):
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(DictionaryServices)
+        self.assertCallableMetadataIsSane(
+            DictionaryServices,
+            exclude_attrs=(
+                "MDQuerySetCreateResultFunction",
+                "MDQuerySetCreateValueFunction",
+            ),
+        )

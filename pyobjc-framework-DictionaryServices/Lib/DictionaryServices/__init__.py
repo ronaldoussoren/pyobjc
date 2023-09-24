@@ -4,28 +4,34 @@ Python mapping for the DictionaryServices framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-import warnings
 
-import CoreServices
-import objc
 
-warnings.warn(
-    "pyobjc-framework-DictionaryServices is deprecated, use 'import CoreServices' instead",
-    DeprecationWarning,
-)
+def _setup():
+    import CoreServices
+    import objc
 
-sys.modules["DictionaryServices"] = mod = objc.ObjCLazyModule(
-    "DictionaryServices",
-    "com.apple.CoreServices",
-    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
-    None,
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (CoreServices,),
-)
+    import warnings
+
+    warnings.warn(
+        "pyobjc-framework-DictionaryServices is deprecated, use 'import CoreServices' instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="DictionaryServices",
+        frameworkIdentifier="com.apple.CoreServices",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(CoreServices,),
+        metadict={},
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+
+globals().pop("_setup")()

@@ -598,27 +598,27 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.setFloat4x4_atTime_,
             0,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.setDouble4x4_atTime_,
             0,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )
 
         self.assertResultHasType(
             ModelIO.MDLAnimatedMatrix4x4.float4x4AtTime_,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             ModelIO.MDLAnimatedMatrix4x4.double4x4AtTime_,
-            simd.matrix_double4x4.__typestr__,
+            simd.simd_double4x4.__typestr__,
         )
 
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.resetWithFloat4x4Array_atTimes_count_,
             0,
-            b"n^" + simd.matrix_float4x4.__typestr__,
+            b"n^" + simd.simd_float4x4.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedMatrix4x4.resetWithFloat4x4Array_atTimes_count_, 0, 2
@@ -633,7 +633,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.resetWithDouble4x4Array_atTimes_count_,
             0,
-            b"n^" + simd.matrix_double4x4.__typestr__,
+            b"n^" + simd.simd_double4x4.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedMatrix4x4.resetWithDouble4x4Array_atTimes_count_, 0, 2
@@ -648,7 +648,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.getFloat4x4Array_maxCount_,
             0,
-            b"o^" + simd.matrix_float4x4.__typestr__,
+            b"o^" + simd.simd_float4x4.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedMatrix4x4.getFloat4x4Array_maxCount_, 0, 1
@@ -661,7 +661,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgHasType(
             ModelIO.MDLAnimatedMatrix4x4.getDouble4x4Array_maxCount_,
             0,
-            b"o^" + simd.matrix_double4x4.__typestr__,
+            b"o^" + simd.simd_double4x4.__typestr__,
         )
         self.assertArgSizeInArg(
             ModelIO.MDLAnimatedMatrix4x4.getDouble4x4Array_maxCount_, 0, 1

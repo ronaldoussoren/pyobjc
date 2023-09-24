@@ -389,7 +389,7 @@
       "selector": "count",
       "class_method": false,
       "retval": {
-       "type_override": [ "i", "q" ]
+       "type_override": "q"
       }
      },
      {
@@ -397,7 +397,7 @@
       "class_method": false,
       "args": {
        "0": {
-        "type_override": [ "i", "q" ]
+        "type_override": "q"
        }
       }
      },

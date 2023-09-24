@@ -396,10 +396,7 @@
          "typestr": "@"
         },
         "1": {
-         "typestr": [
-          "l",
-          "q"
-         ]
+         "typestr": "q"
         },
         "2": {
          "typestr": "^v"
@@ -1118,10 +1115,7 @@
      },
      "1": {
       "type_modifier": "o",
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
+      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
      }
     }
    },
@@ -1222,10 +1216,7 @@
      },
      "1": {
       "type_modifier": "n",
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
+      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
      }
     }
    },

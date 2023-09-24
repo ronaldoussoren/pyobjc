@@ -3,10 +3,6 @@
  *
  * Last update: Wed Jan 16 13:10:52 2013
  */
-#if PyObjC_BUILD_RELEASE >= 1009
-#import <AddressBook/ABPersonPickerDelegate.h>
-#endif
-
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));

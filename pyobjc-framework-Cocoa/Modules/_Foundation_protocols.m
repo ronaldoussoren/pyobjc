@@ -7,10 +7,8 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-#if PyObjC_BUILD_RELEASE >= 1005
     p = PyObjC_IdToPython(@protocol(NSObject));
     Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= 1005 */
 #if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(NSCacheDelegate));
     Py_XDECREF(p);
@@ -84,6 +82,10 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSXPCProxyCreating));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSExtensionRequestHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSUserActivityDelegate));
+    Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
 #if PyObjC_BUILD_RELEASE >= 1011
     p = PyObjC_IdToPython(@protocol(NSProgressReporting));
@@ -91,12 +93,6 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSURLSessionStreamDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-#if PyObjC_BUILD_RELEASE >= 1010
-    p = PyObjC_IdToPython(@protocol(NSExtensionRequestHandling));
-    Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(NSUserActivityDelegate));
-    Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= 1010 */
 #if PyObjC_BUILD_RELEASE >= 1013
     p = PyObjC_IdToPython(@protocol(NSItemProviderWriting));
     Py_XDECREF(p);

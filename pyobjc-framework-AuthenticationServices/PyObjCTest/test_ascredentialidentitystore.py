@@ -42,3 +42,21 @@ class TestASCredentialIdentityStore(TestCase):
             1,
             b"v" + objc._C_NSBOOL + b"@",
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASCredentialIdentityStore.saveCredentialIdentityEntries_completion_,
+            1,
+            b"vZ@",
+        )
+        self.assertArgIsBlock(
+            AuthenticationServices.ASCredentialIdentityStore.removeCredentialIdentityEntries_completion_,
+            1,
+            b"vZ@",
+        )
+        self.assertArgIsBlock(
+            AuthenticationServices.ASCredentialIdentityStore.replaceCredentialIdentityEntries_completion_,
+            1,
+            b"vZ@",
+        )

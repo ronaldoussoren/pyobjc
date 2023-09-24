@@ -16,7 +16,7 @@
        "selector": "pictureInPictureController:skipInterval:completionHandler:",
        "class_method": false,
        "args": {
-        "1": { "type_override": "{_CMTime=qiIq}" },
+        "1": { "type_override": "{CMTime=qiIq}" },
 	"2": {
          "type_override": "@?",
 	 "callable": {

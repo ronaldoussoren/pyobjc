@@ -402,7 +402,7 @@
          "typestr": "i"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -482,7 +482,7 @@
          "typestr": "@"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -653,7 +653,7 @@
          "typestr": "^{__CFData=}"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"
@@ -743,7 +743,7 @@
          "typestr": "^{__CFNetService=}"
         },
         {
-         "typestr": "^{_CFStreamError=qi}"
+         "typestr": "^{CFStreamError=qi}"
         },
         {
          "typestr": "^v"

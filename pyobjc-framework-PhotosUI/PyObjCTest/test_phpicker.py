@@ -18,6 +18,22 @@ class TestPHPicker(TestCase):
         self.assertIsEnumType(PhotosUI.PHPickerConfigurationSelection)
         self.assertEqual(PhotosUI.PHPickerConfigurationSelectionDefault, 0)
         self.assertEqual(PhotosUI.PHPickerConfigurationSelectionOrdered, 1)
+        self.assertEqual(PhotosUI.PHPickerConfigurationSelectionContinuous, 2)
+        self.assertEqual(PhotosUI.PHPickerConfigurationSelectionContinuousAndOrdered, 3)
+
+        self.assertIsEnumType(PhotosUI.PHPickerMode)
+        self.assertEqual(PhotosUI.PHPickerModeDefault, 0)
+        self.assertEqual(PhotosUI.PHPickerModeCompact, 1)
+
+        self.assertIsEnumType(PhotosUI.PHPickerCapabilities)
+        self.assertEqual(PhotosUI.PHPickerCapabilitiesNone, 0)
+        self.assertEqual(PhotosUI.PHPickerCapabilitiesSearch, 1 << 0)
+        self.assertEqual(PhotosUI.PHPickerCapabilitiesStagingArea, 1 << 1)
+        self.assertEqual(PhotosUI.PHPickerCapabilitiesCollectionNavigation, 1 << 2)
+        self.assertEqual(PhotosUI.PHPickerCapabilitiesSelectionActions, 1 << 3)
+        self.assertEqual(
+            PhotosUI.PHPickerCapabilitiesSensitivityAnalysisIntervention, 1 << 4
+        )
 
     @min_os_level("13.0")
     def testClasses(self):

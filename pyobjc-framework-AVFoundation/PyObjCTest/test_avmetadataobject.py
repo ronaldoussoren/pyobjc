@@ -57,3 +57,7 @@ class TestAVMetadataObject(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeMicroQRCode, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeMicroPDF417Code, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeHumanFullBody, str)

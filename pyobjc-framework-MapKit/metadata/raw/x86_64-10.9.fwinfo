@@ -612,7 +612,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -648,7 +648,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "boundingMapRect",
@@ -681,7 +681,7 @@
        "readonly"
       ],
       "name": "boundingMapRect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
       "typestr_special": true
      }
     ],
@@ -1328,7 +1328,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MKMapPoint=dd}",
+        "typestr": "^{MKMapPoint=dd}",
         "typestr_special": true
        },
        {
@@ -1474,7 +1474,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -1483,7 +1483,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -1513,7 +1513,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
       "typestr_special": true
      }
     ],
@@ -1539,7 +1539,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "boundingRegion",
@@ -1563,7 +1563,7 @@
        "readonly"
       ],
       "name": "boundingRegion",
-      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
       "typestr_special": true
      }
     ],
@@ -2034,7 +2034,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "mapRect",
@@ -2043,7 +2043,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -2059,7 +2059,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -2068,7 +2068,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -2198,7 +2198,7 @@
        "nonatomic"
       ],
       "name": "mapRect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
       "typestr_special": true
      },
      {
@@ -2207,7 +2207,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
       "typestr_special": true
      },
      {
@@ -2348,7 +2348,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        },
        {
@@ -2386,13 +2386,13 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "regionThatFits:",
@@ -2401,7 +2401,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -2420,13 +2420,13 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "mapRectThatFits:",
@@ -2435,7 +2435,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -2458,7 +2458,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -2468,7 +2468,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "mapRectThatFits:edgePadding:",
@@ -2534,7 +2534,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        },
        {
@@ -2563,7 +2563,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "convertRect:toRegionFromView:",
@@ -2632,7 +2632,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -2785,7 +2785,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+       "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
        "typestr_special": true
       },
       "selector": "region",
@@ -2794,7 +2794,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+        "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
         "typestr_special": true
        }
       ],
@@ -2835,7 +2835,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "visibleMapRect",
@@ -2844,7 +2844,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -3452,7 +3452,7 @@
        "nonatomic"
       ],
       "name": "region",
-      "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}",
+      "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}",
       "typestr_special": true
      },
      {
@@ -3468,7 +3468,7 @@
        "nonatomic"
       ],
       "name": "visibleMapRect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
       "typestr_special": true
      },
      {
@@ -3658,7 +3658,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "^{_MKMapPoint=dd}",
+       "typestr": "^{MKMapPoint=dd}",
        "typestr_special": true
       },
       "selector": "points",
@@ -3683,7 +3683,7 @@
        "readonly"
       ],
       "name": "points",
-      "typestr": "^{_MKMapPoint=dd}",
+      "typestr": "^{MKMapPoint=dd}",
       "typestr_special": true
      },
      {
@@ -4111,7 +4111,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapPoint=dd}",
+        "typestr": "{MKMapPoint=dd}",
         "typestr_special": true
        }
       ],
@@ -4132,7 +4132,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapPoint=dd}",
+       "typestr": "{MKMapPoint=dd}",
        "typestr_special": true
       },
       "selector": "mapPointForPoint:",
@@ -4141,7 +4141,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -4162,7 +4162,7 @@
       ],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "mapRectForRect:",
@@ -4171,7 +4171,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -4190,7 +4190,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -4223,7 +4223,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -4238,7 +4238,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        },
        {
@@ -4505,7 +4505,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MKMapPoint=dd}",
+        "typestr": "^{MKMapPoint=dd}",
         "typestr_special": true
        },
        {
@@ -4524,7 +4524,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MKMapPoint=dd}",
+        "typestr": "^{MKMapPoint=dd}",
         "typestr_special": true
        },
        {
@@ -4663,7 +4663,7 @@
      {
       "args": [
        {
-        "typestr": "^{_MKMapPoint=dd}",
+        "typestr": "^{MKMapPoint=dd}",
         "typestr_special": true
        },
        {
@@ -5234,7 +5234,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKTileOverlayPath=qqqd}",
+        "typestr": "{MKTileOverlayPath=qqqd}",
         "typestr_special": true
        }
       ],
@@ -5249,7 +5249,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKTileOverlayPath=qqqd}",
+        "typestr": "{MKTileOverlayPath=qqqd}",
         "typestr_special": true
        },
        {
@@ -5516,7 +5516,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKCoordinateSpan=dd}",
+        "typestr": "{MKCoordinateSpan=dd}",
         "typestr_special": true
        }
       ],
@@ -5542,7 +5542,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_MKCoordinateSpan=dd}",
+       "typestr": "{MKCoordinateSpan=dd}",
        "typestr_special": true
       },
       "selector": "MKCoordinateSpanValue",
@@ -5617,13 +5617,13 @@
     "typestr": "@"
    },
    "MKMapRectNull": {
-    "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+    "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
    },
    "MKMapRectWorld": {
-    "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+    "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
    },
    "MKMapSizeWorld": {
-    "typestr": "{_MKMapSize=dd}"
+    "typestr": "{MKMapSize=dd}"
    }
   },
   "formal_protocols": {
@@ -6078,7 +6078,7 @@
      {
       "args": [
        {
-        "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+        "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
         "typestr_special": true
        }
       ],
@@ -6118,7 +6118,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+       "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
        "typestr_special": true
       },
       "selector": "boundingMapRect",
@@ -6141,7 +6141,7 @@
        "readonly"
       ],
       "name": "boundingMapRect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}",
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}",
       "typestr_special": true
      }
     ]
@@ -6153,7 +6153,7 @@
     "args": [
      {
       "name": "mapPoint",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      }
     ],
     "retval": {
@@ -6164,11 +6164,11 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
-     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateRegionMake": {
@@ -6179,12 +6179,12 @@
      },
      {
       "name": "span",
-      "typestr": "{_MKCoordinateSpan=dd}"
+      "typestr": "{MKCoordinateSpan=dd}"
      }
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateRegionMakeWithDistance": {
@@ -6203,7 +6203,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+     "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}"
     }
    },
    "MKCoordinateSpanMake": {
@@ -6219,18 +6219,18 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKCoordinateSpan=dd}"
+     "typestr": "{MKCoordinateSpan=dd}"
     }
    },
    "MKMapPointEqualToPoint": {
     "args": [
      {
       "name": "point1",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      },
      {
       "name": "point2",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      }
     ],
     "inline": true,
@@ -6246,7 +6246,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKMapPoint=dd}"
+     "typestr": "{MKMapPoint=dd}"
     }
    },
    "MKMapPointMake": {
@@ -6262,7 +6262,7 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKMapPoint=dd}"
+     "typestr": "{MKMapPoint=dd}"
     }
    },
    "MKMapPointsPerMeterAtLatitude": {
@@ -6280,11 +6280,11 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "point",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      }
     ],
     "retval": {
@@ -6295,11 +6295,11 @@
     "args": [
      {
       "name": "rect1",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "rect2",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
@@ -6310,15 +6310,15 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "slice",
-      "typestr": "^{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "^{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "remainder",
-      "typestr": "^{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "^{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "amount",
@@ -6337,11 +6337,11 @@
     "args": [
      {
       "name": "rect1",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "rect2",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6353,7 +6353,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6365,7 +6365,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6377,7 +6377,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6389,7 +6389,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6401,7 +6401,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6413,7 +6413,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6425,7 +6425,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6437,7 +6437,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6449,7 +6449,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "dx",
@@ -6461,33 +6461,33 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapRectIntersection": {
     "args": [
      {
       "name": "rect1",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "rect2",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapRectIntersectsRect": {
     "args": [
      {
       "name": "rect1",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "rect2",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
@@ -6498,7 +6498,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6510,7 +6510,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6539,14 +6539,14 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapRectOffset": {
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "dx",
@@ -6558,25 +6558,25 @@
      }
     ],
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapRectRemainder": {
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapRectSpans180thMeridian": {
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
@@ -6587,26 +6587,26 @@
     "args": [
      {
       "name": "rect1",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      },
      {
       "name": "rect2",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "retval": {
-     "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+     "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
     }
    },
    "MKMapSizeEqualToSize": {
     "args": [
      {
       "name": "size1",
-      "typestr": "{_MKMapSize=dd}"
+      "typestr": "{MKMapSize=dd}"
      },
      {
       "name": "size2",
-      "typestr": "{_MKMapSize=dd}"
+      "typestr": "{MKMapSize=dd}"
      }
     ],
     "inline": true,
@@ -6627,18 +6627,18 @@
     ],
     "inline": true,
     "retval": {
-     "typestr": "{_MKMapSize=dd}"
+     "typestr": "{MKMapSize=dd}"
     }
    },
    "MKMetersBetweenMapPoints": {
     "args": [
      {
       "name": "a",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      },
      {
       "name": "b",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      }
     ],
     "retval": {
@@ -6671,7 +6671,7 @@
     "args": [
      {
       "name": "point",
-      "typestr": "{_MKMapPoint=dd}"
+      "typestr": "{MKMapPoint=dd}"
      }
     ],
     "inline": true,
@@ -6683,7 +6683,7 @@
     "args": [
      {
       "name": "rect",
-      "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+      "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
      }
     ],
     "inline": true,
@@ -6695,7 +6695,7 @@
     "args": [
      {
       "name": "size",
-      "typestr": "{_MKMapSize=dd}"
+      "typestr": "{MKMapSize=dd}"
      }
     ],
     "inline": true,
@@ -6713,7 +6713,7 @@
      "span"
     ],
     "special": true,
-    "typestr": "{_MKCoordinateRegion={CLLocationCoordinate2D=dd}{_MKCoordinateSpan=dd}}"
+    "typestr": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}"
    },
    "MKCoordinateSpan": {
     "fieldnames": [
@@ -6721,7 +6721,7 @@
      "longitudeDelta"
     ],
     "special": true,
-    "typestr": "{_MKCoordinateSpan=dd}"
+    "typestr": "{MKCoordinateSpan=dd}"
    },
    "MKMapPoint": {
     "fieldnames": [
@@ -6729,7 +6729,7 @@
      "y"
     ],
     "special": true,
-    "typestr": "{_MKMapPoint=dd}"
+    "typestr": "{MKMapPoint=dd}"
    },
    "MKMapRect": {
     "fieldnames": [
@@ -6737,7 +6737,7 @@
      "size"
     ],
     "special": true,
-    "typestr": "{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"
+    "typestr": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"
    },
    "MKMapSize": {
     "fieldnames": [
@@ -6745,7 +6745,7 @@
      "height"
     ],
     "special": true,
-    "typestr": "{_MKMapSize=dd}"
+    "typestr": "{MKMapSize=dd}"
    },
    "MKTileOverlayPath": {
     "fieldnames": [
@@ -6755,7 +6755,7 @@
      "contentScaleFactor"
     ],
     "special": true,
-    "typestr": "{_MKTileOverlayPath=qqqd}"
+    "typestr": "{MKTileOverlayPath=qqqd}"
    }
   }
  },

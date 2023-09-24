@@ -5,27 +5,33 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from ClassKit import _metadata
-from ClassKit import _ClassKit
+def _setup():
+    import sys
 
-sys.modules["ClassKit"] = mod = objc.ObjCLazyModule(
-    "ClassKit",
-    "com.apple.ClassKit",
-    objc.pathForFramework("/System/Library/Frameworks/ClassKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_ClassKit, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _ClassKit
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ClassKit",
+        frameworkIdentifier="com.apple.ClassKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ClassKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _ClassKit,
+            Foundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["ClassKit._metadata"]
 
 
-del sys.modules["ClassKit._metadata"]
+globals().pop("_setup")()

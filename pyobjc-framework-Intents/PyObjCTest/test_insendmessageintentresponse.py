@@ -19,3 +19,7 @@ class TestINSendMessageIntentResponse(TestCase):
         self.assertEqual(
             Intents.INSendMessageIntentResponseCodeFailureMessageServiceNotAvailable, 6
         )
+        self.assertEqual(
+            Intents.INSendMessageIntentResponseCodeFailureRequiringInAppAuthentication,
+            7,
+        )

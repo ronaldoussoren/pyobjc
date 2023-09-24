@@ -3,10 +3,174 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.0
+------------
+
+* Update bindings for macOS 14
+
+  Symbols newly introduced in macOS 14 were added to the existing bindings,
+  and the following new bindings were introduced:
+
+  * Cinematic
+
+  * MediaExtension
+
+  * SensitiveContentAnalysis
+
+  * Symbols
+
+* The "IMServicePlugIn" bindings are no longer available
+
+  The entire framework was deprecated in macOS 10.13 and removed in macOS 14.
+  The bindings can not be build using the latest SDK, and had (at best) limited
+  use.
+
+* :issue:`542`: PyObjC 10 requires Python 3.8 and no longer supports Python 3.7
+
+* :issue:`547`: Removed all ``MAC_OS_X_VERSION*`` constants from ``objc``.
+
+  These constants are needed in practice (switch to :func:`objc.available` to
+  check for platform availability), and caused unnecessary code churn.
+
+* The value for ``objc.options.deprecation_warnings`` is now a string
+  instead of an integer.
+
+* :issue:`555`: Fix unintended incompatibility with pytest in PyObjCTools.TestSupport
+
+* :issue:`295`: The lazy loading machinery by default no longer uses
+  :class:`objc.ObjCLazyModule`, but uses module level ``__dir__`` and
+  ``__getattr__`` instead. The class :class:`objc.ObjCLazyModule` is still
+  available, but is deprecated
+
+  As a side effect of this ``objc`` is no longer an attribute of framework
+  binding packages (e.g ``Foundation.objc`` is no longer a valid attribute).
+
+  Another side effect of this is that all attributes added by the import system
+  are now correctly present in the packages for framework bindings.
+
+  And a final side effect is that private symbols (prefixed with underscore) are
+  no longer imported from dependencies of framework bindings (more closely matching
+  the ``from dependency import *`` behaviour that the lazy importer emulates.
+
+* Add attribute ``__framework_identifier__`` to all framework bindings with the
+  identifier of the corresponding system framework.
+
+* :issue:`295`: Introduce :func:`objc.createFrameworkDirAndGetattr` to
+  create module level ``__dir__`` and ``__getattr__`` for use by
+  framework bindings.
+
+* :issue:`561`: Tests now validate the bundle identifier value used in framework bindings.
+
+  This resulted in a number of changes to framework bindings with incorrect
+  bundle identifier values. This shouldn't affect user code because the
+  bundle loader falls back on the framework path when the identifier cannot be found.
+
+* :issue:`559`: Avoid test failures in pyobjc-core when pyobjc-framework-Quartz is
+  not installed.
+
+* A number of classes can no longer be subclasses in Python because they are marked as non-subclassable
+  in the macOS 14 SDK (either directly or as "subclassing is deprecated":
+
+  ``CKAllowedSharingOptions``,
+  ``CKAsset``,
+  ``CKContainer``,
+  ``CKDatabase``,
+  ``CKDatabaseNotification``,
+  ``CKDatabaseSubscription``,
+  ``CKFetchRecordZoneChangesConfiguration``,
+  ``CKNotification``,
+  ``CKNotificationID``,
+  ``CKNotificationInfo``,
+  ``CKOperationConfiguration``,
+  ``CKOperationGroup``,
+  ``CKQuery``,
+  ``CKQueryCursor``,
+  ``CKQueryNotification``,
+  ``CKQuerySubscription``,
+  ``CKRecord``,
+  ``CKRecordID``,
+  ``CKRecordZone``,
+  ``CKRecordZoneID``,
+  ``CKRecordZoneNotification``,
+  ``CKRecordZoneSubscription``,
+  ``CKReference``,
+  ``CKServerChangeToken``,
+  ``CKShare``,
+  ``CKShareMetadata``,
+  ``CKShareParticipant``,
+  ``CKSubscription``,
+  ``CKSyncEngine``,
+  ``CKSyncEngineAccountChangeEvent``,
+  ``CKSyncEngineConfiguration``,
+  ``CKSyncEngineDidFetchChangesEvent``,
+  ``CKSyncEngineDidFetchRecordZoneChangesEvent``,
+  ``CKSyncEngineDidSendChangesEvent``,
+  ``CKSyncEngineEvent``,
+  ``CKSyncEngineFailedRecordSave``,
+  ``CKSyncEngineFailedZoneSave``,
+  ``CKSyncEngineFetchChangesOptions``,
+  ``CKSyncEngineFetchedDatabaseChangesEvent``,
+  ``CKSyncEngineFetchedRecordDeletion``,
+  ``CKSyncEngineFetchedRecordZoneChangesEvent``,
+  ``CKSyncEngineFetchedZoneDeletion``,
+  ``CKSyncEnginePendingDatabaseChange``,
+  ``CKSyncEnginePendingRecordZoneChange``,
+  ``CKSyncEnginePendingZoneDelete``,
+  ``CKSyncEnginePendingZoneSave``,
+  ``CKSyncEngineRecordZoneChangeBatch``,
+  ``CKSyncEngineSendChangesContext``,
+  ``CKSyncEngineSendChangesOptions``,
+  ``CKSyncEngineSentDatabaseChangesEvent``,
+  ``CKSyncEngineSentRecordZoneChangesEvent``,
+  ``CKSyncEngineState``,
+  ``CKSyncEngineStateSerialization``,
+  ``CKSyncEngineStateUpdateEvent``,
+  ``CKSyncEngineWillFetchChangesEvent``,
+  ``CKSyncEngineWillFetchRecordZoneChangesEvent``,
+  ``CKSyncEngineWillSendChangesEvent``,
+  ``CKSystemSharingUIObserver``,
+  ``CKUserIdentity``,
+  ``CKUserIdentityLookupInfo``.
+
+* The encoding of a number of basic types changes, in particular those
+  of CoreFoundation struct types and SIMD struct types. None of this
+  should affect user code.
+
+* ``objc.getClassList`` now has an optional positional argument to
+  ignore classes with a name that aren't identifiers.
+
+* Some of the functionality in CoreFoundation was rewritten in Swift
+  in macOS 14, with Swift subclasses of ``NSArray`` and ``NSDictionary``.
+  Those classes break an invariant of PyObjC: the superclass of the root
+  of the Swift class hierarchy changes when the class is instantiated
+  for the first time (from ``NSObject`` to the correct superclass).
+
+  PyObjC 10 contains a workaround for this by ignoring these classes
+  unless they are needed to create a proxy for an instance (FB12286520).
+
+* Fix crash when the method signature retrieved from the Objective-C runtime
+  contains the class name for a method returning ``id``.
+
+* Remove old 32-bit support in metadata override files.
+
+* Restructure ``objc.simd``: The matrix types are now named ``simd_float3x3``
+  instead of ``matrix_float3x3``, with the older name as an alias (to match
+  older system headers).
+
+* Fix crash when loading the libdispatch bindings on recent macOS versions
+  (at least macOS 13, possibly earlier)
+
+* ``dispatch.dispatch_source_t`` is renamed to ``dispatch.dispatch_source_type_t``
+  to match the type name in C code.
+
+* :issue:`569`: Xcode 15 has a bug when using weak symbols and targeting older macOS
+  versions. Switch to the old linker when detecting Xcode 15.
+
 Version 9.2.1
 -------------
 
 * :issue:`563`: Fix incompatibility with macOS 14 beta 1
+
 
 Version 9.2
 -----------
@@ -1250,7 +1414,7 @@ of test coverage for the C code in pyobjc-core.
 * The proxy for python's :class:`bytearray` (and other writable buffers) now
   supports the ``mutableBytes`` method in Objective-C.
 
-  As a side effect of this ``OC_PythonData`` is now a sublcass of
+  As a side effect of this ``OC_PythonData`` is now a subclass of
   ``NSMutableData`` instead of ``NSData``.
 
 * Fixed retrieving an :class:`bytearray` value from a Cocoa archive

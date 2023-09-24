@@ -66,3 +66,53 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomLoginRequestBodyClaims_returningError_,
             1,
         )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomRefreshRequestHeaderClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomRefreshRequestHeaderClaims_returningError_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomRefreshRequestBodyClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomRefreshRequestBodyClaims_returningError_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyExchangeRequestHeaderClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyExchangeRequestHeaderClaims_returningError_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyExchangeRequestBodyClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyExchangeRequestBodyClaims_returningError_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestHeaderClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestHeaderClaims_returningError_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestBodyClaims_returningError_
+        )
+        self.assertArgIsOut(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestBodyClaims_returningError_,
+            1,
+        )

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, os_level_between
+from PyObjCTools.TestSupport import TestCase, os_level_between, min_os_level
 import Vision
 
 
@@ -109,4 +109,15 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
         self.assertArgIsOut(
             Vision.VNHumanHandPoseObservation.recognizedPointsForJointsGroupName_error_,
             1,
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertArgIsOut(
+            Vision.VNDetectHumanHandPoseRequest.supportedJointNamesAndReturnError_,
+            0,
+        )
+        self.assertArgIsOut(
+            Vision.VNDetectHumanHandPoseRequest.supportedJointsGroupNamesAndReturnError_,
+            0,
         )

@@ -3,7 +3,7 @@
 #
 #    ** DO NOT EDIT **
 #
-from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, skipUnless
+from PyObjCTools.TestSupport import TestCase
 import objc
 from functools import partial
 from objc import simd
@@ -11,10 +11,7 @@ from objc import simd
 
 # Needs to be replaced by minimal definitions for
 # CGColor and CGColorSpace
-try:
-    import Quartz  # noqa: F401
-except ImportError:
-    pass
+import Quartz  # noqa: F401
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
@@ -34,10 +31,6 @@ NoObjCValueObject = NoObjCClass()
 
 # Register full signatures for the helper methods
 
-objc.registerMetaDataForSelector(b"NSObject", b"v16C", {"full_signature": b"<16C>@:"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv16C", {"full_signature": b"<16C>@:"}
-)
 objc.registerMetaDataForSelector(b"NSObject", b"v2d", {"full_signature": b"<2d>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv2d", {"full_signature": b"<2d>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2dd:", {"full_signature": b"<2d>@:d"})
@@ -113,6 +106,18 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsv4iv3f:", {"full_signature": b"<4i>@:<3f>"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"idv2d:id:", {"full_signature": b"@@:<2d>@"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsidv2d:id:", {"full_signature": b"@@:<2d>@"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"idv2d:q:", {"full_signature": b"@@:<2d>q"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsidv2d:q:", {"full_signature": b"@@:<2d>q"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"idv2f:", {"full_signature": b"@@:<2f>"})
 objc.registerMetaDataForSelector(
@@ -264,13 +269,13 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idid:Q:matrixfloat4x4:",
-    {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
+    b"idid:Q:simdfloat4x4:",
+    {"full_signature": b"@@:@Q{simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsidid:Q:matrixfloat4x4:",
-    {"full_signature": b"@@:@Q{_matrix_float4x4=[4<4f>]}"},
+    b"clsidid:Q:simdfloat4x4:",
+    {"full_signature": b"@@:@Q{simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject", b"idid:Z:id:v2i:q:Q:q:Z:", {"full_signature": b"@@:@Z@<2i>qQqZ"}
@@ -305,42 +310,54 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"idid:MDLAxisAlignedBoundingBox:f:",
-    {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
+    {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsidid:MDLAxisAlignedBoundingBox:f:",
-    {"full_signature": b"@@:@{_MDLAxisAlignedBoundingBox=<3f><3f>}f"},
+    {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idid:matrixfloat2x2:",
-    {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
+    b"idid:simdfloat2x2:",
+    {"full_signature": b"@@:@{simd_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsidid:matrixfloat2x2:",
-    {"full_signature": b"@@:@{_matrix_float2x2=[2<2f>]}"},
+    b"clsidid:simdfloat2x2:",
+    {"full_signature": b"@@:@{simd_float2x2=[2<2f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idid:matrixfloat3x3:",
-    {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
+    b"idid:simdfloat3x3:",
+    {"full_signature": b"@@:@{simd_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsidid:matrixfloat3x3:",
-    {"full_signature": b"@@:@{_matrix_float3x3=[3<3f>]}"},
+    b"clsidid:simdfloat3x3:",
+    {"full_signature": b"@@:@{simd_float3x3=[3<3f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idid:matrixfloat4x4:",
-    {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
+    b"idid:simdfloat4x4:",
+    {"full_signature": b"@@:@{simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsidid:matrixfloat4x4:",
-    {"full_signature": b"@@:@{_matrix_float4x4=[4<4f>]}"},
+    b"clsidid:simdfloat4x4:",
+    {"full_signature": b"@@:@{simd_float4x4=[4<4f>]}"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"idid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsidid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"idid:simdquatf:id:", {"full_signature": b"@@:@{simd_quatf=<4f>}@"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsidid:simdquatf:id:", {"full_signature": b"@@:@{simd_quatf=<4f>}@"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
@@ -431,32 +448,30 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"idMDLVoxelIndexExtent:",
-    {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
+    {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsidMDLVoxelIndexExtent:",
-    {"full_signature": b"@@:{_MDLVoxelIndexExtent=<4i><4i>}"},
+    {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"idsimdfloat4x4:", {"full_signature": b"@@:{simd_float4x4=[4<4f>]}"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idmatrixfloat4x4:",
-    {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
+    b"clsidsimdfloat4x4:",
+    {"full_signature": b"@@:{simd_float4x4=[4<4f>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsidmatrixfloat4x4:",
-    {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}"},
+    b"idsimdfloat4x4:Z:",
+    {"full_signature": b"@@:{simd_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"idmatrixfloat4x4:Z:",
-    {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsidmatrixfloat4x4:Z:",
-    {"full_signature": b"@@:{_matrix_float4x4=[4<4f>]}Z"},
+    b"clsidsimdfloat4x4:Z:",
+    {"full_signature": b"@@:{simd_float4x4=[4<4f>]}Z"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject", b"Zv2i:id:id:id:id:", {"full_signature": b"Z@:<2i>@@@@"}
@@ -499,6 +514,10 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(b"NSObject", b"fv2i:", {"full_signature": b"f@:<2i>"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsfv2i:", {"full_signature": b"f@:<2i>"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"vv2d:", {"full_signature": b"v@:<2d>"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvv2d:", {"full_signature": b"v@:<2d>"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject", b"vv2d:d:", {"full_signature": b"v@:<2d>d"}
@@ -589,114 +608,90 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"vMDLAxisAlignedBoundingBox:",
-    {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
+    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsvMDLAxisAlignedBoundingBox:",
-    {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}"},
+    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"vMDLAxisAlignedBoundingBox:Z:",
-    {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
+    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsvMDLAxisAlignedBoundingBox:Z:",
-    {"full_signature": b"v@:{_MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
+    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"vsimddouble4x4:", {"full_signature": b"v@:{simd_double4x4=[4<4d>]}"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"vmatrixdouble4x4:",
-    {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
+    b"clsvsimddouble4x4:",
+    {"full_signature": b"v@:{simd_double4x4=[4<4d>]}"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsvmatrixdouble4x4:",
-    {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}"},
+    b"vsimddouble4x4:d:",
+    {"full_signature": b"v@:{simd_double4x4=[4<4d>]}d"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"vmatrixdouble4x4:d:",
-    {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
+    b"clsvsimddouble4x4:d:",
+    {"full_signature": b"v@:{simd_double4x4=[4<4d>]}d"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"vsimdfloat2x2:", {"full_signature": b"v@:{simd_float2x2=[2<2f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvsimdfloat2x2:", {"full_signature": b"v@:{simd_float2x2=[2<2f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"vsimdfloat3x3:", {"full_signature": b"v@:{simd_float3x3=[3<3f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvsimdfloat3x3:", {"full_signature": b"v@:{simd_float3x3=[3<3f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"vsimdfloat4x4:", {"full_signature": b"v@:{simd_float4x4=[4<4f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsvsimdfloat4x4:", {"full_signature": b"v@:{simd_float4x4=[4<4f>]}"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"vsimdfloat4x4:d:", {"full_signature": b"v@:{simd_float4x4=[4<4f>]}d"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
-    b"clsvmatrixdouble4x4:d:",
-    {"full_signature": b"v@:{_matrix_double4x4=[4<4d>]}d"},
+    b"clsvsimdfloat4x4:d:",
+    {"full_signature": b"v@:{simd_float4x4=[4<4f>]}d"},
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vmatrixfloat2x2:",
-    {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
+    b"NSObject", b"vsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvmatrixfloat2x2:",
-    {"full_signature": b"v@:{_matrix_float2x2=[2<2f>]}"},
+    b"NSObject", b"clsvsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vmatrixfloat3x3:",
-    {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
+    b"NSObject", b"vsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvmatrixfloat3x3:",
-    {"full_signature": b"v@:{_matrix_float3x3=[3<3f>]}"},
+    b"NSObject", b"clsvsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vmatrixfloat4x4:",
-    {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
+    b"NSObject", b"vsimdquatf:v3f:", {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvmatrixfloat4x4:",
-    {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}"},
+    b"NSObject", b"clsvsimdquatf:v3f:", {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vmatrixfloat4x4:d:",
-    {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
+    b"NSObject", b"vsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvmatrixfloat4x4:d:",
-    {"full_signature": b"v@:{_matrix_float4x4=[4<4f>]}d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdfloat4x4:", {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvsimdfloat4x4:",
-    {"full_signature": b"v@:{_simd_float4x4=[4<4f>]}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatd:d:", {"full_signature": b"v@:{_simd_quatd=<4d>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:", {"full_signature": b"v@:{_simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:v3f:", {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:v3f:", {"full_signature": b"v@:{_simd_quatf=<4f>}<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:d:", {"full_signature": b"v@:{_simd_quatf=<4f>}d"}
+    b"NSObject", b"clsvsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
 )
 objc.registerMetaDataForSelector(
     b"NSObject", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
@@ -719,42 +714,132 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"MDLAxisAlignedBoundingBox",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsMDLAxisAlignedBoundingBox",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"MDLAxisAlignedBoundingBoxv4i:",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsMDLAxisAlignedBoundingBoxv4i:",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"MDLAxisAlignedBoundingBoxd:",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsMDLAxisAlignedBoundingBoxd:",
-    {"full_signature": b"{_MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
+    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"MDLVoxelIndexExtent",
-    {"full_signature": b"{_MDLVoxelIndexExtent=<4i><4i>}@:"},
+    {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"clsMDLVoxelIndexExtent",
-    {"full_signature": b"{_MDLVoxelIndexExtent=<4i><4i>}@:"},
+    {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simddouble4x4", {"full_signature": b"{simd_double4x4=[4<4d>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimddouble4x4", {"full_signature": b"{simd_double4x4=[4<4d>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simddouble4x4d:", {"full_signature": b"{simd_double4x4=[4<4d>]}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"clssimddouble4x4d:",
+    {"full_signature": b"{simd_double4x4=[4<4d>]}@:d"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdfloat2x2", {"full_signature": b"{simd_float2x2=[2<2f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdfloat2x2", {"full_signature": b"{simd_float2x2=[2<2f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdfloat3x3", {"full_signature": b"{simd_float3x3=[3<3f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdfloat3x3", {"full_signature": b"{simd_float3x3=[3<3f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdfloat4x4", {"full_signature": b"{simd_float4x4=[4<4f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdfloat4x4", {"full_signature": b"{simd_float4x4=[4<4f>]}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"simdfloat4x4id:d:",
+    {"full_signature": b"{simd_float4x4=[4<4f>]}@:@d"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"clssimdfloat4x4id:d:",
+    {"full_signature": b"{simd_float4x4=[4<4f>]}@:@d"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdfloat4x4d:", {"full_signature": b"{simd_float4x4=[4<4f>]}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdfloat4x4d:", {"full_signature": b"{simd_float4x4=[4<4f>]}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"simdfloat4x4simdfloat4x4:id:",
+    {"full_signature": b"{simd_float4x4=[4<4f>]}@:{simd_float4x4=[4<4f>]}@"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"clssimdfloat4x4simdfloat4x4:id:",
+    {"full_signature": b"{simd_float4x4=[4<4f>]}@:{simd_float4x4=[4<4f>]}@"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"simdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clssimdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
+)
+objc.registerMetaDataForSelector(b"NSObject", b"v16C", {"full_signature": b"<16C>@:"})
+objc.registerMetaDataForSelector(
+    b"NSObject", b"clsv16C", {"full_signature": b"<16C>@:"}
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"MPSImageHistogramInfo",
+    {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"clsMPSImageHistogramInfo",
+    {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
@@ -766,137 +851,9 @@ objc.registerMetaDataForSelector(
     b"clsMPSAxisAlignedBoundingBox",
     {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
 )
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MPSImageHistogramInfo",
-    {"full_signature": b"{_MPSImageHistogramInfo=QZ<4f><4f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMPSImageHistogramInfo",
-    {"full_signature": b"{_MPSImageHistogramInfo=QZ<4f><4f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"matrixdouble4x4",
-    {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixdouble4x4",
-    {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"matrixdouble4x4d:",
-    {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixdouble4x4d:",
-    {"full_signature": b"{_matrix_double4x4=[4<4d>]}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"matrixfloat2x2", {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixfloat2x2",
-    {"full_signature": b"{_matrix_float2x2=[2<2f>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"matrixfloat3x3", {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixfloat3x3",
-    {"full_signature": b"{_matrix_float3x3=[3<3f>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"matrixfloat4x4", {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixfloat4x4",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"matrixfloat4x4id:d:",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixfloat4x4id:d:",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:@d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"matrixfloat4x4d:",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsmatrixfloat4x4d:",
-    {"full_signature": b"{_matrix_float4x4=[4<4f>]}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdfloat4x4", {"full_signature": b"{_simd_float4x4=[4<4f>]}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"simdfloat4x4simdfloat4x4:id:",
-    {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clssimdfloat4x4simdfloat4x4:id:",
-    {"full_signature": b"{_simd_float4x4=[4<4f>]}@:{_simd_float4x4=[4<4f>]}@"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatdd:", {"full_signature": b"{_simd_quatd=<4d>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatf", {"full_signature": b"{_simd_quatf=<4f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatfd:", {"full_signature": b"{_simd_quatf=<4f>}@:d"}
-)
-
-if os_level_key(os_release()) >= os_level_key("10.12"):
-    HAVE_GK = 1
-else:
-    HAVE_GK = 0
-
-if os_level_key(os_release()) >= os_level_key("10.13"):
-    HAVE_SIMD_STRUCTS = 1
-    HAVE_MPS = 1
-else:
-    HAVE_SIMD_STRUCTS = 0
-    HAVE_MPS = 0
 
 
 class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
-    def v16C(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return objc.simd.vector_uchar16(
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        )
-
     def v2d(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
@@ -1016,6 +973,24 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return objc.simd.vector_int4(0, 1, 2, 3)
+
+    def idv2d_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idv2d_q_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     def idv2f_(self, arg0):
         self.argvalues = (arg0,)
@@ -1286,7 +1261,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idid_Q_matrixfloat4x4_(self, arg0, arg1, arg2):
+    def idid_Q_simdfloat4x4_(self, arg0, arg1, arg2):
         self.argvalues = (
             arg0,
             arg1,
@@ -1340,25 +1315,23 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if HAVE_GK:
+    def idid_GKBox_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        def idid_GKBox_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
-
-        def idid_GKQuad_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    def idid_GKQuad_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
         self.argvalues = (
@@ -1370,7 +1343,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idid_matrixfloat2x2_(self, arg0, arg1):
+    def idid_simdfloat2x2_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -1379,7 +1352,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idid_matrixfloat3x3_(self, arg0, arg1):
+    def idid_simdfloat3x3_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -1388,10 +1361,29 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idid_matrixfloat4x4_(self, arg0, arg1):
+    def idid_simdfloat4x4_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_simdquatf_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    def idid_simdquatf_id_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
@@ -1507,37 +1499,35 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if HAVE_GK:
+    def idGKBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        def idGKBox_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    def idGKBox_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        def idGKBox_f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    def idGKQuad_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        def idGKQuad_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
-
-        def idGKQuad_f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    def idGKQuad_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     def idMDLVoxelIndexExtent_(self, arg0):
         self.argvalues = (arg0,)
@@ -1545,13 +1535,13 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idmatrixfloat4x4_(self, arg0):
+    def idsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return "hello"
 
-    def idmatrixfloat4x4_Z_(self, arg0, arg1):
+    def idsimdfloat4x4_Z_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -1623,6 +1613,11 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return 2500000000.0
+
+    def vv2d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
     def vv2d_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1754,12 +1749,12 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixdouble4x4_(self, arg0):
+    def vsimddouble4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixdouble4x4_d_(self, arg0, arg1):
+    def vsimddouble4x4_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -1767,22 +1762,22 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixfloat2x2_(self, arg0):
+    def vsimdfloat2x2_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixfloat3x3_(self, arg0):
+    def vsimdfloat3x3_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixfloat4x4_(self, arg0):
+    def vsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    def vmatrixfloat4x4_d_(self, arg0, arg1):
+    def vsimdfloat4x4_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -1790,73 +1785,61 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    if HAVE_SIMD_STRUCTS:
+    def vsimdquatd_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        def vsimdfloat4x4_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    def vsimdquatf_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        def vsimdquatd_d_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    def vsimdquatf_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        def vsimdquatf_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    def vsimdquatf_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        def vsimdquatf_v3f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    def GKBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.0, 2.0, 3.0),
+            objc.simd.vector_float3(4.0, 5.0, 6.0),
+        )
 
-        def vsimdquatf_d_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    def GKQuad(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
 
-    if HAVE_GK:
-
-        def GKBox(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float3(1.0, 2.0, 3.0),
-                objc.simd.vector_float3(4.0, 5.0, 6.0),
-            )
-
-        def GKQuad(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float2(9.0, 10.0),
-                objc.simd.vector_float2(11.0, 12.0),
-            )
-
-        def GKTriangleQ_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                (
-                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
-                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
-                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
-                ),
-            )
+    def GKTriangleQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            (
+                objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                objc.simd.vector_float3(-17.5, 11.5, 122.5),
+            ),
+        )
 
     def MDLAxisAlignedBoundingBox(self):
         self.argvalues = None
@@ -1894,33 +1877,11 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             objc.simd.vector_int4(-20, -21, -22, -23),
         )
 
-    if HAVE_MPS:
-
-        def MPSAxisAlignedBoundingBox(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            )
-
-        def MPSImageHistogramInfo(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            )
-
-    def matrixdouble4x4(self):
+    def simddouble4x4(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_double4x4(
+        return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -1929,11 +1890,11 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def matrixdouble4x4d_(self, arg0):
+    def simddouble4x4d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_double4x4(
+        return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -1942,19 +1903,19 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def matrixfloat2x2(self):
+    def simdfloat2x2(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float2x2(
+        return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
 
-    def matrixfloat3x3(self):
+    def simdfloat3x3(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float3x3(
+        return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -1962,11 +1923,11 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def matrixfloat4x4(self):
+    def simdfloat4x4(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -1975,14 +1936,14 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def matrixfloat4x4id_d_(self, arg0, arg1):
+    def simdfloat4x4id_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -1991,11 +1952,11 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    def matrixfloat4x4d_(self, arg0):
+    def simdfloat4x4d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2004,67 +1965,71 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
         )
 
-    if HAVE_SIMD_STRUCTS:
-
-        def simdfloat4x4(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
+    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
             )
+        )
 
-        def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
+    def simdquatdd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
-        def simdquatdd_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+    def simdquatf(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        def simdquatf(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+    def simdquatfd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        def simdquatfd_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+    def v16C(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_uchar16(
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        )
+
+    def MPSImageHistogramInfo(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            4398046511104,
+            True,
+            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+        )
+
+    def MPSAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.5, 2.5, 3.5),
+            objc.simd.vector_float3(4.5, 5.5, 6.5),
+        )
 
 
 class OC_VectorCallClass(objc.lookUpClass("NSObject")):
     @classmethod
-    def v16C(self):
-        self.argvalues = None
-        if getattr(self, "shouldRaise", False):
-            raise RuntimeError("failure!")
-        return objc.simd.vector_uchar16(
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-        )
-
-    @classmethod
     def v2d(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
@@ -2202,6 +2167,26 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return objc.simd.vector_int4(0, 1, 2, 3)
+
+    @classmethod
+    def idv2d_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idv2d_q_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     @classmethod
     def idv2f_(self, arg0):
@@ -2499,7 +2484,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     @classmethod
-    def idid_Q_matrixfloat4x4_(self, arg0, arg1, arg2):
+    def idid_Q_simdfloat4x4_(self, arg0, arg1, arg2):
         self.argvalues = (
             arg0,
             arg1,
@@ -2556,27 +2541,25 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if HAVE_GK:
+    @classmethod
+    def idid_GKBox_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        @classmethod
-        def idid_GKBox_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
-
-        @classmethod
-        def idid_GKQuad_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    @classmethod
+    def idid_GKQuad_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     @classmethod
     def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
@@ -2590,7 +2573,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     @classmethod
-    def idid_matrixfloat2x2_(self, arg0, arg1):
+    def idid_simdfloat2x2_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -2600,7 +2583,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     @classmethod
-    def idid_matrixfloat3x3_(self, arg0, arg1):
+    def idid_simdfloat3x3_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -2610,10 +2593,31 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     @classmethod
-    def idid_matrixfloat4x4_(self, arg0, arg1):
+    def idid_simdfloat4x4_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_simdquatf_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
+
+    @classmethod
+    def idid_simdquatf_id_(self, arg0, arg1, arg2):
+        self.argvalues = (
+            arg0,
+            arg1,
+            arg2,
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
@@ -2738,41 +2742,39 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if HAVE_GK:
+    @classmethod
+    def idGKBox_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        @classmethod
-        def idGKBox_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    @classmethod
+    def idGKBox_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        @classmethod
-        def idGKBox_f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    @classmethod
+    def idGKQuad_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
-        @classmethod
-        def idGKQuad_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
-
-        @classmethod
-        def idGKQuad_f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return "hello"
+    @classmethod
+    def idGKQuad_f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return "hello"
 
     @classmethod
     def idMDLVoxelIndexExtent_(self, arg0):
@@ -2782,14 +2784,14 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     @classmethod
-    def idmatrixfloat4x4_(self, arg0):
+    def idsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return "hello"
 
     @classmethod
-    def idmatrixfloat4x4_Z_(self, arg0, arg1):
+    def idsimdfloat4x4_Z_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -2868,6 +2870,12 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         return 2500000000.0
+
+    @classmethod
+    def vv2d_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
     @classmethod
     def vv2d_d_(self, arg0, arg1):
@@ -3018,13 +3026,13 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixdouble4x4_(self, arg0):
+    def vsimddouble4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixdouble4x4_d_(self, arg0, arg1):
+    def vsimddouble4x4_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -3033,25 +3041,25 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixfloat2x2_(self, arg0):
+    def vsimdfloat2x2_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixfloat3x3_(self, arg0):
+    def vsimdfloat3x3_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixfloat4x4_(self, arg0):
+    def vsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
     @classmethod
-    def vmatrixfloat4x4_d_(self, arg0, arg1):
+    def vsimdfloat4x4_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
@@ -3059,81 +3067,68 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
 
-    if HAVE_SIMD_STRUCTS:
+    @classmethod
+    def vsimdquatd_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        @classmethod
-        def vsimdfloat4x4_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    @classmethod
+    def vsimdquatf_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        @classmethod
-        def vsimdquatd_d_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    @classmethod
+    def vsimdquatf_v3f_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        @classmethod
-        def vsimdquatf_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    @classmethod
+    def vsimdquatf_d_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
 
-        @classmethod
-        def vsimdquatf_v3f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    @classmethod
+    def GKBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.0, 2.0, 3.0),
+            objc.simd.vector_float3(4.0, 5.0, 6.0),
+        )
 
-        @classmethod
-        def vsimdquatf_d_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
+    @classmethod
+    def GKQuad(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
 
-    if HAVE_GK:
-
-        @classmethod
-        def GKBox(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float3(1.0, 2.0, 3.0),
-                objc.simd.vector_float3(4.0, 5.0, 6.0),
-            )
-
-        @classmethod
-        def GKQuad(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float2(9.0, 10.0),
-                objc.simd.vector_float2(11.0, 12.0),
-            )
-
-        @classmethod
-        def GKTriangleQ_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                (
-                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
-                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
-                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
-                ),
-            )
+    @classmethod
+    def GKTriangleQ_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            (
+                objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                objc.simd.vector_float3(-17.5, 11.5, 122.5),
+            ),
+        )
 
     @classmethod
     def MDLAxisAlignedBoundingBox(self):
@@ -3175,36 +3170,12 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             objc.simd.vector_int4(-20, -21, -22, -23),
         )
 
-    if HAVE_MPS:
-
-        @classmethod
-        def MPSAxisAlignedBoundingBox(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            )
-
-        @classmethod
-        def MPSImageHistogramInfo(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            )
-
     @classmethod
-    def matrixdouble4x4(self):
+    def simddouble4x4(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_double4x4(
+        return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3214,11 +3185,11 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     @classmethod
-    def matrixdouble4x4d_(self, arg0):
+    def simddouble4x4d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_double4x4(
+        return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3228,20 +3199,20 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     @classmethod
-    def matrixfloat2x2(self):
+    def simdfloat2x2(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float2x2(
+        return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
 
     @classmethod
-    def matrixfloat3x3(self):
+    def simdfloat3x3(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float3x3(
+        return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -3250,11 +3221,11 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     @classmethod
-    def matrixfloat4x4(self):
+    def simdfloat4x4(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3264,14 +3235,14 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     @classmethod
-    def matrixfloat4x4id_d_(self, arg0, arg1):
+    def simdfloat4x4id_d_(self, arg0, arg1):
         self.argvalues = (
             arg0,
             arg1,
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3281,11 +3252,11 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     @classmethod
-    def matrixfloat4x4d_(self, arg0):
+    def simdfloat4x4d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
-        return simd.matrix_float4x4(
+        return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3294,59 +3265,74 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
         )
 
-    if HAVE_SIMD_STRUCTS:
-
-        @classmethod
-        def simdfloat4x4(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
+    @classmethod
+    def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
+        self.argvalues = (
+            arg0,
+            arg1,
+        )
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_float4x4(
+            (
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
             )
+        )
 
-        @classmethod
-        def simdfloat4x4simdfloat4x4_id_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-            )
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
+    @classmethod
+    def simdquatdd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
-        @classmethod
-        def simdquatdd_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+    @classmethod
+    def simdquatf(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        @classmethod
-        def simdquatf(self):
-            self.argvalues = None
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+    @classmethod
+    def simdquatfd_(self, arg0):
+        self.argvalues = (arg0,)
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        @classmethod
-        def simdquatfd_(self, arg0):
-            self.argvalues = (arg0,)
-            if getattr(self, "shouldRaise", False):
-                raise RuntimeError("failure!")
-            return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+    @classmethod
+    def v16C(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return objc.simd.vector_uchar16(
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        )
+
+    @classmethod
+    def MPSImageHistogramInfo(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            4398046511104,
+            True,
+            objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+            objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+        )
+
+    @classmethod
+    def MPSAxisAlignedBoundingBox(self):
+        self.argvalues = None
+        if getattr(self, "shouldRaise", False):
+            raise RuntimeError("failure!")
+        return (
+            objc.simd.vector_float3(1.5, 2.5, 3.5),
+            objc.simd.vector_float3(4.5, 5.5, 6.5),
+        )
 
 
 class TestVectorCall(TestCase):
@@ -3360,6 +3346,11 @@ class TestVectorCall(TestCase):
         self.addTypeEqualityFunc(simd.simd_quatf, "assertMatrixEqual")
         self.addTypeEqualityFunc(simd.simd_quatd, "assertMatrixEqual")
         self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float2x2, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float3x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x3, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_float4x4, "assertMatrixEqual")
+        self.addTypeEqualityFunc(simd.simd_double4x4, "assertMatrixEqual")
 
     def assertMatrixEqual(self, first, second, msg=None):
         self.assertEqual(type(first), type(second))
@@ -3367,213 +3358,6 @@ class TestVectorCall(TestCase):
             self.assertSequenceEqual(first.vector, second.vector, msg)
         else:
             self.assertSequenceEqual(first.columns, second.columns, msg)
-
-    def test_v16C(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.v16C.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.v16C
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    def test_clsv16C(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsv16C
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    def test_v16C_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.v16C.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"v16C")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-            )
-
-    def test_clsv16C_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsv16C")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
-    def test_imp_v16C(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.v16COn_(value)
-        self.assertEqual(
-            result,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.v16COn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_v16C_cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.v16COn_(value)
-        self.assertEqual(
-            result,
-            objc.simd.vector_uchar16(
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.v16COn_(value)
-        finally:
-            del value.shouldRaise
 
     def test_v2d(self):
         OC_VectorCall.clearRaise()
@@ -7479,6 +7263,492 @@ class TestVectorCall(TestCase):
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
                 OC_VectorCallInvoke.v4iv3fOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_idv2d_id_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idv2d_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2d_id_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idv2d_id_, 1, b"@")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.idv2d_id_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello", "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), NoObjCValueObject)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+    def test_clsidv2d_id_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidv2d_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 1, b"@")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsidv2d_id_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello", "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), NoObjCValueObject)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+    def test_idv2d_id__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idv2d_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2d_id_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idv2d_id_, 1, b"@")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"idv2d:id:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello", "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), NoObjCValueObject)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5), "hello")
+
+    def test_clsidv2d_id__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidv2d_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 1, b"@")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsidv2d:id:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello", "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), NoObjCValueObject)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
+
+    def test_imp_idv2d_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2didOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2didOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2d_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2didOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2didOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_idv2d_q_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idv2d_q_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2d_q_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idv2d_q_, 1, b"q")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.idv2d_q_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], -17592186044416)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -17592186044416)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+    def test_clsidv2d_q_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidv2d_q_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 1, b"q")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsidv2d_q_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], -17592186044416)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -17592186044416)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+    def test_idv2d_q__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idv2d_q_, b"@")
+        self.assertArgHasType(OC_VectorCall.idv2d_q_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.idv2d_q_, 1, b"q")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"idv2d:q:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], -17592186044416)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -17592186044416)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+    def test_clsidv2d_q__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidv2d_q_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 0, b"<2d>")
+        self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 1, b"q")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsidv2d:q:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+        self.assertEqual(stored[1], -17592186044416)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -17592186044416)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(objc.simd.vector_double2(0.0, 1.5), None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
+    def test_imp_idv2d_q_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2dqOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2dqOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idv2d_q__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.idv2dqOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                objc.simd.vector_double2(0.0, 1.5),
+                -17592186044416,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.idv2dqOn_(value)
         finally:
             del value.shouldRaise
 
@@ -17624,16 +17894,16 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    def test_idid_Q_matrixfloat4x4_(self):
+    def test_idid_Q_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_Q_matrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 1, b"Q")
+        self.assertResultHasType(OC_VectorCall.idid_Q_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 1, b"Q")
         self.assertArgHasType(
-            OC_VectorCall.idid_Q_matrixfloat4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_Q_simdfloat4x4_, 2, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -17641,13 +17911,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idid_Q_matrixfloat4x4_
+        caller = oc.idid_Q_simdfloat4x4_
 
         # Valid call
         rv = caller(
             "hello",
             35184372088832,
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17665,7 +17935,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 35184372088832)
         self.assertEqual(
             stored[2],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17684,7 +17954,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17700,7 +17970,7 @@ class TestVectorCall(TestCase):
             caller(
                 NoObjCValueObject,
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17714,7 +17984,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 None,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17733,7 +18003,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17743,16 +18013,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_Q_matrixfloat4x4_(self):
+    def test_clsidid_Q_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_Q_matrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, 1, b"Q")
+        self.assertResultHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 1, b"Q")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_Q_matrixfloat4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidid_Q_simdfloat4x4_, 2, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -17760,13 +18030,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidid_Q_matrixfloat4x4_
+        caller = oc.clsidid_Q_simdfloat4x4_
 
         # Valid call
         rv = caller(
             "hello",
             35184372088832,
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17784,7 +18054,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 35184372088832)
         self.assertEqual(
             stored[2],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17803,7 +18073,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17819,7 +18089,7 @@ class TestVectorCall(TestCase):
             caller(
                 NoObjCValueObject,
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17833,7 +18103,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 None,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17852,7 +18122,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17862,16 +18132,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_idid_Q_matrixfloat4x4__imp(self):
+    def test_idid_Q_simdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_Q_matrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_Q_matrixfloat4x4_, 1, b"Q")
+        self.assertResultHasType(OC_VectorCall.idid_Q_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 1, b"Q")
         self.assertArgHasType(
-            OC_VectorCall.idid_Q_matrixfloat4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_Q_simdfloat4x4_, 2, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -17879,7 +18149,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idid:Q:matrixfloat4x4:")
+        imp = oc.methodForSelector_(b"idid:Q:simdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -17887,7 +18157,7 @@ class TestVectorCall(TestCase):
         rv = caller(
             "hello",
             35184372088832,
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17905,7 +18175,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 35184372088832)
         self.assertEqual(
             stored[2],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17924,7 +18194,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17940,7 +18210,7 @@ class TestVectorCall(TestCase):
             caller(
                 NoObjCValueObject,
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17954,7 +18224,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 None,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17973,7 +18243,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -17989,7 +18259,7 @@ class TestVectorCall(TestCase):
                 42,
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18004,7 +18274,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18014,16 +18284,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_Q_matrixfloat4x4__imp(self):
+    def test_clsidid_Q_simdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_Q_matrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_Q_matrixfloat4x4_, 1, b"Q")
+        self.assertResultHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 1, b"Q")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_Q_matrixfloat4x4_, 2, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidid_Q_simdfloat4x4_, 2, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -18031,7 +18301,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidid:Q:matrixfloat4x4:")
+        imp = oc.methodForSelector_(b"clsidid:Q:simdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -18039,7 +18309,7 @@ class TestVectorCall(TestCase):
         rv = caller(
             "hello",
             35184372088832,
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18057,7 +18327,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[1], 35184372088832)
         self.assertEqual(
             stored[2],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18076,7 +18346,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18092,7 +18362,7 @@ class TestVectorCall(TestCase):
             caller(
                 NoObjCValueObject,
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18106,7 +18376,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 None,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18125,7 +18395,7 @@ class TestVectorCall(TestCase):
             caller(
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18143,7 +18413,7 @@ class TestVectorCall(TestCase):
                 42,
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18153,17 +18423,17 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_idid_Q_matrixfloat4x4_(self):
+    def test_imp_idid_Q_simdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18178,21 +18448,21 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idid_Q_matrixfloat4x4__cls(self):
+    def test_imp_idid_Q_simdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
                 35184372088832,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -18207,7 +18477,7 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididQmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
 
@@ -20617,7 +20887,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20695,7 +20964,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20773,7 +21041,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20874,7 +21141,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -20967,7 +21233,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -20992,7 +21257,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -21017,7 +21281,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21089,7 +21352,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21161,7 +21423,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21256,7 +21517,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21343,7 +21603,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21368,7 +21627,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idid_GKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -21403,7 +21661,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_,
             1,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 2, b"f")
 
@@ -21512,7 +21770,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_,
             1,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f"
@@ -21617,7 +21875,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_,
             1,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 2, b"f")
 
@@ -21751,7 +22009,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_,
             1,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f"
@@ -21912,15 +22170,15 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    def test_idid_matrixfloat2x2_(self):
+    def test_idid_simdfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat2x2_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat2x2_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat2x2_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat2x2_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat2x2_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.idid_simdfloat2x2_, 1, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -21928,12 +22186,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idid_matrixfloat2x2_
+        caller = oc.idid_simdfloat2x2_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -21945,7 +22203,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -21958,7 +22216,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -21971,7 +22229,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -21987,7 +22245,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -21995,15 +22253,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat2x2_(self):
+    def test_clsidid_simdfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat2x2_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat2x2_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat2x2_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat2x2_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat2x2_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clsidid_simdfloat2x2_, 1, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -22011,12 +22269,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidid_matrixfloat2x2_
+        caller = oc.clsidid_simdfloat2x2_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22028,7 +22286,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22041,7 +22299,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22054,7 +22312,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22070,7 +22328,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22078,15 +22336,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_idid_matrixfloat2x2__imp(self):
+    def test_idid_simdfloat2x2__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat2x2_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat2x2_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat2x2_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat2x2_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat2x2_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.idid_simdfloat2x2_, 1, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -22094,14 +22352,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idid:matrixfloat2x2:")
+        imp = oc.methodForSelector_(b"idid:simdfloat2x2:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22113,7 +22371,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22126,7 +22384,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22139,7 +22397,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22155,7 +22413,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22168,7 +22426,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22180,7 +22438,7 @@ class TestVectorCall(TestCase):
             imp(
                 NoObjCValueObject,
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22188,15 +22446,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat2x2__imp(self):
+    def test_clsidid_simdfloat2x2__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat2x2_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat2x2_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat2x2_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat2x2_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat2x2_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat2x2_, 1, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clsidid_simdfloat2x2_, 1, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -22204,14 +22462,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidid:matrixfloat2x2:")
+        imp = oc.methodForSelector_(b"clsidid:simdfloat2x2:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22223,7 +22481,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -22236,7 +22494,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22249,7 +22507,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22265,7 +22523,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22280,7 +22538,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22288,16 +22546,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_idid_matrixfloat2x2_(self):
+    def test_imp_idid_simdfloat2x2_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22310,20 +22568,20 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+                OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idid_matrixfloat2x2__cls(self):
+    def test_imp_idid_simdfloat2x2__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -22336,19 +22594,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat2x2On_(value)
+                OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_idid_matrixfloat3x3_(self):
+    def test_idid_simdfloat3x3_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat3x3_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat3x3_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat3x3_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat3x3_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat3x3_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.idid_simdfloat3x3_, 1, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -22356,12 +22614,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idid_matrixfloat3x3_
+        caller = oc.idid_simdfloat3x3_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22377,7 +22635,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22394,7 +22652,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22408,7 +22666,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22425,7 +22683,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22434,15 +22692,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat3x3_(self):
+    def test_clsidid_simdfloat3x3_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat3x3_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat3x3_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat3x3_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat3x3_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat3x3_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clsidid_simdfloat3x3_, 1, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -22450,12 +22708,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidid_matrixfloat3x3_
+        caller = oc.clsidid_simdfloat3x3_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22471,7 +22729,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22488,7 +22746,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22502,7 +22760,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22519,7 +22777,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22528,15 +22786,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_idid_matrixfloat3x3__imp(self):
+    def test_idid_simdfloat3x3__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat3x3_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat3x3_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat3x3_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat3x3_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat3x3_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.idid_simdfloat3x3_, 1, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -22544,14 +22802,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idid:matrixfloat3x3:")
+        imp = oc.methodForSelector_(b"idid:simdfloat3x3:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22567,7 +22825,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22584,7 +22842,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22598,7 +22856,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22615,7 +22873,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22629,7 +22887,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22642,7 +22900,7 @@ class TestVectorCall(TestCase):
             imp(
                 NoObjCValueObject,
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22651,15 +22909,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat3x3__imp(self):
+    def test_clsidid_simdfloat3x3__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat3x3_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat3x3_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat3x3_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat3x3_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat3x3_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat3x3_, 1, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clsidid_simdfloat3x3_, 1, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -22667,14 +22925,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidid:matrixfloat3x3:")
+        imp = oc.methodForSelector_(b"clsidid:simdfloat3x3:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22690,7 +22948,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22707,7 +22965,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22721,7 +22979,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22738,7 +22996,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22754,7 +23012,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22763,16 +23021,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_idid_matrixfloat3x3_(self):
+    def test_imp_idid_simdfloat3x3_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22786,20 +23044,20 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+                OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idid_matrixfloat3x3__cls(self):
+    def test_imp_idid_simdfloat3x3__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -22813,19 +23071,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat3x3On_(value)
+                OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_idid_matrixfloat4x4_(self):
+    def test_idid_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat4x4_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat4x4_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_simdfloat4x4_, 1, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -22833,12 +23091,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idid_matrixfloat4x4_
+        caller = oc.idid_simdfloat4x4_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22855,7 +23113,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22873,7 +23131,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22888,7 +23146,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22906,7 +23164,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22916,15 +23174,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat4x4_(self):
+    def test_clsidid_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat4x4_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat4x4_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidid_simdfloat4x4_, 1, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -22932,12 +23190,12 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidid_matrixfloat4x4_
+        caller = oc.clsidid_simdfloat4x4_
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22954,7 +23212,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22972,7 +23230,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -22987,7 +23245,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23005,7 +23263,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23015,15 +23273,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_idid_matrixfloat4x4__imp(self):
+    def test_idid_simdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idid_matrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idid_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.idid_matrixfloat4x4_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.idid_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdfloat4x4_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idid_matrixfloat4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idid_simdfloat4x4_, 1, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -23031,14 +23289,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idid:matrixfloat4x4:")
+        imp = oc.methodForSelector_(b"idid:simdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23055,7 +23313,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23073,7 +23331,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23088,7 +23346,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23106,7 +23364,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23121,7 +23379,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23135,7 +23393,7 @@ class TestVectorCall(TestCase):
             imp(
                 NoObjCValueObject,
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23145,15 +23403,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidid_matrixfloat4x4__imp(self):
+    def test_clsidid_simdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidid_matrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidid_matrixfloat4x4_, b"@")
-        self.assertArgHasType(OC_VectorCall.clsidid_matrixfloat4x4_, 0, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidid_simdfloat4x4_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdfloat4x4_, 0, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidid_matrixfloat4x4_, 1, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidid_simdfloat4x4_, 1, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -23161,14 +23419,14 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidid:matrixfloat4x4:")
+        imp = oc.methodForSelector_(b"clsidid:simdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
             "hello",
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23185,7 +23443,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(stored[0], "hello")
         self.assertEqual(
             stored[1],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23203,7 +23461,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23218,7 +23476,7 @@ class TestVectorCall(TestCase):
         with self.assertRaises((TypeError, ValueError)):
             caller(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23236,7 +23494,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23253,7 +23511,7 @@ class TestVectorCall(TestCase):
             imp(
                 42,
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23263,16 +23521,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_idid_matrixfloat4x4_(self):
+    def test_imp_idid_simdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23287,20 +23545,20 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idid_matrixfloat4x4__cls(self):
+    def test_imp_idid_simdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
                 "hello",
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -23315,7 +23573,698 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.ididmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_idid_simdquatf_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idid_simdquatf_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 1, b"{simd_quatf=<4f>}")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.idid_simdquatf_
+
+        # Valid call
+        rv = caller(
+            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+    def test_clsidid_simdquatf_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 1, b"{simd_quatf=<4f>}")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsidid_simdquatf_
+
+        # Valid call
+        rv = caller(
+            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+    def test_idid_simdquatf__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idid_simdquatf_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 1, b"{simd_quatf=<4f>}")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"idid:simdquatf:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+    def test_clsidid_simdquatf__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 1, b"{simd_quatf=<4f>}")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsidid:simdquatf:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            )
+
+    def test_imp_idid_simdquatf_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_simdquatf__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_idid_simdquatf_id_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idid_simdquatf_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 1, b"{simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 2, b"@")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.idid_simdquatf_id_
+
+        # Valid call
+        rv = caller(
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 3)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(stored[2], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                NoObjCValueObject,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+    def test_clsidid_simdquatf_id_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 0, b"@")
+        self.assertArgHasType(
+            OC_VectorCall.clsidid_simdquatf_id_, 1, b"{simd_quatf=<4f>}"
+        )
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 2, b"@")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsidid_simdquatf_id_
+
+        # Valid call
+        rv = caller(
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 3)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(stored[2], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                NoObjCValueObject,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+    def test_idid_simdquatf_id__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.idid_simdquatf_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 1, b"{simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 2, b"@")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"idid:simdquatf:id:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 3)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(stored[2], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                NoObjCValueObject,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+    def test_clsidid_simdquatf_id__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_id_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 0, b"@")
+        self.assertArgHasType(
+            OC_VectorCall.clsidid_simdquatf_id_, 1, b"{simd_quatf=<4f>}"
+        )
+        self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 2, b"@")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsidid:simdquatf:id:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 3)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(
+            stored[1], simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(stored[2], "hello")
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                NoObjCValueObject,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None, "hello")
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                NoObjCValueObject,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
+    def test_imp_idid_simdquatf_id_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididsimdquatfidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididsimdquatfidOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_idid_simdquatf_id__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.ididsimdquatfidOn_(value)
+        self.assertEqual(result, "hello")
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.ididsimdquatfidOn_(value)
         finally:
             del value.shouldRaise
 
@@ -27955,7 +28904,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28019,7 +28967,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28083,7 +29030,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28168,7 +29114,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28246,7 +29191,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28270,7 +29214,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28294,7 +29237,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28377,7 +29319,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28460,7 +29401,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28566,7 +29506,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28664,7 +29603,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28689,7 +29627,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKBox_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28714,7 +29651,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28772,7 +29708,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28830,7 +29765,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28909,7 +29843,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -28981,7 +29914,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29005,7 +29937,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29029,7 +29960,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29106,7 +30036,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29183,7 +30112,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_idGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29283,7 +30211,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsidGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29375,7 +30302,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29400,7 +30326,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_idGKQuad_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29432,7 +30357,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idMDLVoxelIndexExtent_, 0, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.idMDLVoxelIndexExtent_, 0, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -29499,7 +30424,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsidMDLVoxelIndexExtent_,
             0,
-            b"{_MDLVoxelIndexExtent=<4i><4i>}",
+            b"{MDLVoxelIndexExtent=<4i><4i>}",
         )
 
         # Create test object
@@ -29564,7 +30489,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idMDLVoxelIndexExtent_, 0, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.idMDLVoxelIndexExtent_, 0, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -29652,7 +30577,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsidMDLVoxelIndexExtent_,
             0,
-            b"{_MDLVoxelIndexExtent=<4i><4i>}",
+            b"{MDLVoxelIndexExtent=<4i><4i>}",
         )
 
         # Create test object
@@ -29770,14 +30695,14 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    def test_idmatrixfloat4x4_(self):
+    def test_idsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idmatrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_, b"@")
+        self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -29785,11 +30710,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idmatrixfloat4x4_
+        caller = oc.idsimdfloat4x4_
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29805,7 +30730,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29822,7 +30747,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29841,7 +30766,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29851,14 +30776,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_clsidmatrixfloat4x4_(self):
+    def test_clsidsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidmatrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidmatrixfloat4x4_, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -29866,11 +30791,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidmatrixfloat4x4_
+        caller = oc.clsidsimdfloat4x4_
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29886,7 +30811,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29903,7 +30828,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29922,7 +30847,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29932,14 +30857,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_idmatrixfloat4x4__imp(self):
+    def test_idsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idmatrixfloat4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_, b"@")
+        self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -29947,13 +30872,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idmatrixfloat4x4:")
+        imp = oc.methodForSelector_(b"idsimdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29969,7 +30894,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -29986,7 +30911,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30005,7 +30930,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30019,7 +30944,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30032,7 +30957,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30042,14 +30967,14 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsidmatrixfloat4x4__imp(self):
+    def test_clsidsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidmatrixfloat4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidmatrixfloat4x4_, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -30057,13 +30982,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidmatrixfloat4x4:")
+        imp = oc.methodForSelector_(b"clsidsimdfloat4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30079,7 +31004,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30096,7 +31021,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30115,7 +31040,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30131,7 +31056,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30141,15 +31066,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_idmatrixfloat4x4_(self):
+    def test_imp_idsimdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.idsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30164,19 +31089,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.idsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idmatrixfloat4x4__cls(self):
+    def test_imp_idsimdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+        result = OC_VectorCallInvoke.idsimdfloat4x4On_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30191,31 +31116,31 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.idmatrixfloat4x4On_(value)
+                OC_VectorCallInvoke.idsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_idmatrixfloat4x4_Z_(self):
+    def test_idsimdfloat4x4_Z_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idmatrixfloat4x4_Z_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_Z_, b"@")
+        self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idmatrixfloat4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idsimdfloat4x4_Z_, 0, b"{simd_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.idmatrixfloat4x4_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.idsimdfloat4x4_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.idmatrixfloat4x4_Z_
+        caller = oc.idsimdfloat4x4_Z_
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30232,7 +31157,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30246,7 +31171,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30259,7 +31184,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30277,7 +31202,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30292,7 +31217,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30303,27 +31228,27 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-    def test_clsidmatrixfloat4x4_Z_(self):
+    def test_clsidsimdfloat4x4_Z_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidmatrixfloat4x4_Z_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidmatrixfloat4x4_Z_, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidmatrixfloat4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidsimdfloat4x4_Z_, 0, b"{simd_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsidmatrixfloat4x4_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsidmatrixfloat4x4_Z_
+        caller = oc.clsidsimdfloat4x4_Z_
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30340,7 +31265,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30354,7 +31279,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30367,7 +31292,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30385,7 +31310,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30400,7 +31325,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30411,29 +31336,29 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-    def test_idmatrixfloat4x4_Z__imp(self):
+    def test_idsimdfloat4x4_Z__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.idmatrixfloat4x4_Z_.isClassMethod)
+        self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.idmatrixfloat4x4_Z_, b"@")
+        self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.idmatrixfloat4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.idsimdfloat4x4_Z_, 0, b"{simd_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.idmatrixfloat4x4_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.idsimdfloat4x4_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"idmatrixfloat4x4:Z:")
+        imp = oc.methodForSelector_(b"idsimdfloat4x4:Z:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30450,7 +31375,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30464,7 +31389,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30477,7 +31402,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30495,7 +31420,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30510,7 +31435,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30525,7 +31450,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30539,7 +31464,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30550,29 +31475,29 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-    def test_clsidmatrixfloat4x4_Z__imp(self):
+    def test_clsidsimdfloat4x4_Z__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsidmatrixfloat4x4_Z_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsidmatrixfloat4x4_Z_, b"@")
+        self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
-            OC_VectorCall.clsidmatrixfloat4x4_Z_, 0, b"{_matrix_float4x4=[4<4f>]}"
+            OC_VectorCall.clsidsimdfloat4x4_Z_, 0, b"{simd_float4x4=[4<4f>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsidmatrixfloat4x4_Z_, 1, b"Z")
+        self.assertArgHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, 1, b"Z")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsidmatrixfloat4x4:Z:")
+        imp = oc.methodForSelector_(b"clsidsimdfloat4x4:Z:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30589,7 +31514,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30603,7 +31528,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30616,7 +31541,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30634,7 +31559,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30649,7 +31574,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30666,7 +31591,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30677,15 +31602,15 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-    def test_imp_idmatrixfloat4x4_Z_(self):
+    def test_imp_idsimdfloat4x4_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        result = OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30701,19 +31626,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+                OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_idmatrixfloat4x4_Z__cls(self):
+    def test_imp_idsimdfloat4x4_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+        result = OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
         self.assertEqual(result, "hello")
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float4x4(
+                simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -30729,7 +31654,7 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.idmatrixfloat4x4ZOn_(value)
+                OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
         finally:
             del value.shouldRaise
 
@@ -32971,6 +33896,217 @@ class TestVectorCall(TestCase):
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
                 OC_VectorCallInvoke.fv2iOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_vv2d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.vv2d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv2d_, 0, b"<2d>")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.vv2d_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+    def test_clsvv2d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsvv2d_, b"v")
+        self.assertArgHasType(OC_VectorCall.clsvv2d_, 0, b"<2d>")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsvv2d_
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+    def test_vv2d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.vv2d_, b"v")
+        self.assertArgHasType(OC_VectorCall.vv2d_, 0, b"<2d>")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"vv2d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5))
+
+    def test_clsvv2d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsvv2d_, b"v")
+        self.assertArgHasType(OC_VectorCall.clsvv2d_, 0, b"<2d>")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsvv2d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], objc.simd.vector_double2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(objc.simd.vector_double2(0.0, 1.5))
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(42, objc.simd.vector_double2(0.0, 1.5))
+
+    def test_imp_vv2d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_double2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vv2d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vv2dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(value.argvalues, (objc.simd.vector_double2(0.0, 1.5),))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vv2dOn_(value)
         finally:
             del value.shouldRaise
 
@@ -37235,7 +38371,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.vMDLAxisAlignedBoundingBox_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -37302,7 +38438,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsvMDLAxisAlignedBoundingBox_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -37369,7 +38505,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.vMDLAxisAlignedBoundingBox_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -37457,7 +38593,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsvMDLAxisAlignedBoundingBox_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -37584,7 +38720,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, 1, b"Z")
 
@@ -37670,7 +38806,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_, 1, b"Z")
 
@@ -37756,7 +38892,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, 1, b"Z")
 
@@ -37865,7 +39001,7 @@ class TestVectorCall(TestCase):
         self.assertArgHasType(
             OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_,
             0,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_, 1, b"Z")
 
@@ -38005,14 +39141,14 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    def test_vmatrixdouble4x4_(self):
+    def test_vsimddouble4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixdouble4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimddouble4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixdouble4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vsimddouble4x4_, 0, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -38020,11 +39156,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixdouble4x4_
+        caller = oc.vsimddouble4x4_
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38040,7 +39176,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38057,7 +39193,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38076,7 +39212,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38086,14 +39222,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_clsvmatrixdouble4x4_(self):
+    def test_clsvsimddouble4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixdouble4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixdouble4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixdouble4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clsvsimddouble4x4_, 0, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -38101,11 +39237,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixdouble4x4_
+        caller = oc.clsvsimddouble4x4_
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38121,7 +39257,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38138,7 +39274,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38157,7 +39293,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38167,14 +39303,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_vmatrixdouble4x4__imp(self):
+    def test_vsimddouble4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixdouble4x4_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimddouble4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixdouble4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vsimddouble4x4_, 0, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -38182,13 +39318,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixdouble4x4:")
+        imp = oc.methodForSelector_(b"vsimddouble4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38204,7 +39340,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38221,7 +39357,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38240,7 +39376,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38254,7 +39390,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38267,7 +39403,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38277,14 +39413,14 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsvmatrixdouble4x4__imp(self):
+    def test_clsvsimddouble4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixdouble4x4_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixdouble4x4_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixdouble4x4_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clsvsimddouble4x4_, 0, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -38292,13 +39428,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixdouble4x4:")
+        imp = oc.methodForSelector_(b"clsvsimddouble4x4:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38314,7 +39450,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38331,7 +39467,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38350,7 +39486,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38366,7 +39502,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38376,15 +39512,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_vmatrixdouble4x4_(self):
+    def test_imp_vsimddouble4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        result = OC_VectorCallInvoke.vsimddouble4x4On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38399,19 +39535,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+                OC_VectorCallInvoke.vsimddouble4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_vmatrixdouble4x4__cls(self):
+    def test_imp_vsimddouble4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+        result = OC_VectorCallInvoke.vsimddouble4x4On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38426,31 +39562,31 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixdouble4x4On_(value)
+                OC_VectorCallInvoke.vsimddouble4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_vmatrixdouble4x4_d_(self):
+    def test_vsimddouble4x4_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixdouble4x4_d_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimddouble4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixdouble4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vsimddouble4x4_d_, 0, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.vmatrixdouble4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.vsimddouble4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixdouble4x4_d_
+        caller = oc.vsimddouble4x4_d_
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38467,7 +39603,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38481,7 +39617,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38494,7 +39630,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38512,7 +39648,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38527,7 +39663,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38538,27 +39674,27 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    def test_clsvmatrixdouble4x4_d_(self):
+    def test_clsvsimddouble4x4_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixdouble4x4_d_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixdouble4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixdouble4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clsvsimddouble4x4_d_, 0, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsvmatrixdouble4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.clsvsimddouble4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixdouble4x4_d_
+        caller = oc.clsvsimddouble4x4_d_
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38575,7 +39711,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38589,7 +39725,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38602,7 +39738,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38620,7 +39756,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38635,7 +39771,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38646,29 +39782,29 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    def test_vmatrixdouble4x4_d__imp(self):
+    def test_vsimddouble4x4_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixdouble4x4_d_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixdouble4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimddouble4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixdouble4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.vsimddouble4x4_d_, 0, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.vmatrixdouble4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.vsimddouble4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixdouble4x4:d:")
+        imp = oc.methodForSelector_(b"vsimddouble4x4:d:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38685,7 +39821,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38699,7 +39835,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38712,7 +39848,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38730,7 +39866,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38745,7 +39881,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38760,7 +39896,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38774,7 +39910,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38785,29 +39921,29 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    def test_clsvmatrixdouble4x4_d__imp(self):
+    def test_clsvsimddouble4x4_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixdouble4x4_d_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixdouble4x4_d_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_d_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixdouble4x4_d_, 0, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clsvsimddouble4x4_d_, 0, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsvmatrixdouble4x4_d_, 1, b"d")
+        self.assertArgHasType(OC_VectorCall.clsvsimddouble4x4_d_, 1, b"d")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixdouble4x4:d:")
+        imp = oc.methodForSelector_(b"clsvsimddouble4x4:d:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38824,7 +39960,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 2)
         self.assertEqual(
             stored[0],
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38838,7 +39974,7 @@ class TestVectorCall(TestCase):
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38851,7 +39987,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38869,7 +40005,7 @@ class TestVectorCall(TestCase):
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38884,7 +40020,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38901,7 +40037,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38912,15 +40048,15 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    def test_imp_vmatrixdouble4x4_d_(self):
+    def test_imp_vsimddouble4x4_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        result = OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38936,19 +40072,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+                OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_vmatrixdouble4x4_d__cls(self):
+    def test_imp_vsimddouble4x4_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+        result = OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_double4x4(
+                simd.simd_double4x4(
                     (
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -38964,18 +40100,18 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixdouble4x4dOn_(value)
+                OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
 
-    def test_vmatrixfloat2x2_(self):
+    def test_vsimdfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat2x2_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat2x2_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -38983,11 +40119,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixfloat2x2_
+        caller = oc.vsimdfloat2x2_
 
         # Valid call
         rv = caller(
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
         )
@@ -38998,7 +40134,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -39010,7 +40146,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39027,7 +40163,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39035,14 +40171,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_clsvmatrixfloat2x2_(self):
+    def test_clsvsimdfloat2x2_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat2x2_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat2x2_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat2x2_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clsvsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -39050,11 +40186,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixfloat2x2_
+        caller = oc.clsvsimdfloat2x2_
 
         # Valid call
         rv = caller(
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
         )
@@ -39065,7 +40201,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -39077,7 +40213,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39094,7 +40230,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39102,14 +40238,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_vmatrixfloat2x2__imp(self):
+    def test_vsimdfloat2x2__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat2x2_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat2x2_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -39117,13 +40253,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixfloat2x2:")
+        imp = oc.methodForSelector_(b"vsimdfloat2x2:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
         )
@@ -39134,7 +40270,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -39146,7 +40282,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39163,7 +40299,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39175,7 +40311,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39186,7 +40322,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39194,14 +40330,14 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsvmatrixfloat2x2__imp(self):
+    def test_clsvsimdfloat2x2__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat2x2_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat2x2_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat2x2_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat2x2_, 0, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clsvsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -39209,13 +40345,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixfloat2x2:")
+        imp = oc.methodForSelector_(b"clsvsimdfloat2x2:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
         )
@@ -39226,7 +40362,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -39238,7 +40374,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39255,7 +40391,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39269,7 +40405,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39277,15 +40413,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_vmatrixfloat2x2_(self):
+    def test_imp_vsimdfloat2x2_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.vsimdfloat2x2On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39298,19 +40434,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+                OC_VectorCallInvoke.vsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_vmatrixfloat2x2__cls(self):
+    def test_imp_vsimdfloat2x2__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.vsimdfloat2x2On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float2x2(
+                simd.simd_float2x2(
                     (
                         objc.simd.vector_float2(0.0, 1.5),
                         objc.simd.vector_float2(0.0, 1.5),
@@ -39323,18 +40459,18 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat2x2On_(value)
+                OC_VectorCallInvoke.vsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_vmatrixfloat3x3_(self):
+    def test_vsimdfloat3x3_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat3x3_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat3x3_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -39342,11 +40478,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixfloat3x3_
+        caller = oc.vsimdfloat3x3_
 
         # Valid call
         rv = caller(
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39361,7 +40497,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39377,7 +40513,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39395,7 +40531,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39404,14 +40540,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_clsvmatrixfloat3x3_(self):
+    def test_clsvsimdfloat3x3_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat3x3_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat3x3_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat3x3_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clsvsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -39419,11 +40555,11 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixfloat3x3_
+        caller = oc.clsvsimdfloat3x3_
 
         # Valid call
         rv = caller(
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39438,7 +40574,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39454,7 +40590,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39472,7 +40608,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39481,14 +40617,14 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    def test_vmatrixfloat3x3__imp(self):
+    def test_vsimdfloat3x3__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat3x3_.isClassMethod)
+        self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat3x3_, b"v")
+        self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -39496,13 +40632,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixfloat3x3:")
+        imp = oc.methodForSelector_(b"vsimdfloat3x3:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39517,7 +40653,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39533,7 +40669,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39551,7 +40687,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39564,7 +40700,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
             imp(
                 42,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39576,7 +40712,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39585,14 +40721,14 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_clsvmatrixfloat3x3__imp(self):
+    def test_clsvsimdfloat3x3__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat3x3_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat3x3_, b"v")
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat3x3_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat3x3_, 0, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clsvsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -39600,13 +40736,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixfloat3x3:")
+        imp = oc.methodForSelector_(b"clsvsimdfloat3x3:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
         # Valid call
         rv = caller(
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39621,7 +40757,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(len(stored), 1)
         self.assertEqual(
             stored[0],
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39637,7 +40773,7 @@ class TestVectorCall(TestCase):
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39655,7 +40791,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39670,7 +40806,7 @@ class TestVectorCall(TestCase):
         ):
             imp(
                 42,
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39679,15 +40815,15 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    def test_imp_vmatrixfloat3x3_(self):
+    def test_imp_vsimdfloat3x3_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.vsimdfloat3x3On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39701,19 +40837,19 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+                OC_VectorCallInvoke.vsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_vmatrixfloat3x3__cls(self):
+    def test_imp_vsimdfloat3x3__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.vsimdfloat3x3On_(value)
         self.assertIs(result, None)
         self.assertEqual(
             value.argvalues,
             (
-                simd.matrix_float3x3(
+                simd.simd_float3x3(
                     (
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -39727,974 +40863,10 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat3x3On_(value)
+                OC_VectorCallInvoke.vsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_vmatrixfloat4x4_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat4x4_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixfloat4x4_
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-    def test_clsvmatrixfloat4x4_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat4x4_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixfloat4x4_
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-    def test_vmatrixfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat4x4_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixfloat4x4:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
-    def test_clsvmatrixfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat4x4_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat4x4_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixfloat4x4:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            )
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
-    def test_imp_vmatrixfloat4x4_(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
-        self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues,
-            (
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_vmatrixfloat4x4__cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
-        self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues,
-            (
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat4x4On_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_vmatrixfloat4x4_d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat4x4_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_d_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.vmatrixfloat4x4_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.vmatrixfloat4x4_d_
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-            -557000000000.0,
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                None,
-            )
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-    def test_clsvmatrixfloat4x4_d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat4x4_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat4x4_d_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsvmatrixfloat4x4_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsvmatrixfloat4x4_d_
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-            -557000000000.0,
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                None,
-            )
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-    def test_vmatrixfloat4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.vmatrixfloat4x4_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.vmatrixfloat4x4_d_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vmatrixfloat4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.vmatrixfloat4x4_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"vmatrixfloat4x4:d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-            -557000000000.0,
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                None,
-            )
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-    def test_clsvmatrixfloat4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsvmatrixfloat4x4_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clsvmatrixfloat4x4_d_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvmatrixfloat4x4_d_, 0, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsvmatrixfloat4x4_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsvmatrixfloat4x4:d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-            -557000000000.0,
-        )
-        self.assertIs(rv, None)
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(
-            stored[0],
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                )
-            )
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-                "hello",
-            )
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                None,
-            )
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
-    def test_imp_vmatrixfloat4x4_d_(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
-        self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues,
-            (
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_vmatrixfloat4x4_d__cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
-        self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues,
-            (
-                simd.matrix_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.vmatrixfloat4x4dOn_(value)
-        finally:
-            del value.shouldRaise
-
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40702,7 +40874,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vsimdfloat4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -40776,7 +40948,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40784,7 +40955,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvsimdfloat4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clsvsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -40858,7 +41029,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40866,7 +41036,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.vsimdfloat4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -40969,7 +41139,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdfloat4x4__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -40977,7 +41146,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_, b"v")
         self.assertArgHasType(
-            OC_VectorCall.clsvsimdfloat4x4_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clsvsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -41069,7 +41238,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41097,7 +41265,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41125,14 +41292,551 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
+    def test_vsimdfloat4x4_d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_d_, b"v")
+        self.assertArgHasType(
+            OC_VectorCall.vsimdfloat4x4_d_, 0, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat4x4_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.vsimdfloat4x4_d_
+
+        # Valid call
+        rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(
+            stored[0],
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                )
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                None,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+    def test_clsvsimdfloat4x4_d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_d_, b"v")
+        self.assertArgHasType(
+            OC_VectorCall.clsvsimdfloat4x4_d_, 0, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clsvsimdfloat4x4_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsvsimdfloat4x4_d_
+
+        # Valid call
+        rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(
+            stored[0],
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                )
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                None,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+    def test_vsimdfloat4x4_d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_d_, b"v")
+        self.assertArgHasType(
+            OC_VectorCall.vsimdfloat4x4_d_, 0, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat4x4_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"vsimdfloat4x4:d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(
+            stored[0],
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                )
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                None,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+    def test_clsvsimdfloat4x4_d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_d_, b"v")
+        self.assertArgHasType(
+            OC_VectorCall.clsvsimdfloat4x4_d_, 0, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clsvsimdfloat4x4_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsvsimdfloat4x4:d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(
+            stored[0],
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                )
+            )
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                None,
+            )
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
+    def test_imp_vsimdfloat4x4_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_vsimdfloat4x4_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        self.assertIs(result, None)
+        self.assertEqual(
+            value.argvalues,
+            (
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_vsimdquatd_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatd_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 1, b"d")
 
         # Create test object
@@ -41184,14 +41888,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatd_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatd_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 1, b"d")
 
         # Create test object
@@ -41243,14 +41946,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatd_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatd_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 1, b"d")
 
         # Create test object
@@ -41319,14 +42021,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatd_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatd_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{_simd_quatd=<4d>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 1, b"d")
 
         # Create test object
@@ -41390,7 +42091,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatd_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41412,7 +42112,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatd_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41434,14 +42133,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -41480,14 +42178,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall
@@ -41526,14 +42223,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -41584,14 +42280,13 @@ class TestVectorCall(TestCase):
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall
@@ -41638,7 +42333,6 @@ class TestVectorCall(TestCase):
         ):
             imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41657,7 +42351,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41676,14 +42369,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_v3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 1, b"<3f>")
 
         # Create test object
@@ -41735,16 +42427,13 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_v3f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_v3f_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{_simd_quatf=<4f>}"
-        )
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 1, b"<3f>")
 
         # Create test object
@@ -41796,14 +42485,13 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_v3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_v3f_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 1, b"<3f>")
 
         # Create test object
@@ -41872,16 +42560,13 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_v3f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_v3f_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{_simd_quatf=<4f>}"
-        )
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 1, b"<3f>")
 
         # Create test object
@@ -41945,7 +42630,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41967,7 +42651,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41989,14 +42672,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 1, b"d")
 
         # Create test object
@@ -42048,14 +42730,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 1, b"d")
 
         # Create test object
@@ -42107,14 +42788,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_vsimdquatf_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 1, b"d")
 
         # Create test object
@@ -42183,14 +42863,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clsvsimdquatf_d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_d_, b"v")
-        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{_simd_quatf=<4f>}")
+        self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 1, b"d")
 
         # Create test object
@@ -42254,7 +42933,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42276,7 +42954,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_vsimdquatf_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42298,7 +42975,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42336,7 +43012,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42374,7 +43049,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42425,7 +43099,6 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42473,7 +43146,6 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKBox(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42495,7 +43167,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKBox_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42517,7 +43188,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42552,7 +43222,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42587,7 +43256,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42635,7 +43303,6 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42680,7 +43347,6 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKQuad(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42699,7 +43365,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKQuad_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42718,7 +43383,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42769,7 +43433,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42820,7 +43483,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_GKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42880,7 +43542,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_clsGKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -42939,7 +43600,6 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKTriangleQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42964,7 +43624,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_GK, "GK related test")
     def test_imp_GKTriangleQ__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42996,7 +43655,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBox,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -43036,7 +43695,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBox,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -43076,7 +43735,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBox,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -43129,7 +43788,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBox,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
 
         # Create test object
@@ -43221,7 +43880,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>")
 
@@ -43271,7 +43930,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>"
@@ -43323,7 +43982,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>")
 
@@ -43382,7 +44041,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>"
@@ -43484,7 +44143,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxd_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxd_, 0, b"d")
 
@@ -43534,7 +44193,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_, 0, b"d")
 
@@ -43584,7 +44243,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxd_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.MDLAxisAlignedBoundingBoxd_, 0, b"d")
 
@@ -43643,7 +44302,7 @@ class TestVectorCall(TestCase):
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_,
-            b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+            b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
         self.assertArgHasType(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_, 0, b"d")
 
@@ -43742,7 +44401,7 @@ class TestVectorCall(TestCase):
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.MDLVoxelIndexExtent, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.MDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -43781,7 +44440,7 @@ class TestVectorCall(TestCase):
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsMDLVoxelIndexExtent, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.clsMDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -43820,7 +44479,7 @@ class TestVectorCall(TestCase):
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.MDLVoxelIndexExtent, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.MDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -43872,7 +44531,7 @@ class TestVectorCall(TestCase):
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsMDLVoxelIndexExtent, b"{_MDLVoxelIndexExtent=<4i><4i>}"
+            OC_VectorCall.clsMDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
         )
 
         # Create test object
@@ -43957,15 +44616,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_MPSAxisAlignedBoundingBox(self):
+    def test_simddouble4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
+        self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.MPSAxisAlignedBoundingBox,
-            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+            OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -43973,483 +44630,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.MPSAxisAlignedBoundingBox
+        caller = oc.simddouble4x4
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_clsMPSAxisAlignedBoundingBox(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsMPSAxisAlignedBoundingBox,
-            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsMPSAxisAlignedBoundingBox
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_MPSAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.MPSAxisAlignedBoundingBox,
-            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"MPSAxisAlignedBoundingBox")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-            )
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_clsMPSAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsMPSAxisAlignedBoundingBox,
-            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsMPSAxisAlignedBoundingBox")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_imp_MPSAxisAlignedBoundingBox(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
-        self.assertEqual(
-            result,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
-        finally:
-            del value.shouldRaise
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_imp_MPSAxisAlignedBoundingBox_cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
-        self.assertEqual(
-            result,
-            (
-                objc.simd.vector_float3(1.5, 2.5, 3.5),
-                objc.simd.vector_float3(4.5, 5.5, 6.5),
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
-        finally:
-            del value.shouldRaise
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_MPSImageHistogramInfo(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.MPSImageHistogramInfo, b"{_MPSImageHistogramInfo=QZ<4f><4f>}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.MPSImageHistogramInfo
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_clsMPSImageHistogramInfo(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsMPSImageHistogramInfo,
-            b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsMPSImageHistogramInfo
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_MPSImageHistogramInfo_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.MPSImageHistogramInfo, b"{_MPSImageHistogramInfo=QZ<4f><4f>}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"MPSImageHistogramInfo")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-            )
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_clsMPSImageHistogramInfo_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsMPSImageHistogramInfo,
-            b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsMPSImageHistogramInfo")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_imp_MPSImageHistogramInfo(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
-        self.assertEqual(
-            result,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
-        finally:
-            del value.shouldRaise
-
-    @skipUnless(HAVE_MPS, "MPS not available")
-    def test_imp_MPSImageHistogramInfo_cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
-        self.assertEqual(
-            result,
-            (
-                4398046511104,
-                True,
-                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
-                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_matrixdouble4x4(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixdouble4x4.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixdouble4x4, b"{_matrix_double4x4=[4<4d>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixdouble4x4
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44472,13 +44659,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_clsmatrixdouble4x4(self):
+    def test_clssimddouble4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixdouble4x4.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixdouble4x4, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clssimddouble4x4, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -44486,13 +44673,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixdouble4x4
+        caller = oc.clssimddouble4x4
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44515,13 +44702,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_matrixdouble4x4_imp(self):
+    def test_simddouble4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixdouble4x4.isClassMethod)
+        self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrixdouble4x4, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -44529,7 +44716,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixdouble4x4")
+        imp = oc.methodForSelector_(b"simddouble4x4")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -44537,7 +44724,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44571,13 +44758,13 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_clsmatrixdouble4x4_imp(self):
+    def test_clssimddouble4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixdouble4x4.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixdouble4x4, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clssimddouble4x4, b"{simd_double4x4=[4<4d>]}"
         )
 
         # Create test object
@@ -44585,7 +44772,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixdouble4x4")
+        imp = oc.methodForSelector_(b"clssimddouble4x4")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -44593,7 +44780,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44624,13 +44811,13 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    def test_imp_matrixdouble4x4(self):
+    def test_imp_simddouble4x4(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        result = OC_VectorCallInvoke.simddouble4x4On_(value)
         self.assertEqual(
             result,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44645,17 +44832,17 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixdouble4x4On_(value)
+                OC_VectorCallInvoke.simddouble4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_matrixdouble4x4_cls(self):
+    def test_imp_simddouble4x4_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixdouble4x4On_(value)
+        result = OC_VectorCallInvoke.simddouble4x4On_(value)
         self.assertEqual(
             result,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44670,32 +44857,32 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixdouble4x4On_(value)
+                OC_VectorCallInvoke.simddouble4x4On_(value)
         finally:
             del value.shouldRaise
 
-    def test_matrixdouble4x4d_(self):
+    def test_simddouble4x4d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixdouble4x4d_.isClassMethod)
+        self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrixdouble4x4d_, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.simddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.matrixdouble4x4d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.simddouble4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixdouble4x4d_
+        caller = oc.simddouble4x4d_
 
         # Valid call
         rv = caller(-557000000000.0)
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44727,28 +44914,28 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    def test_clsmatrixdouble4x4d_(self):
+    def test_clssimddouble4x4d_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixdouble4x4d_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixdouble4x4d_, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clssimddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsmatrixdouble4x4d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.clssimddouble4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixdouble4x4d_
+        caller = oc.clssimddouble4x4d_
 
         # Valid call
         rv = caller(-557000000000.0)
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44780,22 +44967,22 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    def test_matrixdouble4x4d__imp(self):
+    def test_simddouble4x4d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixdouble4x4d_.isClassMethod)
+        self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.matrixdouble4x4d_, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.simddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.matrixdouble4x4d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.simddouble4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixdouble4x4d:")
+        imp = oc.methodForSelector_(b"simddouble4x4d:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -44803,7 +44990,7 @@ class TestVectorCall(TestCase):
         rv = caller(-557000000000.0)
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44842,22 +45029,22 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
-    def test_clsmatrixdouble4x4d__imp(self):
+    def test_clssimddouble4x4d__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixdouble4x4d_.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixdouble4x4d_, b"{_matrix_double4x4=[4<4d>]}"
+            OC_VectorCall.clssimddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
         )
-        self.assertArgHasType(OC_VectorCall.clsmatrixdouble4x4d_, 0, b"d")
+        self.assertArgHasType(OC_VectorCall.clssimddouble4x4d_, 0, b"d")
 
         # Create test object
         oc = OC_VectorCall
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixdouble4x4d:")
+        imp = oc.methodForSelector_(b"clssimddouble4x4d:")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -44865,7 +45052,7 @@ class TestVectorCall(TestCase):
         rv = caller(-557000000000.0)
         self.assertEqual(
             rv,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44903,13 +45090,13 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
-    def test_imp_matrixdouble4x4d_(self):
+    def test_imp_simddouble4x4d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        result = OC_VectorCallInvoke.simddouble4x4dOn_(value)
         self.assertEqual(
             result,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44924,17 +45111,17 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+                OC_VectorCallInvoke.simddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_matrixdouble4x4d__cls(self):
+    def test_imp_simddouble4x4d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+        result = OC_VectorCallInvoke.simddouble4x4dOn_(value)
         self.assertEqual(
             result,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -44949,31 +45136,29 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixdouble4x4dOn_(value)
+                OC_VectorCallInvoke.simddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
 
-    def test_matrixfloat2x2(self):
+    def test_simdfloat2x2(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat2x2.isClassMethod)
+        self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat2x2, b"{_matrix_float2x2=[2<2f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat2x2, b"{simd_float2x2=[2<2f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixfloat2x2
+        caller = oc.simdfloat2x2
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -44991,13 +45176,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_clsmatrixfloat2x2(self):
+    def test_clssimdfloat2x2(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat2x2.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat2x2, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clssimdfloat2x2, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -45005,13 +45190,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixfloat2x2
+        caller = oc.clssimdfloat2x2
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -45029,21 +45214,19 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_matrixfloat2x2_imp(self):
+    def test_simdfloat2x2_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat2x2.isClassMethod)
+        self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat2x2, b"{_matrix_float2x2=[2<2f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat2x2, b"{simd_float2x2=[2<2f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixfloat2x2")
+        imp = oc.methodForSelector_(b"simdfloat2x2")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -45051,7 +45234,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -45080,13 +45263,13 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_clsmatrixfloat2x2_imp(self):
+    def test_clssimdfloat2x2_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat2x2.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat2x2, b"{_matrix_float2x2=[2<2f>]}"
+            OC_VectorCall.clssimdfloat2x2, b"{simd_float2x2=[2<2f>]}"
         )
 
         # Create test object
@@ -45094,7 +45277,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixfloat2x2")
+        imp = oc.methodForSelector_(b"clssimdfloat2x2")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -45102,7 +45285,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -45128,13 +45311,13 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    def test_imp_matrixfloat2x2(self):
+    def test_imp_simdfloat2x2(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.simdfloat2x2On_(value)
         self.assertEqual(
             result,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -45144,17 +45327,17 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat2x2On_(value)
+                OC_VectorCallInvoke.simdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_matrixfloat2x2_cls(self):
+    def test_imp_simdfloat2x2_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat2x2On_(value)
+        result = OC_VectorCallInvoke.simdfloat2x2On_(value)
         self.assertEqual(
             result,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             ),
         )
@@ -45164,31 +45347,29 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat2x2On_(value)
+                OC_VectorCallInvoke.simdfloat2x2On_(value)
         finally:
             del value.shouldRaise
 
-    def test_matrixfloat3x3(self):
+    def test_simdfloat3x3(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat3x3.isClassMethod)
+        self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat3x3, b"{_matrix_float3x3=[3<3f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat3x3, b"{simd_float3x3=[3<3f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixfloat3x3
+        caller = oc.simdfloat3x3
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45210,13 +45391,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_clsmatrixfloat3x3(self):
+    def test_clssimdfloat3x3(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat3x3.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat3x3, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clssimdfloat3x3, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -45224,13 +45405,13 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixfloat3x3
+        caller = oc.clssimdfloat3x3
 
         # Valid call
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45252,21 +45433,19 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    def test_matrixfloat3x3_imp(self):
+    def test_simdfloat3x3_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat3x3.isClassMethod)
+        self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat3x3, b"{_matrix_float3x3=[3<3f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat3x3, b"{simd_float3x3=[3<3f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixfloat3x3")
+        imp = oc.methodForSelector_(b"simdfloat3x3")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -45274,7 +45453,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45307,13 +45486,13 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    def test_clsmatrixfloat3x3_imp(self):
+    def test_clssimdfloat3x3_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat3x3.isClassMethod)
+        self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat3x3, b"{_matrix_float3x3=[3<3f>]}"
+            OC_VectorCall.clssimdfloat3x3, b"{simd_float3x3=[3<3f>]}"
         )
 
         # Create test object
@@ -45321,7 +45500,7 @@ class TestVectorCall(TestCase):
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixfloat3x3")
+        imp = oc.methodForSelector_(b"clssimdfloat3x3")
         self.assertIsInstance(imp, objc.IMP)
         caller = partial(imp, oc)
 
@@ -45329,7 +45508,7 @@ class TestVectorCall(TestCase):
         rv = caller()
         self.assertEqual(
             rv,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45359,13 +45538,13 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    def test_imp_matrixfloat3x3(self):
+    def test_imp_simdfloat3x3(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.simdfloat3x3On_(value)
         self.assertEqual(
             result,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45379,17 +45558,17 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat3x3On_(value)
+                OC_VectorCallInvoke.simdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_imp_matrixfloat3x3_cls(self):
+    def test_imp_simdfloat3x3_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat3x3On_(value)
+        result = OC_VectorCallInvoke.simdfloat3x3On_(value)
         self.assertEqual(
             result,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -45403,854 +45582,16 @@ class TestVectorCall(TestCase):
         value.shouldRaise = True
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat3x3On_(value)
+                OC_VectorCallInvoke.simdfloat3x3On_(value)
         finally:
             del value.shouldRaise
 
-    def test_matrixfloat4x4(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixfloat4x4
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    def test_clsmatrixfloat4x4(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixfloat4x4
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-    def test_matrixfloat4x4_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixfloat4x4")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject,
-            )
-
-    def test_clsmatrixfloat4x4_imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4, b"{_matrix_float4x4=[4<4f>]}"
-        )
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixfloat4x4")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller()
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 0)
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
-    def test_imp_matrixfloat4x4(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4On_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4On_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_matrixfloat4x4_cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4On_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertIs(value.argvalues, None)
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4On_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_matrixfloat4x4id_d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4id_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4id_d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixfloat4x4id_d_
-
-        # Valid call
-        rv = caller("hello", -557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(stored[0], "hello")
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", -557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(NoObjCValueObject, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller("hello", -557000000000.0)
-
-    def test_clsmatrixfloat4x4id_d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4id_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4id_d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4id_d_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4id_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixfloat4x4id_d_
-
-        # Valid call
-        rv = caller("hello", -557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(stored[0], "hello")
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", -557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(NoObjCValueObject, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller("hello", -557000000000.0)
-
-    def test_matrixfloat4x4id_d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4id_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4id_d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4id_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixfloat4x4id:d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller("hello", -557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(stored[0], "hello")
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", -557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(NoObjCValueObject, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller("hello", -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", -557000000000.0)
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(NoObjCValueObject, "hello", -557000000000.0)
-
-    def test_clsmatrixfloat4x4id_d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4id_d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4id_d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4id_d_, 0, b"@")
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4id_d_, 1, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixfloat4x4id:d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller("hello", -557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 2)
-        self.assertEqual(stored[0], "hello")
-        self.assertEqual(stored[1], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello")
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", -557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(NoObjCValueObject, -557000000000.0)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller("hello", -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", -557000000000.0)
-
-    def test_imp_matrixfloat4x4id_d_(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(
-            value.argvalues,
-            (
-                "hello",
-                -557000000000.0,
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_matrixfloat4x4id_d__cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(
-            value.argvalues,
-            (
-                "hello",
-                -557000000000.0,
-            ),
-        )
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4iddOn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_matrixfloat4x4d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4d_, 0, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.matrixfloat4x4d_
-
-        # Valid call
-        rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(stored[0], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(-557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(-557000000000.0)
-
-    def test_clsmatrixfloat4x4d_(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4d_, 0, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        caller = oc.clsmatrixfloat4x4d_
-
-        # Valid call
-        rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(stored[0], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(-557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(-557000000000.0)
-
-    def test_matrixfloat4x4d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertFalse(OC_VectorCall.matrixfloat4x4d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.matrixfloat4x4d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.matrixfloat4x4d_, 0, b"d")
-
-        # Create test object
-        oc = OC_VectorCall.alloc().init()
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"matrixfloat4x4d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(stored[0], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(-557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(-557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(NoObjCValueObject, -557000000000.0)
-
-    def test_clsmatrixfloat4x4d__imp(self):
-        OC_VectorCall.clearRaise()
-        # Verify method type
-        self.assertTrue(OC_VectorCall.clsmatrixfloat4x4d_.isClassMethod)
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsmatrixfloat4x4d_, b"{_matrix_float4x4=[4<4f>]}"
-        )
-        self.assertArgHasType(OC_VectorCall.clsmatrixfloat4x4d_, 0, b"d")
-
-        # Create test object
-        oc = OC_VectorCall
-        self.assertIsNot(oc, None)
-
-        # Set caller to the selector/IMP to call (With bound self)
-        imp = oc.methodForSelector_(b"clsmatrixfloat4x4d:")
-        self.assertIsInstance(imp, objc.IMP)
-        caller = partial(imp, oc)
-
-        # Valid call
-        rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = oc.storedvalue()
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 1)
-        self.assertEqual(stored[0], -557000000000.0)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller()
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(-557000000000.0, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(None)
-
-        # Exception handling
-        OC_VectorCall.setRaise()
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(-557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
-    def test_imp_matrixfloat4x4d_(self):
-        value = OC_VectorCallInstance.alloc().init()
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
-        finally:
-            del value.shouldRaise
-
-    def test_imp_matrixfloat4x4d__cls(self):
-        value = OC_VectorCallClass
-        value.argvalues = 1
-        result = OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
-        self.assertEqual(
-            result,
-            simd.matrix_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-        self.assertEqual(value.argvalues, (-557000000000.0,))
-
-        # Test raising an exception
-        value.shouldRaise = True
-        try:
-            with self.assertRaisesRegex(RuntimeError, "failure"):
-                OC_VectorCallInvoke.matrixfloat4x4dOn_(value)
-        finally:
-            del value.shouldRaise
-
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4, b"{_simd_float4x4=[4<4f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat4x4, b"{simd_float4x4=[4<4f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -46286,14 +45627,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clssimdfloat4x4, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clssimdfloat4x4, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -46330,15 +45670,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4, b"{_simd_float4x4=[4<4f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat4x4, b"{simd_float4x4=[4<4f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -46387,14 +45724,13 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clssimdfloat4x4, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clssimdfloat4x4, b"{simd_float4x4=[4<4f>]}"
         )
 
         # Create test object
@@ -46441,7 +45777,6 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -46467,7 +45802,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46493,17 +45827,606 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
+    def test_simdfloat4x4id_d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.simdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4id_d_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4id_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.simdfloat4x4id_d_
+
+        # Valid call
+        rv = caller("hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello", -557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(NoObjCValueObject, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller("hello", -557000000000.0)
+
+    def test_clssimdfloat4x4id_d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clssimdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4id_d_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4id_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clssimdfloat4x4id_d_
+
+        # Valid call
+        rv = caller("hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello", -557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(NoObjCValueObject, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller("hello", -557000000000.0)
+
+    def test_simdfloat4x4id_d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.simdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4id_d_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4id_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"simdfloat4x4id:d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller("hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello", -557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(NoObjCValueObject, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller("hello", -557000000000.0)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(42, "hello", -557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(NoObjCValueObject, "hello", -557000000000.0)
+
+    def test_clssimdfloat4x4id_d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clssimdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4id_d_, 0, b"@")
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4id_d_, 1, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clssimdfloat4x4id:d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller("hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], "hello")
+        self.assertEqual(stored[1], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello", -557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(NoObjCValueObject, -557000000000.0)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller("hello", None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller("hello", -557000000000.0)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(42, "hello", -557000000000.0)
+
+    def test_imp_simdfloat4x4id_d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdfloat4x4id_d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                "hello",
+                -557000000000.0,
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_simdfloat4x4d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4d_, 0, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.simdfloat4x4d_
+
+        # Valid call
+        rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(-557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(-557000000000.0)
+
+    def test_clssimdfloat4x4d_(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clssimdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4d_, 0, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clssimdfloat4x4d_
+
+        # Valid call
+        rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(-557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(-557000000000.0)
+
+    def test_simdfloat4x4d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.simdfloat4x4d_, 0, b"d")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"simdfloat4x4d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(-557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(-557000000000.0)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(42, -557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(NoObjCValueObject, -557000000000.0)
+
+    def test_clssimdfloat4x4d__imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clssimdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
+        )
+        self.assertArgHasType(OC_VectorCall.clssimdfloat4x4d_, 0, b"d")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clssimdfloat4x4d:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], -557000000000.0)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(-557000000000.0, "hello")
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(-557000000000.0)
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(42, -557000000000.0)
+
+    def test_imp_simdfloat4x4d_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_simdfloat4x4d__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        self.assertEqual(
+            result,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(value.argvalues, (-557000000000.0,))
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        finally:
+            del value.shouldRaise
+
     def test_simdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(
-            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 0, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 1, b"@")
 
@@ -46614,19 +46537,16 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(
-            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_,
-            0,
-            b"{_simd_float4x4=[4<4f>]}",
+            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, 0, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, 1, b"@")
 
@@ -46737,17 +46657,16 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdfloat4x4simdfloat4x4_id__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(
-            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 0, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 0, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(OC_VectorCall.simdfloat4x4simdfloat4x4_id_, 1, b"@")
 
@@ -46889,19 +46808,16 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdfloat4x4simdfloat4x4_id__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Check that the signature is as expected
         self.assertResultHasType(
-            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{_simd_float4x4=[4<4f>]}"
+            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(
-            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_,
-            0,
-            b"{_simd_float4x4=[4<4f>]}",
+            OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, 0, b"{simd_float4x4=[4<4f>]}"
         )
         self.assertArgHasType(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, 1, b"@")
 
@@ -47031,7 +46947,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4simdfloat4x4_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47070,7 +46985,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdfloat4x4simdfloat4x4_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47109,13 +47023,12 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatdd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{_simd_quatd=<4d>}")
+        self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.simdquatdd_, 0, b"d")
 
         # Create test object
@@ -47153,13 +47066,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatdd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{_simd_quatd=<4d>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatdd_, 0, b"d")
 
         # Create test object
@@ -47197,13 +47109,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatdd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{_simd_quatd=<4d>}")
+        self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.simdquatdd_, 0, b"d")
 
         # Create test object
@@ -47250,13 +47161,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatdd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{_simd_quatd=<4d>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatdd_, 0, b"d")
 
         # Create test object
@@ -47302,7 +47212,6 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatdd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47320,7 +47229,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatdd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47338,13 +47246,12 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatf(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatf, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.simdquatf, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -47372,13 +47279,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatf(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall
@@ -47406,13 +47312,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatf_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatf, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.simdquatf, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -47453,13 +47358,12 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatf_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{simd_quatf=<4f>}")
 
         # Create test object
         oc = OC_VectorCall
@@ -47497,7 +47401,6 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatf(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47515,7 +47418,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatf_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47533,13 +47435,12 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatfd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.simdquatfd_, 0, b"d")
 
         # Create test object
@@ -47577,13 +47478,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatfd_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatfd_, 0, b"d")
 
         # Create test object
@@ -47621,13 +47521,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_simdquatfd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.simdquatfd_, 0, b"d")
 
         # Create test object
@@ -47674,13 +47573,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_clssimdquatfd__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
         # Check that the signature is as expected
-        self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{_simd_quatf=<4f>}")
+        self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatfd_, 0, b"d")
 
         # Create test object
@@ -47726,7 +47624,6 @@ class TestVectorCall(TestCase):
         ):
             imp(42, -557000000000.0)
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatfd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -47744,7 +47641,6 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @skipUnless(HAVE_SIMD_STRUCTS, "no simd structs available")
     def test_imp_simdquatfd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47759,5 +47655,672 @@ class TestVectorCall(TestCase):
         try:
             with self.assertRaisesRegex(RuntimeError, "failure"):
                 OC_VectorCallInvoke.simdquatfdOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_v16C(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.v16C.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.v16C
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_clsv16C(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsv16C
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_v16C_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.v16C.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"v16C")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+            )
+
+    def test_clsv16C_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsv16C")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+            )
+
+    def test_imp_v16C(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v16COn_(value)
+        self.assertEqual(
+            result,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_v16C_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.v16COn_(value)
+        self.assertEqual(
+            result,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_MPSImageHistogramInfo(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSImageHistogramInfo, b"{MPSImageHistogramInfo=QZ<4f><4f>}"
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.MPSImageHistogramInfo
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_clsMPSImageHistogramInfo(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSImageHistogramInfo,
+            b"{MPSImageHistogramInfo=QZ<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsMPSImageHistogramInfo
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_MPSImageHistogramInfo_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSImageHistogramInfo, b"{MPSImageHistogramInfo=QZ<4f><4f>}"
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"MPSImageHistogramInfo")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+            )
+
+    def test_clsMPSImageHistogramInfo_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSImageHistogramInfo,
+            b"{MPSImageHistogramInfo=QZ<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsMPSImageHistogramInfo")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+            )
+
+    def test_imp_MPSImageHistogramInfo(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        self.assertEqual(
+            result,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MPSImageHistogramInfo_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        self.assertEqual(
+            result,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_MPSAxisAlignedBoundingBox(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSAxisAlignedBoundingBox,
+            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.MPSAxisAlignedBoundingBox
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_clsMPSAxisAlignedBoundingBox(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSAxisAlignedBoundingBox,
+            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsMPSAxisAlignedBoundingBox
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+    def test_MPSAxisAlignedBoundingBox_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSAxisAlignedBoundingBox,
+            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"MPSAxisAlignedBoundingBox")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
+            imp(
+                42,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+            )
+
+    def test_clsMPSAxisAlignedBoundingBox_imp(self):
+        OC_VectorCall.clearRaise()
+        # Verify method type
+        self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSAxisAlignedBoundingBox,
+            b"{_MPSAxisAlignedBoundingBox=<3f><3f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsMPSAxisAlignedBoundingBox")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 0)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller("hello")
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller()
+
+        # Call with invalid type for self
+        with self.assertRaisesRegex(
+            TypeError, "Need Objective-C object or class as self"
+        ):
+            imp(
+                42,
+            )
+
+    def test_imp_MPSAxisAlignedBoundingBox(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.shouldRaise
+
+    def test_imp_MPSAxisAlignedBoundingBox_cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+        self.assertIs(value.argvalues, None)
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
         finally:
             del value.shouldRaise

@@ -3,10 +3,8 @@ import AVKit
 
 
 class TestAVRoutePickerView(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVKit.AVRoutePickerViewButtonState)
-
     def test_constants(self):
+        self.assertIsEnumType(AVKit.AVRoutePickerViewButtonState)
         self.assertEqual(AVKit.AVRoutePickerViewButtonStateNormal, 0)
         self.assertEqual(AVKit.AVRoutePickerViewButtonStateNormalHighlighted, 1)
         self.assertEqual(AVKit.AVRoutePickerViewButtonStateActive, 2)

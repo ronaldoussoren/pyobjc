@@ -119,10 +119,6 @@
     case 3:
         [object takeValuesFromDictionary:value];
         break;
-#pragma clang diagnostic pop
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
-
     case 4:
         [object setValue:value forKey:key];
         break;
@@ -132,7 +128,6 @@
     case 6:
         [object setValuesForKeysWithDictionary:value];
         break;
-#endif
     }
 }
 
@@ -140,22 +135,12 @@
                           observer:(NSObject*)obj
                            keyPath:(NSString*)path
 {
-#if defined(MAC_OS_X_VERSION_10_3)                                                       \
-    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     NSObject* o = [[class alloc] init];
     [o addObserver:obj
         forKeyPath:path
            options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
            context:0];
     return o;
-#else
-    /* Use arguments */
-    int i;
-    i = (int)&class;
-    i = (int)&obj;
-    i = (int)&path;
-    return nil;
-#endif
 }
 @end
 

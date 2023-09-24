@@ -126,3 +126,12 @@ class TestPHImageManager(TestCase):
             2,
             b"v@@@",
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            Photos.PHImageRequestOptions.allowSecondaryDegradedImage
+        )
+        self.assertArgIsBOOL(
+            Photos.PHImageRequestOptions.setAllowSecondaryDegradedImage_, 0
+        )

@@ -708,7 +708,7 @@
      },
      {
       "name": "completeUntilPresentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      }
     ],
     "retval": {
@@ -797,11 +797,11 @@
      },
      {
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "frameProperties",
@@ -832,11 +832,11 @@
      },
      {
       "name": "presentationTimeStamp",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "duration",
-      "typestr": "{_CMTime=qiIq}"
+      "typestr": "{CMTime=qiIq}"
      },
      {
       "name": "frameProperties",
@@ -897,7 +897,7 @@
      },
      {
       "name": "timeRangeArrayOut",
-      "typestr": "^^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -1189,7 +1189,7 @@
      },
      {
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "block": {
@@ -1218,7 +1218,7 @@
      },
      {
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "refcon",
@@ -1258,7 +1258,7 @@
      },
      {
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "options",
@@ -1312,7 +1312,7 @@
      },
      {
       "name": "timeRangeArray",
-      "typestr": "^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "^{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      }
     ],
     "retval": {
@@ -1353,7 +1353,7 @@
      },
      {
       "name": "timeRange",
-      "typestr": "{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}"
+      "typestr": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
      },
      {
       "name": "options",

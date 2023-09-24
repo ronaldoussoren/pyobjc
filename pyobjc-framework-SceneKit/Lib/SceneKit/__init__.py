@@ -5,44 +5,57 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Cocoa
-import objc
-import Quartz
-from SceneKit import _metadata, _SceneKit
-from SceneKit._inlines import _inline_list_
+def _setup():
+    import sys
 
-sys.modules["SceneKit"] = mod = objc.ObjCLazyModule(
-    "SceneKit",
-    "com.apple.SceneKit",
-    objc.pathForFramework("/System/Library/Frameworks/SceneKit.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_SceneKit, Cocoa, Quartz),
-)
+    import AppKit
+    import Quartz
+    import objc
+    from . import _metadata, _SceneKit
+    from ._inlines import _inline_list_
 
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="SceneKit",
+        frameworkIdentifier="com.apple.SceneKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/SceneKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(
+            _SceneKit,
+            AppKit,
+            Quartz,
+        ),
+        metadict=_metadata.__dict__,
+    )
 
-del sys.modules["SceneKit._metadata"]
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
 
-if not hasattr(mod, "SCNMatrix4Identity"):
-    # Two "inline" functions that use a symbol that is available on 10.10 or later,
-    # avoid crashes by removing the inline function wrappers when that symbol
-    # is not available.
+    del sys.modules["SceneKit._metadata"]
+
+    import SceneKit as mod  # isort:skip
+
+    global SCNMatrix4Identity, SCNMatrix4MakeTranslation, SCNMatrix4MakeScale
     try:
-        mod.SCNMatrix4MakeTranslation
-        del mod.SCNMatrix4MakeTranslation
+        mod.SCNMatrix4Identity
     except AttributeError:
-        pass
+        # Two "inline" functions that use a symbol that is available on 10.10 or later,
+        # avoid crashes by removing the inline function wrappers when that symbol
+        # is not available.
+        try:
+            mod.SCNMatrix4MakeTranslation
+            del mod.SCNMatrix4MakeTranslation
+        except AttributeError:
+            pass
 
-    try:
-        mod.SCNMatrix4MakeScale
-        del mod.SCNMatrix4MakeScale
-    except AttributeError:
-        pass
+        try:
+            mod.SCNMatrix4MakeScale
+            del mod.SCNMatrix4MakeScale
+        except AttributeError:
+            pass
+
+
+globals().pop("_setup")()

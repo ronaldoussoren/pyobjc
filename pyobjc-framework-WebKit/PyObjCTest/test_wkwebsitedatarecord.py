@@ -22,3 +22,9 @@ class TestWKWebsiteDataRecord(TestCase):
     @min_os_level("13.0")
     def testConstants13_0(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeFileSystem, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeSearchFieldRecentSearches, str)
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeMediaKeys, str)
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeHashSalt, str)

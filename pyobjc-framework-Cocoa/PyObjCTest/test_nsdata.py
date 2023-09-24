@@ -54,6 +54,10 @@ class TestNSData(TestCase):
             Foundation.NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication,
             0x40000000,
         )
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteWhenUserInactive,
+            0x50000000,
+        )
         self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
 
     @min_os_level("10.6")

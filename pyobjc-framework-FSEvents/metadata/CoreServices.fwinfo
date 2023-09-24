@@ -73,56 +73,32 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__FSEventStream=}",
-          false
-         ]
+         "typestr": "^{__FSEventStream=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "L",
-          false
-         ]
+         "typestr": "L"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^I",
-          false
-         ]
+         "typestr": "^I"
         },
         {
-         "typestr": [
-          "^Q",
-          false
-         ]
+         "typestr": "^Q"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "2": {
-      "type_override": [
-       "^{FSEventStreamContext=i^v^?^?^?}",
-       "^{FSEventStreamContext=q^v^?^?^?}"
-      ]
+      "type_override": "^{FSEventStreamContext=q^v^?^?^?}"
      },
      "3": {
       "type_override": "^{__CFArray=}"
@@ -143,56 +119,32 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__FSEventStream=}",
-          false
-         ]
+         "typestr": "^{__FSEventStream=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "L",
-          false
-         ]
+         "typestr": "L"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         },
         {
-         "typestr": [
-          "^I",
-          false
-         ]
+         "typestr": "^I"
         },
         {
-         "typestr": [
-          "^Q",
-          false
-         ]
+         "typestr": "^Q"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       },
       "type_override": "^?"
      },
      "2": {
-      "type_override": [
-       "^{FSEventStreamContext=i^v^?^?^?}",
-       "^{FSEventStreamContext=q^v^?^?^?}"
-      ]
+      "type_override": "^{FSEventStreamContext=q^v^?^?^?}"
      },
      "4": {
       "type_override": "^{__CFArray=}"

@@ -1601,12 +1601,8 @@ static PyMethodDef mod_methods[] = {
     {"CGDataConsumerCreate", (PyCFunction)m_CGDataConsumerCreate, METH_VARARGS,
      doc_CGDataConsumerCreate},
 
-#if PyObjC_BUILD_RELEASE >= 1005
-
     {"CGDataProviderCreateSequential", (PyCFunction)m_CGDataProviderCreateSequential,
      METH_VARARGS, doc_CGDataProviderCreateSequential},
-
-#endif
     {"CGDataProviderCreateWithData", (PyCFunction)m_CGDataProviderCreateWithData,
      METH_VARARGS, doc_CGDataProviderCreateWithData},
 

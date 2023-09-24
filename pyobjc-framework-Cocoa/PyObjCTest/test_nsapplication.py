@@ -166,6 +166,7 @@ class TestNSApplication(TestCase):
         self.assertEqual(AppKit.NSPrintingSuccess, 1)
         self.assertEqual(AppKit.NSPrintingFailure, 3)
         self.assertEqual(AppKit.NSPrintingReplyLater, 2)
+        self.assertEqual(AppKit.NSPrintingFailure, 3)
 
         self.assertIsInstance(AppKit.NSApplicationDidBecomeActiveNotification, str)
         self.assertIsInstance(AppKit.NSApplicationDidHideNotification, str)

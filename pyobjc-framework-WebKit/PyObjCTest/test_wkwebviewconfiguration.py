@@ -9,6 +9,17 @@ class TestWKWebViewConfiguration(TestCase):
         self.assertIsEnumType(WebKit.WKAudiovisualMediaTypes)
         self.assertIsEnumType(WebKit.WKUserInterfaceDirectionPolicy)
 
+    def testConstants(self):
+        self.assertEqual(WebKit.WKUserInterfaceDirectionPolicyContent, 0)
+        self.assertEqual(WebKit.WKUserInterfaceDirectionPolicySystem, 1)
+
+        self.assertEqual(WebKit.WKAudiovisualMediaTypeNone, 0)
+        self.assertEqual(WebKit.WKAudiovisualMediaTypeAudio, 1 << 0)
+        self.assertEqual(WebKit.WKAudiovisualMediaTypeVideo, 1 << 1)
+
+        # The entire enum is only available in 64-bit code.
+        self.assertEqual(WebKit.WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(
@@ -41,13 +52,9 @@ class TestWKWebViewConfiguration(TestCase):
             WebKit.WKWebViewConfiguration.setUpgradeKnownHostsToHTTPS_, 0
         )
 
-    def testConstants(self):
-        self.assertEqual(WebKit.WKUserInterfaceDirectionPolicyContent, 0)
-        self.assertEqual(WebKit.WKUserInterfaceDirectionPolicySystem, 1)
-
-        self.assertEqual(WebKit.WKAudiovisualMediaTypeNone, 0)
-        self.assertEqual(WebKit.WKAudiovisualMediaTypeAudio, 1 << 0)
-        self.assertEqual(WebKit.WKAudiovisualMediaTypeVideo, 1 << 1)
-
-        # The entire enum is only available in 64-bit code.
-        self.assertEqual(WebKit.WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.allowsInlinePredictions)
+        self.assertArgIsBOOL(
+            WebKit.WKWebViewConfiguration.setAllowsInlinePredictions_, 0
+        )

@@ -122,7 +122,7 @@ class TestAVPlayer(TestCase):
         self.assertArgIsBlock(
             AVFoundation.AVPlayer.addPeriodicTimeObserverForInterval_queue_usingBlock_,  # noqa: B950
             2,
-            b"v{_CMTime=qiIq}",
+            b"v{CMTime=qiIq}",
         )
         self.assertArgIsBlock(
             AVFoundation.AVPlayer.addBoundaryTimeObserverForTimes_queue_usingBlock_,  # noqa: B950

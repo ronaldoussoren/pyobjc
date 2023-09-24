@@ -71,4 +71,10 @@ class TestLaunchServices(TestCase):
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(LaunchServices)
+        self.assertCallableMetadataIsSane(
+            LaunchServices,
+            exclude_attrs=(
+                "MDQuerySetCreateResultFunction",
+                "MDQuerySetCreateValueFunction",
+            ),
+        )

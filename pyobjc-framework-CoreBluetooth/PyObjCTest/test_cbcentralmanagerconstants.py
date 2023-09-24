@@ -57,3 +57,9 @@ class TestCBCentral(TestCase):
     def testConstants10_14(self):
         # XXX: This is currently documented as a 10.13 constant, but isn't available there
         self.assertIsInstance(CoreBluetooth.CBConnectPeripheralOptionStartDelayKey, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(
+            CoreBluetooth.CBConnectPeripheralOptionEnableAutoReconnect, str
+        )

@@ -7,26 +7,32 @@ documentation for details on how to use these functions and classes.
 Note that PyObjC only wrappers the non-deprecated parts of the CoreServices
 framework.
 """
-import sys
-
-import objc
-from CoreServices._inlines import _inline_list_
-from CoreServices.CarbonCore import _metadata
-
-sys.modules["CoreServices.CarbonCore"] = mod = objc.ObjCLazyModule(
-    "CoreServices.CarbonCore",
-    "com.apple.CarbonCore",
-    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (),
-)
 
 
-del sys.modules["CoreServices.CarbonCore._metadata"]
+def _setup():
+    import sys
+
+    import Foundation
+    import objc
+    from . import _metadata
+    from .._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="CoreServices.CarbonCore",
+        frameworkIdentifier="com.apple.CarbonCore",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/CoreServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(Foundation,),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["CoreServices.CarbonCore._metadata"]
+
+
+globals().pop("_setup")()

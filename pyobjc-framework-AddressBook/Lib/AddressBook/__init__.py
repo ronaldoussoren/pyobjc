@@ -5,27 +5,30 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from AddressBook import _metadata
-from AddressBook import _AddressBook
+def _setup():
+    import sys
 
-sys.modules["AddressBook"] = mod = objc.ObjCLazyModule(
-    "AddressBook",
-    "com.apple.AddressBook.framework",
-    objc.pathForFramework("/System/Library/Frameworks/AddressBook.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_AddressBook, Foundation),
-)
+    import Foundation
+    import objc
+    from . import _metadata, _AddressBook
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="AddressBook",
+        frameworkIdentifier="com.apple.AddressBook.framework",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/AddressBook.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(_AddressBook, Foundation),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["AddressBook._metadata"]
 
 
-del sys.modules["AddressBook._metadata"]
+globals().pop("_setup")()

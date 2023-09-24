@@ -40,17 +40,17 @@ class TestSKAction(TestCase):
         self.assertArgHasType(
             SpriteKit.SKUniform.uniformWithName_matrixFloat2x2_,
             1,
-            simd.matrix_float2x2.__typestr__,
+            simd.simd_float2x2.__typestr__,
         )
         self.assertArgHasType(
             SpriteKit.SKUniform.uniformWithName_matrixFloat3x3_,
             1,
-            simd.matrix_float3x3.__typestr__,
+            simd.simd_float3x3.__typestr__,
         )
         self.assertArgHasType(
             SpriteKit.SKUniform.uniformWithName_matrixFloat4x4_,
             1,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )
 
         self.assertResultHasType(
@@ -63,13 +63,13 @@ class TestSKAction(TestCase):
             SpriteKit.SKUniform.vectorFloat4Value, simd.vector_float4.__typestr__
         )
         self.assertResultHasType(
-            SpriteKit.SKUniform.matrixFloat2x2Value, simd.matrix_float2x2.__typestr__
+            SpriteKit.SKUniform.matrixFloat2x2Value, simd.simd_float2x2.__typestr__
         )
         self.assertResultHasType(
-            SpriteKit.SKUniform.matrixFloat3x3Value, simd.matrix_float3x3.__typestr__
+            SpriteKit.SKUniform.matrixFloat3x3Value, simd.simd_float3x3.__typestr__
         )
         self.assertResultHasType(
-            SpriteKit.SKUniform.matrixFloat4x4Value, simd.matrix_float4x4.__typestr__
+            SpriteKit.SKUniform.matrixFloat4x4Value, simd.simd_float4x4.__typestr__
         )
 
         self.assertArgHasType(
@@ -90,15 +90,15 @@ class TestSKAction(TestCase):
         self.assertArgHasType(
             SpriteKit.SKUniform.initWithName_matrixFloat2x2_,
             1,
-            simd.matrix_float2x2.__typestr__,
+            simd.simd_float2x2.__typestr__,
         )
         self.assertArgHasType(
             SpriteKit.SKUniform.initWithName_matrixFloat3x3_,
             1,
-            simd.matrix_float3x3.__typestr__,
+            simd.simd_float3x3.__typestr__,
         )
         self.assertArgHasType(
             SpriteKit.SKUniform.initWithName_matrixFloat4x4_,
             1,
-            simd.matrix_float4x4.__typestr__,
+            simd.simd_float4x4.__typestr__,
         )

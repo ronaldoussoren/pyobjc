@@ -3294,7 +3294,7 @@
 	  "args": [
 	     { "typestr": "^v" },
 	     { "typestr": "^{__CFRunLoopObserver=}" },
-	     { "typestr": ["I", "Q"] }
+	     { "typestr": "Q"}
 	  ]
        }
      }
@@ -5368,7 +5368,7 @@
          "typestr": "^{__CFUserNotification=}"
         },
         {
-         "typestr": ["i", "q"]
+         "typestr": "q"
         }
        ],
        "retval": {

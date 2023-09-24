@@ -4,24 +4,46 @@ Python mapping for the Foundation framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
-
-import CoreFoundation
-import Foundation._Foundation
-import objc
-from Foundation import _metadata
-from Foundation._inlines import _inline_list_
-
-objc.addConvenienceForClass(
-    "NSAttributedString", (("__len__", lambda self: self.length()),)
-)
-
-objc.addConvenienceForBasicMapping("NSMergeConflict", True)
-objc.addConvenienceForBasicMapping("NSUbiquitousKeyValueStore", False)
-objc.addConvenienceForBasicMapping("NSUserDefaults", False)
 
 
-def _setup_conveniences():
+def _setup():
+    import sys
+
+    import CoreFoundation
+    import objc
+    from . import _Foundation, _metadata, _functiondefines, _context
+    from ._inlines import _inline_list_
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="Foundation",
+        frameworkIdentifier="com.apple.Foundation",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/Foundation.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(
+            _Foundation,
+            _functiondefines,
+            _context,
+            CoreFoundation,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["Foundation._metadata"]
+
+    objc.addConvenienceForClass(
+        "NSAttributedString", (("__len__", lambda self: self.length()),)
+    )
+
+    objc.addConvenienceForBasicMapping("NSMergeConflict", True)
+    objc.addConvenienceForBasicMapping("NSUbiquitousKeyValueStore", False)
+    objc.addConvenienceForBasicMapping("NSUserDefaults", False)
+
     NSNull = objc.lookUpClass("NSNull")
 
     def nscache_getitem(self, key):
@@ -163,56 +185,11 @@ def _setup_conveniences():
     )
 
 
-_setup_conveniences()
+globals().pop("_setup")()
 
-sys.modules["Foundation"] = mod = objc.ObjCLazyModule(
-    "Foundation",
-    "com.apple.Foundation",
-    objc.pathForFramework("/System/Library/Frameworks/Foundation.framework"),
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "YES": objc.YES,
-        "NO": objc.NO,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "__file__": globals().get("__file__", None),
-        "__spec__": globals().get("__spec__", None),
-    },
-    (CoreFoundation,),
-)
-
-
-del sys.modules["Foundation._metadata"]
-
-
-for nm in dir(Foundation._Foundation):
-    if nm.startswith("_"):
-        continue
-    setattr(mod, nm, getattr(Foundation._Foundation, nm))
-
-
-mod.NSDecimal = objc.NSDecimal
+from objc import NSDecimal, YES, NO  # isort:skip   # noqa: E402, F401
 
 import Foundation._context  # isort:skip  # noqa: E402
 import Foundation._functiondefines  # isort:skip  # noqa: E402
 import Foundation._nsindexset  # isort:skip  # noqa: E402
-import Foundation._nsobject  # isort:skip  # noqa: E402
-
-for nm in dir(Foundation._functiondefines):
-    if nm.startswith("_"):
-        continue
-    setattr(mod, nm, getattr(Foundation._functiondefines, nm))
-
-
-mod.NSIntegerMax = sys.maxsize
-mod.NSIntegerMin = -sys.maxsize - 1
-mod.NSUIntegerMax = (sys.maxsize * 2) + 1
-
-
-for nm in dir(Foundation._context):
-    if nm.startswith("_"):
-        continue
-    setattr(mod, nm, getattr(Foundation._context, nm))
+import Foundation._nsobject  # isort:skip  # noqa: E402, F401

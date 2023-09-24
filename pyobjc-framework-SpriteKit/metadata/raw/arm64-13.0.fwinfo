@@ -16075,7 +16075,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float3x3=[3<3f>]}",
+        "typestr": "{simd_float3x3=[3<3f>]}",
         "typestr_special": true
        }
       ],
@@ -16091,7 +16091,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float3x3=[3<3f>]}",
+       "typestr": "{simd_float3x3=[3<3f>]}",
        "typestr_special": true
       },
       "selector": "rotationMatrix",
@@ -16100,7 +16100,7 @@
      {
       "args": [
        {
-        "typestr": "{_simd_quatf=<4f>}",
+        "typestr": "{simd_quatf=<4f>}",
         "typestr_special": true
        }
       ],
@@ -16116,7 +16116,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_simd_quatf=<4f>}",
+       "typestr": "{simd_quatf=<4f>}",
        "typestr_special": true
       },
       "selector": "quaternion",
@@ -16623,7 +16623,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float2x2=[2<2f>]}",
+        "typestr": "{simd_float2x2=[2<2f>]}",
         "typestr_special": true
        }
       ],
@@ -16642,7 +16642,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float3x3=[3<3f>]}",
+        "typestr": "{simd_float3x3=[3<3f>]}",
         "typestr_special": true
        }
       ],
@@ -16661,7 +16661,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -16790,7 +16790,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float2x2=[2<2f>]}",
+        "typestr": "{simd_float2x2=[2<2f>]}",
         "typestr_special": true
        }
       ],
@@ -16809,7 +16809,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float3x3=[3<3f>]}",
+        "typestr": "{simd_float3x3=[3<3f>]}",
         "typestr_special": true
        }
       ],
@@ -16828,7 +16828,7 @@
         "typestr_special": false
        },
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -17217,7 +17217,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float2x2=[2<2f>]}",
+       "typestr": "{simd_float2x2=[2<2f>]}",
        "typestr_special": true
       },
       "selector": "matrixFloat2x2Value",
@@ -17226,7 +17226,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float2x2=[2<2f>]}",
+        "typestr": "{simd_float2x2=[2<2f>]}",
         "typestr_special": true
        }
       ],
@@ -17242,7 +17242,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float3x3=[3<3f>]}",
+       "typestr": "{simd_float3x3=[3<3f>]}",
        "typestr_special": true
       },
       "selector": "matrixFloat3x3Value",
@@ -17251,7 +17251,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float3x3=[3<3f>]}",
+        "typestr": "{simd_float3x3=[3<3f>]}",
         "typestr_special": true
        }
       ],
@@ -17267,7 +17267,7 @@
       "args": [],
       "class_method": false,
       "retval": {
-       "typestr": "{_matrix_float4x4=[4<4f>]}",
+       "typestr": "{simd_float4x4=[4<4f>]}",
        "typestr_special": true
       },
       "selector": "matrixFloat4x4Value",
@@ -17276,7 +17276,7 @@
      {
       "args": [
        {
-        "typestr": "{_matrix_float4x4=[4<4f>]}",
+        "typestr": "{simd_float4x4=[4<4f>]}",
         "typestr_special": true
        }
       ],
@@ -17505,7 +17505,7 @@
        "nonatomic"
       ],
       "name": "matrixFloat2x2Value",
-      "typestr": "{_matrix_float2x2=[2<2f>]}",
+      "typestr": "{simd_float2x2=[2<2f>]}",
       "typestr_special": true
      },
      {
@@ -17513,7 +17513,7 @@
        "nonatomic"
       ],
       "name": "matrixFloat3x3Value",
-      "typestr": "{_matrix_float3x3=[3<3f>]}",
+      "typestr": "{simd_float3x3=[3<3f>]}",
       "typestr_special": true
      },
      {
@@ -17521,7 +17521,7 @@
        "nonatomic"
       ],
       "name": "matrixFloat4x4Value",
-      "typestr": "{_matrix_float4x4=[4<4f>]}",
+      "typestr": "{simd_float4x4=[4<4f>]}",
       "typestr_special": true
      },
      {

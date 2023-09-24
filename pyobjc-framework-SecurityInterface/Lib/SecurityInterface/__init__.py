@@ -5,28 +5,35 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import AppKit
-import objc
-import Security
-from SecurityInterface import _metadata
-from SecurityInterface import _SecurityInterface
+def _setup():
+    import sys
 
-sys.modules["SecurityInterface"] = mod = objc.ObjCLazyModule(
-    "SecurityInterface",
-    "com.apple.securityinterface",
-    objc.pathForFramework("/System/Library/Frameworks/SecurityInterface.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_SecurityInterface, AppKit, Security),
-)
+    import AppKit
+    import Security
+    import objc
+    from . import _metadata, _SecurityInterface
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="SecurityInterface",
+        frameworkIdentifier="com.apple.securityinterface",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/SecurityInterface.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _SecurityInterface,
+            Security,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["SecurityInterface._metadata"]
 
 
-del sys.modules["SecurityInterface._metadata"]
+globals().pop("_setup")()

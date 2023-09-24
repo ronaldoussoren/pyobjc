@@ -53,6 +53,7 @@ struct pyobjc_api objc_api = {
     .memview_getbuffer         = PyObjCMemView_GetBuffer,
     .checkargcount             = PyObjC_CheckArgCount,
     .checknokwnames            = PyObjC_CheckNoKwnames,
+    .createopaquepointertype   = PyObjCCreateOpaquePointerType,
 };
 
 int

@@ -20,7 +20,7 @@ PyObjC provides only limited access to definitions in the framework,
 primarily funcionility that cannot be accessed in a better (modern)
 way.
 
-In particular only the following funcionality is available from Python:
+In particular only the following functionality is available from Python:
 
 * BackupCore
 

@@ -144,3 +144,17 @@ class TestAVCaptureSession(TestCase):
             AVFoundation.AVCaptureConnection.setHighResolutionStillImageOutputEnabled_,
             0,
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.automaticallyAdjustsVideoMirroring
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setAutomaticallyAdjustsVideoMirroring_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.isVideoRotationAngleSupported_
+        )

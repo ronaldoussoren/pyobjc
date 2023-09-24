@@ -23,3 +23,7 @@ class TestINSendMessageRecipientResolutionResult(TestCase):
         self.assertEqual(
             Intents.INSendMessageRecipientUnsupportedReasonNoHandleForLabel, 6
         )
+        self.assertEqual(
+            Intents.INSendMessageRecipientUnsupportedReasonRequiringInAppAuthentication,
+            7,
+        )

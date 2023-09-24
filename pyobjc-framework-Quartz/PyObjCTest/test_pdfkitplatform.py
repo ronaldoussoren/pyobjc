@@ -34,6 +34,7 @@ class TestPDFKitPlatform(TestCase):
         )
         self.assertIs(Quartz.PDFKitResponder, Quartz.NSResponder)
         self.assertIs(Quartz.PDFKitTextContentType, Quartz.NSTextContentType)
+        self.assertIs(Quartz.PDFKitPlatformTextContentType, Quartz.NSTextContentType)
         self.assertIs(Quartz.PDFPoint, Quartz.NSPoint)
         self.assertIs(Quartz.PDFRect, Quartz.NSRect)
         self.assertIs(Quartz.PDFSize, Quartz.NSSize)
@@ -43,3 +44,6 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFRectZero, Quartz.NSZeroRect)
         self.assertIs(Quartz.PDFEdgeInsetsZero, Quartz.NSEdgeInsetsZero)
         self.assertIs(Quartz.PDFTrackingRunLoopMode, Quartz.NSEventTrackingRunLoopMode)
+        self.assertIs(
+            Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular
+        )

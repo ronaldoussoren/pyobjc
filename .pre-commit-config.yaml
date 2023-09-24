@@ -1,13 +1,13 @@
 minimum_pre_commit_version: "3.0"
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
+    rev: v3.9.0
     hooks:
     -   id: pyupgrade
-        args: ['--py37-plus']
+        args: ['--py38-plus']
 
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.7.0
     hooks:
       - id: black
         language_version: python3.10
@@ -39,13 +39,14 @@ repos:
 #
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v15.0.7'
+    rev: 'v16.0.6'
     hooks:
     - id: clang-format
+      types: [c, objective-c]
 
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
+    rev: v2.2.5
     hooks:
     -   id: codespell
         args: ["--config", ".codespellrc"]
@@ -59,6 +60,11 @@ repos:
       pass_filenames: false
       types: [c, objective-c]
       entry: ./development-support/validate-lcov.sh
+    - id: fwinfo-valid-json
+      name: fwinfo-valid-json
+      language: python
+      language_version: python3.10
+      entry: ./development-support/validate-fwinfo
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'

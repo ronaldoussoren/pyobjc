@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "CoreSpotlightAPIVersion": { "ignore": true },
    "CSSearchQueryErrorCodeUnknown": { "value": -2000 },
    "CSSearchQueryErrorCodeIndexUnreachable": { "value": -2001 },
    "CSSearchQueryErrorCodeInvalidQuery": { "value": -2002 },

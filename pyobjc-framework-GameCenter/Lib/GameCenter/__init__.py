@@ -5,31 +5,35 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
-
-import Cocoa
-import objc
-from GameCenter import _GameCenter, _metadata
-
-try:
-    long
-except NameError:
-    long = int
-
-sys.modules["GameCenter"] = mod = objc.ObjCLazyModule(
-    "GameCenter",
-    "com.apple.GameKit",
-    objc.pathForFramework("/System/Library/Frameworks/GameKit.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_GameCenter, Cocoa),
-)
+# XXX: This should no longer be a separate framework binding!
 
 
-del sys.modules["GameCenter._metadata"]
+def _setup():
+    import sys
+
+    import AppKit
+    import objc
+    from . import _metadata, _GameCenter
+
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="GameCenter",
+        frameworkIdentifier="com.apple.GameKit",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/GameKit.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _GameCenter,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["GameCenter._metadata"]
+
+
+globals().pop("_setup")()

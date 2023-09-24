@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""
+Basic validation for *.fwinfo files for use
+by pre-commit.
+
+This script currently does nothing beyond checking
+that the payload can be parsed as JSON.
+"""
+
+import sys
+import json
+
+
+def validate(fname):
+    with open(fname) as fp:
+        data = fp.read()
+
+    lines = data.splitlines()
+    while lines and (lines[0].startswith("//") or lines[0].startswith("#")):
+        del lines[0]
+
+    try:
+        json.loads("\n".join(lines))
+    except Exception as exc:
+        print(f"{fname}: {exc}")
+        return False
+    return True
+
+
+xit = 0
+for fn in sys.argv[1:]:
+    if fn.endswith(".fwinfo"):
+        if not validate(fn):
+            xit = 1
+
+sys.exit(xit)

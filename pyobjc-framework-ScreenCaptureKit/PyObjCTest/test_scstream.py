@@ -34,9 +34,27 @@ class TestSCStream(TestCase):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoContentRect, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoDirtyRects, str)
 
+        self.assertIsEnumType(ScreenCaptureKit.SCStreamType)
+        self.assertEqual(ScreenCaptureKit.SCStreamTypeWindow, 0)
+        self.assertEqual(ScreenCaptureKit.SCStreamTypeDisplay, 1)
+
+        self.assertIsEnumType(ScreenCaptureKit.SCCaptureResolutionType)
+        self.assertEqual(ScreenCaptureKit.SCCaptureResolutionAutomatic, 0)
+        self.assertEqual(ScreenCaptureKit.SCCaptureResolutionBest, 1)
+        self.assertEqual(ScreenCaptureKit.SCCaptureResolutionNominal, 2)
+
+        self.assertIsEnumType(ScreenCaptureKit.SCPresenterOverlayAlertSetting)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingSystem, 0)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingNever, 1)
+        self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingAlways, 2)
+
     @min_os_level("13.1")
     def test_constants13_1(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoScreenRect, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoBoundingRect, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.scalesToFit)
@@ -86,6 +104,55 @@ class TestSCStream(TestCase):
         )
         self.assertArgIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.setExcludesCurrentProcessAudio_, 0
+        )
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.preservesAspectRatio
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setPreservesAspectRatio_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.ignoreShadowsDisplay
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setIgnoreShadowsDisplay_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.ignoreShadowsSingleWindow
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setIgnoreShadowsSingleWindow_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.capturesShadowsOnly
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setCapturesShadowsOnly_, 0
+        )
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.shouldBeOpaque)
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setShouldBeOpaque_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.ignoreGlobalClipDisplay
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setIgnoreGlobalClipDisplay_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.ignoreGlobalClipSingleWindow
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setIgnoreGlobalClipSingleWindow_, 0
         )
 
     def test_protocols(self):

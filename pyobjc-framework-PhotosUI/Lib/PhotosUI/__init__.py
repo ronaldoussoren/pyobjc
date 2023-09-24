@@ -5,39 +5,45 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
 
-import Foundation
-import objc
-from PhotosUI import _metadata
-from PhotosUI import _PhotosUI
+def _setup():
+    import sys
 
-sys.modules["PhotosUI"] = mod = objc.ObjCLazyModule(
-    "PhotosUI",
-    "com.apple.photosui",
-    objc.pathForFramework("/System/Library/Frameworks/PhotosUI.framework"),
-    _metadata.__dict__,
-    None,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-    (_PhotosUI, Foundation),
-)
+    import AppKit
+    import objc
+    from . import _metadata, _PhotosUI
 
-for cls_name in (
-    "PHPickerFilter",
-    "PHPickerConfiguration",
-    "PHPickerResult",
-    "PHPickerViewController",
-):
-    try:
-        cls = objc.lookUpClass(cls_name)
-        cls.__objc_final__ = True
-    except objc.error:
-        pass
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="PhotosUI",
+        frameworkIdentifier="com.apple.PhotosUI",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/PhotosUI.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(
+            _PhotosUI,
+            AppKit,
+        ),
+        metadict=_metadata.__dict__,
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+    del sys.modules["PhotosUI._metadata"]
+
+    for cls_name in (
+        "PHPickerFilter",
+        "PHPickerConfiguration",
+        "PHPickerResult",
+        "PHPickerViewController",
+    ):
+        try:
+            cls = objc.lookUpClass(cls_name)
+            cls.__objc_final__ = True
+        except objc.error:
+            pass
 
 
-del sys.modules["PhotosUI._metadata"]
+globals().pop("_setup")()

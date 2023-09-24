@@ -335,3 +335,10 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat_Tundra.isStudioLightSupported
         )
+
+    @min_os_level("14.0")
+    def testMethods14_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.reactionEffectsEnabled)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.reactionEffectsSupported
+        )

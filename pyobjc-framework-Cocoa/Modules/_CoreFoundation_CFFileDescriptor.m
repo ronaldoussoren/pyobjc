@@ -1,5 +1,3 @@
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
-
 static void*
 mod_filedescr_retain(void* info)
 {
@@ -149,7 +147,6 @@ mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObj
     Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
     return PyTuple_GetItem((PyObject*)context.info, 1);
 }
-#endif
 
 #define COREFOUNDATION_FILEDESCRIPTOR_METHODS                                            \
     {"CFFileDescriptorCreate", (PyCFunction)mod_CFFileDescriptorCreate, METH_VARARGS,    \

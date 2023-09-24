@@ -5,33 +5,30 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions.
 """
 
-import sys
 
-import objc
-from dispatch import _metadata
-from dispatch._inlines import _inline_list_
+def _setup():
+    import sys
 
-sys.modules["dispatch"] = mod = objc.ObjCLazyModule(
-    "dispatch",
-    None,
-    None,
-    _metadata.__dict__,
-    _inline_list_,
-    {
-        "__doc__": __doc__,
-        "objc": objc,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-    },
-)
+    import Foundation
+    import objc
+    from . import _metadata
+    from . import _dispatch
+    from ._inlines import _inline_list_
 
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="dispatch",
+        frameworkIdentifier=None,
+        frameworkPath=None,
+        globals_dict=globals(),
+        inline_list=_inline_list_,
+        parents=(_dispatch, Foundation),
+        metadict=_metadata.__dict__,
+    )
 
-import dispatch._dispatch as _manual  # isort:skip # noqa: E402
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
 
-for nm in dir(_manual):
-    if nm.startswith("__"):
-        continue
-    setattr(mod, nm, getattr(_manual, nm))
+    del sys.modules["dispatch._metadata"]
 
 
-del sys.modules["dispatch._metadata"]
+globals().pop("_setup")()

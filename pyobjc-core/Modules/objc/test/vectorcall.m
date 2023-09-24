@@ -11,24 +11,8 @@
 #import <Foundation/Foundation.h>
 
 #import <GameplayKit/GameplayKit.h>
-#if PyObjC_BUILD_RELEASE >= 1013
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #import <ModelIO/ModelIO.h>
-
-#if PyObjC_BULD_RELEASE < 1013
-#define simd_uchar16 vector_uchar16
-#define simd_float2 vector_float2
-#define simd_float3 vector_float3
-#define simd_float4 vector_float4
-#define simd_double2 vector_double2
-#define simd_double3 vector_double3
-#define simd_double4 vector_double4
-#define simd_uint2 vector_uint2
-#define simd_uint3 vector_uint3
-#define simd_int2 vector_int2
-#define simd_int4 vector_int4
-#endif /*  PyObjC_BULD_RELEASE < 1013 */
 
 @interface OC_VectorCall : NSObject {
     PyObject* values;
@@ -94,36 +78,6 @@ static BOOL      shouldRaise = NO;
         Py_CLEAR(clsvalues);
     PyObjC_END_WITH_GIL
     return result;
-}
-
-- (simd_uchar16)v16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-}
-
-+ (simd_uchar16)clsv16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 }
 
 - (simd_double2)v2d
@@ -938,6 +892,118 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
     return (vector_int4){0, 1, 2, 3};
+}
+
+- (id)idv2d:(simd_double2)arg0 id:(id)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
++ (id)clsidv2d:(simd_double2)arg0 id:(id)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
+- (id)idv2d:(simd_double2)arg0 q:(long long)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("q", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
++ (id)clsidv2d:(simd_double2)arg0 q:(long long)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("q", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
 }
 
 - (id)idv2f:(simd_float2)arg0
@@ -2902,7 +2968,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idid:(id)arg0 Q:(unsigned long long)arg1 matrixfloat4x4:(matrix_float4x4)arg2
+- (id)idid:(id)arg0 Q:(unsigned long long)arg1 simdfloat4x4:(simd_float4x4)arg2
 {
     PyObject* items;
     PyObject* tmp;
@@ -2926,7 +2992,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg2);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg2);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -2935,7 +3001,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidid:(id)arg0 Q:(unsigned long long)arg1 matrixfloat4x4:(matrix_float4x4)arg2
++ (id)clsidid:(id)arg0 Q:(unsigned long long)arg1 simdfloat4x4:(simd_float4x4)arg2
 {
     PyObject* items;
     PyObject* tmp;
@@ -2959,7 +3025,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg2);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg2);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3346,7 +3412,6 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idid:(id)arg0 GKBox:(GKBox)arg1
 {
     PyObject* items;
@@ -3458,7 +3523,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 - (id)idid:(id)arg0
     MDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg1
@@ -3481,7 +3545,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3516,7 +3580,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3530,7 +3594,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idid:(id)arg0 matrixfloat2x2:(matrix_float2x2)arg1
+- (id)idid:(id)arg0 simdfloat2x2:(simd_float2x2)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3549,7 +3613,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float2x2=[2<2f>]}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3558,7 +3622,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidid:(id)arg0 matrixfloat2x2:(matrix_float2x2)arg1
++ (id)clsidid:(id)arg0 simdfloat2x2:(simd_float2x2)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3577,7 +3641,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float2x2=[2<2f>]}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3586,7 +3650,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idid:(id)arg0 matrixfloat3x3:(matrix_float3x3)arg1
+- (id)idid:(id)arg0 simdfloat3x3:(simd_float3x3)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3605,7 +3669,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3614,7 +3678,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidid:(id)arg0 matrixfloat3x3:(matrix_float3x3)arg1
++ (id)clsidid:(id)arg0 simdfloat3x3:(simd_float3x3)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3633,7 +3697,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3642,7 +3706,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idid:(id)arg0 matrixfloat4x4:(matrix_float4x4)arg1
+- (id)idid:(id)arg0 simdfloat4x4:(simd_float4x4)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3661,7 +3725,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -3670,7 +3734,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidid:(id)arg0 matrixfloat4x4:(matrix_float4x4)arg1
++ (id)clsidid:(id)arg0 simdfloat4x4:(simd_float4x4)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -3689,7 +3753,129 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg1);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
+- (id)idid:(id)arg0 simdquatf:(simd_quatf)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
++ (id)clsidid:(id)arg0 simdquatf:(simd_quatf)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
+- (id)idid:(id)arg0 simdquatf:(simd_quatf)arg1 id:(id)arg2
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg2);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return @"hello";
+}
+
++ (id)clsidid:(id)arg0 simdquatf:(simd_quatf)arg1 id:(id)arg2
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg2);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4543,7 +4729,6 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKBox:(GKBox)arg0
 {
     PyObject* items;
@@ -4747,7 +4932,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /*  PyObjC_BUILD_RELEASE >= 1012 */
 
 - (id)idMDLVoxelIndexExtent:(MDLVoxelIndexExtent)arg0
 {
@@ -4763,7 +4947,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLVoxelIndexExtent=<4i><4i>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLVoxelIndexExtent=<4i><4i>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4786,7 +4970,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLVoxelIndexExtent=<4i><4i>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLVoxelIndexExtent=<4i><4i>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4795,7 +4979,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idmatrixfloat4x4:(matrix_float4x4)arg0
+- (id)idsimdfloat4x4:(simd_float4x4)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -4809,7 +4993,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4818,7 +5002,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidmatrixfloat4x4:(matrix_float4x4)arg0
++ (id)clsidsimdfloat4x4:(simd_float4x4)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -4832,7 +5016,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4841,7 +5025,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-- (id)idmatrixfloat4x4:(matrix_float4x4)arg0 Z:(BOOL)arg1
+- (id)idsimdfloat4x4:(simd_float4x4)arg0 Z:(BOOL)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -4855,7 +5039,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -4869,7 +5053,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-+ (id)clsidmatrixfloat4x4:(matrix_float4x4)arg0 Z:(BOOL)arg1
++ (id)clsidsimdfloat4x4:(simd_float4x4)arg0 Z:(BOOL)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -4883,7 +5067,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -5367,6 +5551,50 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
     return 2500000000.0;
+}
+
+- (void)vv2d:(simd_double2)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+}
+
++ (void)clsvv2d:(simd_double2)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2d>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
 }
 
 - (void)vv2d:(simd_double2)arg0 d:(double)arg1
@@ -6237,7 +6465,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6259,7 +6487,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6281,7 +6509,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6308,7 +6536,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6321,7 +6549,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-- (void)vmatrixdouble4x4:(matrix_double4x4)arg0
+- (void)vsimddouble4x4:(simd_double4x4)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6335,7 +6563,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6343,7 +6571,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-+ (void)clsvmatrixdouble4x4:(matrix_double4x4)arg0
++ (void)clsvsimddouble4x4:(simd_double4x4)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6357,7 +6585,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6365,7 +6593,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-- (void)vmatrixdouble4x4:(matrix_double4x4)arg0 d:(double)arg1
+- (void)vsimddouble4x4:(simd_double4x4)arg0 d:(double)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -6379,7 +6607,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6392,7 +6620,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-+ (void)clsvmatrixdouble4x4:(matrix_double4x4)arg0 d:(double)arg1
++ (void)clsvsimddouble4x4:(simd_double4x4)arg0 d:(double)arg1
 {
     PyObject* items;
     PyObject* tmp;
@@ -6406,7 +6634,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6419,7 +6647,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-- (void)vmatrixfloat2x2:(matrix_float2x2)arg0
+- (void)vsimdfloat2x2:(simd_float2x2)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6433,7 +6661,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float2x2=[2<2f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6441,7 +6669,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-+ (void)clsvmatrixfloat2x2:(matrix_float2x2)arg0
++ (void)clsvsimdfloat2x2:(simd_float2x2)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6455,7 +6683,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float2x2=[2<2f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6463,7 +6691,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-- (void)vmatrixfloat3x3:(matrix_float3x3)arg0
+- (void)vsimdfloat3x3:(simd_float3x3)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6477,7 +6705,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6485,7 +6713,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-+ (void)clsvmatrixfloat3x3:(matrix_float3x3)arg0
++ (void)clsvsimdfloat3x3:(simd_float3x3)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -6499,7 +6727,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6507,105 +6735,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
 }
 
-- (void)vmatrixfloat4x4:(matrix_float4x4)arg0
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = values = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-}
-
-+ (void)clsvmatrixfloat4x4:(matrix_float4x4)arg0
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = clsvalues = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-}
-
-- (void)vmatrixfloat4x4:(matrix_float4x4)arg0 d:(double)arg1
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = values = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg1);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-}
-
-+ (void)clsvmatrixfloat4x4:(matrix_float4x4)arg0 d:(double)arg1
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = clsvalues = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg1);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
 - (void)vsimdfloat4x4:(simd_float4x4)arg0
 {
     PyObject* items;
@@ -6620,7 +6749,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6642,7 +6771,61 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+}
+
+- (void)vsimdfloat4x4:(simd_float4x4)arg0 d:(double)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+}
+
++ (void)clsvsimdfloat4x4:(simd_float4x4)arg0 d:(double)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg1);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6664,7 +6847,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatd=<4d>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatd=<4d>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6691,7 +6874,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatd=<4d>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatd=<4d>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6718,7 +6901,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6740,7 +6923,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6762,7 +6945,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6789,7 +6972,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6816,7 +6999,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6843,7 +7026,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -6855,9 +7038,6 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1012
 
 - (GKBox)GKBox
 {
@@ -6968,7 +7148,6 @@ static BOOL      shouldRaise = NO;
                          (vector_float3){-111.5, -112.5, -113.5},
                          (vector_float3){-17.5, 11.5, 122.5}}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
 {
@@ -7130,8 +7309,7 @@ static BOOL      shouldRaise = NO;
                                  (vector_int4){-20, -21, -22, -23}};
 }
 
-#if PyObjC_BUILD_RELEASE >= 1013
-- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
+- (simd_double4x4)simddouble4x4
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7143,79 +7321,12 @@ static BOOL      shouldRaise = NO;
         if (values == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
-                                       (vector_float3){4.5, 5.5, 6.5}};
-}
-
-+ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
-                                       (vector_float3){4.5, 5.5, 6.5}};
-}
-
-- (MPSImageHistogramInfo)MPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES,
-                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
-                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-
-+ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES,
-                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
-                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-- (matrix_double4x4)matrixdouble4x4
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_double4x4){
+    return (simd_double4x4){
         {(vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
          (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5}}};
 }
 
-+ (matrix_double4x4)clsmatrixdouble4x4
++ (simd_double4x4)clssimddouble4x4
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7227,12 +7338,12 @@ static BOOL      shouldRaise = NO;
         if (clsvalues == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_double4x4){
+    return (simd_double4x4){
         {(vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
          (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5}}};
 }
 
-- (matrix_double4x4)matrixdouble4x4d:(double)arg0
+- (simd_double4x4)simddouble4x4d:(double)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -7252,12 +7363,12 @@ static BOOL      shouldRaise = NO;
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_double4x4){
+    return (simd_double4x4){
         {(vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
          (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5}}};
 }
 
-+ (matrix_double4x4)clsmatrixdouble4x4d:(double)arg0
++ (simd_double4x4)clssimddouble4x4d:(double)arg0
 {
     PyObject* items;
     PyObject* tmp;
@@ -7277,12 +7388,12 @@ static BOOL      shouldRaise = NO;
         if (PyList_Append(items, tmp) == -1)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_double4x4){
+    return (simd_double4x4){
         {(vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
          (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5}}};
 }
 
-- (matrix_float2x2)matrixfloat2x2
+- (simd_float2x2)simdfloat2x2
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7294,10 +7405,10 @@ static BOOL      shouldRaise = NO;
         if (values == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_float2x2){{(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}};
+    return (simd_float2x2){{(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}};
 }
 
-+ (matrix_float2x2)clsmatrixfloat2x2
++ (simd_float2x2)clssimdfloat2x2
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7309,10 +7420,10 @@ static BOOL      shouldRaise = NO;
         if (clsvalues == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_float2x2){{(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}};
+    return (simd_float2x2){{(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}};
 }
 
-- (matrix_float3x3)matrixfloat3x3
+- (simd_float3x3)simdfloat3x3
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7324,12 +7435,12 @@ static BOOL      shouldRaise = NO;
         if (values == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
-                              (vector_float3){0.0, 1.5, 3.0},
-                              (vector_float3){0.0, 1.5, 3.0}}};
+    return (simd_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                            (vector_float3){0.0, 1.5, 3.0},
+                            (vector_float3){0.0, 1.5, 3.0}}};
 }
 
-+ (matrix_float3x3)clsmatrixfloat3x3
++ (simd_float3x3)clssimdfloat3x3
 {
     if ([self shouldRaise]) {
         shouldRaise = NO;
@@ -7341,156 +7452,11 @@ static BOOL      shouldRaise = NO;
         if (clsvalues == NULL)
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
-    return (matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
-                              (vector_float3){0.0, 1.5, 3.0},
-                              (vector_float3){0.0, 1.5, 3.0}}};
+    return (simd_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                            (vector_float3){0.0, 1.5, 3.0},
+                            (vector_float3){0.0, 1.5, 3.0}}};
 }
 
-- (matrix_float4x4)matrixfloat4x4
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-+ (matrix_float4x4)clsmatrixfloat4x4
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-- (matrix_float4x4)matrixfloat4x4id:(id)arg0 d:(double)arg1
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = values = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("@", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg1);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-+ (matrix_float4x4)clsmatrixfloat4x4id:(id)arg0 d:(double)arg1
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = clsvalues = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("@", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg1);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-- (matrix_float4x4)matrixfloat4x4d:(double)arg0
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = values = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-+ (matrix_float4x4)clsmatrixfloat4x4d:(double)arg0
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = clsvalues = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("d", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (matrix_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
 - (simd_float4x4)simdfloat4x4
 {
     if ([self shouldRaise]) {
@@ -7525,6 +7491,116 @@ static BOOL      shouldRaise = NO;
          (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
 }
 
+- (simd_float4x4)simdfloat4x4id:(id)arg0 d:(double)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
++ (simd_float4x4)clssimdfloat4x4id:(id)arg0 d:(double)arg1
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("@", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
+- (simd_float4x4)simdfloat4x4d:(double)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
++ (simd_float4x4)clssimdfloat4x4d:(double)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("d", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
 - (simd_float4x4)simdfloat4x4simdfloat4x4:(simd_float4x4)arg0 id:(id)arg1
 {
     PyObject* items;
@@ -7539,7 +7615,7 @@ static BOOL      shouldRaise = NO;
         items = values = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -7569,7 +7645,7 @@ static BOOL      shouldRaise = NO;
         items = clsvalues = PyList_New(0);
         if (items == NULL)
             PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &arg0);
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
         if (tmp == NULL)
             PyObjC_GIL_FORWARD_EXC();
         if (PyList_Append(items, tmp) == -1)
@@ -7706,7 +7782,102 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+
+- (simd_uchar16)v16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+}
+
++ (simd_uchar16)clsv16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+}
+
+- (MPSImageHistogramInfo)MPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES,
+                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
+                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
++ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES,
+                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
+                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
+- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
+                                       (vector_float3){4.5, 5.5, 6.5}};
+}
+
++ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
+                                       (vector_float3){4.5, 5.5, 6.5}};
+}
 
 @end
 
@@ -7715,19 +7886,6 @@ static BOOL      shouldRaise = NO;
 @end
 
 @implementation OC_VectorCallInvoke
-
-+ (id)v16COn:(OC_VectorCall*)value
-{
-    id           cinter;
-    simd_uchar16 result = [value v16C];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("<16C>", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
 
 + (id)v2dOn:(OC_VectorCall*)value
 {
@@ -7969,6 +8127,32 @@ static BOOL      shouldRaise = NO;
     id        cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("<4i>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2didOn:(OC_VectorCall*)value
+{
+    id result = [value idv2d:(vector_double2){0.0, 1.5} id:@"hello"];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)idv2dqOn:(OC_VectorCall*)value
+{
+    id result = [value idv2d:(vector_double2){0.0, 1.5} q:-17592186044416];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -8363,14 +8547,14 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)ididQmatrixfloat4x4On:(OC_VectorCall*)value
++ (id)ididQsimdfloat4x4On:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
                           Q:35184372088832
-             matrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+               simdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -8440,7 +8624,6 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)ididGKBoxOn:(OC_VectorCall*)value
 {
     id result = [value
@@ -8470,7 +8653,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 + (id)ididMDLAxisAlignedBoundingBoxfOn:(OC_VectorCall*)value
 {
@@ -8489,10 +8671,10 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)ididmatrixfloat2x2On:(OC_VectorCall*)value
++ (id)ididsimdfloat2x2On:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
-             matrixfloat2x2:(matrix_float2x2){
+               simdfloat2x2:(simd_float2x2){
                                 {(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}}];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
@@ -8504,12 +8686,12 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)ididmatrixfloat3x3On:(OC_VectorCall*)value
++ (id)ididsimdfloat3x3On:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
-             matrixfloat3x3:(matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
-                                               (vector_float3){0.0, 1.5, 3.0},
-                                               (vector_float3){0.0, 1.5, 3.0}}}];
+               simdfloat3x3:(simd_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                                             (vector_float3){0.0, 1.5, 3.0},
+                                             (vector_float3){0.0, 1.5, 3.0}}}];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -8520,13 +8702,44 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)ididmatrixfloat4x4On:(OC_VectorCall*)value
++ (id)ididsimdfloat4x4On:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
-             matrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                               (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+               simdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                             (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididsimdquatfOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                  simdquatf:(simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}}];
+    id cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("@", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)ididsimdquatfidOn:(OC_VectorCall*)value
+{
+    id result = [value idid:@"hello"
+                  simdquatf:(simd_quatf) {
+                      (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
+                  }
+                         id:@"hello"];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -8692,7 +8905,6 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKBoxOn:(OC_VectorCall*)value
 {
     id result = [value
@@ -8752,7 +8964,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 + (id)idMDLVoxelIndexExtentOn:(OC_VectorCall*)value
 {
@@ -8769,13 +8980,13 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)idmatrixfloat4x4On:(OC_VectorCall*)value
++ (id)idsimdfloat4x4On:(OC_VectorCall*)value
 {
     id result =
-        [value idmatrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
-                                                   (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                                   (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                                   (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+        [value idsimdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                               (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -8786,9 +8997,9 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)idmatrixfloat4x4ZOn:(OC_VectorCall*)value
++ (id)idsimdfloat4x4ZOn:(OC_VectorCall*)value
 {
-    id result = [value idmatrixfloat4x4:(matrix_float4x4) {
+    id result = [value idsimdfloat4x4:(simd_float4x4) {
         {
             (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
                 (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
@@ -8797,7 +9008,7 @@ static BOOL      shouldRaise = NO;
             }
         }
     }
-                                      Z:NO];
+                                    Z:NO];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -8909,6 +9120,11 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
++ (void)vv2dOn:(OC_VectorCall*)value
+{
+    [value vv2d:(vector_double2){0.0, 1.5}];
+}
+
 + (void)vv2ddOn:(OC_VectorCall*)value
 {
     [value vv2d:(vector_double2){0.0, 1.5} d:-557000000000.0];
@@ -9009,17 +9225,17 @@ static BOOL      shouldRaise = NO;
                                     Z:NO];
 }
 
-+ (void)vmatrixdouble4x4On:(OC_VectorCall*)value
++ (void)vsimddouble4x4On:(OC_VectorCall*)value
 {
-    [value vmatrixdouble4x4:(matrix_double4x4){{(vector_double4){0.0, 1.5, 3.0, 4.5},
-                                                (vector_double4){0.0, 1.5, 3.0, 4.5},
-                                                (vector_double4){0.0, 1.5, 3.0, 4.5},
-                                                (vector_double4){0.0, 1.5, 3.0, 4.5}}}];
+    [value vsimddouble4x4:(simd_double4x4){{(vector_double4){0.0, 1.5, 3.0, 4.5},
+                                            (vector_double4){0.0, 1.5, 3.0, 4.5},
+                                            (vector_double4){0.0, 1.5, 3.0, 4.5},
+                                            (vector_double4){0.0, 1.5, 3.0, 4.5}}}];
 }
 
-+ (void)vmatrixdouble4x4dOn:(OC_VectorCall*)value
++ (void)vsimddouble4x4dOn:(OC_VectorCall*)value
 {
-    [value vmatrixdouble4x4:(matrix_double4x4) {
+    [value vsimddouble4x4:(simd_double4x4) {
         {
             (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
                 (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4)
@@ -9028,33 +9244,33 @@ static BOOL      shouldRaise = NO;
             }
         }
     }
-                          d:-557000000000.0];
+                        d:-557000000000.0];
 }
 
-+ (void)vmatrixfloat2x2On:(OC_VectorCall*)value
++ (void)vsimdfloat2x2On:(OC_VectorCall*)value
 {
-    [value vmatrixfloat2x2:(matrix_float2x2){
-                               {(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}}];
+    [value vsimdfloat2x2:(simd_float2x2){
+                             {(vector_float2){0.0, 1.5}, (vector_float2){0.0, 1.5}}}];
 }
 
-+ (void)vmatrixfloat3x3On:(OC_VectorCall*)value
++ (void)vsimdfloat3x3On:(OC_VectorCall*)value
 {
-    [value vmatrixfloat3x3:(matrix_float3x3){{(vector_float3){0.0, 1.5, 3.0},
-                                              (vector_float3){0.0, 1.5, 3.0},
-                                              (vector_float3){0.0, 1.5, 3.0}}}];
+    [value vsimdfloat3x3:(simd_float3x3){{(vector_float3){0.0, 1.5, 3.0},
+                                          (vector_float3){0.0, 1.5, 3.0},
+                                          (vector_float3){0.0, 1.5, 3.0}}}];
 }
 
-+ (void)vmatrixfloat4x4On:(OC_VectorCall*)value
++ (void)vsimdfloat4x4On:(OC_VectorCall*)value
 {
-    [value vmatrixfloat4x4:(matrix_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
-                                              (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                              (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                              (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+    [value vsimdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
+                                          (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
 }
 
-+ (void)vmatrixfloat4x4dOn:(OC_VectorCall*)value
++ (void)vsimdfloat4x4dOn:(OC_VectorCall*)value
 {
-    [value vmatrixfloat4x4:(matrix_float4x4) {
+    [value vsimdfloat4x4:(simd_float4x4) {
         {
             (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
                 (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
@@ -9063,16 +9279,7 @@ static BOOL      shouldRaise = NO;
             }
         }
     }
-                         d:-557000000000.0];
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-+ (void)vsimdfloat4x4On:(OC_VectorCall*)value
-{
-    [value vsimdfloat4x4:(simd_float4x4){{(vector_float4){0.0, 1.5, 3.0, 4.5},
-                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                          (vector_float4){0.0, 1.5, 3.0, 4.5},
-                                          (vector_float4){0.0, 1.5, 3.0, 4.5}}}];
+                       d:-557000000000.0];
 }
 
 + (void)vsimdquatddOn:(OC_VectorCall*)value
@@ -9103,9 +9310,7 @@ static BOOL      shouldRaise = NO;
     }
                     d:-557000000000.0];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013*/
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKBoxOn:(OC_VectorCall*)value
 {
     id    cinter;
@@ -9144,7 +9349,6 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 + (id)MDLAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
 {
@@ -9152,7 +9356,7 @@ static BOOL      shouldRaise = NO;
     MDLAxisAlignedBoundingBox result = [value MDLAxisAlignedBoundingBox];
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter =
-            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+            PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9167,7 +9371,7 @@ static BOOL      shouldRaise = NO;
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter =
-            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+            PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9181,7 +9385,7 @@ static BOOL      shouldRaise = NO;
     id                        cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter =
-            PyObjC_ObjCToPython("{_MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
+            PyObjC_ObjCToPython("{MDLAxisAlignedBoundingBox=<3f><3f>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9194,7 +9398,7 @@ static BOOL      shouldRaise = NO;
     id                  cinter;
     MDLVoxelIndexExtent result = [value MDLVoxelIndexExtent];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_MDLVoxelIndexExtent=<4i><4i>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{MDLVoxelIndexExtent=<4i><4i>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9202,14 +9406,12 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1013
-+ (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
++ (id)simddouble4x4On:(OC_VectorCall*)value
 {
-    id                        cinter;
-    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
+    id             cinter;
+    simd_double4x4 result = [value simddouble4x4];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter =
-            PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9217,27 +9419,25 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
++ (id)simddouble4x4dOn:(OC_VectorCall*)value
 {
-    id                    cinter;
-    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
+    simd_double4x4 result = [value simddouble4x4d:-557000000000.0];
+    id             cinter;
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter =
-            PyObjC_ObjCToPython("{_MPSImageHistogramInfo=QZ<4f><4f>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_double4x4=[4<4d>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-+ (id)matrixdouble4x4On:(OC_VectorCall*)value
++ (id)simdfloat2x2On:(OC_VectorCall*)value
 {
-    id               cinter;
-    matrix_double4x4 result = [value matrixdouble4x4];
+    id            cinter;
+    simd_float2x2 result = [value simdfloat2x2];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float2x2=[2<2f>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9245,12 +9445,12 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)matrixdouble4x4dOn:(OC_VectorCall*)value
++ (id)simdfloat3x3On:(OC_VectorCall*)value
 {
-    matrix_double4x4 result = [value matrixdouble4x4d:-557000000000.0];
-    id               cinter;
+    id            cinter;
+    simd_float3x3 result = [value simdfloat3x3];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_double4x4=[4<4d>]}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9258,78 +9458,38 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-+ (id)matrixfloat2x2On:(OC_VectorCall*)value
-{
-    id              cinter;
-    matrix_float2x2 result = [value matrixfloat2x2];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float2x2=[2<2f>]}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-+ (id)matrixfloat3x3On:(OC_VectorCall*)value
-{
-    id              cinter;
-    matrix_float3x3 result = [value matrixfloat3x3];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float3x3=[3<3f>]}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-+ (id)matrixfloat4x4On:(OC_VectorCall*)value
-{
-    id              cinter;
-    matrix_float4x4 result = [value matrixfloat4x4];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-+ (id)matrixfloat4x4iddOn:(OC_VectorCall*)value
-{
-    matrix_float4x4 result = [value matrixfloat4x4id:@"hello" d:-557000000000.0];
-    id              cinter;
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-+ (id)matrixfloat4x4dOn:(OC_VectorCall*)value
-{
-    matrix_float4x4 result = [value matrixfloat4x4d:-557000000000.0];
-    id              cinter;
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_matrix_float4x4=[4<4f>]}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
 + (id)simdfloat4x4On:(OC_VectorCall*)value
 {
     id            cinter;
     simd_float4x4 result = [value simdfloat4x4];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdfloat4x4iddOn:(OC_VectorCall*)value
+{
+    simd_float4x4 result = [value simdfloat4x4id:@"hello" d:-557000000000.0];
+    id            cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)simdfloat4x4dOn:(OC_VectorCall*)value
+{
+    simd_float4x4 result = [value simdfloat4x4d:-557000000000.0];
+    id            cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9351,7 +9511,7 @@ static BOOL      shouldRaise = NO;
                                                         id:@"hello"];
     id            cinter;
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_simd_float4x4=[4<4f>]}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9364,7 +9524,7 @@ static BOOL      shouldRaise = NO;
     simd_quatd result = [value simdquatdd:-557000000000.0];
     id         cinter;
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatd=<4d>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_quatd=<4d>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9377,7 +9537,7 @@ static BOOL      shouldRaise = NO;
     id         cinter;
     simd_quatf result = [value simdquatf];
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -9390,14 +9550,54 @@ static BOOL      shouldRaise = NO;
     simd_quatf result = [value simdquatfd:-557000000000.0];
     id         cinter;
     PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("{_simd_quatf=<4f>}", &result);
+        PyObject* inter = PyObjC_ObjCToPython("{simd_quatf=<4f>}", &result);
         if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+
++ (id)v16COn:(OC_VectorCall*)value
+{
+    id           cinter;
+    simd_uchar16 result = [value v16C];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<16C>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
+{
+    id                    cinter;
+    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{MPSImageHistogramInfo=QZ<4f><4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
++ (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+    id                        cinter;
+    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
 
 @end
 

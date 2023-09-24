@@ -178,10 +178,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -190,10 +187,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -202,10 +196,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -214,10 +205,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -240,50 +228,35 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "f",
-        "d"
-       ]
+       "type_override": "d"
       },
       "selector": "flyModeVelocity"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "f",
-        "d"
-       ]
+       "type_override": "d"
       },
       "selector": "panSensitivity"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "f",
-        "d"
-       ]
+       "type_override": "d"
       },
       "selector": "truckSensitivity"
      },
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "f",
-        "d"
-       ]
+       "type_override": "d"
       },
       "selector": "rotationSensitivity"
      },
      {
       "args": {
        "1": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -292,10 +265,7 @@
      {
       "args": {
        "1": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -304,10 +274,7 @@
      {
       "args": {
        "0": {
-        "type_override": [
-         "f",
-         "d"
-        ]
+        "type_override": "d"
        }
       },
       "class_method": false,
@@ -386,10 +353,7 @@
         "type_override": "n^v"
        },
        "1": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -458,20 +422,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "debugOptions"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -480,20 +438,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "renderingAPI"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -502,20 +454,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "colorPixelFormat"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -524,20 +470,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "depthPixelFormat"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -546,20 +486,14 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": [
-        "I",
-        "Q"
-       ]
+       "type_override": "Q"
       },
       "selector": "stencilPixelFormat"
      },
      {
       "args": {
        "0": {
-        "type_override": [
-         "I",
-         "Q"
-        ]
+        "type_override": "Q"
        }
       },
       "class_method": false,
@@ -666,10 +600,7 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "f",
-            "d"
-           ]
+           "typestr": "d"
           }
          },
          "retval": {
@@ -1507,22 +1438,13 @@
            "typestr": "^^v"
           },
           "2": {
-           "typestr": [
-            "^I",
-            "^Q"
-           ]
+           "typestr": "^Q"
           },
           "3": {
-           "typestr": [
-            "^I",
-            "^Q"
-           ]
+           "typestr": "^Q"
           },
           "4": {
-           "typestr": [
-            "i",
-            "q"
-           ]
+           "typestr": "q"
           }
          },
          "retval": {
@@ -1546,22 +1468,13 @@
            "typestr": "^^v"
           },
           "2": {
-           "typestr": [
-            "^I",
-            "^Q"
-           ]
+           "typestr": "^Q"
           },
           "3": {
-           "typestr": [
-            "i",
-            "q"
-           ]
+           "typestr": "q"
           },
           "4": {
-           "typestr": [
-            "i",
-            "q"
-           ]
+           "typestr": "q"
           },
           "5": {
            "typestr": "f"
@@ -1634,16 +1547,10 @@
            "typestr": "^v"
           },
           "1": {
-           "typestr": [
-            "{SCNVector3=fff}",
-            "{SCNVector3=ddd}"
-           ]
+           "typestr": "{SCNVector3=ddd}"
           },
           "2": {
-           "typestr": [
-            "{SCNVector3=fff}",
-            "{SCNVector3=ddd}"
-           ]
+           "typestr": "{SCNVector3=ddd}"
           },
           "3": {
            "typestr": "f"
@@ -1656,10 +1563,7 @@
           }
          },
          "retval": {
-          "typestr": [
-           "{SCNVector3=fff}",
-           "{SCNVector3=ddd}"
-          ]
+          "typestr": "{SCNVector3=ddd}"
          }
         }
        }
@@ -1858,10 +1762,7 @@
            "typestr": "f"
           },
           "2": {
-           "typestr": [
-            "i",
-            "q"
-           ]
+           "typestr": "q"
           },
           "3": {
            "typestr": "@"
@@ -1976,17 +1877,11 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{CATransform3D=ffffffffffffffff}",
-            "{CATransform3D=dddddddddddddddd}"
-           ]
+           "typestr": "{CATransform3D=dddddddddddddddd}"
           }
          },
          "retval": {
-          "typestr": [
-           "{CATransform3D=ffffffffffffffff}",
-           "{CATransform3D=dddddddddddddddd}"
-          ]
+          "typestr": "{CATransform3D=dddddddddddddddd}"
          }
         }
        }
@@ -2009,17 +1904,11 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{SCNVector3=fff}",
-            "{SCNVector3=ddd}"
-           ]
+           "typestr": "{SCNVector3=ddd}"
           }
          },
          "retval": {
-          "typestr": [
-           "{SCNVector3=fff}",
-           "{SCNVector3=ddd}"
-          ]
+          "typestr": "{SCNVector3=ddd}"
          }
         }
        }
@@ -2042,17 +1931,11 @@
            "typestr": "@"
           },
           "2": {
-           "typestr": [
-            "{SCNVector4=ffff}",
-            "{SCNVector4=dddd}"
-           ]
+           "typestr": "{SCNVector4=dddd}"
           }
          },
          "retval": {
-          "typestr": [
-           "{SCNVector4=ffff}",
-           "{SCNVector4=dddd}"
-          ]
+          "typestr": "{SCNVector4=dddd}"
          }
         }
        }

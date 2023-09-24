@@ -404,7 +404,7 @@
     "typestr": "^{__CFString=}"
    },
    "kCVIndefiniteTime": {
-    "typestr": "{_CVTime=qii}"
+    "typestr": "{CVTime=qii}"
    },
    "kCVMetalTextureCacheMaximumTextureAgeKey": {
     "typestr": "^{__CFString=}"
@@ -653,7 +653,7 @@
     "typestr": "^{__CFString=}"
    },
    "kCVZeroTime": {
-    "typestr": "{_CVTime=qii}"
+    "typestr": "{CVTime=qii}"
    }
   },
   "formal_protocols": {},
@@ -916,7 +916,7 @@
      },
      {
       "name": "outTime",
-      "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+      "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
      }
     ],
     "retval": {
@@ -931,7 +931,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CVTime=qii}"
+     "typestr": "{CVTime=qii}"
     }
    },
    "CVDisplayLinkGetOutputVideoLatency": {
@@ -942,7 +942,7 @@
      }
     ],
     "retval": {
-     "typestr": "{_CVTime=qii}"
+     "typestr": "{CVTime=qii}"
     }
    },
    "CVDisplayLinkGetTypeID": {
@@ -1036,10 +1036,10 @@
          "typestr": "^{__CVDisplayLink=}"
         },
         {
-         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
         },
         {
-         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
         },
         {
          "typestr": "Q"
@@ -1112,11 +1112,11 @@
      },
      {
       "name": "inTime",
-      "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+      "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
      },
      {
       "name": "outTime",
-      "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+      "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
      }
     ],
     "retval": {
@@ -1695,19 +1695,19 @@
      },
      {
       "name": "lowerLeft",
-      "typestr": "[2f]"
+      "typestr": "^f"
      },
      {
       "name": "lowerRight",
-      "typestr": "[2f]"
+      "typestr": "^f"
      },
      {
       "name": "upperRight",
-      "typestr": "[2f]"
+      "typestr": "^f"
      },
      {
       "name": "upperLeft",
-      "typestr": "[2f]"
+      "typestr": "^f"
      }
     ],
     "retval": {
@@ -2550,7 +2550,7 @@
      "flags"
     ],
     "special": true,
-    "typestr": "{_CVTime=qii}"
+    "typestr": "{CVTime=qii}"
    },
    "CVTimeStamp": {
     "fieldnames": [
@@ -2565,7 +2565,7 @@
      "reserved"
     ],
     "special": true,
-    "typestr": "{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
+    "typestr": "{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
    }
   }
  },

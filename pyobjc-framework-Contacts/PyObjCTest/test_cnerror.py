@@ -16,6 +16,7 @@ class TestCNError(TestCase):
         self.assertEqual(Contacts.CNErrorCodeNoAccessableWritableContainers, 101)
         self.assertEqual(Contacts.CNErrorCodeUnauthorizedKeys, 102)
         self.assertEqual(Contacts.CNErrorCodeFeatureDisabledByUser, 103)
+        self.assertEqual(Contacts.CNErrorCodeFeatureNotAvailable, 104)
         self.assertEqual(Contacts.CNErrorCodeRecordDoesNotExist, 200)
         self.assertEqual(Contacts.CNErrorCodeInsertedRecordAlreadyExists, 201)
         self.assertEqual(Contacts.CNErrorCodeContainmentCycle, 202)

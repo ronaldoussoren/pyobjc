@@ -15,6 +15,9 @@ class TestVZError(TestCase):
         self.assertEqual(Virtualization.VZErrorOutOfDiskSpace, 8)
         self.assertEqual(Virtualization.VZErrorOperationCancelled, 9)
         self.assertEqual(Virtualization.VZErrorNotSupported, 10)
+        self.assertEqual(Virtualization.VZErrorSave, 11)
+        self.assertEqual(Virtualization.VZErrorRestore, 12)
+
         self.assertEqual(Virtualization.VZErrorRestoreImageCatalogLoadFailed, 10001)
         self.assertEqual(Virtualization.VZErrorInvalidRestoreImageCatalog, 10002)
         self.assertEqual(Virtualization.VZErrorNoSupportedRestoreImagesInCatalog, 10003)
@@ -22,3 +25,7 @@ class TestVZError(TestCase):
         self.assertEqual(Virtualization.VZErrorInvalidRestoreImage, 10005)
         self.assertEqual(Virtualization.VZErrorInstallationRequiresUpdate, 10006)
         self.assertEqual(Virtualization.VZErrorInstallationFailed, 10007)
+        self.assertEqual(
+            Virtualization.VZErrorNetworkBlockDeviceNegotiationFailed, 20001
+        )
+        self.assertEqual(Virtualization.VZErrorNetworkBlockDeviceDisconnected, 20002)

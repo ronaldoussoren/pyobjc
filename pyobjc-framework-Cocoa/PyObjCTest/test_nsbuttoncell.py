@@ -56,19 +56,34 @@ class TestNSButtonCell(TestCase):
         self.assertEqual(AppKit.NSButtonTypeAccelerator, 8)
         self.assertEqual(AppKit.NSButtonTypeMultiLevelAccelerator, 9)
 
-        self.assertEqual(AppKit.NSBezelStyleRounded, 1)
-        self.assertEqual(AppKit.NSBezelStyleRegularSquare, 2)
+        self.assertEqual(AppKit.NSBezelStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSBezelStylePush, 1)
+        self.assertEqual(AppKit.NSBezelStyleFlexiblePush, 2)
         self.assertEqual(AppKit.NSBezelStyleDisclosure, 5)
-        self.assertEqual(AppKit.NSBezelStyleShadowlessSquare, 6)
         self.assertEqual(AppKit.NSBezelStyleCircular, 7)
-        self.assertEqual(AppKit.NSBezelStyleTexturedSquare, 8)
         self.assertEqual(AppKit.NSBezelStyleHelpButton, 9)
         self.assertEqual(AppKit.NSBezelStyleSmallSquare, 10)
-        self.assertEqual(AppKit.NSBezelStyleTexturedRounded, 11)
-        self.assertEqual(AppKit.NSBezelStyleRoundRect, 12)
-        self.assertEqual(AppKit.NSBezelStyleRecessed, 13)
-        self.assertEqual(AppKit.NSBezelStyleRoundedDisclosure, 14)
-        self.assertEqual(AppKit.NSBezelStyleInline, 15)
+        self.assertEqual(AppKit.NSBezelStyleToolbar, 11)
+        self.assertEqual(AppKit.NSBezelStyleAccessoryBarAction, 12)
+        self.assertEqual(AppKit.NSBezelStyleAccessoryBar, 13)
+        self.assertEqual(AppKit.NSBezelStylePushDisclosure, 14)
+        self.assertEqual(AppKit.NSBezelStyleBadge, 15)
+
+        self.assertEqual(AppKit.NSBezelStyleRounded, AppKit.NSBezelStylePush)
+        self.assertEqual(
+            AppKit.NSBezelStyleRegularSquare, AppKit.NSBezelStyleFlexiblePush
+        )
+        self.assertEqual(AppKit.NSBezelStyleShadowlessSquare, 6)
+        self.assertEqual(AppKit.NSBezelStyleTexturedSquare, 8)
+        self.assertEqual(AppKit.NSBezelStyleTexturedRounded, AppKit.NSBezelStyleToolbar)
+        self.assertEqual(
+            AppKit.NSBezelStyleRoundRect, AppKit.NSBezelStyleAccessoryBarAction
+        )
+        self.assertEqual(AppKit.NSBezelStyleRecessed, AppKit.NSBezelStyleAccessoryBar)
+        self.assertEqual(
+            AppKit.NSBezelStyleRoundedDisclosure, AppKit.NSBezelStylePushDisclosure
+        )
+        self.assertEqual(AppKit.NSBezelStyleInline, AppKit.NSBezelStyleBadge)
 
     @min_os_level("10.7")
     def testConstants10_7(self):

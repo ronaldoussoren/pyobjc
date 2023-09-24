@@ -4,32 +4,28 @@ Python mapping for the ApplicationServices framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import sys
 
-import CoreText
-import HIServices
-import objc
-import Quartz.CoreGraphics
-import Quartz.ImageIO
 
-# import ATS
-# import ColorSync
-# import LangAnalysis
-# import PrintCore
-# import QD
-# import SpeechSynthesis
+def _setup():
+    import CoreText
+    import HIServices
+    import Quartz
+    import objc
 
-sys.modules["ApplicationServices"] = mod = objc.ObjCLazyModule(
-    "ApplicationServices",
-    "com.apple.ApplicationServices",
-    objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework"),
-    {},
-    None,
-    {
-        "__doc__": __doc__,
-        "__path__": __path__,
-        "__loader__": globals().get("__loader__", None),
-        "objc": objc,
-    },
-    (Quartz.ImageIO, Quartz.CoreGraphics, HIServices, CoreText),
-)
+    dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
+        name="ApplicationServices",
+        frameworkIdentifier="com.apple.ApplicationServices",
+        frameworkPath=objc.pathForFramework(
+            "/System/Library/Frameworks/ApplicationServices.framework"
+        ),
+        globals_dict=globals(),
+        inline_list=None,
+        parents=(Quartz, HIServices, CoreText),
+        metadict={},
+    )
+
+    globals()["__dir__"] = dir_func
+    globals()["__getattr__"] = getattr_func
+
+
+globals().pop("_setup")()

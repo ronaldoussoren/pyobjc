@@ -118,6 +118,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetResourceTypeFullSizePairedVideo, 10)
         self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePairedVideo, 11)
         self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBaseVideo, 12)
+        self.assertEqual(Photos.PHAssetResourceTypePhotoProxy, 19)
 
         self.assertEqual(Photos.PHAssetPlaybackStyleUnsupported, 0)
         self.assertEqual(Photos.PHAssetPlaybackStyleImage, 1)

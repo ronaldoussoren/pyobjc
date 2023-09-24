@@ -44,10 +44,23 @@ class TestLAContext(TestCase):
         # self.assertArgIsBlock(LocalAuthentication.LAContext.withCurrentContextExecute_queue_, 0, b"v")
 
     def testConstants(self):
-        self.assertEqual(LocalAuthentication.LABiometryTypeNone, 0)
+        self.assertEqual(
+            LocalAuthentication.LABiometryTypeNone,
+            LocalAuthentication.kLABiometryTypeNone,
+        )
         self.assertEqual(LocalAuthentication.LABiometryNone, 0)
-        self.assertEqual(LocalAuthentication.LABiometryTypeTouchID, 1)
-        self.assertEqual(LocalAuthentication.LABiometryTypeFaceID, 2)
+        self.assertEqual(
+            LocalAuthentication.LABiometryTypeTouchID,
+            LocalAuthentication.kLABiometryTypeTouchID,
+        )
+        self.assertEqual(
+            LocalAuthentication.LABiometryTypeFaceID,
+            LocalAuthentication.kLABiometryTypeFaceID,
+        )
+        self.assertEqual(
+            LocalAuthentication.LABiometryTypeOpticID,
+            LocalAuthentication.kLABiometryTypeOpticID,
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):

@@ -5,7 +5,8 @@ import HealthKit
 class TestHKDefines(TestCase):
     def test_constants(self):
         self.assertIsEnumType(HealthKit.HKErrorCode)
-        self.assertEqual(HealthKit.HKNoError, 0)
+        self.assertEqual(HealthKit.HKUnknownError, 0)
+        self.assertEqual(HealthKit.HKNoError, HealthKit.HKUnknownError)
         self.assertEqual(HealthKit.HKErrorHealthDataUnavailable, 1)
         self.assertEqual(HealthKit.HKErrorHealthDataRestricted, 2)
         self.assertEqual(HealthKit.HKErrorInvalidArgument, 3)
@@ -17,6 +18,9 @@ class TestHKDefines(TestCase):
         self.assertEqual(HealthKit.HKErrorUserExitedWorkoutSession, 9)
         self.assertEqual(HealthKit.HKErrorRequiredAuthorizationDenied, 10)
         self.assertEqual(HealthKit.HKErrorNoData, 11)
+        self.assertEqual(HealthKit.HKErrorWorkoutActivityNotAllowed, 12)
+        self.assertEqual(HealthKit.HKErrorDataSizeExceeded, 13)
+        self.assertEqual(HealthKit.HKErrorBackgroundWorkoutSessionNotAllowed, 14)
 
         self.assertIsEnumType(HealthKit.HKUpdateFrequency)
         self.assertEqual(HealthKit.HKUpdateFrequencyImmediate, 1)

@@ -43,8 +43,29 @@ class TestNSTextInputClientHelper(AppKit.NSObject):
     def drawsVerticallyForCharacterAtIndex_(self, i):
         return 1
 
+    def preferredTextAccessoryPlacement(self):
+        return 1
+
+    def selectionRect(self):
+        return 1
+
+    def documentVisibleRect(self):
+        return 1
+
 
 class TestNSTextInputClient(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSTextCursorAccessoryPlacement)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementUnspecified, 0)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementBackward, 1)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementForward, 2)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementInvisible, 3)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementCenter, 4)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenLeft, 5)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenTop, 6)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenRight, 7)
+        self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenBottom, 8)
+
     @min_os_level("10.5")
     def testMethods(self):
         self.assertProtocolExists("NSTextInputClient")
@@ -127,8 +148,6 @@ class TestNSTextInputClient(TestCase):
             TestNSTextInputClientHelper.windowLevel, objc._C_NSInteger
         )
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(
             TestNSTextInputClientHelper.drawsVerticallyForCharacterAtIndex_
         )
@@ -136,4 +155,15 @@ class TestNSTextInputClient(TestCase):
             TestNSTextInputClientHelper.drawsVerticallyForCharacterAtIndex_,
             0,
             objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestNSTextInputClientHelper.preferredTextAccessoryPlacement,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestNSTextInputClientHelper.selectionRect, AppKit.NSRect.__typestr__
+        )
+        self.assertResultHasType(
+            TestNSTextInputClientHelper.documentVisibleRect, AppKit.NSRect.__typestr__
         )

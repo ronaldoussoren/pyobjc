@@ -25,3 +25,8 @@ class TestAVOutputSettingsAssistant(TestCase):
     @min_os_level("12.1")
     def testConstants12_1(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetHEVC7680x4320, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC960x960, str)
+        self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC1440x1440, str)

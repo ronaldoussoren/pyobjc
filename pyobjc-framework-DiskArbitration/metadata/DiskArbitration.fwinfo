@@ -26,7 +26,7 @@
   "functions": {
    "DADissenterGetTypeID": {
     "retval": {
-     "typestr": [ "I", "Q"]
+     "typestr": "Q"
     }
    },
    "DAApprovalSessionCreate": {
@@ -58,23 +58,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__DADissenter=}",
-         false
-        ]
+        "typestr": "^{__DADissenter=}"
        }
       }
      },
@@ -83,29 +74,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -169,29 +148,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -222,29 +189,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -259,29 +214,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -297,29 +240,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -343,29 +274,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__DADissenter=}",
-          false
-         ]
+         "typestr": "^{__DADissenter=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -400,23 +319,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -432,29 +342,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^{__CFArray=}",
-          false
-         ]
+         "typestr": "^{__CFArray=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -469,23 +367,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -500,23 +389,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__DADissenter=}",
-         false
-        ]
+        "typestr": "^{__DADissenter=}"
        }
       }
      },
@@ -531,23 +411,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__DADissenter=}",
-         false
-        ]
+        "typestr": "^{__DADissenter=}"
        }
       }
      },
@@ -562,23 +433,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "v",
-         false
-        ]
+        "typestr": "v"
        }
       }
      },
@@ -593,23 +455,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__DADisk=}",
-          false
-         ]
+         "typestr": "^{__DADisk=}"
         },
         {
-         "typestr": [
-          "^v",
-          false
-         ]
+         "typestr": "^v"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{__DADissenter=}",
-         false
-        ]
+        "typestr": "^{__DADissenter=}"
        }
       }
      },

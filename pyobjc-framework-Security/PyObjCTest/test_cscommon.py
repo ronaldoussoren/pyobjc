@@ -114,6 +114,7 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCSCheckTrustedAnchors, 1 << 27)
         self.assertEqual(Security.kSecCSQuickCheck, 1 << 26)
         self.assertEqual(Security.kSecCSApplyEmbeddedPolicy, 1 << 25)
+        self.assertEqual(Security.kSecCSStripDisallowedXattrs, 1 << 24)
 
         self.assertEqual(Security.kSecCodeSignatureHost, 0x0001)
         self.assertEqual(Security.kSecCodeSignatureAdhoc, 0x0002)
@@ -152,3 +153,7 @@ class TestCSCommon(TestCase):
     @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecCFErrorResourceSideband, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(Security.kSecCFErrorResourceRecursive, str)

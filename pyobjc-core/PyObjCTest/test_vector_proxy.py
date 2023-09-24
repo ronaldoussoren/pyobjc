@@ -55,12 +55,12 @@ GKBox = objc.createStructType("GKBox", b"{GKBox=<3f><3f>}", ["boxMax", "boxMin"]
 GKQuad = objc.createStructType("GKQuad", b"{GKQuad=<2f><2f>}", ["quadMax", "quadMin"])
 MDLAxisAlignedBoundingBox = objc.createStructType(
     "MDLAxisAlignedBoundingBox",
-    b"{_MDLAxisAlignedBoundingBox=<3f><3f>}",
+    b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
     ["maxBounds", "minBounds"],
 )
 MDLVoxelIndexExtent = objc.createStructType(
     "MDLVoxelIndexExtent",
-    b"{_MDLVoxelIndexExtent=<4i><4i>}",
+    b"{MDLVoxelIndexExtent=<4i><4i>}",
     ["maximumExtent", "minimumExtent"],
 )
 MPSAxisAlignedBoundingBox = objc.createStructType(
@@ -70,7 +70,7 @@ MPSAxisAlignedBoundingBox = objc.createStructType(
 )
 MPSImageHistogramInfo = objc.createStructType(
     "MPSImageHistogramInfo",
-    b"{_MPSImageHistogramInfo=QZ<4f><4f>}",
+    b"{MPSImageHistogramInfo=QZ<4f><4f>}",
     ["numberOfHistogramEntries", "histogramForAlpha", "minPixelValue", "maxPixelValue"],
 )
 
@@ -143,22 +143,22 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"OC_Vector",
     b"getMatrixDouble4x4",
-    {"full_signature": simd.matrix_double4x4.__typestr__ + b"@:"},
+    {"full_signature": simd.simd_double4x4.__typestr__ + b"@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_Vector",
     b"getMatrixFloat2x2",
-    {"full_signature": simd.matrix_float2x2.__typestr__ + b"@:"},
+    {"full_signature": simd.simd_float2x2.__typestr__ + b"@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_Vector",
     b"getMatrixFloat3x3",
-    {"full_signature": simd.matrix_float3x3.__typestr__ + b"@:"},
+    {"full_signature": simd.simd_float3x3.__typestr__ + b"@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_Vector",
     b"getMatrixFloat4x4",
-    {"full_signature": simd.matrix_float4x4.__typestr__ + b"@:"},
+    {"full_signature": simd.simd_float4x4.__typestr__ + b"@:"},
 )
 objc.registerMetaDataForSelector(
     b"OC_Vector",
@@ -458,13 +458,13 @@ class TestMethods(TestCase):
 
     def test_getMatrixDouble4x4(self):
         self.assertResultHasType(
-            OC_Vector.getMatrixDouble4x4, simd.matrix_double4x4.__typestr__
+            OC_Vector.getMatrixDouble4x4, simd.simd_double4x4.__typestr__
         )
         oc = OC_Vector.alloc().init()
         result = oc.getMatrixDouble4x4()
         self.assertEqual(
             result,
-            simd.matrix_double4x4(
+            simd.simd_double4x4(
                 (
                     simd.vector_double4(-20.5, -21.5, -22.5, -23.5),
                     simd.vector_double4(-30.5, -31.5, -32.5, -33.5),
@@ -479,13 +479,13 @@ class TestMethods(TestCase):
 
     def test_getMatrixFloat2x2(self):
         self.assertResultHasType(
-            OC_Vector.getMatrixFloat2x2, simd.matrix_float2x2.__typestr__
+            OC_Vector.getMatrixFloat2x2, simd.simd_float2x2.__typestr__
         )
         oc = OC_Vector.alloc().init()
         result = oc.getMatrixFloat2x2()
         self.assertEqual(
             result,
-            simd.matrix_float2x2(
+            simd.simd_float2x2(
                 (
                     simd.vector_float2(-20.5, -21.5),
                     simd.vector_float2(-30.5, -31.5),
@@ -498,13 +498,13 @@ class TestMethods(TestCase):
 
     def test_getMatrixFloat3x3(self):
         self.assertResultHasType(
-            OC_Vector.getMatrixFloat3x3, simd.matrix_float3x3.__typestr__
+            OC_Vector.getMatrixFloat3x3, simd.simd_float3x3.__typestr__
         )
         oc = OC_Vector.alloc().init()
         result = oc.getMatrixFloat3x3()
         self.assertEqual(
             result,
-            simd.matrix_float3x3(
+            simd.simd_float3x3(
                 (
                     simd.vector_float3(-120.5, -121.5, -122.5),
                     simd.vector_float3(-130.5, -131.5, -132.5),
@@ -518,13 +518,13 @@ class TestMethods(TestCase):
 
     def test_getMatrixFloat4x4(self):
         self.assertResultHasType(
-            OC_Vector.getMatrixFloat4x4, simd.matrix_float4x4.__typestr__
+            OC_Vector.getMatrixFloat4x4, simd.simd_float4x4.__typestr__
         )
         oc = OC_Vector.alloc().init()
         result = oc.getMatrixFloat4x4()
         self.assertEqual(
             result,
-            simd.matrix_float4x4(
+            simd.simd_float4x4(
                 (
                     simd.vector_float4(-220.5, -221.5, -222.5, 10.5),
                     simd.vector_float4(-230.5, -231.5, -232.5, 11.5),
