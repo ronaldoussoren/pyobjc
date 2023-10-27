@@ -618,6 +618,21 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_HorizontalDisparityAdjustment, str
         )
 
+    @min_os_level("14.0")
+    def test_constants14_2(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionLogTransferFunction_AppleLog, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_HasLeftStereoEyeView, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_HasRightStereoEyeView, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_HasAdditionalViews, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)

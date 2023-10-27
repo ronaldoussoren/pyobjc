@@ -85,3 +85,11 @@ class TestAVAudioSessionTypes(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioSessionRecordPermissionGranted, fourcc(b"grnt")
         )
+
+        self.assertIsEnumType(AVFoundation.AVAudioSessionRenderingMode)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeNotApplicable, 0)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeMonoStereo, 1)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeSurround, 2)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeSpatialAudio, 3)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeDolbyAudio, 4)
+        self.assertEqual(AVFoundation.AVAudioSessionRenderingModeDolbyAtmos, 5)

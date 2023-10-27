@@ -341,3 +341,14 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_HorizontalDisparityAdjustment,
             str,
         )
+
+    @min_os_level("14.0")
+    def test_constants14_2(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HasLeftStereoEyeView,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HasRightStereoEyeView,
+            str,
+        )

@@ -128,5 +128,14 @@ class TestGKMatchMaker(TestCase):
             GameKit.GKMatchmaker.startGroupActivityWithPlayerHandler_, 0, b"v@"
         )
 
+    @min_os_level("14.2")
+    def testMethods14_2(self):
+        self.assertArgIsBlock(
+            GameKit.GKMatchmaker.findMatchedPlayers_withCompletionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            GameKit.GKMatchmaker.queryQueueActivity_withCompletionHandler_, 1, b"vq@"
+        )
+
     def testProtocols(self):
         self.assertProtocolExists("GKInviteEventListener")

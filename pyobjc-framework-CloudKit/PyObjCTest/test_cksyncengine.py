@@ -29,3 +29,7 @@ class TestCKSyncEngine(TestCase):
         self.assertArgIsBlock(
             CloudKit.CKSyncEngine.cancelOperationsWithCompletionHandler_, 0, b"v"
         )
+
+    @min_os_level("14.2")
+    def test_methods14_2(self):
+        self.assertResultIsBOOL(CloudKit.CKSyncEngine.containsZoneID)

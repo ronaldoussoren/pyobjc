@@ -192,9 +192,19 @@
    },
    "AVSpeechSynthesisPersonalVoiceAuthorizationStatus": {
     "type": "Q"
+   },
+   "AVAudioSessionRenderingMode": {
+    "type": "q"
    }
+
   },
   "enum": {
+   "AVAudioSessionRenderingModeNotApplicable": { "value": 0 },
+   "AVAudioSessionRenderingModeMonoStereo": { "value": 1 },
+   "AVAudioSessionRenderingModeSurround": { "value": 2 },
+   "AVAudioSessionRenderingModeSpatialAudio": { "value": 3 },
+   "AVAudioSessionRenderingModeDolbyAudio": { "value": 4 },
+   "AVAudioSessionRenderingModeDolbyAtmos": { "value": 5 },
    "AVAudioApplicationRecordPermissionUndetermined": { "value":  1970168948 },
    "AVAudioVoiceProcessingOtherAudioDuckingLevelDefault": { "value":  0 },
    "AVAudioVoiceProcessingOtherAudioDuckingLevelMin": { "value":  10 },

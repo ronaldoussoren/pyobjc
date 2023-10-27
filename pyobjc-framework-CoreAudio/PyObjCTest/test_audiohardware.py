@@ -117,6 +117,16 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioHardwarePropertyServiceRestarted, fourcc(b"srst")
         )
         self.assertEqual(CoreAudio.kAudioHardwarePropertyPowerHint, fourcc(b"powh"))
+        self.assertEqual(
+            CoreAudio.kAudioHardwarePropertyProcessObjectList, fourcc(b"prs#")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioHardwarePropertyTranslatePIDToProcessObject, fourcc(b"id2p")
+        )
+        self.assertEqual(CoreAudio.kAudioHardwarePropertyTapList, fourcc(b"tps#"))
+        self.assertEqual(
+            CoreAudio.kAudioHardwarePropertyTranslateUIDToTap, fourcc(b"uidt")
+        )
 
         self.assertEqual(CoreAudio.kAudioPlugInCreateAggregateDevice, fourcc(b"cagg"))
         self.assertEqual(CoreAudio.kAudioPlugInDestroyAggregateDevice, fourcc(b"dagg"))
@@ -293,6 +303,10 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClockDeviceKey, b"clock")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsPrivateKey, b"private")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsStackedKey, b"stacked")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceTapListKey, b"taps")
+        self.assertEqual(
+            CoreAudio.kAudioAggregateDeviceTapAutoStartKey, b"tapautostart"
+        )
 
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyFullSubDeviceList, fourcc(b"grup")
@@ -312,8 +326,33 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyClockDevice, fourcc(b"apcd")
         )
+        self.assertEqual(
+            CoreAudio.kAudioAggregateDevicePropertyTapList, fourcc(b"tap#")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioAggregateDevicePropertySubTapList, fourcc(b"atap")
+        )
 
         self.assertEqual(CoreAudio.kAudioSubDeviceClassID, fourcc(b"asub"))
+
+        self.assertEqual(CoreAudio.kAudioSubTapClassID, fourcc(b"stap"))
+        self.assertEqual(CoreAudio.kAudioSubTapUIDKey, b"uid")
+        self.assertEqual(CoreAudio.kAudioSubTapExtraInputLatencyKey, b"latency-in")
+        self.assertEqual(CoreAudio.kAudioSubTapExtraOutputLatencyKey, b"latency-out")
+        self.assertEqual(CoreAudio.kAudioSubTapDriftCompensationKey, b"drift")
+        self.assertEqual(
+            CoreAudio.kAudioSubTapDriftCompensationQualityKey, b"drift quality"
+        )
+
+        self.assertEqual(CoreAudio.kAudioSubTapPropertyExtraLatency, fourcc(b"xltc"))
+        self.assertEqual(
+            CoreAudio.kAudioSubTapPropertyDriftCompensation, fourcc(b"drft")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioSubTapPropertyDriftCompensationQuality, fourcc(b"drfq")
+        )
+
+        self.assertEqual(CoreAudio.kAudioProcessClassID, fourcc(b"clnt"))
 
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationMinQuality, 0)
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationLowQuality, 0x20)
@@ -339,6 +378,21 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioSubDevicePropertyDriftCompensationQuality, fourcc(b"drfq")
         )
+
+        self.assertEqual(CoreAudio.kAudioProcessPropertyPID, fourcc(b"ppid"))
+        self.assertEqual(CoreAudio.kAudioProcessPropertyBundleID, fourcc(b"pbid"))
+        self.assertEqual(CoreAudio.kAudioProcessPropertyDevices, fourcc(b"pdv#"))
+        self.assertEqual(CoreAudio.kAudioProcessPropertyIsRunning, fourcc(b"pir?"))
+        self.assertEqual(CoreAudio.kAudioProcessPropertyIsRunningInput, fourcc(b"piri"))
+        self.assertEqual(
+            CoreAudio.kAudioProcessPropertyIsRunningOutput, fourcc(b"piro")
+        )
+
+        self.assertEqual(CoreAudio.kAudioTapClassID, fourcc(b"tcls"))
+
+        self.assertEqual(CoreAudio.kAudioTapPropertyUID, fourcc(b"tuid"))
+        self.assertEqual(CoreAudio.kAudioTapPropertyDescription, fourcc(b"tdsc"))
+        self.assertEqual(CoreAudio.kAudioTapPropertyFormat, fourcc(b"tfmt"))
 
     def testFunctions(self):
         CoreAudio.AudioObjectShow

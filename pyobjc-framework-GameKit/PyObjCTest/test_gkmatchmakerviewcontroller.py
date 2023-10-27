@@ -37,5 +37,13 @@ class TestGKMatchmakerViewController(TestCase):
             GameKit.GKMatchmakerViewController.setCanStartWithMinimumPlayers_, 0
         )
 
+    @min_os_level("14.2")
+    def testMethods14_2(self):
+        self.assertArgIsBlock(
+            GameKit.GKMatchmakerViewController.getMatchPropertiesForRecipient_withCompletionHandler_,
+            1,
+            b"v@",
+        )
+
     def testProtocols(self):
         self.assertProtocolExists("GKMatchmakerViewControllerDelegate")
