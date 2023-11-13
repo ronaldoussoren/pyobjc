@@ -1,13 +1,13 @@
 minimum_pre_commit_version: "3.0"
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.9.0
+    rev: v3.15.0
     hooks:
     -   id: pyupgrade
         args: ['--py38-plus']
 
   - repo: https://github.com/psf/black
-    rev: 23.7.0
+    rev: 23.11.0
     hooks:
       - id: black
         language_version: python3.10
@@ -16,7 +16,7 @@ repos:
         types: []
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
@@ -39,14 +39,14 @@ repos:
 #
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v16.0.6'
+    rev: 'v17.0.4'
     hooks:
     - id: clang-format
       types: [c, objective-c]
 
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.5
+    rev: v2.2.6
     hooks:
     -   id: codespell
         args: ["--config", ".codespellrc"]
@@ -72,7 +72,7 @@ repos:
 #    -   id: clang-format
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
