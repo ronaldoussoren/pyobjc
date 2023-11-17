@@ -1199,7 +1199,6 @@ class TestCase(_unittest.TestCase):
                                 "c_array_delimited_by_null",
                                 "c_array_of_variable_length",
                                 "c_array_length_in_arg",
-                                "c_array_delimited_by_null",
                                 "c_array_size_in_arg",
                             }
                         ):

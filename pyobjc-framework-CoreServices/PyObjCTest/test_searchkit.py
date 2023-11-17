@@ -27,7 +27,7 @@ class TestSearchKit(TestCase):
     def testVariables(self):
         # Use this to test for global variables, (NSString*'s and the like)
         self.assertTrue(hasattr(CoreServices, "kSKEndTermChars"))
-        self.assertTrue(isinstance(CoreServices.kSKEndTermChars, (str, str)))
+        self.assertTrue(isinstance(CoreServices.kSKEndTermChars, str))
 
     def testFunctions(self):
         self.assertTrue(hasattr(CoreServices, "SKDocumentCreateWithURL"))

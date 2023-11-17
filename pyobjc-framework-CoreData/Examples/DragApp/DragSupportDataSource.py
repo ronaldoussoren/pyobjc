@@ -3,7 +3,7 @@ Abstract: Custom that handles Drag and Drop for table views by acting as a datas
 """
 import Cocoa
 import objc
-from objc import super
+from objc import super  # noqa: A004
 
 
 class DragSupportDataSource(Cocoa.NSObject):

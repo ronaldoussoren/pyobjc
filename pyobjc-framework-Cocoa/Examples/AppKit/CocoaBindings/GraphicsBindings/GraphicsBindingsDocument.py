@@ -10,7 +10,7 @@
 
 import objc
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver, NSValueTransformer
-from objc import super
+from objc import super  # noqa: A004
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
 
 

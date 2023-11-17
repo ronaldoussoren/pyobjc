@@ -9,7 +9,7 @@
 
 import objc
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver, NSMutableArray
-from objc import super
+from objc import super  # noqa: A004
 
 # BookmarksDocument defines this as it may be used for copy and paste
 # in addition to just drag and drop

@@ -1,7 +1,7 @@
 import Cocoa
 import objc
 import Quartz  # noqa: F401
-from objc import super
+from objc import super  # noqa: A004
 
 # APPLICATION DATA STORAGE NOTES:
 # - This application uses a simple data storage as an array of entries,

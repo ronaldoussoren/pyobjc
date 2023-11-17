@@ -110,7 +110,7 @@ Accessor functions
    --------------------------- -------------------------------------------------------
    ``distinctUnionOfArrays``   Use the rest of the keypath to fetch the value of
                                each item, which must be a sequence. Those sequences
-			       are merged into an array with distict values.
+			       are merged into an array with distinct values.
    --------------------------- -------------------------------------------------------
    ``distinctUnionOfObjects``  Use the rest of the keypath to fetch the value of
                                each item and return an array with all distinct

@@ -1,6 +1,6 @@
 import objc
 import os
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools.TestSupport import TestCase, pyobjc_options, no_autorelease_pool
 
 

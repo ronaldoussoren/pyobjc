@@ -2076,7 +2076,7 @@ class TestInitFrameworkWrapper(TestCase):
                 try:
                     return resources[(package, name)]
                 except KeyError:
-                    raise os.error(name)
+                    raise OSError(name)
 
             parse_calls = []
 
@@ -2710,7 +2710,7 @@ class TestInitFrameworkWrapper(TestCase):
             g = {}
             inlineTab = InlineTab()
 
-            def bundle_exception(name, path, identifier):
+            def bundle_exception(name, path, identifier):  # noqa: F811
                 raise ImportError(name)
 
             with self.assertWarns(DeprecationWarning):

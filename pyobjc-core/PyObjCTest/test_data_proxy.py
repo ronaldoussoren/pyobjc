@@ -82,9 +82,9 @@ class TestDataReading(TestCase):
     def test_coderClass(self):
         data = self.bytes_class(b"hello")
         cls = OC_DataInt.coderClassFor_(data)
-        if type(data) == bytes:
+        if type(data) is bytes:
             self.assertIs(cls, NSData)
-        elif type(data) == bytearray:
+        elif type(data) is bytearray:
             self.assertIs(cls, NSMutableData)
         else:
             self.assertIs(cls, OC_PythonData)

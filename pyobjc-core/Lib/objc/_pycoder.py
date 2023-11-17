@@ -493,10 +493,10 @@ def load_reduce(coder, setValue):
 
         for k in state:
             v = state[k]
-            if type(k) == objc.pyobjc_unicode:
+            if type(k) is objc.pyobjc_unicode:
                 inst_dict[intern(k)] = v
 
-            elif type(k) == str:
+            elif type(k) is str:
                 inst_dict[intern(k)] = v
 
             else:

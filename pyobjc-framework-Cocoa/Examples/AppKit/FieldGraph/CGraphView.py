@@ -3,7 +3,7 @@ from math import cos, pi, sin
 import Cocoa
 import objc
 from fieldMath import degToRad
-from objc import super
+from objc import super  # noqa: A004
 
 # Convenience global variables
 x, y = 0, 1

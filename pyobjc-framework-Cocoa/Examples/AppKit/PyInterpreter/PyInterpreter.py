@@ -20,7 +20,7 @@ from Cocoa import (
     NSTextView,
     NSUIntegerMax,
 )
-from objc import NO, YES, IBOutlet, super
+from objc import NO, YES, IBOutlet, super  # noqa: A004
 from PyObjCTools import AppHelper
 import objc
 

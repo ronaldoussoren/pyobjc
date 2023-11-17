@@ -16,7 +16,7 @@ from Cocoa import (
     NSMutableArray,
     NSValueTransformer,
 )
-from objc import super
+from objc import super  # noqa: A004
 from OverdueTransformer import OverdueTransformer
 from PriorityToColourTransformer import PriorityToColourTransformer
 

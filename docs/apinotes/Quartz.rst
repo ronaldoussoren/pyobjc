@@ -70,7 +70,7 @@ must be a function with 1 argument: the ``info`` object.
 ............................................
 
 This function is not supported because the lowlevel "CMProfileRef" type is
-not wrappped by PyObjC.
+not wrapped by PyObjC.
 
 
 ``kCGDirectMainDisplay``

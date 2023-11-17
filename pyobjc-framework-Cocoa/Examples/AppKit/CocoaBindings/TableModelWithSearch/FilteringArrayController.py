@@ -10,7 +10,7 @@ import re
 
 import objc
 from Cocoa import NSArrayController
-from objc import super
+from objc import super  # noqa: A004
 
 kLiteralSearch = "Literal Search"
 kRegularExpressionSearch = "Regular Expression Search"

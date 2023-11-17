@@ -648,7 +648,7 @@ improvements as described below).
 
   The new implementation is also more strict in the values of selectors that are accepted,
   all selectors not be instances of ``objc.native_selector`` and must have a ``callable``
-  attribute that is not ``Nonte``.
+  attribute that is not ``None``.
 
 * :issue:`523`: PyObjC's default implementation for ``-forwardInvocation:`` now calls the
   method stub (``IMP``) through libffi, instead of trying to reproduce the logic
@@ -771,7 +771,7 @@ improvements as described below).
   ended up being deallocated after the Python interpreter is finalized.
 
 * Code cleanup for ``objc._objc`` continues, in this version the module initialisation
-  code was much simplied, most of it is now table-driven. This has no user visible
+  code was much simplified, most of it is now table-driven. This has no user visible
   effects.
 
 * Types created by ``objc.createStructType`` now have a (read-only) ``__packed__`` attribute
@@ -2383,7 +2383,7 @@ Version 5.2
   warning because it is still used by the framework wrappers.
 
   The function is still deprecated though, the deprecation will reappear
-  once the metadata has been updatd.
+  once the metadata has been updated.
 
 * :issue:`75`: The core bridge now uses :func:`PyDict_GetItemWithError`, which
   may result in exceptions being raised that were previously swallowed.
@@ -4337,7 +4337,7 @@ Version 2.3
     are actually instances of, non-necessarily public, subclasses.
 
   * Sadly enough ``set([1,2,3]) == NSSet([1, 2, 3])`` evaluates to False,
-    even though the values are equavalent. Reversing the order of
+    even though the values are equivalent. Reversing the order of
     the test (``NSSet([1, 2, 3]) == set([1,2,3])``) results in the
     expected result.
 
@@ -4640,7 +4640,7 @@ Version 2.2 (2009-11-24)
   lurking below the surface.
 
   NOTE: 64-bit support does not yet work on PPC due to a bug in libffi which
-  prefents catching Objective-C exceptions.
+  prevents catching Objective-C exceptions.
 
   This requires Leopard (OSX 10.5), earlier version of the OS don't have a
   64-bit Objective-C runtime at all.  This currently also requires a copy of
@@ -5059,7 +5059,7 @@ Version 2.0 (MacOS X 10.5.0)
 - Output arguments are treated slightly different. In previous versions you
   were not allowed to pass values for output arguments.
 
-  This is now deprecated behaviour, you should choose to suply values for all
+  This is now deprecated behaviour, you should choose to supply values for all
   arguments including output arguments (mixing these two styles is not
   allowed, if you have two output argument you must either supply a value for
   both of them or neither).

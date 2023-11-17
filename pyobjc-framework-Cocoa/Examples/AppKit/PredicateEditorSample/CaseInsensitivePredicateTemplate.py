@@ -1,5 +1,5 @@
 import Cocoa
-from objc import super
+from objc import super  # noqa: A004
 
 
 class CaseInsensitivePredicateTemplate(Cocoa.NSPredicateEditorRowTemplate):

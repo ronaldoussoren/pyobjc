@@ -2,7 +2,7 @@
 
 import CoreData
 import Foundation
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools.TestSupport import TestCase
 
 

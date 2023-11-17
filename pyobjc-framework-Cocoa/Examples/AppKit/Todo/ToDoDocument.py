@@ -1,6 +1,6 @@
 import Cocoa
 import objc
-from objc import super
+from objc import super  # noqa: A004
 from SelectionNotifyMatrix import RowSelectedNotification
 from ToDoCell import ToDoCell
 from ToDoItem import ToDoItem, INCOMPLETE

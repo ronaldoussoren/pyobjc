@@ -16,7 +16,7 @@ import os
 import Cocoa
 import objc
 import PreferencePanes
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools import AppHelper
 
 # Uncomment this during development, you'll get exception tracebacks when
@@ -134,7 +134,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
         if not os.path.isdir(dname):
             try:
                 os.mkdir(dname)
-            except os.error:
+            except OSError:
                 return False
 
         if not self.environ.writeToFile_atomically_(fname, True):

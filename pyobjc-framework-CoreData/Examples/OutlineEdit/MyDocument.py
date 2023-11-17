@@ -1,7 +1,7 @@
 import Cocoa
 import CoreData
 import objc
-from objc import super
+from objc import super  # noqa: A004
 
 prioritySortDescriptions = Cocoa.NSArray.arrayWithObject_(
     Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_("value", True)

@@ -995,7 +995,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
         /* Parent doesn't know the key, try to create in the
          * python side, just like for plain python objects.
          *
-         * NOTE: We have to be extermely careful in here, some classes,
+         * NOTE: We have to be extremely careful in here, some classes,
          * like NSManagedContext convert __getattr__ into a -valueForKey:,
          * and that can cause infinite loops.
          *

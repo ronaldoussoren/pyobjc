@@ -3,7 +3,7 @@ import collections.abc
 
 import objc
 import objc._convenience as convenience
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTest.sequence import OC_TestSequence, OC_TestMutableSequence
 from PyObjCTools.TestSupport import TestCase
 

@@ -31,7 +31,7 @@ from Cocoa import (
     NSValueTransformer,
     NSView,
 )
-from objc import super
+from objc import super  # noqa: A004
 
 
 class JoystickView(NSView):

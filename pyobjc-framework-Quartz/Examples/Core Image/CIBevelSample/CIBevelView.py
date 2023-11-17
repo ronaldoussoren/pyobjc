@@ -3,7 +3,7 @@ from math import sin
 import objc
 import Quartz
 import Cocoa
-from objc import super
+from objc import super  # noqa: A004
 from SampleCIView import SampleCIView
 
 NUM_POINTS = 4

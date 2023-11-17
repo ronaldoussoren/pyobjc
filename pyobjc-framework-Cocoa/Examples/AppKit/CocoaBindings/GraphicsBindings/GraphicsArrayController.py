@@ -13,7 +13,7 @@ from random import random
 
 import objc
 from Cocoa import NSArrayController, NSCalibratedRGBColorSpace, NSColor
-from objc import super
+from objc import super  # noqa: A004
 
 
 class GraphicsArrayController(NSArrayController):

@@ -6,7 +6,7 @@ import FrameworkUtilities
 import objc
 import UIHandling
 import PDFHandling
-from objc import super
+from objc import super  # noqa: A004
 
 # XXX: Why are these global?
 _drawingCommand = UIHandling.kHICommandSimpleRect

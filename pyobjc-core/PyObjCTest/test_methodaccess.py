@@ -1,5 +1,5 @@
 import objc
-from objc import super
+from objc import super  # noqa: A004
 import gc
 from .test_ivar import nilObject, NilHelper
 from PyObjCTools.TestSupport import TestCase, expectedFailure

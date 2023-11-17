@@ -3,7 +3,7 @@
 # can be called in the same way as with normal objects.
 #
 from Foundation import NSObject
-from objc import super
+from objc import super  # noqa: A004
 
 N = 1
 

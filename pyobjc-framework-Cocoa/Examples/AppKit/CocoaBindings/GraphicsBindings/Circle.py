@@ -22,7 +22,7 @@ from Cocoa import (
     NSShadow,
     NSUnionRect,
 )
-from objc import super
+from objc import super  # noqa: A004
 
 
 class Circle(NSObject):

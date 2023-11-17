@@ -22,7 +22,7 @@ from Cocoa import (
     NSUserDefaultsDidChangeNotification,
     NSView,
 )
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools.KeyValueCoding import getKey
 
 

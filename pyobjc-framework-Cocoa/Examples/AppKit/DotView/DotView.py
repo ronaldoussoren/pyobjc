@@ -22,7 +22,7 @@ sources or nibs.)
 
 import Cocoa
 import objc
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools import AppHelper
 
 ZOOM = 2.0

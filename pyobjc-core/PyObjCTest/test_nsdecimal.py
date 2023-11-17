@@ -5,7 +5,7 @@ import decimal
 import warnings
 
 import objc
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTest.decimal import OC_TestDecimal
 from PyObjCTools.TestSupport import TestCase, expectedFailure
 

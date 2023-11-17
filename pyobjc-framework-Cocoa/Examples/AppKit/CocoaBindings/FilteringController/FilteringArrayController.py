@@ -8,7 +8,7 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 from Cocoa import NSArrayController
-from objc import super
+from objc import super  # noqa: A004
 
 
 class FilteringArrayController(NSArrayController):

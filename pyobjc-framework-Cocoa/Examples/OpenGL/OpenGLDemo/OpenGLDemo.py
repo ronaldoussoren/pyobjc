@@ -35,7 +35,7 @@ from OpenGL.GL import (
 )
 from PyObjCTools import AppHelper
 import objc
-from objc import super
+from objc import super  # noqa: A004
 
 ClearColors = redIndex, greenIndex, blueIndex, alphaIndex = range(4)
 

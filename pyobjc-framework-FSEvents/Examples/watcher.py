@@ -308,7 +308,7 @@ def iterate_subdirs(dirname, recursive):
 
     try:
         names = os.listdir(dirname)
-    except os.error as msg:
+    except OSError as msg:
         if msg.errno in (errno.ENOENT, errno.EPERM, errno.EACCES):
             del dir_items[dirname]
             return 0
@@ -332,7 +332,7 @@ def check_for_deleted_dirs():
     for path in dir_items.keys():
         try:
             os.stat(path)
-        except os.error:
+        except OSError:
             del dir_items[path]
 
 

@@ -28,7 +28,7 @@ from Cocoa import (
     NSUnionRect,
     NSView,
 )
-from objc import super
+from objc import super  # noqa: A004
 
 
 PropertyObservationContext = 1091

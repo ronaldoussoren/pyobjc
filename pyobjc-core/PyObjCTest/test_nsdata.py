@@ -1,6 +1,6 @@
 import objc
 import sys
-from objc import super
+from objc import super  # noqa: A004
 from PyObjCTools.TestSupport import TestCase, min_python_release
 from PyObjCTest.helpernsdata import OC_MutableDataHelper
 

@@ -10,7 +10,7 @@ __all__ = ()
 import os
 
 from Foundation import NSObject
-from objc import addConvenienceForClass, super
+from objc import addConvenienceForClass, super  # noqa: A004
 
 # XXX: This is fairly crude, need further research.
 #      This code basically tries to outsmart tricks that

@@ -118,7 +118,7 @@ wrappers.
 
       Calls :meth:`unitest.TestCase.run`, but ensures that there is a fresh
       autorelease pool for every test. This makes is less likely that two
-      tests accidenty influence each other.
+      tests accidentally influence each other.
 
       There will not be a fresh autorelease pool when :envvar:`PYOBJC_NO_AUTORELEASE`
       is in the shell environment.

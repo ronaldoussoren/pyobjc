@@ -27,7 +27,7 @@ from Cocoa import (
     NSViewHeightSizable,
     NSTextView,
 )
-from objc import NO, YES, super
+from objc import NO, YES, super  # noqa: A004
 
 try:
     from code import softspace

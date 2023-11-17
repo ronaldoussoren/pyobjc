@@ -69,7 +69,7 @@ class TestCFBag(TestCase):
         self.assertFalse(exists)
         self.assertIs(value, None)
         values = set(CoreFoundation.CFBagGetValues(bag))
-        expected = {"Hello", 42, "World", 42, "a", "a", "a"}
+        expected = {"Hello", 42, "World", "a"}
         self.assertEqual(values, expected)
 
     def testMutation(self):

@@ -3,7 +3,7 @@ import objc
 import Quartz
 from Circle import Circle
 from Extras import makeRandomPointInRect
-from objc import super
+from objc import super  # noqa: A004
 
 gCircleCount = 3
 

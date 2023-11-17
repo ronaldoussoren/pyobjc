@@ -7,7 +7,6 @@ from Foundation import NSKeyValueChangeNewKey, NSKeyValueObservingOptionNew, NSO
 class MyClass(NSObject):
     base = objc.ivar("base", objc._C_INT)
     power = objc.ivar("power", objc._C_INT)
-    result = objc.ivar("result", objc._C_INT)
 
     def result(self):
         return self.base**self.power

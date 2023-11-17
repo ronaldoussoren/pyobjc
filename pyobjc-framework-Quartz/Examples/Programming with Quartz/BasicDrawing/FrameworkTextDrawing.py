@@ -3,7 +3,7 @@ import objc
 import Quartz
 import QuartzTextDrawing
 import Utilities
-from objc import super
+from objc import super  # noqa: A004
 
 
 def getTextString():

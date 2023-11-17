@@ -845,7 +845,7 @@ Types
    :param name: Name of the instance variable. The name defaults to the name the instance
                 variable is bound to in a class definition.
 
-   :param type: Type encoding for the instance varialble. Defaults to :data:`_C_ID` (that is,
+   :param type: Type encoding for the instance variable. Defaults to :data:`_C_ID` (that is,
                 an object)
 
    :param isOutlet: If :data:`True` the instance variable is used as an outlet, by default
@@ -1941,7 +1941,7 @@ will provide such hooks (for example a method that will be called when an
 item is inserted in an array property).
 
 
-Unconvertable pointer values
+Unconvertible pointer values
 ----------------------------
 
 With incomplete metadata the bridge can run into pointer values that

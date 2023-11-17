@@ -6,7 +6,7 @@ import builtins
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
 from .objectint import OC_ObjectInt
-from objc import super
+from objc import super  # noqa: A004
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")

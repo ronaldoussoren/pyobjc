@@ -5,7 +5,7 @@ import tempfile
 # from objc import super
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.helpernsobject import OC_AllocRaises, OC_RefcountRaises
-from objc import super
+from objc import super  # noqa: A004
 
 NSObject = objc.lookUpClass("NSObject")
 

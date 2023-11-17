@@ -9,7 +9,7 @@
 
 import objc
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver
-from objc import super
+from objc import super  # noqa: A004
 
 
 class FilteringControllerDocument(NSDocument):

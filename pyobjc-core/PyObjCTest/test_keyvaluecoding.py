@@ -157,7 +157,7 @@ class TestArrayOperators(TestCase):
                 self.b = b
 
             def __eq__(self, other):
-                return type(self) == type(other) and self.b == other.b
+                return type(self) is type(other) and self.b == other.b
 
             def __hash__(self):
                 raise TypeError

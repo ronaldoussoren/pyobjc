@@ -10,7 +10,7 @@ import sys
 import Cocoa
 import objc
 import Quartz
-from objc import super
+from objc import super  # noqa: A004
 
 # Global variables
 frequency = [0.0, 0.0, 0.0, 0.0]

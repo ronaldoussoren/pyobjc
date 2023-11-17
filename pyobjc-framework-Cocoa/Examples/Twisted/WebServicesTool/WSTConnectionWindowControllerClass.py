@@ -48,7 +48,7 @@ def addToolbarItem(
     Adds an freshly created item to the toolbar defined by
     aController.  Makes a number of assumptions about the
     implementation of aController.  It should be refactored into a
-    generically useful toolbar management untility.
+    generically useful toolbar management utility.
     """
     toolbarItem = Cocoa.NSToolbarItem.alloc().initWithItemIdentifier_(anIdentifier)
 
@@ -59,7 +59,7 @@ def addToolbarItem(
     if anAction:
         toolbarItem.setAction_(anAction)
 
-    if type(anItemContent) == Cocoa.NSImage:
+    if isinstance(anItemContent, Cocoa.NSImage):
         toolbarItem.setImage_(anItemContent)
     else:
         toolbarItem.setView_(anItemContent)

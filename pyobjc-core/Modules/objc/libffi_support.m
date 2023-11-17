@@ -2131,7 +2131,7 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
             if (argcount == 0) {
                 if (!*haveVarArgs) {
                     PyErr_SetString(PyExc_TypeError,
-                                    "Method without possitional arguments");
+                                    "Method without positional arguments");
                     return -1;
                 }
                 return 0;
