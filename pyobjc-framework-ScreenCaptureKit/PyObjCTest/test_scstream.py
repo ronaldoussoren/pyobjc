@@ -56,6 +56,12 @@ class TestSCStream(TestCase):
     def test_constants14_0(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoBoundingRect, str)
 
+    @min_os_level("14.2")
+    def test_constants14_2(self):
+        self.assertIsInstance(
+            ScreenCaptureKit.SCStreamFrameInfoPresenterOverlayContentRect, str
+        )
+
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.scalesToFit)
         self.assertArgIsBOOL(ScreenCaptureKit.SCStreamConfiguration.setScalesToFit_, 0)
@@ -153,6 +159,16 @@ class TestSCStream(TestCase):
         )
         self.assertArgIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.setIgnoreGlobalClipSingleWindow_, 0
+        )
+
+    @min_os_level("14.2")
+    def test_methods14_2(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.includeMenuBar)
+        self.assertArgIsBOOL(ScreenCaptureKit.SCContentFilter.setIncludeMenuBar_, 0)
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.includeChildWindows)
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCContentFilter.setIncludeChildWindows_, 0
         )
 
     def test_protocols(self):

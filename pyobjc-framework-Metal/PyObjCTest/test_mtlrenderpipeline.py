@@ -181,3 +181,17 @@ class TestMTLRenderPipeline(TestCase):
             .setRasterizationEnabled_,
             0,
         )
+
+    @min_os_level("14.0")
+    def test_methods14_2(self):
+        self.assertResultIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .supportIndirectCommandBuffers
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLMeshRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportIndirectCommandBuffers_,
+            0,
+        )

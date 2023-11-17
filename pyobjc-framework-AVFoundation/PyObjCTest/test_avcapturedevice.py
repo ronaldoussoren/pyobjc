@@ -342,3 +342,9 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.reactionEffectsSupported
         )
+
+    @min_os_level("14.2")
+    def testMethods14_2(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.zoomFactorsOutsideOfVideoZoomRangesForDepthDeliverySupported
+        )

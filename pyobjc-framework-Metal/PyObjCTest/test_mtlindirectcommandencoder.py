@@ -48,6 +48,23 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
     def setKernelBuffer_offset_attributeStride_atIndex_(self, a, b, c, d):
         pass
 
+    def setObjectThreadgroupMemoryLength_atIndex_(self, a, b):
+        pass
+
+    def setObjectBuffer_offset_atIndex_(self, a, b, c):
+        pass
+
+    def setMeshBuffer_offset_atIndex_(self, a, b, c):
+        pass
+
+    def drawMeshThreadgroups_threadsPerMeshThreadgroup_(self, a, b):
+        pass
+
+    def drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_(
+        self, a, b, c
+    ):
+        pass
+
 
 class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
@@ -291,4 +308,64 @@ class TestMTLIndirectCommandEncoder(TestCase):
             TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_attributeStride_atIndex_,  # noqa: B950
             3,
             objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setObjectThreadgroupMemoryLength_atIndex_,  # noqa: B950
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setObjectThreadgroupMemoryLength_atIndex_,  # noqa: B950
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setObjectBuffer_offset_atIndex_,  # noqa: B950
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setObjectBuffer_offset_atIndex_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setMeshBuffer_offset_atIndex_,  # noqa: B950
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setMeshBuffer_offset_atIndex_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_,  # noqa: B950
+            0,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_,  # noqa: B950
+            1,
+            Metal.MTLSize.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
+            0,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
+            1,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
+            2,
+            Metal.MTLSize.__typestr__,
         )
