@@ -193,3 +193,4 @@ import Foundation._context  # isort:skip  # noqa: E402
 import Foundation._functiondefines  # isort:skip  # noqa: E402
 import Foundation._nsindexset  # isort:skip  # noqa: E402
 import Foundation._nsobject  # isort:skip  # noqa: E402, F401
+import Foundation._nsurl  # isort:skip  # noqa: E402, F401

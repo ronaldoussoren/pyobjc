@@ -1,6 +1,7 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
+import os
 
 
 class TestNSURL(TestCase):
@@ -395,3 +396,26 @@ class TestNSURL(TestCase):
             Foundation.NSURLComponents.componentsWithString_encodingInvalidCharacters_,
             1,
         )
+
+    def test_nsurl_fspath(self):
+        url = Foundation.NSURL.URLWithString_("https://www.python.org")
+        with self.assertRaisesRegex(
+            TypeError, "NSURL with scheme 'https' instead of 'file'"
+        ):
+            os.fspath(url)
+
+        url = Foundation.NSURL.fileURLWithPath_(__file__)
+        self.assertEqual(os.fspath(url), __file__)
+
+        bundle = Foundation.NSBundle.bundleWithIdentifier_("com.apple.Foundation")
+        self.assertIsNot(bundle, None)
+
+        url = bundle.URLForResource_withExtension_("Info", "plist")
+        self.assertIsNot(url, None)
+
+        self.assertEqual(
+            os.fspath(url),
+            "/System/Library/Frameworks/Foundation.framework/Resources/Info.plist",
+        )
+
+        self.assertIsInstance(url, os.PathLike)
