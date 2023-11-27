@@ -8,14 +8,16 @@ Version 10.1
 
 * Upgrade framework bindings for the macOS 14.2 SDK
 
-* #579: Make sure the ``install.py`` and ``develop.py`` scripts in the
+* :issue:`579`: Make sure the ``install.py`` and ``develop.py`` scripts in the
   repository work when run out of tree.
 
-* #577: ``os.fspath(someURL)`` will not work with Cocoa URLs (NSURL, CFURLRef) that
+* :issue:`577`: ``os.fspath(someURL)`` will not work with Cocoa URLs (NSURL, CFURLRef) that
   refer to local filesystem paths. ``TypeError`` will be raised for other URLs.
 
   This enables using regular Python filesystem APIs with URLs that refer to
   local filesystem paths.
+
+* :issue:`572`: Fix compilation issue when building on macOS 12
 
 Version 10.0
 ------------
