@@ -17,7 +17,7 @@ Version 10.1
   This enables using regular Python filesystem APIs with URLs that refer to
   local filesystem paths.
 
-* :issue:`572`: Fix compilation issue when building on macOS 12
+* :issue:`572`: Fix compilation issue when building on macOS 13 or earlier
 
 Version 10.0
 ------------
