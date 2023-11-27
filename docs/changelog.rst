@@ -8,6 +8,9 @@ Version 10.1
 
 * Upgrade framework bindings for the macOS 14.2 SDK
 
+* #579: Make sure the ``install.py`` and ``develop.py`` scripts in the
+  repository work when run out of tree.
+
 Version 10.0
 ------------
 
