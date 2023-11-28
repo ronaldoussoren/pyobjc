@@ -25624,6 +25624,13 @@
    "NSAppKitVersionNumber12_5": { "value": 2113.6 },
    "NSAppKitVersionNumber13_0": { "value": 2299.0 },
    "NSAppKitVersionNumber13_1": { "value": 2299.3 },
+   "NSAppKitVersionNumber13_2": { "value":  2299.3 },
+   "NSAppKitVersionNumber13_3": { "value":  2299.4 },
+   "NSAppKitVersionNumber13_4": { "value":  2299.5 },
+   "NSAppKitVersionNumber13_5": { "value":  2299.6 },
+   "NSAppKitVersionNumber13_5": { "value":  2299.7 },
+   "NSAppKitVersionNumber14_0": { "value":  2487.0 },
+   "NSAppKitVersionNumber14_1": { "value":  2487.2 },
    "NSTextElementProviderEnumerationOptionsNone": {
     "value": 0
    },

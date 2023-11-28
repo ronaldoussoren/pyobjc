@@ -4,6 +4,11 @@ import objc
 
 
 class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
+    def drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_(
+        self, a, b, c
+    ):
+        pass
+
     def setVertexBuffer_offset_atIndex_(self, a, b, c):
         pass
 
@@ -344,13 +349,18 @@ class TestMTLIndirectCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_,  # noqa: B950
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
             0,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_,  # noqa: B950
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
             1,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.drawMeshThreadgroups_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
+            2,
             Metal.MTLSize.__typestr__,
         )
 

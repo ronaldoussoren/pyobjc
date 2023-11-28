@@ -2,6 +2,13 @@ import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
+class TestGKMatchmakerViewControllerHelper(GameKit.NSObject):
+    def matchmakerViewController_getMatchPropertiesForRecipient_withCompletionHandler_(
+        self, a, b, c
+    ):
+        pass
+
+
 class TestGKMatchmakerViewController(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKMatchmakingMode)
@@ -40,8 +47,8 @@ class TestGKMatchmakerViewController(TestCase):
     @min_os_level("14.2")
     def testMethods14_2(self):
         self.assertArgIsBlock(
-            GameKit.GKMatchmakerViewController.getMatchPropertiesForRecipient_withCompletionHandler_,
-            1,
+            GameKit.TestGKMatchmakerViewControllerHelper.matchmakerViewController_getMatchPropertiesForRecipient_withCompletionHandler_,
+            2,
             b"v@",
         )
 

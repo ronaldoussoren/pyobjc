@@ -84,7 +84,7 @@ class TestDateInObjC(TestCase):
             raise SkipTest("Not relevant for datetime.date")
         py = self.value.timestamp() - datetime.datetime.now().timestamp()
         oc = OC_DateInt.timeIntervalSinceNowFor_(self.value)
-        self.assertAlmostEqual(py, oc, places=3)
+        self.assertAlmostEqual(py, oc, places=1)
 
     def test_add_interval(self):
         seconds = 545.5

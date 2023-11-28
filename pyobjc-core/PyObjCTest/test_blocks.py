@@ -368,7 +368,7 @@ class TestBlocks(TestCase):
                 pass
 
         helper = D()
-        with self.assertRaisesRegex(TypeError, "Method without possitional arguments"):
+        with self.assertRaisesRegex(TypeError, "Method without positional arguments"):
             obj.callIntBlock_withValue_(helper.callback, 43)
 
     @min_os_level("10.6")

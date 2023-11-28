@@ -13,7 +13,7 @@ import time
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+PY_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
