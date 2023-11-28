@@ -16,6 +16,8 @@ class TestVNGeometry(TestCase):
             Vision.VNContour.normalizedPoints, b"^" + simd.simd_float2.__typestr__
         )
 
+    @min_os_level("14.0")
+    def test_methods14_0(self):
         self.assertArgHasType(
             Vision.VNPoint3D.initWithPosition_, 0, simd.simd_float4x4.__typestr__
         )

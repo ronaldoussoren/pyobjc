@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
 
 
@@ -14,6 +14,7 @@ class TestINEditMessageIntentHelper(Intents.NSObject):
 
 
 class TestINEditMessageIntent(TestCase):
+    @min_sdk_level("14.0")
     def test_protocols(self):
         self.assertProtocolExists("INEditMessageIntentHandling")
 

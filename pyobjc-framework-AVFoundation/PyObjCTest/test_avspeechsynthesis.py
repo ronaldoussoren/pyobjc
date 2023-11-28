@@ -85,6 +85,8 @@ class TestAVSpeechSynthesis(TestCase):
             AVFoundation.AVSpeechSynthesisIPANotationAttribute, str
         )  # noqa: B950
 
+    @min_os_level("14.0")
+    def testConstants14_0(self):
         self.assertIsInstance(
             AVFoundation.AVSpeechSynthesisAvailableVoicesDidChangeNotification, str
         )

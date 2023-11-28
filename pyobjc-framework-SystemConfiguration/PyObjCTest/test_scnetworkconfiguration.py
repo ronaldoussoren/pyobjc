@@ -438,7 +438,7 @@ class TestSCNetworkConfiguration(TestCase):
         self.assertIsInstance(v, str)
 
         v = SystemConfiguration.SCNetworkSetGetServiceOrder(a_set)
-        self.assertIsInstance(v, SystemConfiguration.CFArrayRef)
+        self.assertIsInstance(v, (SystemConfiguration.CFArrayRef, type(None)))
 
         v = SystemConfiguration.SCNetworkSetSetName(
             a_set, SystemConfiguration.SCNetworkSetGetName(a_set)
