@@ -13,7 +13,7 @@ def _setup():
     import objc
     from . import _metadata
 
-    if objc.macos_available(10, 10):
+    if objc.macos_available(13, 0):
         identifier = "com.apple.eventkit"
     else:
         identifier = "com.apple.ical.EventKit"

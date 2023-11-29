@@ -25,12 +25,15 @@ class TestMPSGraphTensorShapeOps(TestCase):
             5,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950
-            4,
-        )
-        self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraph.depthToSpace2DTensor_widthAxis_heightAxis_depthAxis_blockSize_usePixelShuffleOrder_name_,  # noqa: B950
             5,
+        )
+
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950
+            4,
         )
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraph.spaceToBatchTensor_spatialAxes_batchAxis_blockDimensions_usePixelShuffleOrder_name_,  # noqa: B950

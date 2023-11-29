@@ -121,10 +121,6 @@ class TestMTLRenderPipeline(TestCase):
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
 
-    @min_os_level("10.12")
-    def test_methods10_12(self):
-        self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)
-
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertResultIsBOOL(

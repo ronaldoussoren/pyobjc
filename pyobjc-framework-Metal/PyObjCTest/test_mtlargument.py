@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
     min_sdk_level,
+    expectedFailureIf,
+    os_release,
+    os_level_key,
 )
 
 
@@ -211,6 +214,9 @@ class TestMTLArgument(TestCase):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
 
     @min_os_level("10.12")
+    @expectedFailureIf(
+        os_level_key("12.0") <= os_level_key(os_release()) < os_level_key("13.0")
+    )
     def test_methods10_12(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)
 
