@@ -135,7 +135,7 @@ mod_CFNetServiceMonitorClientCallBack(CFNetServiceMonitorRef  monitor,
         return;
     }
 
-    PyObject* py_rdata = PyObjC_IdToPython((NSObject*)rdata);
+    PyObject* py_rdata = PyObjC_IdToPython((NSObject*)(NSData*)rdata);
     if (py_rdata == NULL) {
         Py_DECREF(py_monitor);
         Py_DECREF(py_service);

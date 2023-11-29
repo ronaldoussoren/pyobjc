@@ -1,17 +1,19 @@
 import JavaScriptCore
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, expectedFailure
 
 # import WebKit
 import objc
 
 
 class TestJSExport(TestCase):
-    @min_os_level("10.9")
+    @min_sdk_level("10.9")
     def test_protocols(self):
         self.assertProtocolExists("JSExport")
 
     @expectedFailure
     def test_jsexportas(self):
+        self.fail("Test crashes hard on macOS 10.9")
+
         export_proto = objc.formal_protocol(
             "ExportProto",
             (objc.protocolNamed("JSExport"),),

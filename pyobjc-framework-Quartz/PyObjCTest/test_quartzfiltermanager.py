@@ -20,7 +20,7 @@ class TestQuartzFilterManager(TestCase):
             Quartz.kQuartzFilterManagerDidSelectFilterNotification, str
         )
 
-    @min_os_level("10.6")
+    @min_os_level("10.10")
     def testConstants10_6(self):
         # The following definitions are documented for 10.5, but aren't actually
         # exported from the framework:

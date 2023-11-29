@@ -5,11 +5,14 @@
 
 #import <Foundation/Foundation.h>
 
+#if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>
+#import <ModelIO/ModelIO.h>
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+
 #if PyObjC_BUILD_RELEASE >= 1013
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-#import <ModelIO/ModelIO.h>
 
 #if PyObjC_BULD_RELEASE < 1013
 #define simd_uchar16 vector_uchar16
@@ -126,10 +129,14 @@ GET_VALUE(getVectorInt2, simd_int2, ((simd_int2){42, 43}))
 GET_VALUE(getGKBox, GKBox, ((GKBox){{1.5, 2.5, 3.5}, {4.5, 5.5, 6.5}}))
 GET_VALUE(getGKQuad, GKQuad, ((GKQuad){{7.5, 8.5}, {9.5, 10.5}}))
 #endif /*  PyObjC_BUILD_RELEASE >= 1012 */
+#if PyObjC_BUILD_RELEASE >= 1011
 GET_VALUE(getMDLAxisAlignedBoundingBox, MDLAxisAlignedBoundingBox,
           ((MDLAxisAlignedBoundingBox){{11.5, 12.5, 13.5}, {14.5, 15.5, 16.5}}))
+#endif /*  PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1011
 GET_VALUE(getMDLVoxelIndexExtent, MDLVoxelIndexExtent,
           ((MDLVoxelIndexExtent){{-1, -2, -3, -4}, {-5, -6, -7, -8}}))
+#endif /*  PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1013
 GET_VALUE(getMPSAxisAlignedBoundingBox, MPSAxisAlignedBoundingBox,
           ((MPSAxisAlignedBoundingBox){{-1.5, -2.5, -3.5}, {-5.5, -6.5, -7.5}}))

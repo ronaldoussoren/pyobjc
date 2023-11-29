@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 
 
@@ -29,9 +29,6 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFKitPlatformChoiceWidgetListView, Quartz.NSTableView)
         self.assertIs(Quartz.PDFKitPlatformButton, Quartz.NSButton)
         self.assertIs(Quartz.PDFKitPlatformButtonCell, Quartz.NSButtonCell)
-        self.assertIs(
-            Quartz.PDFKitPlatformAccessibilityElement, Quartz.NSAccessibilityElement
-        )
         self.assertIs(Quartz.PDFKitResponder, Quartz.NSResponder)
         self.assertIs(Quartz.PDFKitTextContentType, Quartz.NSTextContentType)
         self.assertIs(Quartz.PDFKitPlatformTextContentType, Quartz.NSTextContentType)
@@ -44,6 +41,16 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFRectZero, Quartz.NSZeroRect)
         self.assertIs(Quartz.PDFEdgeInsetsZero, Quartz.NSEdgeInsetsZero)
         self.assertIs(Quartz.PDFTrackingRunLoopMode, Quartz.NSEventTrackingRunLoopMode)
+
+    @min_os_level("10.10")
+    def test_aliases10_10(self):
+        self.assertIs(
+            Quartz.PDFKitPlatformAccessibilityElement, Quartz.NSAccessibilityElement
+        )
+
+    @min_os_level("10.11")
+    def test_aliases10_11(self):
+
         self.assertIs(
             Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular
         )

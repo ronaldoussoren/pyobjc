@@ -12,7 +12,7 @@ def _setup():
 
     import CoreFoundation
     import objc
-    from . import _metadata, _util
+    from . import _metadata, _util, _JavaScriptCore
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="JavaScriptCore",
@@ -24,6 +24,7 @@ def _setup():
         inline_list=None,
         parents=(
             _util,
+            _JavaScriptCore,
             CoreFoundation,
         ),
         metadict=_metadata.__dict__,

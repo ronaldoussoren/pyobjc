@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata
+    from . import _metadata, _AudioVideoBridging
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="AudioVideoBridging",
@@ -21,7 +21,7 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(Foundation,),
+        parents=(_AudioVideoBridging, Foundation,),
         metadict=_metadata.__dict__,
     )
 

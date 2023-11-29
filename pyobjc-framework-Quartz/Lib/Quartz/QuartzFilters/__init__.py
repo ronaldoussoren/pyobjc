@@ -13,9 +13,14 @@ def _setup():
     import objc
     from . import _metadata
 
+    if objc.macos_available(10, 10):
+        identifier = "com.apple.Quartz"
+    else:
+        identifier = "com.apple.quartzframework"
+
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.QuartzFilters",
-        frameworkIdentifier="com.apple.quartzframework",
+        frameworkIdentifier=identifier,
         frameworkPath=objc.pathForFramework(
             "/System/Library/Frameworks/Quartz.framework"
         ),

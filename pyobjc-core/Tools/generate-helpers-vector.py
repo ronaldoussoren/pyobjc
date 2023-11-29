@@ -199,9 +199,10 @@ HELPER_PREFIX = """\
 #import "pyobjc.h"
 #include <simd/simd.h>
 
+#if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>
-#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+#endif
 
 #if PyObjC_BUILD_RELEASE >= 1013
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
@@ -861,6 +862,10 @@ def generate_setup_function(stream: typing.IO[str]):
     for idx, signature in enumerate(ALL_SIGNATURES):
         if b"GKBox" in signature:
             print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
+        if b"MDL" in signature:
+            print("#if PyObjC_BUILD_RELEASE >= 1011", file=stream)
+        if b"MPS" in signature:
+            print("#if PyObjC_BUILD_RELEASE >= 1013", file=stream)
         call_name = function_name(CALL_PREFIX, signature)
         mkimp_name = function_name(MKIMP_PREFIX, signature)
 
@@ -899,6 +904,11 @@ def generate_setup_function(stream: typing.IO[str]):
 
         if b"GKBox" in signature:
             print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
+        if b"MDL" in signature:
+            print("#endif /* PyObjC_BUILD_RELEASE >= 1011 */", file=stream)
+        if b"MPS" in signature:
+            print("#endif /* PyObjC_BUILD_RELEASE >= 1013 */", file=stream)
+
 
     print("", file=stream)
     print("    return 0;", file=stream)

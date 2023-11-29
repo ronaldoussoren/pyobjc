@@ -13,9 +13,15 @@ def _setup():
     import objc
     from . import _metadata
 
+    # The framework identifier is different on macOS <= 10.9
+    if objc.macos_available(10, 10): 
+        identifier = "com.apple.xpc.ServiceManagement"
+    else:
+        identifier = "com.apple.bsd.ServiceManagement"
+
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="ServiceManagement",
-        frameworkIdentifier="com.apple.xpc.ServiceManagement",
+        frameworkIdentifier=identifier,
         frameworkPath=objc.pathForFramework(
             "/System/Library/Frameworks/ServiceManagement.framework"
         ),

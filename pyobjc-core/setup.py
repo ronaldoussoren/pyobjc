@@ -434,6 +434,20 @@ def _working_compiler(executable):
         stdout, stderr = p.communicate()
         status = p.wait()
         if status != 0:
+            if "-flto=thin" in CFLAGS:
+                cflags.remove("-flto=thin")
+                CFLAGS.remove("-flto=thin")
+                EXT_CFLAGS.remove("-flto=thin")
+                OBJC_LDFLAGS.remove("-flto=thin")
+                p = subprocess.Popen(
+                    [executable, "-c", fp.name] + cflags,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                )
+                stdout, stderr = p.communicate()
+                status = p.wait()
+
+        if status != 0:
             return False
 
         binfile = fp.name[:-1] + "o"

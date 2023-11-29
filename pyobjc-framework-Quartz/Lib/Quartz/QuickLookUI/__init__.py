@@ -18,7 +18,10 @@ def _setup():
     frameworkIdentifier = "com.apple.QuickLookUIFramework"
     if not os.path.exists(frameworkPath):
         frameworkPath = "/System/Library/Frameworks/Quartz.framework"
-        frameworkIdentifier = "com.apple.Quartz"
+        if objc.macos_available(10, 10):
+            frameworkIdentifier = "com.apple.Quartz"
+        else:
+            frameworkIdentifier = "com.apple.quartzframework"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.QuickLookUI",

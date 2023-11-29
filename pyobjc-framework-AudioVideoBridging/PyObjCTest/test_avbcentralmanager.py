@@ -3,6 +3,7 @@ import AudioVideoBridging
 
 
 class TestAVBCentralManager(TestCase):
+    @min_os_level("10.10")
     def test_constants(self):
         self.assertIsInstance(AudioVideoBridging.AVBNullEUI64, int)
 

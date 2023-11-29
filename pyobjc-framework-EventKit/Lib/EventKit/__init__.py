@@ -13,9 +13,14 @@ def _setup():
     import objc
     from . import _metadata
 
+    if objc.macos_available(10, 10):
+       identifier = "com.apple.eventkit"
+    else:
+       identifier = "com.apple.ical.EventKit"
+
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="EventKit",
-        frameworkIdentifier="com.apple.eventkit",
+        frameworkIdentifier=identifier,
         frameworkPath=objc.pathForFramework(
             "/System/Library/Frameworks/EventKit.framework"
         ),

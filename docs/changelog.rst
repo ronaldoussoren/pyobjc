@@ -19,6 +19,10 @@ Version 10.1
 
 * :issue:`572`: Fix compilation issue when building on macOS 13 or earlier
 
+* Fix build error on ancient macOS versions where clang doesn't support
+  ``-flto=thin``.
+
+
 Version 10.0
 ------------
 

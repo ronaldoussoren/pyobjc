@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import setup, Extension  # noqa: E402
 
 VERSION = "10.0"
 
@@ -21,6 +21,19 @@ setup(
     description="Wrappers for the framework AudioVideoBridging on macOS",
     min_os_level="10.8",
     packages=["AudioVideoBridging"],
+    ext_modules=[
+        Extension(
+            "AudioVideoBridging._AudioVideoBridging",
+            ["Modules/_AudioVideoBridging.m"],
+            extra_link_args=["-framework", "AudioVideoBridging"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_AudioVideoBridging")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

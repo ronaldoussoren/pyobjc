@@ -36,13 +36,14 @@ def _setup():
     # The type encoding for older versions of macOS (at least
     # up to 10.11)
 
-    from . import SecAccessControlGetTypeID  # isort:skip
+    if objc.macos_available(10, 10):
+        from . import SecAccessControlGetTypeID  # isort:skip
 
-    objc.registerCFSignature(
-        "SecAccessControl",
-        b"^{OpaqueSecAccessControl=}",
-        SecAccessControlGetTypeID(),
-    )
+        objc.registerCFSignature(
+            "SecAccessControl",
+            b"^{OpaqueSecAccessControl=}",
+            SecAccessControlGetTypeID(),
+        )
 
     from . import SecTrustedApplicationGetTypeID  # isort:skip
 
@@ -51,29 +52,29 @@ def _setup():
         b"^{OpaqueSecTrustedApplicationRef=}",
         SecTrustedApplicationGetTypeID(),
     )
-
+    
     from . import SecCertificateGetTypeID  # isort:skip
-
+    
     objc.registerCFSignature(
         "SecCertificateRef",
         b"^{OpaqueSecCertificateRef=}",
         SecCertificateGetTypeID(),
     )
-
+    
     from . import SecAccessGetTypeID  # isort:skip
-
+    
     objc.registerCFSignature(
         "SecAccessRef", b"^{OpaqueSecAccessRef=}", SecAccessGetTypeID()
     )
-
+    
     from . import SecIdentityGetTypeID  # isort:skip
-
+    
     objc.registerCFSignature(
         "SecIdentityRef", b"^{OpaqueSecIdentityRef=}", SecIdentityGetTypeID()
     )
 
     from . import SecIdentitySearchGetTypeID  # isort:skip
-
+    
     objc.registerCFSignature(
         "SecIdentitySearchRef",
         b"^{OpaqueSecIdentitySearchRef=}",

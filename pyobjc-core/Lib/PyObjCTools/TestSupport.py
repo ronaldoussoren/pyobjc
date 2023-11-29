@@ -1290,6 +1290,19 @@ class TestCase(_unittest.TestCase):
             )
         )
 
+        # Some bindings in CoreAudio with false positives
+        exclude_attrs.add("AudioHardwareClaimAudioDeviceID")
+        exclude_attrs.add("AudioHardwareClaimAudioStreamID")
+        exclude_attrs.add("AudioHardwareDevicePropertyChanged")
+        exclude_attrs.add("AudioHardwareDevicesCreated")
+        exclude_attrs.add("AudioHardwareDevicesDied")
+        exclude_attrs.add("AudioHardwareStreamPropertyChanged")
+        exclude_attrs.add("AudioHardwareStreamsCreated")
+        exclude_attrs.add("AudioHardwareStreamsDied")
+        exclude_attrs.add("AudioObjectCreate")
+        exclude_attrs.add("AudioObjectPropertiesChanged")
+        exclude_attrs.add("AudioObjectsPublishedAndDied")
+
         # Calculate all (interesting) names in the module. This pokes into
         # the implementation details of objc.ObjCLazyModule to avoid loading
         # all attributes (which is expensive for larger bindings).

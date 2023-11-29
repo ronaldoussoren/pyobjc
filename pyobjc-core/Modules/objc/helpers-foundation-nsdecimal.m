@@ -265,10 +265,12 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         stringVal = [[NSString alloc] initWithFormat:@"%.*g",
 #ifdef DBL_DECIMAL_DIG
                                                      DBL_DECIMAL_DIG,
-#else
+#elif defined(__DBL_DECIMAL_DIG__)
                                                      /* With Xcode 7.3 (macOS 10.11) the
                                                         public macro is not available */
                                                      __DBL_DECIMAL_DIG__,
+#else
+                                                     __DECIMAL_DIG__,
 #endif
                                                      PyFloat_AsDouble(pyValue)];
         if (stringVal == nil) {

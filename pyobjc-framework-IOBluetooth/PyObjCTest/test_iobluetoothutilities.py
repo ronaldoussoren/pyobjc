@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import IOBluetooth
 
@@ -7,7 +7,6 @@ class TestIOBluetoothUtilities(TestCase):
     def test_functions(self):
         self.assertArgIsOut(IOBluetooth.IOBluetoothNSStringToDeviceAddress, 1)
         self.assertArgIsIn(IOBluetooth.IOBluetoothNSStringFromDeviceAddress, 0)
-        self.assertArgIsIn(IOBluetooth.IOBluetoothNSStringFromDeviceAddressColon, 0)
         self.assertResultIsBOOL(IOBluetooth.IOBluetoothIsFileAppleDesignatedPIMData, 1)
         IOBluetooth.IOBluetoothGetUniqueFileNameAndPath
 
@@ -41,3 +40,7 @@ class TestIOBluetoothUtilities(TestCase):
         self.assertArgIsNullTerminated(
             IOBluetooth.IOBluetoothFindNumberOfRegistryEntriesOfClassName, 0
         )
+
+    @min_os_level("10.10")
+    def test_functions10_10(self):
+        self.assertArgIsIn(IOBluetooth.IOBluetoothNSStringFromDeviceAddressColon, 0)

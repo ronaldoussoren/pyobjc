@@ -59,10 +59,13 @@ class TestMIDIServices(TestCase):
         )
 
     def test_functions(self):
-        self.assertArgIsOut(CoreMIDI.MIDISourceCreateWithProtocol, 3)
         self.assertArgIsOut(CoreMIDI.MIDISourceCreate, 2)
         self.assertArgIsOut(CoreMIDI.MIDISetupCreate, 0)
         self.assertArgIsOut(CoreMIDI.MIDIDestinationCreate, 4)
+
+    @min_os_level("11.0")
+    def test_functions11_0(self):
+        self.assertArgIsOut(CoreMIDI.MIDISourceCreateWithProtocol, 3)
 
     @min_os_level("14.0")
     def test_functions14_0(self):

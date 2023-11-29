@@ -13,6 +13,17 @@
 
 #if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
 
+#ifndef NS_ASSUME_NONNULL_BEGIN
+/*
+ * Old compiler without nullability support
+ */
+#define NS_ASSUME_NONNULL_BEGIN
+#define NS_ASSUME_NONNULL_END
+#define _Nullable
+#define _Nonnull
+#endif /* !NS_ASSUME_NONNULL_BEGIN */
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define HAVE_CLOSURE_POOL 1

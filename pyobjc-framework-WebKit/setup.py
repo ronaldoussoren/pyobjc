@@ -24,6 +24,17 @@ setup(
     packages=["WebKit", "JavaScriptCore"],
     ext_modules=[
         Extension(
+            "JavaScriptCore._JavaScriptCore",
+            ["Modules/_JavaScriptCore.m"],
+            extra_link_args=["-framework", "JavaScriptCore"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_JavaScriptCore")
+            ],
+        ),
+        Extension(
             "WebKit._WebKit",
             ["Modules/_WebKit.m"],
             extra_link_args=["-framework", "WebKit"],

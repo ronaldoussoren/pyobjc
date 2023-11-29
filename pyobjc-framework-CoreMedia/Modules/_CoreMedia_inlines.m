@@ -6,7 +6,8 @@
 #import <CoreMedia/CoreMedia.h>
 
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+#pragma clang diagnostic ignored "-Wunguarded-availability"
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1400

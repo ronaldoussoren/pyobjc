@@ -452,7 +452,6 @@ getDoubleFunc(void)
     return do_double;
 }
 
-typedef int (*returnfunc)(int);
 static returnfunc
 getOldDoubleFunc(void)
 {

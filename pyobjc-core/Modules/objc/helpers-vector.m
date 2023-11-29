@@ -6,9 +6,10 @@
 #import "pyobjc.h"
 #include <simd/simd.h>
 
+#if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>
-#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+#endif
 
 #if PyObjC_BUILD_RELEASE >= 1013
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
@@ -26,6 +27,10 @@
 #define simd_uint3 vector_uint3
 #define simd_int2 vector_int2
 #define simd_int4 vector_int4
+#define simd_float2x2 matrix_float2x2
+#define simd_float3x3 matrix_float3x3
+#define simd_float4x4 matrix_float4x4
+#define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
 NS_ASSUME_NONNULL_BEGIN
@@ -6375,6 +6380,7 @@ mkimp_id_id_GKBox(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -6429,7 +6435,9 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_id_GKQuad(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -6486,7 +6494,9 @@ mkimp_id_id_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
@@ -6548,7 +6558,9 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
                                         PyObjCMethodSignature* methinfo
@@ -6610,6 +6622,7 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
 static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* self,
                                                     PyObject* const* arguments,
@@ -6956,6 +6969,7 @@ mkimp_id_id_simd_float4x4(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
 {
@@ -7010,7 +7024,9 @@ static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* sel
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_id_id_simd_quatf(PyObject*              callable,
                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -7067,7 +7083,9 @@ mkimp_id_id_simd_quatf(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* self,
                                                     PyObject* const* arguments,
                                                     size_t           nargs)
@@ -7128,7 +7146,9 @@ static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* 
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_id_id_simd_quatf_id(PyObject*              callable,
                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -7189,6 +7209,7 @@ mkimp_id_id_simd_quatf_id(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
 static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        method,
                                                           PyObject*        self,
@@ -8671,6 +8692,7 @@ mkimp_id_GKBox_f(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
                                           PyObject* const* arguments, size_t nargs)
 {
@@ -8721,7 +8743,9 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_GKQuad(PyObject*              callable,
                 PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8775,7 +8799,9 @@ mkimp_id_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
                                             PyObject* const* arguments, size_t nargs)
 {
@@ -8830,7 +8856,9 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_GKQuad_f(PyObject*              callable,
                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8887,7 +8915,9 @@ mkimp_id_GKQuad_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
                                                        PyObject* const* arguments,
                                                        size_t           nargs)
@@ -8941,7 +8971,9 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
                              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8996,6 +9028,7 @@ mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
 static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
@@ -11966,6 +11999,7 @@ mkimp_v_f_v2i(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        method,
                                                             PyObject*        self,
                                                             PyObject* const* arguments,
@@ -12018,7 +12052,9 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                   __attribute__((__unused__)))
@@ -12073,7 +12109,9 @@ mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* met
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        method,
                                                               PyObject*        self,
                                                               PyObject* const* arguments,
@@ -12131,7 +12169,9 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* methinfo
                                     __attribute__((__unused__)))
@@ -12189,6 +12229,7 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* m
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
 static PyObject* _Nullable call_v_simd_double4x4(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
@@ -12834,6 +12875,7 @@ mkimp_v_simd_float4x4_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
                                                PyObject* const* arguments, size_t nargs)
 {
@@ -12888,7 +12930,9 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatd_d(PyObject*              callable,
                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -12946,7 +12990,9 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -12996,7 +13042,9 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13050,7 +13098,9 @@ mkimp_v_simd_quatf(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
 {
@@ -13105,7 +13155,9 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf_v3f(PyObject*              callable,
                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13163,7 +13215,9 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
                                                PyObject* const* arguments, size_t nargs)
 {
@@ -13218,7 +13272,9 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
 
     Py_RETURN_NONE;
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf_d(PyObject*              callable,
                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13276,6 +13332,7 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1012
 
 static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
@@ -13382,6 +13439,7 @@ mkimp_GKBox(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
                                        PyObject* const* arguments
                                        __attribute__((__unused__)),
@@ -13429,7 +13487,9 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{GKQuad=<2f><2f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_GKQuad(PyObject*              callable,
              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13480,7 +13540,9 @@ mkimp_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -13537,7 +13599,9 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{GKTriangle=[3<3f>]}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_GKTriangle_Q(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13592,7 +13656,9 @@ mkimp_GKTriangle_Q(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
                                                           PyObject* const* arguments
@@ -13647,7 +13713,9 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
 
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                 __attribute__((__unused__)))
@@ -13699,7 +13767,9 @@ mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        method,
                                                               PyObject*        self,
                                                               PyObject* const* arguments,
@@ -13758,7 +13828,9 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
 
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* methinfo
                                     __attribute__((__unused__)))
@@ -13814,7 +13886,9 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* m
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        method,
                                                             PyObject*        self,
                                                             PyObject* const* arguments,
@@ -13873,7 +13947,9 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
 
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* methinfo
                                   __attribute__((__unused__)))
@@ -13928,7 +14004,9 @@ mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* met
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
                                                     PyObject* const* arguments
                                                     __attribute__((__unused__)),
@@ -13981,7 +14059,9 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
 
     return pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLVoxelIndexExtent(PyObject*              callable,
                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -14033,6 +14113,7 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
 static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
                                                PyObject* const* arguments
@@ -14905,6 +14986,7 @@ mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* 
     return imp_implementationWithBlock(block);
 }
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -14960,7 +15042,9 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{simd_quatd=<4d>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatd_d(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15014,7 +15098,9 @@ mkimp_simd_quatd_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
                                            PyObject* const* arguments
                                            __attribute__((__unused__)),
@@ -15062,7 +15148,9 @@ static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatf(PyObject*              callable,
                  PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15113,7 +15201,9 @@ mkimp_simd_quatf(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -15164,7 +15254,9 @@ static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatf_d(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15218,6 +15310,7 @@ mkimp_simd_quatf_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
 static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
                                      PyObject* const* arguments
@@ -15318,6 +15411,7 @@ mkimp_v16C(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
                                                       PyObject* const* arguments
                                                       __attribute__((__unused__)),
@@ -15371,7 +15465,9 @@ static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject
 
     return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_MPSImageHistogramInfo(PyObject*              callable,
                             PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15423,7 +15519,9 @@ mkimp_MPSImageHistogramInfo(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
                                                           PyObject* const* arguments
@@ -15478,7 +15576,9 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
 
     return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                 __attribute__((__unused__)))
@@ -15530,6 +15630,7 @@ mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
 
     return imp_implementationWithBlock(block);
 }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 int
 PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
@@ -15921,12 +16022,15 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{GKQuad=<2f><2f>}", call_id_id_GKQuad, mkimp_id_id_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f",
             call_id_id_MDLAxisAlignedBoundingBox_f,
@@ -15934,6 +16038,7 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{simd_float2x2=[2<2f>]}", call_id_id_simd_float2x2,
@@ -15956,17 +16061,21 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{simd_quatf=<4f>}", call_id_id_simd_quatf, mkimp_id_id_simd_quatf)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{simd_quatf=<4f>}@", call_id_id_simd_quatf_id, mkimp_id_id_simd_quatf_id)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:^{CGColor=}^{CGColor=}@<2i>", call_id_CGColor_CGColor_id_v2i,
@@ -16058,24 +16167,30 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKQuad=<2f><2f>}", call_id_GKQuad, mkimp_id_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKQuad=<2f><2f>}f", call_id_GKQuad_f, mkimp_id_GKQuad_f)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{MDLVoxelIndexExtent=<4i><4i>}", call_id_MDLVoxelIndexExtent,
             mkimp_id_MDLVoxelIndexExtent)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{simd_float4x4=[4<4f>]}", call_id_simd_float4x4, mkimp_id_simd_float4x4)
@@ -16260,26 +16375,32 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}", call_v_MDLAxisAlignedBoundingBox,
             mkimp_v_MDLAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z",
             call_v_MDLAxisAlignedBoundingBox_Z, mkimp_v_MDLAxisAlignedBoundingBox_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}B",
             call_v_MDLAxisAlignedBoundingBox_Z, mkimp_v_MDLAxisAlignedBoundingBox_Z)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{simd_double4x4=[4<4d>]}", call_v_simd_double4x4, mkimp_v_simd_double4x4)
@@ -16319,29 +16440,37 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{simd_quatd=<4d>}d", call_v_simd_quatd_d, mkimp_v_simd_quatd_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{simd_quatf=<4f>}", call_v_simd_quatf, mkimp_v_simd_quatf)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{simd_quatf=<4f>}<3f>", call_v_simd_quatf_v3f, mkimp_v_simd_quatf_v3f)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{simd_quatf=<4f>}d", call_v_simd_quatf_d, mkimp_v_simd_quatf_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1012
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
@@ -16351,45 +16480,57 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKQuad=<2f><2f>}@:", call_GKQuad, mkimp_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKTriangle=[3<3f>]}@:Q", call_GKTriangle_Q, mkimp_GKTriangle_Q)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MDLAxisAlignedBoundingBox=<3f><3f>}@:", call_MDLAxisAlignedBoundingBox,
             mkimp_MDLAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
             call_MDLAxisAlignedBoundingBox_v4i, mkimp_MDLAxisAlignedBoundingBox_v4i)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MDLAxisAlignedBoundingBox=<3f><3f>}@:d", call_MDLAxisAlignedBoundingBox_d,
             mkimp_MDLAxisAlignedBoundingBox_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MDLVoxelIndexExtent=<4i><4i>}@:", call_MDLVoxelIndexExtent,
             mkimp_MDLVoxelIndexExtent)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_double4x4=[4<4d>]}@:", call_simd_double4x4, mkimp_simd_double4x4)
@@ -16441,23 +16582,29 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_quatd=<4d>}@:d", call_simd_quatd_d, mkimp_simd_quatd_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_quatf=<4f>}@:", call_simd_quatf, mkimp_simd_quatf)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_quatf=<4f>}@:d", call_simd_quatf_d, mkimp_simd_quatf_d)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "<16C>@:", call_v16C, mkimp_v16C)
@@ -16465,26 +16612,32 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo,
             mkimp_MPSImageHistogramInfo)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo,
             mkimp_MPSImageHistogramInfo)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox,
             mkimp_MPSAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
     return 0;
 }

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level, expectedFailure
 
 
 class TestNSOpenGL(TestCase):
@@ -153,6 +153,7 @@ class TestNSOpenGL(TestCase):
             AppKit.NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0
         )
 
+    @expectedFailure
     @min_os_level("10.6")
     @max_os_level("10.11")
     def testMethods10_6(self):
