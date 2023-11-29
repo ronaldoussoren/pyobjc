@@ -52,29 +52,29 @@ def _setup():
         b"^{OpaqueSecTrustedApplicationRef=}",
         SecTrustedApplicationGetTypeID(),
     )
-    
+
     from . import SecCertificateGetTypeID  # isort:skip
-    
+
     objc.registerCFSignature(
         "SecCertificateRef",
         b"^{OpaqueSecCertificateRef=}",
         SecCertificateGetTypeID(),
     )
-    
+
     from . import SecAccessGetTypeID  # isort:skip
-    
+
     objc.registerCFSignature(
         "SecAccessRef", b"^{OpaqueSecAccessRef=}", SecAccessGetTypeID()
     )
-    
+
     from . import SecIdentityGetTypeID  # isort:skip
-    
+
     objc.registerCFSignature(
         "SecIdentityRef", b"^{OpaqueSecIdentityRef=}", SecIdentityGetTypeID()
     )
 
     from . import SecIdentitySearchGetTypeID  # isort:skip
-    
+
     objc.registerCFSignature(
         "SecIdentitySearchRef",
         b"^{OpaqueSecIdentitySearchRef=}",

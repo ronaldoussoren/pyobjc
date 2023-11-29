@@ -21,7 +21,10 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(_AudioVideoBridging, Foundation,),
+        parents=(
+            _AudioVideoBridging,
+            Foundation,
+        ),
         metadict=_metadata.__dict__,
     )
 

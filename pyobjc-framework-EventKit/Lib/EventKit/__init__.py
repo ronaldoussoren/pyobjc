@@ -14,9 +14,9 @@ def _setup():
     from . import _metadata
 
     if objc.macos_available(10, 10):
-       identifier = "com.apple.eventkit"
+        identifier = "com.apple.eventkit"
     else:
-       identifier = "com.apple.ical.EventKit"
+        identifier = "com.apple.ical.EventKit"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="EventKit",

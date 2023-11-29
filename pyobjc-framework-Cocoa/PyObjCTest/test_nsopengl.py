@@ -1,5 +1,10 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    max_os_level,
+    expectedFailure,
+)
 
 
 class TestNSOpenGL(TestCase):

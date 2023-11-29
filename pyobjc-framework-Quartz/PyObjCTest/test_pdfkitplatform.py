@@ -50,7 +50,6 @@ class TestPDFKitPlatform(TestCase):
 
     @min_os_level("10.11")
     def test_aliases10_11(self):
-
         self.assertIs(
             Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular
         )

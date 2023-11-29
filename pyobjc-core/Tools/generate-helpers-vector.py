@@ -909,7 +909,6 @@ def generate_setup_function(stream: typing.IO[str]):
         if b"MPS" in signature:
             print("#endif /* PyObjC_BUILD_RELEASE >= 1013 */", file=stream)
 
-
     print("", file=stream)
     print("    return 0;", file=stream)
     print("}", file=stream)

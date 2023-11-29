@@ -14,9 +14,9 @@ def _setup():
     from . import _metadata, _imagekit
 
     if objc.macos_available(10, 10):
-       identifier = "com.apple.Quartz"
+        identifier = "com.apple.Quartz"
     else:
-       identifier = "com.apple.quartzframework"
+        identifier = "com.apple.quartzframework"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.ImageKit",

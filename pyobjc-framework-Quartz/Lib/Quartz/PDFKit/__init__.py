@@ -19,9 +19,9 @@ def _setup():
     if not os.path.exists(frameworkPath):
         frameworkPath = "/System/Library/Frameworks/Quartz.framework"
         if objc.macos_available(10, 10):
-           frameworkIdentifier = "com.apple.Quartz"
+            frameworkIdentifier = "com.apple.Quartz"
         else:
-           frameworkIdentifier = "com.apple.quartzframework"
+            frameworkIdentifier = "com.apple.quartzframework"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.PDFKit",

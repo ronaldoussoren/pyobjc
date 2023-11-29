@@ -382,7 +382,7 @@ class TestMethods(TestCase):
 
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getGKQuad(44, 42)
-   
+
     @min_sdk_level("10.11")
     def test_getMDLAxisAlignedBoundingBox(self):
         self.assertResultHasType(

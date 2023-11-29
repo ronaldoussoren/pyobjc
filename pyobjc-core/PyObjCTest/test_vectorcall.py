@@ -1316,6 +1316,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 11):
+
         def idid_GKBox_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1326,6 +1327,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
+
         def idid_GKQuad_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1336,6 +1338,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
+
         def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
             self.argvalues = (
                 arg0,
@@ -1374,6 +1377,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 13):
+
         def idid_simdquatf_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1384,6 +1388,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 13):
+
         def idid_simdquatf_id_(self, arg0, arg1, arg2):
             self.argvalues = (
                 arg0,
@@ -1505,13 +1510,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 11):
+
         def idGKBox_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return "hello"
-    
+
     if objc.macos_available(10, 11):
+
         def idGKBox_f_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1522,6 +1529,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
+
         def idGKQuad_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -1529,16 +1537,18 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
-         def idGKQuad_f_(self, arg0, arg1):
-             self.argvalues = (
-                 arg0,
-                 arg1,
-             )
-             if getattr(self, "shouldRaise", False):
-                 raise RuntimeError("failure!")
-             return "hello"
+
+        def idGKQuad_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
 
     if objc.macos_available(10, 11):
+
         def idMDLVoxelIndexExtent_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -1747,12 +1757,14 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     if objc.macos_available(10, 11):
+
         def vMDLAxisAlignedBoundingBox_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 11):
+
         def vMDLAxisAlignedBoundingBox_Z_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1798,6 +1810,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         def vsimdquatd_d_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1807,12 +1820,14 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         def vsimdquatf_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         def vsimdquatf_v3f_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1822,6 +1837,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         def vsimdquatf_d_(self, arg0, arg1):
             self.argvalues = (
                 arg0,
@@ -1831,6 +1847,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 11):
+
         def GKBox(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -1841,13 +1858,18 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         def GKQuad(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
-            return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+            return (
+                objc.simd.vector_float2(9.0, 10.0),
+                objc.simd.vector_float2(11.0, 12.0),
+            )
 
     if objc.macos_available(10, 11):
+
         def GKTriangleQ_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -1861,6 +1883,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         def MDLAxisAlignedBoundingBox(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -1871,6 +1894,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         def MDLAxisAlignedBoundingBoxv4i_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -1881,6 +1905,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         def MDLAxisAlignedBoundingBoxd_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -1889,8 +1914,9 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
             )
-        
+
     if objc.macos_available(10, 11):
+
         def MDLVoxelIndexExtent(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -2005,6 +2031,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
 
     if objc.macos_available(10, 13):
+
         def simdquatdd_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -2012,6 +2039,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
+
         def simdquatf(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -2019,6 +2047,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
+
         def simdquatfd_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
@@ -2034,6 +2063,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
 
     if objc.macos_available(10, 13):
+
         def MPSImageHistogramInfo(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -2046,6 +2076,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 13):
+
         def MPSAxisAlignedBoundingBox(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
@@ -2570,6 +2601,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def idid_GKBox_(self, arg0, arg1):
             self.argvalues = (
@@ -2581,6 +2613,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def idid_GKQuad_(self, arg0, arg1):
             self.argvalues = (
@@ -2590,8 +2623,9 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return "hello"
-    
+
     if objc.macos_available(10, 11):
+
         @classmethod
         def idid_MDLAxisAlignedBoundingBox_f_(self, arg0, arg1, arg2):
             self.argvalues = (
@@ -2602,7 +2636,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return "hello"
-    
+
     @classmethod
     def idid_simdfloat2x2_(self, arg0, arg1):
         self.argvalues = (
@@ -2634,6 +2668,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def idid_simdquatf_(self, arg0, arg1):
             self.argvalues = (
@@ -2645,6 +2680,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def idid_simdquatf_id_(self, arg0, arg1, arg2):
             self.argvalues = (
@@ -2776,33 +2812,37 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         return "hello"
 
     if objc.macos_available(10, 11):
-         @classmethod
-         def idGKBox_(self, arg0):
-             self.argvalues = (arg0,)
-             if getattr(self, "shouldRaise", False):
-                 raise RuntimeError("failure!")
-             return "hello"
-     
-    if objc.macos_available(10, 11):
+
         @classmethod
-        def idGKBox_f_(self, arg0, arg1):
-            self.argvalues = (
-                arg0,
-                arg1,
-                )
+        def idGKBox_(self, arg0):
+            self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return "hello"
 
     if objc.macos_available(10, 11):
+
+        @classmethod
+        def idGKBox_f_(self, arg0, arg1):
+            self.argvalues = (
+                arg0,
+                arg1,
+            )
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            return "hello"
+
+    if objc.macos_available(10, 11):
+
         @classmethod
         def idGKQuad_(self, arg0):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return "hello"
-    
+
     if objc.macos_available(10, 11):
+
         @classmethod
         def idGKQuad_f_(self, arg0, arg1):
             self.argvalues = (
@@ -2814,6 +2854,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             return "hello"
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def idMDLVoxelIndexExtent_(self, arg0):
             self.argvalues = (arg0,)
@@ -3049,6 +3090,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def vMDLAxisAlignedBoundingBox_(self, arg0):
             self.argvalues = (arg0,)
@@ -3056,6 +3098,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def vMDLAxisAlignedBoundingBox_Z_(self, arg0, arg1):
             self.argvalues = (
@@ -3108,6 +3151,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def vsimdquatd_d_(self, arg0, arg1):
             self.argvalues = (
@@ -3118,6 +3162,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def vsimdquatf_(self, arg0):
             self.argvalues = (arg0,)
@@ -3125,6 +3170,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def vsimdquatf_v3f_(self, arg0, arg1):
             self.argvalues = (
@@ -3133,8 +3179,9 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
-    
+
     if objc.macos_available(10, 13):
+
         @classmethod
         def vsimdquatf_d_(self, arg0, arg1):
             self.argvalues = (
@@ -3143,8 +3190,9 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
-    
+
     if objc.macos_available(10, 11):
+
         @classmethod
         def GKBox(self):
             self.argvalues = None
@@ -3156,14 +3204,19 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def GKQuad(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
-                    raise RuntimeError("failure!")
-            return (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+                raise RuntimeError("failure!")
+            return (
+                objc.simd.vector_float2(9.0, 10.0),
+                objc.simd.vector_float2(11.0, 12.0),
+            )
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def GKTriangleQ_(self, arg0):
             self.argvalues = (arg0,)
@@ -3178,6 +3231,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def MDLAxisAlignedBoundingBox(self):
             self.argvalues = None
@@ -3189,6 +3243,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def MDLAxisAlignedBoundingBoxv4i_(self, arg0):
             self.argvalues = (arg0,)
@@ -3198,8 +3253,9 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
             )
-    
+
     if objc.macos_available(10, 11):
+
         @classmethod
         def MDLAxisAlignedBoundingBoxd_(self, arg0):
             self.argvalues = (arg0,)
@@ -3211,6 +3267,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 11):
+
         @classmethod
         def MDLVoxelIndexExtent(self):
             self.argvalues = None
@@ -3334,6 +3391,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def simdquatdd_(self, arg0):
             self.argvalues = (arg0,)
@@ -3342,14 +3400,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def simdquatf(self):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-    
+
     if objc.macos_available(10, 13):
+
         @classmethod
         def simdquatfd_(self, arg0):
             self.argvalues = (arg0,)
@@ -3367,6 +3427,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def MPSImageHistogramInfo(self):
             self.argvalues = None
@@ -3380,6 +3441,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
 
     if objc.macos_available(10, 13):
+
         @classmethod
         def MPSAxisAlignedBoundingBox(self):
             self.argvalues = None
@@ -21935,7 +21997,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    
     @min_os_level("10.11")
     def test_idid_MDLAxisAlignedBoundingBox_f__imp(self):
         OC_VectorCall.clearRaise()
@@ -30527,7 +30588,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    
     @min_os_level("10.11")
     def test_clsidMDLVoxelIndexExtent_(self):
         OC_VectorCall.clearRaise()
@@ -43956,7 +44016,6 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBox_imp(self):
         OC_VectorCall.clearRaise()

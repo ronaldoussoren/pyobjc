@@ -14,7 +14,7 @@ def _setup():
     from . import _metadata
 
     # The framework identifier is different on macOS <= 10.9
-    if objc.macos_available(10, 10): 
+    if objc.macos_available(10, 10):
         identifier = "com.apple.xpc.ServiceManagement"
     else:
         identifier = "com.apple.bsd.ServiceManagement"
