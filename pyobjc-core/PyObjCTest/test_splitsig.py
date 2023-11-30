@@ -139,6 +139,7 @@ class SplitSignatureTest(TestCase):
                     b"_ql",
                     b"ck",
                     b"cksqlcs",
+                    b"ef",
                     b"if",
                     b"pep",
                     b"ams",
