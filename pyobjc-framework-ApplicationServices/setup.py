@@ -51,6 +51,7 @@ setup(
         "pyobjc-core>=" + VERSION,
         "pyobjc-framework-Cocoa>=" + VERSION,
         "pyobjc-framework-Quartz>=" + VERSION,
+        "pyobjc-framework-CoreText>=" + VERSION,
     ],
     long_description=__doc__,
 )

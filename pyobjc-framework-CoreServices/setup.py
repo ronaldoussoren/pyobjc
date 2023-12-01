@@ -16,16 +16,17 @@ from pyobjc_setup import Extension, setup  # noqa: E402
 
 VERSION = "10.0"
 
-subpackages = [
-    f"CoreServices.{fn}"
-    for fn in os.listdir("Lib/CoreServices")
-    if os.path.exists(os.path.join("Lib/CoreServices", fn, "__init__.py"))
-]
-
 setup(
     name="pyobjc-framework-CoreServices",
     description="Wrappers for the framework CoreServices on macOS",
-    packages=["CoreServices"] + subpackages,
+    packages=[
+        "CoreServices",
+        "CoreServices.CarbonCore",
+        "CoreServices.LaunchServices",
+        "CoreServices.SearchKit",
+        "CoreServices.DictionaryServices",
+        "CoreServices.Metadata",
+    ],
     ext_modules=[
         Extension(
             "CoreServices._inlines",
@@ -38,6 +39,7 @@ setup(
     install_requires=[
         "pyobjc-core>=" + VERSION,
         "pyobjc-framework-FSEvents>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
     ],
     long_description=__doc__,
     options={"bdist_wheel": {"py_limited_api": "cp36"}},

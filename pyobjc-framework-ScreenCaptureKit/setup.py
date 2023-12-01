@@ -38,6 +38,7 @@ setup(
     install_requires=[
         "pyobjc-core>=" + VERSION,
         "pyobjc-framework-CoreMedia>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
     ],
     long_description=__doc__,
 )

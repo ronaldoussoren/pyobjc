@@ -51,18 +51,23 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-subpackages = [
-    f"Quartz.{fn}"
-    for fn in os.listdir("Lib/Quartz")
-    if os.path.exists(os.path.join("Lib/Quartz", fn, "__init__.py"))
-]
-
 VERSION = "10.0"
 
 setup(
     name="pyobjc-framework-Quartz",
     description="Wrappers for the Quartz frameworks on macOS",
-    packages=["Quartz"] + subpackages,
+    packages=[
+        "Quartz",
+        "Quartz.CoreGraphics",
+        "Quartz.CoreVideo",
+        "Quartz.ImageIO",
+        "Quartz.ImageKit",
+        "Quartz.PDFKit",
+        "Quartz.QuartzComposer",
+        "Quartz.QuartzCore",
+        "Quartz.QuartzFilters",
+        "Quartz.QuickLookUI",
+    ],
     ext_modules=[
         # CoreVideo
         Extension(

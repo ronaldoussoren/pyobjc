@@ -22,6 +22,7 @@ Version 10.1
 * Fix build error on ancient macOS versions where clang doesn't support
   ``-flto=thin``.
 
+* :issue:`581`: Fix dependencies between framework binding packages
 
 Version 10.0
 ------------

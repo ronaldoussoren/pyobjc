@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import re
 
 from setuptools import setup, Command
 from setuptools.command import egg_info
@@ -322,6 +323,42 @@ def cwd(path):
         os.chdir(cur)
 
 
+def scan_info(path):
+    """
+    Returns (packages, required)
+    """
+    packages = []
+    required = []
+
+    a = compile(open(path).read(), path, "exec", ast.PyCF_ONLY_AST)
+    for node in ast.walk(a):
+        if isinstance(node, ast.Call) and getattr(node.func, "id", "") == "setup":
+            for child in node.keywords:
+                if child.arg == "packages":
+                    packages = [value.value for value in child.value.elts]
+
+                elif child.arg == "install_requires":
+                    ast.dump(child)
+                    required = [
+                        value.left.value.split(">")[0] for value in child.value.elts
+                    ]
+
+    return packages, required
+
+
+def get_imports(prefix):
+    imports = set()
+    for topdir, _dirnames, fnames in os.walk(prefix):
+        for fn in fnames:
+            if fn == "__init__.py":
+                for line in open(os.path.join(topdir, fn)).readlines():
+                    m = re.match(r"^\s+import\s([A-Za-z0-9]*)$", line)
+                    if m is not None:
+                        imports.add(m.group(1))
+
+    return imports
+
+
 class oc_test(Command):
     description = "run test suite"
     user_options = [("verbosity=", None, "print what tests are run")]
@@ -559,6 +596,29 @@ class oc_test(Command):
                 fwk, _ = os.path.splitext(fwk)
                 if fwk not in frameworks:
                     print(f"Framework {fwk} not in framework-wrappers.rst")
+                    failures += 1
+
+        print(" scanning for undeclared framework dependencies...")
+        frameworks = sorted(
+            nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-")
+        )
+
+        package_to_fw = {}
+        required = {}
+
+        for fw in frameworks:
+            packages, required[fw] = scan_info(os.path.join("..", fw, "setup.py"))
+            for pkg in packages:
+                package_to_fw[pkg] = fw
+
+        for fw in frameworks:
+            for name in get_imports(os.path.join("..", fw, "Lib")):
+                if name not in package_to_fw:
+                    continue
+
+                r = package_to_fw[name]
+                if r != fw and r not in required[fw]:
+                    print(f"* {fw} depends on {r} but doesn't require it")
                     failures += 1
 
         print(
