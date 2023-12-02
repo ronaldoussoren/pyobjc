@@ -75,6 +75,9 @@ class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
     def test_protocols(self):
         self.assertProtocolExists("MTLIndirectRenderCommand")
+
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         self.assertProtocolExists("MTLIndirectComputeCommand")
 
     def test_methods(self):

@@ -170,7 +170,7 @@ class TestCGEvent(TestCase):
     def testFunctions10_13(self):
         Quartz.CGEventCreateScrollWheelEvent2
 
-    @min_os_level("10.15")
+    @min_os_level("11.0")
     def testFunctions10_15(self):
         Quartz.CGPreflightListenEventAccess
         Quartz.CGRequestListenEventAccess

@@ -144,6 +144,7 @@ class SplitSignatureTest(TestCase):
                     b"pep",
                     b"ams",
                     b"safari",
+                    b"vs",
                 ) or sel.selector in (
                     b"isNSArray::",
                     b"isNSCFConstantString::",

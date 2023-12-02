@@ -438,6 +438,8 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionTaskTransactionMetrics.isMultipath
         )
 
+    @min_os_level("11.0")
+    def testMethods10_15_missing(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.allowsConstrainedNetworkAccess
         )
