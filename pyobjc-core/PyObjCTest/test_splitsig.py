@@ -138,6 +138,7 @@ class SplitSignatureTest(TestCase):
                     b"_intents",
                     b"_ql",
                     b"ck",
+                    b"cl",
                     b"cksqlcs",
                     b"ef",
                     b"if",
@@ -158,6 +159,7 @@ class SplitSignatureTest(TestCase):
                     b"isNSString::",
                     b"isNSTimeZone::",
                     b"isNSValue::",
+                    b"QTKeyValueProxyTarget:keyPathsForValuesAffectingValueForKey:",
                 ):
                     # These keep turning up on test runs on macOS 13.1. Ignore as these
                     # are private APIs.

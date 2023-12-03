@@ -570,6 +570,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     NSObject* result;
@@ -600,6 +602,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     [result retain];
     return result;
 }
+#pragma clang diagnostic pop
 
 @end /* interface OC_PythonDictionary */
 

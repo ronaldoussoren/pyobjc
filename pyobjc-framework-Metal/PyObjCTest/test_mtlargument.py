@@ -215,7 +215,7 @@ class TestMTLArgument(TestCase):
 
     @min_os_level("10.12")
     @expectedFailureIf(
-        os_level_key("10.15") <= os_level_key(os_release()) < os_level_key("13.0")
+        os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("13.0")
     )
     def test_methods10_12(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)

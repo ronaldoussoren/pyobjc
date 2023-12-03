@@ -93,9 +93,8 @@ class TestAVContentKeySession(TestCase):
             b"v@@",
         )
 
-    @min_os_level("10.14")
+    @min_os_level("10.15")
     def testMethods10_14(self):
-        # Documented as available...
         self.assertResultIsBOOL(
             AVFoundation.AVContentKeyRequest.renewsExpiringResponseData
         )

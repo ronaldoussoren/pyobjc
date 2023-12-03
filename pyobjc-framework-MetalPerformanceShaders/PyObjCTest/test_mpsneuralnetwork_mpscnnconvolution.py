@@ -248,8 +248,8 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
             MetalPerformanceShaders.MPSCNNConvolutionGradient.serializeWeightsAndBiases
         )
 
-    @min_os_level("10.14")
-    def test_methods10_14(self):
+    @min_os_level("10.15")
+    def test_methods10_15(self):
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNConvolutionTranspose.exportWeightsAndBiasesWithCommandBuffer_resultStateCanBeTemporary_,
             1,

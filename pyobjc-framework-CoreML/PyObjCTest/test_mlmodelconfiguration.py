@@ -21,5 +21,6 @@ class TestMLModelConfiguration(TestCase):
             CoreML.MLModelConfiguration.setAllowLowPrecisionAccumulationOnGPU_, 0
         )
 
+    @min_os_level("10.15")
     def test_methods10_15_missing(self):
         self.assertResultIsBOOL(CoreML.MLModelDescription.isUpdatable)

@@ -1236,7 +1236,7 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
                     v = self.loads(buf)
                     if (val == 2**63 + 1) and os_level_key(
                         os_release()
-                    ) < os_level_key("10.14"):
+                    ) < os_level_key("10.15"):
                         # Bug in NSNumber...
                         self.assertEqual(cast_ulonglong(v), cast_ulonglong(x))
                     else:

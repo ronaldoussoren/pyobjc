@@ -1471,7 +1471,7 @@ class TestTestSupport(TestCase):
         ):
             self.assertClassIsFinal(type(self))
 
-    def test_assertProtoclExcists(self):
+    def test_assertProtoclExists(self):
         objc.protocolNamed("NSObject")
         try:
             objc.protocolNamed("FooBar")

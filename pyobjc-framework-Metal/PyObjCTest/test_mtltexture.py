@@ -140,7 +140,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(v.alpha, 0)
         self.assertPickleRoundTrips(v)
 
-    @min_sdk_level("10.15")
+    @min_os_level("10.15")
     def test_functions(self):
         v = Metal.MTLTextureSwizzleChannelsMake(0, 1, 2, 3)
         self.assertIsInstance(v, Metal.MTLTextureSwizzleChannels)

@@ -18,6 +18,9 @@ from sysconfig import get_config_var as _get_config_var
 
 import objc
 
+# Partial workaround for issue #582
+objc.lookUpClass("__NSCFType").symbolicTraits = lambda self: None
+
 
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
@@ -1399,6 +1402,13 @@ class TestCase(_unittest.TestCase):
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
         """
+        try:
+            cls = objc.lookUpClass("NSApplication")
+        except objc.error:
+            pass
+        else:
+            cls.sharedApplication()
+
         if _usepool and not self._skip_usepool:
             p = _poolclass.alloc().init()
         else:

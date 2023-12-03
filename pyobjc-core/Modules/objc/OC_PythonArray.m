@@ -622,6 +622,9 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc && PyObjC_CopyFunc != Py_None) {
@@ -651,6 +654,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     NSObject* result;
@@ -672,6 +676,7 @@ NS_ASSUME_NONNULL_BEGIN
     [result retain];
     return result;
 }
+#pragma clang diagnostic pop
 
 + (NSArray*)classFallbacksForKeyedArchiver
 {

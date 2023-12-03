@@ -13,9 +13,14 @@ def _setup():
     import objc
     from . import _metadata, _Photos
 
+    if objc.macos_available(10, 15):
+        identifier = "com.apple.Photos"
+    else:
+        identifier = "com.apple.PhotoKit.Photos"
+
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Photos",
-        frameworkIdentifier="com.apple.Photos",
+        frameworkIdentifier=identifier,
         frameworkPath=objc.pathForFramework(
             "/System/Library/Frameworks/Photos.framework"
         ),

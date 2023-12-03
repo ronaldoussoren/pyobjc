@@ -59,6 +59,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
         if (ignore_invalid_identifiers) {
             const char* name = class_getName(buffer[i]);
 
+
             if (strncmp(name, "__SwiftNative", 12) == 0) {
                 /* FB12286520 */
                 continue;
@@ -74,6 +75,36 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
             }
             if (skip) {
                 continue;
+            }
+
+        }
+
+        if (@available(macOS 10.15, *)) {
+        } else {
+            /* A numbef of private(-ish) classes that cause
+             * crashes when constructed here while running
+             * on macOS 10.14
+             */
+            static const char* IGNORE_NAMES[] = {
+            	"QTKeyedArchiverDelegate",
+                "QTMoviePlaybackController",
+                "QTHUDTimelineCell",
+                "QTHUDTimeline",
+                NULL
+            };
+            const char* name = class_getName(buffer[i]);
+            bool skip = false;
+            if (name[0] == 'Q' && name[1] == 'T') {
+                for (const char** cur = IGNORE_NAMES; *cur != NULL; cur++) {
+                    if (strcmp(name, *cur) == 0) {
+                        skip= true;
+                        break;
+
+                    }
+                }
+                if (skip) {
+                    continue;
+                }
             }
         }
         pyclass = PyObjCClass_New(buffer[i]);

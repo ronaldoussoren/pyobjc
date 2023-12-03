@@ -1,7 +1,14 @@
 import objc
 import os
 from objc import super  # noqa: A004
-from PyObjCTools.TestSupport import TestCase, pyobjc_options, no_autorelease_pool
+from PyObjCTools.TestSupport import (
+    TestCase,
+    pyobjc_options,
+    no_autorelease_pool,
+    skipUnless,
+    os_level_key,
+    os_release,
+)
 
 
 class TestMetadataRegistry(TestCase):
@@ -231,6 +238,12 @@ class TestReleasePoolManagement(TestCase):
         del v
         self.assertEqual(record, [True])
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "crashes on 10.14???",
+    )
     @no_autorelease_pool
     def test_manual_recycle(self):
         objc.recycleAutoreleasePool()
@@ -284,6 +297,12 @@ class TestReleasePoolManagement(TestCase):
             objc.recycleAutoreleasePool()
         self.assertTrue(objc._haveAutoreleasePool())
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "crashes on 10.14???",
+    )
     @no_autorelease_pool
     def test_draining_outer_pool(self):
         objc.removeAutoreleasePool()

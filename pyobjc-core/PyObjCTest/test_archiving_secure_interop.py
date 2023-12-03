@@ -183,7 +183,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
                     out = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
                     if testval > 2**63 and os_level_key(os_release()) < os_level_key(
-                        "10.14"
+                        "10.15"
                     ):
                         # Bug in NSNumber
                         self.assertEqual(cast_ulonglong(out[0]), testval)
@@ -199,7 +199,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
                     converted = loads(converted)
                     if testval > 2**63 and os_level_key(os_release()) < os_level_key(
-                        "10.14"
+                        "10.15"
                     ):
                         # Bug in NSNumber
                         self.assertEqual(cast_ulonglong(converted[0]), testval)
