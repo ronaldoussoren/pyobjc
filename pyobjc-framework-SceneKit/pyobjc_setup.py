@@ -576,19 +576,19 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         if min_os_level is not None:
             if max_os_level is not None:
                 msg = (
-                    "This distribution is only supported on MacOSX "
+                    "This distribution is only supported on macOS "
                     "versions %s up to and including %s" % (min_os_level, max_os_level)
                 )
             else:
-                msg = "This distribution is only supported on MacOSX >= {}".format(
+                msg = "This distribution is only supported on macOS >= {}".format(
                     min_os_level,
                 )
         elif max_os_level is not None:
-            msg = "This distribution is only supported on MacOSX <= {}".format(
+            msg = "This distribution is only supported on macOS <= {}".format(
                 max_os_level,
             )
         else:
-            msg = "This distribution is only supported on MacOSX"
+            msg = "This distribution is only supported on macOS"
 
         def create_command_subclass(base_class):
             class subcommand(base_class):
