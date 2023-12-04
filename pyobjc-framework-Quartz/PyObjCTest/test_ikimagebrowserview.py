@@ -110,9 +110,7 @@ class TestIKImageBrowserView(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        # Method does not exist?
-        view = Quartz.IKImageBrowserView.alloc().init()
-        self.assertResultIsBOOL(view.isGroupExpandedAtIndex_)
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.isGroupExpandedAtIndex_)
 
     @min_os_level("10.5")
     def testConstants(self):

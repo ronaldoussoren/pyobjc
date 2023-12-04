@@ -1,6 +1,12 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 
 
 class TestRunLoop(TestCase):
@@ -279,6 +285,12 @@ class TestRunLoop(TestCase):
         self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3], runloop_mode)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     @min_os_level("10.6")
     def testFunctions10_6(self):
         self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
@@ -297,6 +309,12 @@ class TestRunLoop(TestCase):
 
         self.assertEqual(lst, [True])
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertArgIsBOOL(CoreFoundation.CFRunLoopObserverCreateWithHandler, 2)

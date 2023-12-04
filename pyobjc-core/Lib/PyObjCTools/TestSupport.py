@@ -18,9 +18,6 @@ from sysconfig import get_config_var as _get_config_var
 
 import objc
 
-# Partial workaround for issue #582
-objc.lookUpClass("__NSCFType").symbolicTraits = lambda self: None
-
 
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
@@ -1379,7 +1376,6 @@ class TestCase(_unittest.TestCase):
                             self._validateCallableMetadata(
                                 attr, nm, skip_simple_charptr_check=not exclude_cocoa
                             )
-
             elif isinstance(value, objc.function):
                 with self.subTest(function=nm):
                     self._validateCallableMetadata(value)

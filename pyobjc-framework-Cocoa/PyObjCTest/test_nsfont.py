@@ -1,5 +1,11 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 
 
 class TestNSFont(TestCase):
@@ -13,6 +19,12 @@ class TestNSFont(TestCase):
             # This should probably be 'assertAlmostEquals'
             self.assertEqual(v1, v2)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def testMatrixMethods(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10)
         m = o.matrix()

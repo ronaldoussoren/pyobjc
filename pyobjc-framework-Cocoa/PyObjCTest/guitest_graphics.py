@@ -115,9 +115,7 @@ class RectTest(TestCase):
         pass
 
     def test_NSRectFillList_tuple(self):
-        """
-        Check NSRectFillList with a tuple of NSRects
-        """
+        # Check NSRectFillList with a tuple of NSRects
         self.image.lockFocus()
         Cocoa.NSRectFillList(self.points, len(self.points))
         self.image.unlockFocus()
@@ -125,9 +123,7 @@ class RectTest(TestCase):
         self.assertImagePoints(self.image, self.points)
 
     def test_NSRectFillList_array(self):
-        """
-        Check NSRectFillList with a array.array of NSRects
-        """
+        # Check NSRectFillList with a array.array of NSRects
         self.image.lockFocus()
         Cocoa.NSRectFillList(self.makeArray(self.points), len(self.points))
         self.image.unlockFocus()

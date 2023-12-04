@@ -380,9 +380,7 @@ class PyKeyValueCoding(TestCase):
             o.removeObserver_forKeyPath_(self, "test")
 
         def testKVO2(self):
-            """
-            Check if observations work for python-based keys on ObjC classes
-            """
+            # Check if observations work for python-based keys on ObjC classes
             observer = KeyValueObserver.alloc().init()
             self.assertEqual(observer.observed, [])
 
@@ -404,9 +402,7 @@ class PyKeyValueCoding(TestCase):
                 o.removeObserver_forKeyPath_(observer, "key3")
 
         def testKVO3(self):
-            """
-            Check if observations work for python-based keys on ObjC classes
-            """
+            # Check if observations work for python-based keys on ObjC classes
             observer = KeyValueObserver.alloc().init()
             self.assertEqual(observer.observed, [])
 
@@ -602,10 +598,8 @@ class PyKeyValueCodingExplicit(TestCase):
 
 
 class TestBaseExceptions(TestCase):
-    """
-    Check that NSObject implementation of Key-Value coding raises the
-    exception that we expect it to raise.
-    """
+    # Check that NSObject implementation of Key-Value coding raises the
+    # exception that we expect it to raise.
 
     def testValueForKey(self):
         o = Foundation.NSObject.alloc().init()

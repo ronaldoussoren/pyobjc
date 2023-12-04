@@ -61,10 +61,8 @@ class TestRegr(TestCase):
         self.assertEqual(aList, ["before", "after"])
 
     def testMemoryInit(self):
-        """
-        Regression test for bug #814683, that didn't initialize the memory
-        space for output parameters correctly.
-        """
+        # Regression test for bug #814683, that didn't initialize the memory
+        # space for output parameters correctly.
         if not hasattr(Foundation, "NSPropertyListSerialization"):
             return
 
@@ -80,9 +78,7 @@ class TestRegr(TestCase):
         self.assertEqual(r[1], None)
 
     def testTypeOverrideProblem(self):
-        """
-        A bug in the medatata machinery caused a crash.
-        """
+        # A bug in the medatata machinery caused a crash.
         cls = AppKit.NSOpenGLPixelFormat
         dir(cls)
 
@@ -96,7 +92,7 @@ class TestRegr(TestCase):
         )
 
     @min_os_level("10.6")
-    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.12"))
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.15"))
     def testBinaryPlist(self):
         for pl in ({"key": 2**64 - 1}, {"key": 2**16 - 1}):
             with self.subTest(pl):

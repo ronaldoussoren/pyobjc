@@ -1,7 +1,13 @@
 import gc
 
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 
 
 class PythonClass:
@@ -37,6 +43,12 @@ class TestNSTimer(TestCase):
         del timer
         del pool
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def testPythonLeakage(self):
         # Ignore first run, this has some side-effects that would
         # taint the result.

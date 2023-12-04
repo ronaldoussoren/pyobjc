@@ -75,10 +75,8 @@ class TestNSStringBridging(TestCase):
 
 class TestMutable(TestCase):
     def testSync(self):
-        """
-        Test that python and ObjC string representation are not
-        automaticly synchronized.
-        """
+        # Test that python and ObjC string representation are not
+        # automaticly synchronized.
         pyStr = Foundation.NSMutableString.stringWithString_("hello")
         ocStr = pyStr.nsstring()
         self.assertEqual(pyStr, "hello")
@@ -88,18 +86,14 @@ class TestMutable(TestCase):
 
 
 class TestPickle(TestCase):
-    """
-    Testcases for pickling of Objective-C strings. Those are pickled as
-    str strings.
-    """
+    # Testcases for pickling of Objective-C strings. Those are pickled as
+    # str strings.
 
     def setUp(self):
         self.strVal = Foundation.NSTaskDidTerminateNotification
 
     def testPickle(self):
-        """
-        Check that ObjC-strings pickle as str strings
-        """
+        # Check that ObjC-strings pickle as str strings
         import pickle
 
         s = pickle.dumps(self.strVal, 0)

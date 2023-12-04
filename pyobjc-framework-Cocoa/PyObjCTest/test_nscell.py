@@ -1,5 +1,11 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 
 
 class TestNSCell(TestCase):
@@ -17,18 +23,36 @@ class TestNSCell(TestCase):
         self.assertIsEnumType(AppKit.NSControlTint)
         self.assertIsEnumType(AppKit.NSImageScaling)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "doesn't work on 10.14",
+    )
     def testUnicode(self):
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         cell = AppKit.NSCell.alloc().initTextCell_(u)
         cell.setStringValue_(u)
         self.assertEqual(cell.stringValue(), u)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "doesn't work on 10.14",
+    )
     def testInt(self):
         i = 17
         cell = AppKit.NSCell.alloc().initTextCell_("")
         cell.setIntValue_(i)
         self.assertEqual(cell.intValue(), i)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "doesn't work on 10.14",
+    )
     def testFloat(self):
         f = 3.125
         cell = AppKit.NSCell.alloc().initTextCell_("")

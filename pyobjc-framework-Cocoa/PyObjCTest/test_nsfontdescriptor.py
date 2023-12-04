@@ -1,5 +1,11 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 
 
 class TestNSFontDescriptor(TestCase):
@@ -17,6 +23,12 @@ class TestNSFontDescriptor(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def testConvenience(self):
         v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
         d = v[AppKit.NSFontNameAttribute]

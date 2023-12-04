@@ -1,14 +1,22 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    os_level_key,
+    os_release,
+    skipUnless,
+)
 import objc
 
 
 class TestOpenPanel(TestCase):
-    def dont_testOpenPanelSignature(self):
-        """
-        This test failed sometime after the 1.0b1 release (on Panther).
-        """
-
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
+    def testOpenPanelSignature(self):
         o = AppKit.NSOpenPanel.openPanel()
         sig = (
             o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature  # noqa: B950
@@ -55,6 +63,12 @@ class TestOpenPanel(TestCase):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canDownloadUbiquitousContents)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setCanDownloadUbiquitousContents_, 0)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def test_issue_272(self):
         panel = AppKit.NSOpenPanel.openPanel()
         panel.setAllowedFileTypes_([".html", ".txt"])

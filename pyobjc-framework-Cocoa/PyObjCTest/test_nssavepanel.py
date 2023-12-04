@@ -106,6 +106,7 @@ class TestNSSavePanel(TestCase):
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsTagField_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
 
+    @min_os_level("10.15")
     def test_issue282(self):
         panel = AppKit.NSSavePanel.savePanel()
         self.assertIsInstance(panel, AppKit.NSSavePanel)

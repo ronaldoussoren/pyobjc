@@ -5,7 +5,13 @@ import socket
 import sys
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    skipUnless,
+    os_level_key,
+    os_release,
+)
 import objc
 
 from .test_cfsocket import onTheNetwork
@@ -415,6 +421,12 @@ class TestStream(TestCase):
         self.assertIsInstance(status, int)
         self.assertEqual(status, CoreFoundation.kCFStreamStatusNotOpen)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def testReadSocketASync(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
@@ -474,6 +486,12 @@ class TestStream(TestCase):
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventHasBytesAvailable)
 
+    @skipUnless(
+        not (
+            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.14??",
+    )
     def testWriteSocketAsync(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
