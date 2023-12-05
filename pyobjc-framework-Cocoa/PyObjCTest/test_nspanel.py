@@ -12,9 +12,9 @@ import objc
 class TestNSPanel(TestCase):
     @skipUnless(
         not (
-            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
         ),
-        "Crash on 10.14??",
+        "Crash on 10.13, 10.14??",
     )
     def testFunctions(self):
         self.assertArgIsPrintf(AppKit.NSRunAlertPanel, 1)

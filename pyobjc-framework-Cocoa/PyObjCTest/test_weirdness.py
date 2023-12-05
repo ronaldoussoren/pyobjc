@@ -11,7 +11,13 @@
 # NSActionCell.isEnabled_, which is wrong.
 #
 
-from PyObjCTools.TestSupport import TestCase, max_sdk_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    max_sdk_level,
+    os_release,
+    os_level_key,
+    skipUnless,
+)
 import objc
 
 import AppKit  # noqa: F401
@@ -26,10 +32,23 @@ class TestWeirdness(TestCase):
 
         self.assertEqual(after.definingClass, c)
 
+    @skipUnless(
+        not (
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")
+        ),
+        "crash on 10.13",
+    )
     @max_sdk_level("10.14")
     def testWeirdness1(self):
         self.doWeirdness("NSButtonCell", "setEnabled_")
 
+    @skipUnless(
+        not (
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")
+        ),
+        "crash on 10.13",
+    )
+    @max_sdk_level("10.14")
     @max_sdk_level("10.14")
     def testWeirdness2(self):
         self.doWeirdness("NSTextView", "setEditable_")

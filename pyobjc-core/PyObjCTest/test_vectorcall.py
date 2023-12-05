@@ -2075,7 +2075,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
             )
 
-    if objc.macos_available(10, 13):
+    if objc.macos_available(10, 14):
 
         def MPSAxisAlignedBoundingBox(self):
             self.argvalues = None
@@ -3440,7 +3440,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
             )
 
-    if objc.macos_available(10, 13):
+    if objc.macos_available(10, 14):
 
         @classmethod
         def MPSAxisAlignedBoundingBox(self):
@@ -48380,7 +48380,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_MPSAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -48421,7 +48421,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_clsMPSAxisAlignedBoundingBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -48462,7 +48462,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_MPSAxisAlignedBoundingBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -48516,7 +48516,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_clsMPSAxisAlignedBoundingBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -48567,7 +48567,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_imp_MPSAxisAlignedBoundingBox(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -48589,7 +48589,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.13")
+    @min_os_level("10.14")
     def test_imp_MPSAxisAlignedBoundingBox_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1

@@ -3,7 +3,7 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#include <dispatch/dispatch.h>
+#include <xpc/xpc.h>
 
 static PyObject*
 mod_xpc_dictionary_create(PyObject* mod __attribute__((__unused__)), PyObject* args)

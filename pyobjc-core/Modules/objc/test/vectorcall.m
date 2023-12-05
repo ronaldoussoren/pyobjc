@@ -7983,7 +7983,7 @@ static BOOL      shouldRaise = NO;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 - (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
 {
     if ([self shouldRaise]) {
@@ -7999,9 +7999,9 @@ static BOOL      shouldRaise = NO;
     return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
                                        (vector_float3){4.5, 5.5, 6.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 + (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
 {
     if ([self shouldRaise]) {
@@ -8017,7 +8017,7 @@ static BOOL      shouldRaise = NO;
     return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
                                        (vector_float3){4.5, 5.5, 6.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
 @end
 
@@ -9779,7 +9779,7 @@ static BOOL      shouldRaise = NO;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 + (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
 {
     id                        cinter;
@@ -9793,7 +9793,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
 @end
 

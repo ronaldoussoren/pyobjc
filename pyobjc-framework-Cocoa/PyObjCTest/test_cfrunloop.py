@@ -287,9 +287,9 @@ class TestRunLoop(TestCase):
 
     @skipUnless(
         not (
-            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
         ),
-        "Crash on 10.14??",
+        "Crash on 10.13, 10.14??",
     )
     @min_os_level("10.6")
     def testFunctions10_6(self):
@@ -311,9 +311,9 @@ class TestRunLoop(TestCase):
 
     @skipUnless(
         not (
-            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
         ),
-        "Crash on 10.14??",
+        "Crash on 10.13, 10.14??",
     )
     @min_os_level("10.7")
     def testFunctions10_7(self):

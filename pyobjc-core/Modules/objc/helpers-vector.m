@@ -15521,7 +15521,7 @@ mkimp_MPSImageHistogramInfo(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
                                                           PyObject* const* arguments
@@ -15576,9 +15576,9 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
 
     return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 static IMP
 mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                 __attribute__((__unused__)))
@@ -15630,7 +15630,8 @@ mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
+
 int
 PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
@@ -16630,14 +16631,14 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox,
             mkimp_MPSAxisAlignedBoundingBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
     return 0;
 }

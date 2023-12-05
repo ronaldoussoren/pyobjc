@@ -419,7 +419,7 @@ class TestMethods(TestCase):
         with self.assertRaisesRegex(TypeError, "expected no arguments, got 2"):
             oc.getMDLVoxelIndexExtent(44, 42)
 
-    @min_sdk_level("10.13")
+    @min_sdk_level("10.14")
     def test_getMPSAxisAlignedBoundingBox(self):
         self.assertResultHasType(
             OC_Vector.getMPSAxisAlignedBoundingBox,

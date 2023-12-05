@@ -137,9 +137,11 @@ GET_VALUE(getMDLAxisAlignedBoundingBox, MDLAxisAlignedBoundingBox,
 GET_VALUE(getMDLVoxelIndexExtent, MDLVoxelIndexExtent,
           ((MDLVoxelIndexExtent){{-1, -2, -3, -4}, {-5, -6, -7, -8}}))
 #endif /*  PyObjC_BUILD_RELEASE >= 1011 */
-#if PyObjC_BUILD_RELEASE >= 1013
+#if PyObjC_BUILD_RELEASE >= 1014
 GET_VALUE(getMPSAxisAlignedBoundingBox, MPSAxisAlignedBoundingBox,
           ((MPSAxisAlignedBoundingBox){{-1.5, -2.5, -3.5}, {-5.5, -6.5, -7.5}}))
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
+#if PyObjC_BUILD_RELEASE >= 1013
 GET_VALUE(getMPSImageHistogramInfo, MPSImageHistogramInfo,
           ((MPSImageHistogramInfo){
               1ULL << 40, YES, {-8.5, -9.5, -10.5, -11.5}, {-12.5, -13.5, -14.5, -15.5}}))
