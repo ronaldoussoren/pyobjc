@@ -1290,6 +1290,11 @@ class TestCase(_unittest.TestCase):
             )
         )
 
+        # Two (private) classes that end up being found in
+        # test runs on macOS 10.12 and 10.13
+        exclude_attrs.add("ABCDContact_ABCDContact_")
+        exclude_attrs.add("ABCDGroup_ABCDGroup_")
+
         # Some bindings in CoreAudio with false positives
         exclude_attrs.add("AudioHardwareClaimAudioDeviceID")
         exclude_attrs.add("AudioHardwareClaimAudioStreamID")

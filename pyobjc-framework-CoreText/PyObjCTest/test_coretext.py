@@ -27,10 +27,4 @@ class TestCoreText(TestCase):
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
-        self.assertCallableMetadataIsSane(
-            CoreText,
-            exclude_attrs={
-                "ABCDContact_ABCDContact_",
-                "ABCDGroup_ABCDGroup_",
-            },
-        )
+        self.assertCallableMetadataIsSane(CoreText)

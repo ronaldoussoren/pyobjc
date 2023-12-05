@@ -48,7 +48,7 @@ class TestSecCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoTrust, str)
         self.assertIsInstance(Security.kSecCodeInfoUnique, str)
 
-    @min_os_level("10.12")
+    @min_os_level("10.13")
     def test_constants_missing(self):
         self.assertIsInstance(Security.kSecGuestAttributeArchitecture, str)
         self.assertIsInstance(Security.kSecGuestAttributeSubarchitecture, str)

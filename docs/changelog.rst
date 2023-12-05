@@ -25,7 +25,7 @@ Version 10.1
 * Add a workaround for a crash in pyobjc-core when running the testsuite
   on macOS 10.14.
 
-* Fix some issues found while running the testsuite on macOS 10.13 to
+* Fix some issues found while running the testsuite on macOS 10.12 to
   macOS 13, instead of only testing on the latest macOS version. Most
   issues found where problems in the testsuite itself, but not all.
 

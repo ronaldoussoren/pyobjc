@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import setup, Extension  # noqa: E402
 
 VERSION = "10.0"
 
@@ -23,7 +23,21 @@ setup(
     name="pyobjc-framework-Automator",
     description="Wrappers for the framework Automator on macOS",
     packages=["Automator"],
+    ext_modules=[
+        Extension(
+            "Automator._Automator",
+            ["Modules/_Automator.m"],
+            extra_link_args=["-framework", "Automator"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_Automator")
+            ],
+        )
+    ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
+    options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

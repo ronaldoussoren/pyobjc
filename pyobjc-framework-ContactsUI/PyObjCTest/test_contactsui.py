@@ -12,7 +12,5 @@ class TestCallableMetadata(TestCase):
                     "NSObject",
                     "copyRenderedTextureForCGLContext_pixelFormat_bounds_isFlipped_",
                 ),
-                "ABCDGroup_ABCDGroup_",
-                "ABCDContact_ABCDContact_",
             },
         )

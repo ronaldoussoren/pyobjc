@@ -4,7 +4,7 @@ import objc
 
 
 class TestCKRecord(TestCase):
-    @min_sdk_level("10.12")
+    @min_sdk_level("10.14")
     def testProtocols(self):
         # Documentation claims this protocol is available on 10.11,
         # but value isn't present in the latest 10.11 SDK.

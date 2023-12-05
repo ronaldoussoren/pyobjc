@@ -16,8 +16,6 @@ class TestCallableMetadata(TestCase):
             exclude_attrs={
                 "GetIconFamilyData",
                 "SetIconFamilyData",
-                "ABCDGroup_ABCDGroup_",
-                "ABCDContact_ABCDContact_",
             },
         )
         self.assertCallableMetadataIsSane(
@@ -25,14 +23,6 @@ class TestCallableMetadata(TestCase):
             exclude_attrs={
                 "GetIconFamilyData",
                 "SetIconFamilyData",
-                "ABCDGroup_ABCDGroup_",
-                "ABCDContact_ABCDContact_",
             },
         )
-        self.assertCallableMetadataIsSane(
-            PrintCore,
-            exclude_attrs={
-                "ABCDGroup_ABCDGroup_",
-                "ABCDContact_ABCDContact_",
-            },
-        )
+        self.assertCallableMetadataIsSane(PrintCore)

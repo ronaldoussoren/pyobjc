@@ -13,9 +13,14 @@ def _setup():
     import objc
     from . import _metadata, _Contacts
 
+    if objc.macos_available(10, 13):
+        identifier = "com.apple.contactst"
+    else:
+        identifier = "com.apple.contacts.Contacts"
+
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Contacts",
-        frameworkIdentifier="com.apple.contacts",
+        frameworkIdentifier=identifier,
         frameworkPath=objc.pathForFramework(
             "/System/Library/Frameworks/Contacts.framework"
         ),

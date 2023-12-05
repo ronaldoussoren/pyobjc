@@ -21,8 +21,8 @@ class TestOpenPanel(TestCase):
         sig = (
             o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature  # noqa: B950
         )
-        sig = "".join(objc.splitSignature(sig))
-        self.assertEqual(sig, "v@:@@@@@:i")
+        sig = b"".join(objc.splitSignature(sig))
+        self.assertEqual(sig, b"v@:@@@@@:i")
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.resolvesAliases)
