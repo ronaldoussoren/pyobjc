@@ -3440,7 +3440,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idid:(id)arg0 GKBox:(GKBox)arg1
 {
     PyObject* items;
@@ -3468,9 +3468,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidid:(id)arg0 GKBox:(GKBox)arg1
 {
     PyObject* items;
@@ -3498,9 +3498,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idid:(id)arg0 GKQuad:(GKQuad)arg1
 {
     PyObject* items;
@@ -3528,9 +3528,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidid:(id)arg0 GKQuad:(GKQuad)arg1
 {
     PyObject* items;
@@ -3558,7 +3558,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 - (id)idid:(id)arg0
@@ -4777,7 +4777,7 @@ static BOOL      shouldRaise = NO;
     return @"hello";
 }
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKBox:(GKBox)arg0
 {
     PyObject* items;
@@ -4800,9 +4800,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKBox:(GKBox)arg0
 {
     PyObject* items;
@@ -4825,9 +4825,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKBox:(GKBox)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4855,9 +4855,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKBox:(GKBox)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4885,9 +4885,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKQuad:(GKQuad)arg0
 {
     PyObject* items;
@@ -4910,9 +4910,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKQuad:(GKQuad)arg0
 {
     PyObject* items;
@@ -4935,9 +4935,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKQuad:(GKQuad)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4965,9 +4965,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKQuad:(GKQuad)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4995,7 +4995,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 - (id)idMDLVoxelIndexExtent:(MDLVoxelIndexExtent)arg0
@@ -7131,7 +7131,7 @@ static BOOL      shouldRaise = NO;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (GKBox)GKBox
 {
     if ([self shouldRaise]) {
@@ -7146,9 +7146,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (GKBox)clsGKBox
 {
     if ([self shouldRaise]) {
@@ -7163,9 +7163,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (GKQuad)GKQuad
 {
     if ([self shouldRaise]) {
@@ -7180,9 +7180,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (GKQuad)clsGKQuad
 {
     if ([self shouldRaise]) {
@@ -7197,9 +7197,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 - (GKTriangle)GKTriangleQ:(unsigned long long)arg0
 {
     PyObject* items;
@@ -7224,9 +7224,9 @@ static BOOL      shouldRaise = NO;
                          (vector_float3){-111.5, -112.5, -113.5},
                          (vector_float3){-17.5, 11.5, 122.5}}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (GKTriangle)clsGKTriangleQ:(unsigned long long)arg0
 {
     PyObject* items;
@@ -7251,7 +7251,7 @@ static BOOL      shouldRaise = NO;
                          (vector_float3){-111.5, -112.5, -113.5},
                          (vector_float3){-17.5, 11.5, 122.5}}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
@@ -8764,7 +8764,7 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)ididGKBoxOn:(OC_VectorCall*)value
 {
     id result = [value
@@ -8779,9 +8779,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)ididGKQuadOn:(OC_VectorCall*)value
 {
     id result =
@@ -8796,7 +8796,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)ididMDLAxisAlignedBoundingBoxfOn:(OC_VectorCall*)value
@@ -9055,7 +9055,7 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKBoxOn:(OC_VectorCall*)value
 {
     id result = [value
@@ -9069,9 +9069,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKBoxfOn:(OC_VectorCall*)value
 {
     id result = [value idGKBox:(GKBox) {
@@ -9087,9 +9087,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKQuadOn:(OC_VectorCall*)value
 {
     id result = [value
@@ -9103,9 +9103,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKQuadfOn:(OC_VectorCall*)value
 {
     id result = [value idGKQuad:(GKQuad) {
@@ -9121,7 +9121,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)idMDLVoxelIndexExtentOn:(OC_VectorCall*)value
@@ -9483,7 +9483,7 @@ static BOOL      shouldRaise = NO;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKBoxOn:(OC_VectorCall*)value
 {
     id    cinter;
@@ -9496,9 +9496,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKQuadOn:(OC_VectorCall*)value
 {
     id     cinter;
@@ -9511,9 +9511,9 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKTriangleQOn:(OC_VectorCall*)value
 {
     GKTriangle result = [value GKTriangleQ:35184372088832];
@@ -9526,7 +9526,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)MDLAxisAlignedBoundingBoxOn:(OC_VectorCall*)value

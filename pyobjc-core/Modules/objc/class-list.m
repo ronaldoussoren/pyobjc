@@ -79,8 +79,22 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
 
         }
 
+#if PyObjC_BUILD_RELEASE > 1011
+        /* Ancient compilers don't support @available, but
+         * use @available for modern compilers to avoid
+         * using this code block when it is not necessary.
+         *
+         * This block of code is only necessary when running
+         * on macOS 10.12, 10.13 and 10.14. Both older and
+         * newer versions don't have the bug this works around.
+         *
+         * Ignoring the entiry block when building on macOS 10.11
+         * or earlier is fine, anyone deploying on multiple macOS
+         * versions should build on the latest one (and preferably
+         * use the "official" binary wheels).
+         */
         if (@available(macOS 10.15, *)) {
-        } else {
+        } else  {
             /* A numbef of private(-ish) classes that cause
              * crashes when constructed here while running
              * on macOS 10.14
@@ -477,6 +491,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
                 }
              }
         }
+#endif /* PyObjC_BUILD_RELEASE > 1011 */
         pyclass = PyObjCClass_New(buffer[i]);
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
             goto error;        // LCOV_EXCL_LINE

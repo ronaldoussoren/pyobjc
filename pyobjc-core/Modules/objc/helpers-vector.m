@@ -6380,7 +6380,7 @@ mkimp_id_id_GKBox(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -6435,9 +6435,9 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_id_GKQuad(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -6494,7 +6494,7 @@ mkimp_id_id_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
@@ -8692,7 +8692,7 @@ mkimp_id_GKBox_f(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
                                           PyObject* const* arguments, size_t nargs)
 {
@@ -8743,9 +8743,9 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_GKQuad(PyObject*              callable,
                 PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8799,9 +8799,9 @@ mkimp_id_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
                                             PyObject* const* arguments, size_t nargs)
 {
@@ -8856,9 +8856,9 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
 
     return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_GKQuad_f(PyObject*              callable,
                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8915,7 +8915,7 @@ mkimp_id_GKQuad_f(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
@@ -13439,7 +13439,7 @@ mkimp_GKBox(PyObject*              callable,
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
                                        PyObject* const* arguments
                                        __attribute__((__unused__)),
@@ -13487,9 +13487,9 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{GKQuad=<2f><2f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_GKQuad(PyObject*              callable,
              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13540,9 +13540,9 @@ mkimp_GKQuad(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -13599,9 +13599,9 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
 
     return pythonify_c_value("{GKTriangle=[3<3f>]}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_GKTriangle_Q(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13656,7 +13656,7 @@ mkimp_GKTriangle_Q(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        method,
@@ -16023,13 +16023,13 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{GKQuad=<2f><2f>}", call_id_id_GKQuad, mkimp_id_id_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
@@ -16168,21 +16168,21 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKQuad=<2f><2f>}", call_id_GKQuad, mkimp_id_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKQuad=<2f><2f>}f", call_id_GKQuad_f, mkimp_id_GKQuad_f)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
@@ -16481,21 +16481,21 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKQuad=<2f><2f>}@:", call_GKQuad, mkimp_GKQuad)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKTriangle=[3<3f>]}@:Q", call_GKTriangle_Q, mkimp_GKTriangle_Q)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
 #if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE

@@ -1315,7 +1315,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idid_GKBox_(self, arg0, arg1):
             self.argvalues = (
@@ -1326,7 +1326,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idid_GKQuad_(self, arg0, arg1):
             self.argvalues = (
@@ -1509,7 +1509,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idGKBox_(self, arg0):
             self.argvalues = (arg0,)
@@ -1517,7 +1517,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idGKBox_f_(self, arg0, arg1):
             self.argvalues = (
@@ -1528,7 +1528,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idGKQuad_(self, arg0):
             self.argvalues = (arg0,)
@@ -1536,7 +1536,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def idGKQuad_f_(self, arg0, arg1):
             self.argvalues = (
@@ -1846,7 +1846,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def GKBox(self):
             self.argvalues = None
@@ -1857,7 +1857,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
             )
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def GKQuad(self):
             self.argvalues = None
@@ -1868,7 +1868,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float2(11.0, 12.0),
             )
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         def GKTriangleQ_(self, arg0):
             self.argvalues = (arg0,)
@@ -2600,7 +2600,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idid_GKBox_(self, arg0, arg1):
@@ -2612,7 +2612,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idid_GKQuad_(self, arg0, arg1):
@@ -2811,7 +2811,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             raise RuntimeError("failure!")
         return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idGKBox_(self, arg0):
@@ -2820,7 +2820,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idGKBox_f_(self, arg0, arg1):
@@ -2832,7 +2832,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idGKQuad_(self, arg0):
@@ -2841,7 +2841,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 raise RuntimeError("failure!")
             return "hello"
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def idGKQuad_f_(self, arg0, arg1):
@@ -3191,7 +3191,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def GKBox(self):
@@ -3203,7 +3203,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
             )
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def GKQuad(self):
@@ -3215,7 +3215,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 objc.simd.vector_float2(11.0, 12.0),
             )
 
-    if objc.macos_available(10, 11):
+    if objc.macos_available(10, 12):
 
         @classmethod
         def GKTriangleQ_(self, arg0):
@@ -21005,7 +21005,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21083,7 +21083,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidid_GKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21161,7 +21161,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21262,7 +21262,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidid_GKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21355,7 +21355,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idid_GKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21380,7 +21380,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idid_GKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -21405,7 +21405,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21477,7 +21477,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidid_GKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21549,7 +21549,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21644,7 +21644,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidid_GKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -21731,7 +21731,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idid_GKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21756,7 +21756,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idid_GKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29052,7 +29052,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29116,7 +29116,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKBox_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29180,7 +29180,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29265,7 +29265,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKBox__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29343,7 +29343,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29367,7 +29367,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKBox__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29391,7 +29391,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29474,7 +29474,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29557,7 +29557,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29663,7 +29663,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29761,7 +29761,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29786,7 +29786,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKBox_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29811,7 +29811,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29869,7 +29869,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKQuad_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -29927,7 +29927,7 @@ class TestVectorCall(TestCase):
                 )
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30006,7 +30006,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKQuad__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30078,7 +30078,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -30102,7 +30102,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKQuad__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -30126,7 +30126,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30203,7 +30203,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKQuad_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30280,7 +30280,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_idGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30380,7 +30380,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsidGKQuad_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -30472,7 +30472,7 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKQuad_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -30497,7 +30497,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_idGKQuad_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43189,7 +43189,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43227,7 +43227,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKBox(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43265,7 +43265,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43316,7 +43316,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKBox_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43364,7 +43364,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKBox(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -43386,7 +43386,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKBox_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43408,7 +43408,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43443,7 +43443,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKQuad(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43478,7 +43478,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43526,7 +43526,7 @@ class TestVectorCall(TestCase):
                 NoObjCValueObject,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKQuad_imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43571,7 +43571,7 @@ class TestVectorCall(TestCase):
                 42,
             )
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKQuad(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -43590,7 +43590,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKQuad_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43609,7 +43609,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43660,7 +43660,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKTriangleQ_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43711,7 +43711,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_GKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43771,7 +43771,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_clsGKTriangleQ__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
@@ -43830,7 +43830,7 @@ class TestVectorCall(TestCase):
         ):
             imp(42, 35184372088832)
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKTriangleQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -43855,7 +43855,7 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
-    @min_os_level("10.11")
+    @min_os_level("10.12")
     def test_imp_GKTriangleQ__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
