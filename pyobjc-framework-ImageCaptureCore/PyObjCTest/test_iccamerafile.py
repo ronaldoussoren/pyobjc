@@ -7,9 +7,12 @@ class TestICCameraFile(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.highFramerate)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.timeLapse)
-        self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.firstPicked)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.burstFavorite)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.burstPicked)
+
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.firstPicked)
 
     @min_os_level("10.15")
     def test_methods10_15(self):
