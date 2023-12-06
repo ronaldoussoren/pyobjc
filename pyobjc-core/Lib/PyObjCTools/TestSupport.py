@@ -276,7 +276,7 @@ def min_os_level(release):
     """
     return _unittest.skipUnless(
         os_level_key(os_release()) >= os_level_key(release),
-        f"Requires OSX {release} or later",
+        f"Requires macOS {release} or later",
     )
 
 
@@ -292,7 +292,7 @@ def max_os_level(release):
     """
     return _unittest.skipUnless(
         os_level_key(os_release()) <= os_level_key(release),
-        f"Requires OSX up to {release}",
+        f"Requires macOS up to {release}",
     )
 
 
@@ -310,13 +310,13 @@ def os_level_between(min_release, max_release):
         os_level_key(min_release)
         <= os_level_key(os_release())
         <= os_level_key(max_release),
-        f"Requires OSX {min_release} up to {max_release}",
+        f"Requires macOS {min_release} up to {max_release}",
     )
 
 
 _poolclass = objc.lookUpClass("NSAutoreleasePool")
 
-# NOTE: On at least OSX 10.8 there are multiple proxy classes for CFTypeRef...
+# NOTE: On at least macOS 10.8 there are multiple proxy classes for CFTypeRef...
 _nscftype = tuple(cls for cls in objc.getClassList(1) if "NSCFType" in cls.__name__)
 
 _typealias = {}
