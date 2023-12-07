@@ -130,12 +130,12 @@ class TestCGEvent(TestCase):
         v = Quartz.CGEventCreateCopy(evt)
         self.assertIsInstance(v, Quartz.CGEventRef)
 
-        s = b"hello world".decode("utf-8")
+        s = "hello world"
         Quartz.CGEventKeyboardSetUnicodeString(evt, len(s), s)
 
         a, t = Quartz.CGEventKeyboardGetUnicodeString(evt, 50, None, None)
+        self.assertEqual(a, len(s))
         self.assertEqual(s, t)
-        self.assertEqual(a, len(t))
 
     @min_os_level("10.5")
     def testFunctions10_5(self):

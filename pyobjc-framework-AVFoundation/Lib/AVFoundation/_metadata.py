@@ -424,7 +424,10 @@ functions = {
     "CMTagCollectionCreateWithVideoOutputPreset": (
         b"i^{__CFAllocator=}I^^{OpaqueCMTagCollection=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {2: {"type_modifier": "o", "already_cfretained": True}},
+        },
     ),
     "AVCaptureReactionSystemImageNameForType": (b"@@",),
     "AVAudioMake3DVector": (b"{AVAudio3DPoint=fff}fff",),
@@ -454,6 +457,11 @@ aliases = {
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
+    r(
+        b"AVPlayerVideoOutput",
+        b"copyTaggedBufferGroupForHostTime:presentationTimeStamp:activeConfiguration:",
+        {"arguments": {3: {"type_modifier": "o"}, 4: {"type_modifier": "o"}}},
+    )
     r(b"AVAsset", b"canContainFragments", {"retval": {"type": "Z"}})
     r(b"AVAsset", b"containsFragments", {"retval": {"type": "Z"}})
     r(b"AVAsset", b"copyCGImageAtTime:actualTime:error:", {"retval": {"type": "Z"}})

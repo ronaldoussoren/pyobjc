@@ -14,7 +14,9 @@ def _setup():
     import objc
     from . import _metadata
 
-    if objc.macos_available(13, 10):
+    if objc.macos_available(14, 0):
+        identifier = "com.apple.quartzframework"
+    elif objc.macos_available(13, 0):
         identifier = "com.apple.Quartz"
     else:
         identifier = "com.apple.quartzframework"
