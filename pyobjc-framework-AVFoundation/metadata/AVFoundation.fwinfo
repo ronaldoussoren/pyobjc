@@ -467,6 +467,18 @@
    "AVFrameRateRange": "AVFrameRateRange_Tundra"
   },
   "classes": {
+   "AVPlayerVideoOutput": {
+    "methods": [
+     {
+      "selector": "copyTaggedBufferGroupForHostTime:presentationTimeStamp:activeConfiguration:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVExternalStorageDevice": {
     "methods": [
      {
@@ -3651,6 +3663,11 @@
    }
   },
   "functions": {
+   "CMTagCollectionCreateWithVideoOutputPreset": {
+    "args": {
+     "2": {  "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "AVSampleBufferAttachContentKey": {
     "args": {
      "0": { "type_override": "^{opaqueCMSampleBuffer=}" },

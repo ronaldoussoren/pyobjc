@@ -11,11 +11,11 @@ class TestAVPlayerOutput(TestCase):
     @min_os_level("14.2")
     def test_methods(self):
         self.assertArgIsOut(
-            AVFoundation.AVPlayerOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_,
+            AVFoundation.AVPlayerVideoOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_,
             1,
         )
         self.assertArgIsOut(
-            AVFoundation.AVPlayerOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_,
+            AVFoundation.AVPlayerVideoOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_,
             2,
         )
 

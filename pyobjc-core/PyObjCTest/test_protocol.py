@@ -910,12 +910,3 @@ class TestFormalProtocols2(TestCase):
             NSObject, protocols=[objc.protocolNamed("OC_NSObjectBased")]
         ):
             pass
-
-
-"""
-
-                             @protocol OC_NSObjectBased : NSObject
-  @optional
-  - (int)optionalmethod;
-  @end
-"""

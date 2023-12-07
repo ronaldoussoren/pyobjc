@@ -32,4 +32,4 @@ class TestCKSyncEngine(TestCase):
 
     @min_os_level("14.2")
     def test_methods14_2(self):
-        self.assertResultIsBOOL(CloudKit.CKSyncEngine.containsZoneID)
+        self.assertResultIsBOOL(CloudKit.CKSyncEngineFetchChangesScope.containsZoneID_)

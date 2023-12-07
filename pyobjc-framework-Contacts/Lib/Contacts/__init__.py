@@ -14,7 +14,7 @@ def _setup():
     from . import _metadata, _Contacts
 
     if objc.macos_available(10, 13):
-        identifier = "com.apple.contactst"
+        identifier = "com.apple.contacts"
     else:
         identifier = "com.apple.contacts.Contacts"
 

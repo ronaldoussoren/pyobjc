@@ -125,6 +125,7 @@ class TestLAContext(TestCase):
             b"v" + objc._C_NSBOOL + b"@",
         )
 
+    @min_os_level("10.11")
     def test_regr_security_types(self):
         # Issue #324
         auth_ctx = LocalAuthentication.LAContext.new()

@@ -166,9 +166,11 @@ class TestSCStream(TestCase):
         self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.includeMenuBar)
         self.assertArgIsBOOL(ScreenCaptureKit.SCContentFilter.setIncludeMenuBar_, 0)
 
-        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.includeChildWindows)
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.includeChildWindows
+        )
         self.assertArgIsBOOL(
-            ScreenCaptureKit.SCContentFilter.setIncludeChildWindows_, 0
+            ScreenCaptureKit.SCStreamConfiguration.setIncludeChildWindows_, 0
         )
 
     def test_protocols(self):

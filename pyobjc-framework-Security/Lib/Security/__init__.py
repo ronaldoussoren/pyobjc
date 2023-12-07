@@ -81,7 +81,7 @@ def _setup():
         SecIdentitySearchGetTypeID(),
     )
 
-    from . import SecAccessControlGetTypeID  # isort:skip
+    from . import SecTrustedApplicationGetTypeID  # isort:skip
 
     objc.registerCFSignature(
         "SecTrustedApplicationRef",
