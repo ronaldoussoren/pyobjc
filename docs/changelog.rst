@@ -34,6 +34,8 @@ Version 10.1
 
 * :issue:`581`: Fix dependencies between framework binding packages
 
+* Fix build error with the current Python 3.13 alpha release (3.13a2).
+
 Version 10.0
 ------------
 

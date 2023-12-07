@@ -847,13 +847,14 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     if (*elementType == _C_UNICHAR && PyUnicode_Check(pythonList)) {
         PyObject* bytes_array;
 
-        bytes_array = _PyUnicode_EncodeUTF16(pythonList, NULL, -1);
+        bytes_array = PyUnicode_AsUTF16String(pythonList);
 
         if (bytes_array == NULL) {
             return -1;
         }
 
-        Py_ssize_t bufsize = PyBytes_Size(bytes_array) / 2;
+        /* 2 bytes per UniChar, and subtract 1 to ignore the NUL at the end */
+        Py_ssize_t bufsize = (PyBytes_Size(bytes_array) / 2) - 1;
 
         if (*size == -1) {
             *size = bufsize;
