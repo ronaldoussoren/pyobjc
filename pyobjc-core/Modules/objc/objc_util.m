@@ -853,7 +853,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        /* 2 bytes per UniChar, and subtract 1 to ignore the NUL at the end */
+        /* 2 bytes per UniChar, and subtract 1 to ignore the BOM at the start */
         Py_ssize_t bufsize = (PyBytes_Size(bytes_array) / 2) - 1;
 
         if (*size == -1) {
@@ -888,7 +888,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        *array = view->buf;
+        *array = (void*)((char*)view->buf + 2);
         Py_DECREF(bytes_array); /* Kept alive by view */
         return SHOULD_FREE;
     }
