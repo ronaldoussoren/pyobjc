@@ -29,8 +29,9 @@ Version 10.1
   macOS 13, instead of only testing on the latest macOS version. Most
   issues found where problems in the testsuite itself, but not all.
 
-  Some of the changes skip tests on older macOS versions (10.*) due
-  to running into what appears to be crashing platform bugs.
+  Some of the changes skip tests on older macOS versions (10.12, 10.13
+  and 10.14) due to running into what appears to be crashing
+  platform bugs.
 
 * :issue:`581`: Fix dependencies between framework binding packages
 
