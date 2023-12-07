@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import setup, Extension  # noqa: E402
 
-VERSION = "10.0"
+VERSION = "10.1"
 
 setup(
     name="pyobjc-framework-GameController",
