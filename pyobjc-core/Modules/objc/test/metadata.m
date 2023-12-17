@@ -9,9 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
-static void use_int(int x __attribute__((__unused__))){};
-static void use_charpp(char** x __attribute__((__unused__))){};
-static void use_id(id x __attribute__((__unused__))){};
+static void use_int(int x __attribute__((__unused__))){}
+static void use_charpp(char** x __attribute__((__unused__))){}
+static void use_id(id x __attribute__((__unused__))){}
 
 @interface OC_MetaDataTest : NSObject {
 }
@@ -408,19 +408,19 @@ static void use_id(id x __attribute__((__unused__))){};
     NSMutableArray* result = [NSMutableArray array];
     NSObject*       a;
 
-    snprintf(buf, sizeof(buf), "%p", x);
+    snprintf(buf, sizeof(buf), "%p", (void*)x);
     a = [NSString stringWithUTF8String:buf];
     if (!a)
         return nil;
     [result addObject:a];
 
-    snprintf(buf, sizeof(buf), "%p", y);
+    snprintf(buf, sizeof(buf), "%p", (void*)y);
     a = [NSString stringWithUTF8String:buf];
     if (!a)
         return nil;
     [result addObject:a];
 
-    snprintf(buf, sizeof(buf), "%p", z);
+    snprintf(buf, sizeof(buf), "%p", (void*)z);
     a = [NSString stringWithUTF8String:buf];
     if (!a)
         return nil;
@@ -559,7 +559,7 @@ static void use_id(id x __attribute__((__unused__))){};
 
 + (void)fillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
-    return [obj fillArray:data count:count];
+    [obj fillArray:data count:count];
 }
 
 + (int)nullfillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
@@ -569,7 +569,7 @@ static void use_id(id x __attribute__((__unused__))){};
 
 + (void)fill4Tuple:(int*)data on:(OC_MetaDataTest*)obj
 {
-    return [obj fill4Tuple:data];
+    [obj fill4Tuple:data];
 }
 
 + (int)nullfill4Tuple:(int*)data on:(OC_MetaDataTest*)obj
@@ -649,7 +649,7 @@ static void use_id(id x __attribute__((__unused__))){};
 
 + (void)swapX:(double*)x andY:(double*)y on:(OC_MetaDataTest*)obj
 {
-    return [obj swapX:x andY:y];
+    [obj swapX:x andY:y];
 }
 
 + (NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z on:(OC_MetaDataTest*)obj

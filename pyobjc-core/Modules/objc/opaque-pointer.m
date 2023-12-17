@@ -365,7 +365,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     Py_CLEAR(w);
 
     if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
-            &cl_to_c, convert_cif, &codeloc, opaque_to_c, newType)
+            &cl_to_c, convert_cif, &codeloc, (void*)opaque_to_c, newType)
         == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
@@ -377,7 +377,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
 
     if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
-            &cl_from_c, new_cif, &codeloc, opaque_from_c, newType)
+            &cl_from_c, new_cif, &codeloc, (void*)opaque_from_c, newType)
         == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");

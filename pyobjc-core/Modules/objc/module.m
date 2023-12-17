@@ -1361,7 +1361,7 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
         return NULL;
     }
 
-    PyObject* retval = PyCapsule_New(result, "objc.__imp__", _callback_cleanup);
+    PyObject* retval = PyCapsule_New((void*)result, "objc.__imp__", _callback_cleanup);
     if (retval == NULL) {
         PyObjCFFI_FreeIMP((IMP)result);
         return NULL;

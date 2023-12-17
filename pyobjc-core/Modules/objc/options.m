@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * from C.
  */
 struct options {
-    PyObject_HEAD;
+    PyObject_HEAD
 };
 
 static PyObject* PyObjCOptions_Type;

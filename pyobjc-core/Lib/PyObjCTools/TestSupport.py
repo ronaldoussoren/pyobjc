@@ -1229,13 +1229,16 @@ class TestCase(_unittest.TestCase):
                 )
 
         if exclude_cocoa:
-            import Cocoa
+            try:
+                import Cocoa
 
-            exclude_names = set(dir(Cocoa))
+                exclude_names = set(dir(Cocoa))
 
-            # Don't exclude NSObject' because a number
-            # of frameworks define categories on this class.
-            exclude_names -= {"NSObject"}
+                # Don't exclude NSObject' because a number
+                # of frameworks define categories on this class.
+                exclude_names -= {"NSObject"}
+            except ImportError:
+                exclude_names = set()
         else:
             exclude_names = set()
 

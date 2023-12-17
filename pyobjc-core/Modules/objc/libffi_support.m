@@ -2719,7 +2719,7 @@ PyObjCFFI_CountArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 static void
 imp_capsule_cleanup(PyObject* ptr)
 {
-    PyObjCFFI_FreeIMP(PyCapsule_GetPointer(ptr, "objc.__imp__"));
+    PyObjCFFI_FreeIMP((IMP)PyCapsule_GetPointer(ptr, "objc.__imp__"));
 }
 
 static void
@@ -3027,7 +3027,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                         return -1;
                                     }
                                     byref_attr[i].obj = PyCapsule_New(
-                                        closure, "objc.__imp__", imp_capsule_cleanup);
+                                        (void*)closure, "objc.__imp__", imp_capsule_cleanup);
                                 } else {
                                     PyErr_SetString(
                                         PyExc_TypeError,
@@ -3040,7 +3040,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     PyErr_SetString(PyExc_TypeError,
                                                     "Invalid pyobjc_closure attribute");
                                 }
-                                closure = PyCapsule_GetPointer(v, "objc.__imp__");
+                                closure = (PyObjC_callback_function)PyCapsule_GetPointer(v, "objc.__imp__");
                                 if (closure == NULL) {
                                     PyErr_SetString(PyExc_TypeError,
                                                     "Invalid pyobjc_closure attribute");
@@ -3302,7 +3302,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     return -1;
                                 }
 
-                                byref_attr[i].obj = PyCapsule_New(closure, "objc.__imp__",
+                                byref_attr[i].obj = PyCapsule_New((void*)closure, "objc.__imp__",
                                                                   imp_capsule_cleanup);
 
                             } else {
@@ -3318,7 +3318,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                                 "Invalid pyobjc_closure attribute");
                             }
 
-                            closure = PyCapsule_GetPointer(v, "objc.__imp__");
+                            closure = (PyObjC_callback_function)PyCapsule_GetPointer(v, "objc.__imp__");
                             if (closure == NULL) {
                                 PyErr_SetString(PyExc_TypeError,
                                                 "Invalid pyobjc_closure attribute");
@@ -5117,7 +5117,7 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
     }
 
     if ( // LCOV_BR_EXCL_LINE
-        alloc_prepped_closure(&cl, cif, &codeloc, func, userdata) == -1) {
+        alloc_prepped_closure(&cl, cif, &codeloc, (void*)func, userdata) == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         return NULL;
@@ -5140,7 +5140,7 @@ PyObjCFFI_FreeClosure(IMP closure)
     ffi_cif* cif;
     void*    userdata;
 
-    free_closure_from_codeloc(closure, &cif, &userdata);
+    free_closure_from_codeloc((void*)closure, &cif, &userdata);
     PyObjCFFI_FreeCIF(cif);
     return userdata;
 }

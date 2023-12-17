@@ -107,12 +107,12 @@ typedef unsigned int NSUInteger;
 
 + (void)set:(NSSet*)set makeObjectsPerformSelector:(SEL)aSelector
 {
-    return [set makeObjectsPerformSelector:aSelector];
+    [set makeObjectsPerformSelector:aSelector];
 }
 
 + (void)set:(NSSet*)set makeObjectsPerformSelector:(SEL)aSelector withObject:(id)anObject
 {
-    return [set makeObjectsPerformSelector:aSelector withObject:anObject];
+    [set makeObjectsPerformSelector:aSelector withObject:anObject];
 }
 
 + (id)set:(NSSet*)set member:(id)anObject

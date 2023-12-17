@@ -327,14 +327,15 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 #define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
     static PyObject* _Nullable ctype##_as_tuple(const void* _pvalue)                     \
     {                                                                                    \
-        const ctype* pvalue = (const ctype*)_pvalue;                                     \
+        const ctype value;                                     \
+        memcpy((void*)&value, _pvalue, sizeof(ctype)); \
         PyObject*    rv     = PyTuple_New(elemcount);                                    \
         if (rv == NULL) {                                                                \
             return NULL;                                                                 \
         }                                                                                \
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
-            PyObject* elem = convertelem((*pvalue)[i]);                                  \
+            PyObject* elem = convertelem(value[i]);                                  \
             if (elem == NULL) {                                                          \
                 Py_DECREF(rv);                                                           \
                 return NULL;                                                             \
@@ -348,7 +349,7 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 #define VECTOR_FROM_PYTHON(ctype, elemcount, convertelem)                                \
     static int ctype##_from_python(PyObject* py, void* _pvalue)                          \
     {                                                                                    \
-        ctype* pvalue = (ctype*)_pvalue;                                                 \
+        ctype value;                                                 \
                                                                                          \
         if (!PySequence_Check(py) || PySequence_Length(py) != elemcount) {               \
             PyErr_SetString(PyExc_ValueError,                                            \
@@ -361,48 +362,49 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
             if (e == NULL) {                                                             \
                 return -1;                                                               \
             }                                                                            \
-            (*pvalue)[i] = convertelem(e);                                               \
+            value[i] = convertelem(e);                                               \
             Py_DECREF(e);                                                                \
             if (PyErr_Occurred()) {                                                      \
                 return -1;                                                               \
             }                                                                            \
         }                                                                                \
+        memcpy(_pvalue, (void*)&value, sizeof(ctype)); \
         return 0;                                                                        \
     }
 
-VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_int3, 3, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_int4, 4, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong);
-VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble);
-VECTOR_TO_PYTHON(vector_float3, 3, PyFloat_FromDouble);
-VECTOR_TO_PYTHON(vector_float4, 4, PyFloat_FromDouble);
-VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble);
-VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble);
-VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble);
+VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_int3, 3, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_int4, 4, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong)
+VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble)
+VECTOR_TO_PYTHON(vector_float3, 3, PyFloat_FromDouble)
+VECTOR_TO_PYTHON(vector_float4, 4, PyFloat_FromDouble)
+VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble)
+VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble)
+VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble)
 
-VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_int3, 3, (int)PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_int4, 4, (int)PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong);
-VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble);
-VECTOR_FROM_PYTHON(vector_float3, 3, PyFloat_AsDouble);
-VECTOR_FROM_PYTHON(vector_float4, 4, PyFloat_AsDouble);
-VECTOR_FROM_PYTHON(vector_double2, 2, PyFloat_AsDouble);
-VECTOR_FROM_PYTHON(vector_double3, 3, PyFloat_AsDouble);
-VECTOR_FROM_PYTHON(vector_double4, 4, PyFloat_AsDouble);
+VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_int3, 3, (int)PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_int4, 4, (int)PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong)
+VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_float3, 3, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_float4, 4, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_double2, 2, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_double3, 3, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_double4, 4, PyFloat_AsDouble)
 
 static struct vector_info {
     char*      encoding;
@@ -2203,7 +2205,8 @@ pythonify_c_value(const char* type, const void* datum)
     case _C_ATOM:
 #endif
     {
-        char* cp = *(char**)datum;
+        char* cp;
+        memcpy((void*)&cp, datum, sizeof(char*));
 
         if (cp == NULL) {
             Py_INCREF(Py_None);
@@ -2221,41 +2224,77 @@ pythonify_c_value(const char* type, const void* datum)
         break;
 
     case _C_INT:
-        retobject = (PyObject*)PyLong_FromLong(*(int*)datum);
+        {
+            int v;
+            memcpy((void*)&v, datum, sizeof(int));
+            retobject = (PyObject*)PyLong_FromLong(v);
+        }
         break;
 
     case _C_UINT:
-        retobject = (PyObject*)PyLong_FromLong(*(unsigned int*)datum);
+        {
+            unsigned int v;
+            memcpy((void*)&v, datum, sizeof(unsigned int));
+            retobject = (PyObject*)PyLong_FromLong(v);
+        }
         break;
 
     case _C_SHT:
-        retobject = (PyObject*)PyLong_FromLong(*(short*)datum);
+        {
+            short v;
+            memcpy((void*)&v, datum, sizeof(short));
+            retobject = (PyObject*)PyLong_FromLong(v);
+        }
         break;
 
     case _C_USHT:
-        retobject = (PyObject*)PyLong_FromLong(*(unsigned short*)datum);
+        {
+            unsigned short v;
+            memcpy((void*)&v, datum, sizeof(unsigned short));
+            retobject = (PyObject*)PyLong_FromLong(v);
+        }
         break;
 
     case _C_LNG_LNG:
     case _C_LNG:
-        retobject = (PyObject*)PyLong_FromLong(*(long*)datum);
+        {
+            long v;
+            memcpy((void*)&v, datum, sizeof(long));
+            retobject = (PyObject*)PyLong_FromLong(v);
+        }
         break;
 
     case _C_ULNG_LNG:
     case _C_ULNG:
-        retobject = PyLong_FromUnsignedLong(*(unsigned long*)datum);
+        {
+            unsigned long v;
+            memcpy((void*)&v, datum, sizeof(unsigned long));
+            retobject = (PyObject*)PyLong_FromUnsignedLong(v);
+        }
         break;
 
     case _C_FLT:
-        retobject = (PyObject*)PyFloat_FromDouble(*(float*)datum);
+        {
+            float v;
+            memcpy((void*)&v, datum, sizeof(float));
+            retobject = (PyObject*)PyFloat_FromDouble(v);
+        }
         break;
 
     case _C_DBL:
-        retobject = (PyObject*)PyFloat_FromDouble(*(double*)datum);
+        {
+            double v;
+            memcpy((void*)&v, datum, sizeof(double));
+            retobject = (PyObject*)PyFloat_FromDouble(v);
+        }
         break;
 
     case _C_ID:
-        retobject = id_to_python(*(id*)datum);
+        {
+            id v;
+            memcpy((void*)&v, datum, sizeof(id));
+            retobject = id_to_python(v);
+        }
         break;
 
     case _C_SEL:
@@ -2264,12 +2303,15 @@ pythonify_c_value(const char* type, const void* datum)
             Py_INCREF(retobject);
 
         } else {
-            retobject = PyUnicode_FromString(sel_getName(*(SEL*)datum));
+            SEL s;
+            memcpy((void*)&s, datum, sizeof(SEL));
+            retobject = PyUnicode_FromString(sel_getName(s));
         }
         break;
 
     case _C_CLASS: {
-        Class c = *(Class*)datum;
+        Class c;
+        memcpy((void*)&c, datum, sizeof(Class));
 
         if (c == Nil) {
             retobject = Py_None;
@@ -2282,21 +2324,26 @@ pythonify_c_value(const char* type, const void* datum)
     }
 
     case _C_PTR:
+     {
+        void* v;
+        memcpy((void*)&v, datum, sizeof(void*));
+
         if (type[1] == _C_VOID) {
             /* A void*. These are treated like unsigned integers. */
-            retobject = (PyObject*)PyLong_FromUnsignedLongLong(*(unsigned long*)datum);
+            retobject = (PyObject*)PyLong_FromVoidPtr(v);
 
-        } else if (*(void**)datum == NULL) {
+        } else if (v == NULL) {
             retobject = Py_None;
             Py_INCREF(retobject);
 
         } else {
             retobject = PyObjCPointerWrapper_ToPython(type, datum);
             if (retobject == NULL && !PyErr_Occurred()) {
-                retobject = (PyObject*)PyObjCPointer_New(*(void**)datum, type);
+                retobject = (PyObject*)PyObjCPointer_New(v, type);
             }
         }
-        break;
+     }
+     break;
 
     case _C_UNION_B: {
         Py_ssize_t size = PyObjCRT_SizeOfType(type);
@@ -2767,20 +2814,22 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     case _C_CHARPTR:
 
         if (PyBytes_Check(argument)) {
-            *(char**)datum = PyBytes_AsString(argument);
-            if (*(char**)datum == NULL) {
+            char* v = PyBytes_AsString(argument);
+            memcpy(datum, (void*)&v, sizeof(char*));
+            if (v == NULL) {
                 return -1;
             }
-
 #ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument)) {
-            *(char**)datum = PyByteArray_AsString(argument);
-            if (*(char**)datum == NULL) {
+            char* v = PyByteArray_AsString(argument);
+            memcpy(datum, (void*)&v, sizeof(char*));
+            if (v == NULL) {
                 return -1;
             }
 #endif
         } else if (argument == Py_None) {
-            *(char**)datum = NULL;
+            char* v = NULL;
+            memcpy(datum, (void*)&v, sizeof(char*));
 
         } else {
             PyErr_Format(PyExc_ValueError, "depythonifying 'charptr', got '%s'",
@@ -2793,11 +2842,9 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
             *(char*)datum = PyBytes_AsString(argument)[0];
             return 0;
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
             *(char*)datum = PyByteArray_AsString(argument)[0];
             return 0;
-#endif
         }
 
         r = depythonify_signed_int_value(argument, "char", &temp, CHAR_MIN, CHAR_MAX);
@@ -2852,14 +2899,16 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     case _C_SHT:
         r = depythonify_signed_int_value(argument, "short", &temp, SHRT_MIN, SHRT_MAX);
         if (r == 0) {
-            *(short*)datum = temp;
+            short v = temp;
+            memcpy(datum, (void*)&v, sizeof(short));
         }
         return r;
 
     case _C_USHT:
         r = depythonify_unsigned_int_value(argument, "unsigned short", &utemp, USHRT_MAX);
         if (r == 0) {
-            *(unsigned short*)datum = utemp;
+            unsigned short v = utemp;
+            memcpy(datum, (void*)&v, sizeof(unsigned short));
         }
         return r;
 
@@ -2888,7 +2937,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                              Py_TYPE(argument)->tp_name);
                 return -1;
             }
-            *(UniChar*)datum = (UniChar)PyUnicode_ReadChar(argument, 0);
+            UniChar v = (UniChar)PyUnicode_ReadChar(argument, 0);
+            memcpy(datum, (void*)&v, sizeof(UniChar));
             return 0;
         }
         PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
@@ -2898,28 +2948,32 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     case _C_INT:
         r = depythonify_signed_int_value(argument, "int", &temp, INT_MIN, INT_MAX);
         if (r == 0) {
-            *(int*)datum = (int)temp;
+            int v = (int)temp;
+            memcpy(datum, &v, sizeof(int));
         }
         return r;
 
     case _C_UINT:
         r = depythonify_unsigned_int_value(argument, "unsigned int", &utemp, UINT_MAX);
         if (r == 0) {
-            *(unsigned int*)datum = (unsigned int)utemp;
+            unsigned int v = (unsigned int)utemp;
+            memcpy(datum, &v, sizeof(unsigned int));
         }
         return r;
 
     case _C_LNG:
         r = depythonify_signed_int_value(argument, "long", &temp, LONG_MIN, LONG_MAX);
         if (r == 0) {
-            *(long*)datum = (long)temp;
+            long v = (long)temp;
+            memcpy(datum, &v, sizeof(long));
         }
         return r;
 
     case _C_ULNG:
         r = depythonify_unsigned_int_value(argument, "unsigned long", &utemp, ULONG_MAX);
         if (r == 0) {
-            *(unsigned long*)datum = (unsigned long)utemp;
+            unsigned long v = (unsigned long)utemp;
+            memcpy(datum, &v, sizeof(unsigned long));
         }
         return r;
 
@@ -2927,7 +2981,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         r = depythonify_signed_int_value(argument, "long long", &temp, LLONG_MIN,
                                          LLONG_MAX);
         if (r == 0) {
-            *(long long*)datum = temp;
+            long long v = temp;
+            memcpy(datum, &v, sizeof(long long));
         }
         return r;
 
@@ -2935,12 +2990,18 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         r = depythonify_unsigned_int_value(argument, "unsigned long long", &utemp,
                                            ULLONG_MAX);
         if (r == 0) {
-            *(unsigned long long*)datum = utemp;
+            unsigned long long v = utemp;
+            memcpy(datum, &v, sizeof(unsigned long long));
         }
         return r;
 
     case _C_ID:
-        return depythonify_python_object(argument, (id*)datum);
+        {
+            id v;
+            r = depythonify_python_object(argument, &v);
+            memcpy(datum, (void*)&v, sizeof(id));
+            return r;
+        }
 
     case _C_CLASS:
         if (PyObjCClass_Check(argument)) {
@@ -3079,18 +3140,18 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
     case _C_FLT:
         if (PyFloat_Check(argument)) {
-            *(float*)datum = (float)PyFloat_AsDouble(argument);
+            float v = (float)PyFloat_AsDouble(argument);
+            memcpy(datum, (void*)&v, sizeof(float));
 
         } else if (PyLong_Check(argument)) {
-            *(float*)datum = (float)PyLong_AsDouble(argument);
-            if (*(float*)datum == -1 && PyErr_Occurred()) {
+            float v = (float)PyLong_AsDouble(argument);
+            if (v == -1 && PyErr_Occurred()) {
                 return -1;
             }
+            memcpy(datum, (void*)&v, sizeof(float));
 
         } else if (PyBytes_Check(argument) ||
-#ifdef PyByteArray_Check
                    PyByteArray_Check(argument) ||
-#endif
                    PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError, "depythonifying 'float', got '%s'",
                          Py_TYPE(argument)->tp_name);
@@ -3099,9 +3160,9 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         } else {
             PyObject* tmp = PyNumber_Float(argument);
             if (tmp != NULL) {
-                double dblval = PyFloat_AsDouble(tmp);
+                float dblval = (float)PyFloat_AsDouble(tmp);
                 Py_DECREF(tmp);
-                *(float*)datum = (float)dblval;
+                memcpy(datum, (void*)&dblval, sizeof(float));
                 return 0;
             }
 
@@ -3113,18 +3174,18 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
     case _C_DBL:
         if (PyFloat_Check(argument)) {
-            *(double*)datum = PyFloat_AsDouble(argument);
+            double v = PyFloat_AsDouble(argument);
+            memcpy(datum, (void*)&v, sizeof(double));
 
         } else if (PyLong_Check(argument)) {
-            *(double*)datum = PyLong_AsDouble(argument);
-            if (*(double*)datum == -1 && PyErr_Occurred()) {
+            double v = PyLong_AsDouble(argument);
+            if (v == -1 && PyErr_Occurred()) {
                 return -1;
             }
+            memcpy(datum, (void*)&v, sizeof(double));
 
         } else if (PyBytes_Check(argument) ||
-#ifdef PyByteArray_Check
                    PyByteArray_Check(argument) ||
-#endif
                    PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError, "depythonifying 'double', got '%s'",
                          Py_TYPE(argument)->tp_name);
@@ -3135,7 +3196,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             if (tmp != NULL) {
                 double dblval = PyFloat_AsDouble(tmp);
                 Py_DECREF(tmp);
-                *(double*)datum = dblval;
+                memcpy(datum, (void*)&dblval, sizeof(double));
                 return 0;
             }
 

@@ -385,7 +385,7 @@ error:
 static void
 PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
-    void* block_func = PyCapsule_GetPointer(ptr, "objc.__block_release__");
+    PyObjCBlockFunction block_func = (PyObjCBlockFunction)PyCapsule_GetPointer(ptr, "objc.__block_release__");
     if (block_func == NULL)
         return;
 
@@ -458,7 +458,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
     }
     block->invoke = block_func;
 
-    block->invoke_cleanup = PyCapsule_New(block->invoke, "objc.__block_release__",
+    block->invoke_cleanup = PyCapsule_New((void*)(block->invoke), "objc.__block_release__",
                                           PyObjCBlock_CleanupCapsule);
     if (block->invoke_cleanup == NULL) {            // LCOV_BR_EXCL_LINE
         PyObjCFFI_FreeBlockFunction(block->invoke); // LCOV_EXCL_LINE

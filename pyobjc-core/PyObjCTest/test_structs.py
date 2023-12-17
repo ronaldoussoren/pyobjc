@@ -929,6 +929,34 @@ class TestStructs(TestCase):
         w = objc.repythonify(v, tp.__typestr__)
         self.assertEqual(v, w)
 
+        tp = objc.createStructType(
+            "PackedStruct2",
+            b"".join(
+                (
+                    b"{_PackedStruct2=",
+                    objc._C_CHAR_AS_INT,  # to ensure odd offset,
+                    objc._C_SHT,
+                    objc._C_INT,
+                    objc._C_LNG,
+                    objc._C_LNG_LNG,
+                    objc._C_USHT,
+                    objc._C_UINT,
+                    objc._C_ULNG,
+                    objc._C_ULNG_LNG,
+                    objc._C_FLT,
+                    objc._C_DBL,
+                    b"}",
+                )
+            ),
+            ["c", "s", "i", "l", "ll", "us", "ui", "ul", "ull", "f", "d"],
+            pack=1,
+        )
+        self.assertEqual(tp.__struct_pack__, 1)
+
+        v = tp()
+        w = objc.repythonify(v, tp.__typestr__)
+        self.assertEqual(v, w)
+
     def test_invalid_packed(self):
         with self.assertRaisesRegex(objc.error, "invalid type encoding"):
             objc.createStructType(

@@ -123,7 +123,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)boolValue
 {
-    return (BOOL)PyObject_IsTrue(value);
+    int         r;
+    PyObjC_BEGIN_WITH_GIL
+        r = PyObject_IsTrue(value);
+        if (r == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+
+    return !!r;
 }
 
 - (char)charValue
@@ -209,12 +217,19 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (long long)longLongValue
+  /* Disable float-cast-overflow checking when running
+   * with undefined behaviour sanitizer. The float cast
+   * below can result in undefined behaviour but is
+   * necessary to match Cocoa semantics.
+   */
+  __attribute__((no_sanitize("float-cast-overflow")))
 {
     long long result;
 
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
-            result = (long long)PyFloat_AsDouble(value);
+            double float_result = PyFloat_AsDouble(value);
+            result = (long long)float_result;
             PyObjC_GIL_RETURN(result);
         } else if (PyLong_Check(value)) {
             result = PyLong_AsUnsignedLongLongMask(value);
@@ -231,6 +246,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (unsigned long long)unsignedLongLongValue
+  /* Disable float-cast-overflow checking when running
+   * with undefined behaviour sanitizer. The float cast
+   * below can result in undefined behaviour but is
+   * necessary to match Cocoa semantics.
+   */
+  __attribute__((no_sanitize("float-cast-overflow")))
 {
     unsigned long long result;
 

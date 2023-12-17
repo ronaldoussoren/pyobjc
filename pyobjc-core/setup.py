@@ -73,7 +73,11 @@ CFLAGS = [
     "-fno-objc-arc",
     # Loads of warning flags
     "-Wall",
+    # "-Wextra",
+    # "-Wpedantic",
+    "-Wno-variadic-macros",
     "-Wstrict-prototypes",
+    "-Wbad-function-cast",
     "-Wmissing-prototypes",
     "-Wformat=2",
     "-W",

@@ -3,6 +3,22 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.1.1
+--------------
+
+* Fix a number of warnings found by adding ``-Wpendantic`` to the CFLAGS for
+  pyobjc-core
+
+* Fix undefined behaviour warnings:
+
+  - Suppress the undefined behaviour warning about out of range values in
+    double to (unsigned) long long in the ``OC_PythonNumber`` implementation
+    as these are unavoidable when matching ``NSNumber`` behaviour.
+
+  - Switch to using ``memcpy`` instead of direct assignment in converting
+    plain C values to/from Python because "packed" structs might result
+    in accessing values through unaligned pointers.
+
 Version 10.1
 ------------
 

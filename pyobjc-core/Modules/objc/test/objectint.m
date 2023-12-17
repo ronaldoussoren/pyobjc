@@ -180,17 +180,17 @@ NSObject (TestMethods)
 
 + (void)takeStoredValue:(id)value forKey:(NSString*)key of:(NSObject*)object
 {
-    return [object takeStoredValue:value forKey:key];
+    [object takeStoredValue:value forKey:key];
 }
 
 + (void)takeValue:(id)value forKey:(NSString*)key of:(NSObject*)object
 {
-    return [object takeValue:value forKey:key];
+    [object takeValue:value forKey:key];
 }
 
 + (void)takeValue:(id)value forKeyPath:(NSString*)keypath of:(NSObject*)object
 {
-    return [object takeValue:value forKeyPath:keypath];
+    [object takeValue:value forKeyPath:keypath];
 }
 
 + (NSDictionary*)valuesForKeys:(NSArray*)keys of:(NSObject*)object

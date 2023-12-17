@@ -26,7 +26,10 @@
     if (!self)
         return nil;
 
-    len = MIN([array count], (NSUInteger)128);
+    len = [array count];
+    if (len > 128) {
+        len = 128;
+    }
     for (i = 0; i < len; i++) {
         objects[i] = [[array objectAtIndex:i] retain];
     }

@@ -870,7 +870,7 @@ static initproc _Nullable make_init(const char* _typestr)
     }
 
     if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
-            &cl, init_cif, &codeloc, struct_init, (char*)typestr_copy)
+            &cl, init_cif, &codeloc, (void*)struct_init, (char*)typestr_copy)
         == -1) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");

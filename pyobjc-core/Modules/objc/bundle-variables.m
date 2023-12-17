@@ -387,7 +387,7 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
     len = PySequence_Fast_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
         PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
-        void*     value;
+        function  value;
         char*     signature;
         PyObject* name;
         PyObject* doc;
@@ -417,7 +417,7 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
             }
 
         } else {
-            PyObject* py_val = PyObjCFunc_New(name, value, signature, doc, meta);
+            PyObject* py_val = PyObjCFunc_New(name, (void*)value, signature, doc, meta);
             if (py_val == NULL) {
                 Py_DECREF(seq);
                 return NULL;

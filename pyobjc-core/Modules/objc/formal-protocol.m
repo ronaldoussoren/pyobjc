@@ -185,7 +185,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
 
                 protocol_addMethodDescription(
                     theProtocol, theSel, theSignature,
-                    (BOOL)PyObjCSelector_Required(PyTuple_GET_ITEM(sel, i)),
+                    !!PyObjCSelector_Required(PyTuple_GET_ITEM(sel, i)),
                     PyObjCSelector_IsClassMethod(PyTuple_GET_ITEM(sel, i)) ? NO : YES);
             }
 
@@ -199,7 +199,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
             }
 
             protocol_addMethodDescription(theProtocol, theSel, theSignature,
-                                          (BOOL)PyObjCSelector_Required(sel),
+                                          !!PyObjCSelector_Required(sel),
                                           PyObjCSelector_IsClassMethod(sel) ? NO : YES);
         }
     }

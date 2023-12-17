@@ -297,19 +297,19 @@ static NSArray* _Nullable input_output_inputAndOutput_(int* x, int* y, int* z)
     NSString*       value;
     NSMutableArray* result = [NSMutableArray array];
 
-    snprintf(buf, sizeof(buf), "%p", x);
+    snprintf(buf, sizeof(buf), "%p", (void*)x);
     value = [NSString stringWithUTF8String:buf];
     if (!value)
         return NULL;
     [result addObject:value];
 
-    snprintf(buf, sizeof(buf), "%p", y);
+    snprintf(buf, sizeof(buf), "%p", (void*)y);
     value = [NSString stringWithUTF8String:buf];
     if (!value)
         return NULL;
     [result addObject:value];
 
-    snprintf(buf, sizeof(buf), "%p", z);
+    snprintf(buf, sizeof(buf), "%p", (void*)z);
     value = [NSString stringWithUTF8String:buf];
     if (!value)
         return NULL;

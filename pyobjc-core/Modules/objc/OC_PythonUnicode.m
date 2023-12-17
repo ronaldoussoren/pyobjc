@@ -180,12 +180,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getCharacters:(unichar*)buffer range:(NSRange)aRange
 {
-    return [[self __realObject__] getCharacters:buffer range:aRange];
+    [[self __realObject__] getCharacters:buffer range:aRange];
 }
 
 - (void)getCharacters:(unichar*)buffer
 {
-    return [[self __realObject__] getCharacters:buffer];
+    [[self __realObject__] getCharacters:buffer];
 }
 
 /*
