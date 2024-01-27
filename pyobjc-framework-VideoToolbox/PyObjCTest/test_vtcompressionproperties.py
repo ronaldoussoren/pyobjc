@@ -352,3 +352,30 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_HasRightStereoEyeView,
             str,
         )
+
+    @min_os_level("14.4")
+    def test_constants14_4(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_CalculateMeanSquaredError,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTSampleAttachmentKey_QualityMetrics,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTSampleAttachmentQualityMetricsKey_LumaMeanSquaredError,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTSampleAttachmentQualityMetricsKey_ChromaBlueMeanSquaredError,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTSampleAttachmentQualityMetricsKey_ChromaRedMeanSquaredError,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HorizontalFieldOfView,
+            str,
+        )

@@ -43,6 +43,7 @@ class TestGKError(TestCase):
         self.assertEqual(GameKit.GKErrorAPIObsolete, 34)
         self.assertEqual(GameKit.GKErrorICloudUnavailable, 35)
         self.assertEqual(GameKit.GKErrorLockdownMode, 36)
+        self.assertEqual(GameKit.GKErrorAppUnlisted, 37)
         self.assertEqual(GameKit.GKErrorFriendListDescriptionMissing, 100)
         self.assertEqual(GameKit.GKErrorFriendListRestricted, 101)
         self.assertEqual(GameKit.GKErrorFriendListDenied, 102)

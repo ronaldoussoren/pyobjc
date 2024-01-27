@@ -19,6 +19,31 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
             2,
         )
 
+        self.assertIsEnumType(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicy
+        )
+
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyNone,
+            0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyTouchIDOrWatchCurrentSet,
+            1 << 0,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyTouchIDOrWatchAny,
+            1 << 1,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyReuseDuringUnlock,
+            1 << 2,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyPasswordFallback,
+            1 << 3,
+        )
+
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertArgIsBlock(

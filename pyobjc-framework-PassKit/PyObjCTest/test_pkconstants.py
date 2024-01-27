@@ -108,3 +108,7 @@ class TestPKConstants(TestCase):
     def test_constants12_1(self):
         # SDK Says available in 10.1, but not available there
         self.assertIsInstance(PassKit.PKPaymentNetworkDankort, str)
+
+    @min_os_level("14.4")
+    def test_constants14_4(self):
+        self.assertIsInstance(PassKit.PKPaymentNetworkMeeza, str)

@@ -454,7 +454,7 @@
      },
      "2": {
       "type_override": "^I",
-      "type_modifier": "N"
+      "type_modifier": "o"
      }
     }
    },
@@ -507,7 +507,7 @@
       "type_override": "^{__IOSurface=}"
      },
      "2": {
-      "type_modifier": "N",
+      "type_modifier": "o",
       "type_override": "^I"
      }
     }

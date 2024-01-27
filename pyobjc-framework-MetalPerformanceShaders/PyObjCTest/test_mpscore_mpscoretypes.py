@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import MetalPerformanceShaders
 
 
@@ -202,6 +202,10 @@ class TestMPSCore_MPSCoreTypes(TestCase):
         self.assertIsInstance(
             MetalPerformanceShaders.MPSRectNoClip, MetalPerformanceShaders.MTLRegion
         )
+
+    @min_sdk_level("14.4")
+    def test_functions14_4(self):
+        MetalPerformanceShaders.MPSDataTypeBitsCount
 
     def test_protocols(self):
         self.assertProtocolExists("MPSDeviceProvider")

@@ -31,6 +31,27 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for clsname in (
+        "MLEvaluationPlan",
+        "MLEvaluationPlanComputeDevice",
+        "MLEvaluationPlanCost",
+        "MLModelStructureNeuralNetwork",
+        "MLModelStructurePipeline",
+        "MLModelStructureProgram",
+        "MLModelStructureProgramArgument",
+        "MLModelStructureProgramBinding",
+        "MLModelStructureProgramBlock",
+        "MLModelStructureProgramFunction",
+        "MLModelStructureProgramNamedValueType",
+        "MLModelStructureProgramOperation",
+        "MLModelStructureProgramValue",
+        "MLModelStructureProgramValueType",
+    ):
+        try:
+            objc.lookUpClass(clsname).__objc_final__ = True
+        except objc.error:
+            pass
+
     del sys.modules["CoreML._metadata"]
 
 

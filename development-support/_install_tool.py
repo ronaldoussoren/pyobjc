@@ -247,7 +247,11 @@ def main(extra_arg=None):
         [sys.executable, "-mpip", "install", "-U", "setuptools", "pip", "wheel"]
     )
 
-    for project in ["pyobjc-core"] + sorted_framework_wrappers():
+    all_projects = ["pyobjc-core"] + sorted_framework_wrappers()
+    for idx, project in enumerate(all_projects):
+        print()
+        print(f"{idx+1}/{len(all_projects)}: Building project {project!r}")
+        print()
         if not build_project(project, extra_arg):
             print("Cannot build one of the projects, bailing out")
             sys.exit(1)

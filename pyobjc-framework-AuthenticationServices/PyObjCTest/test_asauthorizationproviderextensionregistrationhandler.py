@@ -51,6 +51,10 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsRegistrationDeviceKeyMigration,
             1 << 3,
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsUserKeyInvalid,
+            1 << 5,
+        )
 
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionRegistrationResult

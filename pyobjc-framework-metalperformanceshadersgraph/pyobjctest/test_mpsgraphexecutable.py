@@ -14,6 +14,9 @@ class TestMPSGraphExecutable(TestCase):
         )
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformIOS, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformTvOS, 2)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformVisionOS, 3
+        )
 
     @min_os_level("12.0")
     def test_methods12_0(self):

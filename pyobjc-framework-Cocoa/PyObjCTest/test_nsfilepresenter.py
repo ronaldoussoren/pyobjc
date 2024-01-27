@@ -18,6 +18,9 @@ class Presenter(Foundation.NSObject):
     def accommodatePresentedSubitemDeletionAtURL_completionHandler_(self, a, b):
         pass
 
+    def accommodatePresentedItemEvictionWithCompletionHandler_(self, a):
+        pass
+
 
 class TestNSFilePresenter(TestCase):
     @min_os_level("10.7")
@@ -41,5 +44,11 @@ class TestNSFilePresenter(TestCase):
         self.assertArgIsBlock(
             Presenter.accommodatePresentedSubitemDeletionAtURL_completionHandler_,
             1,
+            b"v@",
+        )
+
+        self.assertArgIsBlock(
+            Presenter.accommodatePresentedItemEvictionWithCompletionHandler_,
+            0,
             b"v@",
         )

@@ -32,3 +32,11 @@ class TestNSFileProviderError(TestCase):
             FileProvider.NSFileProviderErrorVersionNoLongerAvailable, -2009
         )
         self.assertEqual(FileProvider.NSFileProviderErrorExcludedFromSync, -2010)
+        self.assertEqual(FileProvider.NSFileProviderErrorDomainDisabled, -2011)
+        self.assertEqual(
+            FileProvider.NSFileProviderErrorProviderDomainTemporarilyUnavailable, -2012
+        )
+        self.assertEqual(FileProvider.NSFileProviderErrorProviderDomainNotFound, -2013)
+        self.assertEqual(
+            FileProvider.NSFileProviderErrorApplicationExtensionNotFound, -2014
+        )

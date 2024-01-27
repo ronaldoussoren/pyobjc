@@ -77,3 +77,7 @@ class TestCGImageSource(TestCase):
     @min_os_level("10.14")
     def testFunctions10_14(self):
         Quartz.CGImageSourceGetPrimaryImageIndex
+
+    @min_os_level("14.2")
+    def testFunctions14_2(self):
+        Quartz.CGImageSourceSetAllowableTypes

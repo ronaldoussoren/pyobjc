@@ -7,6 +7,7 @@ class TestMPRemoteControlTypes(TestCase):
         self.assertIsEnumType(MediaPlayer.MPChangeLanguageOptionSetting)
         self.assertIsEnumType(MediaPlayer.MPRepeatType)
         self.assertIsEnumType(MediaPlayer.MPShuffleType)
+        self.assertIsEnumType(MediaPlayer.MPSleepTimerStopMode)
 
     @min_os_level("10.12")
     def testConstants(self):
@@ -19,3 +20,7 @@ class TestMPRemoteControlTypes(TestCase):
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingNone, 0)
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingNowPlayingItemOnly, 1)
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingPermanent, 2)
+        self.assertEqual(MediaPlayer.MPSleepTimerStopModeOff, 0)
+        self.assertEqual(MediaPlayer.MPSleepTimerStopModeTime, 1)
+        self.assertEqual(MediaPlayer.MPSleepTimerStopModeChapterEnd, 2)
+        self.assertEqual(MediaPlayer.MPSleepTimerStopModeItemEnd, 3)

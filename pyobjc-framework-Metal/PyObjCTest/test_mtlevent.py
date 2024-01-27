@@ -12,6 +12,9 @@ class TestMTLEventHelper(Metal.NSObject):
     def signaledValue(self):
         pass
 
+    def waitUntilSignaledValue_timeoutMS_(self, a, b):
+        return 1
+
 
 class TestMTLEvent(TestCase):
     @min_os_level("10.14")
@@ -29,3 +32,11 @@ class TestMTLEvent(TestCase):
             MTLSharedEventNotificationBlock,
         )
         self.assertResultHasType(TestMTLEventHelper.signaledValue, objc._C_ULNGLNG)
+
+        self.assertResultIsBOOL(TestMTLEventHelper.waitUntilSignaledValue_timeoutMS_)
+        self.assertArgHasType(
+            TestMTLEventHelper.waitUntilSignaledValue_timeoutMS_, 0, objc._C_ULNGLNG
+        )
+        self.assertArgHasType(
+            TestMTLEventHelper.waitUntilSignaledValue_timeoutMS_, 1, objc._C_ULNGLNG
+        )

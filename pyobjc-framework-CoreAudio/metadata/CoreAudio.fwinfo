@@ -7,7 +7,15 @@
      "typestr": "^{AudioHardwarePlugInInterface=}"
    }
   },
+  "enum_type": {
+   "CATapMuteBehavior": {
+    "type": "q"
+   }
+  },
   "enum": {
+   "CATapUnmuted": { "value": 0 },
+   "CATapMuted": { "value": 1 },
+   "CATapMutedWhenTapped": { "value": 2 },
    "kAudio_NoError": { "value": 0 },
    "kAudioChannelLabel_LeftSideSurround": { "value": 55 },
    "kAudioChannelLabel_RightSideSurround": { "value": 56 },
@@ -150,6 +158,23 @@
    }
   },
   "functions": {
+   "AudioHardwareCreateProcessTap": {
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "^I", "type_modifier": "o" }
+    },
+    "retval": {
+     "typestr": "i"
+    }
+   },
+   "AudioHardwareDestroyProcessTap": {
+    "args": {
+     "0": { "typestr": "I" }
+    },
+    "retval": {
+     "typestr": "i"
+    }
+   },
    "AudioDeviceAddIOProc": {
     "args": {
      "1": {

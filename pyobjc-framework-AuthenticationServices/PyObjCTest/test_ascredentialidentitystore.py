@@ -15,6 +15,13 @@ class TestASCredentialIdentityStore(TestCase):
             AuthenticationServices.ASCredentialIdentityStoreErrorCodeStoreBusy, 2
         )
 
+        self.assertIsEnumType(AuthenticationServices.ASCredentialIdentityTypes)
+        self.assertEqual(AuthenticationServices.ASCredentialIdentityTypesAll, 0)
+        self.assertEqual(AuthenticationServices.ASCredentialIdentityTypesPassword, 1)
+        self.assertEqual(
+            AuthenticationServices.ASCredentialIdentityTypesPasskey, 1 << 1
+        )
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertArgIsBlock(
@@ -59,4 +66,12 @@ class TestASCredentialIdentityStore(TestCase):
             AuthenticationServices.ASCredentialIdentityStore.replaceCredentialIdentityEntries_completion_,
             1,
             b"vZ@",
+        )
+
+    @min_os_level("14.4")
+    def test_methods14_4(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASCredentialIdentityStore.getCredentialIdentitiesForService_credentialIdentityTypes_completionHandler_,
+            2,
+            b"v@",
         )

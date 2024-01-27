@@ -28,6 +28,9 @@ class TestMTLResourceHelper(Metal.NSObject):
     def isAliasable(self):
         return 1
 
+    def setOwnerWithIdentity_(self, a):
+        return 1
+
 
 class TestMTLResource(TestCase):
     def test_enum_types(self):
@@ -154,3 +157,10 @@ class TestMTLResource(TestCase):
         )
 
         self.assertResultIsBOOL(Metal.TestMTLResourceHelper.isAliasable)
+
+        self.assertResultHasType(
+            Metal.TestMTLResourceHelper.setOwnerWithIdentity_, objc._C_INT
+        )
+        self.assertArgHasType(
+            Metal.TestMTLResourceHelper.setOwnerWithIdentity_, 0, objc._C_UINT
+        )

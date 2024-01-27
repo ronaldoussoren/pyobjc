@@ -32,3 +32,15 @@ class TestAVSampleBufferVideoRenderer(TestCase):
             1,
             b"v",
         )
+
+    @min_os_level("14.4")
+    def test_methods14_4(self):
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferVideoRenderer.copyDisplayedPixelBuffer
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVSampleBufferVideoRenderer.loadVideoPerformanceMetricsWithCompletionHandler_,
+            0,
+            b"v@",
+        )

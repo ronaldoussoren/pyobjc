@@ -125,8 +125,8 @@ class TestIOSurfaceAPI(TestCase):
 
         IOSurface.IOSurfaceGetID
 
-        self.assertArgIsInOut(IOSurface.IOSurfaceLock, 2)
-        self.assertArgIsInOut(IOSurface.IOSurfaceUnlock, 2)
+        self.assertArgIsOut(IOSurface.IOSurfaceLock, 2)
+        self.assertArgIsOut(IOSurface.IOSurfaceUnlock, 2)
 
         IOSurface.IOSurfaceGetAllocSize
         IOSurface.IOSurfaceGetWidth

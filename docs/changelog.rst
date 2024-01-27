@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 10.1.1
---------------
+Version 10.2
+------------
 
 * Fix a number of warnings found by adding ``-Wpendantic`` to the CFLAGS for
   pyobjc-core
@@ -18,6 +18,8 @@ Version 10.1.1
   - Switch to using ``memcpy`` instead of direct assignment in converting
     plain C values to/from Python because "packed" structs might result
     in accessing values through unaligned pointers.
+
+* Updated bindings for the macOS 14.4 SDK (Xcode 15.3)
 
 Version 10.1
 ------------

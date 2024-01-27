@@ -30,6 +30,9 @@ static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1300
     {"MPSSizeofMPSDataType", (PyObjC_Function_Pointer)&MPSSizeofMPSDataType},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1404
+    {"MPSDataTypeBitsCount", (PyObjC_Function_Pointer)&MPSDataTypeBitsCount},
+#endif
     {0, 0}};
 
 #pragma clang diagnostic pop

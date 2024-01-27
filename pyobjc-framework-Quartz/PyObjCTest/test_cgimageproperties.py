@@ -884,3 +884,8 @@ class TestCGImageProperties(TestCase):
         # but wasn't deprecated?
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)
         self.assertIsInstance(Quartz.kCGImagePropertyAVISDictionary, str)
+
+    @min_os_level("14.4")
+    def testConstants14_4(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyTIFFXPosition, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyTIFFYPosition, str)

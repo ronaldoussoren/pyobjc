@@ -31,6 +31,13 @@ class TestAVSampleBufferDisplayLayer(TestCase):
             str,
         )  # noqa: B950
 
+    @min_os_level("14.4")
+    def testConstants14_4(self):
+        self.assertIsInstance(
+            AVFoundation.AVSampleBufferDisplayLayerReadyForDisplayDidChangeNotification,
+            str,
+        )  # noqa: B950
+
     @min_os_level("10.8")
     def testMethods(self):
         self.assertResultIsBOOL(
@@ -76,4 +83,10 @@ class TestAVSampleBufferDisplayLayer(TestCase):
     def testMethods14_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.hasSufficientMediaDataForReliablePlaybackStart
+        )
+
+    @min_os_level("14.4")
+    def testMethods14_4(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVSampleBufferDisplayLayer.isReadyForDisplay
         )

@@ -42,3 +42,14 @@ class TestMKMapItem(TestCase):
         self.assertIsInstance(
             MapKit.MKMapViewDefaultClusterAnnotationViewReuseIdentifier, str
         )
+
+    @min_os_level("14.4")
+    def test_methods14_4(self):
+        self.assertArgIsBlock(
+            MapKit.MKMapItem.openInMapsWithLaunchOptions_completionHandler_, 1, b"vZ"
+        )
+        self.assertArgIsBlock(
+            MapKit.MKMapItem.openMapsWithItems_launchOptions_completionHandler_,
+            2,
+            b"vZ",
+        )

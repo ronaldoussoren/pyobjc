@@ -18,6 +18,7 @@ class TestAVContentKeySession(TestCase):
 
     def test_enum_types(self):
         self.assertIsEnumType(AVFoundation.AVContentKeyRequestStatus)
+        self.assertIsEnumType(AVFoundation.AVExternalContentProtectionStatus)
 
     @min_os_level("10.12.4")
     def testConstants10_12_4(self):
@@ -51,6 +52,10 @@ class TestAVContentKeySession(TestCase):
         self.assertIsInstance(
             AVFoundation.AVContentKeyRequestProtocolVersionsKey, str
         )  # noqa: B950
+
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusPending, 0)
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusSufficient, 1)
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusInsufficient, 2)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
