@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import setup  # noqa: E402
 
-VERSION = "10.1"
+VERSION = "10.2"
 
 setup(
     name="pyobjc-framework-DictionaryServices",
