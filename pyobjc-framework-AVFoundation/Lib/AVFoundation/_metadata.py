@@ -7271,6 +7271,11 @@ try:
     )
     r(
         b"AVSampleBufferVideoRenderer",
+        b"copyDisplayedPixelBuffer",
+        {"retval": {"already_cfretained": True}},
+    )
+    r(
+        b"AVSampleBufferVideoRenderer",
         b"flushWithRemovalOfDisplayedImage:completionHandler:",
         {
             "arguments": {

@@ -11176,10 +11176,13 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "@"
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -11206,10 +11209,13 @@
          "arguments": {
           "0": {
            "type": "^v"
+          },
+          "1": {
+           "type": "@"
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
