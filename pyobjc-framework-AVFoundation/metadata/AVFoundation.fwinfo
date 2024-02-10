@@ -490,6 +490,15 @@
      }
     ]
    },
+   "AVSampleBufferVideoRenderer": {
+    "methods": [
+     {
+      "selector": "copyDisplayedPixelBuffer",
+      "class_method": false,
+      "retval": { "already_cfretained": true }
+     }
+    ]
+   },
    "AVPlayerLayer": {
     "methods": [
      {

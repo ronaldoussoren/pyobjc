@@ -49,7 +49,7 @@ class TestASWebAuthenticationSession(TestCase):
     @min_os_level("14.4")
     def test_methods14_4(self):
         self.assertArgIsBlock(
-            AuthenticationServices.ASWebAuthenticationSession.initWithURL_calback_completionHandler_,  # noqa: B950
+            AuthenticationServices.ASWebAuthenticationSession.initWithURL_callback_completionHandler_,  # noqa: B950
             2,
             ASWebAuthenticationSessionCompletionHandler,
         )
