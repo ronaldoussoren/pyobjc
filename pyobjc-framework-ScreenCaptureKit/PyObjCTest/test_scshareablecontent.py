@@ -56,3 +56,11 @@ class TestSCShareableContent(TestCase):
     @min_os_level("13.1")
     def test_methods13_1(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCWindow.isActive)
+
+    @min_os_level("14.4")
+    def test_methods14_4(self):
+        self.assertArgIsBlock(
+            ScreenCaptureKit.SCShareableContent.getCurrentProcessShareableContentWithCompletionHandler,
+            0,
+            b"v@@",
+        )

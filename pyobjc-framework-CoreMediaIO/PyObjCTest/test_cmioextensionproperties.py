@@ -42,6 +42,11 @@ class TestCMIOExtensionProperties(TestCase):
         )
         self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyStreamSinkEndOfData, str)
 
+    @min_os_level("14.4")
+    def test_constants14_4(self):
+        self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyDeviceLatency, str)
+        self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyStreamLatency, str)
+
     @min_os_level("12.3")
     def test_methods(self):
         self.assertArgIsBOOL(

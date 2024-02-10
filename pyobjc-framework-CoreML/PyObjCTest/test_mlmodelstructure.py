@@ -7,6 +7,9 @@ class TestMLModelStructure(TestCase):
     def test_classes(self):
         self.assertFalse(CoreML.MLModelStructure.__objc_final__)
 
-        self.assertArgIsOut(
-            CoreML.MLModelStructure.modelStructureOfModelAtURL_error_, 1
+        self.assertArgIsBlock(
+            CoreML.MLModelStructure.loadContentsOfURL_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            CoreML.MLModelStructure.loadModelAsset_completionHandler_, 1, b"v@@"
         )

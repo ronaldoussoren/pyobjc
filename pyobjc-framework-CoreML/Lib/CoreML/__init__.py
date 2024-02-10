@@ -32,9 +32,9 @@ def _setup():
     globals()["__getattr__"] = getattr_func
 
     for clsname in (
-        "MLEvaluationPlan",
-        "MLEvaluationPlanComputeDevice",
-        "MLEvaluationPlanCost",
+        "MLComputePlan",
+        "MLComputePlanCost",
+        "MLComputePlanDeviceUsage",
         "MLModelStructureNeuralNetwork",
         "MLModelStructurePipeline",
         "MLModelStructureProgram",
