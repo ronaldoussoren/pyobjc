@@ -1,5 +1,6 @@
 import collections.abc
 import datetime
+import pathlib
 
 from objc import _objc
 
@@ -8,6 +9,7 @@ __all__ = [
     "registerMappingType",
     "registerSetType",
     "registerDateType",
+    "registerPathType",
 ]
 
 _objc.options._datetime_date_type = datetime.date
@@ -58,6 +60,17 @@ def registerDateType(type_object):
     _objc.options._date_types += (type_object,)
 
 
+def registerPathType(type_object):
+    """
+    Register 'type' as a date-like type that will be proxied
+    as an NSDate subclass.
+    """
+    if _objc.options._path_types is None:
+        _objc.options._path_types = ()
+
+    _objc.options._path_types += (type_object,)
+
+
 registerListType(collections.abc.Sequence)
 registerListType(range)
 registerMappingType(collections.abc.Mapping)
@@ -67,3 +80,4 @@ registerSetType(frozenset)
 registerSetType(collections.abc.Set)
 registerDateType(datetime.date)
 registerDateType(datetime.datetime)
+registerPathType(pathlib.Path)

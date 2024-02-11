@@ -21,6 +21,26 @@ Version 10.2
 
 * Updated bindings for the macOS 14.4 SDK (Xcode 15.3)
 
+* Add :func:`obj.registerPathType` to register a Python type as a path like
+  type with PyObjC. By default only :class:`pathlib.Path` is registered as such.
+
+  A minor backward compatibility issue is that instances of the registered types
+  will be written to ``NSArchive`` and ``NSKeyArchive`` archives as instances
+  of ``NSURL`` and won't roundtrip back to the original Python type. This might
+  change in future versions of PyObjC, at least for :class:`pathlib.Path`.
+
+* :issue:`589`: Instances of :class:`pathlib.Path` (and other types registered with
+  `objc.registerPathType`) are bridged into Objective-C as instances of ``NSURL``.
+
+  This means that these types can be used as values passed to APIs expecting
+  a filesystem URL, e.g.:
+
+  ```python
+
+  path = pathlib.Path("/Applications/Numbers.app")
+  bundle = NSBundle.bundleWithURL_(path)
+  ```
+
 Version 10.1
 ------------
 

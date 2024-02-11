@@ -1421,6 +1421,10 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
         test.pickletester.AbstractPickleTests.test_recursive_tuple(self)
 
     @skipUnless(0, "python unittest not relevant for archiving")
+    def test_unicode_memoization(self):
+        pass
+
+    @skipUnless(0, "python unittest not relevant for archiving")
     def test_evil_class_mutating_dict(self):
         pass
 

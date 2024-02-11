@@ -31,6 +31,7 @@ extern PyObject* _Nullable PyObjC_DictLikeTypes;
 extern PyObject* _Nullable PyObjC_ListLikeTypes;
 extern PyObject* _Nullable PyObjC_SetLikeTypes;
 extern PyObject* _Nullable PyObjC_DateLikeTypes;
+extern PyObject* _Nullable PyObjC_PathLikeTypes;
 
 extern PyObject* _Nullable PyObjC_DateTime_Date_Type;
 extern PyObject* _Nullable PyObjC_DateTime_DateTime_Type;

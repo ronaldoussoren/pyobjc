@@ -2771,6 +2771,26 @@ depythonify_python_object(PyObject* argument, id* datum)
             }
         }
 
+        if (*datum == nil && PyObjC_PathLikeTypes != NULL) {
+            int r;
+
+            r = PyObject_IsInstance(argument, PyObjC_PathLikeTypes);
+            if (r == -1) {
+                return -1;
+            }
+
+            if (r) {
+                *datum = [OC_PythonURL URLWithPythonObject:argument];
+                if (*datum == nil) {
+                    /* XXX: Datum can be nil due to `argument` not being
+                     *      pathlike after all or because NSURL construction
+                     *      failed.
+                     */
+                    return -1;
+                }
+            }
+        }
+
         if (*datum == nil) {
             PyObjC_Assert(!PyObjCObject_Check(argument), -1);
             *datum = [OC_PythonObject objectWithPythonObject:argument];

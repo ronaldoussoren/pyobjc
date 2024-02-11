@@ -104,6 +104,7 @@
 #import "OC_PythonObject.h"
 #import "OC_PythonSet.h"
 #import "OC_PythonUnicode.h"
+#import "OC_PythonURL.h"
 
 #import "OC_BuiltinPythonArray.h"
 #import "OC_BuiltinPythonData.h"

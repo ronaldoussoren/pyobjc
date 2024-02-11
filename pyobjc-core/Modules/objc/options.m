@@ -154,6 +154,7 @@ OBJECT_PROP(_mapping_types, PyObjC_DictLikeTypes, NULL)
 OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes, NULL)
 OBJECT_PROP(_set_types, PyObjC_SetLikeTypes, NULL)
 OBJECT_PROP(_date_types, PyObjC_DateLikeTypes, NULL)
+OBJECT_PROP(_path_types, PyObjC_PathLikeTypes, NULL)
 OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type, NULL)
 OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type, NULL)
 OBJECT_PROP(_getKey, PyObjC_getKey, NULL)
@@ -285,6 +286,7 @@ static PyGetSetDef options_getset[] = {
            "Private list of types that proxied as instances of NSMutableArray"),
     GETSET(_set_types, "Private list of types that proxied as instances of NSMutableSet"),
     GETSET(_date_types, "Private list of types that proxied as instances of NSDate"),
+    GETSET(_path_types, "Private list of types that proxied as instances of NSURL"),
     GETSET(_datetime_date_type, "Prive config for datetime.date"),
     GETSET(_datetime_datetime_type, "Prive config for datetime.datetime"),
     GETSET(_callable_signature,
