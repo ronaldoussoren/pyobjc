@@ -60,7 +60,7 @@ class TestSCShareableContent(TestCase):
     @min_os_level("14.4")
     def test_methods14_4(self):
         self.assertArgIsBlock(
-            ScreenCaptureKit.SCShareableContent.getCurrentProcessShareableContentWithCompletionHandler,
+            ScreenCaptureKit.SCShareableContent.getCurrentProcessShareableContentWithCompletionHandler_,
             0,
             b"v@@",
         )
