@@ -41,6 +41,7 @@ FRAMEWORK_WRAPPERS = [
     ("ApplicationServices", None, None),
     ("Automator", None, None),
     ("BackgroundAssets", "13.0", None),
+    ("BrowserEngineKit", "14.4", None),
     ("BusinessChat", "10.14", None),
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
@@ -196,6 +197,7 @@ MACOS_TO_DARWIN = {
     "12.3": "21.4",
     "13.0": "22.0",
     "14.0": "23.0",
+    "14.4": "23.4",
 }
 
 

@@ -37,4 +37,15 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(ASCredentialIdentity));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1404
+    p = PyObjC_IdToPython(
+        @protocol(ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(
+        @protocol(ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialProvider));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(
+        @protocol(ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialRegistrationRequest));
+    Py_XDECREF(p);
+#endif
 }

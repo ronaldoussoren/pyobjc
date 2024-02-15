@@ -1,5 +1,5 @@
 import AuthenticationServices
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
@@ -18,6 +18,12 @@ class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManagerAuthorizationStateNotDetermined,
             2,
+        )
+
+    @min_sdk_level("14.4")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest"
         )
 
     @min_os_level("13.3")

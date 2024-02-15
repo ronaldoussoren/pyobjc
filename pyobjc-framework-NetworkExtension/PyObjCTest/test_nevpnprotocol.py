@@ -30,3 +30,12 @@ class TestNEVPNProtocol(TestCase):
 
         self.assertResultIsBOOL(NetworkExtension.NEVPNProtocol.excludeAPNs)
         self.assertArgIsBOOL(NetworkExtension.NEVPNProtocol.setExcludeAPNs_, 0)
+
+    @min_os_level("14.4")
+    def testMethods14_4(self):
+        self.assertResultIsBOOL(
+            NetworkExtension.NEVPNProtocol.excludeDeviceCommunication
+        )
+        self.assertArgIsBOOL(
+            NetworkExtension.NEVPNProtocol.setExcludeDeviceCommunication_, 0
+        )

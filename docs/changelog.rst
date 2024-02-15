@@ -21,6 +21,8 @@ Version 10.2
 
 * Updated bindings for the macOS 14.4 SDK (Xcode 15.3)
 
+* Added bindings for the "BrowserEngineKit" framework on macOS 14.4 or later.
+
 * Add :func:`obj.registerPathType` to register a Python type as a path like
   type with PyObjC. By default only :class:`pathlib.Path` is registered as such.
 
