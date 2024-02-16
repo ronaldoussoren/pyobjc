@@ -784,6 +784,60 @@
     }
    }
   },
+  "classes": {
+    "CATapDescription": {
+     "methods": [
+      {
+        "selector": "isMono",
+        "class_method": false,
+        "retval": { "type_override": "Z" }
+      },
+      {
+        "selector": "isExclusive",
+        "class_method": false,
+        "retval": { "type_override": "Z" }
+      },
+      {
+        "selector": "isMixdown",
+        "class_method": false,
+        "retval": { "type_override": "Z" }
+      },
+      {
+        "selector": "isPrivate",
+        "class_method": false,
+        "retval": { "type_override": "Z" }
+      },
+      {
+        "selector": "setMono:",
+        "class_method": false,
+        "arguments": {
+         "0": { "type_override": "Z" }
+        }
+      },
+      {
+        "selector": "setExclusive:",
+        "class_method": false,
+        "arguments": {
+         "0": { "type_override": "Z" }
+        }
+      },
+      {
+        "selector": "setMixdown:",
+        "class_method": false,
+        "arguments": {
+         "0": { "type_override": "Z" }
+        }
+      },
+      {
+        "selector": "setPrivate:",
+        "class_method": false,
+        "arguments": {
+         "0": { "type_override": "Z" }
+        }
+      }
+     ]
+    }
+   },
   "informal_protocols": {}
  }
 }

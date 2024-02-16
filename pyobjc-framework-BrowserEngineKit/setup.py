@@ -25,12 +25,6 @@ setup(
     packages=["BrowserEngineKit"],
     ext_modules=[
         Extension(
-            "BrowserEngineKit._inlines",
-            ["Modules/_BrowserEngineKit_inlines.m"],
-            extra_link_args=["-framework", "BrowserEngineKit"],
-            py_limited_api=True,
-        ),
-        Extension(
             "BrowserEngineKit._BrowserEngineKit",
             ["Modules/_BrowserEngineKit.m"],
             extra_link_args=["-framework", "BrowserEngineKit"],

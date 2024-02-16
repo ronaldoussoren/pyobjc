@@ -1465,6 +1465,20 @@ misc.update(
         )
     }
 )
+r = objc.registerMetaDataForSelector
+objc._updatingMetadata(True)
+try:
+    r(b"CATapDescription", b"isExclusive", {"retval": {"type": "Z"}})
+    r(b"CATapDescription", b"setExclusive:", {"arguments": {2: {"type": b"Z"}}})
+    r(b"CATapDescription", b"isMixdown", {"retval": {"type": "Z"}})
+    r(b"CATapDescription", b"setMixdown:", {"arguments": {2: {"type": b"Z"}}})
+    r(b"CATapDescription", b"isMono", {"retval": {"type": "Z"}})
+    r(b"CATapDescription", b"setMono:", {"arguments": {2: {"type": b"Z"}}})
+    r(b"CATapDescription", b"isPrivate", {"retval": {"type": "Z"}})
+    r(b"CATapDescription", b"setPrivate:", {"arguments": {2: {"type": b"Z"}}})
+
+finally:
+    objc._updatingMetadata(False)
 expressions = {}
 
 # END OF FILE

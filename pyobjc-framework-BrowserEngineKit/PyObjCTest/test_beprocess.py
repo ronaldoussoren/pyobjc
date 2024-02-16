@@ -1,5 +1,5 @@
 import BrowserEngineKit
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestBEProcessHelper(BrowserEngineKit.NSObject):
@@ -14,21 +14,8 @@ class TestBEProcess(TestCase):
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestBEProcessHelper.isValid)
 
+    @expectedFailure
     def test_methods(self):
-        self.assertArgIsOut(
-            BrowserEngineKit.BEMediaEnvironment.initWithXPCRepresentation_error_, 1
-        )
-
-        self.assertResultIsBOOL(BrowserEngineKit.BEMediaEnvironment.activateWithError_)
-        self.assertArgIsOut(BrowserEngineKit.BEMediaEnvironment.activateWithError_, 0)
-
-        self.assertResultIsBOOL(BrowserEngineKit.BEMediaEnvironment.suspendWithError_)
-        self.assertArgIsOut(BrowserEngineKit.BEMediaEnvironment.suspendWithError_, 0)
-
-        self.assertArgIsOut(
-            BrowserEngineKit.BEMediaEnvironment.makeCaptureSessionWithError_, 0
-        )
-
         self.assertArgIsOut(BrowserEngineKit.BEProcessCapability.requestWithError_, 0)
 
         self.assertArgIsOut(

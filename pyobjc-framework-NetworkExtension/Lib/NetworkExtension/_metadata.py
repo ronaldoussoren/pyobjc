@@ -1120,12 +1120,18 @@ try:
     r(b"NEVPNManager", b"setOnDemandEnabled:", {"arguments": {2: {"type": "Z"}}})
     r(b"NEVPNManager", b"setProtocol:", {"deprecated": 1011})
     r(b"NEVPNProtocol", b"disconnectOnSleep", {"retval": {"type": "Z"}})
+    r(b"NEVPNProtocol", b"excludeDeviceCommunication", {"retval": {"type": "Z"}})
     r(b"NEVPNProtocol", b"enforceRoutes", {"retval": {"type": b"Z"}})
     r(b"NEVPNProtocol", b"excludeAPNs", {"retval": {"type": b"Z"}})
     r(b"NEVPNProtocol", b"excludeCellularServices", {"retval": {"type": b"Z"}})
     r(b"NEVPNProtocol", b"excludeLocalNetworks", {"retval": {"type": b"Z"}})
     r(b"NEVPNProtocol", b"includeAllNetworks", {"retval": {"type": b"Z"}})
     r(b"NEVPNProtocol", b"setDisconnectOnSleep:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"NEVPNProtocol",
+        b"setExcludeDeviceCommunication:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"NEVPNProtocol", b"setEnforceRoutes:", {"arguments": {2: {"type": b"Z"}}})
     r(b"NEVPNProtocol", b"setExcludeAPNs:", {"arguments": {2: {"type": b"Z"}}})
     r(
