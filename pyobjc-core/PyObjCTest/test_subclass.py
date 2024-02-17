@@ -584,7 +584,11 @@ class TestOverridingSpecials(TestCase):
         with self.assertRaisesRegex(RuntimeError, "Cannot compare"):
             type("ClassWithIntInDict", (NSObject,), {NoCompare(): someSelector})
 
-        cls = type("ClassWithIntInDict", (NSObject,), {42: someSelector})
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+
+            cls = type("ClassWithIntInDict", (NSObject,), {42: someSelector})
+
         self.assertIsInstance(cls.someSelector, objc.selector)
         self.assertIsInstance(cls.__dict__[42], objc.selector)
 

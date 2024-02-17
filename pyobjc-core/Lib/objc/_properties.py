@@ -248,7 +248,7 @@ class object_property:
             )
             signature = _C_NSBOOL + b"@:N^@o^@"
             validate = selector(self._validate, selector=selName, signature=signature)
-            class_dict[validate.selector] = validate
+            class_dict[validate.selector.decode().replace(":", "_")] = validate
             instance_methods.add(validate)
 
         if self._depends_on:
@@ -266,7 +266,7 @@ class object_property:
                 signature=b"@@:",
                 isClassMethod=True,
             )
-            class_dict[affecting.selector] = affecting
+            class_dict[affecting.selector.decode().replace(":", "_")] = affecting
             class_methods.add(affecting)
 
     def __get__(self, an_object, owner):

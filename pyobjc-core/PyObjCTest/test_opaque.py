@@ -133,7 +133,9 @@ class TestFromC(TestCase):
 
     def test_invalid_creation(self):
         with self.assertRaisesRegex(
-            TypeError, "'invalid' is an invalid keyword argument for this function"
+            TypeError,
+            r"('invalid' is an invalid keyword argument for this function)|"
+            r"(this function got an unexpected keyword argument 'invalid')",
         ):
             FooHandle(invalid=42)
 

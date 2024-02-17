@@ -749,13 +749,13 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
                     PyObject* args[2] = {NULL, s};
                     obj               = PyObject_Vectorcall(delmethod, args + 1,
                                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-                    _PyObjCObject_FreeDeallocHelper(s);
                     if (obj == NULL) {
                         PyErr_WriteUnraisable(delmethod);
                     } else {
                         Py_DECREF(obj);
                     }
                     Py_DECREF(delmethod);
+                    _PyObjCObject_FreeDeallocHelper(s);
                 }
             }
 

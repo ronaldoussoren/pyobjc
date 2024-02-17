@@ -23,7 +23,9 @@ class TestProxySupport(TestCase):
         self.assertIs(v, arr)
 
         with self.assertRaisesRegex(
-            TypeError, "'cobject2' is an invalid keyword argument for this function"
+            TypeError,
+            r"('cobject2' is an invalid keyword argument for this function)|"
+            r"(this function got an unexpected keyword argument 'cobject2'.)",
         ):
             objc.objc_object(cobject2=p)
 

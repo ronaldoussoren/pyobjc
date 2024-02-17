@@ -43,6 +43,8 @@ Version 10.2
   bundle = NSBundle.bundleWithURL_(path)
   ```
 
+* Fix some warnings in pyobjc-core when testing with Python 3.13a4.
+
 Version 10.1
 ------------
 
