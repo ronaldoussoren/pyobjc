@@ -45,6 +45,11 @@ Version 10.2
 
 * Fix some warnings in pyobjc-core when testing with Python 3.13a4.
 
+* Add support for ``NSBezierPathElementQuadraticCurveTo`` in ``NSBezierPath.elementAtIndex_associatedPoints_``.
+
+* :issue:`595`: Fix compilation error in ``pyobjc-framework-Cocoa`` with a recent
+  deployment target.
+
 Version 10.1
 ------------
 

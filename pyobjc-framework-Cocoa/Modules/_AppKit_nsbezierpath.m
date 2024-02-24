@@ -9,6 +9,9 @@
 #define NSBezierPathElementCurveTo NSCurveToBezierPathElement
 #define NSBezierPathElementClosePath NSClosePathBezierPathElement
 #endif
+#if PyObjC_BUILD_RELEASE < 1400
+#define NSBezierPathElementCubicCurveTo NSBezierPathElementCurveTo
+#endif
 
 static PyObject*
 call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
@@ -61,9 +64,14 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
     case NSBezierPathElementLineTo:
         pointCount = 1;
         break;
-    case NSBezierPathElementCurveTo:
+    case NSBezierPathElementCubicCurveTo:
         pointCount = 3;
         break;
+#if PyObjC_BUILD_RELEASE >= 1400
+    case NSBezierPathElementQuadraticCurveTo:
+        pointCount = 1;
+        break;
+#endif
     case NSBezierPathElementClosePath:
         pointCount = 0;
         break;
@@ -237,9 +245,14 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
           case NSBezierPathElementLineTo:
               pointCount = 1;
               break;
-          case NSBezierPathElementCurveTo:
+          case NSBezierPathElementCubicCurveTo:
               pointCount = 3;
               break;
+#if PyObjC_BUILD_RELEASE >= 1400
+          case NSBezierPathElementQuadraticCurveTo:
+              pointCount = 1;
+              break;
+#endif
           case NSBezierPathElementClosePath:
               pointCount = 0;
               break;
