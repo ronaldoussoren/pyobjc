@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MetalFX
 import objc
@@ -192,4 +192,23 @@ class TestMTLFXTemporalScaler(TestCase):
         )
         self.assertArgIsBOOL(
             MetalFX.MTLFXTemporalScalerDescriptor.setInputContentPropertiesEnabled_, 0
+        )
+
+    @min_os_level("14.3")
+    def test_methods14_3(self):
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.isReactiveMaskTextureEnabled
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.setReactiveMaskTextureEnabled_, 0
+        )
+
+        self.assertResultHasType(
+            MetalFX.MTLFXTemporalScalerDescriptor.reactiveMaskTextureFormat,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            MetalFX.MTLFXTemporalScalerDescriptor.setReactiveMaskTextureFormat_,
+            0,
+            objc._C_NSUInteger,
         )
