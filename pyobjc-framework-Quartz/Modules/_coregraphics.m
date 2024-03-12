@@ -237,8 +237,11 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
     CGImageRef image = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             image =
                 CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
+#pragma clang diagnostic pop
 
         } @catch (NSException* localException) {
             image = NULL;
