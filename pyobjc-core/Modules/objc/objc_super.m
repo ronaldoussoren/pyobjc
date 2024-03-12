@@ -162,23 +162,8 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
     return PyObject_GenericGetAttr(self, name);
 }
 
-static void
-super_dealloc(PyObject* obj)
-{
-    Py_CLEAR(((superobject*)obj)->type);
-    Py_CLEAR(((superobject*)obj)->obj);
-    Py_CLEAR(((superobject*)obj)->obj_type);
-
-    PyTypeObject* tp = Py_TYPE(obj);
-    tp->tp_free(obj);
-#if PY_VERSION_HEX >= 0x030a0000
-    Py_DECREF(tp);
-#endif
-}
-
 static PyType_Slot super_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&super_getattro},
-    {.slot = Py_tp_dealloc, .pfunc = (void*)&super_dealloc},
     {.slot = Py_tp_doc, .pfunc = NULL},
     {0, NULL} /* sentinel */
 };

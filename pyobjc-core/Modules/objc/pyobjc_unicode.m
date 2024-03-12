@@ -471,11 +471,6 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         characters = NULL;
     }
 
-#ifdef Py_DEBUG
-    /* Check that the unicode object is correct */
-    _PyUnicode_CheckConsistency((PyObject*)result, 1);
-#endif
-
     /* Finally store PyUnicode specific data */
     result->nsstr = [value retain];
 

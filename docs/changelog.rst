@@ -3,6 +3,18 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.2.1
+--------------
+
+* Fix possible memory corruption in the implementation of `forwardInvocation:`
+  for Python classes.
+
+* Fix build error when building with a python configured with ``--with-pydebug``.
+
+* Don't override ``tp_dealloc`` slot in :class:`objc.super` but use the one
+  inherited from :class:`super`. This makes sure construction and deallocation
+  are consistent with each other (found while testing with ``--with-pydebug``).
+
 Version 10.2
 ------------
 

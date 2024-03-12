@@ -5186,7 +5186,12 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     if (*typestr == _C_VOID) {
         values[0] = NULL;
     } else {
-        values[0] = PyMem_Malloc(PyObjCRT_SizeOfType(typestr));
+        /*
+         * Allocate at least enough memory for a long because
+         * at least on arm64 we'll get a buffer when allocating
+         * sizeof(type) for small types.
+         */
+        values[0] = PyMem_Malloc(MAX(PyObjCRT_SizeOfType(typestr), (Py_ssize_t)sizeof(long)));
         if (values[0] == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             rv = -1;
@@ -5204,7 +5209,9 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
             goto cleanup;
             // LCOV_EXCL_STOP
         }
-        values[i + 1] = PyMem_Malloc(PyObjCRT_SizeOfType(typestr));
+
+        /* See above, allocate at least enough memory for a long */
+        values[i + 1] = PyMem_Malloc(MAX(PyObjCRT_SizeOfType(typestr), (Py_ssize_t)sizeof(long)));
         if (values[i + 1] == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             rv = -1;
