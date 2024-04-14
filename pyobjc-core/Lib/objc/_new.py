@@ -1,5 +1,15 @@
 """
 Implementation of `__new__` for arbitrary Cocoa classes
+
+The __new__ method just translates invocations into the
+corresponding invocation of the Cocoa pattern (
+`cls.alloc().init()` or `cls.new()`), based on a mapping
+maintaind in this file.
+
+The mapping is updated in two ways:
+    1. From framework bindings for native classes
+    2. Based on `init` methods in Python subclasses
+
 """
 
 # TODO:
@@ -13,12 +23,31 @@ Implementation of `__new__` for arbitrary Cocoa classes
 # - Update support code for framework bindings
 # - Update framework binding tooling (and then the
 #   bindings themselves)
+# - Check interaction with manually defined __new__
+#   and/or __init__ in Python classes
 # - Add tests
 
 __all__ = ()
 
+# Mapping: cls -> { kwds: selector_name }
+#
+# That is, keys are Objective-C classes, values
+# are mappings from keyword argument names to
+# the name of a selector.
+#
+# The selector_name can be `None` to disable a
+# mapping in a subclass.
+#
+# The complete mapping for a class is a chain map
+# for the submaps of all classes on the MRO.
 NEW_MAP = {}
+
+
+# Sentinel value
 UNSET = object()
+
+# Added to the docstring for __new__
+DOC_SUFFIX = "The order of keyword arguments is significant\n"
 
 
 class _function:
@@ -54,10 +83,10 @@ class _function:
                 else:
                     result[kwds] = f"{self._cls.__name__}(*, " + ", ".join(kwds) + "): "
                 if selector.startswith("init"):
-                    result[kwds] += f"   returns 'cls.alloc().{selector}()'\n\n"
+                    result[kwds] += f"   returns cls.alloc().{selector}()\n\n"
                 else:
-                    result[kwds] += f"   returns 'cls.{selector}()'\n\n"
-        return "".join(sorted(result.values()))[:-1]
+                    result[kwds] += f"   returns cls.{selector}()\n\n"
+        return "".join(sorted(result.values())) + DOC_SUFFIX
 
     def __getattr__(self, name):
         return getattr(self._function, name)
