@@ -13,6 +13,15 @@ from sysconfig import get_config_var
 
 TOPDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
+
 
 # Module defining a topological sort function, see
 # <http://www.bitformation.com/art/python_toposort.html> for more
@@ -208,7 +217,7 @@ def build_project(project, extra_arg):
     print(f"Cleaning {project!r} using {sys.executable!r}")
     status = subprocess.call([sys.executable, "setup.py", "clean"], cwd=proj_dir)
     if status != 0:
-        print(f"Cleaning of {project!r} failed, status {status}")
+        print(f"{RED}Cleaning of {project!r} failed, status {status}{RESET}")
         return False
 
     # Explicitly remove the 'build' directory, just in case...
@@ -228,7 +237,7 @@ def build_project(project, extra_arg):
     )
 
     if status != 0:
-        print(f"Installing {project!r} failed (status {status})")
+        print(f"{RED}Installing {project!r} failed (status {status}){RESET}")
         return False
 
     return True
@@ -240,7 +249,7 @@ def version_key(version):
 
 def main(extra_arg=None):
     if sys.platform != "darwin":
-        print("PyObjC requires macOS")
+        print("{RED}PyObjC requires macOS{RESET}")
         sys.exit(1)
 
     subprocess.check_call(
@@ -250,8 +259,8 @@ def main(extra_arg=None):
     all_projects = ["pyobjc-core"] + sorted_framework_wrappers()
     for idx, project in enumerate(all_projects):
         print()
-        print(f"{idx+1}/{len(all_projects)}: Building project {project!r}")
+        print(f"{BOLD}{idx+1}/{len(all_projects)}: Building project {project!r}{RESET}")
         print()
         if not build_project(project, extra_arg):
-            print("Cannot build one of the projects, bailing out")
+            print("{RED}Cannot build one of the projects, bailing out{RESET}")
             sys.exit(1)
