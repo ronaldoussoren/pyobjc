@@ -44,6 +44,7 @@ from . import _structtype  # noqa: F401, F403, E402
 from . import _callable_docstr  # noqa: F401, F403, E402
 from . import _pycoder  # noqa: F401, F403, E402
 from ._informal_protocol import *  # noqa: F401, F403, E402
+from . import _new  # noqa: E402
 
 
 # Helper function for new-style metadata modules
@@ -83,3 +84,8 @@ class autorelease_pool:
 
     def __exit__(self, exc_type, value, tp):
         del self._pool
+
+
+_new.NEW_MAP[lookUpClass("NSObject")] = {  # noqa: F405
+    (): "init",
+}
