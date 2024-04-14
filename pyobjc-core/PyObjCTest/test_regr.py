@@ -666,3 +666,17 @@ class TestSuperClassAttr(TestCase):
     def test_super_attr_name(self):
         with self.assertRaisesRegex(TypeError, "attribute name must be string"):
             getattr(objc.super(NSObject, NSObject.new()), 42)
+
+
+class TestSuperDealloc(TestCase):
+    def test_super_dealloc(self):
+        deleted = False
+
+        class D:
+            def __del__(self):
+                nonlocal deleted
+                deleted = True
+
+        s = super(D, D())
+        del s
+        assert deleted
