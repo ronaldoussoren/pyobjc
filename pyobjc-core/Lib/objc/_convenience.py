@@ -55,8 +55,7 @@ def add_convenience_methods(cls, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
-    if type_dict.get("__new__") is None:
-        type_dict["__new__"] = _make_new(cls)
+    type_dict["__new__"] = _make_new(cls)
 
     for nm, value in CLASS_METHODS.get(cls.__name__, ()):
         type_dict[nm] = value
