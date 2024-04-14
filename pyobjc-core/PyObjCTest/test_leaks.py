@@ -1,6 +1,7 @@
 """
 Check if we manage retainCounts correctly.
 """
+
 import gc
 
 import objc

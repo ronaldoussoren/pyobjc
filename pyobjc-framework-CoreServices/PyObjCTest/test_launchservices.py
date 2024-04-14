@@ -1,6 +1,7 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+
 import CoreServices
 from PyObjCTools.TestSupport import TestCase
 import objc

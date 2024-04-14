@@ -3,6 +3,7 @@ WSTApplicationDelegateClass
 
 An instance of this class is instantiated in the MainMenu.nib default NIB file.
 """
+
 import objc
 from Cocoa import NSObject
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController

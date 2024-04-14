@@ -1,6 +1,7 @@
 """
 Helper module for KeyValue tests
 """
+
 import objc
 from PyObjCTest.testbndl import (  # noqa: F401
     PyObjCTest_KVBaseClass,

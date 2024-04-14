@@ -1,6 +1,7 @@
 """
 Tests for the NSDecimal wrapper type
 """
+
 import decimal
 import warnings
 

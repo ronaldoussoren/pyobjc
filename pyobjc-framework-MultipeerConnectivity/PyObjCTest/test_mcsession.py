@@ -38,7 +38,7 @@ class TestMCSession(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("MCSessionDelegate"), objc.formal_protocol
+        self.assertProtocolExists("MCSessionDelegate")
 
     def test_protocol_methods(self):
         self.assertArgHasType(

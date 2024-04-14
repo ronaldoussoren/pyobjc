@@ -3,6 +3,7 @@ Tests if NSSet conforms to the interface of the python type set()
 
 This is a port of the set tests from the Python stdlib for 3.2
 """
+
 import collections.abc
 import operator
 import test.test_set

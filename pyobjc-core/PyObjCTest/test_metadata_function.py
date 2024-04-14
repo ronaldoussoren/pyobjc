@@ -3,6 +3,7 @@ Tests for the new-style metadata format interface.
 
 These tests are for global function
 """
+
 import objc
 from PyObjCTest.metadatafunction import function_list, union_SomeUnion
 from PyObjCTools.TestSupport import TestCase

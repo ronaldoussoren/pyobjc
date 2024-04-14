@@ -4,6 +4,7 @@ Check if NSModalSessions are properly wrapped.
 NOTE: This is not a proper unittest, it requires human eyes to check if the
 output is correct.
 """
+
 import time
 
 from Cocoa import (

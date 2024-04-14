@@ -4,6 +4,7 @@ Tests for the proxy of Python numbers
 NOTE: Decimal conversion is not tested, the required proxy is part of
 the Foundation bindings :-(
 """
+
 import sys
 import warnings
 import operator
@@ -727,9 +728,7 @@ class TestPyNumber(TestCase):
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 42.0), NSOrderedAscending)
 
         self.assertEqual(OC_NumberInt.compareA_andB_(0, -1), NSOrderedDescending)
-        self.assertEqual(
-            OC_NumberInt.compareA_andB_(0, -(2**64)), NSOrderedDescending
-        )
+        self.assertEqual(OC_NumberInt.compareA_andB_(0, -(2**64)), NSOrderedDescending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, -42.0), NSOrderedDescending)
 
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0), NSOrderedSame)
@@ -1058,9 +1057,7 @@ class TestComparsionMethods(TestCase):
         OC_NumberInt.number_isEqualTo_(2**63 + 10, 2**63 + 10)
         OC_NumberInt.number_isEqualTo_(2**63 + 10, as_nsnumber(2**63 + 10))
         OC_NumberInt.number_isEqualTo_(as_nsnumber(2**63 + 10), 2**63 + 10)
-        OC_NumberInt.number_isEqualTo_(
-            as_nsnumber(2**63 + 10), as_nsnumber(2**63 + 10)
-        )
+        OC_NumberInt.number_isEqualTo_(as_nsnumber(2**63 + 10), as_nsnumber(2**63 + 10))
 
     def test_encoding(self):
         self.assertEqual(OC_NumberInt.objCTypeOf_(0), objc._C_LNG_LNG)

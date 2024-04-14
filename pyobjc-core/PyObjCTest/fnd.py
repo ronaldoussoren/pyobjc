@@ -1,6 +1,7 @@
 """
 Dummy Foundation wrappers, just those parts needed for the unittests.
 """
+
 import objc as _objc
 
 __bundle__ = _objc.loadBundle(

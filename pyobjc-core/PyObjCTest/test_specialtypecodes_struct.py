@@ -4,6 +4,7 @@ Tests for using special type codes in struct definitions
 TODO:
 * _C_UNICHAR, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT
 """
+
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
 from PyObjCTools.TestSupport import TestCase
 import objc

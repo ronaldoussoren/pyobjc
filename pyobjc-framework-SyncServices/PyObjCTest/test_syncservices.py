@@ -1,6 +1,7 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+
 import objc
 import SyncServices
 from PyObjCTools.TestSupport import TestCase, min_os_level

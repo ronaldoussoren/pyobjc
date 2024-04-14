@@ -2,6 +2,7 @@
 Example for using CGShading and CGFunction. This code is directly translated
 from procedural C code and is definitely not good Python style.
 """
+
 import array
 import math
 import random

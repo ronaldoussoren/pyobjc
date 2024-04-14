@@ -1,6 +1,7 @@
 """
 Add a watermark to all pages in a PDF document
 """
+
 import math
 import os
 import sys

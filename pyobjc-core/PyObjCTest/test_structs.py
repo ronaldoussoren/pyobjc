@@ -7,6 +7,7 @@ XXX: Add tests that check that the type actually works as expected:
 Add tests for nested structs as well (that is assert that NSRect.location is
 an NSPoint, but using our own types)
 """
+
 import sys
 import warnings
 import gc

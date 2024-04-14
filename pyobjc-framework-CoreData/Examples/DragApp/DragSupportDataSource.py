@@ -1,6 +1,7 @@
 """
 Abstract: Custom that handles Drag and Drop for table views by acting as a datasource.
 """
+
 import Cocoa
 import objc
 from objc import super  # noqa: A004

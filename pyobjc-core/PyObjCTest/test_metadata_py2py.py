@@ -16,6 +16,7 @@ XXX: python-to-python calls often don't pass through PyObjC's machinery,
      resulting in slightly different behaviour. Fixing this likely breaks
      user code.
 """
+
 import objc
 
 # To ensure we have the right metadata

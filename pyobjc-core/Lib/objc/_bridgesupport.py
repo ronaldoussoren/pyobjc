@@ -3,6 +3,7 @@ Backward compatibility with bridgesupport files
 
 This functionality is deprecated and will be removed in PyObjC 10.
 """
+
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
 import os
@@ -364,9 +365,9 @@ class _BridgeSupportParser:
                 metadata["suggestion"] = suggestion
 
                 # Force minimal metadata for ignored methods
-                self.meta[
-                    (_as_bytes(class_name), _as_bytes(sel_name), is_class)
-                ] = metadata
+                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = (
+                    metadata
+                )
                 continue
 
             if variadic:
@@ -395,9 +396,9 @@ class _BridgeSupportParser:
                 del metadata["arguments"]
 
             if metadata:
-                self.meta[
-                    (_as_bytes(class_name), _as_bytes(sel_name), is_class)
-                ] = metadata
+                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = (
+                    metadata
+                )
 
     def do_enum(self, node):
         name = self.attribute_string(node, "name", None)

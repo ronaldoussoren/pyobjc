@@ -79,9 +79,9 @@ def drawNSStringWithAttributes():
     # and stroked.
     stringAttributes[Cocoa.NSStrokeWidthAttributeName] = -3.0
     # Set the stroke color attribute to black.
-    stringAttributes[
-        Cocoa.NSStrokeColorAttributeName
-    ] = Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 1.0)
+    stringAttributes[Cocoa.NSStrokeColorAttributeName] = (
+        Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 1.0)
+    )
 
     textString.drawAtPoint_withAttributes_(p, stringAttributes)
 

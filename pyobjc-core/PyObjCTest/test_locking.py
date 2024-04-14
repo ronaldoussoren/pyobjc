@@ -4,6 +4,7 @@ Test locking objects and interaction with @synchronized() statements
 These tests take an annoyingly long time to ensure that we'd hit a race condition when
 locking doesn't actually lock. It should be possible to find a faster mechanism for this.
 """
+
 import threading
 import time
 

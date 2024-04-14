@@ -235,9 +235,9 @@ class TestDyld(TestCase):
         if os.path.exists("/Library/Frameworks/Python.framework"):
             # Test using a non-system path, to ensure we hit a code path that doesn't find the
             # library in the shared library cache
-            libdir = os.environ[
-                "DYLD_LIBRARY_PATH"
-            ] = f"/Library/Frameworks/Python.framework/Versions/{sys.version_info[0]}.{sys.version_info[1]}/lib"
+            libdir = os.environ["DYLD_LIBRARY_PATH"] = (
+                f"/Library/Frameworks/Python.framework/Versions/{sys.version_info[0]}.{sys.version_info[1]}/lib"
+            )
             self.assertEqual(
                 dyld.dyld_library("libcrypto.dylib", "libcrypto.dylib"),
                 f"{libdir}/libcrypto.dylib",

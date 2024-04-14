@@ -1,6 +1,7 @@
 """
 Tests for accessing methods through classes and instances
 """
+
 import objc
 from PyObjCTest.clinmeth import PyObjC_ClsInst1, PyObjC_ClsInst2
 from PyObjCTools.TestSupport import TestCase

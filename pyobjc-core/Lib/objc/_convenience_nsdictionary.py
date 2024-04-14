@@ -1,6 +1,7 @@
 """
 Convenience interface for NSDictionary/NSMutableDictionary
 """
+
 __all__ = ()
 
 import collections.abc

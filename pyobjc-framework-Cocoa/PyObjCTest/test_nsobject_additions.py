@@ -96,7 +96,7 @@ class TestThreadingHelpers(TestCase):
 
         obj.pyobjc_performSelector_onThread_withObject_waitUntilDone_(
             b"sel1:", thr, 1, False
-        ),
+        )
         obj.pyobjc_performSelector_onThread_withObject_waitUntilDone_(
             b"sel2:", thr, 2, True
         )
@@ -135,7 +135,7 @@ class TestThreadingHelpers(TestCase):
 
         obj.pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
             b"sel1:", thr, 1, False, 0
-        ),
+        )
         obj.pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
             b"sel2:", thr, 2, True, 1
         )

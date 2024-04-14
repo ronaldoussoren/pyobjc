@@ -4,6 +4,7 @@ Support for @synchronized blocks
 The python class object_lock is a contextmanager for with statements that
 can also be used manually.
 """
+
 import objc as _objc
 
 

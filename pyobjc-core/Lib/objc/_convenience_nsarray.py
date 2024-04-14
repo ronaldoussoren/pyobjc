@@ -1,6 +1,7 @@
 """
 Convenience interface for NSArray/NSMutableArray
 """
+
 __all__ = ()
 
 import collections.abc

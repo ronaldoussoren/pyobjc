@@ -9,6 +9,7 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
+
 import objc
 
 # To ensure we have the right metadata

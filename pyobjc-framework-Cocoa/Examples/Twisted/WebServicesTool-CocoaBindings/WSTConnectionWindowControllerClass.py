@@ -4,6 +4,7 @@ for the document windows for the Web Services Tool application.
 
 Implements a standard toolbar.
 """
+
 import AppKit
 import objc
 from RPCMethod import RPCMethod

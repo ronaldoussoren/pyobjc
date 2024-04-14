@@ -2,6 +2,7 @@
 This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
 """
+
 from objc._convenience import addConvenienceForClass
 
 __all__ = ("addConvenienceForBasicSequence",)

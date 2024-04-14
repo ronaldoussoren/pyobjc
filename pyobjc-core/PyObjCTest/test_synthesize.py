@@ -1,6 +1,7 @@
 """
 Tests for objc.synthesize
 """
+
 import objc
 from PyObjCTest.fnd import NSObject
 from PyObjCTools.TestSupport import TestCase

@@ -559,13 +559,15 @@ class TestBridgeSupportParser(TestCase):
 
         all_values = {
             "strconst1": b"string constant1",
-            "strconst2": b"string constant 2"
-            if sys.maxsize < 2**32
-            else b"string constant two",
+            "strconst2": (
+                b"string constant 2" if sys.maxsize < 2**32 else b"string constant two"
+            ),
             "strconst1u": "string constant1 unicode",
-            "strconst2u": "string constant 2 unicode"
-            if sys.maxsize < 2**32
-            else "string constant two unicode",
+            "strconst2u": (
+                "string constant 2 unicode"
+                if sys.maxsize < 2**32
+                else "string constant two unicode"
+            ),
             "strconst7": "zee\xebn",
             "enum1": 1,
             "enum2": 3 if sys.maxsize < 2**32 else 4,
@@ -737,8 +739,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method14", False): {
                 "arguments": {
-                    2
-                    + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d"}
+                    2 + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d"}
                 }
             },
             (b"MyClass3", b"method15", False): {
@@ -1037,9 +1038,7 @@ class TestBridgeSupportParser(TestCase):
                     "arguments": {
                         0: {
                             "type": b":",
-                            "sel_of_type": b"v@:f"
-                            if sys.maxsize < 2**32
-                            else b"v@:d",
+                            "sel_of_type": b"v@:f" if sys.maxsize < 2**32 else b"v@:d",
                         }
                     }
                 },

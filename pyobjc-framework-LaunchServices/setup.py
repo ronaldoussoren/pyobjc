@@ -3,6 +3,7 @@ Deprecated wrappers for the "LaunchServices" framework on macOS.
 
 Use the "CoreServices" bindings instead.
 """
+
 import os
 import sys
 

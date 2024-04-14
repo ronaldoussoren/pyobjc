@@ -94,8 +94,8 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsNone, 0)
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsUnicast, 1 << 1)
         self.assertEqual(CoreWLAN.kCWCipherKeyFlagsMulticast, 1 << 2)
-        self.assertEqual(CoreWLAN.kCWCipherKeyFlagsTx, 1 << 3),
-        self.assertEqual(CoreWLAN.kCWCipherKeyFlagsRx, 1 << 4),
+        self.assertEqual(CoreWLAN.kCWCipherKeyFlagsTx, 1 << 3)
+        self.assertEqual(CoreWLAN.kCWCipherKeyFlagsRx, 1 << 4)
         self.assertEqual(CoreWLAN.kCWParamErr, CoreWLAN.kCWInvalidParameterErr)
         self.assertEqual(CoreWLAN.kCWNoMemErr, CoreWLAN.kCWNoMemoryErr)
         self.assertEqual(CoreWLAN.kCWUknownErr, CoreWLAN.kCWUnknownErr)

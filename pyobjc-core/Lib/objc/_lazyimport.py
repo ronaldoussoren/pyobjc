@@ -4,6 +4,7 @@ Helper module that will enable lazy imports of Cocoa wrapper items.
 This improves startup times and memory usage, at the cost
 of not being able to use 'from Cocoa import *'
 """
+
 __all__ = ("ObjCLazyModule", "createFrameworkDirAndGetattr")
 
 import re

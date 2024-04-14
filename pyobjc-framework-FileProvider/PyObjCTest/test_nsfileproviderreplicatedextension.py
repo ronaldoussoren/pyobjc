@@ -133,7 +133,7 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         self.assertArgIsBOOL(
             TestNSFileProviderReplicatedExtensionHelper.setInteractionSuppressed_forIdentifier_,
             0,
-        ),
+        )
         self.assertResultIsBOOL(
             TestNSFileProviderReplicatedExtensionHelper.isInteractionSuppressedForIdentifier_
         )

@@ -2,6 +2,7 @@
 Test cases for testing if it is possible to pickle
 Objective-C objects
 """
+
 from PyObjCTools.TestSupport import TestCase
 
 

@@ -1,6 +1,7 @@
 """
 Test some basic features of signature strings.
 """
+
 import objc
 from PyObjCTools.TestSupport import TestCase
 

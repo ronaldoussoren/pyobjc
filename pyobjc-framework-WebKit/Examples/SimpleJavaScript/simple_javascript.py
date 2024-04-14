@@ -5,6 +5,7 @@ See also <http://parmanoir.com/Taming_JavascriptCore_within_and_without_WebView>
 
 TODO: This needs to be an example that does something useful
 """
+
 import JavaScriptCore
 
 with JavaScriptCore.autoreleasing(JavaScriptCore.JSGlobalContextCreate(None)) as ctx:

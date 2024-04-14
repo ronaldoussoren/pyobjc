@@ -136,9 +136,9 @@ class TransitionSelectorView(Cocoa.NSView):
 
         self.transitions[0] = Quartz.CIFilter.filterWithName_("CISwipeTransition")
         self.transitions[0]._.inputExtent = extent
-        self.transitions[
-            0
-        ]._.inputColor = Quartz.CIColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0)
+        self.transitions[0]._.inputColor = (
+            Quartz.CIColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0)
+        )
         self.transitions[0]._.inputAngle = 0.3 * math.pi
         self.transitions[0]._.inputWidth = 80.0
         self.transitions[0]._.inputOpacity = 0.0
@@ -149,9 +149,9 @@ class TransitionSelectorView(Cocoa.NSView):
             "CISwipeTransition"
         )  # dupe
         self.transitions[2]._.inputExtent = extent
-        self.transitions[
-            2
-        ]._.inputColor = Quartz.CIColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0)
+        self.transitions[2]._.inputColor = (
+            Quartz.CIColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0)
+        )
         self.transitions[2]._.inputAngle = math.pi
         self.transitions[2]._.inputWidth = 2.0
         self.transitions[2]._.inputOpacity = 0.2
@@ -169,9 +169,9 @@ class TransitionSelectorView(Cocoa.NSView):
         self.transitions[4]._.inputCenter = Quartz.CIVector.vectorWithX_Y_(
             0.3 * w, 0.7 * h
         )
-        self.transitions[
-            4
-        ]._.inputColor = Quartz.CIColor.colorWithRed_green_blue_alpha_(1, 0.8, 0.6, 1)
+        self.transitions[4]._.inputColor = (
+            Quartz.CIColor.colorWithRed_green_blue_alpha_(1, 0.8, 0.6, 1)
+        )
         self.transitions[4]._.inputMaxStriationRadius = 2.5
         self.transitions[4]._.inputStriationStrength = 0.5
         self.transitions[4]._.inputStriationContrast = 1.37
@@ -198,9 +198,9 @@ class TransitionSelectorView(Cocoa.NSView):
 
         self.transitions[7] = Quartz.CIFilter.filterWithName_("CICopyMachineTransition")
         self.transitions[7]._.inputExtent = extent
-        self.transitions[
-            7
-        ]._.inputColor = Quartz.CIColor.colorWithRed_green_blue_alpha_(0.6, 1, 0.8, 1)
+        self.transitions[7]._.inputColor = (
+            Quartz.CIColor.colorWithRed_green_blue_alpha_(0.6, 1, 0.8, 1)
+        )
         self.transitions[7]._.inputAngle = 0
         self.transitions[7]._.inputWidth = 40
         self.transitions[7]._.inputOpacity = 1.0

@@ -3,6 +3,7 @@ Deprecated wrappers for the "SearchKit" framework on macOS.
 
 Use the CoreServices package instead.
 """
+
 import os
 import sys
 

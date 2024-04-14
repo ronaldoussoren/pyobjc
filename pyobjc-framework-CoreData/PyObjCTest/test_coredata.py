@@ -1,6 +1,7 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+
 import CoreData
 import objc
 from PyObjCTools.TestSupport import TestCase

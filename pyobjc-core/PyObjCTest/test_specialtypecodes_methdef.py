@@ -8,6 +8,7 @@ while at the same time getting a higher fidelity bridge.
 
 These tests ensure that private type codes don't leak into the Objective-C runtime.
 """
+
 import objc
 
 from PyObjCTest.fnd import NSObject

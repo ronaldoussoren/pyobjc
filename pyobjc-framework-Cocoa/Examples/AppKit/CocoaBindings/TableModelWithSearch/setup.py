@@ -4,6 +4,7 @@ Script for building the example, alternative to the Xcode project
 Usage:
     python3 setup.py py2app
 """
+
 from setuptools import setup
 
 setup(

@@ -1,6 +1,7 @@
 """
 A number of useful categories on Foundation classes
 """
+
 __all__ = ()
 import objc
 from Foundation import NSAffineTransform

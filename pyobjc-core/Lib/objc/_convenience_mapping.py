@@ -1,6 +1,7 @@
 """
 Convenience methods for Cocoa mapping types.
 """
+
 __all__ = ("addConvenienceForBasicMapping",)
 
 import collections.abc

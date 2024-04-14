@@ -1,6 +1,7 @@
 """
 No tests for CoreFoundation.CFPlugin: these API's are unsupported for the moment.
 """
+
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
 

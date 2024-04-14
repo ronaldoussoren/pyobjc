@@ -1,6 +1,7 @@
 """
 Tests for dealing with 'FILE*' argument.
 """
+
 import objc
 import os
 from PyObjCTest.filepointer import OC_TestFilePointer

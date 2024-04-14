@@ -3,6 +3,7 @@ Deprecated wrappers for the "DictionaryServices" framework on macOS 10.5 or late
 
 Use package "CoreServices" instead.
 """
+
 import os
 import sys
 

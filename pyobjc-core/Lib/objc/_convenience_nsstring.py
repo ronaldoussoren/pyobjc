@@ -1,6 +1,7 @@
 """
 Convenience interface for NSString
 """
+
 from objc._convenience import addConvenienceForClass
 
 __all__ = ()

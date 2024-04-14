@@ -3,6 +3,7 @@ Bindings and notification support for Calendar data used
 by this application.  Exposes read-only collections
 (calendars, events, tasks) as observable entities.
 """
+
 from CalendarStore import (
     CalCalendarsChangedExternallyNotification,
     CalCalendarsChangedNotification,

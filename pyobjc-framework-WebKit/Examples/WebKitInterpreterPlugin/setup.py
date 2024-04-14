@@ -4,6 +4,7 @@ Script for building the example.
 Usage:
     python2 setup.py py2app
 """
+
 from setuptools import setup
 
 MIME = "application/x-pyobjc-demo-webkitinterpreter"

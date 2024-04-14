@@ -7,6 +7,7 @@ This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
 """
+
 __all__ = ()
 
 import copy

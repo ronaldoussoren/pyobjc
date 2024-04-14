@@ -1,6 +1,7 @@
 """
 Define a category on NSObject with some useful methods.
 """
+
 import sys
 
 import objc

@@ -209,7 +209,7 @@ class TestOBEX(TestCase):
         self.assertEqual(IOBluetooth.kOBEXPutFlag4Reserved, 1 << 4)
         self.assertEqual(IOBluetooth.kOBEXPutFlag5Reserved, 1 << 5)
         self.assertEqual(IOBluetooth.kOBEXPutFlag6Reserved, 1 << 6)
-        self.assertEqual(IOBluetooth.kOBEXPutFlag7Reserved, 1 << 7),
+        self.assertEqual(IOBluetooth.kOBEXPutFlag7Reserved, 1 << 7)
 
         self.assertIsEnumType(IOBluetooth.OBEXNonceFlagValues)
         self.assertEqual(IOBluetooth.kOBEXNonceFlagNone, 0 << 0)

@@ -25,6 +25,7 @@ Use ``objc.context.unregister`` to remove the registration of ``myObject``
 when you're done. The argument to unregister is the same object as was
 passed in during registration.
 """
+
 __all__ = ("context",)
 from typing import Any
 

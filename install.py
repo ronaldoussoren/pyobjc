@@ -4,6 +4,7 @@ Helper script that will install pyobjc-core and the framework wrappers
 Usage:
     pythonX.Y install.py
 """
+
 import sys
 import os
 

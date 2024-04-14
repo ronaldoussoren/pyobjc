@@ -4,6 +4,7 @@ Support for NSDecimalNumber.
 The actual class is defined in Foundation, but having the wrapper
 here is much more convenient.
 """
+
 __all__ = ()
 import operator
 

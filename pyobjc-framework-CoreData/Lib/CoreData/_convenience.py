@@ -6,6 +6,7 @@ this no longer works on Leopard due to the way NSManagedObject is implemented
 there (it generates accessor methods at runtime, which interferes with the
 implementation in this file).
 """
+
 __all__ = ()
 import os
 

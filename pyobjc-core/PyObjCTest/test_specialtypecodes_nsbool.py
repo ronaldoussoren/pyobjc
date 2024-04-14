@@ -17,6 +17,7 @@ TODO:
 - Add tests with these types in struct definitions
 - Review test cases to make sure the tests are complete enough
 """
+
 import array
 
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode

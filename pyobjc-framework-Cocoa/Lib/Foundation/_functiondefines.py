@@ -1,6 +1,7 @@
 """
 Port of "function defines".
 """
+
 import Foundation as _Foundation
 
 

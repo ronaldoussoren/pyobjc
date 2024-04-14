@@ -9,6 +9,7 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
+
 import array
 import sys
 
@@ -1218,7 +1219,7 @@ class TestPrintfFormat(TestCase):
             (b"%c", ("a",)),
             (b"%c%c", ("c", "d")),
             (b"%c%c", (90, "d")),
-            (b"%f %f %f %f %f %f %f %f", (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
+            (b"%f %f %f %f %f %f %f %f", (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5)),
             # We don't have long double support at all
             # ( '%Lg', (42.0,)),
         ]

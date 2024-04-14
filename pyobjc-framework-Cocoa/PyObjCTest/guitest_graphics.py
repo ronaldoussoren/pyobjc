@@ -3,6 +3,7 @@ Some tests for difficult wrapped graphics functions and methods
 
 NOTE: These require a WindowServer connection on macOS
 """
+
 import array
 import unittest
 

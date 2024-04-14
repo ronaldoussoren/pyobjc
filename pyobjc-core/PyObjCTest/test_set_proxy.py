@@ -1,6 +1,7 @@
 """
 Tests for the proxy of Python sets
 """
+
 import objc
 from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet

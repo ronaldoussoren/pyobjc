@@ -1,6 +1,7 @@
 """
 Helpers for NSURL
 """
+
 import sys
 import objc
 

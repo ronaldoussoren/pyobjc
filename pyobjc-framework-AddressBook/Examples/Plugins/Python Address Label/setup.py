@@ -7,6 +7,7 @@ Usage:
 To use this copy dist/PyAddressLabel.plugin to the plugin directory:
    $ mv dist/PyAddressLabel.plugin ~/Library/"Address Book Plug-Ins/PyAddressLabel.plugin"
 """
+
 from setuptools import setup
 
 infoPlist = {

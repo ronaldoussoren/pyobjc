@@ -3,6 +3,7 @@ Minimal tests for sequence proxies
 
 NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
+
 import objc
 import collections.abc
 from PyObjCTest.pythonset import OC_TestSet

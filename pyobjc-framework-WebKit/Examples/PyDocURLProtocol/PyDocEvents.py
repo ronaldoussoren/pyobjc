@@ -5,6 +5,7 @@ The PyDocEventHandler handles just the event that is used to open URLs. Thanks
 to this class you can use ``open pydoc:///os.open`` from a command-line, or
 add ``pydoc:///`` to HTML files.
 """
+
 import struct
 
 import objc

@@ -6,6 +6,7 @@ It sometimes is useful to see which Objective-C methods are called in a
 program. Luckily the Objective-C runtime contains a private API for logging
 all method calls. This file shows how to call that API.
 """
+
 import Foundation
 import objc
 

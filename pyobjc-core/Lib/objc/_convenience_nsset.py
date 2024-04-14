@@ -1,6 +1,7 @@
 """
 Convenience interface for NSSet/NSMutableSet
 """
+
 __all__ = ()
 
 import collections.abc

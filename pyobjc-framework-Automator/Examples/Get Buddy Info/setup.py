@@ -6,6 +6,7 @@ Usage:
 
 Then install the bundle in dist into ~/Library/Automator.
 """
+
 from setuptools import setup
 
 infoPlist = {

@@ -8,7 +8,6 @@ from Foundation import NSObject
 
 
 class PythonBrowserModel(NSObject):
-
     """This is a delegate as well as a data source for NSOutlineViews."""
 
     def initWithObject_(self, obj):
@@ -91,7 +90,6 @@ def getInstanceVarNames(obj):
 
 
 class NiceError:
-
     """Wrapper for an exception so we can display it nicely in the browser."""
 
     def __init__(self, exc_info):
@@ -107,7 +105,6 @@ class NiceError:
 
 
 class PythonItem(NSObject):
-
     """Wrapper class for items to be displayed in the outline view."""
 
     # We keep references to all child items (once created). This is

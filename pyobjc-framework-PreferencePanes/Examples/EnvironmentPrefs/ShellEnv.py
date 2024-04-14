@@ -11,6 +11,7 @@ when the user logs in using SSH.
 TODO:
 - Undo
 """
+
 import os
 
 import Cocoa

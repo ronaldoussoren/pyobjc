@@ -6,6 +6,7 @@ latter).
 The C code relies on this code to do most semantic checks, and only
 performs checks that are needed to avoid crashes.
 """
+
 import objc
 import types
 import inspect

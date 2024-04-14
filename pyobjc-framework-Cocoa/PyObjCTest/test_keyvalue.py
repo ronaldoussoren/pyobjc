@@ -9,6 +9,7 @@ TODO:
     - Tests that access properties in the parent Objective-C class!
     - More key-error tests, the tests don't cover all relevant code yet.
 """
+
 import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass3 as STUB
 from PyObjCTools.TestSupport import TestCase, max_os_level

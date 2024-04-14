@@ -7,6 +7,7 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
+
 import array
 
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode

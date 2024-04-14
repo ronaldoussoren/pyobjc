@@ -1,6 +1,7 @@
 """
 A number of useful categories on AppKit classes
 """
+
 __all__ = ()
 import objc
 from AppKit import NSAnimationContext, NSGraphicsContext

@@ -5,6 +5,7 @@ NSData needs to be handles specially for correctness reasons,
 and is therefore in the core instead of the Foundation
 framework wrappers.
 """
+
 from objc._convenience import addConvenienceForClass
 from objc._objc import registerMetaDataForSelector
 import sys
