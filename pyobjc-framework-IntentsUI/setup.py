@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import setup, Extension  # noqa: E402  # noqa: E402
 
-VERSION = "10.2"
+VERSION = "10.3"
 
 setup(
     name="pyobjc-framework-IntentsUI",
