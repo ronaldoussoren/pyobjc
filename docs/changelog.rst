@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.3
+------------
+
+* Updated SDK bindings for macOS 14.5
+
 Version 10.2.1
 --------------
 

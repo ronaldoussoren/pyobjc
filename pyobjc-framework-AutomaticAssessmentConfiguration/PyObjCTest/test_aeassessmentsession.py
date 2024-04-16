@@ -15,3 +15,12 @@ class TestAEAssessmentSession(TestCase):
         self.assertResultIsBOOL(
             AutomaticAssessmentConfiguration.AEAssessmentSession.isActive
         )
+
+    @min_os_level("14.5")
+    def test_methods14_5(self):
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentSession.supportsMultipleParticipants
+        )
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentSession.supportsConfigurationUpdates
+        )

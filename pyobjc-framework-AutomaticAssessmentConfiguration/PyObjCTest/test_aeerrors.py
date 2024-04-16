@@ -13,3 +13,11 @@ class TestAEErrors(TestCase):
         self.assertEqual(
             AutomaticAssessmentConfiguration.AEAssessmentErrorUnsupportedPlatform, 2
         )
+        self.assertEqual(
+            AutomaticAssessmentConfiguration.AEAssessmentErrorMultipleParticipantsNotSupported,
+            3,
+        )
+        self.assertEqual(
+            AutomaticAssessmentConfiguration.AEAssessmentErrorConfigurationUpdatesNotSupported,
+            4,
+        )
