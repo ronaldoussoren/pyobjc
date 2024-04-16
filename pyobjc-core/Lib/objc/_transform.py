@@ -15,6 +15,7 @@ import keyword
 import warnings
 import sys
 from ._informal_protocol import _informal_protocol_for_selector
+from . import _new
 
 # only public objc_method until the python_method implementation
 # in C is gone
@@ -22,6 +23,39 @@ __all__ = ("objc_method", "python_method")
 
 
 NO_VALUE = object()
+
+
+def _isSelectorPrefix(name, prefix):
+    return name.startswith(prefix) and (
+        len(name) == len(prefix) | name[len(prefix)].isupper()
+    )
+
+
+def setupSubClass(
+    class_object,
+    class_dict,
+):
+
+    new_map = {}
+
+    for name, value in class_dict.items():
+        if not name.startswith("init"):
+            continue
+        if len(name) > 4 and not name[4].isupper():
+            continue
+        if not isinstance(value, objc.selector):
+            continue
+
+        parts = value.selector[4:].decode().split(":")
+        if parts[0].startswith("With"):
+            parts[0] = parts[0][4:]
+        parts[0] = parts[0][:1].lower() + parts[0][1:]
+        new_map[tuple(parts[:-1])] = name
+
+    if not new_map:
+        return
+
+    _new.NEW_MAP[class_object] = new_map
 
 
 def processClassDict(
@@ -699,3 +733,4 @@ class python_method:
 
 objc.options._transformAttribute = transformAttribute
 objc.options._processClassDict = processClassDict
+objc.options._setupSubClass = setupSubClass

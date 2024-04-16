@@ -1021,6 +1021,19 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     PyObjC_Assert(info->hasPythonImpl, NULL);
 
+    if (PyObjC_setupSubClass != NULL && PyObjC_setupSubClass != Py_None) {
+        PyObject* args[3] = {NULL, res, ((PyTypeObject*)res)->tp_dict};
+        PyObject* rv;
+
+        rv = PyObject_Vectorcall(PyObjC_setupSubClass, args + 1,
+                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (rv == NULL) {
+            Py_DECREF(res);
+            return NULL;
+        }
+        Py_DECREF(rv);
+    }
+
     Py_INCREF(res);
     return res;
 }

@@ -26,6 +26,7 @@ extern PyObject* _Nullable PyObjC_getKeyPath;
 extern PyObject* _Nullable PyObjC_setKeyPath;
 extern PyObject* _Nullable PyObjC_transformAttribute;
 extern PyObject* _Nullable PyObjC_processClassDict;
+extern PyObject* _Nullable PyObjC_setupSubClass;
 
 extern PyObject* _Nullable PyObjC_DictLikeTypes;
 extern PyObject* _Nullable PyObjC_ListLikeTypes;

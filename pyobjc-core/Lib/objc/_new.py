@@ -13,19 +13,17 @@ The mapping is updated in two ways:
 """
 
 # TODO:
-# - Document-
-# - Maybe: somehow add __doc__ to classes that reflect the
-#   __new__ API.
 # - Determine how to interact with the new classes
 #   that already have an __new__
-# - Update _transform to add entries to NEW_MAP
-#   (baesd on init methods)
 # - Update support code for framework bindings
 # - Update framework binding tooling (and then the
 #   bindings themselves)
 # - Check interaction with manually defined __new__
 #   and/or __init__ in Python classes
+# - Document-
 # - Add tests
+# - Maybe: somehow add __doc__ to classes that reflect the
+#   __new__ API.
 
 __all__ = ()
 
@@ -95,6 +93,9 @@ class _function:
         if name in ("_function", "_cls"):
             object.__setattr__(self, name, value)
         return setattr(self._function, name, value)
+
+    def __call__(self, *args, **kwds):
+        return self._function(*args, **kwds)
 
 
 def _make_new(cls):
