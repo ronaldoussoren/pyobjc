@@ -123,11 +123,12 @@ def _make_new(cls):
                 else:
                     raise TypeError(f"{cls.__name__}() requires keyword arguments")
 
+            args = [kwds[n] for n in key]
             if name.startswith("init") and len(name) == 4 or name[4].isupper():
-                return getattr(cls.alloc(), name)(**kwds)
+                return getattr(cls.alloc(), name)(*args)
 
             else:
-                return getattr(cls, name)(**kwds)
+                return getattr(cls, name)(*args)
 
         if key:
             raise TypeError(

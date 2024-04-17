@@ -31,6 +31,18 @@ def _isSelectorPrefix(name, prefix):
     )
 
 
+def _selectorToKeywords(selector):
+    assert selector.startswith("init")
+    selector = selector[4:]
+
+    parts = selector.split(":")[:-1]
+    if parts[0].startswith("With"):
+        parts[0] = parts[0][4:]
+    parts[0] = parts[0][:1].lower() + parts[0][1:]
+
+    return tuple(parts)
+
+
 def setupSubClass(
     class_object,
     class_dict,
@@ -46,11 +58,7 @@ def setupSubClass(
         if not isinstance(value, objc.selector):
             continue
 
-        parts = value.selector[4:].decode().split(":")
-        if parts[0].startswith("With"):
-            parts[0] = parts[0][4:]
-        parts[0] = parts[0][:1].lower() + parts[0][1:]
-        new_map[tuple(parts[:-1])] = name
+        new_map[_selectorToKeywords(value.selector.decode())] = name
 
     if not new_map:
         return
