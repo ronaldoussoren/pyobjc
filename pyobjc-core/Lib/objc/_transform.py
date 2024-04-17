@@ -116,7 +116,7 @@ def processClassDict(
 
     # First call all class setup hooks. Those can
     # update the class dictiory, which is why this
-    # loop# cannot be merged into the next one.
+    # loop cannot be merged into the next one.
     for key, value in list(class_dict.items()):
         setup = getattr(value, "__pyobjc_class_setup__", NO_VALUE)
         if setup is not NO_VALUE:

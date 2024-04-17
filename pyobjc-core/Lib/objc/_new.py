@@ -13,17 +13,21 @@ The mapping is updated in two ways:
 """
 
 # TODO:
-# - Determine how to interact with the new classes
-#   that already have an __new__
 # - Update support code for framework bindings
 # - Update framework binding tooling (and then the
 #   bindings themselves)
-# - Check interaction with manually defined __new__
-#   and/or __init__ in Python classes
-# - Document-
-# - Add tests
+# - Document
+# - Add tests [in progress]
 # - Maybe: somehow add __doc__ to classes that reflect the
 #   __new__ API.
+# - Maybe: In 3.13 switch to MultiSignature instead of
+#   __doc__ (assuming #117671 is merged)
+#
+# FIXME: __init__ invocation is a mess, consider trying
+# to suppress its invocation. Currently: __init__ is
+# invoked by the interpreter when __new__ is called, unless
+# __new__ returns more than one value (e.g. has some output
+# arguments, such as -[FooClass initWithValue:(int)value error:(NSError**)error]
 
 __all__ = ()
 
@@ -142,4 +146,5 @@ def _make_new(cls):
     __new__.__name__ = cls.__name__ + ".__new__"
     __new__.__qualname__ = cls.__name__ + ".__new__"
     __new__.__module__ = cls.__module__
+    __new__._oc_generic_new = True
     return _function(__new__, cls)
