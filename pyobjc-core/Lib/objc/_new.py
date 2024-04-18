@@ -12,7 +12,15 @@ The mapping is updated in two ways:
 
 """
 
+import objc
+
 # TODO:
+# - Interaction with custom __new__ is not entirely correct:
+#   subclases will overwrite __new__ using the generic implementation
+# - Calculate __new__.__doc__ statically for Python subclasses
+# - Allow setting 'init' and 'new' to None in subclasses to
+#   support subclasses where those methods are not available
+#   (actual implementation to be determined)
 # - Make sure __init__ is never invoked implicitly (it
 #   currently is when __new__ is invoked). There is a slight
 #   risks this breaks code that implements a custom __new__
@@ -53,7 +61,6 @@ __all__ = ()
 NEW_MAP = {
     "NSObject": {(): "init"},
 }
-
 
 # Sentinel value
 UNSET = object()
@@ -143,6 +150,11 @@ def _make_new(cls):
 
             else:
                 return getattr(cls, name)(*args)
+
+        if key in (("cobject",), ("c_void_p",)):
+            # Support for creating instances from raw pointers in the default
+            # __new__ implementation.
+            return objc.objc_object.__new__(cls, **kwds)
 
         if key:
             raise TypeError(

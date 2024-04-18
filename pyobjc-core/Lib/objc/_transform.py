@@ -34,6 +34,8 @@ def _isSelectorPrefix(name, prefix):
 def _selectorToKeywords(selector):
     assert selector.startswith("init")
     selector = selector[4:]
+    if not selector:
+        return ()
 
     parts = selector.split(":")[:-1]
     if parts[0].startswith("With"):
@@ -183,7 +185,7 @@ def processClassDict(
     new_kw_map = {}
 
     for name, value in class_dict.items():
-        if not name.startswith("init"):
+        if not isinstance(name, str) or not name.startswith("init"):
             continue
         if len(name) > 4 and not name[4].isupper():
             continue

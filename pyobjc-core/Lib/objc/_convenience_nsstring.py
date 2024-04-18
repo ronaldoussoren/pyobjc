@@ -25,3 +25,8 @@ addConvenienceForClass(
         ("__new__", staticmethod(nsstring_new)),
     ),
 )
+
+addConvenienceForClass(
+    "NSMutableString",
+    (("__new__", staticmethod(nsstring_new)),),
+)

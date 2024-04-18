@@ -401,7 +401,10 @@ for cls in (
 ):
     addConvenienceForClass(
         cls,
-        (("pop", nsarray_pop),),
+        (
+            ("__new__", staticmethod(nsarray_new)),
+            ("pop", nsarray_pop),
+        ),
     )
 
 

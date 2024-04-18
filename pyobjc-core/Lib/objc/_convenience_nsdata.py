@@ -421,6 +421,7 @@ def nsmutabledata_clear(self):
 addConvenienceForClass(
     "NSMutableData",
     (
+        ("__new__", staticmethod(nsdata__new__)),
         ("__setitem__", nsmutabledata__setitem__),
         ("__delitem__", nsmutabledata__delitem__),
         ("__iadd__", nsmutabledata__iadd__),
