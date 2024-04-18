@@ -27,6 +27,8 @@ import objc
 #   and relies on the invocation of __init__
 #   (Implement by overriding tp_call in objc-class)
 # - Update support code for framework bindings
+# - Update the __new__ implementation for _convenience* to
+#   also support the generic __new__ interface.
 # - Update framework binding tooling (and then the
 #   bindings themselves)
 # - Document the feature
