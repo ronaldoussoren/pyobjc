@@ -3,7 +3,6 @@ This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
 """
 
-import types
 from objc._objc import (
     _block_call,
     _rescanClass,
@@ -57,13 +56,10 @@ def add_convenience_methods(cls, type_dict):
     Matching entries from both mappings are added to the 'type_dict'.
     """
 
-    # To ensure that an explicit implementation of __new__ wins
-    # only add __new__ when:
-    # - The current new is a C implemented method, or
-    # - The current new is a generic new implementation
-    if isinstance(cls.__new__, types.BuiltinMethodType):
-        type_dict["__new__"] = _make_new(cls)
-    if getattr(cls.__new__, "_oc_generic_new", False):
+    # Only add the generic __new__ to pure ObjC classes,
+    # __new__ will be added to Python subclasses by
+    # ._transform.
+    if not cls.__has_python_implementation__:
         type_dict["__new__"] = _make_new(cls)
 
     for nm, value in CLASS_METHODS.get(cls.__name__, ()):

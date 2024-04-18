@@ -396,6 +396,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     BOOL               isCFProxyClass       = NO;
     int                r;
     int                final = 0;
+    int                has_dunder_new = 0;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|Op", keywords, &name, &bases, &dict,
                                      &arg_protocols, &final)) {
@@ -624,7 +625,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
          * class dict.
          */
         objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict,
-                                            hiddenSelectors, hiddenClassSelectors);
+                                            hiddenSelectors, hiddenClassSelectors, &has_dunder_new);
         if (objc_class == Nil) {
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
@@ -1021,12 +1022,12 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     PyObjC_Assert(info->hasPythonImpl, NULL);
 
-    if (PyObjC_setupSubClass != NULL && PyObjC_setupSubClass != Py_None) {
-        PyObject* args[3] = {NULL, res, ((PyTypeObject*)res)->tp_dict};
+    if (!has_dunder_new && PyObjC_setDunderNew != NULL && PyObjC_setDunderNew != Py_None) {
+        PyObject* args[2] = {NULL, res};
         PyObject* rv;
 
-        rv = PyObject_Vectorcall(PyObjC_setupSubClass, args + 1,
-                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        rv = PyObject_Vectorcall(PyObjC_setDunderNew, args + 1,
+                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (rv == NULL) {
             Py_DECREF(res);
             return NULL;

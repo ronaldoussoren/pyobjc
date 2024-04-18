@@ -11,7 +11,7 @@ class TestDefaultNewForPythonClass(TestCase):
         v = NSObject()
         self.assertIsInstance(v, NSObject)
 
-        self.assertEqual(new_mod.NEW_MAP[NSObject], {(): "init"})
+        self.assertEqual(new_mod.NEW_MAP["NSObject"], {(): "init"})
 
         with self.assertRaisesRegex(
             TypeError, r"NSObject\(\) does not support keyword arguments 'y', 'x'"

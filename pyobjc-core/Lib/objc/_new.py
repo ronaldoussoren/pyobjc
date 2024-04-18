@@ -13,15 +13,23 @@ The mapping is updated in two ways:
 """
 
 # TODO:
+# - Make sure __init__ is never invoked implicitly (it
+#   currently is when __new__ is invoked). There is a slight
+#   risks this breaks code that implements a custom __new__
+#   and relies on the invocation of __init__
+#   (Implement by overriding tp_call in objc-class)
 # - Update support code for framework bindings
 # - Update framework binding tooling (and then the
 #   bindings themselves)
-# - Document
+# - Document the feature
 # - Add tests [in progress]
 # - Maybe: somehow add __doc__ to classes that reflect the
 #   __new__ API.
 # - Maybe: In 3.13 switch to MultiSignature instead of
 #   __doc__ (assuming #117671 is merged)
+#
+# - Later: generate class/module documentation for framework
+#   bindings, including the generated __new__ signatures.
 #
 # FIXME: __init__ invocation is a mess, consider trying
 # to suppress its invocation. Currently: __init__ is
@@ -31,9 +39,9 @@ The mapping is updated in two ways:
 
 __all__ = ()
 
-# Mapping: cls -> { kwds: selector_name }
+# Mapping: class name -> { kwds: selector_name }
 #
-# That is, keys are Objective-C classes, values
+# That is, keys are names of Objective-C classes, values
 # are mappings from keyword argument names to
 # the name of a selector.
 #
@@ -42,7 +50,9 @@ __all__ = ()
 #
 # The complete mapping for a class is a chain map
 # for the submaps of all classes on the MRO.
-NEW_MAP = {}
+NEW_MAP = {
+    "NSObject": {(): "init"},
+}
 
 
 # Sentinel value
@@ -111,7 +121,7 @@ def _make_new(cls):
         key = tuple(kwds.keys())
 
         for c in cls.__mro__:
-            new_map = NEW_MAP.get(c, UNSET)
+            new_map = NEW_MAP.get(c.__name__, UNSET)
             if new_map is UNSET:
                 continue
 
@@ -146,5 +156,4 @@ def _make_new(cls):
     __new__.__name__ = cls.__name__ + ".__new__"
     __new__.__qualname__ = cls.__name__ + ".__new__"
     __new__.__module__ = cls.__module__
-    __new__._oc_generic_new = True
     return _function(__new__, cls)

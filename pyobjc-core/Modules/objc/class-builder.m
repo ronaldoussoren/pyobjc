@@ -226,7 +226,8 @@ validate_tuple(PyObject* value, int (*validate)(PyObject*), const char* message)
 Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                                        PyObject* class_dict, PyObject* meta_dict,
                                        PyObject* hiddenSelectors,
-                                       PyObject* hiddenClassSelectors)
+                                       PyObject* hiddenClassSelectors,
+                                       int* has_dunder_new)
 {
     PyObject*  value = NULL;
     Py_ssize_t i;
@@ -264,14 +265,19 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             "Cannot create class because 'objc.options._processClassDict' is not set");
         goto error_cleanup;
     }
-    PyObject* args[] = {NULL,      class_dict,      meta_dict,           py_superclass,
+    PyObject* py_name = PyUnicode_FromString(name);
+    if (py_name == NULL) {
+        goto error_cleanup;
+    }
+    PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
                         protocols, hiddenSelectors, hiddenClassSelectors};
     PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
-                                           6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(py_name);
     if (rv == NULL) {
         goto error_cleanup;
     }
-    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 3) {
+    if (!PyTuple_Check(rv) || PyTuple_GET_SIZE(rv) != 4) {
         Py_DECREF(rv);
         PyErr_SetString(
             PyObjCExc_InternalError,
@@ -284,6 +290,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     Py_INCREF(instance_methods);
     class_methods = PyTuple_GET_ITEM(rv, 2);
     Py_INCREF(class_methods);
+    *has_dunder_new = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 3));
     Py_DECREF(rv);
     PyObjC_Assert(instance_variables != NULL, Nil);
     PyObjC_Assert(instance_methods != NULL, Nil);

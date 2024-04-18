@@ -43,30 +43,14 @@ def _selectorToKeywords(selector):
     return tuple(parts)
 
 
-def setupSubClass(
+def setDunderNew(
     class_object,
-    class_dict,
 ):
-
-    new_map = {}
-
-    for name, value in class_dict.items():
-        if not name.startswith("init"):
-            continue
-        if len(name) > 4 and not name[4].isupper():
-            continue
-        if not isinstance(value, objc.selector):
-            continue
-
-        new_map[_selectorToKeywords(value.selector.decode())] = name
-
-    if not new_map:
-        return
-
-    _new.NEW_MAP[class_object] = new_map
+    class_object.__new__ = _new._make_new(class_object)
 
 
 def processClassDict(
+    class_name,
     class_dict,
     meta_dict,
     class_object,
@@ -196,10 +180,25 @@ def processClassDict(
         elif sel.isHidden:
             hidden_class_methods[sel.selector] = sel
 
+    new_kw_map = {}
+
+    for name, value in class_dict.items():
+        if not name.startswith("init"):
+            continue
+        if len(name) > 4 and not name[4].isupper():
+            continue
+        if not isinstance(value, objc.selector):
+            continue
+
+        new_kw_map[_selectorToKeywords(value.selector.decode())] = name
+    if new_kw_map:
+        _new.NEW_MAP[class_name] = new_kw_map
+
     return (
         instance_variables,
         instance_methods,
         class_methods,
+        "__new__" in class_dict,
     )
 
 
@@ -741,4 +740,4 @@ class python_method:
 
 objc.options._transformAttribute = transformAttribute
 objc.options._processClassDict = processClassDict
-objc.options._setupSubClass = setupSubClass
+objc.options._setDunderNew = setDunderNew
