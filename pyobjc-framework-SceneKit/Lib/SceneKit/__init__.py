@@ -34,6 +34,9 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (("SCNAudioPlayer", b"init"),):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["SceneKit._metadata"]
 
     import SceneKit as mod  # isort:skip

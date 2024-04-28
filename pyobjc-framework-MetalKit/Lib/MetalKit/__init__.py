@@ -33,6 +33,15 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MTKMeshBufferAllocator", b"init"),
+        ("MTKMeshBuffer", b"init"),
+        ("MTKSubmesh", b"init"),
+        ("MTKMesh", b"init"),
+        ("MTKTextureLoader", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["MetalKit._metadata"]
 
 

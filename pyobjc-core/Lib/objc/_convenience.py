@@ -13,9 +13,16 @@ from objc._objc import (
     selector,
 )
 import PyObjCTools.KeyValueCoding as kvc
-from objc._new import _make_new
+from objc._new import _make_new, NEW_MAP
+from objc._transform import _selectorToKeywords
 
-__all__ = ("addConvenienceForClass", "registerABCForClass")
+__all__ = (
+    "addConvenienceForClass",
+    "registerABCForClass",
+    "registerUnavailableMethod",
+    "registerNewKeywords",
+    "registerNewKeywordsFromSelector",
+)
 
 CLASS_METHODS = {}
 CLASS_ABC = {}
@@ -59,7 +66,9 @@ def add_convenience_methods(cls, type_dict):
     # Only add the generic __new__ to pure ObjC classes,
     # __new__ will be added to Python subclasses by
     # ._transform.
-    if not cls.__has_python_implementation__:
+    if not cls.__has_python_implementation__ and type(  # noqa: E721
+        cls.__mro__[1].__new__
+    ) != type(lambda: None):
         type_dict["__new__"] = _make_new(cls)
 
     for nm, value in CLASS_METHODS.get(cls.__name__, ()):
@@ -85,6 +94,45 @@ def makeBundleForClass():
         return cb
 
     return selector(bundleForClass, isClassMethod=True)
+
+
+def registerUnavailableMethod(classname, selector):
+    """
+    Mark *selector* as unavailable for *classname*.
+    """
+    selname = selector.decode()
+
+    # This adds None as a replacement value instead of
+    # registering metadata because NS_UNAVAILABLE is
+    # used to mark abstract base classes with concrete
+    # public subclasses.
+    addConvenienceForClass(classname, ((selname.replace(":", "_"), None),))
+
+    if selname.startswith("init"):
+        kw = _selectorToKeywords(selname)
+        NEW_MAP.setdefault(classname, {})[kw] = None
+
+
+def registerNewKeywordsFromSelector(classname, selector):
+    """
+    Register keywords calculated from 'selector' as passible
+    keyword arguments for __new__ for the given class. The
+    selector should be an 'init' method.
+    """
+    selname = selector.decode()
+    kw = _selectorToKeywords(selname)
+    NEW_MAP.setdefault(classname, {})[kw] = selname.replace(":", "_")
+
+
+def registerNewKeywords(classname, keywords, methodname):
+    """
+    Register the keyword tuple 'keywords' as a set of keyword
+    arguments for __new__ for the given class that will result
+    in the invocation of the given method.
+
+    Method should be either an init method or a class method.
+    """
+    NEW_MAP.setdefault(classname, {})[keywords] = method
 
 
 def registerABCForClass(classname, *abc_class):

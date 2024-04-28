@@ -31,6 +31,25 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("TKSmartCardToken", b"initWithTokenDriver:instanceID:"),
+        ("TKTokenWatcherTokenInfo", b"init"),
+        ("TKTokenWatcherTokenInfo", b"new"),
+        ("TKTokenKeychainItem", b"init"),
+        ("TKTokenKeychainCertificate", b"initWithTokenDriver:instanceID:"),
+        ("TKTokenKeychainKey", b"initWithTokenDriver:instanceID:"),
+        ("TKTokenKeychainContents", b"init"),
+        ("TKTokenDriverConfiguration", b"init"),
+        ("TKTokenDriverConfiguration", b"new"),
+        ("TKTokenConfiguration", b"init"),
+        ("TKTokenConfiguration", b"new"),
+        ("TKTokenKeyAlgorithm", b"init"),
+        ("TKTokenSession", b"init"),
+        ("TKToken", b"init"),
+        ("TKTLVRecord", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CryptoTokenKit._metadata"]
 
 

@@ -28,6 +28,12 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("LPLinkView", b"initWithCoder:"),
+        ("LPLinkView", b"encodeWithCoder:"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["LinkPresentation._metadata"]
 
 

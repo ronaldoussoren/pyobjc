@@ -32,6 +32,32 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CNDetection", b"init"),
+        ("CNDetection", b"new"),
+        ("CNScript", b"init"),
+        ("CNScript", b"new"),
+        ("CNScriptChanges", b"init"),
+        ("CNScriptChanges", b"new"),
+        ("CNScriptFrame", b"init"),
+        ("CNScriptFrame", b"new"),
+        ("CNDetectionTrack", b"init"),
+        ("CNDetectionTrack", b"new"),
+        ("CNDecision", b"init"),
+        ("CNDecision", b"new"),
+        ("CNObjectTracker", b"init"),
+        ("CNObjectTracker", b"new"),
+        ("CNAssetInfo", b"init"),
+        ("CNAssetInfo", b"new"),
+        ("CNRenderingSessionAttributes", b"init"),
+        ("CNRenderingSessionAttributes", b"new"),
+        ("CNRenderingSessionFrameAttributes", b"init"),
+        ("CNRenderingSessionFrameAttributes", b"new"),
+        ("CNRenderingSession", b"init"),
+        ("CNRenderingSession", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Cinematic._metadata"]
 
 

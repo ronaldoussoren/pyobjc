@@ -189,7 +189,10 @@ def processClassDict(
             continue
         if len(name) > 4 and not name[4].isupper():
             continue
-        if not isinstance(value, objc.selector):
+        if value is None and name == "init":
+            new_kw_map[()] = None
+            continue
+        elif not isinstance(value, objc.selector):
             continue
 
         new_kw_map[_selectorToKeywords(value.selector.decode())] = name
@@ -200,7 +203,9 @@ def processClassDict(
         instance_variables,
         instance_methods,
         class_methods,
-        "__new__" in class_dict,
+        # Either __new__ in this class, or a custom new in a parent class
+        ("__new__" in class_dict)
+        or type(class_object.__new__) == type(lambda: 1),  # noqa: E721
     )
 
 

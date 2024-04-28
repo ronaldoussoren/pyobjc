@@ -36,6 +36,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("PHPersistentChangeToken", b"init"),
+        ("PHPersistentChangeToken", b"new"),
+        ("PHLivePhoto", b"init"),
+        ("PHPersistentObjectChangeDetails", b"init"),
+        ("PHPersistentObjectChangeDetails", b"new"),
+        ("PHLivePhotoEditingContext", b"init"),
+        ("PHPersistentChangeFetchResult", b"init"),
+        ("PHPersistentChangeFetchResult", b"new"),
+        ("PHPersistentChange", b"init"),
+        ("PHPersistentChange", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Photos._metadata"]
 
 

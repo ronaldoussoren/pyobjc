@@ -31,6 +31,24 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SFSafariToolbarItem", b"init"),
+        ("SFSafariToolbarItem", b"new"),
+        ("SFSafariExtension", b"init"),
+        ("SFSafariExtension", b"new"),
+        ("SFUniversalLink", b"init"),
+        ("SFUniversalLink", b"new"),
+        ("SFSafariApplication", b"init"),
+        ("SFSafariApplication", b"new"),
+        ("SFSafariPage", b"init"),
+        ("SFSafariPage", b"new"),
+        ("SFSafariTab", b"init"),
+        ("SFSafariTab", b"new"),
+        ("SFSafariWindow", b"init"),
+        ("SFSafariWindow", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["SafariServices._metadata"]
 
 

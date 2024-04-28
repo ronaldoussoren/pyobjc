@@ -31,6 +31,18 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("GCSteeringWheelElement", b"init"),
+        ("GCDeviceHaptics", b"init"),
+        ("GCPhysicalInputElementCollection", b"init"),
+        ("GCPhysicalInputElementCollection", b"new"),
+        ("GCDeviceBattery", b"init"),
+        ("GCDeviceLight", b"init"),
+        ("GCRacingWheel", b"init"),
+        ("GCColor", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["GameController._metadata"]
 
 

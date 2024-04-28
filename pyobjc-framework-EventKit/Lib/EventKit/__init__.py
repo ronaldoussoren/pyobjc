@@ -33,6 +33,16 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("EKVirtualConferenceRoomTypeDescriptor", b"init"),
+        ("EKVirtualConferenceRoomTypeDescriptor", b"new"),
+        ("EKVirtualConferenceURLDescriptor", b"init"),
+        ("EKVirtualConferenceURLDescriptor", b"new"),
+        ("EKVirtualConferenceDescriptor", b"init"),
+        ("EKVirtualConferenceDescriptor", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["EventKit._metadata"]
 
 

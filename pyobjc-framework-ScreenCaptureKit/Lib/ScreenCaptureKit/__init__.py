@@ -31,6 +31,22 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SCStream", b"init"),
+        ("SCStream", b"new"),
+        ("SCRunningApplication", b"init"),
+        ("SCRunningApplication", b"new"),
+        ("SCWindow", b"init"),
+        ("SCWindow", b"new"),
+        ("SCDisplay", b"init"),
+        ("SCDisplay", b"new"),
+        ("SCShareableContent", b"init"),
+        ("SCShareableContent", b"new"),
+        ("SCContentSharingPicker", b"init"),
+        ("SCContentSharingPicker", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["ScreenCaptureKit._metadata"]
 
 

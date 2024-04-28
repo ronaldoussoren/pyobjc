@@ -28,6 +28,24 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CXProvider", b"init"),
+        ("CXProvider", b"new"),
+        ("CXCall", b"init"),
+        (
+            "CXCallDirectoryExtensionContext",
+            b"completeRequestReturningItems:completionHandler:",
+        ),
+        ("CXSetMutedCallAction", b"initWithCallUUID:"),
+        ("CXPlayDTMFCallAction", b"initWithCallUUID:"),
+        ("CXSetHeldCallAction", b"initWithCallUUID:"),
+        ("CXSetGroupCallAction", b"initWithCallUUID:"),
+        ("CXStartCallAction", b"initWithCallUUID:"),
+        ("CXCallAction", b"init"),
+        ("CXHandle", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CallKit._metadata"]
 
 

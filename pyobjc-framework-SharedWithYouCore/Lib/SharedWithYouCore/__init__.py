@@ -31,6 +31,28 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SWUpdateCollaborationParticipantsAction", b"init"),
+        ("SWUpdateCollaborationParticipantsAction", b"new"),
+        ("SWPersonIdentity", b"init"),
+        ("SWPersonIdentity", b"new"),
+        ("SWPerson", b"init"),
+        ("SWPerson", b"new"),
+        ("SWPersonIdentityProof", b"init"),
+        ("SWPersonIdentityProof", b"new"),
+        ("SWCollaborationMetadata", b"init"),
+        ("SWCollaborationMetadata", b"new"),
+        ("SWCollaborationOption", b"init"),
+        ("SWCollaborationOption", b"new"),
+        ("SWStartCollaborationAction", b"init"),
+        ("SWStartCollaborationAction", b"new"),
+        ("SWCollaborationOptionsGroup", b"init"),
+        ("SWCollaborationOptionsGroup", b"new"),
+        ("SWCollaborationShareOptions", b"init"),
+        ("SWCollaborationShareOptions", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["SharedWithYouCore._metadata"]
 
 

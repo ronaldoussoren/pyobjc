@@ -31,6 +31,18 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CLSObject", b"init"),
+        ("CLSObject", b"new"),
+        ("CLSContext", b"init"),
+        ("CLSContext", b"new"),
+        ("CLSDataStore", b"init"),
+        ("CLSDataStore", b"new"),
+        ("CLSActivityItem", b"init"),
+        ("CLSActivityItem", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["ClassKit._metadata"]
 
 

@@ -31,6 +31,9 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (("CAEDRMetadata", b"init"),):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Quartz.QuartzCore._metadata"]
 
     def CIVector__getitem__(self, idx):

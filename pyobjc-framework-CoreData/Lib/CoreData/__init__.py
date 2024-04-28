@@ -31,6 +31,24 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("NSLightweightMigrationStage", b"init"),
+        ("NSPersistentCloudKitContainerEvent", b"init"),
+        ("NSPersistentCloudKitContainerEvent", b"new"),
+        ("NSPersistentCloudKitContainerOptions", b"init"),
+        ("NSCoreDataCoreSpotlightDelegate", b"init"),
+        ("NSManagedObjectModelReference", b"init"),
+        ("NSStagedMigrationManager", b"init"),
+        ("NSBatchDeleteRequest", b"init"),
+        ("NSPersistentCloudKitContainerEventResult", b"init"),
+        ("NSPersistentCloudKitContainerEventResult", b"new"),
+        ("NSPersistentStore", b"init"),
+        ("NSMergeConflict", b"init"),
+        ("NSMergePolicy", b"init"),
+        ("NSCustomMigrationStage", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CoreData._metadata"]
 
 

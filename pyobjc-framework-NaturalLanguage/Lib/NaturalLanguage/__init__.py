@@ -28,6 +28,12 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("NLContextualEmbedding", b"init"),
+        ("NLContextualEmbeddingResult", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["NaturalLanguage._metadata"]
 
 

@@ -34,6 +34,21 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("NSPresentationIntent", b"init"),
+        ("NSURLSessionWebSocketMessage", b"init"),
+        ("NSURLSessionWebSocketMessage", b"new"),
+        ("NSURLSessionWebSocketTask", b"init"),
+        ("NSURLSessionWebSocketTask", b"new"),
+        ("NSInflectionRule", b"init"),
+        ("NSMorphologyPronoun", b"init"),
+        ("NSMorphologyPronoun", b"new"),
+        ("NSTermOfAddress", b"init"),
+        ("NSTermOfAddress", b"new"),
+        ("NSObject", b"poseAsClass:"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Foundation._metadata"]
 
     objc.addConvenienceForClass(

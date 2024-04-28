@@ -31,6 +31,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("WKContentWorld", b"init"),
+        ("WKContentWorld", b"new"),
+        ("WKHTTPCookieStore", b"init"),
+        ("WKSecurityOrigin", b"init"),
+        ("WKFindResult", b"init"),
+        ("WKBackForwardListItem", b"init"),
+        ("WKWebsiteDataStore", b"init"),
+        ("WKWebsiteDataStore", b"new"),
+        ("DOMObject", b"init"),
+        ("WKContextMenuElementInfo", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["WebKit._metadata"]
 
     objc.addConvenienceForBasicSequence("WebScriptObject", True)

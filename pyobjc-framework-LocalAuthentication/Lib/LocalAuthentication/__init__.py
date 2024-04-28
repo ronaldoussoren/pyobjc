@@ -28,6 +28,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("LARightStore", b"init"),
+        ("LARightStore", b"new"),
+        ("LAPrivateKey", b"init"),
+        ("LAPrivateKey", b"new"),
+        ("LAPublicKey", b"init"),
+        ("LAPublicKey", b"new"),
+        ("LASecret", b"init"),
+        ("LASecret", b"new"),
+        ("LAPersistedRight", b"init"),
+        ("LAPersistedRight", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["LocalAuthentication._metadata"]
 
 

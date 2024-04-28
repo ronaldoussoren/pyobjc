@@ -28,6 +28,13 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("PKStrokePoint", b"init"),
+        ("PKTool", b"init"),
+        ("PKTool", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["PencilKit._metadata"]
 
 

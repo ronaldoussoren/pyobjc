@@ -36,6 +36,22 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MKMapConfiguration", b"init"),
+        ("MKMapConfiguration", b"new"),
+        ("MKLocalPointsOfInterestRequest", b"init"),
+        ("MKLocalPointsOfInterestRequest", b"new"),
+        ("MKLookAroundSnapshotter", b"init"),
+        ("MKLookAroundSnapshotter", b"new"),
+        ("MKLookAroundSceneRequest", b"init"),
+        ("MKLookAroundSceneRequest", b"new"),
+        ("MKLookAroundScene", b"init"),
+        ("MKLookAroundScene", b"new"),
+        ("MKClusterAnnotation", b"init"),
+        ("MKClusterAnnotation", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["MapKit._metadata"]
 
 

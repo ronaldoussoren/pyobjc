@@ -44,6 +44,9 @@ class TestDefaultNewForPythonClass(TestCase):
         self.assertEqual(v.x, 3)
         self.assertEqual(v.y, 4)
 
+        v = OCPyNew1()
+        self.assertIsInstance(v, OCPyNew1)
+
         with self.assertRaisesRegex(
             TypeError, r"OCPyNew1\(\) does not support keyword arguments 'y', 'x'"
         ):
@@ -110,6 +113,24 @@ class TestDefaultNewForPythonClass(TestCase):
         v, e = OCPyNew4(value=4, error=None)
         self.assertEqual(v.value, 4)
         self.assertIs(e, None)
+
+    def test_init_is_none(self):
+        class OCPyNew5(NSObject):
+            init = None
+
+            def initWithValue_(self, new_value):
+                self = super().init()
+                self.value = new_value
+                return self
+
+        with self.assertRaisesRegex(
+            TypeError, r"OCPyNew5\(\) requires keyword arguments"
+        ):
+            OCPyNew5()
+
+        v = OCPyNew5(value=3)
+        self.assertIsInstance(v, OCPyNew5)
+        self.assertEqual(v.value, 3)
 
 
 # TODO: TestDefaultNewForObjectiveCClass

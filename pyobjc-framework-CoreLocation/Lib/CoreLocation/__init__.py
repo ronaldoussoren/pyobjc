@@ -31,6 +31,22 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CLMonitor", b"init"),
+        ("CLMonitor", b"new"),
+        ("CLMonitoringRecord", b"init"),
+        ("CLMonitoringRecord", b"new"),
+        ("CLMonitoringEvent", b"init"),
+        ("CLMonitoringEvent", b"new"),
+        ("CLBackgroundActivitySession", b"init"),
+        ("CLBackgroundActivitySession", b"new"),
+        ("CLCondition", b"init"),
+        ("CLCondition", b"new"),
+        ("CLLocationUpdater", b"init"),
+        ("CLLocationUpdater", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CoreLocation._metadata"]
 
 
