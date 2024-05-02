@@ -106,7 +106,12 @@ def registerUnavailableMethod(classname, selector):
     # registering metadata because NS_UNAVAILABLE is
     # used to mark abstract base classes with concrete
     # public subclasses.
-    addConvenienceForClass(classname, ((selname.replace(":", "_"), None),))
+    # addConvenienceForClass(classname, ((selname.replace(":", "_"), None),))
+    registerMetaDataForSelector(
+        classname.encode(),
+        selector,
+        {"suggestion": f"{selector.decode()!r} is NS_UNAVAILABLE"},
+    )
 
     if selname.startswith("init"):
         kw = _selectorToKeywords(selname)

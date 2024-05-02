@@ -16,6 +16,8 @@ import objc
 
 # TODO:
 # - Calculate __new__.__doc__ statically for Python subclasses
+# - Likewise for ObjC classes (should be possible by updating
+#   doc strings when new keywords are registered)
 # - Make sure __init__ is never invoked implicitly (it
 #   currently is when __new__ is invoked). There is a slight
 #   risks this breaks code that implements a custom __new__
@@ -38,6 +40,9 @@ import objc
 # invoked by the interpreter when __new__ is called, unless
 # __new__ returns more than one value (e.g. has some output
 # arguments, such as -[FooClass initWithValue:(int)value error:(NSError**)error]
+#
+#  FIXME: 'unavailable' annations vs. calls methods
+#         (fairly sure those don't work properly yet with current setup)
 
 __all__ = ()
 
