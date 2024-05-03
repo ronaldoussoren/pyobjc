@@ -83,16 +83,15 @@ class TestDefaultNewForPythonClass(TestCase):
                 return self
 
             def __init__(self, **kwds):
-                # __init__ will be called when __new__
-                # is invoked, but not when the instance
-                # is created regularly.
+                # __init__ is never called automaticly for
+                # Cocoa classes.
                 self.value += 1
 
         v = OCPyNew3.alloc().initWithValue_(3)
         self.assertEqual(v.value, 3)
 
         v = OCPyNew3(value=4)
-        self.assertEqual(v.value, 5)
+        self.assertEqual(v.value, 4)
 
     def test_dunder_init_with_error(self):
         class OCPyNew4(NSObject):
@@ -102,8 +101,8 @@ class TestDefaultNewForPythonClass(TestCase):
                 return self, None
 
             def __init__(self, **kwds):
-                # __init__ will not be called when the
-                # init method returns 2 values.
+                # __init__ is never called automaticly for
+                # Cocoa classes.
                 self.value += 1
 
         v, e = OCPyNew4.alloc().initWithValue_error_(3, None)

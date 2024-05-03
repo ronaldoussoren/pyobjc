@@ -15,11 +15,6 @@ The mapping is updated in two ways:
 import objc
 
 # TODO:
-# - Make sure __init__ is never invoked implicitly (it
-#   currently is when __new__ is invoked). There is a slight
-#   risks this breaks code that implements a custom __new__
-#   and relies on the invocation of __init__
-#   (Implement by overriding tp_call in objc-class)
 # - Update the __new__ implementation for _convenience* to
 #   also support the generic __new__ interface.
 # - Document the feature
@@ -27,12 +22,6 @@ import objc
 #
 # - Later: generate class/module documentation for framework
 #   bindings, including the generated __new__ signatures.
-#
-# FIXME: __init__ invocation is a mess, consider trying
-# to suppress its invocation. Currently: __init__ is
-# invoked by the interpreter when __new__ is called, unless
-# __new__ returns more than one value (e.g. has some output
-# arguments, such as -[FooClass initWithValue:(int)value error:(NSError**)error]
 #
 __all__ = ()
 

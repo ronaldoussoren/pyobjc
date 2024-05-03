@@ -345,6 +345,20 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
  * Note: This function creates new _classes_
  */
 
+static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
+{
+    PyTypeObject* type = (PyTypeObject*)self;
+
+    if (type->tp_new == NULL) {
+        PyErr_Format( PyExc_TypeError,
+                      "cannot create '%s' instances", type->tp_name);
+        return NULL;
+    }
+
+    return type->tp_new(type, args, kwds);
+}
+
+
 static int
 class_init(PyObject* cls, PyObject* args, PyObject* kwds)
 {
@@ -364,6 +378,7 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
     }
     return PyType_Type.tp_init(cls, args, kwds);
 }
+
 
 static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused__)),
                                      PyObject* _Nullable args, PyObject* _Nullable kwds)
@@ -2424,6 +2439,7 @@ PyTypeObject PyObjCClass_Type = {
     .tp_base        = &PyObjCMetaClass_Type,
     .tp_init        = class_init,
     .tp_new         = class_new,
+    .tp_call        = class_call,
 };
 
 /*
