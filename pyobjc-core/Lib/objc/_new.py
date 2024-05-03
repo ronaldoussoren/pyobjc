@@ -15,9 +15,6 @@ The mapping is updated in two ways:
 import objc
 
 # TODO:
-# - Calculate __new__.__doc__ statically for Python subclasses
-# - Likewise for ObjC classes (should be possible by updating
-#   doc strings when new keywords are registered)
 # - Make sure __init__ is never invoked implicitly (it
 #   currently is when __new__ is invoked). There is a slight
 #   risks this breaks code that implements a custom __new__
@@ -27,10 +24,6 @@ import objc
 #   also support the generic __new__ interface.
 # - Document the feature
 # - Add tests [in progress]
-# - Maybe: somehow add __doc__ to classes that reflect the
-#   __new__ API.
-# - Maybe: In 3.13 switch to MultiSignature instead of
-#   __doc__ (assuming #117671 is merged)
 #
 # - Later: generate class/module documentation for framework
 #   bindings, including the generated __new__ signatures.
@@ -41,9 +34,6 @@ import objc
 # __new__ returns more than one value (e.g. has some output
 # arguments, such as -[FooClass initWithValue:(int)value error:(NSError**)error]
 #
-#  FIXME: 'unavailable' annations vs. calls methods
-#         (fairly sure those don't work properly yet with current setup)
-
 __all__ = ()
 
 # Mapping: class name -> { kwds: selector_name }
@@ -68,6 +58,34 @@ UNSET = object()
 DOC_SUFFIX = "The order of keyword arguments is significant\n"
 
 
+def calculate_new_doc(cls):
+    """
+    Calculate the docstring for the __new__
+    for *cls*
+    """
+    result = {}
+    for c in reversed(cls.__mro__):
+        new_map = NEW_MAP.get(c.__name__, UNSET)
+        if new_map is UNSET:
+            continue
+
+        for kwds, selector in new_map.items():
+            if selector is None:
+                result.pop(kwds, None)
+
+            if not kwds:
+                result[kwds] = f"{cls.__name__}(): "
+            else:
+                result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "): "
+            if selector.startswith("init"):
+                result[
+                    kwds
+                ] += f"\n   returns cls.alloc().{selector}({', '.join(kwds)})\n\n"
+            else:
+                result[kwds] += f"\n   returns cls.{selector}({', '.join(kwds)})\n\n"
+    return "".join(sorted(result.values())) + DOC_SUFFIX
+
+
 class _function:
     """
     Wrapper for the __new__ function to generate the
@@ -86,25 +104,7 @@ class _function:
 
     @property
     def __doc__(self):
-        result = {}
-        for c in reversed(self._cls.__mro__):
-            new_map = NEW_MAP.get(c, UNSET)
-            if new_map is UNSET:
-                continue
-
-            for kwds, selector in new_map.items():
-                if selector is None:
-                    result.pop(kwds, None)
-
-                if not kwds:
-                    result[kwds] = f"{self._cls.__name__}(): "
-                else:
-                    result[kwds] = f"{self._cls.__name__}(*, " + ", ".join(kwds) + "): "
-                if selector.startswith("init"):
-                    result[kwds] += f"   returns cls.alloc().{selector}()\n\n"
-                else:
-                    result[kwds] += f"   returns cls.{selector}()\n\n"
-        return "".join(sorted(result.values())) + DOC_SUFFIX
+        return calculate_new_doc(self._cls)
 
     def __getattr__(self, name):
         return getattr(self._function, name)
