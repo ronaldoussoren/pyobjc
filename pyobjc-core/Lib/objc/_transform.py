@@ -48,7 +48,7 @@ def _selectorToKeywords(selector):
 def setDunderNew(
     class_object,
 ):
-    class_object.__new__ = _new._make_new(class_object)
+    class_object.__new__ = _new.make_generic_new(class_object)
 
 
 def processClassDict(

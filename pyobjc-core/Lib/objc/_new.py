@@ -17,7 +17,6 @@ import objc
 # TODO:
 # - Update the __new__ implementation for _convenience* to
 #   also support the generic __new__ interface.
-# - Document the feature
 # - Add tests [in progress]
 #
 # - Later: generate class/module documentation for framework
@@ -75,7 +74,7 @@ def calculate_new_doc(cls):
     return "".join(sorted(result.values())) + DOC_SUFFIX
 
 
-class _function:
+class function_wrapper:
     """
     Wrapper for the __new__ function to generate the
     docstring dynamically.
@@ -107,7 +106,7 @@ class _function:
         return self._function(*args, **kwds)
 
 
-def _make_new(cls):
+def make_generic_new(cls):
     def __new__(cls, **kwds):
         """
         Generic implementation for Objective-C `__new__`.
@@ -156,4 +155,4 @@ def _make_new(cls):
     __new__.__name__ = cls.__name__ + ".__new__"
     __new__.__qualname__ = cls.__name__ + ".__new__"
     __new__.__module__ = cls.__module__
-    return _function(__new__, cls)
+    return function_wrapper(__new__, cls)

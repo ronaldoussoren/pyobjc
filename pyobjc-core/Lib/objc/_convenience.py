@@ -13,7 +13,7 @@ from objc._objc import (
     selector,
 )
 import PyObjCTools.KeyValueCoding as kvc
-from objc._new import _make_new, NEW_MAP
+from objc._new import make_generic_new, NEW_MAP
 from objc._transform import _selectorToKeywords
 
 __all__ = (
@@ -69,7 +69,7 @@ def add_convenience_methods(cls, type_dict):
     if not cls.__has_python_implementation__ and type(  # noqa: E721
         cls.__mro__[1].__new__
     ) != type(lambda: None):
-        type_dict["__new__"] = _make_new(cls)
+        type_dict["__new__"] = make_generic_new(cls)
 
     for nm, value in CLASS_METHODS.get(cls.__name__, ()):
         type_dict[nm] = value

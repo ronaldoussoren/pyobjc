@@ -55,3 +55,28 @@ the class are:
   whose will be documented in the framework notes. In general
   those will be based on factory class methods for which there
   are no equivalent using the ``alloc().init...(...)`` pattern.
+
+For classes in system frameworks the possibly init method are
+registered using frmaework data.
+
+For classes implemented in Python the possible init methods
+are detected automatically, just implement one or more Objective-C
+style init methods to add sets of keyword arguments for ``__new__``
+(and don't implement ``__new__`` or ``__init__`` in the Python
+class).
+
+Set ``init`` to ``None`` to require using one or more keyword
+arguments, that is:
+
+.. sourcecode:: python
+
+   class MyObject(NSObject):
+       init = None  # Calling MyOjbect() is not allowed
+
+       def initWithX_y_(self, x_value, y_value):
+           self = super.init()
+           self.x = x_value
+           self.y = y_value
+           return self
+
+   value = MyValue(x=42, y=24)
