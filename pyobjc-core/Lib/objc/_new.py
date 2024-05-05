@@ -14,13 +14,6 @@ The mapping is updated in two ways:
 
 import objc
 
-# TODO:
-# - Update the __new__ implementation for _convenience* to
-#   also support the generic __new__ interface.
-#
-# - Later: generate class/module documentation for framework
-#   bindings, including the generated __new__ signatures.
-#
 __all__ = ()
 
 # Mapping: class name -> { kwds: selector_name }

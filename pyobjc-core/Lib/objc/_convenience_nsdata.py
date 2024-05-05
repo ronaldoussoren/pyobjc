@@ -8,6 +8,7 @@ framework wrappers.
 
 from objc._convenience import addConvenienceForClass
 from objc._objc import registerMetaDataForSelector
+from ._new import NEW_MAP
 import sys
 import operator
 
@@ -51,6 +52,10 @@ def nsdata__new__(cls, value=None):
             view = bytes(value)
 
         return cls.dataWithBytes_length_(view, len(view))
+
+
+for cls in ("NSData", "NSMutableData"):
+    NEW_MAP.setdefault(cls, {})[()] = nsdata__new__
 
 
 def nsdata__str__(self):
@@ -249,7 +254,6 @@ def nsdata_isascii(self, *args, **kwds):
 addConvenienceForClass(
     "NSData",
     (
-        ("__new__", staticmethod(nsdata__new__)),
         ("__len__", lambda self: self.length()),
         ("__str__", nsdata__str__),
         ("__getitem__", nsdata__getitem__),
@@ -421,7 +425,6 @@ def nsmutabledata_clear(self):
 addConvenienceForClass(
     "NSMutableData",
     (
-        ("__new__", staticmethod(nsdata__new__)),
         ("__setitem__", nsmutabledata__setitem__),
         ("__delitem__", nsmutabledata__delitem__),
         ("__iadd__", nsmutabledata__iadd__),

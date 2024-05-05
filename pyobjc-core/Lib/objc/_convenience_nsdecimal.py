@@ -10,6 +10,7 @@ import operator
 
 from objc._convenience import addConvenienceForClass
 from objc._objc import NSDecimal, lookUpClass
+from ._new import NEW_MAP
 
 NSDecimalNumber = lookUpClass("NSDecimalNumber")
 
@@ -39,10 +40,11 @@ def decimal_new(cls, value=None):
                 raise TypeError("Value is not a number")
 
 
+NEW_MAP.setdefault("NSDecimalNumber", {})[()] = decimal_new
+
 addConvenienceForClass(
     "NSDecimalNumber",
     (
-        ("__new__", staticmethod(decimal_new)),
         (
             "__add__",
             lambda self, other: NSDecimalNumber(operator.add(NSDecimal(self), other)),

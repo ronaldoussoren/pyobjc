@@ -299,8 +299,7 @@ def nsarray_new(cls, sequence=None):
 
 
 for cls in ("NSArray", "__NSArrayI", "__NSArrayM", "__NSArray0"):
-    d = NEW_MAP.setdefault(cls, {})
-    d[()] = nsarray_new
+    NEW_MAP.setdefault(cls, {})[()] = nsarray_new
 
 
 def nsmutablearray_new(cls, sequence=None):
