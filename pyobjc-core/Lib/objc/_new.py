@@ -106,11 +106,10 @@ class function_wrapper:
 
 
 def make_generic_new(cls):
-    def __new__(cls, **kwds):
+    def __new__(cls, *args, **kwds):
         """
         Generic implementation for Objective-C `__new__`.
         """
-        # XXX: should this sort the keywords?
         key = tuple(kwds.keys())
 
         for c in cls.__mro__:
@@ -129,6 +128,18 @@ def make_generic_new(cls):
                     )
                 else:
                     raise TypeError(f"{cls.__name__}() requires keyword arguments")
+
+            if not isinstance(name, str):
+                # Assume that 'name' is actually a callable.
+                #
+                # This is used to implement custom signatures for a number
+                # of classes in the various ._convenience sibling modules.
+                return name(cls, *args, **kwds)
+
+            if args:
+                raise TypeError(
+                    f"{cls.__name__}() does not accept positional arguments"
+                )
 
             args = [kwds[n] for n in key]
             if name.startswith("init") and len(name) == 4 or name[4].isupper():
