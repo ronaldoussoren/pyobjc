@@ -17,7 +17,6 @@ import objc
 # TODO:
 # - Update the __new__ implementation for _convenience* to
 #   also support the generic __new__ interface.
-# - Add tests [in progress]
 #
 # - Later: generate class/module documentation for framework
 #   bindings, including the generated __new__ signatures.

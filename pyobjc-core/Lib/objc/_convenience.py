@@ -100,6 +100,8 @@ def registerUnavailableMethod(classname, selector):
     """
     Mark *selector* as unavailable for *classname*.
     """
+    if not isinstance(selector, bytes):
+        raise TypeError("selector should by a bytes object")
     selname = selector.decode()
 
     # This adds None as a replacement value instead of
@@ -124,6 +126,8 @@ def registerNewKeywordsFromSelector(classname, selector):
     keyword arguments for __new__ for the given class. The
     selector should be an 'init' method.
     """
+    if not isinstance(selector, bytes):
+        raise TypeError("selector should by a bytes object")
     selname = selector.decode()
     kw = _selectorToKeywords(selname)
     NEW_MAP.setdefault(classname, {})[kw] = selname.replace(":", "_")
@@ -137,7 +141,9 @@ def registerNewKeywords(classname, keywords, methodname):
 
     Method should be either an init method or a class method.
     """
-    NEW_MAP.setdefault(classname, {})[keywords] = method
+    if not isinstance(keywords, tuple) or not all(isinstance(x, str) for x in keywords):
+        raise TypeError("keywords must be tuple of strings")
+    NEW_MAP.setdefault(classname, {})[keywords] = methodname
 
 
 def registerABCForClass(classname, *abc_class):

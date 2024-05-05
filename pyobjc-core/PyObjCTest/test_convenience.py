@@ -7,6 +7,9 @@ from objc import super  # noqa: A004
 from PyObjCTest.sequence import OC_TestSequence, OC_TestMutableSequence
 from PyObjCTools.TestSupport import TestCase
 
+from objc._new import NEW_MAP
+from unittest import mock
+
 objc.addConvenienceForBasicSequence("OC_TestSequence", False)
 objc.addConvenienceForBasicSequence("OC_TestMutableSequence", True)
 
@@ -599,3 +602,78 @@ class TestABCs(TestCase):
             pass
 
         self.assertTrue(issubclass(FakeSequence2, collections.abc.Sequence))
+
+
+class TestRegisterKeywords(TestCase):
+    def test_init_registration(self):
+        self.assertNotIn("OC_Keyword1", NEW_MAP)
+
+        objc.registerNewKeywordsFromSelector("OC_Keyword1", b"init")
+        self.assertIn("OC_Keyword1", NEW_MAP)
+        self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 1)
+        self.assertEqual(NEW_MAP["OC_Keyword1"][()], "init")
+
+        objc.registerNewKeywordsFromSelector("OC_Keyword1", b"initWithFoo:bar:baz:")
+        self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 2)
+        self.assertEqual(
+            NEW_MAP["OC_Keyword1"][("foo", "bar", "baz")], "initWithFoo_bar_baz_"
+        )
+
+        objc.registerNewKeywordsFromSelector("OC_Keyword1", b"initX:")
+        self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 3)
+        self.assertEqual(NEW_MAP["OC_Keyword1"][("x",)], "initX_")
+
+        with self.assertRaises(ValueError):
+            objc.registerNewKeywordsFromSelector("OC_Keyword1", b"keywordWithX:y:")
+
+        with self.assertRaises(ValueError):
+            objc.registerNewKeywordsFromSelector("OC_Keyword1", b"initialize")
+
+        with self.assertRaises(TypeError):
+            objc.registerNewKeywordsFromSelector("OC_Keyword1", "initWithFoo:bar:")
+
+        self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 3)
+
+    def test_other_registration(self):
+        self.assertNotIn("OC_Keyword2", NEW_MAP)
+
+        objc.registerNewKeywords("OC_Keyword2", ("a", "b"), "keywordWithValue1_value2_")
+        self.assertIn("OC_Keyword2", NEW_MAP)
+        self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 1)
+        self.assertEqual(
+            NEW_MAP["OC_Keyword2"][("a", "b")], "keywordWithValue1_value2_"
+        )
+
+        objc.registerNewKeywords("OC_Keyword2", (), "keyword")
+        self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 2)
+        self.assertEqual(NEW_MAP["OC_Keyword2"][()], "keyword")
+
+        with self.assertRaises(TypeError):
+            objc.registerNewKeywords("OC_Keyword2", [], "keywords")
+
+        with self.assertRaises(TypeError):
+            objc.registerNewKeywords("OC_Keyword2", "ab", "keywords")
+
+        with self.assertRaises(TypeError):
+            objc.registerNewKeywords("OC_Keyword2", ("ab", 42), "keywords")
+
+        self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 2)
+
+    def test_unavailable_registration(self):
+        self.assertNotIn("OC_Keyword3", NEW_MAP)
+
+        with mock.patch("objc._convenience.registerMetaDataForSelector") as mck:
+            objc.registerUnavailableMethod("OC_Keyword3", b"init")
+
+        mck.assert_called()
+        self.assertEqual(len(NEW_MAP["OC_Keyword3"]), 1)
+        self.assertIs(NEW_MAP["OC_Keyword3"][()], None)
+
+        with mock.patch("objc._convenience.registerMetaDataForSelector") as mck:
+            objc.registerUnavailableMethod("OC_Keyword3", b"doubleX:y:")
+
+        mck.assert_called()
+        self.assertEqual(len(NEW_MAP["OC_Keyword3"]), 1)
+
+        with self.assertRaises(TypeError):
+            objc.registerUnavailableMethod("OC_Keyword3", "init")

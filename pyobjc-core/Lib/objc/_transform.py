@@ -32,7 +32,10 @@ def _isSelectorPrefix(name, prefix):
 
 
 def _selectorToKeywords(selector):
-    assert selector.startswith("init")
+    if not selector.startswith("init"):
+        raise ValueError("selector is not a valid init selector")
+    if len(selector) > 4 and not selector[4].isupper():
+        raise ValueError("selector is a valid init selector")
     selector = selector[4:]
     if not selector:
         return ()
