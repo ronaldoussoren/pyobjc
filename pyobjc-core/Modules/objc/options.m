@@ -218,6 +218,7 @@ deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newV
         unsigned long major = 0;
         unsigned long minor = 0;
 
+        errno = 0;
         major = strtoul(text, &text, 10);
         if (major >= 100 || ((major == 0 || major == ULONG_MAX) && errno != 0)) {
             PyErr_Format(PyExc_ValueError,
