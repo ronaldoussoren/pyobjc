@@ -163,6 +163,7 @@ OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath, NULL)
 OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
 OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute, NULL)
 OBJECT_PROP(_processClassDict, PyObjC_processClassDict, NULL)
+OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew, NULL)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -217,6 +218,7 @@ deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newV
         unsigned long major = 0;
         unsigned long minor = 0;
 
+        errno = 0;
         major = strtoul(text, &text, 10);
         if (major >= 100 || ((major == 0 || major == ULONG_MAX) && errno != 0)) {
             PyErr_Format(PyExc_ValueError,
@@ -299,6 +301,8 @@ static PyGetSetDef options_getset[] = {
            "Private helper used for transforming attributes for Objective-C classes"),
     GETSET(_processClassDict,
            "Private helper used for splitting a class dict into parts"),
+    GETSET(_setDunderNew,
+           "Private helper used for setting __new__ of a new Python subclass"),
     {
         .name = "deprecation_warnings",
         .get  = deprecation_warnings_get,

@@ -32,6 +32,12 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("LAAuthenticationView", b"initWithFrame:"),
+        ("LAAuthenticationView", b"initWithCoder:"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["LocalAuthenticationEmbeddedUI._metadata"]
 
 

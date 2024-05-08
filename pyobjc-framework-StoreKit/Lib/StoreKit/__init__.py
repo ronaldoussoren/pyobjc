@@ -31,6 +31,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SKOverlayConfiguration", b"init"),
+        ("SKOverlayConfiguration", b"new"),
+        ("SKOverlayAppConfiguration", b"init"),
+        ("SKOverlayAppConfiguration", b"new"),
+        ("SKOverlayAppClipConfiguration", b"init"),
+        ("SKOverlayAppClipConfiguration", b"new"),
+        ("SKOverlayTransitionContext", b"init"),
+        ("SKOverlayTransitionContext", b"new"),
+        ("SKOverlay", b"init"),
+        ("SKOverlay", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["StoreKit._metadata"]
 
 

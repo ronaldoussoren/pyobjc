@@ -1332,10 +1332,11 @@ class TestClassDictProcessor(TestCase):
     def assertValidResult(self, rval):
         # Sanity check of the return value of the processor
         self.assertIsInstance(rval, tuple)
-        self.assertEqual(len(rval), 3)
+        self.assertEqual(len(rval), 4)
         self.assertIsInstance(rval[0], tuple)
         self.assertIsInstance(rval[1], tuple)
         self.assertIsInstance(rval[2], tuple)
+        self.assertIsInstance(rval[3], bool)
 
         for item in rval[0]:
             self.assertIsInstance(item, objc.ivar)
@@ -1358,6 +1359,7 @@ class TestClassDictProcessor(TestCase):
         hidden_instance_methods = {}
         hidden_class_methods = {}
         rval = self.processor(
+            "SomeClass",
             class_dict,
             meta_dict,
             NSObject,
@@ -1372,6 +1374,7 @@ class TestClassDictProcessor(TestCase):
                 (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                 (),
                 (),
+                False,
             ),
         )
         self.assertTrue(class_dict["__objc_python_subclass__"])
@@ -1386,6 +1389,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1400,6 +1404,7 @@ class TestClassDictProcessor(TestCase):
                     (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1413,6 +1418,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1421,7 +1427,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, ((), (), ()))
+            self.assertEqual(rval, ((), (), (), False))
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
@@ -1433,6 +1439,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1450,6 +1457,7 @@ class TestClassDictProcessor(TestCase):
                     ),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1463,6 +1471,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1480,6 +1489,7 @@ class TestClassDictProcessor(TestCase):
                     ),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1493,6 +1503,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1503,7 +1514,7 @@ class TestClassDictProcessor(TestCase):
             self.assertValidResult(rval)
             self.assertEqual(
                 rval,
-                ((objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), ()),
+                ((objc.ivar("ab", objc._C_PythonObject, isSlot=True),), (), (), False),
             )
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
@@ -1516,6 +1527,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1533,6 +1545,7 @@ class TestClassDictProcessor(TestCase):
                     ),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1547,6 +1560,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods = {}
             with self.assertRaisesRegex(TypeError, "not iterable"):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     NSObject,
@@ -1567,6 +1581,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods = {}
             with self.assertRaisesRegex(TypeError, r"must be str, not int"):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     NSObject,
@@ -1587,6 +1602,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 OC_TransformWithDict,
@@ -1595,7 +1611,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, ((), (), ()))
+            self.assertEqual(rval, ((), (), (), False))
             self.assertEqual(class_dict["__slots__"], ())
             self.assertEqual(meta_dict, {})
             self.assertEqual(len(hidden_instance_methods), 0)
@@ -1607,6 +1623,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 OC_TransformWithDict,
@@ -1624,6 +1641,7 @@ class TestClassDictProcessor(TestCase):
                     ),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1637,6 +1655,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 OC_TransformWithoutDict,
@@ -1651,6 +1670,7 @@ class TestClassDictProcessor(TestCase):
                     (objc.ivar("__dict__", objc._C_PythonObject, isSlot=True),),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1664,6 +1684,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 OC_TransformWithoutDict,
@@ -1681,6 +1702,7 @@ class TestClassDictProcessor(TestCase):
                     ),
                     (),
                     (),
+                    False,
                 ),
             )
             self.assertEqual(class_dict["__slots__"], ())
@@ -1698,6 +1720,7 @@ class TestClassDictProcessor(TestCase):
                 "objc.ivar 'a' overrides instance variable in super class",
             ):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     OC_TransformWitIvarA,
@@ -1719,6 +1742,7 @@ class TestClassDictProcessor(TestCase):
                 "slot 'a' redefines 42",
             ):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     OC_TransformWitIvarA,
@@ -1737,6 +1761,7 @@ class TestClassDictProcessor(TestCase):
                 "slot 'a' redefines 42",
             ):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     OC_TransformWitIvarA,
@@ -1753,6 +1778,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1761,7 +1787,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, ((ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), (), False))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[0][0])
@@ -1776,6 +1802,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1784,7 +1811,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, ((ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), (), False))
             self.assertEqual(ivar.__name__, "var")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[0][0])
@@ -1799,6 +1826,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1807,7 +1835,7 @@ class TestClassDictProcessor(TestCase):
                 hidden_class_methods,
             )
             self.assertValidResult(rval)
-            self.assertEqual(rval, ((ivar,), (), ()))
+            self.assertEqual(rval, ((ivar,), (), (), False))
             self.assertEqual(ivar.__name__, "varname")
             self.assertIs(ivar, class_dict["var"])
             self.assertIs(ivar, rval[0][0])
@@ -1824,6 +1852,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods = {}
             with self.assertRaisesRegex(objc.error, "'b' reimplements objc.ivar 'a'"):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     NSObject,
@@ -1841,6 +1870,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods = {}
             with self.assertRaisesRegex(objc.error, "'a' redefines <"):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     NSObject,
@@ -1860,6 +1890,7 @@ class TestClassDictProcessor(TestCase):
                 objc.error, "objc.ivar 'iv' overrides instance variable in super class"
             ):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     OC_TransformWithIvar,
@@ -1879,6 +1910,7 @@ class TestClassDictProcessor(TestCase):
                 objc.error, "objc.ivar 'iv' overrides instance variable in super class"
             ):
                 self.processor(
+                    "ClassName",
                     class_dict,
                     meta_dict,
                     OC_TransformWithSlot,
@@ -1907,6 +1939,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -1951,6 +1984,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -2000,6 +2034,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -2046,6 +2081,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -2096,6 +2132,7 @@ class TestClassDictProcessor(TestCase):
         hidden_instance_methods = {}
         hidden_class_methods = {}
         rval = self.processor(
+            "ClassName",
             class_dict,
             meta_dict,
             NSObject,
@@ -2104,7 +2141,7 @@ class TestClassDictProcessor(TestCase):
             hidden_class_methods,
         )
         self.assertValidResult(rval)
-        self.assertEqual(rval, ((), (), ()))
+        self.assertEqual(rval, ((), (), (), False))
         self.assertIs(class_dict["method"], method)
         self.assertEqual(meta_dict, {})
         self.assertEqual(len(hidden_instance_methods), 0)
@@ -2122,6 +2159,7 @@ class TestClassDictProcessor(TestCase):
         hidden_instance_methods = {}
         hidden_class_methods = {}
         rval = self.processor(
+            "ClassName",
             class_dict,
             meta_dict,
             NSObject,
@@ -2150,6 +2188,7 @@ class TestClassDictProcessor(TestCase):
         hidden_instance_methods = {}
         hidden_class_methods = {}
         rval = self.processor(
+            "ClassName",
             class_dict,
             meta_dict,
             NSObject,
@@ -2177,6 +2216,7 @@ class TestClassDictProcessor(TestCase):
         hidden_class_methods = {}
 
         rval = self.processor(
+            "ClassName",
             class_dict,
             meta_dict,
             NSMutableArray,
@@ -2213,6 +2253,7 @@ class TestClassDictProcessor(TestCase):
             side_effect=_transform.transformAttribute,
         ) as mck:
             rval = self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,
@@ -2246,6 +2287,7 @@ class TestClassDictProcessor(TestCase):
         hidden_class_methods = {}
 
         rval = self.processor(
+            "ClassName",
             class_dict,
             meta_dict,
             NSObject,
@@ -2276,6 +2318,7 @@ class TestClassDictProcessor(TestCase):
             hidden_instance_methods = {}
             hidden_class_methods = {}
             self.processor(
+                "ClassName",
                 class_dict,
                 meta_dict,
                 NSObject,

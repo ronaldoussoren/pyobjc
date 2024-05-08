@@ -28,6 +28,42 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MLCTensorParameter", b"init"),
+        ("MLCTensorParameter", b"new"),
+        ("MLCTensorOptimizerDeviceData", b"init"),
+        ("MLCTensorOptimizerDeviceData", b"new"),
+        ("MLCTensor", b"init"),
+        ("MLCTensor", b"new"),
+        ("MLCLSTMDescriptor", b"init"),
+        ("MLCLSTMDescriptor", b"new"),
+        ("MLCActivationDescriptor", b"init"),
+        ("MLCActivationDescriptor", b"new"),
+        ("MLCMatMulDescriptor", b"init"),
+        ("MLCMatMulDescriptor", b"new"),
+        ("MLCEmbeddingDescriptor", b"init"),
+        ("MLCEmbeddingDescriptor", b"new"),
+        ("MLCInferenceGraph", b"init"),
+        ("MLCInferenceGraph", b"new"),
+        ("MLCLayer", b"init"),
+        ("MLCLayer", b"new"),
+        ("MLCTensorDescriptor", b"init"),
+        ("MLCTensorDescriptor", b"new"),
+        ("MLCYOLOLossDescriptor", b"init"),
+        ("MLCYOLOLossDescriptor", b"new"),
+        ("MLCTensorData", b"init"),
+        ("MLCTensorData", b"new"),
+        ("MLCPoolingDescriptor", b"init"),
+        ("MLCPoolingDescriptor", b"new"),
+        ("MLCOptimizer", b"init"),
+        ("MLCOptimizer", b"new"),
+        ("MLCLossDescriptor", b"init"),
+        ("MLCLossDescriptor", b"new"),
+        ("MLCMultiheadAttentionDescriptor", b"init"),
+        ("MLCMultiheadAttentionDescriptor", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["MLCompute._metadata"]
 
 

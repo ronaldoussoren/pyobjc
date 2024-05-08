@@ -345,6 +345,20 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
  * Note: This function creates new _classes_
  */
 
+static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
+{
+    PyTypeObject* type = (PyTypeObject*)self;
+
+    if (type->tp_new == NULL) {
+        PyErr_Format( PyExc_TypeError,
+                      "cannot create '%s' instances", type->tp_name);
+        return NULL;
+    }
+
+    return type->tp_new(type, args, kwds);
+}
+
+
 static int
 class_init(PyObject* cls, PyObject* args, PyObject* kwds)
 {
@@ -364,6 +378,7 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
     }
     return PyType_Type.tp_init(cls, args, kwds);
 }
+
 
 static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused__)),
                                      PyObject* _Nullable args, PyObject* _Nullable kwds)
@@ -396,6 +411,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     BOOL               isCFProxyClass       = NO;
     int                r;
     int                final = 0;
+    int                has_dunder_new = 0;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|Op", keywords, &name, &bases, &dict,
                                      &arg_protocols, &final)) {
@@ -624,7 +640,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
          * class dict.
          */
         objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict,
-                                            hiddenSelectors, hiddenClassSelectors);
+                                            hiddenSelectors, hiddenClassSelectors, &has_dunder_new);
         if (objc_class == Nil) {
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
@@ -1020,6 +1036,19 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     PyObjC_Assert(info->hasPythonImpl, NULL);
+
+    if (!has_dunder_new && PyObjC_setDunderNew != NULL && PyObjC_setDunderNew != Py_None) {
+        PyObject* args[2] = {NULL, res};
+        PyObject* rv;
+
+        rv = PyObject_Vectorcall(PyObjC_setDunderNew, args + 1,
+                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (rv == NULL) {
+            Py_DECREF(res);
+            return NULL;
+        }
+        Py_DECREF(rv);
+    }
 
     Py_INCREF(res);
     return res;
@@ -2410,6 +2439,7 @@ PyTypeObject PyObjCClass_Type = {
     .tp_base        = &PyObjCMetaClass_Type,
     .tp_init        = class_init,
     .tp_new         = class_new,
+    .tp_call        = class_call,
 };
 
 /*

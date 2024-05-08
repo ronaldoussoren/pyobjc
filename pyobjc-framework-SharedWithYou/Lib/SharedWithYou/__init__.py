@@ -31,6 +31,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SWHighlightMembershipEvent", b"init"),
+        ("SWHighlightMembershipEvent", b"new"),
+        ("SWHighlightPersistenceEvent", b"init"),
+        ("SWHighlightPersistenceEvent", b"new"),
+        ("SWHighlightMentionEvent", b"init"),
+        ("SWHighlightMentionEvent", b"new"),
+        ("SWHighlightChangeEvent", b"init"),
+        ("SWHighlightChangeEvent", b"new"),
+        ("SWHighlight", b"init"),
+        ("SWHighlight", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["SharedWithYou._metadata"]
 
 

@@ -28,6 +28,36 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MEComposeSession", b"init"),
+        ("MEComposeSession", b"new"),
+        ("MEDecodedMessage", b"init"),
+        ("MEDecodedMessage", b"new"),
+        ("MEMessageAction", b"init"),
+        ("MEMessageAction", b"new"),
+        ("MEMessageActionDecision", b"init"),
+        ("MEMessageActionDecision", b"new"),
+        ("MEExtensionManager", b"init"),
+        ("MEExtensionManager", b"new"),
+        ("MEMessage", b"init"),
+        ("MEMessage", b"new"),
+        ("MEMessageSecurityInformation", b"init"),
+        ("MEMessageSecurityInformation", b"new"),
+        ("MEMessageSigner", b"init"),
+        ("MEMessageSigner", b"new"),
+        ("MEEmailAddress", b"init"),
+        ("MEEmailAddress", b"new"),
+        ("MEMessageEncodingResult", b"init"),
+        ("MEMessageEncodingResult", b"new"),
+        ("MEOutgoingMessageEncodingStatus", b"init"),
+        ("MEOutgoingMessageEncodingStatus", b"new"),
+        ("MEAddressAnnotation", b"init"),
+        ("MEAddressAnnotation", b"new"),
+        ("MEDecodedMessageBanner", b"init"),
+        ("MEDecodedMessageBanner", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["MailKit._metadata"]
 
 

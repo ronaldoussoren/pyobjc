@@ -29,10 +29,13 @@ class TestTransformerIntegrationErrors(TestCase):
                 type(name, (NSObject,), {})
 
     def test_not_tuple(self):
-        for idx, value in enumerate((42, (True, (), (), (), ()), [True, (), ()])):
+        for idx, value in enumerate(
+            (42, (True, (), (), (), (), False), [True, (), (), False])
+        ):
             with self.subTest(value):
 
                 def helper(
+                    class_name,
                     class_dict,
                     meta_dict,
                     class_object,
@@ -60,6 +63,7 @@ class TestTransformerIntegrationErrors(TestCase):
             with self.subTest(value):
 
                 def helper(
+                    class_name,
                     class_dict,
                     meta_dict,
                     class_object,
@@ -67,7 +71,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return (value,), (), ()  # noqa: B023
+                    return (value,), (), (), False  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -80,6 +84,7 @@ class TestTransformerIntegrationErrors(TestCase):
         idx += 1
 
         def helper(
+            class_name,
             class_dict,
             meta_dict,
             class_object,
@@ -87,7 +92,7 @@ class TestTransformerIntegrationErrors(TestCase):
             hidden_instance_methods,
             hidden_class_methods,
         ):
-            return (objc.ivar(),), (), ()  # noqa: B023
+            return (objc.ivar(),), (), (), False  # noqa: B023
 
         with patch(helper):
             with self.assertRaisesRegex(objc.error, "instance variable without a name"):
@@ -111,6 +116,7 @@ class TestTransformerIntegrationErrors(TestCase):
             with self.subTest(value):
 
                 def helper(
+                    class_name,
                     class_dict,
                     meta_dict,
                     class_object,
@@ -118,7 +124,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return (), (value,), ()  # noqa: B023
+                    return (), (value,), (), False  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -145,6 +151,7 @@ class TestTransformerIntegrationErrors(TestCase):
             with self.subTest(value):
 
                 def helper(
+                    class_name,
                     class_dict,
                     meta_dict,
                     class_object,
@@ -152,7 +159,7 @@ class TestTransformerIntegrationErrors(TestCase):
                     hidden_instance_methods,
                     hidden_class_methods,
                 ):
-                    return (), (), (value,)  # noqa: B023
+                    return (), (), (value,), False  # noqa: B023
 
                 with patch(helper):
                     with self.assertRaisesRegex(
@@ -167,6 +174,7 @@ class TestTransformerIntegrationErrors(TestCase):
         with self.subTest("ivars"):
 
             def helper(
+                class_name,
                 class_dict,
                 meta_dict,
                 class_object,
@@ -174,7 +182,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return 42, (), ()  # noqa: B023
+                return 42, (), (), False  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(
@@ -188,6 +196,7 @@ class TestTransformerIntegrationErrors(TestCase):
         with self.subTest("instance methods"):
 
             def helper(
+                class_name,
                 class_dict,
                 meta_dict,
                 class_object,
@@ -195,7 +204,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return (), 42, ()  # noqa: B023
+                return (), 42, (), False  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(
@@ -209,6 +218,7 @@ class TestTransformerIntegrationErrors(TestCase):
         with self.subTest("class methods"):
 
             def helper(
+                class_name,
                 class_dict,
                 meta_dict,
                 class_object,
@@ -216,7 +226,7 @@ class TestTransformerIntegrationErrors(TestCase):
                 hidden_instance_methods,
                 hidden_class_methods,
             ):
-                return (), (), 42  # noqa: B023
+                return (), (), 42, False  # noqa: B023
 
             with patch(helper):
                 with self.assertRaisesRegex(

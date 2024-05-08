@@ -31,6 +31,39 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("PKIssuerProvisioningExtensionPassEntry", b"init"),
+        ("PKPaymentOrderDetails", b"init"),
+        ("PKPaymentOrderDetails", b"new"),
+        ("PKPaymentTokenContext", b"init"),
+        ("PKDeferredPaymentRequest", b"init"),
+        ("PKPayLaterView", b"init"),
+        ("PKPayLaterView", b"new"),
+        ("PKPayLaterView", b"initWithFrame:"),
+        ("PKPayLaterView", b"initWithCoder:"),
+        ("PKIdentityButton", b"initWithFrame:"),
+        ("PKIdentityButton", b"initWithFrame:primaryAction:"),
+        ("PKIdentityElement", b"init"),
+        ("PKIdentityElement", b"new"),
+        ("PKAddSecureElementPassConfiguration", b"init"),
+        ("PKAddSecureElementPassConfiguration", b"new"),
+        ("PKDateComponentsRange", b"init"),
+        ("PKStoredValuePassBalance", b"init"),
+        ("PKStoredValuePassBalance", b"new"),
+        ("PKIdentityDocument", b"init"),
+        ("PKIdentityDocument", b"new"),
+        ("PKIdentityIntentToStore", b"init"),
+        ("PKIdentityIntentToStore", b"new"),
+        ("PKAutomaticReloadPaymentRequest", b"init"),
+        ("PKShareSecureElementPassViewController", b"init"),
+        ("PKVehicleConnectionSession", b"init"),
+        ("PKVehicleConnectionSession", b"new"),
+        ("PKRecurringPaymentRequest", b"init"),
+        ("PKShareablePassMetadataPreview", b"init"),
+        ("PKShareablePassMetadataPreview", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["PassKit._metadata"]
 
 

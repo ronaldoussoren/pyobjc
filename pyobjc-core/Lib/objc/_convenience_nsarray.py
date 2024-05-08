@@ -11,6 +11,7 @@ from objc._convenience import addConvenienceForClass, container_unwrap, containe
 from objc._objc import _C_ID, _C_NSInteger
 from objc._objc import _NSNotFound as NSNotFound
 from objc._objc import lookUpClass, registerMetaDataForSelector
+from ._new import NEW_MAP
 
 NSArray = lookUpClass("NSArray")
 NSMutableArray = lookUpClass("NSMutableArray")
@@ -297,6 +298,10 @@ def nsarray_new(cls, sequence=None):
         return NSArray.arrayWithArray_(sequence)
 
 
+for cls in ("NSArray", "__NSArrayI", "__NSArrayM", "__NSArray0"):
+    NEW_MAP.setdefault(cls, {})[()] = nsarray_new
+
+
 def nsmutablearray_new(cls, sequence=None):
     if not sequence:
         return NSMutableArray.array()
@@ -312,6 +317,11 @@ def nsmutablearray_new(cls, sequence=None):
         # otherwise arrayWithArray might access the sequence differently
         # then expected from a Python sequence initializer.
         return NSMutableArray.arrayWithArray_(sequence)
+
+
+for cls in ("NSMutableArray",):
+    d = NEW_MAP.setdefault(cls, {})
+    d[()] = nsmutablearray_new
 
 
 def nsarray__contains__(self, elem):
@@ -374,7 +384,6 @@ def nsarray__iter__(self):
 addConvenienceForClass(
     "NSArray",
     (
-        ("__new__", staticmethod(nsarray_new)),
         ("__add__", nsarray_add),
         ("__radd__", nsarray_radd),
         ("__mul__", nsarray_mul),
@@ -412,7 +421,6 @@ def nsmutablearray__copy__(self):
 addConvenienceForClass(
     "NSMutableArray",
     (
-        ("__new__", staticmethod(nsmutablearray_new)),
         ("__copy__", nsmutablearray__copy__),
         ("__setitem__", nsarray__setitem__),
         ("__delitem__", nsarray__delitem__),

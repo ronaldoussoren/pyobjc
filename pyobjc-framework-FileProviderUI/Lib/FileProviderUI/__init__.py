@@ -28,6 +28,14 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        (
+            "FPUIActionExtensionContext",
+            b"completeRequestReturningItems:completionHandler:",
+        ),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["FileProviderUI._metadata"]
 
 

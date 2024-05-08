@@ -8,6 +8,7 @@ import collections.abc
 
 from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
 from objc._objc import lookUpClass
+from ._new import NEW_MAP
 
 NSSet = lookUpClass("NSSet")
 NSMutableSet = lookUpClass("NSMutableSet")
@@ -342,6 +343,5 @@ def nsmutableset_new(cls, sequence=None):
     return value
 
 
-addConvenienceForClass("NSSet", (("__new__", staticmethod(nsset_new)),))
-
-addConvenienceForClass("NSMutableSet", (("__new__", staticmethod(nsmutableset_new)),))
+NEW_MAP.setdefault("NSSet", {})[()] = nsset_new
+NEW_MAP.setdefault("NSMutableSet", {})[()] = nsmutableset_new

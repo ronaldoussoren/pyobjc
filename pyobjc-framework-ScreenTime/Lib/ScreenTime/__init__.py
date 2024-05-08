@@ -28,6 +28,16 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("STWebpageController", b"initWithNibName:bundle:"),
+        ("STWebpageController", b"initWithCoder:"),
+        ("STScreenTimeConfiguration", b"init"),
+        ("STScreenTimeConfiguration", b"new"),
+        ("STScreenTimeConfigurationObserver", b"init"),
+        ("STScreenTimeConfigurationObserver", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["ScreenTime._metadata"]
 
 

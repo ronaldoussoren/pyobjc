@@ -32,6 +32,16 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MIDICIDeviceInfo", b"init"),
+        ("MIDICIProfile", b"init"),
+        ("MIDICIProfileState", b"init"),
+        ("MIDICIDiscoveredNode", b"init"),
+        ("MIDICISession", b"init"),
+        ("MIDICIResponder", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CoreMIDI._metadata"]
 
 

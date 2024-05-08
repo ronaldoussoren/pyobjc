@@ -39,6 +39,26 @@ def _setup():
         except objc.error:
             pass
 
+    for cls, sel in (
+        ("AXNumericDataAxisDescriptor", b"init"),
+        ("AXNumericDataAxisDescriptor", b"new"),
+        ("AXCategoricalDataAxisDescriptor", b"init"),
+        ("AXCategoricalDataAxisDescriptor", b"new"),
+        ("AXDataPointValue", b"init"),
+        ("AXDataPointValue", b"new"),
+        ("AXDataPoint", b"init"),
+        ("AXDataPoint", b"new"),
+        ("AXDataSeriesDescriptor", b"init"),
+        ("AXDataSeriesDescriptor", b"new"),
+        ("AXChartDescriptor", b"init"),
+        ("AXChartDescriptor", b"new"),
+        ("AXCustomContent", b"init"),
+        ("AXCustomContent", b"new"),
+        ("AXBrailleMap", b"init"),
+        ("AXBrailleMap", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Accessibility._metadata"]
 
 

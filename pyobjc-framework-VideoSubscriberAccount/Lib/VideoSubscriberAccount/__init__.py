@@ -28,6 +28,18 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("VSAccountApplicationProvider", b"init"),
+        ("VSAccountApplicationProvider", b"new"),
+        ("VSAppleSubscription", b"init"),
+        ("VSAppleSubscription", b"new"),
+        ("VSAccountManagerResult", b"init"),
+        ("VSAccountManagerResult", b"new"),
+        ("VSUserAccount", b"init"),
+        ("VSUserAccount", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["VideoSubscriberAccount._metadata"]
 
 

@@ -31,6 +31,16 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("INUIAddVoiceShortcutViewController", b"init"),
+        ("INUIAddVoiceShortcutViewController", b"initWithNibName:bundle:"),
+        ("INUIEditVoiceShortcutViewController", b"init"),
+        ("INUIEditVoiceShortcutViewController", b"initWithNibName:bundle:"),
+        ("INUIAddVoiceShortcutButton", b"init"),
+        ("INUIAddVoiceShortcutButton", b"initWithFrame:"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["IntentsUI._metadata"]
 
 

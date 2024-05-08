@@ -36,6 +36,14 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CNFetchResult", b"init"),
+        ("CNFetchResult", b"new"),
+        ("CNContactFetchRequest", b"init"),
+        ("CNContactFetchRequest", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Contacts._metadata"]
 
 

@@ -15,6 +15,7 @@ import keyword
 import warnings
 import sys
 from ._informal_protocol import _informal_protocol_for_selector
+from . import _new
 
 # only public objc_method until the python_method implementation
 # in C is gone
@@ -24,7 +25,37 @@ __all__ = ("objc_method", "python_method")
 NO_VALUE = object()
 
 
+def _isSelectorPrefix(name, prefix):
+    return name.startswith(prefix) and (
+        len(name) == len(prefix) | name[len(prefix)].isupper()
+    )
+
+
+def _selectorToKeywords(selector):
+    if not selector.startswith("init"):
+        raise ValueError("selector is not a valid init selector")
+    if len(selector) > 4 and not selector[4].isupper():
+        raise ValueError("selector is a valid init selector")
+    selector = selector[4:]
+    if not selector:
+        return ()
+
+    parts = selector.split(":")[:-1]
+    if parts[0].startswith("With"):
+        parts[0] = parts[0][4:]
+    parts[0] = parts[0][:1].lower() + parts[0][1:]
+
+    return tuple(parts)
+
+
+def setDunderNew(
+    class_object,
+):
+    class_object.__new__ = _new.make_generic_new(class_object)
+
+
 def processClassDict(
+    class_name,
     class_dict,
     meta_dict,
     class_object,
@@ -74,7 +105,7 @@ def processClassDict(
 
     # First call all class setup hooks. Those can
     # update the class dictiory, which is why this
-    # loop# cannot be merged into the next one.
+    # loop cannot be merged into the next one.
     for key, value in list(class_dict.items()):
         setup = getattr(value, "__pyobjc_class_setup__", NO_VALUE)
         if setup is not NO_VALUE:
@@ -154,10 +185,30 @@ def processClassDict(
         elif sel.isHidden:
             hidden_class_methods[sel.selector] = sel
 
+    new_kw_map = {}
+
+    for name, value in class_dict.items():
+        if not isinstance(name, str) or not name.startswith("init"):
+            continue
+        if len(name) > 4 and not name[4].isupper():
+            continue
+        if value is None and name == "init":
+            new_kw_map[()] = None
+            continue
+        elif not isinstance(value, objc.selector):
+            continue
+
+        new_kw_map[_selectorToKeywords(value.selector.decode())] = name
+    if new_kw_map:
+        _new.NEW_MAP[class_name] = new_kw_map
+
     return (
         instance_variables,
         instance_methods,
         class_methods,
+        # Either __new__ in this class, or a custom new in a parent class
+        ("__new__" in class_dict)
+        or type(class_object.__new__) == type(lambda: 1),  # noqa: E721
     )
 
 
@@ -699,3 +750,4 @@ class python_method:
 
 objc.options._transformAttribute = transformAttribute
 objc.options._processClassDict = processClassDict
+objc.options._setDunderNew = setDunderNew

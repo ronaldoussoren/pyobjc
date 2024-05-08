@@ -28,6 +28,16 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("NSSymbolEffectOptions", b"init"),
+        ("NSSymbolEffectOptions", b"new"),
+        ("NSSymbolEffect", b"init"),
+        ("NSSymbolEffect", b"new"),
+        ("NSSymbolContentTransition", b"init"),
+        ("NSSymbolContentTransition", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["Symbols._metadata"]
 
 

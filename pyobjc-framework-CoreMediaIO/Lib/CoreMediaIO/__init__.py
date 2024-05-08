@@ -31,6 +31,34 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CMIOExtensionStreamProperties", b"init"),
+        ("CMIOExtensionStreamProperties", b"new"),
+        ("CMIOExtensionStream", b"init"),
+        ("CMIOExtensionStream", b"new"),
+        ("CMIOExtensionPropertyAttributes", b"init"),
+        ("CMIOExtensionPropertyAttributes", b"new"),
+        ("CMIOExtensionPropertyState", b"init"),
+        ("CMIOExtensionPropertyState", b"new"),
+        ("CMIOExtensionStreamCustomClockConfiguration", b"init"),
+        ("CMIOExtensionStreamCustomClockConfiguration", b"new"),
+        ("CMIOExtensionStreamFormat", b"init"),
+        ("CMIOExtensionStreamFormat", b"new"),
+        ("CMIOExtensionScheduledOutput", b"init"),
+        ("CMIOExtensionScheduledOutput", b"new"),
+        ("CMIOExtensionClient", b"init"),
+        ("CMIOExtensionClient", b"new"),
+        ("CMIOExtensionDeviceProperties", b"init"),
+        ("CMIOExtensionDeviceProperties", b"new"),
+        ("CMIOExtensionDevice", b"init"),
+        ("CMIOExtensionDevice", b"new"),
+        ("CMIOExtensionProviderProperties", b"init"),
+        ("CMIOExtensionProviderProperties", b"new"),
+        ("CMIOExtensionProvider", b"init"),
+        ("CMIOExtensionProvider", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CoreMediaIO._metadata"]
 
 

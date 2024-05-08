@@ -31,6 +31,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("SHMediaLibrary", b"init"),
+        ("SHMediaLibrary", b"new"),
+        ("SHRange", b"init"),
+        ("SHRange", b"new"),
+        ("SHMediaItem", b"init"),
+        ("SHMediaItem", b"new"),
+        ("SHCatalog", b"init"),
+        ("SHCatalog", b"new"),
+        ("SHMatch", b"init"),
+        ("SHMatch", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["ShazamKit._metadata"]
 
 

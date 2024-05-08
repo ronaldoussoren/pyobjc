@@ -31,6 +31,12 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("AVB1722ControlInterface", b"init"),
+        ("AVBInterface", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["AudioVideoBridging._metadata"]
 
 

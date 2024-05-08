@@ -31,6 +31,20 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("UNNotificationActionIcon", b"init"),
+        ("UNUserNotificationCenter", b"init"),
+        ("UNNotificationCategory", b"init"),
+        ("UNNotificationRequest", b"init"),
+        ("UNNotificationTrigger", b"init"),
+        ("UNNotificationAttachment", b"init"),
+        ("UNNotificationAction", b"init"),
+        ("UNNotificationSound", b"init"),
+        ("UNNotificationResponse", b"init"),
+        ("UNNotificationSettings", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["UserNotifications._metadata"]
 
 

@@ -28,6 +28,30 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("MPMusicPlayerQueueDescriptor", b"init"),
+        ("MPMusicPlayerQueueDescriptor", b"new"),
+        ("MPRemoteCommand", b"init"),
+        ("MPRemoteCommand", b"new"),
+        ("MPAdTimeRange", b"init"),
+        ("MPAdTimeRange", b"new"),
+        ("MPNowPlayingSession", b"init"),
+        ("MPNowPlayingSession", b"new"),
+        ("MPMusicPlayerControllerQueue", b"init"),
+        ("MPMusicPlayerControllerQueue", b"new"),
+        ("MPMusicPlayerController", b"init"),
+        ("MPMusicPlayerController", b"new"),
+        ("MPMediaPlaylistCreationMetadata", b"init"),
+        ("MPMediaPlaylistCreationMetadata", b"new"),
+        ("MPRemoteCommandCenter", b"init"),
+        ("MPRemoteCommandCenter", b"new"),
+        ("MPNowPlayingInfoCenter", b"init"),
+        ("MPNowPlayingInfoCenter", b"new"),
+        ("MPMediaItemArtwork", b"init"),
+        ("MPMediaItemArtwork", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["MediaPlayer._metadata"]
 
 

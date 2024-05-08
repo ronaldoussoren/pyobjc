@@ -13,8 +13,16 @@ from objc._objc import (
     selector,
 )
 import PyObjCTools.KeyValueCoding as kvc
+from objc._new import make_generic_new, NEW_MAP
+from objc._transform import _selectorToKeywords
 
-__all__ = ("addConvenienceForClass", "registerABCForClass")
+__all__ = (
+    "addConvenienceForClass",
+    "registerABCForClass",
+    "registerUnavailableMethod",
+    "registerNewKeywords",
+    "registerNewKeywordsFromSelector",
+)
 
 CLASS_METHODS = {}
 CLASS_ABC = {}
@@ -54,6 +62,15 @@ def add_convenience_methods(cls, type_dict):
 
     Matching entries from both mappings are added to the 'type_dict'.
     """
+
+    # Only add the generic __new__ to pure ObjC classes,
+    # __new__ will be added to Python subclasses by
+    # ._transform.
+    if not cls.__has_python_implementation__ and type(  # noqa: E721
+        cls.__mro__[1].__new__
+    ) != type(lambda: None):
+        type_dict["__new__"] = make_generic_new(cls)
+
     for nm, value in CLASS_METHODS.get(cls.__name__, ()):
         type_dict[nm] = value
 
@@ -77,6 +94,56 @@ def makeBundleForClass():
         return cb
 
     return selector(bundleForClass, isClassMethod=True)
+
+
+def registerUnavailableMethod(classname, selector):
+    """
+    Mark *selector* as unavailable for *classname*.
+    """
+    if not isinstance(selector, bytes):
+        raise TypeError("selector should by a bytes object")
+    selname = selector.decode()
+
+    # This adds None as a replacement value instead of
+    # registering metadata because NS_UNAVAILABLE is
+    # used to mark abstract base classes with concrete
+    # public subclasses.
+    # addConvenienceForClass(classname, ((selname.replace(":", "_"), None),))
+    registerMetaDataForSelector(
+        classname.encode(),
+        selector,
+        {"suggestion": f"{selector.decode()!r} is NS_UNAVAILABLE"},
+    )
+
+    if selname.startswith("init"):
+        kw = _selectorToKeywords(selname)
+        NEW_MAP.setdefault(classname, {})[kw] = None
+
+
+def registerNewKeywordsFromSelector(classname, selector):
+    """
+    Register keywords calculated from 'selector' as passible
+    keyword arguments for __new__ for the given class. The
+    selector should be an 'init' method.
+    """
+    if not isinstance(selector, bytes):
+        raise TypeError("selector should by a bytes object")
+    selname = selector.decode()
+    kw = _selectorToKeywords(selname)
+    NEW_MAP.setdefault(classname, {})[kw] = selname.replace(":", "_")
+
+
+def registerNewKeywords(classname, keywords, methodname):
+    """
+    Register the keyword tuple 'keywords' as a set of keyword
+    arguments for __new__ for the given class that will result
+    in the invocation of the given method.
+
+    Method should be either an init method or a class method.
+    """
+    if not isinstance(keywords, tuple) or not all(isinstance(x, str) for x in keywords):
+        raise TypeError("keywords must be tuple of strings")
+    NEW_MAP.setdefault(classname, {})[keywords] = methodname
 
 
 def registerABCForClass(classname, *abc_class):

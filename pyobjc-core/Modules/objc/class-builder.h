@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 extern Class _Nullable PyObjCClass_BuildClass(Class, PyObject*, char*, PyObject*,
-                                              PyObject*, PyObject*, PyObject*);
+                                              PyObject*, PyObject*, PyObject*, int*);
 extern int PyObjCClass_UnbuildClass(Class);
 extern int PyObjCClass_FinishClass(Class);
 

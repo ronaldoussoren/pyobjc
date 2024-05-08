@@ -28,6 +28,17 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("CHHapticPattern", b"init"),
+        ("CHHapticEvent", b"init"),
+        ("CHHapticEngine", b"init"),
+        ("CHHapticEventParameter", b"init"),
+        ("CHHapticDynamicParameter", b"init"),
+        ("CHHapticParameterCurveControlPoint", b"init"),
+        ("CHHapticParameterCurve", b"init"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["CoreHaptics._metadata"]
 
 

@@ -28,6 +28,18 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("BADownloadManager", b"init"),
+        ("BADownloadManager", b"new"),
+        ("BAURLDownload", b"init"),
+        ("BAURLDownload", b"new"),
+        ("BAAppExtensionInfo", b"init"),
+        ("BAAppExtensionInfo", b"new"),
+        ("BADownload", b"init"),
+        ("BADownload", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["BackgroundAssets._metadata"]
 
 

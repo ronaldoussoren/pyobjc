@@ -29,10 +29,8 @@ weaker coupling between the view and model layers.
 import collections.abc
 import types
 
-import objc
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
-_null = objc.lookUpClass("NSNull").null()
 
 
 def keyCaps(s):
@@ -382,3 +380,13 @@ class kvc:
         if not isinstance(item, str):
             raise TypeError("Keys must be strings")
         setKeyPath(self.__pyobjc_object__, item, value)
+
+
+# The import of 'objc' is at the end of the module
+# to avoid problems when importing this module before
+# importing objc due to the objc package importing bits
+# of this module.
+
+import objc  # noqa: E402
+
+_null = objc.lookUpClass("NSNull").null()

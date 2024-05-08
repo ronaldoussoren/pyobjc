@@ -7,6 +7,7 @@ import gc
 import objc
 from PyObjCTest.fnd import NSAutoreleasePool, NSMutableArray, NSObject
 from PyObjCTools.TestSupport import TestCase
+from objc import super  # noqa: A004
 
 LeaksDel = 0
 
@@ -26,14 +27,14 @@ class SlottedClass(NSObject):
     __slots__ = ("slot1",)
 
     def init(self):
-        NSObject.pyobjc_instanceMethods.init(self)
+        self = super().init()
         self.slot1 = LeaksClass.alloc().init()
         return self
 
 
 class MemberClass(NSObject):
     def init(self):
-        self = NSObject.pyobjc_instanceMethods.init(self)
+        self = super().init()
         self.slot1 = LeaksClass.alloc().init()
         return self
 

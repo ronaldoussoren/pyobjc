@@ -491,6 +491,38 @@ Metadata for Objective-C methods and classes
 
    .. versionadded:: 3.0
 
+.. function:: registerUnavailableMethod(classname, selector)
+
+   Register the selector (a byte string with the Objective-C name for the selector)
+   as being unavailable in the named class. Calling this method later will
+   result in an exception being raised.
+
+   This is primairly meant to be used to mirror the effects
+   of ``NS_UNAVAILABLE`` in Objective-C headers.
+
+   .. versionadded: 10.4
+
+.. function:: registerNewKeywordsFromSelector(classname, selector)
+
+   Register keywords calculated from *selector* as passible
+   keyword arguments for ``__new__`` for class *classname*. The
+   selector should start with "init".
+
+   .. versionadded: 10.4
+
+.. function:: registerNewKeywords(classname, keywords, methodname)
+
+   Register the keyword tuple *keywords* as a set of keyword
+   arguments for ``__new__`` for class *classname* that will result
+   in the invocation the method named *methodname*.
+
+   If the *methodname* startswith "init" invocation of ``__new__``
+   with this tuple of keywords is equivalent to ``classname.alloc().methodname()``,
+   otherwise it is equivalent to ``classname.methodname()``.
+
+   .. versionadded: 10.4
+
+
 Register proxy types
 ....................
 
