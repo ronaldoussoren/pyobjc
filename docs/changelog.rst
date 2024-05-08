@@ -8,6 +8,83 @@ Version 10.3
 
 * Updated SDK bindings for macOS 14.5
 
+
+* :issue:`275`: It is now possible to create instances of Objective-C
+  classes by calling the class, e.g. ``NSObject()`` instead of
+  ``NSObject.alloc().init()``.
+
+  The implementation of ``__new__`` forwards calls to the underlying
+  ``SomeClass.alloc().init...()`` pattern. In particular, all public init
+  methods are translated into sets of keyword arguments:
+
+  - Remove `init` or `initWith` from the start of the selector name
+  - Lowercase the first character of what's left over
+  - The strings before colons are acceptable keywords, in that order
+
+  For example, given a selector ``initWithX:y:`` the ``__new__`` method
+  will accept ``x, y`` as keyword arguments, in that order.
+
+  Framework bindings have been updated with additional metadata to support
+  this pattern, and the sets of keyword arguments are automatically calculated
+  for subclasses in Python.
+
+  The limitation on the order of keyword arguments may be lifted in a future
+  version, it is currently present to keep the code closer to the Objective-C
+  spelling which should make it easier to look up documentation on Apple's
+  website.
+
+* For some Objective-C classes some of the `init` and `new` methods are not
+  available even if they are available in super classes. Those methods are
+  marked with ``NS_UNAVAILABLE`` in Apple's headers.
+
+  As of this version these methods are also not available in Python code,
+  trying to call them will result in an exception.
+
+  To make methods unavailable in Python classes set these methods to ``None``,
+  e.g.:
+
+  ```python
+
+  class MyObject(NSObject):
+     init = None # NS_UNAVAILABLE
+  ```
+
+
+* Added :func:`objc.registerUnavailableMethod`,
+  :func:`objc.registerNewKeywordsFromSelector` and
+  :func:`objc.registerNewKeywords` to support the generic ``__new__``
+  in framework bindings.
+
+* Instantiating an Objective-C class by calling the class (e.g. invoking
+  ``__new__``) will not call ``__init__`` even if one is defined.
+
+  The implementation of a subclass of ``NSObject`` should always follow
+  the Objective-C convention for initializing using one or more
+  methods with a name starting with ``init``.
+
+  This can affect code that manually defines a ``__new__`` method for
+  an Objective-C class, in previous versions that was the only way
+  to create instances in a Pythontic way.
+
+* ``NSArray``, ``NSMutableArray``, ``NSSet`` and ``NSMutableSet`` accepted
+  a ``sequence`` keyword argument in previous versions. This is no longer supported.
+
+  It is still supported to create instances using a positional argument
+  for a sequence, e.g.  ``NSArray([1, 2, 3])``.
+
+* ``NSData``, ``NSMutableData``, ``NSDecimal``, ``NSString`` and ``NSMutableString``
+   accepted a ``value`` keyword argument in previous versions. This is no longer supported.
+
+  It is still supported to create instances using a positional argument,
+  e.g.  ``NSData(b"hello")``.
+
+* ``NSDictionary`` and ``NSMutableDictionary`` do *not* support the
+  generic new interface because this conflicts with having a similar
+  interface to ``dict`` for creating instances.
+
+  That is, ``NSDictionary(a=4, b=5)`` is the same as ``NSDictionary({"a":4, "b":5})``,
+  and not like ``NSDictionary.alloc().initWithA_b_(4, 5)``.
+
 Version 10.2.1
 --------------
 

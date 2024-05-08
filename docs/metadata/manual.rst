@@ -500,7 +500,7 @@ Metadata for Objective-C methods and classes
    This is primairly meant to be used to mirror the effects
    of ``NS_UNAVAILABLE`` in Objective-C headers.
 
-   .. versionadded: 10.4
+   .. versionadded: 10.3
 
 .. function:: registerNewKeywordsFromSelector(classname, selector)
 
@@ -508,7 +508,7 @@ Metadata for Objective-C methods and classes
    keyword arguments for ``__new__`` for class *classname*. The
    selector should start with "init".
 
-   .. versionadded: 10.4
+   .. versionadded: 10.3
 
 .. function:: registerNewKeywords(classname, keywords, methodname)
 
@@ -520,7 +520,7 @@ Metadata for Objective-C methods and classes
    with this tuple of keywords is equivalent to ``classname.alloc().methodname()``,
    otherwise it is equivalent to ``classname.methodname()``.
 
-   .. versionadded: 10.4
+   .. versionadded: 10.3
 
 
 Register proxy types
