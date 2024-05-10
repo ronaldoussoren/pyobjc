@@ -9,8 +9,6 @@ IGNORE = {
     "InterfaceBuilderKit"
     "Message",
     "PubSub",
-    "QTKit",
-    "XgridFoundation",
 }
 
 
@@ -35,7 +33,10 @@ for nm in BASE.glob("pyobjc-framework-*"):
                     f"--ini-section={section}",
                     "scan",
                     "--arch=x86_64,arm64",
-                    "--sdk=14.0",
+                    "--sdk=14.5",
+                    # XXX: Detect automatically
+                    # XXX: Use major version (14) instead of subreleases
+                    #      (or automatically remove all but latest minor version)
                 ],
                 cwd=nm,
             )

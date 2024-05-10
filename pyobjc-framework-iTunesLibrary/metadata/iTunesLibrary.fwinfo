@@ -1,326 +1,676 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
   "classes": {
+   "ITLibAlbum": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isCompilation"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isGapless"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isRatingComputed"
+     }
+    ]
+   },
    "ITLibMediaEntity": {
     "methods": [
      {
-      "selector": "enumerateValuesForProperties:usingBlock:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" },
-	  "3": { "type": "o^Z" }
-	 },
-	 "retval": {
-	  "type": "v"
-	 }
-	}
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          },
+          "3": {
+           "type": "o^Z"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "enumerateValuesForProperties:usingBlock:"
      },
      {
-      "selector": "enumerateValuesExceptForProperties:usingBlock:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" },
-	  "3": { "type": "o^Z" }
-	 },
-	 "retval": {
-	  "type": "v"
-	 }
-	}
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          },
+          "3": {
+           "type": "o^Z"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
        }
-      }
-     }
-    ]
-   },
-   "ITLibrary": {
-    "methods": [
-     {
-      "selector": "initWithAPIVersion:options:error:",
+      },
       "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "libraryWithAPIVersion:options:error:",
-      "class_method": true,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "reloadData",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "shouldShowContentRating",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "libraryWithAPIVersion:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithAPIVersion:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "ITLibPlaylist": {
-    "methods": [
-     {
-      "selector": "isAllItemsPlaylist",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "isMaster",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "isVisible",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "ITLibMediaItemVideoInfo": {
-    "methods": [
-     {
-      "selector": "isHD",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
+      "selector": "enumerateValuesExceptForProperties:usingBlock:"
      }
     ]
    },
    "ITLibMediaItem": {
     "methods": [
      {
-      "selector": "isUserDisabled",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isUserDisabled"
      },
      {
-      "selector": "isVideo",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isVideo"
      },
      {
-      "selector": "isDRMProtected",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isDRMProtected"
      },
      {
-      "selector": "isCloud",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isCloud"
      },
      {
-      "selector": "isPurchased",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isPurchased"
      },
      {
-      "selector": "isRatingComputed",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isRatingComputed"
      },
      {
-      "selector": "hasArtworkAvailable",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasArtworkAvailable"
      }
     ]
    },
-   "ITLibAlbum": {
+   "ITLibMediaItemVideoInfo": {
     "methods": [
      {
-      "selector": "isCompilation",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isHD"
+     }
+    ]
+   },
+   "ITLibPlaylist": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAllItemsPlaylist"
      },
      {
-      "selector": "isGapless",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isMaster"
      },
      {
-      "selector": "isRatingComputed",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isVisible"
+     }
+    ]
+   },
+   "ITLibrary": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithAPIVersion:options:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "libraryWithAPIVersion:options:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "reloadData"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldShowContentRating"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "libraryWithAPIVersion:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithAPIVersion:error:"
      }
     ]
    }
   },
   "enum": {
-   "ITLibInitOptionNone": { "value": 0 },
-   "ITLibInitOptionLazyLoadData": { "value": 1 },
-   "ITLibArtworkFormatNone": { "value": 0 },
-   "ITLibArtworkFormatBitmap": { "value": 1 },
-   "ITLibArtworkFormatJPEG": { "value": 2 },
-   "ITLibArtworkFormatJPEG2000": { "value": 3 },
-   "ITLibArtworkFormatGIF": { "value": 4 },
-   "ITLibArtworkFormatPNG": { "value": 5 },
-   "ITLibArtworkFormatBMP": { "value": 6 },
-   "ITLibArtworkFormatTIFF": { "value": 7 },
-   "ITLibArtworkFormatPICT": { "value": 8 },
-   "ITLibMediaItemMediaKindUnknown" :{ "value": 1 },
-   "ITLibMediaItemMediaKindSong" :{ "value": 2 },
-   "ITLibMediaItemMediaKindMovie" :{ "value": 3 },
-   "ITLibMediaItemMediaKindPodcast" :{ "value": 4 },
-   "ITLibMediaItemMediaKindAudiobook" :{ "value": 5 },
-   "ITLibMediaItemMediaKindPDFBooklet" :{ "value": 6 },
-   "ITLibMediaItemMediaKindMusicVideo" :{ "value": 7 },
-   "ITLibMediaItemMediaKindTVShow" :{ "value": 8 },
-   "ITLibMediaItemMediaKindInteractiveBooklet" :{ "value": 9 },
-   "ITLibMediaItemMediaKindHomeVideo" :{ "value": 12 },
-   "ITLibMediaItemMediaKindRingtone" :{ "value": 14 },
-   "ITLibMediaItemMediaKindDigitalBooklet" :{ "value": 15 },
-   "ITLibMediaItemMediaKindIOSApplication" :{ "value": 16 },
-   "ITLibMediaItemMediaKindVoiceMemo" :{ "value": 17 },
-   "ITLibMediaItemMediaKindiTunesU" :{ "value": 18 },
-   "ITLibMediaItemMediaKindBook" :{ "value": 19 },
-   "ITLibMediaItemMediaKindPDFBook" :{ "value": 20 },
-   "ITLibMediaItemMediaKindAlertTone" :{ "value": 21 },
-   "ITLibMediaItemLyricsContentRatingNone": { "value": 0 },
-   "ITLibMediaItemLyricsContentRatingExplicit": { "value": 1 },
-   "ITLibMediaItemLyricsContentRatingClean": { "value": 2 },
-   "ITLibMediaItemLocationTypeUnknown": { "value": 0 },
-   "ITLibMediaItemLocationTypeFile": { "value": 1 },
-   "ITLibMediaItemLocationTypeURL": { "value": 2 },
-   "ITLibMediaItemLocationTypeRemote": { "value": 3 },
-   "ITLibMediaItemPlayStatusNone": { "value": 0 },
-   "ITLibMediaItemPlayStatusPartiallyPlayed": { "value": 1 },
-   "ITLibMediaItemPlayStatusUnplayed": { "value": 2 },
-   "ITLibDistinguishedPlaylistKindNone": { "value": 0 },
-   "ITLibDistinguishedPlaylistKindMovies": { "value": 1 },
-   "ITLibDistinguishedPlaylistKindTVShows": { "value": 2 },
-   "ITLibDistinguishedPlaylistKindMusic": { "value": 3 },
-   "ITLibDistinguishedPlaylistKindBooks": { "value": 4 },
-   "ITLibDistinguishedPlaylistKindRingtones": { "value": 5 },
-   "ITLibDistinguishedPlaylistKindPodcasts": { "value": 7 },
-   "ITLibDistinguishedPlaylistKindVoiceMemos": { "value": 14 },
-   "ITLibDistinguishedPlaylistKindPurchases": { "value": 16 },
-   "ITLibDistinguishedPlaylistKindiTunesU": { "value": 26 },
-   "ITLibDistinguishedPlaylistKind90sMusic": { "value": 42 },
-   "ITLibDistinguishedPlaylistKindMyTopRated": { "value": 43 },
-   "ITLibDistinguishedPlaylistKindTop25MostPlayed": { "value": 44 },
-   "ITLibDistinguishedPlaylistKindRecentlyPlayed": { "value": 45 },
-   "ITLibDistinguishedPlaylistKindRecentlyAdded": { "value": 46 },
-   "ITLibDistinguishedPlaylistKindMusicVideos": { "value": 47 },
-   "ITLibDistinguishedPlaylistKindClassicalMusic": { "value": 48 },
-   "ITLibDistinguishedPlaylistKindLibraryMusicVideos": { "value": 49 },
-   "ITLibDistinguishedPlaylistKindHomeVideos": { "value": 50 },
-   "ITLibDistinguishedPlaylistKindApplications": { "value": 51 },
-   "ITLibDistinguishedPlaylistKindLovedSongs": { "value": 52 },
-   "ITLibDistinguishedPlaylistKindMusicShowsAndMovies": { "value": 53 },
-   "ITLibPlaylistKindRegular": { "value": 0 },
-   "ITLibPlaylistKindSmart": { "value": 1 },
-   "ITLibPlaylistKindGenius": { "value": 2 },
-   "ITLibPlaylistKindFolder": { "value": 3 },
-   "ITLibPlaylistKindGeniusMix": { "value": 4 },
-   "ITLibExportFeatureNone": { "value": 0 }
+   "ITLibArtworkFormatBMP": {
+    "value": 6
+   },
+   "ITLibArtworkFormatBitmap": {
+    "value": 1
+   },
+   "ITLibArtworkFormatGIF": {
+    "value": 4
+   },
+   "ITLibArtworkFormatJPEG": {
+    "value": 2
+   },
+   "ITLibArtworkFormatJPEG2000": {
+    "value": 3
+   },
+   "ITLibArtworkFormatNone": {
+    "value": 0
+   },
+   "ITLibArtworkFormatPICT": {
+    "value": 8
+   },
+   "ITLibArtworkFormatPNG": {
+    "value": 5
+   },
+   "ITLibArtworkFormatTIFF": {
+    "value": 7
+   },
+   "ITLibDistinguishedPlaylistKind90sMusic": {
+    "value": 42
+   },
+   "ITLibDistinguishedPlaylistKindApplications": {
+    "value": 51
+   },
+   "ITLibDistinguishedPlaylistKindBooks": {
+    "value": 4
+   },
+   "ITLibDistinguishedPlaylistKindClassicalMusic": {
+    "value": 48
+   },
+   "ITLibDistinguishedPlaylistKindHomeVideos": {
+    "value": 50
+   },
+   "ITLibDistinguishedPlaylistKindLibraryMusicVideos": {
+    "value": 49
+   },
+   "ITLibDistinguishedPlaylistKindLovedSongs": {
+    "value": 52
+   },
+   "ITLibDistinguishedPlaylistKindMovies": {
+    "value": 1
+   },
+   "ITLibDistinguishedPlaylistKindMusic": {
+    "value": 3
+   },
+   "ITLibDistinguishedPlaylistKindMusicShowsAndMovies": {
+    "value": 53
+   },
+   "ITLibDistinguishedPlaylistKindMusicVideos": {
+    "value": 47
+   },
+   "ITLibDistinguishedPlaylistKindMyTopRated": {
+    "value": 43
+   },
+   "ITLibDistinguishedPlaylistKindNone": {
+    "value": 0
+   },
+   "ITLibDistinguishedPlaylistKindPodcasts": {
+    "value": 7
+   },
+   "ITLibDistinguishedPlaylistKindPurchases": {
+    "value": 16
+   },
+   "ITLibDistinguishedPlaylistKindRecentlyAdded": {
+    "value": 46
+   },
+   "ITLibDistinguishedPlaylistKindRecentlyPlayed": {
+    "value": 45
+   },
+   "ITLibDistinguishedPlaylistKindRingtones": {
+    "value": 5
+   },
+   "ITLibDistinguishedPlaylistKindTVShows": {
+    "value": 2
+   },
+   "ITLibDistinguishedPlaylistKindTop25MostPlayed": {
+    "value": 44
+   },
+   "ITLibDistinguishedPlaylistKindVoiceMemos": {
+    "value": 14
+   },
+   "ITLibDistinguishedPlaylistKindiTunesU": {
+    "value": 26
+   },
+   "ITLibExportFeatureNone": {
+    "value": 0
+   },
+   "ITLibInitOptionLazyLoadData": {
+    "value": 1
+   },
+   "ITLibInitOptionNone": {
+    "value": 0
+   },
+   "ITLibMediaItemLocationTypeFile": {
+    "value": 1
+   },
+   "ITLibMediaItemLocationTypeRemote": {
+    "value": 3
+   },
+   "ITLibMediaItemLocationTypeURL": {
+    "value": 2
+   },
+   "ITLibMediaItemLocationTypeUnknown": {
+    "value": 0
+   },
+   "ITLibMediaItemLyricsContentRatingClean": {
+    "value": 2
+   },
+   "ITLibMediaItemLyricsContentRatingExplicit": {
+    "value": 1
+   },
+   "ITLibMediaItemLyricsContentRatingNone": {
+    "value": 0
+   },
+   "ITLibMediaItemMediaKindAlertTone": {
+    "value": 21
+   },
+   "ITLibMediaItemMediaKindAudiobook": {
+    "value": 5
+   },
+   "ITLibMediaItemMediaKindBook": {
+    "value": 19
+   },
+   "ITLibMediaItemMediaKindDigitalBooklet": {
+    "value": 15
+   },
+   "ITLibMediaItemMediaKindHomeVideo": {
+    "value": 12
+   },
+   "ITLibMediaItemMediaKindIOSApplication": {
+    "value": 16
+   },
+   "ITLibMediaItemMediaKindInteractiveBooklet": {
+    "value": 9
+   },
+   "ITLibMediaItemMediaKindMovie": {
+    "value": 3
+   },
+   "ITLibMediaItemMediaKindMusicVideo": {
+    "value": 7
+   },
+   "ITLibMediaItemMediaKindPDFBook": {
+    "value": 20
+   },
+   "ITLibMediaItemMediaKindPDFBooklet": {
+    "value": 6
+   },
+   "ITLibMediaItemMediaKindPodcast": {
+    "value": 4
+   },
+   "ITLibMediaItemMediaKindRingtone": {
+    "value": 14
+   },
+   "ITLibMediaItemMediaKindSong": {
+    "value": 2
+   },
+   "ITLibMediaItemMediaKindTVShow": {
+    "value": 8
+   },
+   "ITLibMediaItemMediaKindUnknown": {
+    "value": 1
+   },
+   "ITLibMediaItemMediaKindVoiceMemo": {
+    "value": 17
+   },
+   "ITLibMediaItemMediaKindiTunesU": {
+    "value": 18
+   },
+   "ITLibMediaItemPlayStatusNone": {
+    "value": 0
+   },
+   "ITLibMediaItemPlayStatusPartiallyPlayed": {
+    "value": 1
+   },
+   "ITLibMediaItemPlayStatusUnplayed": {
+    "value": 2
+   },
+   "ITLibPlaylistKindFolder": {
+    "value": 3
+   },
+   "ITLibPlaylistKindGenius": {
+    "value": 2
+   },
+   "ITLibPlaylistKindGeniusMix": {
+    "value": 4
+   },
+   "ITLibPlaylistKindRegular": {
+    "value": 0
+   },
+   "ITLibPlaylistKindSmart": {
+    "value": 1
+   }
   },
   "externs": {
-   "ITLibMediaEntityPropertyPersistentID": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumTitle": { "typestr": "@" },
-   "ITLibMediaItemPropertySortAlbumTitle": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumArtist": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumRating": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumRatingComputed": { "typestr": "@" },
-   "ITLibMediaItemPropertySortAlbumArtist": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumIsGapless": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumIsCompilation": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumDiscCount": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumDiscNumber": { "typestr": "@" },
-   "ITLibMediaItemPropertyAlbumTrackCount": { "typestr": "@" },
-   "ITLibMediaItemPropertyArtistName": { "typestr": "@" },
-   "ITLibMediaItemPropertySortArtistName": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoIsHD": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoWidth": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoHeight": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoSeries": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoSortSeries": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoSeason": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoEpisode": { "typestr": "@" },
-   "ITLibMediaItemPropertyVideoEpisodeOrder": { "typestr": "@" },
-   "ITLibMediaItemPropertyHasArtwork": { "typestr": "@" },
-   "ITLibMediaItemPropertyBitRate": { "typestr": "@" },
-   "ITLibMediaItemPropertyBeatsPerMinute": { "typestr": "@" },
-   "ITLibMediaItemPropertyCategory": { "typestr": "@" },
-   "ITLibMediaItemPropertyComments": { "typestr": "@" },
-   "ITLibMediaItemPropertyComposer": { "typestr": "@" },
-   "ITLibMediaItemPropertySortComposer": { "typestr": "@" },
-   "ITLibMediaItemPropertyContentRating": { "typestr": "@" },
-   "ITLibMediaItemPropertyLyricsContentRating": { "typestr": "@" },
-   "ITLibMediaItemPropertyAddedDate": { "typestr": "@" },
-   "ITLibMediaItemPropertyModifiedDate": { "typestr": "@" },
-   "ITLibMediaItemPropertyDescription": { "typestr": "@" },
-   "ITLibMediaItemPropertyIsUserDisabled": { "typestr": "@" },
-   "ITLibMediaItemPropertyFileType": { "typestr": "@" },
-   "ITLibMediaItemPropertyGenre": { "typestr": "@" },
-   "ITLibMediaItemPropertyGrouping": { "typestr": "@" },
-   "ITLibMediaItemPropertyIsVideo": { "typestr": "@" },
-   "ITLibMediaItemPropertyKind": { "typestr": "@" },
-   "ITLibMediaItemPropertyTitle": { "typestr": "@" },
-   "ITLibMediaItemPropertySortTitle": { "typestr": "@" },
-   "ITLibMediaItemPropertyVolumeNormalizationEnergy": { "typestr": "@" },
-   "ITLibMediaItemPropertyPlayCount": { "typestr": "@" },
-   "ITLibMediaItemPropertyLastPlayDate": { "typestr": "@" },
-   "ITLibMediaItemPropertyPlayStatus": { "typestr": "@" },
-   "ITLibMediaItemPropertyIsDRMProtected": { "typestr": "@" },
-   "ITLibMediaItemPropertyIsPurchased": { "typestr": "@" },
-   "ITLibMediaItemPropertyMovementCount": { "typestr": "@" },
-   "ITLibMediaItemPropertyMovementName": { "typestr": "@" },
-   "ITLibMediaItemPropertyMovementNumber": { "typestr": "@" },
-   "ITLibMediaItemPropertyRating": { "typestr": "@" },
-   "ITLibMediaItemPropertyRatingComputed": { "typestr": "@" },
-   "ITLibMediaItemPropertyReleaseDate": { "typestr": "@" },
-   "ITLibMediaItemPropertySampleRate": { "typestr": "@" },
-   "ITLibMediaItemPropertySize": { "typestr": "@" },
-   "ITLibMediaItemPropertyFileSize": { "typestr": "@" },
-   "ITLibMediaItemPropertyUserSkipCount": { "typestr": "@" },
-   "ITLibMediaItemPropertySkipDate": { "typestr": "@" },
-   "ITLibMediaItemPropertyStartTime": { "typestr": "@" },
-   "ITLibMediaItemPropertyStopTime": { "typestr": "@" },
-   "ITLibMediaItemPropertyTotalTime": { "typestr": "@" },
-   "ITLibMediaItemPropertyTrackNumber": { "typestr": "@" },
-   "ITLibMediaItemPropertyLocationType": { "typestr": "@" },
-   "ITLibMediaItemPropertyVoiceOverLanguage": { "typestr": "@" },
-   "ITLibMediaItemPropertyVolumeAdjustment": { "typestr": "@" },
-   "ITLibMediaItemPropertyWork": { "typestr": "@" },
-   "ITLibMediaItemPropertyYear": { "typestr": "@" },
-   "ITLibMediaItemPropertyMediaKind": { "typestr": "@" },
-   "ITLibMediaItemPropertyLocation": { "typestr": "@" },
-   "ITLibMediaItemPropertyArtwork": { "typestr": "@" },
-   "ITLibPlaylistPropertyName": { "typestr": "@" },
-   "ITLibPlaylistPropertyAllItemsPlaylist": { "typestr": "@" },
-   "ITLibPlaylistPropertyDistinguisedKind": { "typestr": "@" },
-   "ITLibPlaylistPropertyMaster": { "typestr": "@" },
-   "ITLibPlaylistPropertyParentPersistentID": { "typestr": "@" },
-   "ITLibPlaylistPropertyVisible": { "typestr": "@" },
-   "ITLibPlaylistPropertyItems": { "typestr": "@" },
-   "ITLibPlaylistPropertyKind": { "typestr": "@" }
+   "ITLibMediaEntityPropertyPersistentID": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAddedDate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumArtist": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumDiscCount": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumDiscNumber": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumIsCompilation": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumIsGapless": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumRating": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumRatingComputed": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumTitle": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyAlbumTrackCount": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyArtistName": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyArtwork": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyBeatsPerMinute": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyBitRate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyCategory": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyComments": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyComposer": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyContentRating": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyDescription": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyFileSize": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyFileType": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyGenre": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyGrouping": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyHasArtwork": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyIsDRMProtected": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyIsPurchased": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyIsUserDisabled": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyIsVideo": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyKind": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyLastPlayDate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyLocation": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyLocationType": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyLyricsContentRating": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyMediaKind": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyModifiedDate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyMovementCount": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyMovementName": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyMovementNumber": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyPlayCount": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyPlayStatus": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyRating": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyRatingComputed": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyReleaseDate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySampleRate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySize": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySkipDate": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySortAlbumArtist": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySortAlbumTitle": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySortArtistName": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySortComposer": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertySortTitle": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyStartTime": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyStopTime": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyTitle": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyTotalTime": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyTrackNumber": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyUserSkipCount": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoEpisode": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoEpisodeOrder": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoHeight": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoIsHD": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoSeason": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoSeries": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoSortSeries": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVideoWidth": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVoiceOverLanguage": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVolumeAdjustment": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyVolumeNormalizationEnergy": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyWork": {
+    "typestr": "@"
+   },
+   "ITLibMediaItemPropertyYear": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyAllItemsPlaylist": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyDistinguisedKind": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyItems": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyKind": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyMaster": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyName": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyParentPersistentID": {
+    "typestr": "@"
+   },
+   "ITLibPlaylistPropertyVisible": {
+    "typestr": "@"
+   }
   }
  }
 }
