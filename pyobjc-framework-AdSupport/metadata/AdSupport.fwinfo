@@ -1,11 +1,15 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
   "classes": {
    "ASIdentifierManager": {
     "methods": [
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isAdvertisingTrackingEnabled"
      }
     ]

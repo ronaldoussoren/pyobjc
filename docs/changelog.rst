@@ -6,8 +6,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 10.3
 ------------
 
+* The release contains binary wheels for Python 3.13
+
 * Updated SDK bindings for macOS 14.5
 
+* A minor change in the (currently private) tooling I use for
+  collecting the raw metadata resulted in minor fixes to the framework
+  bindings, in particular for metadata for a number of block typed
+  arguments and return values.
 
 * :issue:`275`: It is now possible to create instances of Objective-C
   classes by calling the class, e.g. ``NSObject()`` instead of
@@ -26,7 +32,7 @@ Version 10.3
 
   Framework bindings have been updated with additional metadata to support
   this pattern, and the sets of keyword arguments are automatically calculated
-  for subclasses in Python.
+  for subclasses in written in Python.
 
   The limitation on the order of keyword arguments may be lifted in a future
   version, it is currently present to keep the code closer to the Objective-C
@@ -49,11 +55,14 @@ Version 10.3
      init = None # NS_UNAVAILABLE
   ```
 
-
 * Added :func:`objc.registerUnavailableMethod`,
   :func:`objc.registerNewKeywordsFromSelector` and
   :func:`objc.registerNewKeywords` to support the generic ``__new__``
   in framework bindings.
+
+  A limitation for ``registerUnavailableMethod`` is that it is currently
+  not supported to reintroduce the method in a subclass, primarily because
+  that functionality is not needed for framework bindings.
 
 * Instantiating an Objective-C class by calling the class (e.g. invoking
   ``__new__``) will not call ``__init__`` even if one is defined.

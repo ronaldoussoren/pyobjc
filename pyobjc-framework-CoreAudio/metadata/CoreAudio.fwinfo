@@ -808,30 +808,30 @@
         "retval": { "type_override": "Z" }
       },
       {
-        "selector": "setMono:",
-        "class_method": false,
-        "arguments": {
-         "0": { "type_override": "Z" }
-        }
-      },
-      {
         "selector": "setExclusive:",
         "class_method": false,
-        "arguments": {
+        "args": {
          "0": { "type_override": "Z" }
         }
       },
       {
         "selector": "setMixdown:",
         "class_method": false,
-        "arguments": {
+        "args": {
          "0": { "type_override": "Z" }
         }
       },
       {
         "selector": "setPrivate:",
         "class_method": false,
-        "arguments": {
+        "args": {
+         "0": { "type_override": "Z" }
+        }
+      },
+      {
+        "selector": "setMono:",
+        "class_method": false,
+        "args": {
          "0": { "type_override": "Z" }
         }
       }
