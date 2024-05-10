@@ -8,6 +8,9 @@ Version 10.3
 
 * The release contains binary wheels for Python 3.13
 
+  PyObjC does at this time not support the experimental free threading
+  support in Python 3.13.
+
 * Updated SDK bindings for macOS 14.5
 
 * A minor change in the (currently private) tooling I use for
