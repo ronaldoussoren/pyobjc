@@ -2,6 +2,7 @@
 import subprocess
 import pathlib
 import configparser
+import glob
 
 IGNORE = {
     # Frameworks not present in the latest SDK
@@ -13,6 +14,8 @@ IGNORE = {
 
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
+
+SDK_VERSION = subprocess.check_output(["xcrun", "-sdk", "macosx", "--show-sdk-version"]).decode()
 
 scan_failed = []
 compile_failed = []
@@ -33,10 +36,7 @@ for nm in BASE.glob("pyobjc-framework-*"):
                     f"--ini-section={section}",
                     "scan",
                     "--arch=x86_64,arm64",
-                    "--sdk=14.5",
-                    # XXX: Detect automatically
-                    # XXX: Use major version (14) instead of subreleases
-                    #      (or automatically remove all but latest minor version)
+                    f"--sdk={SDK_VERSION}",
                 ],
                 cwd=nm,
             )
@@ -46,6 +46,14 @@ for nm in BASE.glob("pyobjc-framework-*"):
             continue
 
         subprocess.call(["git", "checkout", overrides])
+
+        # Only keep the latest version of the scanned headers for
+        # every major release of macOS (starting at 11.0)
+        for fn in glob.glob(f"{nm}/metadata.*/*-{SDK_VERSION.split('.')[0]}.*"):
+            if SDK_VERSION in fn:
+                subprocess.call(["git", "add", fn])
+            else:
+                subprocess.call(["git", "rm", fn])
 
         try:
             subprocess.check_call(
