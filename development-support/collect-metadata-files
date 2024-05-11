@@ -3,6 +3,17 @@ import subprocess
 import pathlib
 import configparser
 import glob
+import sys
+import os
+
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
 
 IGNORE = {
     # Frameworks not present in the latest SDK
@@ -26,10 +37,13 @@ for nm in BASE.glob("pyobjc-framework-*"):
     for section in cfg.sections():
         if section in IGNORE:
             continue
-        print(nm.name, section)
+        print()
+        print(f"{BOLD}Processing {nm} - {section}{RESET}")
+        print()
         overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")
 
         try:
+            print(f"   scanning in {nm}")
             subprocess.check_call(
                 [
                     "objective-metadata-tool",
@@ -42,6 +56,7 @@ for nm in BASE.glob("pyobjc-framework-*"):
             )
 
         except subprocess.CalledProcessError:
+            print(f"    {RED}Scanning failed!{RESET}")
             scan_failed.append((nm.name, section))
             continue
 
@@ -56,11 +71,13 @@ for nm in BASE.glob("pyobjc-framework-*"):
                 subprocess.call(["git", "rm", fn])
 
         try:
+            print(f"   compiling in {nm}")
             subprocess.check_call(
                 ["objective-metadata-tool", f"--ini-section={section}", "compile"],
                 cwd=nm,
             )
         except subprocess.CalledProcessError:
+            print(f"    {RED}Compilation failed!{RESET}")
             compile_failed.append((nm.name, section))
 
             # Undo the compile attempt
@@ -87,13 +104,15 @@ for nm in BASE.glob("pyobjc-framework-*"):
 
 
 if scan_failed:
-    print("Scanning failed for:")
+    print(f"{RED}Scanning failed for:{RESET}")
     for wrapper, section in scan_failed:
-        print(f"* {wrapper} - {section}")
+        print(f"{RED}* {wrapper} - {section}{RESET}")
     print("")
 
 if compile_failed:
-    print("Compiling failed for:")
+    print(f"{RED}Compiling failed for:{RESET}")
     for wrapper, section in compile_failed:
-        print(f"* {wrapper} - {section}")
+        print(f"{RED}* {wrapper} - {section}{RESET}")
     print("")
+
+print(f"{BOLD}DONE{RESET}")
