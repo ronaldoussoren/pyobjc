@@ -297,6 +297,11 @@
      "already_retained": true
     }
    },
+   "xpc_listener_activate": {
+    "args": {
+     "1": { "type_modifier": "o"}
+    }
+   },
    "xpc_data_get_bytes": {
     "args": {
      "1": { "type_modifier": "o", "c_array_length_in_arg": 3 }
@@ -516,6 +521,57 @@
      "1": { "type_modifier": "o" }
     }
    },
+   "xpc_connection_set_peer_entitlement_exists_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_listener_create": {
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "xpc_dictionary_set_mach_send": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_connection_set_peer_entitlement_matches_value_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_connection_set_peer_platform_identity_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_connection_set_peer_team_identity_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_dictionary_copy_mach_send": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_listener_reject_peer": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_session_set_peer_code_signing_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "xpc_listener_set_peer_code_signing_requirement": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
    "xpc_string_create": {
     "args": {
      "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
@@ -540,6 +596,9 @@
    "xpc_string_get_string_ptr": {
     "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
+   "xpc_listener_copy_description": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
    "xpc_type_get_name": {
     "args": {
      "0": {}
@@ -548,6 +607,9 @@
    },
    "xpc_uuid_get_bytes": {
     "retval": { "c_array_of_fixed_length": 16, "type_override": "^v"  }
+   },
+   "xpc_connection_copy_invalidation_reason": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
    }
   },
   "informal_protocols": {}
