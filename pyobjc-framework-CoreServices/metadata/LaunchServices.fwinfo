@@ -5,6 +5,16 @@
   "classes": {},
   "formal_protocols": {},
   "enum": {
+   "kLSLaunchFailedBecauseLaunchConstraintsWereViolatedErr": { "value": -10350},
+   "kLSTemplateApplicationIsCorruptErr": { "value": -10401},
+   "kLSTemplateApplicationDataVaultIsCorruptErr": { "value": -10402},
+   "kLSTemplateApplicationDataVaultInformationIsCorruptErr": { "value": -10403},
+   "kLSTemplateApplicationTeamIdentifierMismatchErr": { "value": -10404},
+   "kLSTemplateApplicationSignatureFailureErr": { "value": -10410},
+   "kLSTemplateApplicationSignatureNotFoundErr": { "value": -10411},
+   "kLSTemplateApplicationUnableToContactServerErr": { "value": -10420},
+   "kLSTemplateApplicationUnknownErr": { "value": -10421},
+   "kLSTemplateApplicationOperationRequiresEntitlementErr": { "value": -10422},
    "kLSUnknownKindID": { "value": 0 }
   },
   "structs": {
