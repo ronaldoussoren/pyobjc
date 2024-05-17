@@ -627,6 +627,13 @@
    "NSObject": {
     "methods": [
      {
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "l2capChannelData:data:length:"
+     },
+     {
       "selector": "rfcommChannelData:data:length:",
       "class_method": false,
       "args": {
@@ -825,17 +832,6 @@
       "selector": "openTransportConnection:selectorTarget:refCon:"
      }
     ]
-   },
-   "NSObject": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      },
-      "class_method": false,
-      "selector": "l2capChannelData:data:length:"
-     }
-    ]
    }
   },
   "formal_protocols": {
@@ -954,8 +950,6 @@
    },
    "IOBluetoothOBEXSessionCreateWithIncomingIOBluetoothRFCOMMChannel": {
     "ignore": true
-   },
-   "IOBluetoothOBEXSessionOpenTransportConnection": {
    },
    "IOBluetoothPackData": {
      "ignore": true,
