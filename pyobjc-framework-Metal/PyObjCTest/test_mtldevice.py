@@ -110,9 +110,6 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newLibraryWithSource_options_error_(self, a, b, c):
         return 1
 
-    def newLibraryWithDescriptor_error_(self, a, b):
-        return 1
-
     def maxThreadgroupMemoryLength(self):
         return 1
 
@@ -285,9 +282,6 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_(
         self, a, b, c, d
     ):
-        pass
-
-    def newLibraryWithDescriptor_completionHandler_(self, a, b):
         pass
 
     def newRenderPipelineStateWithMeshDescriptor_options_reflection_error_(
@@ -595,10 +589,6 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithData_error_, 1, b"o^@")
         self.assertArgHasType(
             TestMTLDeviceHelper.newLibraryWithSource_options_error_, 2, b"o^@"
-        )
-
-        self.assertArgHasType(
-            TestMTLDeviceHelper.newLibraryWithDescriptor_error_, 1, b"o^@"
         )
 
         self.assertArgHasType(
@@ -934,12 +924,6 @@ class TestMTLDevice(TestCase):
             TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
             3,
             objc._C_NSUInteger,
-        )
-
-        self.assertArgIsBlock(
-            TestMTLDeviceHelper.newLibraryWithDescriptor_completionHandler_,
-            1,
-            MTLNewLibraryCompletionHandler,
         )
 
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPrimitiveMotionBlur)
