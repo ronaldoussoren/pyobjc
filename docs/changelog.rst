@@ -11,12 +11,17 @@ Version 10.3
   PyObjC does at this time not support the experimental free threading
   support in Python 3.13.
 
+* :issue:`569`: Removed the workaround for a bug in Xcode 15.0
+
+  The workaround is no longer necessary, and caused problems when
+  building with the Command Line Tools development tools from Apple.
+
 * Updated SDK bindings for macOS 14.5
 
 * A minor change in the (currently private) tooling I use for
   collecting the raw metadata resulted in minor fixes to the framework
-  bindings, in particular for metadata for a number of block typed
-  arguments and return values.
+  bindings, in particular for metadata for a number of block and function
+  typed arguments and return values.
 
 * :issue:`275`: It is now possible to create instances of Objective-C
   classes by calling the class, e.g. ``NSObject()`` instead of
