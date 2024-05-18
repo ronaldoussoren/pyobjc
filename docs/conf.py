@@ -35,6 +35,11 @@ extensions = [
     "examples",
     "sphinxcontrib.blockdiag",
     "sphinx_sitemap",
+    "sphinx_copybutton",
+    "sphinx_design",
+    "sphinx_tabs.tabs",
+    "sphinx_togglebutton",
+    "sphinxcontrib.mermaid",
 ]
 
 extlinks = {
@@ -55,8 +60,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "PyObjC"
-copyright = "2017, Ronald Oussoren"  # noqa: A001
+project = "PyObjC - the Python to Objective-C bridge"
+copyright = "2017-2024, Ronald Oussoren"  # noqa: A001
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -112,14 +117,16 @@ linkcheck_workers = 10
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 # html_theme = 'traditional'
-html_theme = "nature"
+html_theme = "shibuya"
 
 html_baseurl = "https://pyobjc.readthedocs.io/en/latest/"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {}
+html_theme_options = {
+    "accent_color": "jade",
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -161,7 +168,7 @@ html_sidebars = {"**": ["localtoc.html", "links.html", "donate.html", "searchbox
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
-html_additional_pages = {"index": "index.html"}
+html_additional_pages = {}
 
 # If false, no module index is generated.
 # html_domain_indices = True
@@ -176,10 +183,10 @@ html_use_index = True
 html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
-html_show_sphinx = False
+html_show_sphinx = True
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-html_show_copyright = False
+html_show_copyright = True
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the

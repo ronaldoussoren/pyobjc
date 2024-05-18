@@ -1,38 +1,82 @@
+:layout: landing
+
 Introduction
 ============
 
-The PyObjC project aims to provide a bridge between the Python and Objective-C
-programming languages on macOS. The bridge is intended to be fully bidirectional, allowing
-the Python programmer to take full advantage of the power provided by various
-Objective-C based toolkits and the Objective-C programmer transparent access
-to Python based functionality.
+PyObjC provides bindings to most Objective-C frameworks on macOS, build
+upon a generic bidirectional bridge between Python and Objective-C.
 
-PyObjC not only includes the basic bridge, but also bindings to most Apple
-frameworks on macOS.
+PyObjC aims to get as close as possible to having Python and a first class
+language for developing applications and scripts on macOS using Apple's high
+level system APIs.
 
-The most important usage of this is writing Cocoa GUI applications on macOS
-in pure Python. See our tutorial for an example of this.
+.. tabs::
 
-Release information
--------------------
+   .. tab:: Python
 
-PyObjC 10.2 was released on 2024--03-16. See the :doc:`changelog <changelog>` for more information. PyObjC 10 supports Python 3.8 and later.
+      .. sourcecode:: Python
 
-PyObjC 9.2 is the last version supporting Python 3.7 PyObjC 8.5 is the last version supporting Python 3.6.
-PyObjC 5.3 is the last version supporting Python 2. These versions are
-no longer supported.
+         from Foundation import NSObject
+         from objc import super
 
-Supported platforms
--------------------
+         class MyCocoaObject(NSObject):
+             def initWithX_y_(self, x, y):
+                 self = super().init()
+                 if self is None:
+                     return None
+                 self.x = x
+                 self.y = y
+                 return self
 
-PyObjC supports Python 3.7 or later and does not support Python 2.
-PyObjC does not support other python implementation such as PyPy and Jython.
+   .. tab:: Objective-C
 
-PyObjC is regularly tested on macOS 10.14 and should work on macOS
-10.9 or later for the i386 and x86_64 architectures.
+      .. sourcecode:: objective-c
 
-PyObjC only supports macOS, and is not supported on other platforms (iOS,
-Linux, ...).
+         #import <Foundation/Foundation.h>
+
+         @interfae MyCocoaObject : NSObject {
+            int x, y;
+         }
+         -(instancetype)initWithX:(int)x y:(int)y;
+         @end
+
+         @implementation MyCocoaObject
+         -(instancetype)initWithX:(int)xValue y:(int)yValue
+         {
+            self = [super init];
+            if (!self) return nil;
+
+            x = xValue;
+            y = yValue;
+            return self;
+         }
+
+.. grid:: 1 1 2 3
+   :gutter: 2
+   :padding:  0
+   :class-row: surface
+
+   .. grid-item-card:: Release Info
+
+      PyObjC 10.2 was released on 2024-03-16.  See the :doc:`changelog <changelog>` for more information.
+
+
+   .. grid-item-card:: Supported Platforms
+      :link: supported-platforms
+      :link-type: doc
+
+      - macOS 10.9 or later
+      - Python 3.7 or later
+      - x86_64 and arm64
+
+   .. grid-item-card:: Installing PyObjC
+      :link: install
+      :link-type: doc
+
+      .. sourcecode:: sh
+
+         $ python3 -mpip install pyobjc
+
 
 General documentation
 =====================
@@ -56,7 +100,7 @@ General documentation
    metadata/index
    tutorials/index
    notes/exceptions
-   notes/instantiation
+   notes/instantiating
    notes/quartz-vs-coregraphics
    notes/using-nsxpcinterface
    notes/ctypes
@@ -67,6 +111,7 @@ General documentation
    deprecations
    team
    release-workflow
+   supported-platforms
 
 
 API documentation

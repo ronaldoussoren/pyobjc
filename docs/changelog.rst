@@ -57,11 +57,10 @@ Version 10.3
   To make methods unavailable in Python classes set these methods to ``None``,
   e.g.:
 
-  ```python
+  .. sourcecode:: python
 
-  class MyObject(NSObject):
-     init = None # NS_UNAVAILABLE
-  ```
+     class MyObject(NSObject):
+        init = None # NS_UNAVAILABLE
 
 * Added :func:`objc.registerUnavailableMethod`,
   :func:`objc.registerNewKeywordsFromSelector` and
@@ -150,11 +149,10 @@ Version 10.2
   This means that these types can be used as values passed to APIs expecting
   a filesystem URL, e.g.:
 
-  ```python
+  .. sourcecode:: python
 
-  path = pathlib.Path("/Applications/Numbers.app")
-  bundle = NSBundle.bundleWithURL_(path)
-  ```
+     path = pathlib.Path("/Applications/Numbers.app")
+     bundle = NSBundle.bundleWithURL_(path)
 
 * Fix some warnings in pyobjc-core when testing with Python 3.13a4.
 
