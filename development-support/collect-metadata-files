@@ -18,27 +18,36 @@ else:
 IGNORE = {
     # Frameworks not present in the latest SDK
     "GameCenter",
-    "InterfaceBuilderKit"
-    "Message",
     "PubSub",
 }
 
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
 
-SDK_VERSION = subprocess.check_output(["xcrun", "-sdk", "macosx", "--show-sdk-version"]).decode()
+SDK_VERSION = subprocess.check_output(
+    ["xcrun", "-sdk", "macosx", "--show-sdk-version"]
+).decode()
 
 scan_failed = []
 compile_failed = []
-for nm in BASE.glob("pyobjc-framework-*"):
+all_frameworks = sorted(BASE.glob("pyobjc-framework-*"))
+for idx, nm in enumerate(all_frameworks):
     cfg = configparser.RawConfigParser()
     cfg.read(nm / "metadata" / "metadata.ini")
 
-    for section in cfg.sections():
+    all_sections = sorted(cfg.sections())
+    for sec_idx, section in enumerate(all_sections):
         if section in IGNORE:
             continue
         print()
-        print(f"{BOLD}Processing {nm} - {section}{RESET}")
+        if len(all_sections) == 1:
+            print(
+                f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{section}{RESET}"
+            )
+        else:
+            print(
+                f"{BOLD}[{idx+1}/{len(all_frameworks)}; {sec_idx+1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
+            )
         print()
         overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")
 

@@ -103,7 +103,7 @@ class TestCMTagCollection(TestCase):
         self.assertArgIsFunction(
             CoreMedia.CMTagCollectionApplyUntil,
             1,
-            CMTagCollectionApplierFunction,
+            CMTagCollectionTagFilterFunction,
             False,
         )
 
