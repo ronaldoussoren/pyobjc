@@ -1,8 +1,5 @@
 :layout: landing
 
-Introduction
-============
-
 PyObjC provides bindings to most Objective-C frameworks on macOS, build
 upon a generic bidirectional bridge between Python and Objective-C.
 
@@ -57,6 +54,8 @@ level system APIs.
    :class-row: surface
 
    .. grid-item-card:: Release Info
+      :link: changelog
+      :link-type: doc
 
       PyObjC 10.2 was released on 2024-03-16.  See the :doc:`changelog <changelog>` for more information.
 
@@ -65,8 +64,8 @@ level system APIs.
       :link: supported-platforms
       :link-type: doc
 
-      - macOS 10.9 or later
-      - Python 3.7 or later
+      - macOS 10.9 and later
+      - Python 3.7 and later
       - x86_64 and arm64
 
    .. grid-item-card:: Installing PyObjC
@@ -75,105 +74,86 @@ level system APIs.
 
       .. sourcecode:: sh
 
-         $ python3 -mpip install pyobjc
+         $ python3 -mpip \
+           install pyobjc
 
-
-General documentation
-=====================
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
 
    install
    changelog
-   core/intro
-   core/protocols
-   core/blocks
-   core/vector-types
-   core/typemapping
-   core/fsref-fsspec
-   core/type-wrapper
-   core/introspecting
-   core/serializing
-   core/kvo
-   core/super
-   metadata/index
-   tutorials/index
-   notes/exceptions
-   notes/instantiating
-   notes/quartz-vs-coregraphics
-   notes/using-nsxpcinterface
-   notes/ctypes
-   examples/index
-   notes/framework-wrappers.rst
-   notes/codesigning.rst
-   apinotes
-   deprecations
-   team
-   release-workflow
    supported-platforms
 
 
-API documentation
-=================
+.. grid:: 1 1 2 2
+   :gutter: 2
 
-.. toctree::
-   :maxdepth: 2
+   .. grid-item-card:: Introduction
 
-   api/index
-   api/coregraphics-context-managers
-   api/threading-helpers
-   api/module-PyObjCTools.AppCategories
-   api/module-PyObjCTools.FndCategories
+      .. toctree::
+         :maxdepth: 1
 
+         core/intro
+         tutorials/index
+         notes/framework-wrappers.rst
+         apinotes
+         examples/index
+         core/introspecting
 
-Historical documents
-====================
+   .. grid-item-card:: Technical Notes
 
-.. toctree::
-   :maxdepth: 1
+      .. toctree::
+         :maxdepth: 1
 
-   xcode
-   core/objc-gc
+         notes/instantiating
+         core/super
+         notes/exceptions
+         notes/fsref
+         core/protocols
+         core/blocks
+         notes/ctypes
+         core/vector-types
+         core/kvo
+         core/serializing
+         notes/quartz-vs-coregraphics
+         notes/codesigning
+         deprecations
 
+   .. grid-item-card:: Internals
 
-PyObjC Development
-===================
+      .. toctree::
+         :maxdepth: 2
 
-PyObjC development is hosted at GitHub, in particular at <https://github.com/ronaldoussoren/pyobjc/>.
+         metadata/index
+         core/typemapping
+         core/type-wrapper
 
-Important resources:
+   .. grid-item-card:: Development
 
-* `Issue tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_
+      .. toctree::
+         :maxdepth: 2
 
-* `PyObjC-dev mailing list <https://sourceforge.net/projects/pyobjc/lists/pyobjc-dev>`_
+         team
+         release-workflow
+         dev/index
 
-  A low-volume mailinglist for PyObjC development.
+   .. grid-item-card:: API documentation
 
-* `Mailing list for the PythonMac SIG <https://www.python.org/community/sigs/current/pythonmac-sig/>`_
+      .. toctree::
+         :maxdepth: 2
 
-  A mailing list for anyone developing with Python on macOS.
+         api/index
+         api/coregraphics-context-managers
+         api/threading-helpers
+         api/module-PyObjCTools.AppCategories
+         api/module-PyObjCTools.FndCategories
 
-* `Repository browser <https://github.com/ronaldoussoren/pyobjc>`_
+   .. grid-item-card:: Historical
 
-* Creating a checkout of the repository:
+      .. toctree::
+         :maxdepth: 1
 
-  .. sourcecode:: sh
-
-     $ git clone https://github.com/ronaldoussoren/pyobjc
-
-  You can then use the "install.py" at the root of the checkout to
-  install this version of PyObjC.
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   dev/*
-
-
-Indices and tables
-==================
-
-* :ref:`modindex`
-* :ref:`search`
+         xcode
+         core/objc-gc
+         notes/using-nsxpcinterface

@@ -40,6 +40,7 @@ extensions = [
     "sphinx_tabs.tabs",
     "sphinx_togglebutton",
     "sphinxcontrib.mermaid",
+    "sphinx_reredirects",
 ]
 
 extlinks = {
@@ -203,4 +204,8 @@ intersphinx_mapping = {
     "macholib": ("https://macholib.readthedocs.io/en/latest/", None),
     "modulegraph": ("https://modulegraph.readthedocs.io/en/latest/", None),
     "py2app": ("https://py2app.readthedocs.io/en/latest/", None),
+}
+
+redirects = {
+    "core/fsref-fsspec": "../notes/fsref.html",
 }
