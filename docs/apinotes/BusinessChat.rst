@@ -1,8 +1,9 @@
+.. module:: BussinessChat
+   :platform: macOS 10.13.4+
+   :synopsis: Bindings for the BussinessChat
+
 API Notes: BusinessChat framework
 =================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,13 +12,14 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``BusinessChat`` package (that is, ``import BusinessChat``).
 
+.. note::
+
+   This framework is only available on macOS 10.13.4 and later.
+
 
 API Notes
 ---------
 
-.. note::
-
-   This framework is only available on macOS 10.13.4 and later.
 
 The entire API can be used from Python, but there are non-technical restrictions
 on who can use the framework.

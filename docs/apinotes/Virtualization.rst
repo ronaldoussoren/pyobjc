@@ -1,3 +1,7 @@
+.. module:: Virtualization
+   :platform: macOS 11
+   :synopsis: Bindings for the Virtualization framework
+
 API Notes: Virtualization framework
 ===================================
 
@@ -8,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Virtualization`` package (that is, ``import Virtualization``).
 
+.. note::
+
+   This framework is only available on macOS 11 and later, and only for Apple Silicon
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 11 and later.

@@ -1,3 +1,7 @@
+.. module:: MultipeerConnectivity
+   :platform: macOS 10.10+
+   :synopsis: Bindings for the MultipeerConnectivity framework
+
 API notes: MultipeerConnectivity framework
 ==========================================
 
@@ -8,7 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MultipeerConnectivity`` package (that is, ``import MultipeerConnectivity``).
 
+.. note::
+
+   This framework requires macOS 10.10 or later.
+
 API Notes
 ---------
-
-The entire "MultipeerConnectivity" framework on macOS 10.10 (or later) is available from Python.

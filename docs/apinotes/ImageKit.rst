@@ -13,5 +13,3 @@ These bindings are accessed through the ``Quartz`` package (that is, ``import Qu
 
 API Notes
 ---------
-
-The entire framework is usable from python.

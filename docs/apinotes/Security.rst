@@ -1,3 +1,7 @@
+.. module:: Security
+   :platform: macOS
+   :synopsis: Bindings for the Security framework
+
 API notes: Security framework
 =============================
 

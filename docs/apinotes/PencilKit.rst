@@ -1,3 +1,7 @@
+.. module:: PencilKit
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the PencilKit framework
+
 API Notes: PencilKit framework
 ==============================
 
@@ -9,9 +13,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``PencilKit`` package (that is, ``import PencilKit``).
 
-This framework is available starting macOS 10.15 (Catalina).
+.. note::
+
+   This framework is available starting macOS 10.15 (Catalina).
 
 API Notes
 ---------
-
-The entire API is exposed to Python.

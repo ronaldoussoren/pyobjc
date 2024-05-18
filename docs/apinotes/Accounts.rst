@@ -1,8 +1,10 @@
+.. module:: Accounts
+   :platform: macOS
+   :synopsis: Bindings for the Accounts framework
+   :deprecated:
+
 API notes: Accounts framework
 =============================
-
-Apple Documentation
--------------------
 
 The framework is documented on `Apple's developer website`__
 
@@ -10,10 +12,10 @@ The framework is documented on `Apple's developer website`__
 
 These bindings are accessed through the ``Accounts`` package (that is, ``import Accounts``).
 
+.. note::
+
+   This framework is deprecated by Apple in macOS 12.
+
 
 API Notes
 ---------
-
-The entire "Accounts" framework on macOS 10.8 (or later) is available from Python.
-
-This framework is deprecated by Apple in macOS 12.

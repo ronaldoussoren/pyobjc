@@ -1,3 +1,7 @@
+.. module:: LocalAuthenticationEmbeddedUI
+   :platform: macOS 12+
+   :synopsis: Bindings for the LocalAuthenticationEmbeddedUI framework
+
 API notes: LocalAuthenticationEmbeddedUI framework
 ==================================================
 
@@ -8,7 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``LocalAuthenticationEmbeddedUI`` package (that is, ``import LocalAuthenticationEmbeddedUI``).
 
+.. note::
+
+   The framework requires macOS 12 or later.
+
 API Notes
 ---------
-
-The entire "LocalAuthenticationEmbeddedUI" framework on macOS 12 (or later) is available from Python.

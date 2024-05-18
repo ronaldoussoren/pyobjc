@@ -1,3 +1,7 @@
+.. module:: iTunesLibrary
+   :platform: macOS
+   :synopsis: Bindings for the iTunesLibrary framework
+
 API Notes: iTunesLibrary framework
 ==================================
 

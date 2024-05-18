@@ -1,3 +1,8 @@
+.. module:: SyncServices
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the SyncServices framework
+   :deprecated:
+
 API Notes: SyncServices framework
 =================================
 

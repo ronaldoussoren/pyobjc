@@ -1,8 +1,9 @@
+.. module:: DiscRecordingUI
+   :platform: macOS
+   :synopsis: Bindings for the DiscRecordingUI framework
+
 API Notes: DiscRecordingUI framework
 ====================================
-
-Apple documentation
--------------------
 
 The full API is described in Apple's documentation, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).

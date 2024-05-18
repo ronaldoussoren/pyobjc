@@ -1,3 +1,7 @@
+.. module:: UniformTypeIdentifiers
+   :platform: macOS 11+
+   :synopsis: Bindings for the UniformTypeIdentifiers framework
+
 API Notes: UniformTypeIdentifiers framework
 ===========================================
 
@@ -8,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``UniformTypeIdentifiers`` package (that is, ``import UniformTypeIdentifiers``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 11 and later.
+
+API Notes
+---------

@@ -1,3 +1,7 @@
+.. module:: MetalPerformanceShaders
+   :platform: macOS 10.13+
+   :synopsis: Bindings for the MetalPerformanceShaders framework
+
 API Notes: MetalPerformanceShaders framework
 ============================================
 
@@ -11,16 +15,12 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MetalPerformanceShaders`` package (that is, ``import MetalPerformanceShaders``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 10.13 and later.
 
-Most of the API is available from Python, except for APIs using vector types.
-
+API Notes
+---------
 
 ```MPSPackedFloat3```
 .....................

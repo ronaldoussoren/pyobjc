@@ -1,3 +1,7 @@
+.. module:: ScriptingBridge
+   :platform: macOS
+   :synopsis: Bindings for the ScriptingBridge framework
+
 API Notes: ScriptingBridge framework
 ====================================
 
@@ -18,13 +22,17 @@ focuses on static tools for creating proxy classes for scriptable
 applications. This is in general not needed when you're programming
 in Python.
 
-In Python you can just as easy create a dynamic proxy object::
+In Python you can just as easy create a dynamic proxy object:
 
-	iTunes = SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
+.. sourcecode:: python
 
-This can then be used to call "AppleScript" methods, like this::
+   iTunes = SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
 
-	print iTunes.currentTrack().name()
+This can then be used to call "AppleScript" methods, like this:
+
+.. sourcecode:: python
+
+   print(iTunes.currentTrack().name())
 
 
 API Notes

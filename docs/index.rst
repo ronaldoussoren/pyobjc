@@ -116,7 +116,6 @@ level system APIs.
          core/vector-types
          core/kvo
          core/serializing
-         notes/quartz-vs-coregraphics
          notes/codesigning
          deprecations
 
@@ -149,6 +148,9 @@ level system APIs.
          api/module-PyObjCTools.AppCategories
          api/module-PyObjCTools.FndCategories
 
+      - :ref:`modindex`
+      - :ref:`genindex`
+
    .. grid-item-card:: Historical
 
       .. toctree::
@@ -157,3 +159,4 @@ level system APIs.
          xcode
          core/objc-gc
          notes/using-nsxpcinterface
+         notes/quartz-vs-coregraphics

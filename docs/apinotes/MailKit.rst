@@ -1,3 +1,7 @@
+.. module:: MailKit
+   :platform: macOS 12+
+   :synopsis: Bindings for the MailKit framework
+
 API Notes: MailKit framework
 ============================
 
@@ -8,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MailKit`` package (that is, ``import MailKit``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 12 and later.
+
+API Notes
+---------

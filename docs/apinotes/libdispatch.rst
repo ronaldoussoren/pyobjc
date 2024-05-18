@@ -1,8 +1,9 @@
+.. module:: dispatch
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the dispatch library
+
 API Notes: dispatch library
 ===========================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__.
 
@@ -15,12 +16,6 @@ For backward compatibility ``import libdispatch`` works as well.
 
 API Notes
 ---------
-
-.. note::
-
-   These bindings are only available on macOS 10.8 or later. The dispatch library is
-   available on earlier releases of macOS, but in a way that is not compatible with these
-   bindings.
 
 The libraries exposes a number APIs in two variants: one that has a block as an argument,
 and one that has a function as an argument. Both can be used from Python, but in general

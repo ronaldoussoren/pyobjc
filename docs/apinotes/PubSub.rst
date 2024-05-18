@@ -1,3 +1,8 @@
+.. module:: PubSub
+   :platform: macOS
+   :synopsis: Bindings for the PubSub framework
+   :deprecated:
+
 API Notes: PubSub framework
 ===========================
 
@@ -6,13 +11,9 @@ Apple's developer website.
 
 These bindings are accessed through the ``PubSub`` package (that is, ``import PubSub``).
 
-.. note:: This framework was removed in macOS 10.15
+.. note::
+
+   This framework was deprecated in macOS 10.9 and was removed in macOS 10.15
 
 API Notes
 ---------
-
-The PyObjC bindings for the PubSub framework are complete.
-
-.. note::
-
-   This framework is deprecated in macOS 10.9

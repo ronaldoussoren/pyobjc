@@ -1,3 +1,7 @@
+.. module:: Photos
+   :platform: macOS 10.11+
+   :synopsis: Bindings for the Photos framework
+
 API Notes: Photos framework
 ===========================
 
@@ -9,11 +13,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``Photos`` package (that is, ``import Photos``).
 
 
-API Notes
----------
-
 .. note::
 
    This framework is only available on OSX 10.11 and later.
 
-The entire framework is available from Python.
+API Notes
+---------

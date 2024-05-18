@@ -1,3 +1,7 @@
+.. module:: SceneKit
+   :platform: macOS
+   :synopsis: Bindings for the SceneKit framework
+
 API Notes: SceneKit framework
 =============================
 
@@ -19,11 +23,6 @@ to PyObjC's core bridge).
 This means ``SCNVector3ToFloat3`` and ``SCNVector3FromFloat3`` are not available from Python.
 
 The type "SCNVector3FromGLKVector3" is also not available at the moment.
-
-.. note::
-
-   This framework is only available on macOS 10.8 and later.
-
 
 * ``SCNErrorDomain``
 

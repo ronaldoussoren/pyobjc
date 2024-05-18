@@ -1,3 +1,7 @@
+.. module:: MediaAccessibility
+   :platform: macOS
+   :synopsis: Bindings for the MediaAccessibility framework
+
 API Notes: MediaAccessibility framework
 =======================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``MediaAccessibility`` package (that is,
 
 API Notes
 ---------
-
-The full framework is available from Python. This framework was introduced in macOS 10.9.

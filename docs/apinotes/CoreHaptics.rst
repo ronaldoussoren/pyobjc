@@ -1,8 +1,9 @@
+.. module:: CoreHaptics
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the CoreHaptics framework
+
 API Notes: CoreHaptics framework
 ================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,12 +12,10 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CoreHaptics`` package (that is, ``import CoreHaptics``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 10.15 and later.
 
-The full API is available from Python.
+
+API Notes
+---------

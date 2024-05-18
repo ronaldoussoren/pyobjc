@@ -1,3 +1,7 @@
+.. module:: MetalFX
+   :platform: macOS 13+
+   :synopsis: Bindings for the MetalFX framework
+
 API Notes: MetalFX framework
 ============================
 
@@ -11,12 +15,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MetalFX`` package (that is, ``import MetalFX``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 13 and later.
 
-The full API is available from Python.
+API Notes
+---------

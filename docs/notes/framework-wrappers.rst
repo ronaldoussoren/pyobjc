@@ -577,7 +577,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | SensorKit                                                                            |                                                      | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`ServerNotification </apinotes/ServerNotification>`                             | `pyobjc-framework-ServerNotification`_               | Removed in macOS 10.9.                  |
+| ServerNotification                                                                   | -                                                    | Removed in macOS 10.9.                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | ServiceExtensions                                                                    |                                                      | No public API on macOS                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -817,7 +817,6 @@ prioritizing work.
 .. _`pyobjc-framework-SecurityFoundation`: https://pypi.org/project/pyobjc-framework-SecurityFoundation/
 .. _`pyobjc-framework-SecurityInterface`: https://pypi.org/project/pyobjc-framework-SecurityInterface/
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
-.. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
 .. _`pyobjc-framework-SharedWithYouCore`: https://pypi.org/project/pyobjc-framework-SharedWithYouCore/
 .. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/

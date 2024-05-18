@@ -1,6 +1,9 @@
+.. module:: ExecutionPolicy
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the ExecutionPolicy framework
+
 API Notes: ExecutionPolicy framework
 ====================================
-
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -9,9 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``ExecutionPolicy`` package (that is, ``import ExecutionPolicy``).
 
-This framework is available starting macOS 10.15 (Catalina).
+.. note::
+
+   This framework is available in macOS 10.15 and later.
 
 API Notes
 ---------
-
-The entire API is exposed to Python.

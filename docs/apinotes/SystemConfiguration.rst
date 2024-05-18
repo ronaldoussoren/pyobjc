@@ -1,3 +1,7 @@
+.. module:: SystemConfiguration
+   :platform: macOS
+   :synopsis: Bindings for the SystemConfiguration framework
+
 API Notes: SystemConfiguration framework
 ========================================
 

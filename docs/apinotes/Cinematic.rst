@@ -1,3 +1,7 @@
+.. module:: Cinematic
+   :platform: macOS 14+
+   :synopsis: Bindings for the Cinematic framework
+
 API Notes: Cinematic framework
 ==============================
 
@@ -11,10 +15,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Cinematic`` package (that is, ``import Cinematic``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 14.0 and later.
+
+API Notes
+---------

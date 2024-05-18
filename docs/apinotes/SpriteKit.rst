@@ -1,3 +1,7 @@
+.. module:: SpriteKit
+   :platform: macOS
+   :synopsis: Bindings for the SpriteKit framework
+
 API Notes: SpriteKit framework
 ===============================
 
@@ -17,7 +21,3 @@ API Notes
 * ``+[SKFieldNode customFieldWithEvaluationBlock:]``
 
   This method is not supported yet (requires changes to the core bridge)
-
-.. note::
-
-   This framework is only available on macOS 10.9 and later.

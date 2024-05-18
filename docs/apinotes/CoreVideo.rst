@@ -1,3 +1,7 @@
+.. module:: CoreVideo
+   :platform: macOS
+   :synopsis: Bindings for the CoreVideo framework
+
 API Notes: CoreVideo framework
 =================================
 

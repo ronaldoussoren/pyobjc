@@ -1,3 +1,6 @@
+.. module:: IntentsUI
+   :platform: macOS 12+
+   :synopsis: Bindings for the IntentsUI framework
 
 API Notes: IntentsUI framework
 ==============================
@@ -9,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``IntentsUI`` package (that is, ``import IntentsUI``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 12 and later.
+
+API Notes
+---------

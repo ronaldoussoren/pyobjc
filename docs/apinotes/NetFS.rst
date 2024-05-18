@@ -1,3 +1,7 @@
+.. module:: NetFS
+   :platform: macOS
+   :synopsis: Bindings for the NetFS framework
+
 API Notes: NetFS framework
 ==========================
 

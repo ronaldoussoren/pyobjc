@@ -1,3 +1,7 @@
+.. module:: Foundation
+   :platform: macOS
+   :synopsis: Bindings for the Foundation framework
+
 API Notes: Foundation framework
 ===============================
 

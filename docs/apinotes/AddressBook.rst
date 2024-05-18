@@ -1,8 +1,10 @@
+.. module:: AddressBook
+   :platform: macOS
+   :synopsis: Bindings for the AddressBook framework
+   :deprecated:
+
 API Notes: AddressBook framework
 ================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,6 +13,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AddressBook`` package (that is, ``import AddressBook``).
 
+.. note::
+
+   This framework was deprecated by Apple in macOS 10.11, use the :mod:`Contacts` framework instead.
 
 API Notes
 ---------

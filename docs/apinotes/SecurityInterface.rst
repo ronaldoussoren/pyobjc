@@ -1,3 +1,7 @@
+.. module:: SecurityInterface
+   :platform: macOS
+   :synopsis: Bindings for the SecurityInterface framework
+
 API notes: SecurityInterface framework
 =======================================
 
@@ -11,8 +15,6 @@ These bindings are accessed through the ``SecurityInterface`` package (that is, 
 
 API Notes
 ---------
-
-The entire "SecurityInterface" framework on macOS is available from Python.
 
 ``-[SFAuthorizationView authorizationRights]``
 ..............................................

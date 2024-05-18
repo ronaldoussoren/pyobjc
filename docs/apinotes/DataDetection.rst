@@ -1,3 +1,7 @@
+.. module:: DataDetection
+   :platform: macOS 12+
+   :synopsis: Bindings for the DataDetection framework
+
 API Notes: DataDetection framework
 ===================================
 
@@ -8,10 +12,10 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``DataDetection`` package (that is, ``import DataDetection``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 12 and later.
+
+
+API Notes
+---------

@@ -1,3 +1,7 @@
+.. module:: CoreBluetooth
+   :platform: macOS
+   :synopsis: Bindings for the CoreBluetooth framework
+
 API notes: CoreBluetooth framework
 ==================================
 
@@ -9,8 +13,5 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``CoreBluetooth`` package (that is, ``import CoreBluetooth``).
 
 
-
 API Notes
 ---------
-
-The entire "CoreBluetooth" framework on macOS 10.9 (or later) is available from Python.

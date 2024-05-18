@@ -208,4 +208,5 @@ intersphinx_mapping = {
 
 redirects = {
     "core/fsref-fsspec": "../notes/fsref.html",
+    "apinotes/kvo": "../core/kvo.html",
 }

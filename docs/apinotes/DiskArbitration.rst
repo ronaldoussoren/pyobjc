@@ -1,3 +1,7 @@
+.. module:: DiskArbitration
+   :platform: macOS
+   :synopsis: Bindings for the DiskArbitration framework
+
 API Notes: DiskArbitration framework
 ====================================
 
@@ -12,8 +16,6 @@ These bindings are accessed through the ``DiskArbitration`` package (that is, ``
 
 API Notes
 ---------
-
-The entire framework is available from Python.
 
 
 DADiskCreateFromIOMedia

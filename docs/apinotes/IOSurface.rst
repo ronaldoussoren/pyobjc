@@ -1,3 +1,7 @@
+.. module:: IOSurface
+   :platform: macOS
+   :synopsis: Bindings for the IOSurface framework
+
 API Notes: IOSurface framework
 =================================
 
@@ -8,13 +12,8 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``IOSurface`` package (that is, ``import IOSurface``).
 
-
 API Notes
 ---------
 
 The entire framework is available from Python. But note that PyObjC does not have bindings
 for mach ports and the C library for XPC.
-
-.. note::
-
-   This framework is only available on macOS 10.6.

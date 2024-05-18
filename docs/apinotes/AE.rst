@@ -1,9 +1,6 @@
 API Notes: AE framework
 =======================
 
-Apple documentation
--------------------
-
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 

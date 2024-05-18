@@ -1,3 +1,7 @@
+.. module:: CoreData
+   :platform: macOS
+   :synopsis: Bindings for the CoreData framework
+
 API Notes: CoreData framework
 =============================
 

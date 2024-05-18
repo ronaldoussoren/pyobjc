@@ -1,3 +1,7 @@
+.. module:: SharedWithYouCore
+   :platform: macOS 13+
+   :synopsis: Bindings for the SharedWithYouCore framework
+
 API Notes: SharedWithYouCore framework
 ======================================
 
@@ -8,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SharedWithYouCore`` package (that is, ``import SharedWithYouCore``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is available on macOS 13 and later.
+
+API Notes
+---------

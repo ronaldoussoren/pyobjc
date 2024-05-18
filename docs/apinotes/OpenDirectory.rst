@@ -1,5 +1,9 @@
-API Notes: OpenDirectory and CFOpenDirectory frameworks
-=======================================================
+.. module:: OpenDirectory
+   :platform: macOS
+   :synopsis: Bindings for the OpenDirectory framework
+
+API Notes: OpenDirectory frameworks
+===================================
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,9 +15,6 @@ These bindings are accessed through the ``OpenDirectory`` package (that is, ``im
 
 API Notes
 ---------
-
-Both the OpenDirectory framework and the embedded CFOpenDirectory framework are fully wrapped
-and can be used as described in the generic PyObjC documentation.
 
 ODQuerySetCallback
 ..................

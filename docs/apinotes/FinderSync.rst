@@ -1,3 +1,7 @@
+.. module:: FinderSync
+   :platform: macOS 10.10+
+   :synopsis: Bindings for the FinderSync framework
+
 API notes: FinderSync framework
 ===============================
 
@@ -8,8 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``FinderSync`` package (that is, ``import FinderSync``).
 
+.. note::
+
+   This framework is available on macOS 10.10 and later.
 
 API Notes
 ---------
-
-The entire "FinderSync" framework on macOS 10.10 (or later) is available from Python.

@@ -1,8 +1,9 @@
+.. module:: AVRouting
+   :platform: macOS 13+
+   :synopsis: Bindings for the AVRouting framework
+
 API Notes: AVRouting framework
 ==============================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,10 +12,10 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AVRouting`` package (that is, ``import AVRouting``).
 
-
-API Notes
----------
-
 .. note::
 
    This framework is only available on macOS 13.0 and later.
+
+
+API Notes
+---------

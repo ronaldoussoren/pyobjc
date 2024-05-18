@@ -1,3 +1,7 @@
+.. module:: WebKit
+   :platform: macOS
+   :synopsis: Bindings for the WebKit framework
+
 API Notes: WebKit framework
 ===========================
 

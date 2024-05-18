@@ -1,3 +1,7 @@
+.. module:: ScreenCaptureKit
+   :platform: macOS 12.3+
+   :synopsis: Bindings for the ScreenCaptureKit framework
+
 API Notes: ScreenCaptureKit framework
 =====================================
 
@@ -8,8 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``ScreenCaptureKit`` package (that is, ``import ScreenCaptureKit``).
 
+.. note::
+
+   This framework requires macOS 12.3 or later.
 
 API Notes
 ---------
-
-The full API for the SceneKit framework is available from Python.
