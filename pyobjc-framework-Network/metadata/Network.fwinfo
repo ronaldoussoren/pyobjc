@@ -31,6 +31,7 @@
   "nw_proxy_config_enumerate_match_domains": {
    "args": {
     "1": {
+     "type_override": "@?",
      "callable": {
       "arguments": {
        "0": {
@@ -50,6 +51,7 @@
   "nw_proxy_config_enumerate_excluded_domains": {
    "args": {
     "1": {
+     "type_override": "@?",
      "callable": {
       "arguments": {
        "0": {
