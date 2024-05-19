@@ -68,9 +68,10 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print(name, file=fp)
         print("=" * len(name), file=fp)
         print("", file=fp)
+        print(".. container:: buttons", file=fp)
+        print("", file=fp)
         print(
-            f":download:`Download Example <{os.path.basename(input_file)}>`",
-            file=fp,
+            f"   :download:`Download Example <{os.path.basename(input_file)}>`", file=fp
         )
         print("", file=fp)
         print(readme, file=fp)
@@ -122,10 +123,9 @@ def convert_example(name, input_dir, output_dir, verbose):
         print(name, file=fp)
         print("=" * len(name), file=fp)
         print("", file=fp)
-        print(
-            f":download:`Download Example <{os.path.basename(zipname)}>`",
-            file=fp,
-        )
+        print(".. container:: buttons", file=fp)
+        print("", file=fp)
+        print(f"   :download:`Download Example <{os.path.basename(zipname)}>`", file=fp)
         print("", file=fp)
         print(readme, file=fp)
         print("", file=fp)
