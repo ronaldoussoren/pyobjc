@@ -127,6 +127,46 @@ html_baseurl = "https://pyobjc.readthedocs.io/en/latest/"
 # documentation.
 html_theme_options = {
     "accent_color": "jade",
+    "nav_links": [
+        {
+            "title": "GitHub",
+            "url": "https://github.com/ronaldoussoren/pyobjc",
+            "external": True,
+        },
+        {
+            "title": "Module Index",
+            "url": "py-modindex",
+        },
+        {
+            "title": "Support Me",
+            "url": "https://blog.ronaldoussoren.net/support/",
+            "external": True,
+        },
+        {
+            "title": "Resources",
+            "children": [
+                {
+                    "title": "Examples",
+                    "url": "examples/index",
+                    "summary": "Overview of example projects",
+                },
+                {
+                    "title": "Changelog",
+                    "url": "changelog",
+                    "summary": "Overview of updates",
+                },
+                {
+                    "title": "API Notes",
+                    "url": "apinotes",
+                    "summary": "Notes for framework bindings",
+                },
+            ],
+        },
+    ],
+    "globaltoc_expand_depth": 1,
+    "twitter_url": "https://twitter.com/ronaldoussoren",
+    "github_url": "https://github.com/ronaldoussoren/pyobjc",
+    "mastodon_url": "https://blog.ronaldoussoren.com/@ronald",
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -165,7 +205,7 @@ html_extra_path = ["_extra"]
 html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {"**": ["localtoc.html", "links.html", "donate.html", "searchbox.html"]}
+html_sidebars = {"**": ["localtoc.html"]}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

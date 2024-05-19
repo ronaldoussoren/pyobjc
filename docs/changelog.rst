@@ -3019,7 +3019,6 @@ Version 4.0b1
   - :doc:`Foundation </apinotes/Foundation>`
   - :doc:`FSEvents </apinotes/FSEvents>`
   - :doc:`GameController </apinotes/GameController>`
-  - :doc:`IMServicePlugIn </apinotes/IMServicePlugIn>`
   - :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`
   - :doc:`ImageIO </apinotes/ImageIO>`
   - :doc:`Intents </apinotes/Intents>`

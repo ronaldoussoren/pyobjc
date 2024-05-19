@@ -1,17 +1,28 @@
 :layout: landing
+:description: PyObjC provides bindings for Objective-C frameworks on macOS
 
-PyObjC provides bindings to most Objective-C frameworks on macOS, build
-upon a generic bidirectional bridge between Python and Objective-C.
+PyObjC
+======
 
-PyObjC aims to get as close as possible to having Python and a first class
-language for developing applications and scripts on macOS using Apple's high
-level system APIs.
+.. rst-class:: lead
+
+   PyObjC provides bindings to most Objective-C frameworks on macOS, build
+   upon a generic bidirectional bridge between Python and Objective-C.
+
+   PyObjC aims to get as close as possible to having Python and a first class
+   language for developing applications and scripts on macOS using Apple's high
+   level system APIs.
+
+.. container:: buttons
+
+   `GitHub <https://github.com/ronaldoussoren/pyobjc>`_
 
 .. tabs::
 
    .. tab:: Python
 
       .. sourcecode:: Python
+         :caption: Cocoa class definition in Python
 
          from Foundation import NSObject
          from objc import super
@@ -28,6 +39,7 @@ level system APIs.
    .. tab:: Objective-C
 
       .. sourcecode:: objective-c
+         :caption: Cocoa class definition in Objective-C
 
          #import <Foundation/Foundation.h>
 
@@ -89,9 +101,10 @@ level system APIs.
 .. grid:: 1 1 2 2
    :gutter: 2
 
-   .. grid-item-card:: Introduction
+   .. grid-item-card::
 
       .. toctree::
+         :caption: Introduction
          :maxdepth: 1
 
          core/intro
@@ -101,9 +114,10 @@ level system APIs.
          examples/index
          core/introspecting
 
-   .. grid-item-card:: Technical Notes
+   .. grid-item-card::
 
       .. toctree::
+         :caption: Technical Notes
          :maxdepth: 1
 
          notes/instantiating
@@ -119,27 +133,30 @@ level system APIs.
          notes/codesigning
          deprecations
 
-   .. grid-item-card:: Internals
+   .. grid-item-card::
 
       .. toctree::
+         :caption: Internals
          :maxdepth: 2
 
          metadata/index
          core/typemapping
          core/type-wrapper
 
-   .. grid-item-card:: Development
+   .. grid-item-card::
 
       .. toctree::
+         :caption: Development
          :maxdepth: 2
 
          team
          release-workflow
          dev/index
 
-   .. grid-item-card:: API documentation
+   .. grid-item-card::
 
       .. toctree::
+         :caption: API Documentation
          :maxdepth: 2
 
          api/index
@@ -151,9 +168,10 @@ level system APIs.
       - :ref:`modindex`
       - :ref:`genindex`
 
-   .. grid-item-card:: Historical
+   .. grid-item-card::
 
       .. toctree::
+         :caption: Historical
          :maxdepth: 1
 
          xcode

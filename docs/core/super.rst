@@ -6,6 +6,7 @@ is using the ``super()`` object to resolve methods
 in a super class:
 
 .. sourcecode:: python
+   :caption: Defining a Cocoa class
 
    class MyObject(NSObject):
        def init(self):
@@ -21,6 +22,7 @@ use the builtin ``super`` for this, but must use
 PyObjC's reimplementation of this builtin:
 
 .. sourcecode:: python
+   :caption: Importing *super*
 
    from objc import super
 
@@ -35,25 +37,24 @@ contain a mix of Python and Cocoa classes, PyObjC's
 ``super`` reimplements the builtin ``super`` with some
 additions to support PyObjC.
 
-Background
-..........
+.. admonition:: Background
 
-PyObjC lazily fills a class ``__dict__`` for two reasons:
+   PyObjC lazily fills a class ``__dict__`` for two reasons:
 
-1. Correctness: Cocoa classes can change at runtime by way
-   of using categories loaded from dynamic libraries. Because
-   of this eagerly scanning classes for methods can result
-   in an incomplete ``__dict__``. Furthermore the Objective-C
-   runtime does not have way to effiencly detect changes
-   to a class.
+   1. Correctness: Cocoa classes can change at runtime by way
+      of using categories loaded from dynamic libraries. Because
+      of this eagerly scanning classes for methods can result
+      in an incomplete ``__dict__``. Furthermore the Objective-C
+      runtime does not have way to effiencly detect changes
+      to a class.
 
-2. Performance: Cocoa contains a large number of classes with
-   an even larger number of methods. Eagerly scanning classes
-   has a significant overhead when importing framework bindings.
+   2. Performance: Cocoa contains a large number of classes with
+      an even larger number of methods. Eagerly scanning classes
+      has a significant overhead when importing framework bindings.
 
-In itself a lazily filled does not cause a problem because the
-attribute gets filled as needed. But this is a problem with the
-builtin ``super`` because that walks the MRO and directly peeks
-in the class ``__dict__`` without a way to intercept this. Because
-of this ``objc.super`` is a reimplementation of ``builtin.super``
-with special behaviour for Cocoa classes.
+   In itself a lazily filled does not cause a problem because the
+   attribute gets filled as needed. But this is a problem with the
+   builtin ``super`` because that walks the MRO and directly peeks
+   in the class ``__dict__`` without a way to intercept this. Because
+   of this ``objc.super`` is a reimplementation of ``builtin.super``
+   with special behaviour for Cocoa classes.
