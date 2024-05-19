@@ -1210,6 +1210,13 @@ Types
    for Cocoa classes, the default function doesn't support custom attribute
    getters as used by PyObjC.
 
+   Always import this method in a way that shadows the builtin super when
+   using *super* in class definitions, that is always import like this:
+
+   .. sourcecode:: python
+
+      from objc import super
+
 
 Constants
 ---------
