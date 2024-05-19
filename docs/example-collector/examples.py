@@ -69,7 +69,7 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print("=" * len(name), file=fp)
         print("", file=fp)
         print(
-            f"* :download:`Download example <{os.path.basename(input_file)}>`",
+            f":download:`Download Example <{os.path.basename(input_file)}>`",
             file=fp,
         )
         print("", file=fp)
@@ -86,7 +86,7 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print("." * len(path), file=fp)
         print("", file=fp)
 
-        print(f".. sourcecode:: {lang}", file=fp)
+        print(f".. code-block:: {lang}", file=fp)
         print("", file=fp)
         for ln in source.splitlines():
             print(f"    {ln.rstrip()}", file=fp)
@@ -122,15 +122,18 @@ def convert_example(name, input_dir, output_dir, verbose):
         print(name, file=fp)
         print("=" * len(name), file=fp)
         print("", file=fp)
-        print(f"* :download:`Download example <{zipname}>`", file=fp)
+        print(
+            f":download:`Download Example <{os.path.basename(zipname)}>`",
+            file=fp,
+        )
         print("", file=fp)
         print(readme, file=fp)
         print("", file=fp)
 
-        print(".. rst-class:: tabber", file=fp)
-        print("", file=fp)
         print("Sources", file=fp)
         print("-------", file=fp)
+        print("", file=fp)
+        print(".. tab-set::", file=fp)
         print("", file=fp)
 
         for dirpath, dirnames, filenames in os.walk(input_dir):
@@ -157,16 +160,12 @@ def convert_example(name, input_dir, output_dir, verbose):
                 with open(os.path.join(dirpath, fn)) as src_fp:
                     source = src_fp.read()
 
-                print(".. rst-class:: tabbertab", file=fp)
+                print(f"   .. tab-item:: {path}", file=fp)
                 print("", file=fp)
-                print(path, file=fp)
-                print("." * len(path), file=fp)
-                print("", file=fp)
-
-                print(f".. sourcecode:: {lang}", file=fp)
+                print(f"      .. code-block:: {lang}", file=fp)
                 print("", file=fp)
                 for ln in source.splitlines():
-                    print(f"    {ln.rstrip()}", file=fp)
+                    print(f"         {ln.rstrip()}", file=fp)
                 print("", file=fp)
 
         # TODO: Store other links with examples and add them to this list
