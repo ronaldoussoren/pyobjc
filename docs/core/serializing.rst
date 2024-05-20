@@ -1,3 +1,5 @@
+.. index:: pickle, nscoding
+
 Object-graph serialization
 ==========================
 
