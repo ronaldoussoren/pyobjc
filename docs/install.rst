@@ -1,133 +1,78 @@
 Installing PyObjC
 =================
 
-Supported versions
-------------------
-
-PyObjC supports Python 3.6 or later and does not support Python 2.
-
-PyObjC does not support other python implementation such as PyPy and Jython.
-
-PyObjC is regularly tested on macOS 10.14 and should work on macOS
-10.9 or later for the i386 and x86_64 architectures.
-
-PyObjC only supports macOS and does not support other platform (iOS, Linux, ...)
-
-Installation
-------------
+Preferred way to install PyObjC
+-------------------------------
 
 PyObjC is distributed as a collection of Python packages and can be installed
 using `pip`_.  Manual installation is also supported, but is a lot more work and is
 therefore more of a power-user feature.
 
-Installation using pip
-.......................
-
 Installing or upgrading PyObjC using `pip`_ is easy:
 
 .. sourcecode:: sh
 
-   $ pip3 install -U pyobjc
+   $ python3 -mpip install -U pyobjc
 
 For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
 
 Some use cases require installation of all framework bindings, not just those that are
-relevant for the current system. In PyObjC 8 or later you can install framework bindings
-using the *allbindings** extra:
+relevant for the current system. To do this use the *allbindings* extra:
 
 .. sourcecode:: sh
 
-   $ pip3 install -U 'pyobjc[allbindings]'
+   $ python3 -mpip install -U 'pyobjc[allbindings]'
 
 This requires using binary wheels, otherwise this can attempt to install bindings that
 require a newer SDK than available on the current machine.
 
-.. note::
-
-   Pip will install PyObjC 5 for users of Python 2.7, but only when using
-   pip 9 or later.
-
-
-Manual installation
-...................
-
-Manual installation is slightly involved, but still pretty easy.
-
-* First download the source code packages from the cheeseshop, you
-  need at least `pyobjc-core <https://pypi.org/project/pyobjc-core>`_ and
-  `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_.
-  You do not need `pyobjc <https://pypi.org/project/pyobjc>`_, that's a helper package that is only
-  used to pull in the other packages when installing using `pip`_.
-
-* Extract the archives
-
-* Install every packages using the standard recipe for Python package
-  installation:
-
-  .. sourcecode:: sh
-
-     $ python setup.py install
-
-  Due to package dependencies you need to install the packages in a
-  particular order:
-
-  - `pyobjc-core <https://pypi.org/project/pyobjc-core>`_
-
-  - `pyobjc-framework-Cocoa <https://pypi.org/project/pyobjc-framework-Cocoa>`_
-
-  - `pyobjc-framework-Quartz <https://pypi.org/project/pyobjc-framework-Quartz>`_
-
-  - all other packages (in arbitrary order)
-
-
-Requirements for building from source
+Source based installation through pip
 -------------------------------------
 
-PyObjC contains extensions and is distributed as source code. You therefore
-need a compiler to install PyObjC. The easiest way to get a compiler is do
-download `Xcode from the Mac App Store <https://apps.apple.com/us/app/xcode/id497799835?mt=12>`_.
+The installation method in the previous section will use binary wheels for most
+users. Some users prefer installing from source even when binary wheels are available.
 
-Depending on the Python release you may need to install the Command Line
-Tools for Xcode. To install the Command Line Tools first install Xcode from
-the Mac App Store. The next action depends on the OSX release you are using.
+.. sourcecode:: sh
 
-If you use OSX 10.8 or earlier, open Xcode and then open
-the Xcode preferences.  The downloads tab contains an option "components" and
-that list contains an option to install the "Command Line Tools".
+   $ python3 -mpip install -U --no-binary :all: pyobjc
 
-If you use OSX 10.9 or later, open a Terminal window and run ``xcode-select --install``.
+This does require having a system compiler installed, either Xcode or
+the Command Line Tools, for both with either the latest SDK for the current
+version of macOS, or an SDK for a later version of macOS. Using an older
+SDK can lead to build errors.
 
+Building from source using a checkout
+-------------------------------------
 
-Advanced installation options
------------------------------
+It is possible to install PyObjC from source using the GitHub repository,
+but that is more involved than pointing pip at the repository.  This does require
+having a system compiler installed, either Xcode or the Command Line Tools, for
+both with either the latest SDK for the current version of macOS, or an SDK
+for a later version of macOS. Using an older SDK can lead to build errors.
 
-Distributing binaries to other macOS releases
-.............................................
+.. sourcecode:: sh
 
-It is possible to create self-contained application bundles for PyObjC based
-application using `py2app <https://pypi.org/project/py2app>`_. You do need to take some care when
-you want to ship these applications to machines running a different
-version of macOS than the one you used for the build
+   $ git clone https://github.com/ronaldoussoren/pyobjc
+   $ cd pyobjc
+   $ python3 install.py
 
-* Later versions of macOS should work fine
+Use ``develop.py`` instead of ``install.py`` to end up with an editable installation.
 
-* Earlier version of macOS work fine, but you do need to ensure that
-  Python itself is build with ``MACOSX_DEPLOYMENT_TARGET`` set to the earliest
-  version of macOS you want to support. PyObC, and other extension packages,
-  should automatically pick up the deployment target from the Python build.
+Distributing to older versions of macOS
+---------------------------------------
 
-* Using the latest version of macOS to build binaries gives the most featureful
-  binaries, building on older macOS versions can drop specific support for
-  some newer APIs.
+PyObjC's code is written in such a way that binaries created on later versions
+of macOS can be distributed as far back as macOS 10.9, assuming the Python interpreter
+used was build with a suitable deployment target (and CPU architecture).
 
-  .. note::
+The binary wheels for PyObjC combined with the
+`Python installer on python.org <https://www.python.org/downloads/macos/>`_ can
+be used to build application distributions that target any version of macOS between
+10.9 and the current release of macOS.
 
-     PyObjC contains code that explicitly weak-links to a number of APIs that
-     are not available on all macOS releases.
-
-     You might still end up with an application that won't run on earlier
-     releases when you use another extension module that (accidentally) hard links
-     to an API that is not available in the earlier release.
+Note that other extension modules, both on PyPI and those for your own code might
+cause problems when running on older versions of macOS due to hard linking to
+symbols that aren't available on those versions of macOS.
 
 .. _pip: https://pypi.org/project/pip/
