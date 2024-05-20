@@ -1,4 +1,3 @@
-=============================
 Utility methods for threading
 =============================
 
@@ -81,7 +80,6 @@ until the call on the "other" thread is done.
 As an example:
 
   .. sourcecode:: python
-      :linenos:
 
 	class MyClass (NSObject):
 

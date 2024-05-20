@@ -5,9 +5,6 @@
    :platform: macOS
    :synopsis: SIMD support for PyObjC
 
-.. moduleauthor:: Ronald Oussoren <ronaldoussoren@mac.com>
-
-
 Introduction
 ------------
 
@@ -106,48 +103,48 @@ does not support named accessors to elements.
       Initialize the 4 elements of the vector after
       unpacking the vector argument.
 
-   .. data:: x: float
+   .. attribute:: x: float
 
       First element of the vector
 
-   .. data:: y: float
+   .. attribute:: y: float
 
       Second element of the vector
 
-   .. data:: z: float
+   .. attribute:: z: float
 
       Third element of the vector
 
-   .. data:: w: float
+   .. attribute:: w: float
 
       Fourth element of the vector
 
-   .. data:: xy
+   .. attribute:: xy: vector_double2
 
       A :class:`vector_double2` with the first and second
       elements.
 
-   .. data:: yz
+   .. attribute:: yz: vector_double2
 
       A :class:`vector_double2` with the second and third
       elements.
 
-   .. data:: zw
+   .. attribute:: zw: vector_double2
 
       A :class:`vector_double2` with the third and fourth
       elements.
 
-   .. data:: xyz
+   .. attribute:: xyz: vector_double3
 
       A :class:`vector_double3` with the first,  second and third
       elements.
 
-   .. data:: yzw
+   .. attribute:: yzw: vector_double3
 
       A :class:`vector_double3` with the second, third and fourth
       elements.
 
-   .. data:: xyzw
+   .. attribute:: xyzw: vector_double4
 
       A copy of the vector.
 
@@ -211,32 +208,32 @@ does not support named accessors to elements.
 
       Return a copy of *self*.
 
-   .. method:: __eq__(self, other)
+   .. method:: __eq__(self, other) -> bool
 
       Return True if *self* and *other* are equal
       after casting *other* to :class:`vector_double4`
 
-   .. method:: __ne__(self, other)
+   .. method:: __ne__(self, other) -> bool
 
       Return False if *self* and *other* are equal
       after casting *other* to :class:`vector_double4`
 
-   .. method:: __lt__(self, other)
+   .. method:: __lt__(self, other) -> bool
 
       Return True if *self* is less than *other*
       after casting *other* to :class:`vector_double4`
 
-   .. method:: __le__(self, other)
+   .. method:: __le__(self, other) -> bool
 
       Return True if *self* is less than or equal to *other*
       after casting *other* to :class:`vector_double4`
 
-   .. method:: __gt__(self, other)
+   .. method:: __gt__(self, other) -> bool
 
       Return True if *self* is greater than *other*
       after casting *other* to :class:`vector_double4`
 
-   .. method:: __ge__(self, other)
+   .. method:: __ge__(self, other) -> bool
 
       Return True if *self* is greater than or equal to *other*
       after casting *other* to :class:`vector_double4`
@@ -452,7 +449,7 @@ Matrix types
    element of the array is a :class:`vector_float2`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -463,7 +460,7 @@ Matrix types
    element of the array is a :class:`vector_float3`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -474,7 +471,7 @@ Matrix types
    element of the array is a :class:`vector_float3`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -485,7 +482,7 @@ Matrix types
    element of the array is a :class:`vector_float4`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -496,7 +493,7 @@ Matrix types
    element of the array is a :class:`vector_float4`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -507,7 +504,7 @@ Matrix types
    element of the array is a :class:`vector_double4`
    with the row values.
 
-   .. data:: columns
+   .. attribute:: columns
 
       The columns of the matrix.
 
@@ -518,7 +515,7 @@ Quaternions
 
    A struct wrapping a :class:`vector_float4`
 
-   .. data:: vector
+   .. attribute:: vector
 
       The wrapped value
 
@@ -526,6 +523,6 @@ Quaternions
 
    A struct wrapping a :class:`vector_doulbe4`
 
-   .. data:: vector
+   .. attribute:: vector
 
       The wrapped value

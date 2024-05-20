@@ -1,4 +1,3 @@
-====================================================
 API Description for :mod:`PyObjCTools.AppCategories`
 ====================================================
 
@@ -10,7 +9,7 @@ Introduction
 ------------
 
 The module :mod:`PyObjCTools.AppCategories` defines a number of categories on
-classes from the *AppKit* framework. These categories introduce
+classes from the :mod:`AppKit` framework. These categories introduce
 new methods that aren't present in that framework.
 
 To use these new methods use the following code somewhere in your program:
@@ -23,11 +22,11 @@ To use these new methods use the following code somewhere in your program:
 Additional methods on ``NSGraphicsContext``
 -------------------------------------------
 
-This module defines a method for ``NSGraphicsContext``:
+This module defines a method for :class:`NSGraphicsContext <AppKit.NSGraphicsContext>`:
 
-.. method:: NSGraphicsContext.savedGraphicsState
+.. method:: NSGraphicsContext.savedGraphicsState()
 
-   This is a Python context-manager for use with the ``with`` statement.
+   Contextmanager that saves and restores the graphics state.
 
    Usage:
 
@@ -50,20 +49,20 @@ This module defines a method for ``NSGraphicsContext``:
 Context-manager for ``NSAnimationContext``
 ------------------------------------------
 
-Class :c:type:`NSAnimationContext` can be used as the context for a ``with``
+Class :class:`NSAnimationContext <AppKit.NSAnimationContext>` can be used as the context for a ``with``
 statement:
 
-    .. sourcecode:: python
+.. sourcecode:: python
 
-	with NSAnimationContext:
-		pass
+   with NSAnimationContext:
+       pass
 
 This is equivalent to:
 
-    .. sourcecode:: python
+.. sourcecode:: python
 
-	NSAnimationContext.beginGrouping()
-	try:
-		pass
-	finally:
-		NSAnimationContext.endGrouping()
+   NSAnimationContext.beginGrouping()
+   try:
+       pass
+   finally:
+       NSAnimationContext.endGrouping()
