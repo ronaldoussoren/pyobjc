@@ -87,7 +87,7 @@ PyObjC
       .. sourcecode:: sh
 
          $ python3 -mpip \
-           install pyobjc
+           install -U pyobjc
 
 
 .. toctree::
