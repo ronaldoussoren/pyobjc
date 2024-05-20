@@ -250,3 +250,5 @@ redirects = {
     "core/fsref-fsspec": "../notes/fsref.html",
     "apinotes/kvo": "../core/kvo.html",
 }
+
+todo_include_todos = True
