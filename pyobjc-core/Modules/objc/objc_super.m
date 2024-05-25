@@ -165,6 +165,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 static PyType_Slot super_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&super_getattro},
     {.slot = Py_tp_doc, .pfunc = NULL},
+
     {0, NULL} /* sentinel */
 };
 
@@ -183,7 +184,7 @@ PyObjCSuper_Setup(PyObject* module)
 {
     PyObjC_Assert(sizeof(superobject) == PySuper_Type.tp_basicsize, -1);
 
-    super_slots[2].pfunc = (void*)(PySuper_Type.tp_doc);
+    super_slots[1].pfunc = (void*)(PySuper_Type.tp_doc);
 
 #if PY_VERSION_HEX < 0x030a0000
     PyObject* bases = PyTuple_New(1);
