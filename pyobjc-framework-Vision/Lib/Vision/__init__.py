@@ -76,7 +76,7 @@ def _setup():
         ("VNTrackRectangleRequest", b"init"),
         ("VNTrackRectangleRequest", b"initWithCompletionHandler:"),
         ("VNStatefulRequest", b"init"),
-        ("VNStatefulRequest", b"initwithcompletionhandler:"),
+        ("VNStatefulRequest", b"initWithCompletionHandler:"),
         ("VNStatefulRequest", b"new"),
         ("VNRecognizedPoint3D", b"init"),
         ("VNRecognizedPoint3D", b"new"),
