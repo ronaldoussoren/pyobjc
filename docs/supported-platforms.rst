@@ -22,7 +22,6 @@ Currently PyObjC supports Python 3.7 upto and including 3.13.
    PyObjC 11 will drop support for Python 3.7, which goes out of support later
    this year.
 
-
 .. admonition:: Old Python versions
 
    The list belows shows which versions of PyObjC are the latest that can be used with old
@@ -35,3 +34,13 @@ Currently PyObjC supports Python 3.7 upto and including 3.13.
    3.6    8.5
    2.7    5.3
    ====== ======
+
+Objective-C Garbage Collection
+------------------------------
+
+In macOS 10.5 up to 10.12 Objective-C optional Garbage Collection (GC) instead of
+retains counts for code that was explicitly compiled to support (or require) garbage
+collection. PyObjC does not support this feature.
+
+Note that this is different from Automatic Reference Counts (ARC), which is supported
+by PyObjC although PyObjC itself must be compiled without this feature enabled.

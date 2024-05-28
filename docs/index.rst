@@ -143,15 +143,6 @@ PyObjC
          core/typemapping
          core/type-wrapper
 
-   .. grid-item-card::
-
-      .. toctree::
-         :caption: Development
-         :maxdepth: 2
-
-         team
-         release-workflow
-         dev/index
 
    .. grid-item-card::
 
@@ -171,11 +162,20 @@ PyObjC
    .. grid-item-card::
 
       .. toctree::
+         :caption: Development
+         :maxdepth: 2
+
+         team
+         release-workflow
+         dev/index
+
+   .. grid-item-card::
+
+      .. toctree::
          :caption: Historical
          :maxdepth: 1
 
          xcode
-         core/objc-gc
          notes/using-nsxpcinterface
          notes/quartz-vs-coregraphics
 
