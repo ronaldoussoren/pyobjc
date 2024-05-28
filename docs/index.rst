@@ -56,7 +56,7 @@ General documentation
    metadata/index
    tutorials/index
    notes/exceptions
-   notes/instantiation
+   notes/instantiating
    notes/quartz-vs-coregraphics
    notes/using-nsxpcinterface
    notes/ctypes
