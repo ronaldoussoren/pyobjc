@@ -21,7 +21,7 @@ To use these new methods use the following code somewhere in your program:
 
 
 Additional methods on :class:`NSAffineTransform <Foundation.NSAffineTransform>`
--------------------------------------------------
+-------------------------------------------------------------------------------
 
 .. class:: Foundation.NSAffineTransform
 

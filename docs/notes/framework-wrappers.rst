@@ -685,7 +685,7 @@ prioritizing work.
 
 .. _PyOpenGL: https://pypi.org/project/PyOpenGL
 
-.. _appscript: https://pypi.org/project/appscript
+.. _appscript: https://appscript.sourceforge.io/
 
 .. _gssapi: https://pypi.org/project/gssapi
 

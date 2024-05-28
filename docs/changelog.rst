@@ -393,8 +393,7 @@ Version 9.2
 * :issue:`549`: Document that ``objc.super`` must be used instead of
   ``builtin.super`` when calling superclass methods in a Cocoa subclass.
 
-  See `the documentation <(https://pyobjc.readthedocs.io/core/super.html>`_
-  for more details.
+  See :doc:`the documentation <core/super>` for more details.
 
 * :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
 
