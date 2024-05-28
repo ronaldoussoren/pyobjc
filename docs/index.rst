@@ -177,7 +177,6 @@ PyObjC
 
          xcode
          notes/using-nsxpcinterface
-         notes/quartz-vs-coregraphics
 
 
 .. todolist::
