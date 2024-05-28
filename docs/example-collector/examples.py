@@ -1,9 +1,20 @@
 import os
 import zipfile
+import ast
 
 destination_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 source_dir = os.path.dirname(destination_dir)
 verbose = True
+
+EXAMPLES_OVERVIEW = """
+
+This page lists the example scripts and programs
+for PyObjC.
+
+At this point in time these examples are a mix
+of useful and less useful programs that provide
+information on how to use the various libraries.
+"""
 
 
 def split_groups(info):
@@ -60,9 +71,21 @@ def convert_script_example(name, input_file, output_dir, verbose):
         with open(
             os.path.join(output_dir, os.path.basename(input_file)), "w"
         ) as fp_out:
-            fp_out.write(fp_in.read())
+            script = fp_in.read()
+            fp_out.write(script)
 
-    readme = "..."
+    script_ast = ast.parse(script)
+    if (
+        isinstance(script_ast, ast.Module)
+        and script_ast.body
+        and isinstance(script_ast.body[0], ast.Expr)
+        and isinstance(script_ast.body[0].value, ast.Constant)
+    ):
+        readme = script_ast.body[0].value.value
+        if not isinstance(readme, str):
+            readme = ".. todo:: document this example script"
+    else:
+        readme = ".. todo:: document this example script"
 
     with open(os.path.join(output_dir, "index.rst"), "w") as fp:
         print(name, file=fp)
@@ -81,16 +104,21 @@ def convert_script_example(name, input_file, output_dir, verbose):
         with open(input_file) as src_fp:
             source = src_fp.read()
 
+        print("Sources", file=fp)
+        print("-------", file=fp)
         print("", file=fp)
-        path = os.path.basename(input_file)
-        print(path, file=fp)
-        print("." * len(path), file=fp)
+        print(".. tab-set::", file=fp)
         print("", file=fp)
 
-        print(f".. code-block:: {lang}", file=fp)
+        print("", file=fp)
+        path = os.path.basename(input_file)
+
+        print(f"   .. tab-item:: {path}", file=fp)
+        print("", file=fp)
+        print(f"      .. code-block:: {lang}", file=fp)
         print("", file=fp)
         for ln in source.splitlines():
-            print(f"    {ln.rstrip()}", file=fp)
+            print(f"         {ln.rstrip()}", file=fp)
         print("", file=fp)
 
 
@@ -309,15 +337,19 @@ def build_examples(app):
             print("", file=fp)
             print("    :download:`Download All Examples <all-examples.zip>`", file=fp)
             print("", file=fp)
+            print(EXAMPLES_OVERVIEW, file=fp)
+
             for project, info in all_examples:
-                print(project, file=fp)
-                print("-" * len(project), file=fp)
+                title = f"Library {project}"
+                print(title, file=fp)
+                print("-" * len(title), file=fp)
                 print("", file=fp)
 
                 for grp, items in split_groups(info):
                     if grp:
-                        print(grp, file=fp)
-                        print("." * len(grp), file=fp)
+                        title = f"{project}/{grp}"
+                        print(title, file=fp)
+                        print("." * len(title), file=fp)
                         print("", file=fp)
 
                     print(".. toctree::", file=fp)

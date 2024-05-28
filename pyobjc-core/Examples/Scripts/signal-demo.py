@@ -1,4 +1,9 @@
 #!/usr/bin/python
+"""
+This script demonstrates using the PyObjCTools.Signals
+module to show a stacktrace when there's a fatal signal
+when running a script.
+"""
 
 import os
 import signal

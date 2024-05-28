@@ -1,26 +1,22 @@
 #!/usr/bin/env pythonw
+"""
+The original PyObjC interface example by Steve Majewski.
 
-# HelloWorld.py
-#
-# The original PyObjC interface example by Steve Majewski.
-#
+A quick guide to runtime name mangling:
 
-# A quick guide to runtime name mangling:
-#
-#      ObjC             becomes           Python
-#    [ obj method ]                     obj.method()
-#    [ obj method: arg ]                obj.method_(arg)
-#    [ obj method: arg1 withOtherArgs: arg2 ]
-#                               obj.method_withOtherArgs_( arg1, arg2 )
+   ObjC             becomes              Python
+   [obj method ]                         obj.method()
+   [obj method:arg ]                     obj.method_(arg)
+   [obj method:arg1 withOtherArgs:arg2]  obj.method_withOtherArgs_( arg1, arg2 )
 
-#
-# NOTE:  This is no longer the recommended way to build applications
-# using the pyobjc bridge under with OS X.  In particular, applications
-# work much better if they are constructed in a proper app wrapper.
-#
-# This app does demonstrate that it is possible to build full
-# featured Cocoa apps without InterfaceBuilder.
-#
+
+NOTE:  This is no longer the recommended way to build applications
+using the pyobjc bridge under with OS X.  In particular, applications
+work much better if they are constructed in a proper app wrapper.
+
+This app does demonstrate that it is possible to build full
+featured Cocoa apps without InterfaceBuilder.
+"""
 
 from Cocoa import NSObject, NSApplication, NSApp, NSWindow, NSButton, NSSound
 from PyObjCTools import AppHelper
