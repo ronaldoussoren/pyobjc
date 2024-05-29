@@ -10,7 +10,7 @@ therefore more of a power-user feature.
 
 Installing or upgrading PyObjC using `pip`_ is easy:
 
-.. sourcecode:: sh
+.. sourcecode:: console
 
    $ python3 -mpip install -U pyobjc
 
@@ -20,7 +20,7 @@ archives, which means you don't have to have a compiler on your machine.
 Some use cases require installation of all framework bindings, not just those that are
 relevant for the current system. To do this use the *allbindings* extra:
 
-.. sourcecode:: sh
+.. sourcecode:: console
 
    $ python3 -mpip install -U 'pyobjc[allbindings]'
 
@@ -33,7 +33,7 @@ Source based installation through pip
 The installation method in the previous section will use binary wheels for most
 users. Some users prefer installing from source even when binary wheels are available.
 
-.. sourcecode:: sh
+.. sourcecode:: console
 
    $ python3 -mpip install -U --no-binary :all: pyobjc
 
@@ -51,7 +51,7 @@ having a system compiler installed, either Xcode or the Command Line Tools, for
 both with either the latest SDK for the current version of macOS, or an SDK
 for a later version of macOS. Using an older SDK can lead to build errors.
 
-.. sourcecode:: sh
+.. sourcecode:: console
 
    $ git clone https://github.com/ronaldoussoren/pyobjc
    $ cd pyobjc

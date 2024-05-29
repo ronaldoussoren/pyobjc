@@ -253,3 +253,4 @@ redirects = {
 }
 
 todo_include_todos = True
+copybutton_exclude = ".linenos, .gp"
