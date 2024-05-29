@@ -12,14 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``GameplayKit`` package (that is, ``import GameplayKit``).
 
-.. note::
-
-   This framework is only available on macOS 10.11 and later.
-
-
-A number of APIs in this framework use SIMD types such as ``vector_float2``.
-Those SIMD types are not yet supported in PyObjC and those APIs cannot be
-used.
+.. versionadded:: macOS 10.11
 
 
 ``GK_VERSION``

@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SharedWithYou`` package (that is, ``import SharedWithYou``).
 
-.. note::
-
-   This framework is available on macOS 13 and later.
+.. versionadded:: macOS 13
 
 API Notes
 ---------

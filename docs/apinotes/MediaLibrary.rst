@@ -14,9 +14,8 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 .. __: https://developer.apple.com/documentation/medialibrary/?preferredLanguage=occ
 
-.. note::
+.. versionadded:: macOS 10.15
 
-   The framework is deprecated in macOS 10.15.
 
 API Notes
 ---------

@@ -11,9 +11,8 @@ available on Apple's developer website.
 
 These bindings are accessed through the ``InstantMessage`` package (that is, ``import InstantMessage``).
 
-.. note::
-
-   This framework was deprecated by Apple in macOS 10.9, use the :mod:`Social` framework instead.
+.. deprecated:: macOS 10.9
+   Use the :mod:`Social` framework instead.
 
 
 API Notes

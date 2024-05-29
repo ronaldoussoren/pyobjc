@@ -10,9 +10,7 @@ on Apple's developer website.
 
 These bindings are accessed through the ``BusinessChat`` package (that is, ``import BusinessChat``).
 
-.. note::
-
-   This framework is only available on macOS 10.13.4 and later.
+.. versionadded:: macOS 10.13.4
 
 
 API Notes

@@ -15,10 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``DeviceCheck`` package (that is, ``import DeviceCheck``).
 
-
-.. note::
-
-   This framework requires macOS 10.15 or later.
+.. versionadded:: macOS 10.15
 
 API Notes
 ---------

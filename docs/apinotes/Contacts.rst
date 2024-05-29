@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Contacts`` package (that is, ``import Contacts``).
 
-.. note::
-
-   This framework is only available on macOS 10.11 and later.
+.. versionadded:: macOS 10.11
 
 
 API Notes

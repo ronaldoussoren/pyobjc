@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Accessibility`` package (that is, ``import Accessibility``).
 
-.. note::
-
-   This framework is only available on macOS 11 and later.
+.. versionadded:: macOS 11
 
 API Notes
 ---------

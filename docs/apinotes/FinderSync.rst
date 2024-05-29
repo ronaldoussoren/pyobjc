@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``FinderSync`` package (that is, ``import FinderSync``).
 
-.. note::
-
-   This framework is available on macOS 10.10 and later.
+.. versionadded:: macOS 10.10
 
 API Notes
 ---------

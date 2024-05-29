@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``NotificationCenter`` package (that is, ``import NotificationCenter``).
 
-.. note::
-
-   This framework is only available on macOS 10.10 and later.
+.. versionadded:: macOS 10.10
 
 API Notes
 ---------

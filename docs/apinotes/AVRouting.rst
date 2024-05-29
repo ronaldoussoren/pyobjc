@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AVRouting`` package (that is, ``import AVRouting``).
 
-.. note::
-
-   This framework is only available on macOS 13.0 and later.
+.. versionadded:: macOS 13
 
 
 API Notes

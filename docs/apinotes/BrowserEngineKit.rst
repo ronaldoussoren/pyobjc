@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``BrowserEngineKit`` package (that is, ``import BrowserEngineKit``).
 
-.. note::
-
-   This framework is only available on macOS 14.4 and later.
+.. versionadded:: macOS 14.4
 
 API Notes
 ---------

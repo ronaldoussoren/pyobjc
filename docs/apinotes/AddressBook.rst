@@ -13,9 +13,8 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AddressBook`` package (that is, ``import AddressBook``).
 
-.. note::
-
-   This framework was deprecated by Apple in macOS 10.11, use the :mod:`Contacts` framework instead.
+.. deprecated:: macOS 10.11
+   Use the :mod:`Contacts` framework instead.
 
 API Notes
 ---------

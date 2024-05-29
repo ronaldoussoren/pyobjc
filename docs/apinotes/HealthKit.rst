@@ -15,10 +15,11 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``HealthKit`` package (that is, ``import HealthKit``).
 
+.. versionadded:: macOS 13
+
 .. note::
 
-   This framework is only available on macOS 13 and later, and requires specific permissions
-   to use.
+   This framework requires a specific entitlement to use.
 
 API Notes
 ---------

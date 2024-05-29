@@ -13,9 +13,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``ColorSync`` package (that is,
 ``import ColorSync``).
 
-.. note::
-
-   This framework is only available on macOS 10.13 and later.
+.. versionadded:: macOS 10.13
 
 API Notes
 ---------

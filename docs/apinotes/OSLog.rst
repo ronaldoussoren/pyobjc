@@ -13,9 +13,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``OSLog`` package (that is, ``import OSLog``).
 
-.. note::
-
-   This framework is available starting macOS 10.15.
+.. versionadded:: macOS 10.15
 
 API Notes
 ---------

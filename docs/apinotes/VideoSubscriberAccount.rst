@@ -15,9 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``VideoSubscriberAccount`` package (that is, ``import VideoSubscriberAccount``).
 
-.. note::
-
-   This framework is only available on macOS 10.14 and later.
+.. versionadded:: macOS 10.14
 
 API Notes
 ---------

@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MetricKit`` package (that is, ``import MetricKit``).
 
-.. note::
-
-   This framework is available on macOS 12 and later.
+.. versionadded:: macOS 12
 
 API Notes
 ---------

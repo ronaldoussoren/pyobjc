@@ -11,9 +11,9 @@ Apple's developer website.
 
 These bindings are accessed through the ``PubSub`` package (that is, ``import PubSub``).
 
-.. note::
+.. deprecated:: macOS 10.9
 
-   This framework was deprecated in macOS 10.9 and was removed in macOS 10.15
+.. versionremoved:: macOS 10.15
 
 API Notes
 ---------

@@ -12,10 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CallKit`` package (that is, ``import CallKit``).
 
-.. note::
+.. versionadded:: macOS 11
 
-   This framework is only available on macOS 11 and later, although large portions
-   were made unavailable in the macOS 12.1 SDK.
+   Large portions of the framework are unavailable in the SDK for macOS 12.1 and later.
 
 API Notes
 ---------

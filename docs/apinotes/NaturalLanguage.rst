@@ -14,9 +14,7 @@ The framework is documented on `Apple's developer website`__
 
 These bindings are accessed through the ``NaturalLanguage`` package (that is, ``import NaturalLanguage``).
 
-.. note::
-
-   This framework requires macOS 10.14 or later.
+.. versionadded:: macOS 10.14
 
 API Notes
 ---------

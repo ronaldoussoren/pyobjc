@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CryptoTokenKit`` package (that is, ``import CryptoTokenKit``).
 
-.. note::
-
-   This framework is available on macOS 10.10 or later.
+.. versionadded:: macOS 10.10
 
 API Notes
 ---------

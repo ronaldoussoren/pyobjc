@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``LocalAuthenticationEmbeddedUI`` package (that is, ``import LocalAuthenticationEmbeddedUI``).
 
-.. note::
-
-   The framework requires macOS 12 or later.
+.. versionadded:: macOS 12
 
 API Notes
 ---------

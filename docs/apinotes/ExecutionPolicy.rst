@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``ExecutionPolicy`` package (that is, ``import ExecutionPolicy``).
 
-.. note::
-
-   This framework is available in macOS 10.15 and later.
+.. versionadded:: macOS 10.15
 
 API Notes
 ---------

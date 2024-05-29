@@ -12,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``LocalAuthentication`` package (that is, ``import LocalAuthentication``).
 
-.. note::
-
-   This framework requires macOS 10.10 or later.
+.. versionadded:: macOS 10.10
 
 API Notes
 ---------
