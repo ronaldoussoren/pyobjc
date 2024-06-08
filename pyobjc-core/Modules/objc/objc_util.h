@@ -123,6 +123,7 @@ extern PyObject* PyObjCNM___get__;
 extern PyObject* PyObjCNM_date_format_string;
 extern PyObject* PyObjCNM_objc_memview_object;
 extern PyObject* PyObjCNM_objc_NULL;
+extern PyObject* PyObjCNM___new__;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);

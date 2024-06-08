@@ -34,6 +34,7 @@ PyObject* PyObjCNM___get__;
 PyObject* PyObjCNM_date_format_string;
 PyObject* PyObjCNM_objc_memview_object;
 PyObject* PyObjCNM_objc_NULL;
+PyObject* PyObjCNM___new__;
 
 int
 PyObjCUtil_Init(PyObject* module)
@@ -84,6 +85,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_date_format_string, "%s");
     NEW_STR(PyObjCNM_objc_memview_object, "objc.memview object");
     NEW_STR(PyObjCNM_objc_NULL, "objc.NULL");
+    NEW_STR(PyObjCNM___new__, "__new__");
 
 #undef NEW_STR
 

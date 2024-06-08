@@ -164,6 +164,7 @@ OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
 OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute, NULL)
 OBJECT_PROP(_processClassDict, PyObjC_processClassDict, NULL)
 OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew, NULL)
+OBJECT_PROP(_genericNewClass, PyObjC_genericNewClass, NULL)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -303,6 +304,8 @@ static PyGetSetDef options_getset[] = {
            "Private helper used for splitting a class dict into parts"),
     GETSET(_setDunderNew,
            "Private helper used for setting __new__ of a new Python subclass"),
+    GETSET(_genericNewClass,
+           "Class of the generic __new__ implementation"),
     {
         .name = "deprecation_warnings",
         .get  = deprecation_warnings_get,

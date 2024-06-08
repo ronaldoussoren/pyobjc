@@ -3,6 +3,20 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.3.1
+--------------
+
+* :issue:`610`: Ensure ``__init__`` can be used when user implements ``__new__``.
+
+  Version 10.3 dropped support for calling ``__init__``, but that breaks
+  a number of popular projects. Reintroduce the ability to use ``__init__``
+  when a class or one of its super classes contains a user implemenentation
+  of ``__new__``.
+
+  Code relying on the ``__new__`` provided by PyObjC still cannot use
+  ``__init__`` for the reason explained in the 10.3 release notes.
+
+
 Version 10.3
 ------------
 
@@ -82,6 +96,21 @@ Version 10.3
   This can affect code that manually defines a ``__new__`` method for
   an Objective-C class, in previous versions that was the only way
   to create instances in a Pythontic way.
+
+  The primairy reason for this change is that the new default ``__new__``
+  implementation resulted in calling ``__init__`` for some code paths and
+  not others due to the python semantics for creating instances, e.g.:
+
+  .. sourcecode:: python3
+
+     class MyDocument(NSDocument):
+         def __init__(self, *args, **kwds): pass
+
+     document = MyDocument()   # __init__ gets called
+     document, error = MyDocument(type="mytype", error=None). # __init__ does not get called
+
+  In the last statement ``__init__`` does not get called because
+  ``__new__`` does not return an instance of ``MyDocument``.
 
 * ``NSArray``, ``NSMutableArray``, ``NSSet`` and ``NSMutableSet`` accepted
   a ``sequence`` keyword argument in previous versions. This is no longer supported.

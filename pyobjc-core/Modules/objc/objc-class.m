@@ -348,6 +348,7 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     PyTypeObject* type = (PyTypeObject*)self;
+    PyObject* result;
 
     if (type->tp_new == NULL) {
         PyErr_Format( PyExc_TypeError,
@@ -355,7 +356,40 @@ static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, 
         return NULL;
     }
 
-    return type->tp_new(type, args, kwds);
+
+    result = type->tp_new(type, args, kwds);
+    if (result == NULL) {
+        return result;
+    }
+
+    if (PyObject_TypeCheck(result, type) == 0) {
+        return result;
+    }
+
+    if (PyObjC_genericNewClass != NULL && PyObjC_genericNewClass != Py_None) {
+        PyObject* new = PyObject_GetAttr((PyObject*)type, PyObjCNM___new__);
+        if (new == NULL) { /* Shouldn't happen */
+            Py_DECREF(result);
+            return NULL;
+        }
+
+        int r = PyObject_TypeCheck(new, (PyTypeObject*)PyObjC_genericNewClass);
+        Py_DECREF(new);
+        if (r != 0) {
+            return result;
+        }
+    }
+
+    /* Only call __init__ when the generic new implementation is not used */
+
+    type = Py_TYPE(result);
+    if (type->tp_init != NULL) {
+        int res = type->tp_init(result, args, kwds);
+        if (res == -1) {
+            Py_SETREF(result, NULL);
+        }
+    }
+    return result;
 }
 
 

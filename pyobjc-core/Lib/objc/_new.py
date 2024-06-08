@@ -159,3 +159,6 @@ def make_generic_new(cls):
     __new__.__qualname__ = cls.__name__ + ".__new__"
     __new__.__module__ = cls.__module__
     return function_wrapper(__new__, cls)
+
+
+objc.options._genericNewClass = function_wrapper

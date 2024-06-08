@@ -1155,3 +1155,53 @@ class TestSuperUsage(TestCase):
                     def init(self):
                         self = super().init()
                         return self
+
+
+class OC_DunderInitBase(NSObject):
+    # Helper for ``TestUsingDunderInit``
+    def __new__(cls, *args, **kwds):
+        return cls.alloc().init()
+
+
+class TestUsingDunderInit(TestCase):
+    # Some users have an intermediate class
+    # which implements ``__new__`` to be able
+    # to create Cocoa sublcasses using a similar
+    # interface as normal Python subclasses, e.g.
+    # with ``__init__`` for initializing the instance.
+    #
+    # This should continue to work.
+
+    def test_using_dunder_init(self):
+        class OC_DunderInitSub1(OC_DunderInitBase):
+            def __init__(self, x, y=2):
+                self.x = x
+                self.y = y
+
+        o = OC_DunderInitSub1(x=1)
+        self.assertIsInstance(o, OC_DunderInitSub1)
+        self.assertEqual(o.x, 1)
+        self.assertEqual(o.y, 2)
+
+        with self.assertRaises(TypeError):
+            OC_DunderInitSub1()
+
+        with self.assertRaises(TypeError):
+            OC_DunderInitSub1(9, z=4)
+
+    def test_multipe_generations(self):
+        class OC_DunderInitSub2(OC_DunderInitBase):
+            def __init__(self, x, y):
+                self.x = x
+                self.y = y
+
+        class OC_DunderInitSub3(OC_DunderInitSub2):
+            def __init__(self, x, y, z):
+                super().__init__(x, y)
+                self.z = z
+
+        o = OC_DunderInitSub3(1, 2, 3)
+        self.assertIsInstance(o, OC_DunderInitSub3)
+        self.assertEqual(o.x, 1)
+        self.assertEqual(o.y, 2)
+        self.assertEqual(o.z, 3)
