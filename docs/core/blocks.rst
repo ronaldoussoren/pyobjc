@@ -14,9 +14,6 @@ functions. The syntax for them is like this:
 This is a literal for a block that takes no arguments and prints a value when
 called.
 
-PyObjC supports blocks, but only when compiled using a compiler that supports
-blocks in Objective-C (all Apple compilers on macOS 10.6 or later).
-
 Calling blocks from Python
 --------------------------
 
@@ -30,14 +27,17 @@ Limitations
 ...........
 
 It is not possible to call arbitrary blocks because PyObjC needs to store some
-additional metadata for a block. This means it is only possible to call blocks
-where the bridge knows the call signature, which means:
+additional metadata for a block. The framework bindings provide this additional
+metadata for all supported APIs.
+
+This means it is only possible to call blocks where the bridge knows the call signature, which means:
 
 * Block was returned from a method for which we know the signature of
-  returned blocks. PyObjC ships with metadata that covers all of Cocoa.
+  returned blocks. PyObjC ships with metadata that covers all of the system frameworks
+  on macOS.
 
 * When a block is stored in a Cocoa datastructure, such as an NSArray, and that
-  is the only reference to the block PyObjC will loose the additional information
+  is the only reference to the block PyObjC can loose the additional information
   that is needed to call the block.
 
 It is possible to retrieve and set the call signature of a block using the

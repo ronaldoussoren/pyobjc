@@ -249,7 +249,8 @@ intersphinx_mapping = {
 redirects = {
     "core/fsref-fsspec": "../notes/fsref.html",
     "apinotes/kvo": "../core/kvo.html",
-    "core/objc-gc": "../supported-platforms.html#objective-c-garbage-collectio",
+    "core/objc-gc": "../supported-platforms.html#objective-c-garbage-collection.html",
+    "core/vector-types": "../api/module-objc.simd.html",
 }
 
 todo_include_todos = True

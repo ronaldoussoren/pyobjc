@@ -127,7 +127,6 @@ PyObjC
          core/protocols
          core/blocks
          notes/ctypes
-         core/vector-types
          core/kvo
          core/serializing
          notes/codesigning
