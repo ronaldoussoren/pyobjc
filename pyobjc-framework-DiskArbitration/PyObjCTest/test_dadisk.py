@@ -53,6 +53,10 @@ class TestDADisk(TestCase):
         )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionDeviceTDMLockedKey, str)
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(DiskArbitration.kDADiskDescriptionFSKitPrefix, str)
+
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
     @min_os_level("10.10")
     def test_types(self):

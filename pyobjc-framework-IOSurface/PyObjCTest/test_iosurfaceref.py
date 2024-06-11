@@ -88,6 +88,10 @@ class TestIOSurfaceObjC(TestCase):
     def test_constants11_0(self):
         self.assertIsInstance(IOSurface.kIOSurfaceName, str)
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(IOSurface.kIOSurfaceContentHeadroom, str)
+
     def test_funtions(self):
         IOSurface.IOSurfaceGetTypeID
         self.assertResultIsCFRetained(IOSurface.IOSurfaceCreate)

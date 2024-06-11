@@ -21,3 +21,8 @@ class TestQLThumbnailGenerator(TestCase):
             3,
             b"v@",
         )
+        self.assertArgIsBlock(
+            QuickLookThumbnailing.QLThumbnailGenerator.saveBestRepresentationForRequest_toFileAtURL_asContentType_completionHandler_,  # noqa: B950
+            3,
+            b"v@",
+        )

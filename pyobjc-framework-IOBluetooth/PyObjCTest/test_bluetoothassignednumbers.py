@@ -1129,6 +1129,10 @@ class TestBluetoothAssignedNumbers(TestCase):
             0x26,
         )
         self.assertEqual(
+            IOBluetooth.kBluetoothHCIExtendedInquiryResponseDataTypeCsisRsiData,
+            0x2E,
+        )
+        self.assertEqual(
             IOBluetooth.kBluetoothHCIExtendedInquiryResponseDataType3DInformationData,
             0x3D,
         )

@@ -38,6 +38,13 @@ class TestCBUUID(TestCase):
         self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicValidRangeString, str)
         self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        # Introduced in macOS 15 SDK without availability macro
+        self.assertIsInstance(
+            CoreBluetooth.CBUUIDCharacteristicObservationScheduleString, str
+        )
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBUUID, objc.objc_class)

@@ -10,6 +10,8 @@ class TestQUICOptions(TestCase):
         self.assertEqual(Network.nw_quic_stream_type_unidirectional, 2)
         self.assertEqual(Network.nw_quic_stream_type_datagram, 3)
 
+        self.assertEqual(Network.NW_QUIC_CONNECTION_DEFAULT_KEEPALIVE, 0xFFFF)
+
     @min_os_level("12.0")
     def test_functions12_0(self):
         self.assertResultIsRetained(Network.nw_protocol_copy_quic_definition)

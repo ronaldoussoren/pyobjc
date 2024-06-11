@@ -31,6 +31,7 @@ class TestParameters(TestCase):
         self.assertEqual(Network.nw_parameters_expired_dns_behavior_default, 0)
         self.assertEqual(Network.nw_parameters_expired_dns_behavior_allow, 1)
         self.assertEqual(Network.nw_parameters_expired_dns_behavior_prohibit, 2)
+        self.assertEqual(Network.nw_parameters_expired_dns_behavior_persistent, 3)
 
         self.assertEqual(Network.nw_parameters_attribution_developer, 1)
         self.assertEqual(Network.nw_parameters_attribution_user, 2)

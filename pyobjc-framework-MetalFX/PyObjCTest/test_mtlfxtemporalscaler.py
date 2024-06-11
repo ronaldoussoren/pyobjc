@@ -187,6 +187,20 @@ class TestMTLFXTemporalScaler(TestCase):
         self.assertArgIsBOOL(TestMTLFXTemporalScalerHelper.setDepthReversed_, 0)
 
     def test_methods(self):
+        self.assertResultIsBOOL(MetalFX.MTLFXTemporalScalerDescriptor.supportsDevice_)
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.isAutoExposureEnabled
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.setAutoExposureEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.requiresSynchronousInitialization
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXTemporalScalerDescriptor.setRequiresSynchronousInitialization_,
+            0,
+        )
         self.assertResultIsBOOL(
             MetalFX.MTLFXTemporalScalerDescriptor.isInputContentPropertiesEnabled
         )

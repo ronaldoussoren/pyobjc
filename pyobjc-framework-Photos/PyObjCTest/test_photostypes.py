@@ -33,6 +33,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoScreenshot, (1 << 2))
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoLive, (1 << 3))
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoDepthEffect, (1 << 4))
+        self.assertEqual(Photos.PHAssetMediaSubtypeSpatialMedia, (1 << 10))
 
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoStreamed, (1 << 16))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoHighFrameRate, (1 << 17))
@@ -91,6 +92,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumRAW, 217)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumCinematic, 218)
+        self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumSpatial, 219)
         self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
         self.assertEqual(Photos.PHAssetEditOperationDelete, 1)

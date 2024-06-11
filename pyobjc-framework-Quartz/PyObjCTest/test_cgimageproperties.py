@@ -889,3 +889,19 @@ class TestCGImageProperties(TestCase):
     def testConstants14_4(self):
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFXPosition, str)
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFYPosition, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeISOGainMap, str)
+        self.assertIsInstance(Quartz.kCGImageAuxiliaryDataInfoColorSpace, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIndexMonoscopic, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsMonoscopicImage, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageStereoAggressors, str)
+        self.assertIsInstance(Quartz.kIIOStereoAggressors_Type, str)
+        self.assertIsInstance(Quartz.kIIOStereoAggressors_SubTypeURI, str)
+        self.assertIsInstance(Quartz.kIIOStereoAggressors_Severity, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupMonoscopicImageLocation, str)
+        self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Unspecified, str)
+        self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Left, str)
+        self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Right, str)
+        self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Center, str)

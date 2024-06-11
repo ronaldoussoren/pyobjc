@@ -76,3 +76,12 @@ class TestMPNowPlayingInfoCenter(TestCase):
     def testConstants13_0(self):
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAdTimeRanges, str)
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyCreditsStartTime, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoPropertyInternationalStandardRecordingCode, str
+        )
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoPropertyExcludeFromSuggestions, str
+        )

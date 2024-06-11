@@ -11,7 +11,7 @@ Version 11.0 (Unreleased, expected release is October 2024)
 * Updated metadata for the macOS 15 SDK (first beta), including bindings
   for the following frameworks:
 
-  -
+  - FSKit
 
 Version 10.3.1
 --------------

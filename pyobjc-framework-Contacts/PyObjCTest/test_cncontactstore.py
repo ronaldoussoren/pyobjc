@@ -3,9 +3,16 @@ import Contacts
 
 
 class TestCNContactStore(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Contacts.CNAuthorizationStatus)
+    def test_constants(self):
         self.assertIsEnumType(Contacts.CNEntityType)
+        self.assertEqual(Contacts.CNEntityTypeContacts, 0)
+
+        self.assertIsEnumType(Contacts.CNAuthorizationStatus)
+        self.assertEqual(Contacts.CNAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(Contacts.CNAuthorizationStatusRestricted, 1)
+        self.assertEqual(Contacts.CNAuthorizationStatusDenied, 2)
+        self.assertEqual(Contacts.CNAuthorizationStatusAuthorized, 3)
+        self.assertEqual(Contacts.CNAuthorizationStatusLimited, 4)
 
     def test_methods(self):
         self.assertArgIsOut(

@@ -879,6 +879,11 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Ogg_6_1, (214 << 16) | 7)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Ogg_7_1, (215 << 16) | 8)
 
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_E, (216 << 16) | 5)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_E, (217 << 16) | 6)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_MPEG_6_1_B, (218 << 16) | 7)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_D, (219 << 16) | 8)
+
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_BeginReserved, 0xF0000000)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_EndReserved, 0xFFFEFFFF)
 

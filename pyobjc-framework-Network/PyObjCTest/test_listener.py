@@ -58,3 +58,9 @@ class TestListener(TestCase):
     @min_os_level("12.0")
     def test_functions12_0(self):
         Network.nw_listener_set_new_connection_group_handler
+
+    @min_os_level("15.0")
+    def test_functions15_0(self):
+        self.assertResultIsRetained(Network.nw_listener_create_with_launchd_key)
+        self.assertArgIsIn(Network.nw_listener_create_with_launchd_key, 1)
+        self.assertArgIsNullTerminated(Network.nw_listener_create_with_launchd_key, 1)

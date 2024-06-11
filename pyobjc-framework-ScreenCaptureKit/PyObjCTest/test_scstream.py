@@ -26,6 +26,7 @@ class TestSCStream(TestCase):
 
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeScreen, 0)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeAudio, 1)
+        self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeMicrophone, 2)
 
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoStatus, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoDisplayTime, str)
@@ -47,6 +48,28 @@ class TestSCStream(TestCase):
         self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingSystem, 0)
         self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingNever, 1)
         self.assertEqual(ScreenCaptureKit.SCPresenterOverlayAlertSettingAlways, 2)
+
+        self.assertIsEnumType(ScreenCaptureKit.SCCaptureDynamicRange)
+        self.assertEqual(ScreenCaptureKit.SCCaptureDynamicRangeSDR, 0)
+        self.assertEqual(ScreenCaptureKit.SCCaptureDynamicRangeHDRLocalDisplay, 1)
+        self.assertEqual(ScreenCaptureKit.SCCaptureDynamicRangeHDRCanonicalDisplay, 2)
+
+        self.assertIsEnumType(ScreenCaptureKit.SCStreamConfigurationPreset)
+        self.assertEqual(
+            ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRStreamLocalDisplay, 0
+        )
+        self.assertEqual(
+            ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRStreamCanonicalDisplay,
+            1,
+        )
+        self.assertEqual(
+            ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRScreenshotLocalDisplay,
+            2,
+        )
+        self.assertEqual(
+            ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRScreenshotCanonicalDisplay,
+            3,
+        )
 
     @min_os_level("13.1")
     def test_constants13_1(self):
@@ -172,6 +195,26 @@ class TestSCStream(TestCase):
         self.assertArgIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.setIncludeChildWindows_, 0
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.showMouseClicks)
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setShowMouseClicks_, 0
+        )
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.captureMicrophone
+        )
+        self.assertArgIsBOOL(
+            ScreenCaptureKit.SCStreamConfiguration.setCaptureMicrophone_, 0
+        )
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.addRecordingOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.addRecordingOutput_error_, 1)
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.removeRecordingOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.removeRecordingOutput_error_, 1)
 
     def test_protocols(self):
         self.assertProtocolExists("SCStreamDelegate")
