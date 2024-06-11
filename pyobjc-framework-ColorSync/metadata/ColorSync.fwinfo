@@ -29,6 +29,7 @@
    }
   },
   "enum": {
+    "COLORSYNC_API_VERSION": { "ignore": true },
     "COLORSYNC_MD5_LENGTH": { "value": 16 },
     "kColorSync1BitGamut": { "value": 1 },
     "kColorSync8BitInteger": { "value": 2 },

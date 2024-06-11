@@ -42,7 +42,7 @@ for idx, nm in enumerate(all_frameworks):
         print()
         if len(all_sections) == 1:
             print(
-                f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{section}{RESET}"
+                f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{RESET}"
             )
         else:
             print(
