@@ -438,3 +438,12 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetProxiesProxyAutoConfigJavaScript, str
         )
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesFTPUser, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesGopherUser, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesHTTPUser, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesHTTPSUser, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesRTSPUser, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesSOCKSUser, str)

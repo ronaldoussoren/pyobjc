@@ -21,6 +21,7 @@ class TestSecAccessControl(TestCase):
         self.assertEqual(Security.kSecAccessControlApplicationPassword, 1 << 31)
         self.assertEqual(Security.kSecAccessControlDevicePasscode, 1 << 4)
         self.assertEqual(Security.kSecAccessControlWatch, 1 << 5)
+        self.assertEqual(Security.kSecAccessControlCompanion, 1 << 5)
 
     @min_os_level("10.10")
     def test_functions(self):

@@ -29,3 +29,8 @@ class TestVZError(TestCase):
             Virtualization.VZErrorNetworkBlockDeviceNegotiationFailed, 20001
         )
         self.assertEqual(Virtualization.VZErrorNetworkBlockDeviceDisconnected, 20002)
+
+        self.assertEqual(Virtualization.VZErrorUSBControllerNotFound, 30001)
+        self.assertEqual(Virtualization.VZErrorDeviceAlreadyAttached, 30002)
+        self.assertEqual(Virtualization.VZErrorDeviceInitializationFailure, 30003)
+        self.assertEqual(Virtualization.VZErrorDeviceNotFound, 30004)

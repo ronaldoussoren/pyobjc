@@ -47,6 +47,8 @@ class TestVTErrors(TestCase):
             VideoToolbox.kVTVideoEncoderMVHEVCVideoLayerIDsMismatchErr, -17698
         )
         self.assertEqual(VideoToolbox.kVTCouldNotOutputTaggedBufferGroupErr, -17699)
+        self.assertEqual(VideoToolbox.kVTCouldNotFindExtensionErr, -19510)
+        self.assertEqual(VideoToolbox.kVTExtensionConflictErr, -19511)
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )

@@ -230,3 +230,8 @@ class TestSecCertificate(TestCase):
         self.assertResultHasType(Security.SecCertificateCopyKey, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecCertificateCopyKey)
         self.assertArgHasType(Security.SecCertificateCopyKey, 0, objc._C_ID)
+
+    @min_os_level("15.0")
+    def test_functions15_0(self):
+        self.assertResultIsCFRetained(Security.SecCertificateCopyNotValidBeforeDate)
+        self.assertResultIsCFRetained(Security.SecCertificateCopyNotValidAfterDate)

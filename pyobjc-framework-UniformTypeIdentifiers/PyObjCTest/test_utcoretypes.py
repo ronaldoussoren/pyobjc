@@ -417,3 +417,28 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(
             UniformTypeIdentifiers.UTTypeAHAP, UniformTypeIdentifiers.UTType
         )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeCSS, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeHEICS, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeEXR, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeDNG, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeTarArchive, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeGeoJSON, UniformTypeIdentifiers.UTType
+        )
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeLinkPresentationMetadata,
+            UniformTypeIdentifiers.UTType,
+        )

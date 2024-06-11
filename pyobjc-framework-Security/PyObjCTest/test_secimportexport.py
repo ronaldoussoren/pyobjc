@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -45,6 +45,10 @@ class TestSecImportExport(TestCase):
         self.assertIsInstance(Security.kSecImportItemTrust, str)
         self.assertIsInstance(Security.kSecImportItemCertChain, str)
         self.assertIsInstance(Security.kSecImportItemIdentity, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(Security.kSecImportToMemoryOnly, str)
 
     def test_structs(self):
         v = Security.SecItemImportExportKeyParameters()

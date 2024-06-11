@@ -10,6 +10,10 @@ class TestSMAppService(TestCase):
         self.assertEqual(ServiceManagement.SMAppServiceStatusRequiresApproval, 2)
         self.assertEqual(ServiceManagement.SMAppServiceStatusNotFound, 3)
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(ServiceManagement.SMAppServiceErrorDomain, str)
+
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(ServiceManagement.SMAppService.registerAndReturnError_)

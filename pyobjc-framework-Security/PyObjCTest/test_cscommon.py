@@ -115,6 +115,7 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCSQuickCheck, 1 << 26)
         self.assertEqual(Security.kSecCSApplyEmbeddedPolicy, 1 << 25)
         self.assertEqual(Security.kSecCSStripDisallowedXattrs, 1 << 24)
+        self.assertEqual(Security.kSecCSMatchGuestRequirementInKernel, 1 << 23)
 
         self.assertEqual(Security.kSecCodeSignatureHost, 0x0001)
         self.assertEqual(Security.kSecCodeSignatureAdhoc, 0x0002)

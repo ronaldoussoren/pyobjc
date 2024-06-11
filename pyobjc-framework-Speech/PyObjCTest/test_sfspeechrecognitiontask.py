@@ -1,9 +1,13 @@
 import Speech
+import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestSFSpeechRecognitionTaskHelper(Speech.NSObject):
     def speechRecognitionTask_didFinishSuccessfully_(self, a, b):
+        pass
+
+    def speechRecognitionTask_didProcessAudioDuration_(self, a, b):
         pass
 
 
@@ -26,6 +30,12 @@ class TestSFSpeechRecognitionTask(TestCase):
         self.assertArgIsBOOL(
             TestSFSpeechRecognitionTaskHelper.speechRecognitionTask_didFinishSuccessfully_,
             1,
+        )
+
+        self.assertArgHasType(
+            TestSFSpeechRecognitionTaskHelper.speechRecognitionTask_didProcessAudioDuration_,
+            1,
+            objc._C_DBL,
         )
 
     @min_os_level("10.15")

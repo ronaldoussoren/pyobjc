@@ -195,6 +195,10 @@ class TestAuthorizationDB(TestCase):
     def test_constants_10_15(self):
         self.assertIsInstance(Security.kSecUseDataProtectionKeychain, str)
 
+    @min_os_level("15.0")
+    def test_constants_15_0(self):
+        self.assertIsInstance(Security.kSecMatchHostOrSubdomainOfHost, str)
+
     @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(Security.SecItemCopyMatching, objc._C_INT)

@@ -132,6 +132,7 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_4_0, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_4_1, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_4_2, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_0, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_1, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_2, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_AutoLevel, str)
@@ -378,4 +379,36 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_HorizontalFieldOfView,
             str,
+        )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_HEVC_Monochrome_AutoLevel,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_HEVC_Monochrome10_AutoLevel,
+            str,
+        )
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_4_2, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_5_0, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_5_1, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_5_2, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_4_2, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_5_0, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_5_1, str)
+        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_5_2, str)
+
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ProjectionKind, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ViewPackingKind, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_SuggestedLookAheadFrameCount, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_SpatialAdaptiveQPLevel, str
         )

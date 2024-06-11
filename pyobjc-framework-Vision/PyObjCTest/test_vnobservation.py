@@ -122,3 +122,7 @@ class TestVNObservation(TestCase):
             Vision.VNHumanBodyPose3DObservation.getCameraRelativePosition_forJointName_error_,
             2,
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(Vision.VNImageAestheticsScoresObservation.isUtility)

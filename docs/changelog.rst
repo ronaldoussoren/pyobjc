@@ -3,6 +3,16 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 11.0 (Unreleased, expected release is October 2024)
+-----------------------------------------------------------
+
+* Dropped support for Python 3.8. PyObjC 11 supports Python 3.9 and later.
+
+* Updated metadata for the macOS 15 SDK (first beta), including bindings
+  for the following frameworks:
+
+  -
+
 Version 10.3.1
 --------------
 

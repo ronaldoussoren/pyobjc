@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import ShazamKit
 
 
@@ -23,4 +23,11 @@ class TestSHCustomCatalog(TestCase):
         self.assertResultIsBOOL(ShazamKit.SHCustomCatalog.writeToURL_error_)
         self.assertArgIsOut(ShazamKit.SHCustomCatalog.writeToURL_error_, 1)
 
-        # XXX: unavailable -init, +new
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            ShazamKit.SHCustomCatalog.initWithDataRepresentation_error_
+        )
+        self.assertArgIsOut(
+            ShazamKit.SHCustomCatalog.initWithDataRepresentation_error_, 1
+        )
