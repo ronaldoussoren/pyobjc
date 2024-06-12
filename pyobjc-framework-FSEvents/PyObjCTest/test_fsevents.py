@@ -133,13 +133,17 @@ class TestFSEvents(TestCase):
             # the tests as root), therefore test against /dev which is a virtual
             # filesystem on OSX
             self.assertResultIsBOOL(FSEvents.FSEventsPurgeEventsForDeviceUpToEventId)
-            v = FSEvents.FSEventsPurgeEventsForDeviceUpToEventId(
-                os.stat("/dev").st_dev,
-                FSEvents.FSEventsGetLastEventIdForDeviceBeforeTime(
-                    os.stat("/dev").st_dev, 0
-                ),
-            )
-            self.assertIsInstance(v, bool)
+
+            if 0:
+                # Stop calling this API as this can affect system state and
+                # /dev is not always a virtual file system.
+                v = FSEvents.FSEventsPurgeEventsForDeviceUpToEventId(
+                    os.stat("/dev").st_dev,
+                    FSEvents.FSEventsGetLastEventIdForDeviceBeforeTime(
+                        os.stat("/dev").st_dev, 0
+                    ),
+                )
+                self.assertIsInstance(v, bool)
 
             FSEvents.FSEventStreamRetain(ref)
             FSEvents.FSEventStreamRelease(ref)
