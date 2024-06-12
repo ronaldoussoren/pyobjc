@@ -409,7 +409,7 @@ class TestCTFont(TestCase):
         self.assertIsInstance(v, tuple)
 
         v = CoreText.CTFontCopyTable(font, v[0], 0)
-        self.assertIsInstance(v, CoreText.CFDataRef)
+        self.assertIsInstance(v, CoreText.NSData)
 
         v = CoreText.CTFontGetTypeID()
         self.assertIsInstance(v, int)

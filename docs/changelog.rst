@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 10.3.2
+--------------
+
+* Fix a number of test failures on the first macOS 15 beta. These are
+  all documentation and test updates.
+
 Version 10.3.1
 --------------
 
