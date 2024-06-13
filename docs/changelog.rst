@@ -13,6 +13,12 @@ Version 11.0 (Unreleased, expected release is October 2024)
 
   - FSKit
 
+Version 10.3.2
+--------------
+
+* Fix a number of test failures on the first macOS 15 beta. These are
+  all documentation and test updates.
+
 Version 10.3.1
 --------------
 
