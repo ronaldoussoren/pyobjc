@@ -1,5 +1,10 @@
 import FileProvider
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+
+
+class TestNSFileProviderExtensionHelper(FileProvider.NSObject):
+    def shouldConnectExternalDomainWithCompletionHandler_(self, a):
+        pass
 
 
 class TestNSFileProviderExtension(TestCase):
@@ -14,6 +19,17 @@ class TestNSFileProviderExtension(TestCase):
         self.assertEqual(FileProvider.NSFileProviderItemContentModificationDate, 1 << 7)
         self.assertEqual(FileProvider.NSFileProviderItemFileSystemFlags, 1 << 8)
         self.assertEqual(FileProvider.NSFileProviderItemExtendedAttributes, 1 << 9)
+
+    @min_sdk_level("15.0")
+    def test_protocols(self):
+        self.assertProtocolExists("NSFileProviderExternalVolumeHandling")
+
+    def test_protocol_methods(self):
+        self.assertArgIsBlock(
+            TestNSFileProviderExtensionHelper.shouldConnectExternalDomainWithCompletionHandler_,
+            0,
+            b"v@",
+        )
 
     def test_methods(self):
         self.assertArgIsOut(

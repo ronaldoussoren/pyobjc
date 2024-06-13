@@ -82,6 +82,12 @@ class TestNSURLRequest(TestCase):
             Foundation.NSMutableURLRequest.setRequiresDNSSECValidation_, 0
         )
 
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(Foundation.NSURLRequest.allowsPersistentDNS)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.allowsPersistentDNS)
+        self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsPersistentDNS_, 0)
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("NSURLSessionWebSocketDelegate")

@@ -37,6 +37,10 @@ class TestNSToolbar(TestCase):
     def testConstants13_0(self):
         self.assertIsInstance(AppKit.NSToolbarItemKey, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(AppKit.NSToolbarNewIndexKey, str)
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.isVisible)
         self.assertArgIsBOOL(AppKit.NSToolbar.setVisible_, 0)
@@ -52,6 +56,11 @@ class TestNSToolbar(TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.allowsExtensionItems)
         self.assertArgIsBOOL(AppKit.NSToolbar.setAllowsExtensionItems_, 0)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AppKit.NSToolbar.allowsDisplayModeCustomization)
+        self.assertArgIsBOOL(AppKit.NSToolbar.setAllowsDisplayModeCustomization_, 0)
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):

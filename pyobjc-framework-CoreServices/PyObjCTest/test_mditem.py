@@ -213,3 +213,9 @@ class TestMDImport(TestCase):
     @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(CoreServices.kMDItemHTMLContent, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(CoreServices.kMDItemXMPCredit, str)
+        self.assertIsInstance(CoreServices.kMDItemXMPDigitalSourceType, str)
+        self.assertIsInstance(CoreServices.kMDItemMediaExtensions, str)

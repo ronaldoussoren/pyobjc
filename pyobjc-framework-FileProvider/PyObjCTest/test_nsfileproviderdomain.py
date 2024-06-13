@@ -17,6 +17,10 @@ class TestNSFileProviderDomain(TestCase):
             FileProvider.NSFileProviderDomainTestingModeInteractive, 1 << 1
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderKnownFolders)
+        self.assertEqual(FileProvider.NSFileProviderDesktop, 1 << 0)
+        self.assertEqual(FileProvider.NSFileProviderDocuments, 1 << 1)
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.isDisconnected)

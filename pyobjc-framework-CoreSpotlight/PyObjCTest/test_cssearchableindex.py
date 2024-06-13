@@ -36,6 +36,7 @@ class TestCSSearchableIndex(TestCase):
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeRemoteConnectionError, -1003)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeQuotaExceeded, -1004)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexingUnsupported, -1005)
+        self.assertEqual(CoreSpotlight.CSIndexErrorCodeMismatchedClientState, -1006)
 
     def testMethods(self):
         self.assertResultIsBOOL(CoreSpotlight.CSSearchableIndex.isIndexingAvailable)
@@ -100,4 +101,12 @@ class TestCSSearchableIndex(TestCase):
             CoreSpotlight.CSSearchableIndex.fetchDataForBundleIdentifier_itemIdentifier_contentType_completionHandler_,
             3,
             b"v@@",
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            CoreSpotlight.CSSearchableIndex.endIndexBatchWithExpectedClientState_newClientState_completionHandler_,
+            2,
+            b"v@",
         )

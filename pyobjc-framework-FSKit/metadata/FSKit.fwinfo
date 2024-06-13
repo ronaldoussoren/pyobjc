@@ -1,0 +1,288 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "FSBlockDeviceResource": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "readInto:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "synchronousReadInto:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeFrom:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "synchronousWriteFrom:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "synchronousMetaReadInto:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "synchronousMetaReadInto:startingAt:length:readAheadExtents:readAheadCount:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "metaWriteFrom:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "synchronousMetaWriteFrom:startingAt:length:replyHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "synchronousDelayedMetaWriteFrom:startingAt:length:replyHandler:"
+     }
+    ]
+   },
+   "FSEntityIdentifier": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithUUID:byteQualifier:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithUUID:longByteQualifier:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "identifierWithUUID:byteQualifier:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "identifierWithUUID:longByteQualifier:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithBytes:length:"
+     }
+    ]
+   },
+   "FSFileDataBuffer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "bytes"
+     }
+    ]
+   },
+   "FSFileName": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithCString:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithBytes:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "nameWithCString:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "nameWithBytes:length:"
+     }
+    ]
+   },
+   "FSItemAttributes": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "modifyTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "addedTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "changeTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "accessTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "birthTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "backupTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setModifyTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setAddedTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setChangeTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setAccessTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setBirthTime:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setBackupTime:"
+     }
+    ]
+   },
+   "FSMessageConnection": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "logLocalizedMessage:table:bundle:",
+      "variadic": true
+     },
+     {
+      "class_method": false,
+      "selector": "localizedMessage:table:bundle:",
+      "variadic": true
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "logLocalizedMessage:table:bundle:arguments:"
+     }
+    ]
+   },
+   "FSMutableFileDataBuffer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "mutableBytes"
+     }
+    ]
+   },
+   "FSTaskOptionsBundle": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "bundleForArguments:count:extension:operationType:errorHandler:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

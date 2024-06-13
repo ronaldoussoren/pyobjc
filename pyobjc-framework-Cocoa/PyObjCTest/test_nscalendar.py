@@ -96,6 +96,9 @@ class TestNSCalendar(TestCase):
             CoreFoundation.kCFCalendarUnitYearForWeekOfYear,
         )
         self.assertEqual(Foundation.NSCalendarUnitNanosecond, (1 << 15))
+        self.assertEqual(
+            Foundation.NSCalendarUnitDayOfYear, Foundation.kCFCalendarUnitDayOfYear
+        )
         self.assertEqual(Foundation.NSCalendarUnitCalendar, (1 << 20))
         self.assertEqual(Foundation.NSCalendarUnitTimeZone, (1 << 21))
         self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))

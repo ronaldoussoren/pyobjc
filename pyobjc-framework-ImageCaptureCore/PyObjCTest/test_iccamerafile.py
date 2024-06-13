@@ -44,3 +44,11 @@ class TestICCameraFile(TestCase):
             0,
             b"v@@",
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            ImageCaptureCore.ICCameraFile.requestFingerprintWithCompletion_,
+            0,
+            b"v@@",
+        )

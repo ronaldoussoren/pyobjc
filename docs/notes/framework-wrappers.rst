@@ -304,6 +304,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Foundation </apinotes/Foundation>`                                             | `pyobjc-framework-Cocoa`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`FSKit </apinotes/FSKit>`                                                       | `pyobjc-framework-FSKit`_                            |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | FWAUserLib                                                                           | -                                                    | Will not be wrapped, framework is       |
 |                                                                                      |                                                      | deprecated in macOS 10.12 and removed   |
 |                                                                                      |                                                      | in macOS 13                             |
@@ -858,3 +860,4 @@ prioritizing work.
 .. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
 .. _`pyobjc-framework-SensitiveContentAnalysis`: https://pypi.org/project/pyobjc-framework-SensitiveContentAnalysis/
 .. _`pyobjc-framework-Cinematic`: https://pypi.org/project/pyobjc-framework-Cinematic/
+.. _`pyobjc-framework-FSKit`: https://pypi.org/project/pyobjc-framework-FSKit/

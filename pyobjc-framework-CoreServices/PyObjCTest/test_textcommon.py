@@ -98,6 +98,9 @@ class TestTextCommon(TestCase):
         self.assertEqual(CoreServices.kTextEncodingUnicodeV11_0, 0x0115)
         self.assertEqual(CoreServices.kTextEncodingUnicodeV12_1, 0x0116)
         self.assertEqual(CoreServices.kTextEncodingUnicodeV13_0, 0x0117)
+        self.assertEqual(CoreServices.kTextEncodingUnicodeV14_0, 0x0118)
+        self.assertEqual(CoreServices.kTextEncodingUnicodeV15_0, 0x0119)
+        self.assertEqual(CoreServices.kTextEncodingUnicodeV15_1, 0x011A)
 
         self.assertEqual(CoreServices.kTextEncodingISOLatin1, 0x0201)
         self.assertEqual(CoreServices.kTextEncodingISOLatin2, 0x0202)

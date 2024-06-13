@@ -87,13 +87,24 @@ class TestNSTextCheckingClientHelper(AppKit.NSObject):
 
 
 class TestNSTextCheckingClient(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSTextInputTraitType)
 
     def test_constants(self):
+        self.assertIsEnumType(AppKit.NSTextInputTraitType)
         self.assertEqual(AppKit.NSTextInputTraitTypeDefault, 0)
         self.assertEqual(AppKit.NSTextInputTraitTypeNo, 1)
         self.assertEqual(AppKit.NSTextInputTraitTypeYes, 2)
+
+        self.assertIsEnumType(AppKit.NSWritingToolsBehavior)
+        self.assertEqual(AppKit.NSWritingToolsBehaviorNone, -1)
+        self.assertEqual(AppKit.NSWritingToolsBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSWritingToolsBehaviorComplete, 1)
+        self.assertEqual(AppKit.NSWritingToolsBehaviorLimited, 2)
+
+        self.assertIsEnumType(AppKit.NSWritingToolsAllowedInputOptions)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsDefault, 0)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsPlainText, 1 << 0)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsRichText, 1 << 1)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsTable, 1 << 2)
 
     def test_methods(self):
         self.assertResultHasType(

@@ -125,6 +125,11 @@ class TestCGEventTypes(TestCase):
         )
         self.assertEqual(Quartz.kCGEventUnacceleratedPointerMovementX, 170)
         self.assertEqual(Quartz.kCGEventUnacceleratedPointerMovementY, 171)
+        self.assertEqual(Quartz.kCGScrollWheelEventMomentumOptionPhase, 173)
+        self.assertEqual(Quartz.kCGScrollWheelEventAcceleratedDeltaAxis1, 176)
+        self.assertEqual(Quartz.kCGScrollWheelEventAcceleratedDeltaAxis2, 175)
+        self.assertEqual(Quartz.kCGScrollWheelEventRawDeltaAxis1, 178)
+        self.assertEqual(Quartz.kCGScrollWheelEventRawDeltaAxis2, 177)
 
         self.assertEqual(Quartz.kCGEventMouseSubtypeDefault, 0)
         self.assertEqual(Quartz.kCGEventMouseSubtypeTabletPoint, 1)

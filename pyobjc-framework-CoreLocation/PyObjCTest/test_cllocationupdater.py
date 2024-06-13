@@ -22,3 +22,15 @@ class TestCLLocationUpdater(TestCase):
             2,
             b"v@",
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDenied)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDeniedGlobally)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationRestricted)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.stationary)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.insufficientlyInUse)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.locationUnavailable)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.accuracyLimited)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.serviceSessionRequired)
+        self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationRequestInProgress)

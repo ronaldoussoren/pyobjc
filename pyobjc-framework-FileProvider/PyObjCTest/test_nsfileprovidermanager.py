@@ -26,6 +26,27 @@ class TestNSFileProviderManager(TestCase):
             FileProvider.NSFileProviderDomainRemovalModePreserveDownloadedUserData, 2
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderVolumeUnsupportedReason)
+        self.assertEqual(FileProvider.NSFileProviderVolumeUnsupportedReasonNone, 0)
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonUnknown, 1 << 0
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonNonAPFS, 1 << 1
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonNonEncrypted, 1 << 2
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonReadOnly, 1 << 3
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonNetwork, 1 << 4
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderVolumeUnsupportedReasonQuarantined, 1 << 5
+        )
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertArgIsBlock(
@@ -136,6 +157,20 @@ class TestNSFileProviderManager(TestCase):
             FileProvider.NSFileProviderManager.requestDownloadForItemWithIdentifier_requestedRange_completionHandler_,  # noqa:  B950
             2,
             b"v@",
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            FileProvider.NSFileProviderManager.checkDomainsCanBeStored_onVolumeAtURL_unsupportedReason_error_
+        )
+        self.assertArgIsOut(
+            FileProvider.NSFileProviderManager.checkDomainsCanBeStored_onVolumeAtURL_unsupportedReason_error_,
+            0,
+        )
+        self.assertArgIsOut(
+            FileProvider.NSFileProviderManager.checkDomainsCanBeStored_onVolumeAtURL_unsupportedReason_error_,
+            3,
         )
 
     @min_sdk_level("11.3")

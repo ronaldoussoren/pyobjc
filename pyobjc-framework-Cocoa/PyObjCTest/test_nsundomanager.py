@@ -85,6 +85,8 @@ class TestSubclassingUndo(TestCase):
         )
         self.assertEqual(Foundation.NSUndoCloseGroupingRunLoopOrdering, 350_000)
 
+        self.assertIsTypedEnum(Foundation.NSUndoManagerUserInfoKey, str)
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(Foundation.NSUndoManagerGroupIsDiscardableKey, str)

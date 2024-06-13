@@ -232,3 +232,13 @@ class TestCGImage(TestCase):
     def testFunctions10_14(self):
         Quartz.CGImageGetByteOrderInfo
         Quartz.CGImageGetPixelFormatInfo
+
+    @min_os_level("15.0")
+    def testFunctions15_0(self):
+        self.assertResultIsCFRetained(Quartz.CGImageCreateWithEDRHeadroom)
+        # XXX: The 'decode' parameter is a pointer, but unclear what it is supposed to be
+        self.fail()
+
+        Quartz.CGImageGetContentHeadroom
+        Quartz.CGImageShouldToneMap
+        Quartz.CGImageContainsImageSpecificToneMappingMetadata

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPopUpButton(TestCase):
@@ -13,3 +13,11 @@ class TestNSPopUpButton(TestCase):
         self.assertResultIsBOOL(AppKit.NSPopUpButton.autoenablesItems)
         self.assertArgIsBOOL(AppKit.NSPopUpButton.setAutoenablesItems_, 0)
         self.assertResultIsBOOL(AppKit.NSPopUpButton.selectItemWithTag_)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AppKit.NSPopUpButton.usesItemFromMenu)
+        self.assertArgIsBOOL(AppKit.NSPopUpButton.setUsesItemFromMenu_, 0)
+
+        self.assertResultIsBOOL(AppKit.NSPopUpButton.altersStateOfSelectedItem)
+        self.assertArgIsBOOL(AppKit.NSPopUpButton.setAltersStateOfSelectedItem_, 0)

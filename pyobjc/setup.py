@@ -85,6 +85,7 @@ FRAMEWORK_WRAPPERS = [
     ("FileProvider", "10.15", None),
     ("FileProviderUI", "10.15", None),
     ("FSEvents", "10.5", None),
+    ("FSKit", "15.0", None),
     ("FinderSync", "10.10", None),
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
@@ -198,6 +199,7 @@ MACOS_TO_DARWIN = {
     "13.0": "22.0",
     "14.0": "23.0",
     "14.4": "23.4",
+    "15.0": "24.0",
 }
 
 

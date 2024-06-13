@@ -237,3 +237,4 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfMonth, 1 << 12)
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfYear, 1 << 13)
         self.assertEqual(CoreFoundation.kCFCalendarUnitYearForWeekOfYear, 1 << 14)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitDayOfYear, 1 << 16)

@@ -61,3 +61,7 @@ class TestCTStringAttributes(TestCase):
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(CoreText.kCTBaselineOffsetAttributeName, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(CoreText.kCTAdaptiveImageProviderAttributeName, str)

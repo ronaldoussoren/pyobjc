@@ -74,3 +74,17 @@ class TestSCNGeometry(TestCase):
 
         self.assertResultIsBOOL(SceneKit.SCNGeometryTessellator.isScreenSpace)
         self.assertArgIsBOOL(SceneKit.SCNGeometryTessellator.setScreenSpace_, 0)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertArgIsBOOL(
+            SceneKit.SCNGeometryElement.geometryElementWithData_primitiveType_primitiveCount_indicesChannelCount_interleavedIndicesChannels_bytesPerIndex_,
+            4,
+        )
+        self.assertArgIsBOOL(
+            SceneKit.SCNGeometryElement.geometryElementWithBuffer_primitiveType_primitiveCount_indicesChannelCount_interleavedIndicesChannels_bytesPerIndex_,
+            4,
+        )
+        self.assertResultIsBOOL(
+            SceneKit.SCNGeometryElement.hasInterleavedIndicesChannels
+        )

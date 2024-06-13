@@ -116,6 +116,25 @@ class TestCMMetadata(TestCase):
             str,
         )
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataSegmentIdentifier,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataSceneIlluminance,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataDataType_QuickTimeMetadataUUID,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataDataType_QuickTimeMetadataMilliLux,
+            str,
+        )
+
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataCreateIdentifierForKeyAndKeySpace, 3)

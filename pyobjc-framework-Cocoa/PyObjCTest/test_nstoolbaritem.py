@@ -63,6 +63,11 @@ class TestNSToolbarItem(TestCase):
     def testMethods12_0(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isVisible)
 
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AppKit.NSToolbarItem.isHidden)
+        self.assertArgIsBOOL(AppKit.NSToolbarItem.setHidden_, 0)
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 

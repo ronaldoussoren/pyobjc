@@ -120,3 +120,6 @@ class TesPHASETypes(TestCase):
         self.assertEqual(PHASE.PHASECalibrationModeNone, 0)
         self.assertEqual(PHASE.PHASECalibrationModeRelativeSpl, 1)
         self.assertEqual(PHASE.PHASECalibrationModeAbsoluteSpl, 2)
+
+        self.assertIsEnumType(PHASE.PHASEAutomaticHeadTrackingFlags)
+        self.assertEqual(PHASE.PHASEAutomaticHeadTrackingFlagOrientation, 1 << 0)

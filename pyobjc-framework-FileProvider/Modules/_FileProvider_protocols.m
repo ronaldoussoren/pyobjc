@@ -39,4 +39,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSFileProviderPartialContentFetching));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1500
+    p = PyObjC_IdToPython(@protocol(NSFileProviderKnownFolderSupporting));
+    Py_XDECREF(p);
+#endif
 }

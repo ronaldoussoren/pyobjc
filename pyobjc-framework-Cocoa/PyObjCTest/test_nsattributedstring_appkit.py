@@ -29,6 +29,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSGlyphInfoAttributeName, str)
         self.assertIsInstance(AppKit.NSMarkedClauseSegmentAttributeName, str)
 
+        self.assertIsEnumType(AppKit.NSUnderlineStyle)
         self.assertEqual(AppKit.NSUnderlineStyleNone, 0x00)
         self.assertEqual(AppKit.NSUnderlineStyleSingle, 0x01)
         self.assertEqual(AppKit.NSUnderlineStyleThick, 0x02)
@@ -41,6 +42,8 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSUnderlinePatternDashDotDot, 0x0400)
 
         self.assertEqual(AppKit.NSUnderlineByWordMask, 0x8000)
+
+        self.assertIsEnumType(AppKit.NSWritingDirectionFormatType)
         self.assertEqual(AppKit.NSWritingDirectionEmbedding, 0 << 1)
         self.assertEqual(AppKit.NSWritingDirectionOverride, 1 << 1)
 
@@ -49,6 +52,7 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSSpellingStateSpellingFlag, (1 << 0))
         self.assertEqual(AppKit.NSSpellingStateGrammarFlag, (1 << 1))
 
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentType, str)
         self.assertIsInstance(AppKit.NSPlainTextDocumentType, str)
         self.assertIsInstance(AppKit.NSRTFTextDocumentType, str)
         self.assertIsInstance(AppKit.NSRTFDTextDocumentType, str)
@@ -68,6 +72,8 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSViewSizeDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSViewZoomDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSViewModeDocumentAttribute, str)
+
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentAttributeKey)
         self.assertIsInstance(AppKit.NSDocumentTypeDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSReadOnlyDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSConvertedDocumentAttribute, str)
@@ -90,6 +96,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSTextEncodingNameDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSPrefixSpacesDocumentAttribute, str)
 
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentReadingOptionKey, str)
         self.assertIsInstance(AppKit.NSDocumentTypeDocumentOption, str)
         self.assertIsInstance(AppKit.NSDefaultAttributesDocumentOption, str)
         self.assertIsInstance(AppKit.NSCharacterEncodingDocumentOption, str)
@@ -116,6 +123,7 @@ class TestNSAttributedString(TestCase):
 
         self.assertEqual(AppKit.NSUnderlineStyleByWord, 0x8000)
 
+        self.assertIsEnumType(AppKit.NSTextScalingType)
         self.assertEqual(AppKit.NSTextScalingStandard, 0)
         self.assertEqual(AppKit.NSTextScalingiOS, 1)
 
@@ -137,6 +145,7 @@ class TestNSAttributedString(TestCase):
         self.assertArgIsOut(
             AppKit.NSAttributedString.initWithURL_options_documentAttributes_error_, 3
         )
+
         self.assertArgIsOut(
             AppKit.NSAttributedString.initWithData_options_documentAttributes_error_, 2
         )
@@ -229,9 +238,11 @@ class TestNSAttributedString(TestCase):
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(
-            AppKit.NSMutableAttributedString.containsAttachmentsInRange_
-        )
+        self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachmentsInRange_)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AppKit.NSAttributedString.prefersRTFDInRange_)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
@@ -246,6 +257,7 @@ class TestNSAttributedString(TestCase):
 
     @min_os_level("10.7")
     def testConstants10_7(self):
+        self.assertIsTypedEnum(AppKit.NSTextLayoutSectionKey, str)
         self.assertIsInstance(AppKit.NSVerticalGlyphFormAttributeName, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionOrientation, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionRange, str)
@@ -259,6 +271,8 @@ class TestNSAttributedString(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AppKit.NSTextEffectAttributeName, str)
+
+        self.assertIsTypedEnum(AppKit.NSTextEffectStyle, str)
         self.assertIsInstance(AppKit.NSTextEffectLetterpressStyle, str)
 
     @min_os_level("10.11")
@@ -268,3 +282,24 @@ class TestNSAttributedString(TestCase):
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(AppKit.NSTrackingAttributeName, str)
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AppKit.NSDefaultFontExcludedDocumentAttribute, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(AppKit.NSTextHighlightStyleAttributeName, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemeAttributeName, str)
+        self.assertIsInstance(AppKit.NSAdaptiveImageGlyphAttributeName, str)
+
+        self.assertIsTypedEnum(AppKit.NSTextHighlightStyle, str)
+        self.assertIsInstance(AppKit.NSTextHighlightStyleDefault, str)
+
+        self.assertIsTypedEnum(AppKit.NSTextHighlightColorScheme, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemeDefault, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemePurple, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemePink, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemeOrange, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemeMint, str)
+        self.assertIsInstance(AppKit.NSTextHighlightColorSchemeBlue, str)

@@ -70,6 +70,24 @@ class TestCGContext(TestCase):
         self.assertEqual(Quartz.kCGBlendModePlusDarker, 26)
         self.assertEqual(Quartz.kCGBlendModePlusLighter, 27)
 
+        self.assertIsEnumType(Quartz.CGToneMapping)
+        self.assertEqual(Quartz.kCGToneMappingDefault, 0)
+        self.assertEqual(Quartz.kCGToneMappingImageSpecificLumaScaling, 1)
+        self.assertEqual(Quartz.kCGToneMappingReferenceWhiteBased, 2)
+        self.assertEqual(Quartz.kCGToneMappingITURecommended, 3)
+        self.assertEqual(Quartz.kCGToneMappingEXRGamma, 4)
+        self.assertEqual(Quartz.kCGToneMappingNone, 5)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(Quartz.kCGUse100nitsHLGOOTF, str)
+        self.assertIsInstance(Quartz.kCGUseBT1886ForCoreVideoGamma, str)
+        self.assertIsInstance(Quartz.kCGSkipBoostToHDR, str)
+        self.assertIsInstance(Quartz.kCGEXRToneMappingGammaDefog, str)
+        self.assertIsInstance(Quartz.kCGEXRToneMappingGammaExposure, str)
+        self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeLow, str)
+        self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeHigh, str)
+
     @min_os_level("10.5")
     def testFunctions10_5(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
@@ -620,3 +638,9 @@ class TestCGContext(TestCase):
     @min_os_level("14.0")
     def test_functions14_0(self):
         Quartz.CGContextDrawConicGradient
+
+    @min_os_level("15.0")
+    def test_functions15_0(self):
+        Quartz.CGContextSetEDRTargetHeadroom
+        Quartz.CGContextGetEDRTargetHeadroom
+        Quartz.CGContextDrawImageApplyingToneMapping

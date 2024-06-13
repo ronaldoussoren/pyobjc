@@ -1,6 +1,6 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAttributedString(TestCase):
@@ -115,3 +115,18 @@ class TestAttributedString(TestCase):
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         CoreFoundation.CFAttributedStringBeginEditing(val)
         CoreFoundation.CFAttributedStringEndEditing(val)
+
+    @min_os_level("15.0")
+    def test_functions15_0(self):
+        self.assertArgIsOut(
+            CoreFoundation.CFAttributedStringGetBidiLevelsAndResolvedDirections, 3
+        )
+        self.assertArgSizeInArg(
+            CoreFoundation.CFAttributedStringGetBidiLevelsAndResolvedDirections, 3, 1
+        )
+        self.assertArgIsOut(
+            CoreFoundation.CFAttributedStringGetBidiLevelsAndResolvedDirections, 4
+        )
+        self.assertArgSizeInArg(
+            CoreFoundation.CFAttributedStringGetBidiLevelsAndResolvedDirections, 4, 1
+        )

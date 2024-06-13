@@ -336,3 +336,7 @@ class TestNSDocument(TestCase):
             1,
             b"vZ",
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AppKit.NSDocument.savePanelShowsFileFormatsControl)

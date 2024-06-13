@@ -82,6 +82,9 @@ class TestNSTextViewHelper(AppKit.NSObject):
     def textView_shouldSelectCandidateAtIndex_(self, tv, i):
         return 1
 
+    def textView_writingToolsIgnoredRangesInEnclosingRange_(self, a, b):
+        return 1
+
 
 class TestNSTextView(TestCase):
     def test_typed_enum(self):
@@ -439,6 +442,10 @@ class TestNSTextView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTextView.initUsingTextLayoutManager_, 0)
         self.assertArgIsBOOL(AppKit.NSTextView.textViewUsingTextLayoutManager_, 0)
 
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertArgIsBOOL(AppKit.NSTextView.isWritingToolsActive, 0)
+
     @min_os_level("10.6")
     def testProtocols10_6(self):
         self.assertArgHasType(
@@ -495,6 +502,11 @@ class TestNSTextView(TestCase):
         )
         self.assertResultIsBOOL(
             TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_writingToolsIgnoredRangesInEnclosingRange_,
+            1,
+            AppKit.NSRange.__typestr__,
         )
 
     @min_os_level("10.14")

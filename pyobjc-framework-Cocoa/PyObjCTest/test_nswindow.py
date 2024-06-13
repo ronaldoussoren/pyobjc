@@ -415,6 +415,17 @@ class TestNSWindow(TestCase):
     def testMethods14_0(self):
         self.assertArgIsSEL(AppKit.NSWindow.displayLinkWithTarget_selector_, 1, b"v@:@")
 
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertArgIsBlock(
+            AppKit.NSWindow.requestSharingOfWindow_completionHandler_, 1, b"v@"
+        )
+        self.assertArgIsBlock(
+            AppKit.NSWindow.requestSharingOfWindowUsingPreview_title_completionHandler_,
+            2,
+            b"v@",
+        )
+
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSWindowDelegate")

@@ -633,6 +633,24 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_HasAdditionalViews, str
         )
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ProjectionKind, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_Rectilinear, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ViewPackingKind, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionViewPackingKind_SideBySide, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionViewPackingKind_OverUnder, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)
