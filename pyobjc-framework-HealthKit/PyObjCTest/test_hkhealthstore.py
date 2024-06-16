@@ -113,3 +113,19 @@ class TestHKHealthStore(TestCase):
                 HealthKit.HKHealthStore.workoutSessionMirroringStartHandler,
                 b"v@",
             )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        with self.subTest("relateWorkoutEffortSample"):
+            self.assertArgIsBlock(
+                HealthKit.HKHealthStore.relateWorkoutEffortSample_withWorkout_activity_completion_,
+                3,
+                b"vZ@",
+            )
+
+        with self.subTest("unrelateWorkoutEffortSample"):
+            self.assertArgIsBlock(
+                HealthKit.HKHealthStore.unrelateWorkoutEffortSample_withWorkout_activity_completion_,
+                3,
+                b"vZ@",
+            )

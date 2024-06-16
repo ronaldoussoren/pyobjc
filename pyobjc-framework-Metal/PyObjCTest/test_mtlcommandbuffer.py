@@ -42,6 +42,9 @@ class TestMTLCommandBufferHelper(Metal.NSObject):
     def encodeSignalEvent_value_(self, a, b):
         pass
 
+    def useResidencySets_count_(self, a, b):
+        pass
+
 
 class TestMTLCommandBuffer(TestCase):
     def test_enum_types(self):
@@ -134,6 +137,14 @@ class TestMTLCommandBuffer(TestCase):
         )
         self.assertArgHasType(
             TestMTLCommandBufferHelper.encodeSignalEvent_value_, 1, objc._C_ULNGLNG
+        )
+
+        self.assertArgHasType(
+            TestMTLCommandBufferHelper.useResidencySets_count_, 0, "n^@"
+        )
+        self.assertSizeInArg(TestMTLCommandBufferHelper.useResidencySets_count_, 0, 1)
+        self.assertArgHasType(
+            TestMTLCommandBufferHelper.useResidencySets_count_, 1, objc._C_ULNGLNG
         )
 
     @min_os_level("11.0")

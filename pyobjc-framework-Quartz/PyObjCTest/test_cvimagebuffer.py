@@ -134,6 +134,10 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVImageBufferLogTransferFunctionKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferLogTransferFunction_AppleLog, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCVImageBufferSceneIlluminationKey, str)
+
     def testFunctions(self):
         self.assertResultHasType(
             Quartz.CVImageBufferGetEncodedSize, Quartz.CGSize.__typestr__

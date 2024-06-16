@@ -64,10 +64,13 @@ class TestLAContext(TestCase):
             LocalAuthentication.LAErrorBiometryLockout,
             LocalAuthentication.kLAErrorBiometryLockout,
         )
-
         self.assertEqual(
             LocalAuthentication.LAErrorWatchNotAvailable,
             LocalAuthentication.kLAErrorWatchNotAvailable,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAErrorCompanionNotAvailable,
+            LocalAuthentication.kLAErrorCompanionNotAvailable,
         )
         self.assertEqual(
             LocalAuthentication.LAErrorBiometryNotPaired,

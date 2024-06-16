@@ -103,3 +103,13 @@ class TestAVAssetResourceLoader(TestCase):
             AVFoundation.AVAssetResourceLoadingContentInformationRequest.setEntireLengthAvailableOnDemand_,
             0,
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetResourceLoader.sendsCommonMediaClientDataAsHTTPHeaders
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetResourceLoader.setSendsCommonMediaClientDataAsHTTPHeaders_,
+            0,
+        )

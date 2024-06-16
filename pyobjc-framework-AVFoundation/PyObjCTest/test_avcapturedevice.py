@@ -137,6 +137,16 @@ class TestAVCaptureDevice(TestCase):
     def test_constants13_0(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeDeskViewCamera, str)
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsTypedEnum(AVFoundation.AVSpatialCaptureDiscomfortReason, str)
+        self.assertIsInstance(
+            AVFoundation.AVSpatialCaptureDiscomfortReasonNotEnoughLight, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVSpatialCaptureDiscomfortReasonSubjectTooClose, str
+        )
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
@@ -347,4 +357,30 @@ class TestAVCaptureDevice(TestCase):
     def testMethods14_2(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.zoomFactorsOutsideOfVideoZoomRangesForDepthDeliverySupported
+        )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isAutoVideoFrameRateEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.setAutoVideoFrameRateEnabled_, 0
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isBackgroundReplacementEnabled
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isBackgroundReplacementActive
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isAutoVideoFrameRateSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isSpatialVideoCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isBackgroundReplacementSupported
         )

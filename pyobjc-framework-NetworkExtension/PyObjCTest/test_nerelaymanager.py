@@ -12,12 +12,40 @@ class TestNERelayManager(TestCase):
             NetworkExtension.NERelayManagerErrorConfigurationCannotBeRemoved, 4
         )
 
+        self.assertIsEnumType(NetworkExtension.NERelayManagerClientError)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorNone, 1)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorDNSFailed, 2)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorServerUnreachable, 3)
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorServerDisconnected, 4
+        )
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorCertificateMissing, 5
+        )
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorCertificateInvalid, 6
+        )
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorCertificateExpired, 7
+        )
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorServerCertificateInvalid, 8
+        )
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorServerCertificateExpired, 9
+        )
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorOther, 10)
+
     @min_os_level("14.0")
     def test_constants14_0(self):
         self.assertIsInstance(NetworkExtension.NERelayErrorDomain, str)
         self.assertIsInstance(
             NetworkExtension.NERelayConfigurationDidChangeNotification, str
         )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(NetworkExtension.NERelayClientErrorDomain, str)
 
     @min_os_level("14.0")
     def test_methods14_0(self):
@@ -44,4 +72,12 @@ class TestNERelayManager(TestCase):
             NetworkExtension.NERelayManager.loadAllManagersFromPreferencesWithCompletionHandler_,
             0,
             b"v@@",
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            NetworkExtension.NERelayManager.getLastClientErrors_completionHandler_,
+            1,
+            b"v@",
         )

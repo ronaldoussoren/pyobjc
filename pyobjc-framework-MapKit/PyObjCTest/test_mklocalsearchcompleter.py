@@ -14,6 +14,7 @@ class TestMKLocalSearchCompleter(TestCase):
         self.assertEqual(MapKit.MKLocalSearchCompleterResultTypeAddress, 1 << 0)
         self.assertEqual(MapKit.MKLocalSearchCompleterResultTypePointOfInterest, 1 << 1)
         self.assertEqual(MapKit.MKLocalSearchCompleterResultTypeQuery, 1 << 2)
+        self.assertEqual(MapKit.MKLocalSearchCompleterResultTypePhysicalFeature, 1 << 3)
 
     @min_os_level("10.11")
     def testMethods(self):

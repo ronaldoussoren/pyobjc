@@ -323,3 +323,35 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierCyclingSpeed, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierPhysicalEffort, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierTimeInDaylight, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierCrossCountrySkiingSpeed, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierDistanceCrossCountrySkiing, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierDistancePaddleSports, str
+        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDistanceRowing, str)
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierDistanceSkatingSports, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierEstimatedWorkoutEffortScore, str
+        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierPaddleSportsSpeed, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierRowingSpeed, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierWorkoutEffortScore, str)
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierBleedingAfterPregnancy, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierBleedingDuringPregnancy, str
+        )
+
+        self.assertIsTypedEnum(HealthKit.HKScoredAssessmentTypeIdentifier, str)
+        self.assertIsInstance(HealthKit.HKScoredAssessmentTypeIdentifierGAD7, str)
+        self.assertIsInstance(HealthKit.HKScoredAssessmentTypeIdentifierPHQ9, str)

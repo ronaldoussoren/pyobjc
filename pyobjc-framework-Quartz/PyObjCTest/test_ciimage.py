@@ -107,6 +107,10 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIImageCacheImmediately, str)
         self.assertIsInstance(Quartz.kCIImageAuxiliaryHDRGainMap, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCIImageContentHeadroom, str)
+
     def testMethods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2
@@ -149,3 +153,7 @@ class TestCIImage(TestCase):
         self.assertResultIsBOOL(
             Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(Quartz.CIContext.isOpaque)

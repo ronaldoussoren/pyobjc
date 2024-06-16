@@ -48,5 +48,5 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp36"}},
+    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

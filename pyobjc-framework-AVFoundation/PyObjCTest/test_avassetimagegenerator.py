@@ -27,6 +27,15 @@ class TestAVAssetImageGenerator(TestCase):
         self.assertEqual(AVFoundation.AVAssetImageGeneratorFailed, 1)
         self.assertEqual(AVFoundation.AVAssetImageGeneratorCancelled, 2)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetImageGeneratorDynamicRangePolicyForceSDR, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetImageGeneratorDynamicRangePolicyMatchSource, str
+        )
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(

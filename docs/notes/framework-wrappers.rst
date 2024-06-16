@@ -422,7 +422,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaAccessibility </apinotes/MediaAccessibility>`                             | `pyobjc-framework-MediaAccessibility`_               |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| MediaExtension                                                                       | -                                                    | No public API.                          |
+| :doc:`MediaExtension </apinotes/MediaExtension>`                                     | `pyobjc-framework-MediaExtension`_                   |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaLibrary </apinotes/MediaLibrary>`                                         | `pyobjc-framework-MediaLibrary`_                     |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -866,3 +866,4 @@ prioritizing work.
 .. _`pyobjc-framework-SensitiveContentAnalysis`: https://pypi.org/project/pyobjc-framework-SensitiveContentAnalysis/
 .. _`pyobjc-framework-Cinematic`: https://pypi.org/project/pyobjc-framework-Cinematic/
 .. _`pyobjc-framework-FSKit`: https://pypi.org/project/pyobjc-framework-FSKit/
+.. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/

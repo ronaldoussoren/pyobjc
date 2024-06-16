@@ -67,6 +67,37 @@ class TestMPSCore_MPSNDArray(TestCase):
             MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 1
         )
 
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(MetalPerformanceShaders.MPSNDArray.preferPackedRows)
+        self.assertArgIsBOOL(MetalPerformanceShaders.MPSNDArray.setPreferPackedRows_, 0)
+
+        self.assertArgIsIn(
+            MetalPerformanceShaders.MPSNDArray.permuteWithDimensionOrder_, 0
+        )
+        self.assertArgIsVariableSized(
+            MetalPerformanceShaders.MPSNDArray.permuteWithDimensionOrder_, 0
+        )
+
+        self.assertArgIsIn(
+            MetalPerformanceShaders.MPSNDArray.arrayViewWithDimensionCount_dimensionSizes_strides_,
+            1,
+        )
+        self.assertArgSizeInArg(
+            MetalPerformanceShaders.MPSNDArray.arrayViewWithDimensionCount_dimensionSizes_strides_,
+            1,
+            0,
+        )
+        self.assertArgIsIn(
+            MetalPerformanceShaders.MPSNDArray.arrayViewWithDimensionCount_dimensionSizes_strides_,
+            2,
+        )
+        self.assertArgSizeInArg(
+            MetalPerformanceShaders.MPSNDArray.arrayViewWithDimensionCount_dimensionSizes_strides_,
+            2,
+            0,
+        )
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("MPSNDArrayAllocator")

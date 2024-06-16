@@ -841,6 +841,18 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setZoom_(self, a):
         return 1
 
+    def sourceHeadroom(self):
+        return 1
+
+    def setSourceHeadroom(self, a):
+        pass
+
+    def targetHeadroom(self):
+        return 1
+
+    def setTargetHeadroom(self, a):
+        pass
+
 
 class TestCIFilterBuiltins(TestCase):
     @min_sdk_level("10.15")
@@ -1031,6 +1043,12 @@ class TestCIFilterBuiltins(TestCase):
         self.assertProtocolExists("CICannyEdgeDetector")
         self.assertProtocolExists("CISobelGradients")
         self.assertProtocolExists("CIBlurredRectangleGenerator")
+
+    @min_sdk_level("15.0")
+    def test_protocols15_0(self):
+        self.assertProtocolExists("CIMaximumScaleTransform")
+        self.assertProtocolExists("CIToneMapHeadroom")
+        self.assertProtocolExists("CIAreaBoundsRed")
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)
@@ -2045,3 +2063,20 @@ class TestCIFilterBuiltins(TestCase):
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sigma", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)
+
+        with self.subTest("CIMaximumScaleTransform"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "aspectRatio", objc._C_FLT)
+
+        with self.subTest("CIToneMapHeadroom"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "sourceHeadroom", objc._C_FLT
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "targetHeadroom", objc._C_FLT
+            )
+
+        with self.subTest("CIAreaBoundsRed"):
+            pass

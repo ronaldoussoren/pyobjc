@@ -12,6 +12,9 @@ class TestASExtensionErrors(TestCase):
         self.assertEqual(
             AuthenticationServices.ASExtensionErrorCodeCredentialIdentityNotFound, 101
         )
+        self.assertEqual(
+            AuthenticationServices.ASExtensionErrorCodeMatchedExcludedCredential, 102
+        )
 
     @min_os_level("11.0")
     def test_constants11_0(self):

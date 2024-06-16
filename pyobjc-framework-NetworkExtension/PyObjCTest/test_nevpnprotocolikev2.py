@@ -94,3 +94,11 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertArgIsBOOL(
             NetworkExtension.NEVPNProtocolIKEv2.setStrictRevocationCheck_, 0
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.isMandatory)
+        self.assertArgIsBOOL(
+            NetworkExtension.NEVPNProtocolIKEv2.setIsMandatory_,
+            0,
+        )

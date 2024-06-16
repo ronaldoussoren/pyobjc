@@ -18,6 +18,10 @@ class TestASCredentialRequest(TestCase):
         self.assertEqual(
             AuthenticationServices.ASCredentialRequestTypePasskeyAssertion, 1
         )
+        self.assertEqual(
+            AuthenticationServices.ASCredentialRequestTypePasskeyRegistration, 2
+        )
+        self.assertEqual(AuthenticationServices.ASCredentialRequestTypeOneTimeCode, 3)
 
     @min_sdk_level("14.0")
     def test_protocols(self):

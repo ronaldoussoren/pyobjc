@@ -30,6 +30,14 @@ class TestLAPublicDefines(TestCase):
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWristDetection,
             5,
         )
+        self.assertEqual(
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithCompanion,
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWatch,
+        )
+        self.assertEqual(
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrCompanion,
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
+        )
 
         self.assertEqual(LocalAuthentication.kLACredentialTypePasscode, -1)
         self.assertEqual(LocalAuthentication.kLACredentialTypePassphrase, -2)
@@ -51,6 +59,10 @@ class TestLAPublicDefines(TestCase):
         self.assertEqual(LocalAuthentication.kLAErrorBiometryDisconnected, -13)
         self.assertEqual(LocalAuthentication.kLAErrorInvalidDimensions, -14)
         self.assertEqual(
+            LocalAuthentication.kLAErrorCompanionNotAvailable,
+            LocalAuthentication.kLAErrorWatchNotAvailable,
+        )
+        self.assertEqual(
             LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication"
         )
 
@@ -66,3 +78,6 @@ class TestLAPublicDefines(TestCase):
             LocalAuthentication.kLAErrorBiometryLockout,
             LocalAuthentication.kLAErrorTouchIDLockout,
         )
+
+        self.assertEqual(LocalAuthentication.kLACompanionTypeWatch, 1 << 0)
+        self.assertEqual(LocalAuthentication.kLACompanionTypeMac, 1 << 1)

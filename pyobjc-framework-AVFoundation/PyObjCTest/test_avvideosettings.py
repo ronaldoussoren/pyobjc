@@ -119,3 +119,8 @@ class TestAVVideoSettings(TestCase):
     @min_os_level("13.0")
     def testConstants13_0(self):
         self.assertIsInstance(AVFoundation.AVVideoTransferFunction_Linear, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444XQ, str)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_IEC_sRGB, str)

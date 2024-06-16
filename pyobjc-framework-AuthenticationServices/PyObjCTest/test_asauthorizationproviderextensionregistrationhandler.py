@@ -14,6 +14,9 @@ class TestASAuthorizationProviderExtensionRegistrationHandlerHelper(
     ):
         pass
 
+    def keyWillRotateForKeyType_newKey_loginManager_completion_(self, a, b, c, d):
+        pass
+
 
 class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
     def test_constants(self):
@@ -142,4 +145,9 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginUserRegistrationUsingLoginManager_userName_authenticationMethod_options_completion_,
             4,
             b"v" + objc._C_NSInteger,
+        )
+        self.assertArgIsBlock(
+            TestASAuthorizationProviderExtensionRegistrationHandlerHelper.keyWillRotateForKeyType_newKey_loginManager_completion_,
+            3,
+            b"vZ",
         )

@@ -323,6 +323,12 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newIOFileHandleWithURL_compressionMethod_error_(self, a, b, c):
         return 1
 
+    def newLogStateWithDescriptor_error_(self, a, b):
+        pass
+
+    def newResidencySetWithDescriptor_error_(self, a, b):
+        pass
+
 
 class TestMTLDevice(TestCase):
     def test_typed_enum(self):
@@ -413,6 +419,7 @@ class TestMTLDevice(TestCase):
 
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)
+        self.assertEqual(Metal.MTLPipelineOptionBindingInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBufferTypeInfo, 1 << 1)
         self.assertEqual(Metal.MTLPipelineOptionFailOnBinaryArchiveMiss, 1 << 2)
 
@@ -1022,5 +1029,16 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,
             2,
+            b"o^@",
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newLogStateWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newResidencySetWithDescriptor_error_,
+            1,
             b"o^@",
         )

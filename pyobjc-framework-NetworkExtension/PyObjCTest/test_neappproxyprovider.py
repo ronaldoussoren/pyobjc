@@ -22,3 +22,10 @@ class TestNEAppProxyProvider(TestCase):
         self.assertResultIsBOOL(
             NetworkExtension.NEAppProxyProvider.handleNewUDPFlow_initialRemoteEndpoint_
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(NetworkExtension.NEAppProxyProvider.handleNewFlow_)
+        self.assertResultIsBOOL(
+            NetworkExtension.NEAppProxyProvider.handleNewUDPFlow_initialRemoteFlowEndpoint_
+        )

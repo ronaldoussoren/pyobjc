@@ -105,6 +105,14 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLCurveEndCapsDisk, 1)
         self.assertEqual(Metal.MTLCurveEndCapsSphere, 2)
 
+        self.assertIsEnumType(Metal.MTLMatrixLayout)
+        self.assertEqual(Metal.MTLMatrixLayoutColumnMajor, 0)
+        self.assertEqual(Metal.MTLMatrixLayoutRowMajor, 1)
+
+        self.assertIsEnumType(Metal.MTLTransformType)
+        self.assertEqual(Metal.MTLTransformTypePackedFloat4x3, 0)
+        self.assertEqual(Metal.MTLTransformTypeComponent, 1)
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(Metal.MTLAccelerationStructureGeometryDescriptor.opaque)

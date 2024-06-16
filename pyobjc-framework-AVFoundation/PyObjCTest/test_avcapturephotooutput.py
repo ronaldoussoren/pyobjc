@@ -88,3 +88,40 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCapturePhotoOutput.isResponsiveCaptureEnabled
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoOutput.isConstantColorSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoOutput.isConstantColorEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoOutput.setConstantColorEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoOutput.isShutterSoundSuppressionSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isConstantColorEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.setConstantColorEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isConstantColorFallbackPhotoDeliveryEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.setConstantColorFallbackPhotoDeliveryEnabled_,
+            0,
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isShutterSoundSuppressionEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.setShutterSoundSuppressionEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCapturePhotoSettings.isConstantColorFallbackPhoto
+        )

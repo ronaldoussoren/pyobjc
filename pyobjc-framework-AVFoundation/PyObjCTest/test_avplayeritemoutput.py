@@ -8,6 +8,11 @@ class TestAVPlayerOutputHelper(AVFoundation.NSObject):
     ):
         pass
 
+    def renderedLegibleOutput_didOutputRenderedCaptionImages_forItemTime_(
+        self, a, b, c
+    ):
+        pass
+
 
 class TestAVPlayerOutput(TestCase):
     def test_typed_enum(self):
@@ -47,14 +52,22 @@ class TestAVPlayerOutput(TestCase):
             1,
         )
 
+    def testProtocols(self):
+        self.assertProtocolExists("AVPlayerItemOutputPullDelegate")
+        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemMetadataOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemRenderedLegibleOutputPushDelegate")
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestAVPlayerOutputHelper.legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_,  # noqa: B950
             3,
             b"{CMTime=qiIq}",
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("AVPlayerItemOutputPullDelegate")
-        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemMetadataOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemOutputPushDelegate")
+        self.assertArgHasType(
+            TestAVPlayerOutputHelper.renderedLegibleOutput_didOutputRenderedCaptionImages_forItemTime_,  # noqa: B950
+            2,
+            b"{CMTime=qiIq}",
+        )

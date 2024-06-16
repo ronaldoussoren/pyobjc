@@ -9,6 +9,7 @@ class TestPKPaymentRequest(TestCase):
         self.assertIsEnumType(PassKit.PKMerchantCapability)
         self.assertIsEnumType(PassKit.PKShippingContactEditingMode)
         self.assertIsEnumType(PassKit.PKShippingType)
+        self.assertIsTypedEnum(PassKit.PKMerchantCategoryCode, int)
 
     def test_constants(self):
         self.assertEqual(PassKit.PKMerchantCapability3DS, 1 << 0)
@@ -49,6 +50,10 @@ class TestPKPaymentRequest(TestCase):
         self.assertEqual(PassKit.PKApplePayLaterAvailable, 0)
         self.assertEqual(PassKit.PKApplePayLaterUnavailableItemIneligible, 1)
         self.assertEqual(PassKit.PKApplePayLaterUnavailableRecurringTransaction, 2)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(PassKit.PKMerchantCategoryCodeNone, int)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

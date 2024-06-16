@@ -188,5 +188,11 @@ class TestAVVideoComposition(TestCase):
             b"vZ@",
         )
 
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVMutableVideoComposition.isValidForTracks_assetDuration_timeRange_validationDelegate_
+        )
+
     def testProtocols(self):
         self.assertProtocolExists("AVVideoCompositionValidationHandling")

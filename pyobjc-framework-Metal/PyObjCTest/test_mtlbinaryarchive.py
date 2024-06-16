@@ -18,6 +18,12 @@ class TestMTLBinaryArchiveHelper(Metal.NSObject):
     def addFunctionWithDescriptor_library_error_(self, a, b, c):
         return 1
 
+    def addMeshRenderPipelineFunctionsWithDescriptor_error_(self, a, b):
+        return 1
+
+    def addLibraryWithDescriptor_error_(self, a, b):
+        return 1
+
 
 class TestMTLBinaryArchive(TestCase):
     def test_enum_types(self):
@@ -56,6 +62,22 @@ class TestMTLBinaryArchive(TestCase):
         )
         self.assertArgHasType(
             TestMTLBinaryArchiveHelper.addTileRenderPipelineFunctionsWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertResultIsBOOL(
+            TestMTLBinaryArchiveHelper.addMeshRenderPipelineFunctionsWithDescriptor_error_
+        )
+        self.assertArgHasType(
+            TestMTLBinaryArchiveHelper.addMeshRenderPipelineFunctionsWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertResultIsBOOL(
+            TestMTLBinaryArchiveHelper.addLibraryWithDescriptor_error_
+        )
+        self.assertArgHasType(
+            TestMTLBinaryArchiveHelper.addLibraryWithDescriptor_error_,
             1,
             b"o^@",
         )

@@ -12,6 +12,12 @@ class TestAVAssetPlaybackAssistant(TestCase):
             AVFoundation.AVAssetPlaybackConfigurationOptionStereoMultiviewVideo, str
         )
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetPlaybackConfigurationOptionSpatialVideo, str
+        )
+
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertArgIsBlock(

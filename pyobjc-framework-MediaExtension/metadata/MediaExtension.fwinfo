@@ -1,0 +1,195 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MEByteSource": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readDataOfLength:fromOffset:toDestination:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "readDataOfLength:fromOffset:toDestination:bytesRead:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "byteSourceForRelatedFileName:error:"
+     }
+    ]
+   },
+   "MERAWProcessorPixelBufferManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "retval": {},
+      "selector": "createPixelBufferAndReturnError:"
+     }
+    ]
+   },
+   "MEVideoDecoderPixelBufferManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "retval": {},
+      "selector": "createPixelBufferAndReturnError:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "MEFormatReaderExtension": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "formatReaderWithByteSource:options:error:"
+     }
+    ]
+   },
+   "MERAWProcessor": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "processFrameFromImageBuffer:completionHandler:"
+     }
+    ]
+   },
+   "MERAWProcessorExtension": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "processorWithFormatDescription:extensionPixelBufferManager:error:"
+     }
+    ]
+   },
+   "MESampleCursor": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "chunkDetailsReturningError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "sampleLocationReturningError:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "estimatedSampleLocationReturningError:"
+     },
+     {
+      "args": {
+       "1": {},
+       "3": {},
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "refineSampleLocation:refinementData:refinementDataLength:refinedLocation:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "currentSampleFormatDescription"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "currentSampleFormatDescription"
+     }
+    ]
+   },
+   "MEVideoDecoder": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "decodeFrameFromSampleBuffer:options:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "canAcceptFormatDescription:"
+     }
+    ]
+   },
+   "MEVideoDecoderExtension": {
+    "methods": [
+     {
+      "args": {
+       "1": {},
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "videoDecoderWithCodecType:videoFormatDescription:videoDecoderSpecifications:extensionDecoderPixelBufferManager:error:"
+     }
+    ]
+   }
+  },
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

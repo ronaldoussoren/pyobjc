@@ -1,7 +1,7 @@
 /*
  * Support for callback functions/structs in the FSEvents frameework.
  */
-#define Py_LIMITED_API 0x03060000
+#define Py_LIMITED_API 0x03090000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"

@@ -46,6 +46,7 @@ def _setup():
         "MLModelStructureProgramOperation",
         "MLModelStructureProgramValue",
         "MLModelStructureProgramValueType",
+        "MLState",
     ):
         try:
             objc.lookUpClass(clsname).__objc_final__ = True

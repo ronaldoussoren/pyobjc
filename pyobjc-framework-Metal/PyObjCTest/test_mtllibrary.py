@@ -80,6 +80,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion2_4, (2 << 16) + 4)
         self.assertEqual(Metal.MTLLanguageVersion3_0, (3 << 16) + 0)
         self.assertEqual(Metal.MTLLanguageVersion3_1, (3 << 16) + 1)
+        self.assertEqual(Metal.MTLLanguageVersion3_2, (3 << 16) + 2)
 
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
@@ -93,6 +94,15 @@ class TestMTLLibrary(TestCase):
 
         self.assertEqual(Metal.MTLCompileSymbolVisibilityDefault, 0)
         self.assertEqual(Metal.MTLCompileSymbolVisibilityHidden, 1)
+
+        self.assertIsEnumType(Metal.MTLMathMode)
+        self.assertEqual(Metal.MTLMathModeSafe, 0)
+        self.assertEqual(Metal.MTLMathModeRelaxed, 1)
+        self.assertEqual(Metal.MTLMathModeFast, 2)
+
+        self.assertIsEnumType(Metal.MTLMathFloatingPointFunctions)
+        self.assertEqual(Metal.MTLMathFloatingPointFunctionsFast, 0)
+        self.assertEqual(Metal.MTLMathFloatingPointFunctionsPrecise, 1)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -186,5 +196,13 @@ class TestMTLLibrary(TestCase):
         )
         self.assertArgIsBOOL(
             Metal.MTLCompileOptions.alloc().init().setAllowReferencingUndefinedSymbols_,
+            0,
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().enableLogging)
+        self.assertArgIsBOOL(
+            Metal.MTLCompileOptions.alloc().init().setEnableLogging_,
             0,
         )

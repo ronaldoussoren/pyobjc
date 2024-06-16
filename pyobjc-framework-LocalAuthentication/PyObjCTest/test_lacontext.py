@@ -110,8 +110,16 @@ class TestLAContext(TestCase):
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWatch,
         )
         self.assertEqual(
+            LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithCompanion,
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithCompanion,
+        )
+        self.assertEqual(
             LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrWatch,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometricsOrCompanion,
+            LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometricsOrCompanion,
         )
 
     @min_os_level("10.11")

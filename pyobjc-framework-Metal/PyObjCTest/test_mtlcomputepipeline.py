@@ -19,6 +19,12 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
     def newComputePipelineStateWithAdditionalBinaryFunctions_error_(self, a, b):
         return 1
 
+    def shaderValidation(self):
+        return 1
+
+    def setShaderValidation_(self, a):
+        pass
+
 
 class TestMTLComputePipeline(TestCase):
     @min_sdk_level("10.11")
@@ -63,4 +69,14 @@ class TestMTLComputePipeline(TestCase):
             TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultHasType(
+            TestMTLComputePipelineHelper.shaderValidation,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputePipelineHelper.setShaderValidation_,
+            0,
+            objc._C_NSUInteger,
         )

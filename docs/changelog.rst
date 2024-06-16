@@ -12,6 +12,7 @@ Version 11.0 (Unreleased, expected release is October 2024)
   for the following frameworks:
 
   - FSKit
+  - MediaExtension
 
 Version 10.3.2
 --------------

@@ -81,3 +81,7 @@ class TestCVPixelFormatDescription(TestCase):
     @min_os_level("13.0")
     def testConstants13_0(self):
         self.assertIsInstance(Quartz.kCVPixelFormatContainsSenselArray, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCVPixelFormatBitsPerComponent, str)

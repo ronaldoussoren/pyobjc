@@ -12,6 +12,7 @@ class TestJSValueRef(TestCase):
         self.assertEqual(JavaScriptCore.kJSTypeString, 4)
         self.assertEqual(JavaScriptCore.kJSTypeObject, 5)
         self.assertEqual(JavaScriptCore.kJSTypeSymbol, 6)
+        self.assertEqual(JavaScriptCore.kJSTypeBigInt, 7)
 
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt8Array, 0)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt16Array, 1)
@@ -26,6 +27,12 @@ class TestJSValueRef(TestCase):
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeNone, 10)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigInt64Array, 11)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigUint64Array, 12)
+
+        self.assertIsEnumType(JavaScriptCore.SRelationCondition)
+        self.assertEqual(JavaScriptCore.kJSRelationConditionUndefined, 0)
+        self.assertEqual(JavaScriptCore.kJSRelationConditionEqual, 1)
+        self.assertEqual(JavaScriptCore.kJSRelationConditionGreaterThan, 2)
+        self.assertEqual(JavaScriptCore.kJSRelationConditionLessThan, 3)
 
     def test_functions(self):
         self.assertArgHasType(
@@ -111,3 +118,19 @@ class TestJSValueRef(TestCase):
     def testFunctions10_15(self):
         JavaScriptCore.JSValueIsSymbol
         JavaScriptCore.JSValueMakeSymbol
+
+    @min_os_level("15.0")
+    def testFunctions15_0(self):
+        JavaScriptCore.JSValueIsBigInt
+        JavaScriptCore.JSValueCompare
+        JavaScriptCore.JSValueCompareInt64
+        JavaScriptCore.JSValueCompareUInt64
+        JavaScriptCore.JSValueCompareDouble
+        JavaScriptCore.JSBigIntCreateWithDouble
+        JavaScriptCore.JSBigIntCreateWithInt64
+        JavaScriptCore.JSBigIntCreateWithUInt64
+        JavaScriptCore.JSBigIntCreateWithString
+        JavaScriptCore.JSValueToInt32
+        JavaScriptCore.JSValueToUInt32
+        JavaScriptCore.JSValueToInt64
+        JavaScriptCore.JSValueToUInt64

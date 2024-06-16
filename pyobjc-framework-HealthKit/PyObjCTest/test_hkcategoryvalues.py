@@ -115,3 +115,10 @@ class TestHKCategoryValues(TestCase):
 
         self.assertIsEnumType(HealthKit.HKCategoryValueAudioExposureEvent)
         self.assertEqual(HealthKit.HKCategoryValueAudioExposureEventLoudEnvironment, 1)
+
+        self.assertIsEnumType(HealthKit.HKCategoryValueVaginalBleeding)
+        self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingUnspecified, 1)
+        self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingLight, 2)
+        self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingMedium, 3)
+        self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingHeavy, 4)
+        self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingNone, 5)

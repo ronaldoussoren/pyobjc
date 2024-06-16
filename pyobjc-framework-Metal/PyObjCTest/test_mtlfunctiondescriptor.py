@@ -10,3 +10,4 @@ class TestMTLFunctionDescriptor(TestCase):
         self.assertEqual(Metal.MTLFunctionOptionNone, 0)
         self.assertEqual(Metal.MTLFunctionOptionCompileToBinary, 1 << 0)
         self.assertEqual(Metal.MTLFunctionOptionStoreFunctionInMetalScript, 1 << 1)
+        self.assertEqual(Metal.MTLFunctionOptionFailOnBinaryArchiveMiss, 1 << 2)

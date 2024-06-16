@@ -29,3 +29,11 @@ class TestASCredentialProviderExtensionContext(TestCase):
             1,
             b"v" + objc._C_NSBOOL,
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASCredentialProviderExtensionContext.completeOneTimeCodeRequestWithSelectedCredential_completionHandler_,
+            1,
+            b"v" + objc._C_NSBOOL,
+        )

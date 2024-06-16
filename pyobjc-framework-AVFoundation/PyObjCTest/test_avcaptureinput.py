@@ -9,6 +9,10 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
         )
 
+        self.assertIsEnumType(AVFoundation.AVCaptureMultichannelAudioMode)
+        self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeNone, 0)
+        self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeStereo, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureInputPort.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureInputPort.setEnabled_, 0)
@@ -54,7 +58,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra10_8(self):
+    def testMethods12_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput_Tundra.capturesCursor)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput_Tundra.setCapturesCursor_, 0
@@ -65,4 +69,10 @@ class TestAVCaptureInput(TestCase):
         )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
+        )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureScreenInput.isMultichannelAudioModeSupported
         )

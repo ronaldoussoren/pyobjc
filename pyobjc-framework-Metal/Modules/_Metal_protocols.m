@@ -13,6 +13,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLBlitCommandEncoder));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLCommandQueue));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1013
     p = PyObjC_IdToPython(@protocol(MTLArgumentEncoder));
@@ -83,6 +85,12 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(MTLIOScratchBufferAllocator));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLIOFileHandle));
+    Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1500
+    p = PyObjC_IdToPython(@protocol(MTLLogState));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLResidencySet));
     Py_XDECREF(p);
 #endif
 }

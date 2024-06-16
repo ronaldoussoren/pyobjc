@@ -36,6 +36,12 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEventAssetListResponseStatusUnavailable, 2
         )
 
+        self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventTimelineOccupancy)
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventTimelineOccupancySinglePoint, 0
+        )
+        self.assertEqual(AVFoundation.AVPlayerInterstitialEventTimelineOccupancyFill, 1)
+
     @min_os_level("11.3")
     def test_constants11_3(self):
         self.assertIsInstance(
@@ -93,3 +99,16 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEvent.alignsResumptionWithPrimarySegmentBoundary
         )
         self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.willPlayOnce)
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerInterstitialEvent.supplementsPrimaryContent
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerInterstitialEvent.setSupplementsPrimaryContent_, 0
+        )
+        self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.contentMayVary)
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerInterstitialEvent.setContentMayVary_, 0
+        )

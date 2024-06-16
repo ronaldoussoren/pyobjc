@@ -32,3 +32,11 @@ class TestNEAppProxyFlow(TestCase):
     @min_os_level("11.1")
     def testMethods11_1(self):
         self.assertResultIsBOOL(NetworkExtension.NEAppProxyFlow.isBound)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertArgIsBlock(
+            NetworkExtension.NEAppProxyFlow.openWithLocalFlowEndpoint_completionHandler_,
+            1,
+            b"v@",
+        )

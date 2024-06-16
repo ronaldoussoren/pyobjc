@@ -14,3 +14,5 @@ class TestMLFeatureType(TestCase):
         self.assertEqual(CoreML.MLFeatureTypeImage, 4)
         self.assertEqual(CoreML.MLFeatureTypeMultiArray, 5)
         self.assertEqual(CoreML.MLFeatureTypeDictionary, 6)
+        self.assertEqual(CoreML.MLFeatureTypeSequence, 7)
+        self.assertEqual(CoreML.MLFeatureTypeState, 8)

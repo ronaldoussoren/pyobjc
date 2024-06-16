@@ -35,6 +35,7 @@ class TestPKError(TestCase):
         self.assertEqual(PassKit.PKAddPaymentPassErrorSystemCancelled, 2)
 
         self.assertEqual(PassKit.PKAddSecureElementPassUnknownError, 0)
+        self.assertEqual(PassKit.PKAddSecureElementPassGenericError, 0)
         self.assertEqual(PassKit.PKAddSecureElementPassUserCanceledError, 1)
         self.assertEqual(PassKit.PKAddSecureElementPassUnavailableError, 2)
         self.assertEqual(PassKit.PKAddSecureElementPassInvalidConfigurationError, 3)

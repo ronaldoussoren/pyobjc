@@ -49,3 +49,12 @@ class TestNEAppProxyFlow(TestCase):
         )
         self.assertResultIsBOOL(NetworkExtension.NEFilterManager.isEnabled)
         self.assertArgIsBOOL(NetworkExtension.NEFilterManager.setEnabled_, 0)
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            NetworkExtension.NEFilterManager.disableEncryptedDNSSettings
+        )
+        self.assertArgIsBOOL(
+            NetworkExtension.NEFilterManager.setDisableEncryptedDNSSettings_, 0
+        )

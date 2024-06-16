@@ -15,3 +15,4 @@ class TestMKLocalSearchRequest(TestCase):
     def test_constants(self):
         self.assertEqual(MapKit.MKLocalSearchResultTypeAddress, 1 << 0)
         self.assertEqual(MapKit.MKLocalSearchResultTypePointOfInterest, 1 << 1)
+        self.assertEqual(MapKit.MKLocalSearchResultTypePhysicalFeature, 1 << 2)

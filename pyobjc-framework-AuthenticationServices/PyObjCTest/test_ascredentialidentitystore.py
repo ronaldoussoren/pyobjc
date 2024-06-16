@@ -21,6 +21,9 @@ class TestASCredentialIdentityStore(TestCase):
         self.assertEqual(
             AuthenticationServices.ASCredentialIdentityTypesPasskey, 1 << 1
         )
+        self.assertEqual(
+            AuthenticationServices.ASCredentialIdentityTypesOneTimeCode, 1 << 2
+        )
 
     @min_os_level("11.0")
     def test_methods11_0(self):

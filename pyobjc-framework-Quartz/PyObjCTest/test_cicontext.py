@@ -71,6 +71,10 @@ class TestCIContext(TestCase):
     def testConstants14_0(self):
         self.assertIsInstance(Quartz.kCIContextMemoryLimit, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCIImageRepresentationHDRImage, str)
+
     def testMethods(self):
         self.assertArgIsOut(
             Quartz.CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1

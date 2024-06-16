@@ -77,3 +77,13 @@ class TestAVAssetDownloadTask(TestCase):
             AVFoundation.AVAssetDownloadConfiguration.setOptimizesAuxiliaryContentConfigurations_,
             0,
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetDownloadConfiguration.downloadsInterstitialAssets
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetDownloadConfiguration.setDownloadsInterstitialAssets_,
+            0,
+        )

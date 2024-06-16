@@ -1,5 +1,6 @@
 import AuthenticationServices
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
@@ -42,6 +43,46 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicyPasswordFallback,
             1 << 3,
+        )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsTypedEnum(
+            AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithm,
+            objc.objc_object,
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithmECDHE_A256GCM,
+            (int, float),
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithmHPKE_P256_SHA256_AES_GCM_256,
+            (int, float),
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithmHPKE_P384_SHA384_AES_GCM_256,
+            (int, float),
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithmHPKE_Curve25519_SHA256_ChachaPoly,
+            (int, float),
+        )
+
+        self.assertIsTypedEnum(
+            AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithm,
+            objc.objc_object,
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithmES256,
+            (int, float),
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithmES384,
+            (int, float),
+        )
+        self.assertIsInstance(
+            AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithmEd25519,
+            (int, float),
         )
 
     @min_os_level("13.0")

@@ -54,6 +54,14 @@ class TestAVAudioSessionTypes(TestCase):
             AVFoundation.AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation, 1
         )
 
+        self.assertEqual(AVFoundation.AVAudioSessionInterruptionReasonDefault, 0)
+        self.assertEqual(
+            AVFoundation.AVAudioSessionInterruptionReasonAppWasSuspended, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioSessionInterruptionReasonBuiltInMicMuted, 2
+        )
+
         self.assertEqual(
             AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeBegin, 1
         )

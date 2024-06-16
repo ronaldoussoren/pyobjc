@@ -46,3 +46,16 @@ class TestAVCaptureFileOutput(TestCase):
             AVFoundation.AVCaptureMovieFileOutput_Tundra.setPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled_,
             0,
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isSpatialVideoCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isSpatialVideoCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setSpatialVideoCaptureEnabled_,
+            0,
+        )

@@ -49,6 +49,19 @@ class TestMIDIServices(TestCase):
         self.assertEqual(CoreMIDI.kMIDIProtocol_1_0, 1)
         self.assertEqual(CoreMIDI.kMIDIProtocol_2_0, 2)
 
+        self.assertIsEnumType(CoreMIDI.MIDINotificationMessageID)
+        self.assertEqual(CoreMIDI.kMIDIMsgSetupChanged, 1)
+        self.assertEqual(CoreMIDI.kMIDIMsgObjectAdded, 2)
+        self.assertEqual(CoreMIDI.kMIDIMsgObjectRemoved, 3)
+        self.assertEqual(CoreMIDI.kMIDIMsgPropertyChanged, 4)
+        self.assertEqual(CoreMIDI.kMIDIMsgThruConnectionsChanged, 5)
+        self.assertEqual(CoreMIDI.kMIDIMsgSerialPortOwnerChanged, 6)
+        self.assertEqual(CoreMIDI.kMIDIMsgIOError, 7)
+        self.assertEqual(CoreMIDI.kMIDIMsgInternalStart, 0x1000)
+
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyFactoryPatchNameFile, str)
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyUserPatchNameFile, str)
+
     @min_os_level("14.0")
     def test_constants14_0(self):
         self.assertIsInstance(
@@ -57,6 +70,10 @@ class TestMIDIServices(TestCase):
         self.assertIsInstance(
             CoreMIDI.kMIDIPropertyUMPCanTransmitGroupless, (str, type(None))
         )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyAssociatedEndpoint, str)
 
     def test_functions(self):
         self.assertArgIsOut(CoreMIDI.MIDISourceCreate, 2)
