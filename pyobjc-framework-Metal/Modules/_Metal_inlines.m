@@ -38,6 +38,9 @@ static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1200
     {"MTLPackedFloat3Make", (PyObjC_Function_Pointer)&MTLPackedFloat3Make},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1500
+    {"MTLPackedFloatQuaternionMake", (PyObjC_Function_Pointer)&MTLPackedFloatQuaternionMake},
+#endif
     {0, 0}};
 
 #pragma clang diagnostic pop

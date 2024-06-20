@@ -73,7 +73,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSViewZoomDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSViewModeDocumentAttribute, str)
 
-        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentAttributeKey)
+        self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentAttributeKey, str)
         self.assertIsInstance(AppKit.NSDocumentTypeDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSReadOnlyDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSConvertedDocumentAttribute, str)

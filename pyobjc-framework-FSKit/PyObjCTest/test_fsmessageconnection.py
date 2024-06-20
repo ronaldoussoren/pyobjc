@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 import FSKit
 
 
-class TestFSMessageConnectionHelper(TestCase):
+class TestFSMessageConnectionHelper(FSKit.NSObject):
     def prompt_replyHandler_(self, a, b):
         pass
 

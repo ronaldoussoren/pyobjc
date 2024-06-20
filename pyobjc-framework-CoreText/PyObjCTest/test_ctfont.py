@@ -477,14 +477,12 @@ class TestCTFont(TestCase):
     def testFunctions15_0(self):
         self.assertResultIsCFRetained(CoreText.CTFontCopyDefaultCascadeListForLanguages)
         CoreText.CTFontGetTypographicBoundsForAdaptiveImageProvider
+        CoreText.CTFontDrawImageFromAdaptiveImageProviderAtPoint
 
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(CoreText.kCTFontOpenTypeFeatureTag, str)
         self.assertIsInstance(CoreText.kCTFontOpenTypeFeatureValue, str)
-        self.assertIsInstance(
-            CoreText.CTFontDrawImageFromAdaptiveImageProviderAtPoint, str
-        )
 
     @min_os_level("10.13")
     def testConstants10_13(self):

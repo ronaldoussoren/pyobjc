@@ -4,7 +4,7 @@ import Quartz
 
 class TestCVMetalBuffer(TestCase):
     def test_types(self):
-        self.assertIs(Quartz.CVMetalBufferRef, Quartz.CFBufferRef)
+        self.assertIs(Quartz.CVMetalBufferRef, Quartz.CVBufferRef)
 
     @min_os_level("15.0")
     def test_functions15_0(self):
@@ -12,4 +12,4 @@ class TestCVMetalBuffer(TestCase):
 
     @min_sdk_level("15.0")
     def test_protocols(self):
-        self.assertProtocolNamed("MTLBuffer")
+        self.assertProtocolExists("MTLBuffer")

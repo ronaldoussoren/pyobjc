@@ -236,9 +236,8 @@ class TestCGImage(TestCase):
     @min_os_level("15.0")
     def testFunctions15_0(self):
         self.assertResultIsCFRetained(Quartz.CGImageCreateWithEDRHeadroom)
-        # XXX: The 'decode' parameter is a pointer, but unclear what it is supposed to be
-        self.fail()
-
+        self.assertArgIsIn(Quartz.CGImageCreateWithEDRHeadroom, 9)
+        self.assertArgIsVariableSize(Quartz.CGImageCreateWithEDRHeadroom, 9)
         Quartz.CGImageGetContentHeadroom
         Quartz.CGImageShouldToneMap
         Quartz.CGImageContainsImageSpecificToneMappingMetadata

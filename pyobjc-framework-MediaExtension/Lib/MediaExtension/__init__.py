@@ -22,6 +22,7 @@ def _setup():
             "/System/Library/Frameworks/MediaExtension.framework"
         ),
         globals_dict=globals(),
+        inline_list=None,
         parents=(_MediaExtension, CoreMedia, AVFoundation, Foundation),
         metadict=_metadata.__dict__,
     )

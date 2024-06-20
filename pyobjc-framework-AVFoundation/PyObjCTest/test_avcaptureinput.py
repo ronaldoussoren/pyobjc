@@ -74,5 +74,5 @@ class TestAVCaptureInput(TestCase):
     @min_os_level("15.0")
     def testMethods15_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureScreenInput.isMultichannelAudioModeSupported
+            AVFoundation.AVCaptureDeviceInput.isMultichannelAudioModeSupported_
         )

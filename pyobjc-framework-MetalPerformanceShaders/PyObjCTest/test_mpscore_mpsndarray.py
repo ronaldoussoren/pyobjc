@@ -69,14 +69,18 @@ class TestMPSCore_MPSNDArray(TestCase):
 
     @min_os_level("15.0")
     def test_methods15_0(self):
-        self.assertResultIsBOOL(MetalPerformanceShaders.MPSNDArray.preferPackedRows)
-        self.assertArgIsBOOL(MetalPerformanceShaders.MPSNDArray.setPreferPackedRows_, 0)
+        self.assertResultIsBOOL(
+            MetalPerformanceShaders.MPSNDArrayDescriptor.preferPackedRows
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShaders.MPSNDArrayDescriptor.setPreferPackedRows_, 0
+        )
 
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSNDArray.permuteWithDimensionOrder_, 0
+            MetalPerformanceShaders.MPSNDArrayDescriptor.permuteWithDimensionOrder_, 0
         )
-        self.assertArgIsVariableSized(
-            MetalPerformanceShaders.MPSNDArray.permuteWithDimensionOrder_, 0
+        self.assertArgIsVariableSize(
+            MetalPerformanceShaders.MPSNDArrayDescriptor.permuteWithDimensionOrder_, 0
         )
 
         self.assertArgIsIn(

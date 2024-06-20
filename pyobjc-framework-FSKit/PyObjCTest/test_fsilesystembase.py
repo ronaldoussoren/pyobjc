@@ -4,14 +4,14 @@ import objc
 import FSKit  # noqa: F401
 
 
-class TestFSFileSystemBaseHelper(TestCase):
+class TestFSFileSystemBaseHelper(FSKit.NSObject):
     def containerState(self):
         return 1
 
     def setContainerState_(self, a):
         pass
 
-    def wipeResource_includingRange_excludingRange_replyHandler_(self, a, b, c):
+    def wipeResource_includingRanges_excludingRanges_replyHandler_(self, a, b, c, d):
         pass
 
 
@@ -28,7 +28,7 @@ class TestFSFileSystemBase(TestCase):
         )
 
         self.assertArgIsBlock(
-            TestFSFileSystemBaseHelper.wipeResource_includingRange_excludingRange_replyHandler_,
+            TestFSFileSystemBaseHelper.wipeResource_includingRanges_excludingRanges_replyHandler_,
             3,
             b"v@",
         )

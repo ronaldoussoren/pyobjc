@@ -33,9 +33,9 @@ class TestAVAudioEnvironmentNode(TestCase):
     @min_os_level("15.0")
     def testMethods15_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVAudioEnvironmentReverbParameters.isListenerHeadTrackingEnabled
+            AVFoundation.AVAudioEnvironmentNode.isListenerHeadTrackingEnabled
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioEnvironmentReverbParameters.setListenerHeadTrackingEnabled_,
+            AVFoundation.AVAudioEnvironmentNode.setListenerHeadTrackingEnabled_,
             0,
         )

@@ -60,11 +60,11 @@ class TestMEVideoDecoder(TestCase):
         self.assertResultIsBOOL(
             TestMEVideoDecoderHelper.contentHasInterframeDependencies
         )
-        self.assertResultHasType(TestMEVideoDecoderHelper.recommendedThreadCount, b"Q")
+        self.assertResultHasType(TestMEVideoDecoderHelper.recommendedThreadCount, b"q")
         self.assertArgHasType(
-            TestMEVideoDecoderHelper.setRecommendedThreadCount_, 0, b"Q"
+            TestMEVideoDecoderHelper.setRecommendedThreadCount_, 0, b"q"
         )
-        self.assertResultHasType(TestMEVideoDecoderHelper.actualThreadCount, b"Q")
+        self.assertResultHasType(TestMEVideoDecoderHelper.actualThreadCount, b"q")
         self.assertResultHasType(
             TestMEVideoDecoderHelper.reducedResolution,
             MediaExtension.CGSize.__typestr__,
@@ -73,7 +73,7 @@ class TestMEVideoDecoder(TestCase):
         self.assertArgIsBlock(
             TestMEVideoDecoderHelper.decodeFrameFromSampleBuffer_options_completionHandler_,
             2,
-            b"v@q@",
+            b"v^{__CVBuffer=}Q@",
         )
         self.assertResultIsBOOL(TestMEVideoDecoderHelper.canAcceptFormatDescription_)
 

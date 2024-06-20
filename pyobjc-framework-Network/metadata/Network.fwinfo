@@ -9,6 +9,7 @@
   },
   "classes": {},
   "enum": {
+   "NW_QUIC_CONNECTION_DEFAULT_KEEPALIVE": { "value": 65535 },
    "NW_FRAMER_WAKEUP_TIME_FOREVER": {
     "value": 18446744073709551615
    },
@@ -18,6 +19,12 @@
   },
   "formal_protocols": {},
   "functions": {
+  "nw_listener_create_with_launchd_key": {
+   "args": {
+    "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "retval": { "already_retained": true }
+  },
   "nw_proxy_config_add_match_domain": {
    "args": {
     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t"  }

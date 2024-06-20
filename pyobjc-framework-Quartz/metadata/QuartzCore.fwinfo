@@ -54,6 +54,8 @@
    "CIRAWDecoderVersion6DNG": { "typestr": "@" },
    "kCIContextName": { "typestr": "@" },
    "kCIInputEnableEDRModeKey": { "typestr": "@" },
+   "kCIImageContentHeadroom": { "typestr": "@" },
+   "kCIImageRepresentationHDRImage": { "typestr": "@" },
    "kCIContextAllowLowPower": { "typestr": "@" },
    "kCARendererMetalCommandQueue": { "typestr": "@" },
    "kCAContentsFormatRGBA8Uint": { "typestr": "@" },
@@ -952,6 +954,11 @@
    "CIImage": {
     "methods": [
      {
+      "selector": "isOpaque",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "imageByApplyingTransform:highQualityDownsample:",
       "class_method": false,
       "args": {
@@ -1301,6 +1308,30 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "sourceHeadroom",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setSourceHeadroom:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "targetHeadroom",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setTargetHeadroom:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
      {
       "selector": "thresholdLow",
       "class_method": false,

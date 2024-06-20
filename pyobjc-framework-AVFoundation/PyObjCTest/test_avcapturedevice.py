@@ -362,10 +362,10 @@ class TestAVCaptureDevice(TestCase):
     @min_os_level("15.0")
     def testMethods15_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat.isAutoVideoFrameRateEnabled
+            AVFoundation.AVCaptureDevice.isAutoVideoFrameRateEnabled
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat.setAutoVideoFrameRateEnabled_, 0
+            AVFoundation.AVCaptureDevice.setAutoVideoFrameRateEnabled_, 0
         )
 
         self.assertResultIsBOOL(
@@ -375,7 +375,7 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDevice.isBackgroundReplacementActive
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDevice.isAutoVideoFrameRateSupported
+            AVFoundation.AVCaptureDeviceFormat.isAutoVideoFrameRateSupported
         )
 
         self.assertResultIsBOOL(

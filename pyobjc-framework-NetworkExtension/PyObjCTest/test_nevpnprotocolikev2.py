@@ -97,8 +97,8 @@ class TestNEVPNProtocolIKEv2(TestCase):
 
     @min_os_level("15.0")
     def testMethods15_0(self):
-        self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.isMandatory)
+        self.assertResultIsBOOL(NetworkExtension.NEVPNIKEv2PPKConfiguration.isMandatory)
         self.assertArgIsBOOL(
-            NetworkExtension.NEVPNProtocolIKEv2.setIsMandatory_,
+            NetworkExtension.NEVPNIKEv2PPKConfiguration.setIsMandatory_,
             0,
         )

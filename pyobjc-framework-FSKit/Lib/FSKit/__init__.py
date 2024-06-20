@@ -11,7 +11,7 @@ def _setup():
 
     import objc
     import Foundation
-    from . import _metadata
+    from . import _metadata, _FSKit
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="FSKit",
@@ -21,7 +21,10 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(Foundation,),
+        parents=(
+            _FSKit,
+            Foundation,
+        ),
         metadict=_metadata.__dict__,
     )
 

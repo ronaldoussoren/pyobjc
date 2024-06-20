@@ -9,6 +9,24 @@
    }
   },
   "classes": {
+   "MPSNDArrayIdentity": {
+    "methods": [
+     {
+      "args": {
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "reshapeWithCommandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
+     },
+     {
+      "args": {
+       "4": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      },
+      "class_method": false,
+      "selector": "reshapeWithCommandEncoder:commandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
+     }
+    ]
+   },
    "MPSAccelerationStructure": {
     "methods": [
      {
@@ -980,6 +998,14 @@
     "methods": [
      {
       "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 0 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 0 }
+      },
+      "class_method": false,
+      "selector": "arrayViewWithDimensionCount:dimensionSizes:strides:"
+     },
+     {
+      "args": {
        "4": {
         "c_array_of_variable_length": true,
         "type_modifier": "n"
@@ -1043,7 +1069,14 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "0": { "type_modifier": "n", "c_array_of_variable_length": true }
+      },
+      "class_method": true,
+      "selector": "permuteWithDimensionOrder:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "descriptorWithDataType:dimensionCount:dimensionSizes:"

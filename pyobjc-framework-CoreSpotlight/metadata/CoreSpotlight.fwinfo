@@ -67,6 +67,20 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "disableSemanticSearch",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "comment": "should be part of 'CSUserQueryContext', but that doesn't work for some reason"
+     },
+     {
+      "selector": "setDisableSemanticSearch:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "comment": "should be part of 'CSUserQueryContext', but that doesn't work for some reason"
+     },
+     {
       "selector": "searchableIndex:reindexAllSearchableItemsWithAcknowledgementHandler:",
       "class_method": false,
       "args": {

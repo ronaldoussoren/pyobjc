@@ -125,7 +125,7 @@ class TestHKHealthStore(TestCase):
 
         with self.subTest("unrelateWorkoutEffortSample"):
             self.assertArgIsBlock(
-                HealthKit.HKHealthStore.unrelateWorkoutEffortSample_withWorkout_activity_completion_,
+                HealthKit.HKHealthStore.unrelateWorkoutEffortSample_fromWorkout_activity_completion_,
                 3,
                 b"vZ@",
             )

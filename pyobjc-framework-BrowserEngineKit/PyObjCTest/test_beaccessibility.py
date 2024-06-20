@@ -19,13 +19,13 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
     def browserAccessibilityHasDOMFocus(self):
         return 1
 
-    def setBrowserAccessibilityHasDOMFocus(self, a):
+    def setBrowserAccessibilityHasDOMFocus_(self, a):
         pass
 
     def browserAccessibilityContainerType(self):
         return 1
 
-    def setBrowserAccessibilityContainerType(self, a):
+    def setBrowserAccessibilityContainerType_(self, a):
         pass
 
 
@@ -78,14 +78,14 @@ class TestBEAccessibility(TestCase):
             TestBEAccessibilityHelper.browserAccessibilityHasDOMFocus
         )
         self.assertArgIsBOOL(
-            TestBEAccessibilityHelper.setBrowserAccessibilityContainerType, 0
+            TestBEAccessibilityHelper.setBrowserAccessibilityHasDOMFocus_, 0
         )
         self.assertResultHasType(
             TestBEAccessibilityHelper.browserAccessibilityContainerType,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestBEAccessibilityHelper.setBrowserAccessibilityContainerType_,
             0,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )

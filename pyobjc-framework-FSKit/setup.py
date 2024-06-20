@@ -14,7 +14,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import Extension, setup  # noqa: E402
 
 VERSION = "11.0a0"
 
@@ -23,6 +23,19 @@ setup(
     description="Wrappers for the framework FSKit on macOS",
     min_os_level="15.0",
     packages=["FSKit"],
+    ext_modules=[
+        Extension(
+            "FSKit._FSKit",
+            ["Modules/_FSKit.m"],
+            extra_link_args=["-framework", "FSKit"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_FSKit")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

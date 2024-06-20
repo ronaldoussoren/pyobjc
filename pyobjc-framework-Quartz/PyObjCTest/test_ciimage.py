@@ -156,4 +156,4 @@ class TestCIImage(TestCase):
 
     @min_os_level("15.0")
     def testMethods15_0(self):
-        self.assertResultIsBOOL(Quartz.CIContext.isOpaque)
+        self.assertResultIsBOOL(Quartz.CIImage.isOpaque)

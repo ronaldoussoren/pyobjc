@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import Extension, setup  # noqa: E402
 
 VERSION = "11.0a0"
 
@@ -22,6 +22,19 @@ setup(
     description="Wrappers for the framework LocalAuthentication on macOS",
     min_os_level="10.10",
     packages=["LocalAuthentication"],
+    ext_modules=[
+        Extension(
+            "LocalAuthentication._LocalAuthentication",
+            ["Modules/_LocalAuthentication.m"],
+            extra_link_args=["-framework", "LocalAuthentication"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_LocalAuthentication")
+            ],
+        )
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
@@ -29,4 +42,5 @@ setup(
         "pyobjc-framework-Security>=" + VERSION,
     ],
     long_description=__doc__,
+    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

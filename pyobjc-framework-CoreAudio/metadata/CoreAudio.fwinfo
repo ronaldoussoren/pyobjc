@@ -85,7 +85,11 @@
    "AVAudioSessionErrorCodeUnspecified": { "value": 2003329396 },
    "AVAudioSessionErrorCodeExpiredSession": { "value": 561210739 },
    "AVAudioSessionErrorCodeSessionNotActive": { "value": 1768841571 },
-   "kAudioFormatMPEGD_USAC": { "value": 1970495843 }
+   "kAudioFormatMPEGD_USAC": { "value": 1970495843 },
+   "kAudioChannelLayoutTag_MPEG_5_0_E": { "value": 14155781 },
+   "kAudioChannelLayoutTag_MPEG_5_1_E": { "value": 14221318 },
+   "kAudioChannelLayoutTag_MPEG_6_1_B": { "value":  14286855 },
+   "kAudioChannelLayoutTag_MPEG_7_1_D": { "value":  14352392  }
   },
   "aliases": {
    "kAudioChannelLayoutTag_Ogg_3_0": { "alias": "kAudioChannelLayoutTag_AC3_3_0" },

@@ -49,7 +49,7 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
     def test_constants15_0(self):
         self.assertIsTypedEnum(
             AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithm,
-            objc.objc_object,
+            objc.lookUpClass("NSNumber"),
         )
         self.assertIsInstance(
             AuthenticationServices.ASAuthorizationProviderExtensionEncryptionAlgorithmECDHE_A256GCM,
@@ -70,7 +70,7 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
 
         self.assertIsTypedEnum(
             AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithm,
-            objc.objc_object,
+            objc.lookUpClass("NSNumber"),
         )
         self.assertIsInstance(
             AuthenticationServices.ASAuthorizationProviderExtensionSigningAlgorithmES256,

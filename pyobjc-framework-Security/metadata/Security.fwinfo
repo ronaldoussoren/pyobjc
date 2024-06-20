@@ -5320,6 +5320,20 @@
      "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    },
+   "SecKeychainItemImport": {
+    "args": {
+     "2": { "type_modifier": "N" },
+     "3": { "type_modifier": "N" },
+     "5": { "type_modifier": "n" },
+     "7": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "SecKeychainItemExport": {
+    "args": {
+     "3": { "type_modifier": "n" },
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "sec_protocol_metadata_create_secret_with_context": {
     "args": {
      "0": { "type_override": "@" },

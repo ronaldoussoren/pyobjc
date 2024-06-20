@@ -3,6 +3,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "PKMerchantCategoryCode": { "type": "s" },
    "PKEncryptionScheme": { "type": "@", "type_name": "NSString" },
    "PKContactField": { "type": "@", "type_name": "NSString" },
    "PKPassLibraryNotificationKey": { "type": "@", "type_name": "NSString" },

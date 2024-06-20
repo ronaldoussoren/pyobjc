@@ -63,7 +63,14 @@ class TestSecImportExport(TestCase):
         self.assertPickleRoundTrips(v)
 
     def test_functions(self):
-        self.assertFalse(hasattr(Security, "SecKeychainItemExport"))
+        self.assertArgIsIn(Security.SecKeychainItemExport, 3)
+        self.assertArgIsOut(Security.SecKeychainItemExport, 4)
+        self.assertArgIsCFRetained(Security.SecKeychainItemExport, 4)
+
+        self.assertArgIsInOut(Security.SecKeychainItemImport, 2)
+        self.assertArgIsInOut(Security.SecKeychainItemImport, 3)
+        self.assertArgIsIn(Security.SecKeychainItemImport, 5)
+        self.assertArgIsCFRetained(Security.SecKeychainItemImport, 7)
 
         self.assertResultHasType(Security.SecItemExport, objc._C_INT)
         self.assertArgHasType(Security.SecItemExport, 0, objc._C_ID)
@@ -80,8 +87,6 @@ class TestSecImportExport(TestCase):
             Security.SecItemExport, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
         )
         self.assertArgIsCFRetained(Security.SecItemExport, 4)
-
-        self.assertFalse(hasattr(Security, "SecKeychainItemImport"))
 
         self.assertResultHasType(Security.SecItemImport, objc._C_INT)
         self.assertArgHasType(Security.SecItemImport, 0, objc._C_ID)

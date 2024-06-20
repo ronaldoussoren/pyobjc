@@ -5,5 +5,5 @@ import FSKit
 
 class TestFSClient(TestCase):
     def test_methods(self):
-        self.assertResultHasVariableLength(FSKit.FSFileDataBuffer.bytes)
-        self.assertResultHasVariableLength(FSKit.FSMutableFileDataBuffer.mutableBytes)
+        self.assertResultIsVariableSize(FSKit.FSFileDataBuffer.bytes)
+        self.assertResultIsVariableSize(FSKit.FSMutableFileDataBuffer.mutableBytes)
