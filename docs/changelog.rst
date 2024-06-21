@@ -20,6 +20,9 @@ Version 10.3.2
 * Fix a number of test failures on the first macOS 15 beta. These are
   all documentation and test updates.
 
+* :issue:`593`: PyObjCTools.AppHelper.runConsoleEventLoop no longer
+  exits the process on macOS 14 or later when stopping the event loop.
+
 Version 10.3.1
 --------------
 
