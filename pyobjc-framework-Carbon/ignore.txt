@@ -1,0 +1,16 @@
+  "structs": {
+   "DataBrowserListViewColumnDesc": { "ignore": true },
+   "ControlButtonContentInfo": { "ignore": true },
+   "HIThemeButtonDrawInfo": { "ignore": true },
+   "ControlTabEntry": { "ignore": true },
+   "ThemeTrackDrawInfo": { "ignore": true },
+   "HIViewContentInfo": { "ignore": true },
+   "DataBrowserListViewHeaderDesc": { "ignore": true },
+   "HMHelpContent": { "ignore": true },
+   "DataBrowserAccessibilityItemInfo": { "ignore": true },
+   "WindowDefSpec": { "ignore": true },
+   "HIThemeTrackDrawInfo": { "ignore": true },
+   "ControlImageContentInfo": { "ignore": true },
+   "HIViewImageContentInfo": { "ignore": true },
+   "HMHelpContentRec": { "ignore": true }
+  },

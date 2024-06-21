@@ -14,6 +14,11 @@ Version 11.0 (Unreleased, expected release is October 2024)
   - FSKit
   - MediaExtension
 
+* :issue:`249`: Added minimal bindings to the Carbon framework.
+
+  At this time only some functions and constants related to hotkeys
+  are available. Please file an issue if you have a usecase for other APIs.
+
 Version 10.3.2
 --------------
 

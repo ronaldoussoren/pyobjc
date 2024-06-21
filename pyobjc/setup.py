@@ -46,6 +46,7 @@ FRAMEWORK_WRAPPERS = [
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
     ("CallKit", "11.0", None),
+    ("Carbon", None, None),
     ("Cinematic", "14.0", None),
     ("ClassKit", "11.0", None),
     ("CloudKit", "10.10", None),
