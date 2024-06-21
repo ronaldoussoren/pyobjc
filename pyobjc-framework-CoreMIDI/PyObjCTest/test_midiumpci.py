@@ -117,10 +117,10 @@ class TestMIDIUMPCI(TestCase):
 
     def test_structs(self):
         v = CoreMIDI.MIDI2DeviceManufacturer()
-        self.assertEqual(v.sysExIDByte, 3)
+        self.assertEqual(v.sysExIDByte, None)
 
         v = CoreMIDI.MIDI2DeviceRevisionLevel()
-        self.assertEqual(v.revisionLevel, 3)
+        self.assertEqual(v.revisionLevel, None)
 
         v = CoreMIDI.MIDICIProfileIDStandard()
         self.assertIsInstance(v.profileIDByte1, int)

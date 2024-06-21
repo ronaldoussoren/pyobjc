@@ -30,6 +30,6 @@ class TestSCNMaterialProperty(TestCase):
             1,
         )
         self.assertArgIsOut(
-            SceneKit.SCNMaterialProperty.precomputedLightingEnvironmentDataForContents_device__error_,
+            SceneKit.SCNMaterialProperty.precomputedLightingEnvironmentDataForContents_device_error_,
             2,
         )

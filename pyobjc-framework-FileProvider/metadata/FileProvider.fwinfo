@@ -627,6 +627,16 @@
    "NSFileProviderManager": {
     "methods": [
      {
+      "selector": "checkDomainsCanBeStored:onVolumeAtURL:unsupportedReason:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "type_override": "^Z" },
+       "2": { "type_modifier": "o" },
+       "3": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "runTestingOperations:error:",
       "class_method": false,
       "args": {

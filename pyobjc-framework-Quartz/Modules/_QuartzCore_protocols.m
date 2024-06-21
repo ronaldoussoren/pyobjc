@@ -23,4 +23,12 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(CAMetalDisplayLinkDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1400 */
+#if PyObjC_BUILD_RELEASE >= 1500
+    p = PyObjC_IdToPython(@protocol(CIMaximumScaleTransform));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIToneMapHeadroom));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIAreaBoundsRed));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1400 */
 }

@@ -11,14 +11,16 @@ class TestMPSCore_MPSNDArrayIdentity(TestCase):
         )
         self.assertArgSizeInArg(
             MetalPerformanceShaders.MPSNDArrayIdentity.reshapeWithCommandBuffer_sourceArray_dimensionCount_dimensionSizes_destinationArray_,
+            3,
             2,
         )
 
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSNDArrayIdentity.reshapeWithCommandEncoder_sourceArray_dimensionCount_dimensionSizes_destinationArray_,
-            3,
+            MetalPerformanceShaders.MPSNDArrayIdentity.reshapeWithCommandEncoder_commandBuffer_sourceArray_dimensionCount_dimensionSizes_destinationArray_,
+            4,
         )
         self.assertArgSizeInArg(
-            MetalPerformanceShaders.MPSNDArrayIdentity.reshapeWithCommandEncoder_sourceArray_dimensionCount_dimensionSizes_destinationArray_,
-            2,
+            MetalPerformanceShaders.MPSNDArrayIdentity.reshapeWithCommandEncoder_commandBuffer_sourceArray_dimensionCount_dimensionSizes_destinationArray_,
+            4,
+            3,
         )

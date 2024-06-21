@@ -444,7 +444,7 @@ class TestNSTextView(TestCase):
 
     @min_os_level("15.0")
     def testMethods15_0(self):
-        self.assertArgIsBOOL(AppKit.NSTextView.isWritingToolsActive, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isWritingToolsActive)
 
     @min_os_level("10.6")
     def testProtocols10_6(self):

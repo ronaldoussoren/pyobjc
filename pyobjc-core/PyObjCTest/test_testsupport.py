@@ -1888,7 +1888,8 @@ class TestTestSupport(TestCase):
 
         m = Method(3, {"type": b"@?"}, selector=True)
         with self.assertRaisesRegex(
-            self.failureException, "arg 1 of <.*> is not of type block: no callable"
+            self.failureException,
+            "arg 1 of <.*>: no callable specified for the block signature",
         ):
             self.assertArgIsBlock(m, 1, "v")
         m = Method(3, {"type": b"@?", "callable": {}}, selector=True)
@@ -2036,7 +2037,7 @@ class TestTestSupport(TestCase):
         m = Method(None, {"type": b"@?"}, selector=True)
         with self.assertRaisesRegex(
             self.failureException,
-            "result of <.*> is not of type block: no callable specified",
+            "result of <.*>: no callable specified for the block signature",
         ):
             self.assertResultIsBlock(m, "v")
         m = Method(None, {"type": b"@?", "callable": {}}, selector=True)

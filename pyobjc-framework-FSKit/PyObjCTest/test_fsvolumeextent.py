@@ -27,6 +27,12 @@ class TestFSVolumeExtentHelper(FSKit.NSObject):
     ):
         pass
 
+    def preallocateOperationsInhibited(self):
+        return 1
+
+    def setPreallocateOperationsInhibited_(self, a):
+        pass
+
 
 class TestFSVolumeExtent(TestCase):
     def test_enum(self):
@@ -40,32 +46,32 @@ class TestFSVolumeExtent(TestCase):
 
     def test_protocol_methods(self):
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             1,
             FSKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             2,
-            b"B",
+            b"I",
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             3,
             b"I",
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             4,
             b"Q",
         )
         self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             5,
             FSExtentPacker,
         )
         self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             6,
             b"v@",
         )
@@ -91,8 +97,13 @@ class TestFSVolumeExtent(TestCase):
             b"Q",
         )
         self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler,
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
             5,
+            b"i@iQQI",
+        )
+        self.assertArgIsBlock(
+            TestFSVolumeExtentHelper.blockmapFile_range_startIO_flags_operationID_usingPacker_replyHandler_,
+            6,
             b"v@",
         )
 
@@ -118,7 +129,7 @@ class TestFSVolumeExtent(TestCase):
             FSExtentPacker,
         )
         self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.createItemNamed_type_inDirectory_attributes_usingPacker_replyHandler_,
+            TestFSVolumeExtentHelper.lookupName_inDirectory_usingPacker_replyHandler_,
             3,
             b"v@@",
         )
@@ -127,7 +138,7 @@ class TestFSVolumeExtent(TestCase):
             TestFSVolumeExtentHelper.preallocateOperationsInhibited, b"B"
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.setRreallocateOperationsInhibited_, 0, b"B"
+            TestFSVolumeExtentHelper.setPreallocateOperationsInhibited_, 0, b"B"
         )
 
         self.assertArgHasType(

@@ -123,5 +123,5 @@ class TestAVCapturePhotoOutput(TestCase):
             AVFoundation.AVCapturePhotoSettings.setShutterSoundSuppressionEnabled_, 0
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoSettings.isConstantColorFallbackPhoto
+            AVFoundation.AVCapturePhoto.isConstantColorFallbackPhoto
         )

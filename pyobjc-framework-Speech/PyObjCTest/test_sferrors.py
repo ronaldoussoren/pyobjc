@@ -6,7 +6,7 @@ class TestSFErrors(TestCase):
     def test_constants(self):
         self.assertIsEnumType(Speech.SFSpeechErrorCode)
         self.assertEqual(Speech.SFSpeechErrorCodeInternalServiceError, 1)
-        self.assertEqual(Speech.SFSpeechErrorCodeAudioReadFailed, 1)
+        self.assertEqual(Speech.SFSpeechErrorCodeAudioReadFailed, 2)
         self.assertEqual(Speech.SFSpeechErrorCodeUndefinedTemplateClassName, 7)
         self.assertEqual(Speech.SFSpeechErrorCodeMalformedSupplementalModel, 8)
 

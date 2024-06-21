@@ -50,7 +50,7 @@ class TestFSResource(TestCase):
         )
 
         self.assertArgIsBlock(
-            TestFSResourceHelper.probeResource_replyHandler_, 1, b"vq@@"
+            TestFSResourceHelper.probeResource_replyHandler_, 1, b"vi@@@"
         )
 
     def test_methods(self):

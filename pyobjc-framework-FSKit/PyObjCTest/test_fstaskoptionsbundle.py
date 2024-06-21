@@ -10,7 +10,7 @@ class TestFSClient(TestCase):
         self.assertIsInstance(FSKit.FSActivateOptionSyntaxKey, str)
 
     def test_methods(self):
-        self.fail("argv suppprt!")
+        self.fail("argv support!")
         self.assertArgIsBlock(
             FSKit.FSTaskOptionsBundle.bundleForArguments_count_extension_operationType_errorHandler_,
             4,

@@ -803,7 +803,8 @@ class TestCase(_unittest.TestCase):
         if st is None:
             self.fail(
                 message
-                or "arg %d of %s is not of type block: no callable" % (argno, method)
+                or "arg %d of %s: no callable specified for the block signature"
+                % (argno, method)
             )
 
         try:
@@ -848,7 +849,8 @@ class TestCase(_unittest.TestCase):
         if st is None:
             self.fail(
                 message
-                or "result of %s is not of type block: no callable specified" % (method)
+                or "result of %s: no callable specified for the block signature"
+                % (method)
             )
 
         try:

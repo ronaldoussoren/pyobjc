@@ -52,7 +52,7 @@ class TestVTRAWProcessingSession(TestCase):
     @min_os_level("15.0")
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTRAWProcessingSessionCreate, 4)
-        self.assertArgIsAlreadyCFRetained(VideoToolbox.VTRAWProcessingSessionCreate, 4)
+        self.assertArgIsCFRetained(VideoToolbox.VTRAWProcessingSessionCreate, 4)
 
         VideoToolbox.VTRAWProcessingSessionInvalidate
         VideoToolbox.VTRAWProcessingSessionGetTypeID
@@ -74,7 +74,7 @@ class TestVTRAWProcessingSession(TestCase):
         self.assertArgIsOut(
             VideoToolbox.VTRAWProcessingSessionCopyProcessingParameters, 1
         )
-        self.assertArgIsAlreadyCFRetained(
+        self.assertArgIsCFRetained(
             VideoToolbox.VTRAWProcessingSessionCopyProcessingParameters, 1
         )
 

@@ -68,6 +68,9 @@
    "CVBufferRef": {
     "gettypeid_func": "CVBufferGetTypeID"
    },
+   "CVMetalBufferCacheRef": {
+    "gettypeid_func": "CVMetalBufferCacheGetTypeID"
+   },
    "CVDisplayLinkRef": {
     "gettypeid_func": "CVDisplayLinkGetTypeID",
     "typestr": "^{__CVDisplayLink=}"
@@ -100,6 +103,16 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CVMetalBufferCacheCreate": {
+    "args": {
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "CVMetalBufferCacheCreateBufferFromImage": {
+    "args": {
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "CVMetalTextureCacheCreateFromImage": {
     "args": {
      "0": { "type_override": "@" },

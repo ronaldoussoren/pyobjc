@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 import FSKit  # noqa: F401
 
 
-class TestFSFileSystemHelper(TestCase):
+class TestFSFileSystemHelper(FSKit.NSObject):
     def loadResource_options_replyHandler_(self, a, b, c):
         pass
 

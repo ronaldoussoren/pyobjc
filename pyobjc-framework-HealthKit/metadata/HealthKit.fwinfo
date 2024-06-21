@@ -1,6 +1,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "HKScoredAssessmentTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKDocumentTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKCorrelationTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKCharacteristicTypeIdentifier": { "type": "@", "type_name": "NSString" },

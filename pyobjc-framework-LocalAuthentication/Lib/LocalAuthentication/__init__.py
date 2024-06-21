@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata
+    from . import _metadata, _LocalAuthentication
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="LocalAuthentication",
@@ -21,7 +21,10 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(Foundation,),
+        parents=(
+            _LocalAuthentication,
+            Foundation,
+        ),
         metadict=_metadata.__dict__,
     )
 

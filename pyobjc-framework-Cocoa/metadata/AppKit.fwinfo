@@ -2,6 +2,8 @@
  "definitions": {
   "typed_enum": {
    "NSFontWidth": { "type": "d" },
+   "NSTextHighlightStyle": { "type": "@", "type_name": "NSString" },
+   "NSTextHighlightColorScheme": { "type": "@", "type_name": "NSString"  },
    "NSControlStateValue": { "type": "q" },
    "NSToolbarUserInfoKey": { "type": "@", "type_name": "NSString" },
    "NSAttributedStringFormattingContextKey": { "type": "@", "type_name": "NSString" },

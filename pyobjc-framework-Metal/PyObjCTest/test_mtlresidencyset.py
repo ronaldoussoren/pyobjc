@@ -13,7 +13,7 @@ class TestMTLResidencySetHelper(Metal.NSObject):
     def removeAllocations_count_(self, a, b):
         pass
 
-    def containsAllocation_(self):
+    def containsAllocation_(self, a):
         return 1
 
     def allocationCount(self):

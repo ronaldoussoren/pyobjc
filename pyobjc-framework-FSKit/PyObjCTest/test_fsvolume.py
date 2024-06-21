@@ -3,31 +3,39 @@ from PyObjCTools.TestSupport import TestCase
 import FSKit
 import objc
 
-FSDirEntryPacker = b"i@qQQ@B"
+FSDirEntryPacker = b"i@CQQ@B"
 
 
 class TestFSVolumeHelper(FSKit.NSObject):
+    @objc.objc_method(selector=b"PC_LINK_MAX")
     def PC_LINK_MAX(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_NAME_MAX")
     def PC_NAME_MAX(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_CHOWN_RESTRICTED")
     def PC_CHOWN_RESTRICTED(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_NO_TRUNC")
     def PC_NO_TRUNC(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_CASE_SENSITIVE")
     def PC_CASE_SENSITIVE(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_CASE_PRESERVING")
     def PC_CASE_PRESERVING(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_XATTR_SIZE_BITS")
     def PC_XATTR_SIZE_BITS(self):
         return 1
 
+    @objc.objc_method(selector=b"PC_FILESIZEBITS")
     def PC_FILESIZEBITS(self):
         return 1
 
@@ -52,6 +60,9 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def lookupName_inDirectory_replyHandler_(self, a, b, c):
         pass
 
+    def readSymbolicLink_replyHandler_(self, a, b):
+        pass
+
     def reclaim_replyHandler_(self, a, b):
         pass
 
@@ -66,13 +77,23 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def createLinkof_named_inDirectory_replyHandler_(self, a, b, c, d):
         pass
 
+    def removeItem_named_fromDirectory_replyHandler_(self, a, b, c, d):
+        pass
+
     def renameItem_inDirectory_named_toDirectory_newName_overItem_withOptions_replyHandler_(
         self, a, b, c, d, e, f, g, h
     ):
         pass
 
     def enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_(
-        self, a, b, c, d, e, f, g
+        self,
+        a,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
     ):
         pass
 
@@ -91,6 +112,9 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def xattrOperationsInhibited(self):
         return 1
 
+    def setXattrOperationsInhibited_(self, a):
+        pass
+
     def xattrOf_named_replyHandler_(self, a, b, c):
         pass
 
@@ -101,6 +125,9 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     def limitedXattrOperationsInhibited(self):
+        return 1
+
+    def setLimitedXattrOperationsInhibited_(self, a):
         return 1
 
     def supportedXattrNamesOf_(self, a):
@@ -131,11 +158,14 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     def makeCloneOf_inDirectory_named_attributes_usingFlags_replyHandler_(
-        self, a, b, c, d, e, f, g
+        self, a, b, c, d, e, f
     ):
         pass
 
     def renameOperationsInhibited(self):
+        return 1
+
+    def setRenameOperationsInhibited_(self, a):
         return 1
 
     def renameVolume_replyHandler_(self, a, b):
@@ -202,20 +232,20 @@ class TestFSVolume(TestCase):
         self.assertProtocolExists("FSVolumeRenameOperations")
 
     def test_protocol_methods(self):
-        self.assertResultHasType(TestFSVolumeHelper.PC_LINK_MAX, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_NAME_MAX, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_CHOWN_RESTRICTED, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_NO_TRUNC, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_CASE_SENSITIVE, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_CASE_PRESERVING, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_XATTR_SIZE_BITS, objc._C_UINT)
-        self.assertResultHasType(TestFSVolumeHelper.PC_FILESIZEBITS, objc._C_UINT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_LINK_MAX, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_NAME_MAX, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_CHOWN_RESTRICTED, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_NO_TRUNC, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_CASE_SENSITIVE, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_CASE_PRESERVING, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_XATTR_SIZE_BITS, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.PC_FILESIZEBITS, objc._C_INT)
 
         self.assertArgHasType(
             TestFSVolumeHelper.setNewState_forced_replyHandler_, 1, objc._C_BOOL
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.setNewState_forced_replyHandler_, 2, b"vq@"
+            TestFSVolumeHelper.setNewState_forced_replyHandler_, 2, b"vi@"
         )
 
         self.assertArgIsBlock(TestFSVolumeHelper.mount_replyHandler_, 1, b"v@@")
@@ -274,28 +304,28 @@ class TestFSVolume(TestCase):
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingCookie_verifier_provideAttributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
             1,
             b"Q",
         )
         self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingCookie_verifier_provideAttributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
             2,
             b"Q",
         )
         self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingCookie_verifier_provideAttributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
             3,
             b"B",
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingCookie_verifier_provideAttributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
             5,
             FSDirEntryPacker,
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingCookie_verifier_provideAttributes_usingBlock_replyHandler_,
-            5,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
+            6,
             b"vQ@",
         )
 
@@ -338,7 +368,7 @@ class TestFSVolume(TestCase):
             TestFSVolumeHelper.setXattrOf_named_value_how_replyHandler_, 3, b"I"
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.setXattrOf_named_value_how_replyHandler_, 4, b"v@@"
+            TestFSVolumeHelper.setXattrOf_named_value_how_replyHandler_, 4, b"v@"
         )
 
         self.assertArgIsBlock(TestFSVolumeHelper.listXattrsOf_replyHandler_, 1, b"v@@")

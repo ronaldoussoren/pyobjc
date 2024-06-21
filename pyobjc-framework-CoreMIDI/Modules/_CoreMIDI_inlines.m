@@ -45,6 +45,32 @@ static PyObjC_function_map function_map[] = {
     {"MIDI1UPSysEx", (PyObjC_Function_Pointer)&MIDI1UPSysEx},
     {"MIDI1UPSysExArray", (PyObjC_Function_Pointer)&MIDI1UPSysExArray},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1500
+    {"MIDI1UPPolyPressure", (PyObjC_Function_Pointer)&MIDI1UPPolyPressure},
+    {"MIDI1UPProgramChange", (PyObjC_Function_Pointer)&MIDI1UPProgramChange},
+    {"MIDI1UPChannelPressure", (PyObjC_Function_Pointer)&MIDI1UPChannelPressure},
+    {"MIDI2StreamMessage", (PyObjC_Function_Pointer)&MIDI2StreamMessage},
+    {"MIDI2StreamMessageFromData", (PyObjC_Function_Pointer)&MIDI2StreamMessageFromData},
+    {"MIDI2EndpointDiscoveryMessage", (PyObjC_Function_Pointer)&MIDI2EndpointDiscoveryMessage},
+    {"MIDI2EndpointInfoNotificationMessage", (PyObjC_Function_Pointer)&MIDI2EndpointInfoNotificationMessage},
+    {"MIDI2EndpointDeviceIdentityNotificationMessage", (PyObjC_Function_Pointer)&MIDI2EndpointDeviceIdentityNotificationMessage},
+    {"MIDI2EndpointNameNotificationMessage", (PyObjC_Function_Pointer)&MIDI2EndpointNameNotificationMessage},
+    {"MIDI2EndpointProductInstanceIDNotificationMessage", (PyObjC_Function_Pointer)&MIDI2EndpointProductInstanceIDNotificationMessage},
+    {"MIDI2StreamConfigurationRequestMessage", (PyObjC_Function_Pointer)&MIDI2StreamConfigurationRequestMessage},
+    {"MIDI2StreamConfigurationNotificationMessage", (PyObjC_Function_Pointer)&MIDI2StreamConfigurationNotificationMessage},
+    {"MIDI2FunctionBlockDiscoveryMessage", (PyObjC_Function_Pointer)&MIDI2FunctionBlockDiscoveryMessage},
+    {"MIDI2FunctionBlockInfoNotificationMessage", (PyObjC_Function_Pointer)&MIDI2FunctionBlockInfoNotificationMessage},
+    {"MIDI2FunctionBlockNameNotificationMessage", (PyObjC_Function_Pointer)&MIDI2FunctionBlockNameNotificationMessage},
+    {"MIDI2StartOfClipMessage", (PyObjC_Function_Pointer)&MIDI2StartOfClipMessage},
+    {"MIDI2EndOfClipMessage", (PyObjC_Function_Pointer)&MIDI2EndOfClipMessage},
+    {"MIDINoOpMessage", (PyObjC_Function_Pointer)&MIDINoOpMessage},
+    {"MIDIJitterReductionClockMessage", (PyObjC_Function_Pointer)&MIDIJitterReductionClockMessage},
+    {"MIDIJitterReductionTimestampMessage", (PyObjC_Function_Pointer)&MIDIJitterReductionTimestampMessage},
+    {"MIDIDeltaClockstampTicksPerQuarterNoteMessage", (PyObjC_Function_Pointer)&MIDIDeltaClockstampTicksPerQuarterNoteMessage},
+    {"MIDITicksSinceLastEventMessage", (PyObjC_Function_Pointer)&MIDITicksSinceLastEventMessage},
+    {"MIDI2FlexDataMessage", (PyObjC_Function_Pointer)&MIDI2FlexDataMessage},
+
+#endif
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013

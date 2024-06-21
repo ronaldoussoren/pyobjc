@@ -3,6 +3,8 @@
 {
  "definitions": {
   "typed_enum": {
+   "ASAuthorizationProviderExtensionEncryptionAlgorithm": { "type": "@","type_name": "NSNumber" },
+   "ASAuthorizationProviderExtensionSigningAlgorithm": { "type": "@","type_name": "NSNumber" },
    "ASAuthorizationOpenIDOperation": { "type": "@","type_name": "NSString" },
    "ASAuthorizationProviderAuthorizationOperation": { "type": "@","type_name": "NSString" },
    "ASAuthorizationScope": { "type": "@","type_name": "NSString" },

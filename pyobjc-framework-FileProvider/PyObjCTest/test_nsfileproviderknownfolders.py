@@ -36,5 +36,5 @@ class TestNSFileProviderKnownFolders(TestCase):
         self.assertArgIsBlock(
             TestNSFileProviderKnownFoldersHelper.getKnownFolderLocations_completionHandler_,
             1,
-            b"@@",
+            b"v@@",
         )

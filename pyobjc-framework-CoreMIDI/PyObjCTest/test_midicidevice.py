@@ -6,7 +6,7 @@ import CoreMIDI
 class TestMIDICIDevice(TestCase):
     @min_os_level("15.0")
     def test_methods(self):
-        self.assetResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProtocolNegotiation)
-        self.assetResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProfileConfiguration)
-        self.assetResultIsBOOL(CoreMIDI.MIDICIDevice.supportsPropertyExchange)
-        self.assetResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProcessInquiry)
+        self.assertResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProtocolNegotiation)
+        self.assertResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProfileConfiguration)
+        self.assertResultIsBOOL(CoreMIDI.MIDICIDevice.supportsPropertyExchange)
+        self.assertResultIsBOOL(CoreMIDI.MIDICIDevice.supportsProcessInquiry)

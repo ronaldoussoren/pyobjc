@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestVTHDRPerFrameMetadataGenerationSession(TestCase):
     @min_os_level("15.0")
     def test_constants15_0(self):
-        self.assertTypedEnum(
+        self.assertIsTypedEnum(
             VideoToolbox.VTHDRPerFrameMetadataGenerationHDRFormatType, str
         )
         self.assertIsInstance(
@@ -26,7 +26,7 @@ class TestVTHDRPerFrameMetadataGenerationSession(TestCase):
         self.assertArgIsOut(
             VideoToolbox.VTHDRPerFrameMetadataGenerationSessionCreate, 3
         )
-        self.assertArgIsAlreadyCFRetained(
+        self.assertArgIsCFRetained(
             VideoToolbox.VTHDRPerFrameMetadataGenerationSessionCreate, 3
         )
 

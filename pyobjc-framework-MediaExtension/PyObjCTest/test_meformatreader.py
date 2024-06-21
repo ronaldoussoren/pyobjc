@@ -37,7 +37,7 @@ class TestMEFormatReaderHelper(MediaExtension.NSObject):
     def loadTotalSampleDataLengthWithCompletionHandler_(self, a):
         pass
 
-    def loadEstimatedDataRateWithCompletionHandler__(self, a):
+    def loadEstimatedDataRateWithCompletionHandler_(self, a):
         pass
 
     # def loadMetadataWithCompletionHandler_(self, a):
@@ -169,7 +169,7 @@ class TestMEFormatReader(TestCase):
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.parseAdditionalFragmentsWithCompletionHandler_,
             0,
-            b"v@@",
+            b"vQ@",
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.loadTrackInfoWithCompletionHandler_, 0, b"v@@"
@@ -200,7 +200,7 @@ class TestMEFormatReader(TestCase):
             b"vq@",
         )
         self.assertArgIsBlock(
-            TestMEFormatReaderHelper.loadEstimatedDataRateWithCompletionHandler,
+            TestMEFormatReaderHelper.loadEstimatedDataRateWithCompletionHandler_,
             0,
             b"vf@",
         )
@@ -218,21 +218,6 @@ class TestMEFormatReader(TestCase):
             TestMEFormatReaderHelper.currentSampleDuration,
             MediaExtension.CMTime.__typestr__,
         )
-        self.assertArgHasType(
-            TestMEFormatReaderHelper.setPresentationTimeStamp_,
-            0,
-            MediaExtension.CMTime.__typestr__,
-        )
-        self.assertArgHasType(
-            TestMEFormatReaderHelper.setDecodeTimeStamp_,
-            0,
-            MediaExtension.CMTime.__typestr__,
-        )
-        self.assertArgHasType(
-            TestMEFormatReaderHelper.setCurrentSampleDuration_,
-            0,
-            MediaExtension.CMTime.__typestr__,
-        )
 
         self.assertArgHasType(
             TestMEFormatReaderHelper.stepInDecodeOrderByCount_completionHandler_,
@@ -241,7 +226,7 @@ class TestMEFormatReader(TestCase):
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepInDecodeOrderByCount_completionHandler_,
-            0,
+            1,
             b"vq@",
         )
         self.assertArgHasType(
@@ -251,7 +236,7 @@ class TestMEFormatReader(TestCase):
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepInPresentationOrderByCount_completionHandler_,
-            0,
+            1,
             b"vq@",
         )
         self.assertArgHasType(
@@ -261,7 +246,7 @@ class TestMEFormatReader(TestCase):
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepByDecodeTime_completionHandler_,
-            0,
+            1,
             b"v" + MediaExtension.CMTime.__typestr__ + b"Z@",
         )
         self.assertArgHasType(
@@ -271,7 +256,7 @@ class TestMEFormatReader(TestCase):
         )
         self.assertArgIsBlock(
             TestMEFormatReaderHelper.stepByPresentationTime_completionHandler_,
-            0,
+            1,
             b"v" + MediaExtension.CMTime.__typestr__ + b"Z@",
         )
         self.assertResultHasType(
@@ -324,16 +309,21 @@ class TestMEFormatReader(TestCase):
         self.assertArgHasType(
             TestMEFormatReaderHelper.refineSampleLocation_refinementData_refinementDataLength_refinedLocation_error_,
             3,
+            b"o^{AVSampleCursorStorageRange=qq}",
+        )
+        self.assertArgHasType(
+            TestMEFormatReaderHelper.refineSampleLocation_refinementData_refinementDataLength_refinedLocation_error_,
+            4,
             b"o^@",
         )
 
     @min_os_level("15.0")
     def test_methods15_0(self):
         self.assertResultIsBOOL(MediaExtension.METrackInfo.isEnabled)
-        self.assertArgIsBOOL(MediaExtension.METrackInfo.setEnabled_)
+        self.assertArgIsBOOL(MediaExtension.METrackInfo.setEnabled_, 0)
 
         self.assertResultIsBOOL(MediaExtension.METrackInfo.requiresFrameReordering)
-        self.assertArgIsBOOL(MediaExtension.METrackInfo.setRequiresFrameReordering_)
+        self.assertArgIsBOOL(MediaExtension.METrackInfo.setRequiresFrameReordering_, 0)
 
         self.assertResultIsBOOL(
             MediaExtension.MEHEVCDependencyInfo.hasTemporalSubLayerAccess

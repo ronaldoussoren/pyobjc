@@ -844,13 +844,13 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def sourceHeadroom(self):
         return 1
 
-    def setSourceHeadroom(self, a):
+    def setSourceHeadroom_(self, a):
         pass
 
     def targetHeadroom(self):
         return 1
 
-    def setTargetHeadroom(self, a):
+    def setTargetHeadroom_(self, a):
         pass
 
 
@@ -2066,7 +2066,9 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CIMaximumScaleTransform"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # XXX: Disabled this auto-detection because it conflicts with an older
+            # binding for Foundation.
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "aspectRatio", objc._C_FLT)
 
         with self.subTest("CIToneMapHeadroom"):

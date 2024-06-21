@@ -15,10 +15,10 @@ class TestMLModelAsset(TestCase):
         self.assertArgIsOut(CoreML.MLModelAsset.modelAssetWithURL_error_, 1)
 
         self.assertArgIsBlock(
-            CoreML.MLModelAsset.modelDescriptionWithCompletionHandler, 0, b"v@@"
+            CoreML.MLModelAsset.modelDescriptionWithCompletionHandler_, 0, b"v@@"
         )
         self.assertArgIsBlock(
-            CoreML.MLModelAsset.modelDescriptionOfFunctionNamed_completionHandler,
+            CoreML.MLModelAsset.modelDescriptionOfFunctionNamed_completionHandler_,
             1,
             b"v@@",
         )

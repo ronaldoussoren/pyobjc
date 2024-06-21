@@ -6,6 +6,14 @@
    "MIDIDriverRef": { "typestr": "^^{MIDriverInterface=}" }
   },
   "enum": {
+   "kMIDICIPropertyExchangeBadRequestID": { "value": 255 },
+   "kMIDIUInteger2Max": { "value": 3 },
+   "kMIDIUInteger4Max": { "value": 15 },
+   "kMIDIUInteger7Max": { "value": 127 },
+   "kMIDIUInteger14Max": { "value": 16383 },
+   "kMIDIUInteger28Max": { "value": 268435455 },
+   "kMIDIDeviceIDUMPGroup": { "value": 126 },
+   "kMIDIDeviceIDFunctionBlock": { "value": 127 },
    "kMIDIObjectType_ExternalMask": { "value": 16 },
    "MIDINetworkConnectionPolicy_NoOne": { "value": 0 },
    "MIDINetworkConnectionPolicy_HostsInContactList": { "value": 1 },
@@ -190,6 +198,26 @@
   },
   "formal_protocols": {},
   "functions": {
+   "MIDI2EndpointNameNotificationMessage": {
+    "args": {
+     "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "MIDI2EndpointProductInstanceIDNotificationMessage": {
+    "args": {
+     "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "MIDI2FunctionBlockNameNotificationMessage": {
+    "args": {
+     "2": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 3 }
+    }
+   },
+   "MIDI2StreamMessageFromData": {
+    "args": {
+     "2": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 3 }
+    }
+   },
    "MIDISendUMPSysex": { "ignore": true },
    "MIDISendUMPSysex8": { "ignore": true },
    "MIDIEventPacketSysexBytesForGroup": {

@@ -11,7 +11,7 @@ class TestMIDIUMPMutableEndpoint(TestCase):
         self.assertArgIsBlock(
             CoreMIDI.MIDIUMPMutableEndpoint.initWithName_deviceInfo_productInstanceID_MIDIProtocol_destinationCallback_,
             4,
-            b"x^v",
+            b"v^{MIDIEventList=iI[1{MIDIEventPacket=QI[64I]}]}^v",
         )
 
         self.assertResultIsBOOL(CoreMIDI.MIDIUMPMutableEndpoint.setName_error_)

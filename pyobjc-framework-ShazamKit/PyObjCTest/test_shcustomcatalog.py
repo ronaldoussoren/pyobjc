@@ -25,9 +25,6 @@ class TestSHCustomCatalog(TestCase):
 
     @min_os_level("15.0")
     def test_methods15_0(self):
-        self.assertResultIsBOOL(
-            ShazamKit.SHCustomCatalog.initWithDataRepresentation_error_
-        )
         self.assertArgIsOut(
             ShazamKit.SHCustomCatalog.initWithDataRepresentation_error_, 1
         )

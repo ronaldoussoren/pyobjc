@@ -289,6 +289,66 @@
     "WTF_EXPORT_PRIVATE": { "ignore": true }
   },
   "functions": {
+   "JSValueToUInt32": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueToUInt64": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueToInt32": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueToInt64": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueCompare": {
+    "args": {
+     "3":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueCompareDouble": {
+    "args": {
+     "3":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueCompareInt64": {
+    "args": {
+     "3":  { "type_modifier": "o" }
+    }
+   },
+   "JSValueCompareUInt64": {
+    "args": {
+     "3":  { "type_modifier": "o" }
+    }
+   },
+   "JSBigIntCreateWithDouble": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSBigIntCreateWithInt64": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSBigIntCreateWithUInt64": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
+   "JSBigIntCreateWithString": {
+    "args": {
+     "2":  { "type_modifier": "o" }
+    }
+   },
    "JSValueGetTypedArrayType": {
     "args": {
      "0": {

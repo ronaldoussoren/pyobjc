@@ -45,11 +45,10 @@ class TestMERawProcessor(TestCase):
         self.assertArgHasType(
             TestMERawProcessorHelper.setMetalDeviceRegistryID_, 0, b"Q"
         )
-        self.assertResultIsBOOL(TestMERawProcessorHelper.processFrameFromImageBuffer)
         self.assertArgIsBlock(
             TestMERawProcessorHelper.processFrameFromImageBuffer_completionHandler_,
-            0,
-            b"v@@",
+            1,
+            b"v^{__CVBuffer=}@",
         )
 
     @min_os_level("15.0")
@@ -64,9 +63,13 @@ class TestMERawProcessor(TestCase):
 
         self.assertArgIsBOOL(
             MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_,
-            4,
+            3,
         )
 
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_cameraValue_,
+            3,
+        )
         self.assertArgIsBOOL(
             MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_cameraValue_,
             4,
@@ -74,10 +77,6 @@ class TestMERawProcessor(TestCase):
         self.assertArgIsBOOL(
             MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_cameraValue_,
             5,
-        )
-        self.assertArgIsBOOL(
-            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_cameraValue_,
-            6,
         )
 
         self.assertResultIsBOOL(

@@ -28,7 +28,7 @@ class TestJSValueRef(TestCase):
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigInt64Array, 11)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigUint64Array, 12)
 
-        self.assertIsEnumType(JavaScriptCore.SRelationCondition)
+        self.assertIsEnumType(JavaScriptCore.JSRelationCondition)
         self.assertEqual(JavaScriptCore.kJSRelationConditionUndefined, 0)
         self.assertEqual(JavaScriptCore.kJSRelationConditionEqual, 1)
         self.assertEqual(JavaScriptCore.kJSRelationConditionGreaterThan, 2)
@@ -122,15 +122,15 @@ class TestJSValueRef(TestCase):
     @min_os_level("15.0")
     def testFunctions15_0(self):
         JavaScriptCore.JSValueIsBigInt
-        JavaScriptCore.JSValueCompare
-        JavaScriptCore.JSValueCompareInt64
-        JavaScriptCore.JSValueCompareUInt64
-        JavaScriptCore.JSValueCompareDouble
-        JavaScriptCore.JSBigIntCreateWithDouble
-        JavaScriptCore.JSBigIntCreateWithInt64
-        JavaScriptCore.JSBigIntCreateWithUInt64
-        JavaScriptCore.JSBigIntCreateWithString
-        JavaScriptCore.JSValueToInt32
-        JavaScriptCore.JSValueToUInt32
-        JavaScriptCore.JSValueToInt64
-        JavaScriptCore.JSValueToUInt64
+        self.assertArgIsOut(JavaScriptCore.JSValueCompare, 3)
+        self.assertArgIsOut(JavaScriptCore.JSValueCompareInt64, 3)
+        self.assertArgIsOut(JavaScriptCore.JSValueCompareUInt64, 3)
+        self.assertArgIsOut(JavaScriptCore.JSValueCompareDouble, 3)
+        self.assertArgIsOut(JavaScriptCore.JSBigIntCreateWithDouble, 2)
+        self.assertArgIsOut(JavaScriptCore.JSBigIntCreateWithInt64, 2)
+        self.assertArgIsOut(JavaScriptCore.JSBigIntCreateWithUInt64, 2)
+        self.assertArgIsOut(JavaScriptCore.JSBigIntCreateWithString, 2)
+        self.assertArgIsOut(JavaScriptCore.JSValueToInt32, 2)
+        self.assertArgIsOut(JavaScriptCore.JSValueToUInt32, 2)
+        self.assertArgIsOut(JavaScriptCore.JSValueToInt64, 2)
+        self.assertArgIsOut(JavaScriptCore.JSValueToUInt64, 2)

@@ -1,6 +1,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "NSUndoManagerUserInfoKey": { "type": "@", "type_name": "NSString" },
    "NSLocaleKey": { "type": "@", "type_name": "NSString" },
    "NSAttributedStringKey": { "type": "@", "type_name": "NSString" },
    "NSURLResourceKey": { "type": "@", "type_name": "NSString" },

@@ -108,26 +108,26 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kUMPStreamMessageStatusStartOfClip, 0x20)
         self.assertEqual(CoreMIDI.kUMPStreamMessageStatusEndOfClip, 0x21)
 
-        self.assertIsEhumType(CoreMIDI.MIDIUMPFunctionBlockMIDI1Info)
+        self.assertIsEnumType(CoreMIDI.MIDIUMPFunctionBlockMIDI1Info)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoNotMIDI1, 0)
         self.assertEqual(
             CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoUnrestrictedBandwidth, 1
         )
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoRestrictedBandwidth, 2)
 
-        self.assertIsEhumType(CoreMIDI.MIDIUMPFunctionBlockUIHint)
+        self.assertIsEnumType(CoreMIDI.MIDIUMPFunctionBlockUIHint)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockUIHintUnknown, 0)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockUIHintReceiver, 1)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockUIHintSender, 2)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockUIHintSenderReceiver, 3)
 
-        self.assertIsEhumType(CoreMIDI.MIDIUMPFunctionBlockDirection)
+        self.assertIsEnumType(CoreMIDI.MIDIUMPFunctionBlockDirection)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockDirectionUnknown, 0)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockDirectionInput, 1)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockDirectionOutput, 2)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockDirectionBidirectional, 3)
 
-        self.assertIsEhumType(CoreMIDI.UMPStreamMessageFormat)
+        self.assertIsEnumType(CoreMIDI.UMPStreamMessageFormat)
         self.assertEqual(CoreMIDI.kUMPStreamMessageFormatComplete, 0x00)
         self.assertEqual(CoreMIDI.kUMPStreamMessageFormatStart, 0x01)
         self.assertEqual(CoreMIDI.kUMPStreamMessageFormatContinuing, 0x02)

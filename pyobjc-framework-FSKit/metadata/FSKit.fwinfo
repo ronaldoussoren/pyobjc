@@ -103,7 +103,7 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "initWithBytes:length:"
@@ -123,28 +123,28 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
       },
       "class_method": false,
       "selector": "initWithCString:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "initWithBytes:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
       },
       "class_method": true,
       "selector": "nameWithCString:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "nameWithBytes:length:"
@@ -155,84 +155,84 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "modifyTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "addedTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "changeTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "accessTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "birthTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "backupTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setModifyTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setAddedTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setChangeTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setAccessTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setBirthTime:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setBackupTime:"

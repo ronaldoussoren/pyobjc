@@ -259,7 +259,8 @@ def test_summary(fp_out, state_dir):
     keys = tuple(sorted(results[next(iter(results))].keys()))
     width = max(len(x) for x in keys)
 
-    fmt = "%28s" + (" | %%%ds" % width) * len(keys)
+    maxlen = max(len(s) for s in results)
+    fmt = f"%{maxlen+2}s" + (" | %%%ds" % width) * len(keys)
     print(file=fp_out)
     print()
     print(fmt % (("Project",) + keys), file=fp_out)

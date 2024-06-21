@@ -43,6 +43,7 @@
    "VNImageOptionCameraIntrinsics": { "typestr": "@" }
   },
   "enum": {
+   "VNCalculateImageAestheticsScoresRequestRevision1": { "value": 1 },
    "VNDetectBarcodesRequestRevision2": { "value": 2 },
    "VNGenerateOpticalFlowRequestRevision2": { "value": 2 },
    "VNDetectBarcodesRequestRevision3": { "value": 3 },
