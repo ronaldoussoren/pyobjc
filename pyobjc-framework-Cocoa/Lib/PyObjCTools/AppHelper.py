@@ -135,40 +135,39 @@ class PyObjCAppHelperApplicationActivator(NSObject):
 class PyObjCAppHelperRunLoopStopper(NSObject):
     singletons = {}
 
+    @classmethod
     def currentRunLoopStopper(cls):
         runLoop = NSRunLoop.currentRunLoop()
         return cls.singletons.get(runLoop)
 
-    currentRunLoopStopper = classmethod(currentRunLoopStopper)
-
     def init(self):
         self = super().init()
         self.shouldStop = False
+        self.isConsole = False
         return self
 
     def shouldRun(self):
         return not self.shouldStop
 
+    @classmethod
     def addRunLoopStopper_toRunLoop_(cls, runLoopStopper, runLoop):
         if runLoop in cls.singletons:
             raise ValueError("Stopper already registered for this runLoop")
         cls.singletons[runLoop] = runLoopStopper
 
-    addRunLoopStopper_toRunLoop_ = classmethod(addRunLoopStopper_toRunLoop_)
-
+    @classmethod
     def removeRunLoopStopperFromRunLoop_(cls, runLoop):
         if runLoop not in cls.singletons:
             raise ValueError("Stopper not registered for this runLoop")
         del cls.singletons[runLoop]
 
-    removeRunLoopStopperFromRunLoop_ = classmethod(removeRunLoopStopperFromRunLoop_)
-
     def stop(self):
         self.shouldStop = True
         # this should go away when/if runEventLoop uses
         # runLoop iteration
-        if NSApp() is not None:
-            NSApp().terminate_(self)
+        if not self.isConsole:
+            if NSApp() is not None:
+                NSApp().terminate_(self)
 
     def performStop_(self, sender):
         self.stop()
@@ -249,6 +248,7 @@ def runConsoleEventLoop(
         installMachInterrupt()
     runLoop = NSRunLoop.currentRunLoop()
     stopper = PyObjCAppHelperRunLoopStopper.alloc().init()
+    stopper.isConsole = True
     PyObjCAppHelperRunLoopStopper.addRunLoopStopper_toRunLoop_(stopper, runLoop)
     try:
         while stopper.shouldRun():
