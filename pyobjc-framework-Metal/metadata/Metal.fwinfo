@@ -5,7 +5,9 @@
   "typed_enum": {
    "MTLDeviceNotificationName": { "type": "@", "type_name": "NSString" },
    "MTLCommonCounter": { "type": "@", "type_name": "NSString" },
-   "MTLCommonCounterSet": { "type": "@", "type_name": "NSString" }
+   "MTLCommonCounterSet": { "type": "@", "type_name": "NSString" },
+   "NSDeviceCertification": { "type": "q" },
+   "NSProcessPerformanceProfile": { "type": "q" }
   },
   "expressions": {
    "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
@@ -117,6 +119,41 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "removeAllocations:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "addAllocations:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "removeResidencySets:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "addResidencySets:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "useResidencySets:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
      {
       "selector": "setBytes:length:attributeStride:atIndex:",
       "class_method": false,

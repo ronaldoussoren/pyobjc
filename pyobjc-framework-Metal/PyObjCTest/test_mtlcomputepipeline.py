@@ -73,10 +73,5 @@ class TestMTLComputePipeline(TestCase):
 
         self.assertResultHasType(
             TestMTLComputePipelineHelper.shaderValidation,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestMTLComputePipelineHelper.setShaderValidation_,
-            0,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )

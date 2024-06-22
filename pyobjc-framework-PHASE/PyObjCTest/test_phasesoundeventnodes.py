@@ -4,9 +4,10 @@ import PHASE
 import CoreAudio
 
 PHASEPullStreamRenderBlock = (
-    b"iN^Bn^"
+    b"iN^Zn^"
     + CoreAudio.AudioTimeStamp.__typestr__
     + b"I"
+    + b"^"
     + CoreAudio.AudioBufferList.__typestr__
 )
 

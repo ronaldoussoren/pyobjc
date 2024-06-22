@@ -35,3 +35,10 @@ class TestFSMessageConnection(TestCase):
 
     def test_methods(self):
         self.assertArgIsBlock(FSKit.FSMessageConnection.connect_, 0, b"v@")
+
+        self.assertArgIsPrintf(
+            FSKit.FSMessageConnection.logLocalizedMessage_table_bundle_, 0
+        )
+        self.assertArgIsPrintf(
+            FSKit.FSMessageConnection.localizedMessage_table_bundle_, 0
+        )

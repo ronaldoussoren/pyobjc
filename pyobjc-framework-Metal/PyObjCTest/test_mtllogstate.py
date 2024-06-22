@@ -18,7 +18,7 @@ class TestMTLLogState(TestCase):
         self.assertEqual(Metal.MTLLogLevelError, 4)
         self.assertEqual(Metal.MTLLogLevelFault, 5)
 
-        self.assertIsEnumType(Metal.TLLogStateError)
+        self.assertIsEnumType(Metal.MTLLogStateError)
         self.assertEqual(Metal.MTLLogStateErrorInvalidSize, 1)
         self.assertEqual(Metal.MTLLogStateErrorInvalid, 2)
 

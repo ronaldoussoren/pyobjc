@@ -140,9 +140,11 @@ class TestMTLCommandBuffer(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLCommandBufferHelper.useResidencySets_count_, 0, "n^@"
+            TestMTLCommandBufferHelper.useResidencySets_count_, 0, b"n^@"
         )
-        self.assertSizeInArg(TestMTLCommandBufferHelper.useResidencySets_count_, 0, 1)
+        self.assertArgSizeInArg(
+            TestMTLCommandBufferHelper.useResidencySets_count_, 0, 1
+        )
         self.assertArgHasType(
             TestMTLCommandBufferHelper.useResidencySets_count_, 1, objc._C_ULNGLNG
         )

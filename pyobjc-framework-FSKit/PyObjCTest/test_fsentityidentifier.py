@@ -8,4 +8,30 @@ class TestFSEntityIdentifier(TestCase):
         self.assertArgHasType(FSKit.FSEntityIdentifier.initWithBytes_length_, 0, b"n^v")
         self.assertArgSizeInArg(FSKit.FSEntityIdentifier.initWithBytes_length_, 0, 1)
 
-        self.fail("various bytequalifier methods with unclear signature")
+        self.assertArgHasType(
+            FSKit.FSEntityIdentifier.initWithUUID_byteQualifier_, 1, b"n^v"
+        )
+        self.assertArgIsVariableSize(
+            FSKit.FSEntityIdentifier.initWithUUID_byteQualifier_, 1
+        )
+
+        self.assertArgHasType(
+            FSKit.FSEntityIdentifier.initWithUUID_longByteQualifier_, 1, b"n^v"
+        )
+        self.assertArgIsVariableSize(
+            FSKit.FSEntityIdentifier.initWithUUID_longByteQualifier_, 1
+        )
+
+        self.assertArgHasType(
+            FSKit.FSEntityIdentifier.identifierWithUUID_byteQualifier_, 1, b"n^v"
+        )
+        self.assertArgIsVariableSize(
+            FSKit.FSEntityIdentifier.identifierWithUUID_byteQualifier_, 1
+        )
+
+        self.assertArgHasType(
+            FSKit.FSEntityIdentifier.identifierWithUUID_longByteQualifier_, 1, b"n^v"
+        )
+        self.assertArgIsVariableSize(
+            FSKit.FSEntityIdentifier.identifierWithUUID_longByteQualifier_, 1
+        )

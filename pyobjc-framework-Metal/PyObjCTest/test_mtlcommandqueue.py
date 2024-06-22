@@ -6,6 +6,9 @@ class TestMTLCommandQueueHelper(Metal.NSObject):
     def addResidencySets_count_(self, a, b):
         pass
 
+    def removeResidencySets_count_(self, a, b):
+        pass
+
 
 class TestMTLCommandQueue(TestCase):
     @min_sdk_level("10.11")

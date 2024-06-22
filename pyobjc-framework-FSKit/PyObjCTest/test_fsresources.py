@@ -54,14 +54,27 @@ class TestFSResource(TestCase):
         )
 
     def test_methods(self):
-        self.fail("buffer arguments needs care")
+        self.assertArgIsInOut(
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_, 0
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_, 0, 2
+        )
         self.assertArgIsBlock(
             FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_,
             3,
             b"vQ@",
         )
 
-        self.fail("buffer arguments needs care")
+        self.assertArgIsInOut(
+            FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
+            0,
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
+            0,
+            2,
+        )
         self.assertArgIsBlock(
             FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
             3,
@@ -95,14 +108,39 @@ class TestFSResource(TestCase):
             b"vQ@",
         )
 
-        self.fail("buffer arguments needs care")
+        self.assertArgIsInOut(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
+            0,
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
+            0,
+            2,
+        )
         self.assertArgIsBlock(
             FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
             3,
             b"v@",
         )
 
-        self.fail("buffer arguments needs care")
+        self.assertArgIsInOut(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            0,
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            0,
+            2,
+        )
+        self.assertArgIsInOut(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            3,
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            3,
+            4,
+        )
         self.assertArgIsBlock(
             FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
             5,

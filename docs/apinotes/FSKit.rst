@@ -18,3 +18,18 @@ API Notes
 * ``-[FSMessageConnection logLocalizedMessage:table:bundle:arguments:]``
 
   This method is not available in Python, use one of the other log methods instead.
+
+* ``-[FSTaskOptionsBundle bundleForArguments:count:extension:operationType:errorHandler:]``
+
+  This method is not available in Python at this time.
+
+* ``-[FSBlockDeviceResource readInto:startingAt:length:replyHandler:]``
+
+  The first argument must be a read-write buffer (such as an instance of :class:`memoryview`)
+  of at least *length* bytes,
+
+
+* ``-[FSBlockDeviceResource synchronousReadInto:startingAt:length:replyHandler:]``
+
+  The first argument must be a read-write buffer (such as an instance of :class:`memoryview`)
+  of at least *length* bytes,

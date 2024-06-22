@@ -6,6 +6,44 @@
    "PHASESpatialCategory": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "PHASEPullStreamNode": {
+    "methods": [
+     {
+      "selector": "renderBlock",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "N^Z" },
+         "2": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+         "3": { "type": "I" },
+         "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" }
+        },
+        "retval": { "type": "i" }
+       }
+      }
+     },
+     {
+      "selector": "setRenderBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "N^Z" },
+          "2": { "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
+          "3": { "type": "I" },
+          "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "PHASEAssetRegistry": {
     "methods": [
      {
