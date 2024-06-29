@@ -15,3 +15,11 @@ class TestASSettingsHelper(TestCase):
             0,
             b"v@",
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASSettingsHelper.requestCredentialProviderExtensionEnablementWithCompletionHandler,
+            0,
+            b"vZ",
+        )

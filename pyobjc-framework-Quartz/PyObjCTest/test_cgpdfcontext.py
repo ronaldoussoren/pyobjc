@@ -69,6 +69,12 @@ class TestCGPDFContext(TestCase):
         Quartz.CGPDFContextBeginTag
         Quartz.CGPDFContextEndTag
 
+    @min_os_level("15.0")
+    def testFunctions15_0(self):
+        Quartz.CGPDFContextSetParentTree
+        Quartz.CGPDFContextSetIDTree
+        Quartz.CGPDFContextSetPageTagStructureTree
+
     def testConstants(self):
         self.assertIsInstance(Quartz.kCGPDFContextMediaBox, str)
         self.assertIsInstance(Quartz.kCGPDFContextCropBox, str)
@@ -142,6 +148,7 @@ class TestCGPDFContext(TestCase):
         self.assertEqual(Quartz.CGPDFTagTypeFigure, 700)
         self.assertEqual(Quartz.CGPDFTagTypeFormula, 701)
         self.assertEqual(Quartz.CGPDFTagTypeForm, 702)
+        self.assertEqual(Quartz.CGPDFTagTypeObject, 800)
 
     @min_os_level("10.5")
     def testConstants10_5(self):

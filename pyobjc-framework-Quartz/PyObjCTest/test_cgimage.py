@@ -56,6 +56,10 @@ class TestCGImage(TestCase):
         self.assertEqual(Quartz.kCGImageByteOrder16Big, 3 << 12)
         self.assertEqual(Quartz.kCGImageByteOrder32Big, 4 << 12)
 
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(Quartz.kCGDefaultHDRImageContentHeadroom, float)
+
     def testFunctions(self):
         self.assertIsInstance(Quartz.CGImageGetTypeID(), int)
 
@@ -241,3 +245,5 @@ class TestCGImage(TestCase):
         Quartz.CGImageGetContentHeadroom
         Quartz.CGImageShouldToneMap
         Quartz.CGImageContainsImageSpecificToneMappingMetadata
+
+        self.assertResultIsCFRetained(Quartz.CGImageCreateCopyWithContentHeadroom)

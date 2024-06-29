@@ -123,6 +123,13 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.kCACornerCurveCircular, str)
         self.assertIsInstance(Quartz.kCACornerCurveContinuous, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsTypedEnum(Quartz.CAToneMapMode, str)
+        self.assertIsInstance(Quartz.CAToneMapModeAutomatic, str)
+        self.assertIsInstance(Quartz.CAToneMapModeNever, str)
+        self.assertIsInstance(Quartz.CAToneMapModeIfSupported, str)
+
     @min_sdk_level("10.6")
     def testProtocols(self):
         self.assertProtocolExists("CAAction")

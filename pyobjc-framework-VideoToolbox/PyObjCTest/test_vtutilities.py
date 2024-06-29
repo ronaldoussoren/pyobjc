@@ -18,6 +18,9 @@ class TestVTUtilities(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTDecoderExtensionProperties_ContainingBundleURLKey, str
         )
+        self.assertIsInstance(
+            VideoToolbox.kVTDecoderExtensionProperties_ExtensionIdentifierKey, str
+        )
 
     @min_os_level("10.11")
     def test_functions(self):

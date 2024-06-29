@@ -5,9 +5,9 @@ import CoreMIDI
 
 class TestMIDIUMPEndpoint(TestCase):
     def test_enum(self):
-        self.assertIsEnumType(CoreMIDI.MIDIUMPProtocolBitmap)
-        self.assertEqual(CoreMIDI.kMIDIUMPSupportedProtocolMIDI1, 1)
-        self.assertEqual(CoreMIDI.kMIDIUMPSupportedProtocolMIDI2, 1 << 1)
+        self.assertIsEnumType(CoreMIDI.MIDIUMPProtocolOptions)
+        self.assertEqual(CoreMIDI.kMIDIUMPProtocolOptionsMIDI1, 1)
+        self.assertEqual(CoreMIDI.kMIDIUMPProtocolOptionsMIDI2, 1 << 1)
 
     @min_os_level("15.0")
     def test_methods(self):

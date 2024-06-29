@@ -112,6 +112,16 @@ class TestCGImageDestination(TestCase):
     def testConstants11_0(self):
         self.assertIsInstance(Quartz.kCGImageDestinationPreserveGainMap, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequest, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToSDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOHDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOGainmap, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequestOptions, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseIsSDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeTonemapMode, str)
+
     @min_os_level("10.8")
     def testFunctions10_8(self):
         Quartz.CGImageDestinationAddImageAndMetadata

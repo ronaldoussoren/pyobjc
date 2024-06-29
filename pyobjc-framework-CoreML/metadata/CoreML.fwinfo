@@ -38,6 +38,17 @@
    "MLModelLicenseKey": { "typestr": "@" }
   },
   "classes": {
+   "MLModelAsset": {
+    "methods": [
+     {
+      "selector": "modelAssetWithSpecificationData:blobMapping:error",
+      "class_method": true,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "MLModelCollection": {
     "methods": [
      {

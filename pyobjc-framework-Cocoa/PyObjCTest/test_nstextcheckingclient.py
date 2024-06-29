@@ -104,7 +104,8 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsDefault, 0)
         self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsPlainText, 1 << 0)
         self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsRichText, 1 << 1)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsTable, 1 << 2)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsList, 1 << 2)
+        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsTable, 1 << 3)
 
     def test_methods(self):
         self.assertResultHasType(

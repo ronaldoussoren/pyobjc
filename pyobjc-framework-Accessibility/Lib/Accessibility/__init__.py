@@ -56,6 +56,8 @@ def _setup():
         ("AXCustomContent", b"new"),
         ("AXBrailleMap", b"init"),
         ("AXBrailleMap", b"new"),
+        ("AXRequest", b"init"),
+        ("AXRequest", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

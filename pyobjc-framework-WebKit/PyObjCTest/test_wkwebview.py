@@ -141,3 +141,7 @@ class TestWKWebView(TestCase):
     def testMethods13_3(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isInspectable)
         self.assertArgIsBOOL(WebKit.WKWebView.setInspectable_, 0)
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(WebKit.WKWebView.isWritingToolsActive)

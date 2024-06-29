@@ -25,3 +25,7 @@ class TestMLModelAsset(TestCase):
         self.assertArgIsBlock(
             CoreML.MLModelAsset.functionNamesWithCompletionHandler_, 0, b"v@@"
         )
+
+        self.assertArgIsOut(
+            CoreML.MLModelAsset.modelAssetWithSpecificationData_blobMapping_error_, 2
+        )

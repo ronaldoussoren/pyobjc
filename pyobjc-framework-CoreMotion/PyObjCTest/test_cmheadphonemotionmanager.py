@@ -18,3 +18,9 @@ class TestCMHeadphoneMotionManager(TestCase):
             1,
             CMHeadphoneDeviceMotionHandler,
         )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(
+            CoreMotion.CMHeadphoneMotionManager.isConnectionStatusActive
+        )

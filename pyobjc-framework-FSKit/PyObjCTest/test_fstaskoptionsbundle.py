@@ -9,6 +9,10 @@ class TestFSClient(TestCase):
         self.assertIsInstance(FSKit.FSFormatOptionSyntaxKey, str)
         self.assertIsInstance(FSKit.FSActivateOptionSyntaxKey, str)
 
+        self.assertIsTypedEnum(FSKit.FSTaskParameterConstant, str)
+        self.assertIsInstance(FSKit.FSTaskParameterConstantForceLoad, str)
+        self.assertIsInstance(FSKit.FSTaskParameterConstantReadOnly, str)
+
     def test_methods(self):
         self.assertArgIsBlock(
             FSKit.FSTaskOptionsBundle.bundleForArguments_count_extension_operationType_errorHandler_,

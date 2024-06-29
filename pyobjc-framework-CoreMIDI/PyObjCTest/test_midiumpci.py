@@ -5,15 +5,15 @@ import CoreMIDI
 
 class TestMIDIUMPCI(TestCase):
     def test_enum(self):
-        self.assertIsEnumType(CoreMIDI.MIDICICategoryBitmap)
-        self.assertEqual(CoreMIDI.kMIDICICategoryBitmapProtocolNegotiation, 1 << 1)
+        self.assertIsEnumType(CoreMIDI.MIDICICategoryOptions)
+        self.assertEqual(CoreMIDI.kMIDICICategoryOptionsProtocolNegotiation, 1 << 1)
         self.assertEqual(
-            CoreMIDI.kMIDICICategoryBitmapProfileConfigurationSupported, 1 << 2
+            CoreMIDI.kMIDICICategoryOptionsProfileConfigurationSupported, 1 << 2
         )
         self.assertEqual(
-            CoreMIDI.kMIDICICategoryBitmapPropertyExchangeSupported, 1 << 3
+            CoreMIDI.kMIDICICategoryOptionsPropertyExchangeSupported, 1 << 3
         )
-        self.assertEqual(CoreMIDI.kMIDICICategoryBitmapProcessInquirySupported, 1 << 4)
+        self.assertEqual(CoreMIDI.kMIDICICategoryOptionsProcessInquirySupported, 1 << 4)
 
         self.assertIsEnumType(CoreMIDI.MIDICIDeviceType)
         self.assertEqual(CoreMIDI.kMIDICIDeviceTypeUnknown, 0)
