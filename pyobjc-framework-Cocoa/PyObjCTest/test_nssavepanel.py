@@ -1,5 +1,12 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    min_sdk_level,
+    skipUnless,
+    os_level_key,
+    os_release,
+)
 import objc
 
 
@@ -106,6 +113,10 @@ class TestNSSavePanel(TestCase):
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsTagField_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
 
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "Crash on 15.0 beta",
+    )
     @min_os_level("10.15")
     def test_issue282(self):
         panel = AppKit.NSSavePanel.savePanel()

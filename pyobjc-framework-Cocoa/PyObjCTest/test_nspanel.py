@@ -10,12 +10,6 @@ import objc
 
 
 class TestNSPanel(TestCase):
-    @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
-        "Crash on 10.13, 10.14??",
-    )
     def testFunctions(self):
         self.assertArgIsPrintf(AppKit.NSRunAlertPanel, 1)
         self.assertArgIsPrintf(AppKit.NSRunInformationalAlertPanel, 1)
@@ -55,6 +49,17 @@ class TestNSPanel(TestCase):
         self.assertArgIsPrintf(AppKit.NSGetInformationalAlertPanel, 1)
         self.assertArgIsPrintf(AppKit.NSGetCriticalAlertPanel, 1)
 
+    @skipUnless(
+        not (
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.13, 10.14??",
+    )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "Crash on macOS 15 beta",
+    )
+    def test_function_usage(self):
         panel = AppKit.NSGetInformationalAlertPanel(
             "title", "fmt %d", "ok", "cancel", "help", 10
         )

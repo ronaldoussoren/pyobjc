@@ -29,6 +29,10 @@ class TestNSCell(TestCase):
         ),
         "doesn't work on 10.13, 10.14",
     )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "doesn't work on 15.0",
+    )
     def testUnicode(self):
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         cell = AppKit.NSCell.alloc().initTextCell_(u)
@@ -41,6 +45,10 @@ class TestNSCell(TestCase):
         ),
         "doesn't work on 10.13, 10.14",
     )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "doesn't work on 15.0",
+    )
     def testInt(self):
         i = 17
         cell = AppKit.NSCell.alloc().initTextCell_("")
@@ -52,6 +60,10 @@ class TestNSCell(TestCase):
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
         ),
         "doesn't work on 10.13, 10.14",
+    )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "doesn't work on 15.0",
     )
     def testFloat(self):
         f = 3.125
