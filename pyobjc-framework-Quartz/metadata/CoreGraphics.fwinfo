@@ -325,7 +325,7 @@
   },
   "formal_protocols": {},
   "functions": {
-   "CGImageCreateWithEDRHeadroom": {
+   "CGImageCreateWithContentHeadroom": {
      "comment": "API documentation is unclear about this parameter",
      "args": {
       "9":  { "c_array_of_variable_length": true, "type_modifier": "n" }

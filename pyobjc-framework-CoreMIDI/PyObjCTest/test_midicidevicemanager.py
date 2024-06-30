@@ -8,7 +8,6 @@ class TestMIDICIDeviceManager(TestCase):
     def test_constants(self):
         self.assertIsInstance(CoreMIDI.MIDICIDeviceWasAddedNotification, str)
         self.assertIsInstance(CoreMIDI.MIDICIDeviceWasRemovedNotification, str)
-        self.assertIsInstance(CoreMIDI.MIDICIProfileStateChangedNotification, str)
         self.assertIsInstance(CoreMIDI.MIDICIProfileWasRemovedNotification, str)
         self.assertIsInstance(CoreMIDI.MIDICIDeviceObjectKey, str)
         self.assertIsInstance(CoreMIDI.MIDICIProfileObjectKey, str)

@@ -74,7 +74,9 @@ class TestCGWindow(TestCase):
 
         self.assertResultIsCFRetained(Quartz.CGWindowListCreateImage)
         v = Quartz.CGWindowListCreateImage(((0, 0), (100, 100)), aWindowID, 0, 0)
-        self.assertIsInstance(v, Quartz.CGImageRef)
+        if v is not None:
+            # function requires specific permissions on macOS 15
+            self.assertIsInstance(v, Quartz.CGImageRef)
 
         v = Quartz.CGWindowListCreateImageFromArray(
             ((0, 0), (100, 100)), windowArray, 0

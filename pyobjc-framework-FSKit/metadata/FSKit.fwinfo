@@ -6,68 +6,168 @@
    "FSTaskParameterConstant":  { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "preallocate:offset:length:flags:usingPacker:replyHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "i" },
+          "3": { "type": "Q" },
+          "4": { "type": "Q" },
+          "5": { "type": "I" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "lookupName:inDirectory:usingPacker:replyHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "i" },
+          "3": { "type": "Q" },
+          "4": { "type": "Q" },
+          "5": { "type": "I" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "blockmapFile:range:startIO:flags:operationID:usingPacker:replyHandler:",
+      "class_method": false,
+      "args": {
+       "5": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "i" },
+          "3": { "type": "Q" },
+          "4": { "type": "Q" },
+          "5": { "type": "I" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "createItemNamed:type:inDirectory:attributes:usingPacker:replyHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "i" },
+          "3": { "type": "Q" },
+          "4": { "type": "Q" },
+          "5": { "type": "I" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "enumerateDirectory:startingAtCookie:verifier:provideAttributes:attributes:usingBlock:replyHandler:",
+      "class_method": false,
+      "args": {
+       "5": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "C" },
+          "3": { "type": "Q" },
+          "4": { "type": "Q" },
+          "5": { "type": "@" },
+          "6": { "type": "B" }
+         },
+         "retval": { "type": "i" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "FSBlockDeviceResource": {
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "readInto:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "synchronousReadInto:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "writeFrom:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "synchronousWriteFrom:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "synchronousMetaReadInto:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {},
-       "3": {}
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2},
+       "3": { "type_modifier": "N", "c_array_length_in_arg": 4 }
       },
       "class_method": false,
       "selector": "synchronousMetaReadInto:startingAt:length:readAheadExtents:readAheadCount:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "metaWriteFrom:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "synchronousMetaWriteFrom:startingAt:length:replyHandler:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "synchronousDelayedMetaWriteFrom:startingAt:length:replyHandler:"
@@ -78,28 +178,28 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithUUID:byteQualifier:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithUUID:longByteQualifier:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": true,
       "selector": "identifierWithUUID:byteQualifier:"
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": true,
       "selector": "identifierWithUUID:longByteQualifier:"
@@ -117,7 +217,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "bytes"
      }
     ]
@@ -247,19 +347,26 @@
      {
       "class_method": false,
       "selector": "logLocalizedMessage:table:bundle:",
-      "variadic": true
+      "variadic": true,
+      "args": {
+       "0": { "printf_format": true }
+      }
      },
      {
       "class_method": false,
       "selector": "localizedMessage:table:bundle:",
-      "variadic": true
+      "variadic": true,
+      "args": {
+       "0": { "printf_format": true }
+      }
      },
      {
       "args": {
        "3": {}
       },
       "class_method": false,
-      "selector": "logLocalizedMessage:table:bundle:arguments:"
+      "selector": "logLocalizedMessage:table:bundle:arguments:",
+      "suggestion": "Use one of the other log methods"
      }
     ]
    },
@@ -267,7 +374,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "mutableBytes"
      }
     ]

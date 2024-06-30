@@ -239,9 +239,9 @@ class TestCGImage(TestCase):
 
     @min_os_level("15.0")
     def testFunctions15_0(self):
-        self.assertResultIsCFRetained(Quartz.CGImageCreateWithEDRHeadroom)
-        self.assertArgIsIn(Quartz.CGImageCreateWithEDRHeadroom, 9)
-        self.assertArgIsVariableSize(Quartz.CGImageCreateWithEDRHeadroom, 9)
+        self.assertResultIsCFRetained(Quartz.CGImageCreateWithContentHeadroom)
+        self.assertArgIsIn(Quartz.CGImageCreateWithContentHeadroom, 9)
+        self.assertArgIsVariableSize(Quartz.CGImageCreateWithContentHeadroom, 9)
         Quartz.CGImageGetContentHeadroom
         Quartz.CGImageShouldToneMap
         Quartz.CGImageContainsImageSpecificToneMappingMetadata

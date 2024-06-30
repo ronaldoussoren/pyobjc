@@ -8,7 +8,5 @@ class TestMIDIUMPEndpointManager(TestCase):
     def test_constants(self):
         self.assertIsInstance(CoreMIDI.MIDIUMPEndpointWasAddedNotification, str)
         self.assertIsInstance(CoreMIDI.MIDIUMPEndpointWasRemovedNotification, str)
-        self.assertIsInstance(CoreMIDI.MIDIUMPEndpointUpdatedNotification, str)
-        self.assertIsInstance(CoreMIDI.MIDIUMPFunctionBlockUpdatedNotification, str)
         self.assertIsInstance(CoreMIDI.MIDIUMPEndpointObjectKey, str)
         self.assertIsInstance(CoreMIDI.MIDIUMPFunctionBlockObjectKey, str)
