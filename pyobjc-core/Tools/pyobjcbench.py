@@ -3,7 +3,7 @@
 Script for gathering performance statistics.
 
 This is very much a work in progress, and will morph into a tool
-simular to pybench, but just measuring the speed of a number of
+similar to pybench, but just measuring the speed of a number of
 PyObjC primitives:
 
 * For methods, functions and blocks:

@@ -11,7 +11,7 @@ Support for Key-Value Coding in Python. This provides a simple functional
 interface to Cocoa's Key-Value coding that also works for regular Python
 objects.
 
-Key-Value Coding is Cocoa functionality that is simular to
+Key-Value Coding is Cocoa functionality that is similar to
 the :func:`getattr` and :func:`setattr` functions in Python. The APIs
 in this module are modelled on those functions and work on
 Cocoa objects as well as basic Python objects.
@@ -147,7 +147,7 @@ Accessor functions
    are separated by colons, for example :data:`"owner.firstName"`.
 
    The key path is used to traverse an object graph to an attribute and
-   the value is then set simularly to how :func:`setKey` sets the value.
+   the value is then set similarly to how :func:`setKey` sets the value.
 
    :param object: An arbitrary object
    :param keypath: The keypath, colon separated keys

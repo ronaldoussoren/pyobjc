@@ -266,7 +266,7 @@ NS_ASSUME_NONNULL_BEGIN
                  * unsigned long long is undefined behaviour,
                  * the code below seems to get the behaviour
                  * we'd like: casting to unsigned long long
-                 * behaves simular to casting a signed integer
+                 * behaves similar to casting a signed integer
                  * to unsigned.
                  */
                 long long t = (long long)temp;

@@ -27,10 +27,10 @@ Additional methods on :class:`NSAffineTransform`
 
    .. method:: rotateByDegrees_atPoint_(angle, point)
 
-      This is simular to ``rotateByDegrees_`` but rotates around ``point`` instead
+      This is similar to ``rotateByDegrees_`` but rotates around ``point`` instead
       of the origin.
 
    .. method:: rotateByRadians_atPoint_(angle, point)
 
-      This is simular to ``rotateByRadians_`` but rotates around ``point`` instead
+      This is similar to ``rotateByRadians_`` but rotates around ``point`` instead
       of the origin.

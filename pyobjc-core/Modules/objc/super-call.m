@@ -282,7 +282,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
                                     (PyTypeObject*)pyclass)) {
             /* special_type is a superclass of search_class,
              * but a subclass of the current match, hence it is
-             * a more specific match or a simular match later in the
+             * a more specific match or a similar match later in the
              * list.
              */
             special_class = pyclass;

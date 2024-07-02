@@ -1194,7 +1194,7 @@ PyObjCRT_SizeOfType(const char* start_type)
         Py_ssize_t align;
         Py_ssize_t max_align = 0;
 
-        /* This is an awfull hack... */
+        /* This is an awful hack... */
         /*   struct sockaddr is a generic type with several supported
          *   specific types. Annoyingly enough not all of those have the
          *   same size.

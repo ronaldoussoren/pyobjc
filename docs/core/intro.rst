@@ -734,7 +734,7 @@ PyObjC automatically emits the right `Key-Value Observing`_ notifications when
 you set attributes on an Objective-C class. This is however not supported for
 pure python objects. You should therefore use ``NSMutableArray`` instances
 instead of Python lists for instance variables that will be observed and contain
-a sequence of values (and simularly for ``NSMutableDictionary`` instead of
+a sequence of values (and similarly for ``NSMutableDictionary`` instead of
 ``dict``).
 
 .. _`Cocoa Bindings`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html

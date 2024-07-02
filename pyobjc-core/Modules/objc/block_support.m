@@ -2,7 +2,7 @@
  * This file implements support for the "Blocks" feature of Objective-C
  *
  * Most of the code in this file implements a single manually coded block that
- * is manipulated at runtime, basically simularly to how method descriptors are
+ * is manipulated at runtime, basically similarly to how method descriptors are
  * manipulated by pyobjc.
  *
  * WARNING: The blocks implementation is technically private, the interfaces we

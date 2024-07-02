@@ -157,7 +157,7 @@ class NSObject(objc.Category(NSObject)):
         self, aSelector, arg, modes
     ):
         """
-        Simular to performSelectorOnMainThread:withObject:waitUntilDone:modes:,
+        Similar to performSelectorOnMainThread:withObject:waitUntilDone:modes:,
         but:
 
         - always waits until done

@@ -121,7 +121,7 @@ type) are barely supported by PyObjC and these API's are currently not covered
 by PyObjC's testsuite.
 
 Adding support for these API's is on the todo-list, but adding proper support
-requires work because the ``PDFArrayRef`` type (and simular types) is not
+requires work because the ``PDFArrayRef`` type (and similar types) is not
 a CoreFoundation based type.
 
 

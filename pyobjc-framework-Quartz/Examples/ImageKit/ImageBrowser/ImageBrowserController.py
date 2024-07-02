@@ -269,7 +269,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
         return self.images[index]
 
     # Implement some optional methods of the image browser  datasource protocol
-    # to allow for removing and reodering items.
+    # to allow for removing and reordering items.
 
     # -------------------------------------------------------------------------
     #   removeItemsAtIndexes:

@@ -792,7 +792,7 @@ improvements as described below).
 * Added ``objc._C_PythonObject`` with the encoding for ``PyObject*``.
 
   This is primarily for internal use by PyObjC, using PyObjC
-  as an FFI tool for callin CPython APIs is not supported.
+  as an FFI tool for calling CPython APIs is not supported.
 
 * Added ``isSlot`` argument to ``objc.ivar`` to define Python variable
   slots.
@@ -1936,7 +1936,7 @@ for edge cases that don't happen in normal programs.
   from Objective-C to a Python tuple.
 
 * Added :func:`PyObjCTools.TestSupport.no_autorelease_pool` to disable
-  autorelease pool management by the test runnner for a specific test.
+  autorelease pool management by the test runner for a specific test.
 
 * ``NSMutableArray.insert(idx, value)`` would fail when ``idx`` is beyond
   the length of the array. It now behaves the same as :meth:`list.insert`,
@@ -3563,7 +3563,7 @@ Version 3.0
 * The wrapper type for opaque pointers didn't have a "__module__" attribute,
   which breaks code that (correctly) assumes that all types have such an attribute.
 
-* Archiving now supports nested definitions and method references, simular
+* Archiving now supports nested definitions and method references, similar
   to the support of those added to pickle protocol 4 in Python 3.4.
 
   Encoding nested classes requires support for the ``__qualname__`` attribute,
@@ -3772,7 +3772,7 @@ Version 3.0
 * Dropped depcreated APIs *objc.pluginBundle*, *objc.registerPlugin*. Py2app has used a
   different mechanism for years now.
 
-* Dropped deprecatd APIs: *objc.splitStruct*,  *objc._loadFunctionList*. Both have
+* Dropped deprecated APIs: *objc.splitStruct*,  *objc._loadFunctionList*. Both have
   been replaced by newer APIs in PyObjC 2.4.
 
 * Foundation's *NSDecimal* type is exposed in the objc module as well.
@@ -3919,7 +3919,7 @@ Version 3.0
  All were private methods used by the core bridge and are no longer necessary.
 
 * Added :func:`objc.registerSetType` and :func:`objc.registerDateType`, with
-  simular semantics as the already existing functions :func:`objc.registerMappingType`
+  similar semantics as the already existing functions :func:`objc.registerMappingType`
   and :func:`objc.registerListType`.
 
 * Moved the logic for creating Objective-C proxies for Python objects from
@@ -4112,7 +4112,7 @@ Version 2.5.1
   on OSX 10.5 when the binary was build on 10.8 (and using a 10.5 deployment
   target).
 
-  Simular issues may be present in some of the other framework wrappers,
+  Similar issues may be present in some of the other framework wrappers,
   there will be a more generic fix for this issue in a future release.
 
 Version 2.5
@@ -4160,7 +4160,7 @@ Version 2.5
   code.
 
 - :issue:`30`: Explicitly check if the compiler works, and try to
-  fall back to clang if it doesn't. This uses a simular algorithm as
+  fall back to clang if it doesn't. This uses a similar algorithm as
   the fix for <https://bugs.python.org/issue13590> in Python's tracker.
 
 - :issue:`22`: Reimplement support for bridgesupport files
@@ -4652,25 +4652,25 @@ Version 2.3
 
 - Renamed the assertion functions in ``PyObjCTools.TestSupport``, added
   ``assertFoo`` methods and deprecated the ``failIfFoo`` and ``failUnlessFoo``
-  methods (simularly to what's happening in the stdlib).
+  methods (similarly to what's happening in the stdlib).
 
 - Added ``objc.propertiesForClass``. This function returns information about
   properties for a class from the Objective-C runtime. The information does
   not include information about properties in superclasses.
 
-- Added ``objc.object_property``. This is class behaves simularly to
+- Added ``objc.object_property``. This is class behaves similarly to
   ``property``, but integrates better with Objective-C code and APIs like
   Key-Value Observation.
 
-- Added ``objc.array_property``. This is simular to ``objc.object_property``,
+- Added ``objc.array_property``. This is similar to ``objc.object_property``,
   but models a list-like object and implements the right Objective-C interfaces
   for Key-Value Coding/Observations.
 
-- Added ``objc.set_property``. This is simular to
+- Added ``objc.set_property``. This is similar to
   ``objc.object_property``, but models a set-like object and implements the
   right Objective-C interfaces for Key-Value Coding/Observations.
 
-- Added ``objc.dict_property``. This is simular to
+- Added ``objc.dict_property``. This is similar to
   ``objc.object_property``, but models a dict-like object and implements the
   right Objective-C interfaces for Key-Value Coding/Observations.
 

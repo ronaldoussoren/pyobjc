@@ -1692,7 +1692,7 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
 
 #else
 
-/* Variant to be used when buildin on macOS 10.15 or earlier:
+/* Variant to be used when building on macOS 10.15 or earlier:
  * use dlsym(3) APIs to look for the function.
  */
 

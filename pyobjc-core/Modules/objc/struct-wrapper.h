@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    this function will not copy them.
  *
  *    If tpinit is NULL the type will have a default __init__ that initializes
- *    the fields to None and uses its arguments to optionally initiaze the
+ *    the fields to None and uses its arguments to optionally initialize the
  *    fields.
  *
  */

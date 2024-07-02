@@ -466,7 +466,7 @@ Dynamic modification of classes
 
    Add a sequence of methods to the given class.
 
-   The effect is simular to how categories work in Objective-C. If the class
+   The effect is similar to how categories work in Objective-C. If the class
    already implements a method that is defined in *methods* the existing
    implementation is replaced by the new one.
 
@@ -1789,7 +1789,7 @@ Descriptors
    This can be used when specific semantics are required (such as
    copying values before storing them).
 
-   The class :class:`object_property` provides simular features with
+   The class :class:`object_property` provides similar features with
    a nicer python interface: with that class the property behaves
    itself like a property for python code, with this function you
    still have to call accessor methods in your code.

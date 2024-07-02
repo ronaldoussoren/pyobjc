@@ -118,7 +118,7 @@ def addConvenienceForBasicMapping(classname, readonly=True):
     Add the convenience methods for a Cocoa mapping type
 
     Used to add the basic collections.abc.Mapping or collections.abc.MutableMapping
-    APIs to a Cocoa class that has an API simular to NSDictionary.
+    APIs to a Cocoa class that has an API similar to NSDictionary.
     """
     addConvenienceForClass(
         classname, _CONVENIENCES_MAPPING_RO if readonly else _CONVENIENCES_MAPPING_RW

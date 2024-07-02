@@ -205,7 +205,7 @@ dictionary all keys are optional unless the description mentions otherwise.
 
   For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the argument must be a Python sequence
   and the bridge will allocate a C array that is long enough to contain all items of that sequence; alternatively the argument
-  can be a Python buffer object (simular to :data:`_C_OUT` arguments).  For :data:`_C_OUT` arguments the value for the argument
+  can be a Python buffer object (similar to :data:`_C_OUT` arguments).  For :data:`_C_OUT` arguments the value for the argument
   must be either :data:`NULL` or a Python buffer object that will be passed to the function.
 
 * *c_array_length_in_result*: Only valid for argument metadata. When the argument *type* is a pointer type and the
@@ -315,7 +315,7 @@ Creating and registering types
      (default is to use the default platform packing for structures).
 
 
-   The created type behaves itself simular to a mutable :func:`namedtuple <collections.namedtuple>`,
+   The created type behaves itself similar to a mutable :func:`namedtuple <collections.namedtuple>`,
    that is items can be accessed both using attribute access and using the sequence interface.
 
    An example::
@@ -422,7 +422,7 @@ Loading functions
 
 .. function:: loadFunctionList(list, module_globals, functionInfo[, skip_undefined])
 
-   Simular to :func:`loadBundleFunctions`, but loads the functions from *list* instead
+   Similar to :func:`loadBundleFunctions`, but loads the functions from *list* instead
    of a bundle.
 
    *List* should be a capsule object with tag "objc.__inline__" and the value should
