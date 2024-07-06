@@ -1,5 +1,7 @@
 
+#ifndef PyObjC_GIL_DISABLED
 #define Py_LIMITED_API 0x03090000
+#endif
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"

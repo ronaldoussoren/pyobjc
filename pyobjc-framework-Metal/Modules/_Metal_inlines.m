@@ -1,4 +1,6 @@
+#ifndef PyObjC_GIL_DISABLED
 #define Py_LIMITED_API 0x03090000
+#endif
 #define PY_SSIZE_T_CLEAN
 #define NS_INLINE
 #include "Python.h"

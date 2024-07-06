@@ -516,6 +516,9 @@ def Extension(*args, **kwds):
     if "-Werror" not in cflags:
         cflags.append("-Werror")
 
+    if get_config_var("Py_GIL_DISABLED"):
+        cflags.append("-DPyObjC_GIL_DISABLED")
+
     if "extra_compile_args" in kwds:
         kwds["extra_compile_args"] = kwds["extra_compile_args"] + cflags
     else:
@@ -533,7 +536,13 @@ def _sort_key(version):
     return tuple(int(x) for x in version.split("."))
 
 
-def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
+def setup(
+    min_os_level=None,
+    max_os_level=None,
+    cmdclass=None,
+    options={},  # noqa: M511, B006
+    **kwds,
+):
     k = kwds.copy()
 
     os_level = get_sdk_level()
@@ -648,6 +657,13 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"
 
+    if "bdist_wheel" in options:
+        # Python 3.13 does not support the limited ABI for C extensions
+        # when using a free threaded build.
+        if get_config_var("Py_GIL_DISABLED"):
+            options = options.copy()
+            del options["bdist_wheel"]
+
     _setup(
         cmdclass=cmdclass,
         author="Ronald Oussoren",
@@ -663,5 +679,6 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         classifiers=CLASSIFIERS,
         python_requires=">=3.9",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
+        options=options,
         **k,
     )
