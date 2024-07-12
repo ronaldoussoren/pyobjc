@@ -303,3 +303,5 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSTextHighlightColorSchemeOrange, str)
         self.assertIsInstance(AppKit.NSTextHighlightColorSchemeMint, str)
         self.assertIsInstance(AppKit.NSTextHighlightColorSchemeBlue, str)
+
+        self.assertIsInstance(AppKit.NSTextKit1ListMarkerFormatDocumentOption, str)

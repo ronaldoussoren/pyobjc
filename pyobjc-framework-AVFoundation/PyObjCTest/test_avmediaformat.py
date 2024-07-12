@@ -131,3 +131,7 @@ class TestAVMediaFormat(TestCase):
             AVFoundation.AVMediaCharacteristicIndicatesHorizontalFieldOfView, str
         )
         self.assertIsInstance(AVFoundation.AVFileTypeAHAP, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(AVFoundation.AVMediaTypeAuxiliaryPicture, str)

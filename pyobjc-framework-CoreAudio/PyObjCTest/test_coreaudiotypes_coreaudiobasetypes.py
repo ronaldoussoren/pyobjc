@@ -55,6 +55,7 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(CoreAudio.kAudioFormatEnhancedAC3, fourcc(b"ec-3"))
         self.assertEqual(CoreAudio.kAudioFormatFLAC, fourcc(b"flac"))
         self.assertEqual(CoreAudio.kAudioFormatOpus, fourcc(b"opus"))
+        self.assertEqual(CoreAudio.kAudioFormatAPAC, fourcc(b"apac"))
 
         self.assertEqual(CoreAudio.kAudioFormatFlagIsFloat, (1 << 0))
         self.assertEqual(CoreAudio.kAudioFormatFlagIsBigEndian, (1 << 1))

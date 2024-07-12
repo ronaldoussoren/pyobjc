@@ -7,7 +7,7 @@
    "VTDecompressionOutputCallbackRecord": { "ignore": true }
   },
   "typed_enum": {
-   "VTDecoderExtensionPropertiesKey": {  "type": "@", "type_name": "NSString" },
+   "VTExtensionPropertiesKey": {  "type": "@", "type_name": "NSString" },
    "VTHDRPerFrameMetadataGenerationHDRFormatType": {  "type": "@", "type_name": "NSString" }
   },
   "externs": {

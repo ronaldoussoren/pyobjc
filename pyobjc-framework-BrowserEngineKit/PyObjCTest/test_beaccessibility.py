@@ -28,6 +28,24 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
     def setBrowserAccessibilityContainerType_(self, a):
         pass
 
+    def browserAccessibilitySelectedTextRange(self):
+        return
+
+    def browserAccessibilitySetSelectedTextRange_(self, a):
+        pass
+
+    def browserAccessibilityValueInRange_(self, a):
+        return 1
+
+    def browserAccessibilityAttributedValueInRange_(self, a):
+        return 1
+
+    def browserAccessibilityInsertTextAtCursor_(self, a):
+        pass
+
+    def browserAccessibilityDeleteTextAtCursor_(self, a):
+        pass
+
 
 class TestBEAccessibility(TestCase):
     def test_constants(self):
@@ -86,6 +104,25 @@ class TestBEAccessibility(TestCase):
         )
         self.assertArgHasType(
             TestBEAccessibilityHelper.setBrowserAccessibilityContainerType_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.browserAccessibilitySelectedTextRange,
+            BrowserEngineKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.browserAccessibilitySetSelectedTextRange,
+            0,
+            BrowserEngineKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.browserAccessibilityValueInRange_,
+            0,
+            BrowserEngineKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.browserAccessibilityDeleteTextAtCursor_,
             0,
             objc._C_NSUInteger,
         )

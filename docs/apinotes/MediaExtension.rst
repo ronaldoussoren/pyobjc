@@ -11,3 +11,6 @@ These bindings are accessed through the ``MediaExtension`` package (that is, ``i
 .. note::
 
    This framework is available on macOS 15 and later
+
+API Notes
+---------

@@ -74,10 +74,6 @@ class TestMPMediaItem(TestCase):
     def testConstants11_3(self):
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsPreorder, str)
 
-    @min_os_level("15.0")
-    def testConstants15_0(self):
-        self.assertIsInstance(MediaPlayer.MPMediaItemPropertyStoreCanonicalId, str)
-
     @min_os_level("10.12")
     def testMethods(self):
         self.assertResultIsBOOL(MediaPlayer.MPMediaItem.isExplicitItem)

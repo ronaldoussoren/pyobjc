@@ -21,7 +21,7 @@ API Notes
 
 The following API groups are *not* available:
 
-* HIToolbox: Use :module:`AppKit` instead
+* HIToolbox: Use :mod:`AppKit` instead
 
   * :func:`RegisterEventHotKey`: Is available.
 

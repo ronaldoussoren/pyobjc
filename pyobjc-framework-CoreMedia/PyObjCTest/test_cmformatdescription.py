@@ -268,6 +268,8 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMTaggedBufferGroupFormatType_TaggedBufferGroup, fourcc(b"tbgr")
         )
 
+        self.assertEqual(CoreMedia.kCMMediaType_AuxiliaryPicture, fourcc(b"auxv"))
+
     @min_os_level("10.7")
     def test_constants10_7(self):
         self.assertIsInstance(

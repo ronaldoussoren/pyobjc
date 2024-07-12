@@ -13,6 +13,7 @@
    }
   },
   "enum": {
+   "kAudioFormatAPAC": { "value": 1667330145 },
    "CATapUnmuted": { "value": 0 },
    "CATapMuted": { "value": 1 },
    "CATapMutedWhenTapped": { "value": 2 },

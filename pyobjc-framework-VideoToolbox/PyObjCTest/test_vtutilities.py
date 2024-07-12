@@ -5,22 +5,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestVTUtilities(TestCase):
     @min_os_level("15.0")
     def test_constants(self):
-        self.assertIsTypedEnum(VideoToolbox.VTDecoderExtensionPropertiesKey, str)
+        self.assertIsTypedEnum(VideoToolbox.VTExtensionPropertiesKey, str)
+        self.assertIsInstance(VideoToolbox.kVTExtensionProperties_ExtensionNameKey, str)
         self.assertIsInstance(
-            VideoToolbox.kVTDecoderExtensionProperties_ExtensionNameKey, str
+            VideoToolbox.kVTExtensionProperties_ContainingBundleNameKey, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTExtensionProperties_ExtensionURLKey, str)
+        self.assertIsInstance(
+            VideoToolbox.kVTExtensionProperties_ContainingBundleURLKey, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTDecoderExtensionProperties_ContainingBundleNameKey, str
+            VideoToolbox.kVTExtensionProperties_ExtensionIdentifierKey, str
         )
-        self.assertIsInstance(
-            VideoToolbox.kVTDecoderExtensionProperties_ExtensionURLKey, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTDecoderExtensionProperties_ContainingBundleURLKey, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTDecoderExtensionProperties_ExtensionIdentifierKey, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTExtensionProperties_CodecNameKey, str)
 
     @min_os_level("10.11")
     def test_functions(self):
@@ -33,6 +30,11 @@ class TestVTUtilities(TestCase):
 
     @min_os_level("15.0")
     def test_functions15_0(self):
+        self.assertArgIsOut(VideoToolbox.VTCopyRAWProcessorExtensionProperties, 1)
+        self.assertArgIsCFRetained(
+            VideoToolbox.VTCopyRAWProcessorExtensionProperties, 1
+        )
+
         self.assertArgIsOut(VideoToolbox.VTCopyVideoDecoderExtensionProperties, 1)
         self.assertArgIsCFRetained(
             VideoToolbox.VTCopyVideoDecoderExtensionProperties, 1

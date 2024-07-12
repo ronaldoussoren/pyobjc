@@ -10,6 +10,9 @@ class TestNSViewHelper(AppKit.NSObject):
     def layer_shouldInheritContentsScale_fromWindow_(self, a, b, c):
         return 1
 
+    def selectionAnchorRect(self):
+        return 1
+
 
 class ObjCTestNSView_KnowPageRange(AppKit.NSView):
     def knowsPageRange_(self, aRange):
@@ -274,10 +277,19 @@ class TestHeader(TestCase):
             TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b"^v"
         )
 
+        self.assertResultHasType(
+            TestNSViewHelper.selectionAnchorRect,
+            AppKit.NSRect.__typestr__,
+        )
+
     @min_sdk_level("10.14")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSViewLayerContentScaleDelegate")
         self.assertProtocolExists("NSViewToolTipOwner")
+
+    @min_sdk_level("15.0")
+    def testProtocolObjects15_0(self):
+        self.assertProtocolExists("NSViewContentSelectionInfo")
 
     def testMissingTests(self):
         v = AppKit.NSView.alloc().init()
