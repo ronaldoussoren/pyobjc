@@ -110,6 +110,9 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
     }
 
     r = PyModule_AddObject(m, name, v);
+    if (r == -1) {
+        Py_DECREF(v);
+    }
 
     return r;
 }
@@ -126,6 +129,9 @@ add_bytes_constant(PyObject* m, const char* name, const char* value)
     }
 
     r = PyModule_AddObject(m, name, v);
+    if (r == -1) {
+        Py_DECREF(v);
+    }
 
     return r;
 }
@@ -172,23 +178,11 @@ static struct int64_constants {
 
 #pragma clang diagnostic pop
 
-/* Python glue */
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_xpc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
-PyObject* PyInit__xpc(void);
-
-PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
+static int mod_exec_module(PyObject* module)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
-    if (PyObjC_ImportAPI(m) == -1)
-        return NULL;
+    if (PyObjC_ImportAPI(module) == -1)
+        return -1;
 
     /*
      * Register a number of struct pointer types that are actually Objective-C objects
@@ -208,7 +202,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
     for (struct bytes_constants* cur = BYTES_CONSTANTS; cur->name != NULL; cur++) {
         if (cur->value == NULL)
             continue;
-        if (add_bytes_constant(m, cur->name, *(cur->value)) != 0)
+        if (add_bytes_constant(module, cur->name, *(cur->value)) != 0)
             goto error;
     }
 
@@ -219,43 +213,43 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
         if (v == NULL)
             goto error;
 
-        if (PyModule_AddObject(m, cur->name, v) == -1) {
+        if (PyModule_AddObject(module, cur->name, v) == -1) {
             Py_DECREF(v);
             goto error;
         }
     }
 
     id v = (id)XPC_TYPE_ACTIVITY;
-    if (add_constant(m, "XPC_TYPE_ACTIVITY", @encode(id), &v) != 0)
+    if (add_constant(module, "XPC_TYPE_ACTIVITY", @encode(id), &v) != 0)
         goto error;
 
     v = (id)XPC_ACTIVITY_CHECK_IN;
-    if (add_constant(m, "XPC_ACTIVITY_CHECK_IN", @encode(id), &v) != 0)
+    if (add_constant(module, "XPC_ACTIVITY_CHECK_IN", @encode(id), &v) != 0)
         goto error;
 
     v = (id)XPC_TYPE_ENDPOINT;
-    if (add_constant(m, "XPC_TYPE_ENDPOINT", @encode(id), &v) != 0)
+    if (add_constant(module, "XPC_TYPE_ENDPOINT", @encode(id), &v) != 0)
         goto error;
 
     xpc_object_t d;
 
     d = XPC_ERROR_CONNECTION_INTERRUPTED;
-    if (add_constant(m, "XPC_ERROR_CONNECTION_INTERRUPTED", @encode(xpc_object_t), &d)
+    if (add_constant(module, "XPC_ERROR_CONNECTION_INTERRUPTED", @encode(xpc_object_t), &d)
         != 0)
         goto error;
 
     d = XPC_ERROR_CONNECTION_INVALID;
-    if (add_constant(m, "XPC_ERROR_CONNECTION_INVALID", @encode(xpc_object_t), &d) != 0)
+    if (add_constant(module, "XPC_ERROR_CONNECTION_INVALID", @encode(xpc_object_t), &d) != 0)
         goto error;
 
     d = XPC_ERROR_TERMINATION_IMMINENT;
-    if (add_constant(m, "XPC_ERROR_TERMINATION_IMMINENT", @encode(xpc_object_t), &d) != 0)
+    if (add_constant(module, "XPC_ERROR_TERMINATION_IMMINENT", @encode(xpc_object_t), &d) != 0)
         goto error;
 
 #if PyObjC_BUILD_RELEASE >= 1200
     if (__builtin_available(macOS 12.0, *)) {
         d = XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT;
-        if (add_constant(m, "XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT",
+        if (add_constant(module, "XPC_ERROR_PEER_CODE_SIGNING_REQUIREMENT",
                          @encode(xpc_object_t), &d)
             != 0)
             goto error;
@@ -264,81 +258,125 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
 
     xpc_type_t t;
     t = XPC_TYPE_NULL;
-    if (add_constant(m, "XPC_TYPE_NULL", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_NULL", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_BOOL;
-    if (add_constant(m, "XPC_TYPE_BOOL", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_BOOL", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_INT64;
-    if (add_constant(m, "XPC_TYPE_INT64", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_INT64", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_UINT64;
-    if (add_constant(m, "XPC_TYPE_UINT64", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_UINT64", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_DOUBLE;
-    if (add_constant(m, "XPC_TYPE_DOUBLE", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_DOUBLE", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_DATE;
-    if (add_constant(m, "XPC_TYPE_DATE", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_DATE", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_DATA;
-    if (add_constant(m, "XPC_TYPE_DATA", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_DATA", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_STRING;
-    if (add_constant(m, "XPC_TYPE_STRING", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_STRING", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_UUID;
-    if (add_constant(m, "XPC_TYPE_UUID", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_UUID", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_FD;
-    if (add_constant(m, "XPC_TYPE_FD", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_FD", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_SHMEM;
-    if (add_constant(m, "XPC_TYPE_SHMEM", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_SHMEM", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_ARRAY;
-    if (add_constant(m, "XPC_TYPE_ARRAY", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_ARRAY", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_DICTIONARY;
-    if (add_constant(m, "XPC_TYPE_DICTIONARY", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_DICTIONARY", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_ERROR;
-    if (add_constant(m, "XPC_TYPE_ERROR", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_ERROR", @encode(xpc_type_t), &t) != 0)
         goto error;
 
 #if PyObjC_BUILD_RELEASE >= 1300
     t = XPC_TYPE_SESSION;
-    if (add_constant(m, "XPC_TYPE_SESSION", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_SESSION", @encode(xpc_type_t), &t) != 0)
         goto error;
 
     t = XPC_TYPE_RICH_ERROR;
-    if (add_constant(m, "XPC_TYPE_RICH_ERROR", @encode(xpc_type_t), &t) != 0)
+    if (add_constant(module, "XPC_TYPE_RICH_ERROR", @encode(xpc_type_t), &t) != 0)
         goto error;
 #endif /* PyObjC_BUILD_RELEASE >= 1300 */
 
     xpc_object_t b = XPC_BOOL_TRUE;
-    if (add_constant(m, "XPC_BOOL_TRUE", @encode(xpc_object_t), &b) != 0)
+    if (add_constant(module, "XPC_BOOL_TRUE", @encode(xpc_object_t), &b) != 0)
         goto error;
 
     b = XPC_BOOL_FALSE;
-    if (add_constant(m, "XPC_BOOL_FALSE", @encode(xpc_object_t), &b) != 0)
+    if (add_constant(module, "XPC_BOOL_FALSE", @encode(xpc_object_t), &b) != 0)
         goto error;
 
-    return m;
+    return 0;
 
 error:
-    return NULL;
+    return -1;
+}
+
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* Subinterpreters are not yet supported because of PyObjC_API */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        /* The code in this extension should be safe to use without the GIL */
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_NOT_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "_xpc",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit__xpc(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
+{
+    return PyModuleDef_Init(&mod_module);
 }
