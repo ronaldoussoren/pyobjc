@@ -15,6 +15,7 @@ import gc
 import objc
 import pickle
 import textwrap
+import copy
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.structs import OC_StructTest
 from PyObjCTools.TestSupport import (
@@ -77,6 +78,90 @@ class TestStructs(TestCase):
             TypeError, r"FooStruct\(\) got multiple values for keyword argument 'a'"
         ):
             tp(1, a=2)
+
+    def test_copy_copy(self):
+        Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
+        Line = objc.createStructType(
+            "OCLine",
+            b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d",
+            ["start", "stop", "width"],
+        )
+
+        start = Point(1, 2)
+        stop = Point(3, 4)
+        line = Line(start, stop)
+
+        r = copy.copy(start)
+        self.assertEqual(r, start)
+        self.assertIsNot(r, start)
+
+        r = copy.copy(line)
+        self.assertEqual(r, line)
+        self.assertIsNot(r, line)
+        self.assertIs(r.start, start)
+        self.assertIs(r.stop, stop)
+
+    def test_copy_deepcopy(self):
+        Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
+        Line = objc.createStructType(
+            "OCLine",
+            b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d",
+            ["start", "stop", "width"],
+        )
+
+        start = Point(1, 2)
+        stop = Point(3, 4)
+        line = Line(start, stop)
+
+        r = copy.deepcopy(start)
+        self.assertEqual(r, start)
+        self.assertIsNot(r, start)
+
+        r = copy.deepcopy(line)
+        self.assertEqual(r, line)
+        self.assertIsNot(r, line)
+        self.assertIsNot(r.start, start)
+        self.assertIsNot(r.stop, stop)
+
+        line2 = Line(start, start)
+        self.assertIs(line2.start, line2.stop)
+        r = copy.deepcopy(line2)
+        self.assertEqual(r, line2)
+        self.assertIsNot(r, line2)
+        self.assertIsNot(r.start, start)
+        self.assertIsNot(r.stop, start)
+        self.assertIs(r.start, r.stop)
+
+    @min_python_release("3.13")
+    def test_copy_replace(self):
+        Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
+        Line = objc.createStructType(
+            "OCLine",
+            b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d",
+            ["start", "stop", "width"],
+        )
+
+        start = Point(1, 2)
+        stop = Point(3, 4)
+        line = Line(start, stop)
+
+        r = copy.replace(start)
+        self.assertEqual(r, start)
+
+        r = copy.replace(start, x=9)
+        self.assertIsInstance(r, Point)
+        self.assertEqual(r.x, 9)
+        self.assertEqual(r.y, 2)
+
+        r = copy.replace(line)
+        self.assertEqual(r, line)
+        self.assertIsNot(r.start, start)
+        self.assertIsNot(r.stop, stop)
+
+        r = copy.replace(line, stop=start)
+        self.assertIsInstance(r, Line)
+        self.assertEqual(r.start, start)
+        self.assertEqual(r.stop, stop)
 
     def testNamedTupleAPI(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
@@ -860,7 +945,7 @@ class TestStructs(TestCase):
 
     def test_copy_error(self):
         class CopyError:
-            def __pyobjc_copy__(self):
+            def __deepcopy__(self, memo=None):
                 raise RuntimeError("cannot copy me")
 
         v = GlobalType(1, CopyError())

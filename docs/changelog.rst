@@ -19,6 +19,14 @@ Version 11.0 (Unreleased, expected release is October 2024)
   At this time only some functions and constants related to hotkeys
   are available. Please file an issue if you have a usecase for other APIs.
 
+* :issue:`615`: Struct wrappers now support a number of functions from
+  :mod:`copy`: :func:`copy.replace` (new in Python 3.13), :func:`copy.copy`
+  and :func:`copy.deepcopy`.
+
+* The ``__pyobjc_copy__`` method has been removed from struct wrappers. This
+  was never a public API. Use :func:`copy.deepcopy` instead.
+
+
 Version 10.3.2
 --------------
 

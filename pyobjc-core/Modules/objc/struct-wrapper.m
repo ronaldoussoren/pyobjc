@@ -249,7 +249,7 @@ static PyObject* _Nullable struct_sizeof(PyObject* self)
     return PyLong_FromSsize_t(Py_TYPE(self)->tp_basicsize);
 }
 
-static PyObject* _Nullable struct_copy(PyObject* self)
+static PyObject* _Nullable struct__copy__(PyObject* self)
 {
     PyObject*    result;
     PyMemberDef* member = Py_TYPE(self)->tp_members;
@@ -266,36 +266,7 @@ static PyObject* _Nullable struct_copy(PyObject* self)
         PyObjC_Assert(t != NULL, NULL);
 
         if (t != NULL) {
-            /*
-             * XXX: Maybe change to unconditional (vector) call, with fallback
-             * to current behaviour on attributeerror?
-             *
-             * XXX: Consider using ``__copy__`` instead.
-             */
-
-            /* "t" is a borrowed reference, make sure this reference
-             * stays alive while we're working with it even if
-             * "__pyobjc_copy__" does something nasty.
-             */
-            Py_INCREF(t);
-            PyObject* m = PyObject_GetAttrString(t, "__pyobjc_copy__");
-            if (m == NULL) {
-                PyErr_Clear();
-                SET_STRUCT_FIELD(result, member, t);
-            } else {
-                PyObject* args[1] = {NULL};
-                PyObject* c       = PyObject_Vectorcall(
-                    m, args + 1, 0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-                Py_DECREF(m);
-                if (c == NULL) {
-                    Py_DECREF(t);
-                    Py_DECREF(result);
-                    return NULL;
-                }
-                SET_STRUCT_FIELD(result, member, c);
-                Py_DECREF(c);
-            }
-            Py_DECREF(t);
+            SET_STRUCT_FIELD(result, member, t);
         }
 
         member++;
@@ -305,7 +276,72 @@ static PyObject* _Nullable struct_copy(PyObject* self)
     return result;
 }
 
-static PyObject* _Nullable struct_replace(PyObject* self, PyObject* _Nullable args,
+static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, PyObject* kwds)
+{
+    static char* keywords[] = {"memo", NULL};
+    PyObject*    memo;
+    PyObject*    result;
+    PyMemberDef* member = Py_TYPE(self)->tp_members;
+    PyObject*    deepcopy;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &memo)) {
+        return NULL;
+    }
+
+    deepcopy= PyObjC_ImportName("copy.deepcopy");
+    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
+
+    result = PyObject_GC_New(PyObject, Py_TYPE(self));
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(deepcopy); // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
+
+    while (member && member->name) {
+        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        *((PyObject**)(((char*)result) + member->offset)) = NULL;
+        PyObject* t = GET_STRUCT_FIELD(self, member);
+        PyObjC_Assert(t != NULL, NULL);
+
+        if (t != NULL) {
+            Py_INCREF(t);
+            PyObject* args[3] = {NULL, t, memo};
+            PyObject* v       = PyObject_Vectorcall(
+                    deepcopy, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            if (v == NULL) {
+                Py_DECREF(result);
+                Py_DECREF(deepcopy);
+                return NULL;
+            }
+            SET_STRUCT_FIELD(result, member, v);
+            Py_DECREF(v);
+        }
+
+        member++;
+    }
+
+    PyObject_GC_Track(result);
+    Py_DECREF(deepcopy);
+    return result;
+}
+
+static PyObject* _Nullable struct_deepcopy(PyObject* self)
+{
+    PyObject* deepcopy= PyObjC_ImportName("copy.deepcopy");
+    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
+    PyObject* args[2] = {NULL, self};
+    PyObject* result       = PyObject_Vectorcall(
+            deepcopy, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(deepcopy);
+    return result;
+}
+
+
+static PyObject* _Nullable struct_replace_impl(const char* name, int deepcopy, PyObject* self, PyObject* _Nullable args,
                                           PyObject* _Nullable kwds)
 {
     /* NOTE: This is a fairly inefficient implementation, first
@@ -319,11 +355,16 @@ static PyObject* _Nullable struct_replace(PyObject* self, PyObject* _Nullable ar
     PyObject*  value;
 
     if (args && PySequence_Length(args) != 0) {
-        PyErr_SetString(PyExc_TypeError, "_replace called with positional arguments");
+        PyErr_Format(PyExc_TypeError, "%s called with positional arguments", name);
         return NULL;
     }
 
-    result = struct_copy(self);
+    if (deepcopy) {
+        result = struct_deepcopy(self);
+    } else {
+        result = struct__copy__(self);
+    }
+
     if (result == NULL) {
         return NULL;
     }
@@ -339,6 +380,18 @@ static PyObject* _Nullable struct_replace(PyObject* self, PyObject* _Nullable ar
     }
 
     return result;
+}
+
+static PyObject* _Nullable struct_replace(PyObject* self, PyObject* _Nullable args,
+                                          PyObject* _Nullable kwds)
+{
+    return struct_replace_impl("_replace", 1, self, args, kwds);
+}
+
+static PyObject* _Nullable struct__replace__(PyObject* self, PyObject* _Nullable args,
+                                          PyObject* _Nullable kwds)
+{
+    return struct_replace_impl("__replace__", 0, self, args, kwds);
 }
 
 static PyObject* _Nullable struct_asdict(PyObject* self)
@@ -526,14 +579,9 @@ static PyMethodDef struct_methods[] = {
     },
     {
         .ml_name  = "copy",
-        .ml_meth  = (PyCFunction)struct_copy,
+        .ml_meth  = (PyCFunction)struct_deepcopy,
         .ml_flags = METH_NOARGS,
         .ml_doc   = "Return a copy of the struct",
-    },
-    {
-        .ml_name  = "__pyobjc_copy__",
-        .ml_meth  = (PyCFunction)struct_copy,
-        .ml_flags = METH_NOARGS,
     },
     {
         .ml_name  = "__sizeof__",
@@ -549,6 +597,19 @@ static PyMethodDef struct_methods[] = {
      .ml_meth  = (PyCFunction)struct_replace,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
      .ml_doc   = "Return a copy with some fields replaced by other values"},
+    {.ml_name  = "__copy__",
+     .ml_meth  = (PyCFunction)struct__copy__,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "Return a shallow copy"},
+    {.ml_name  = "__deepcopy__",
+     .ml_meth  = (PyCFunction)struct__deepcopy__,
+     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_doc   = "Return a deep copy"},
+    {.ml_name  = "__replace__",
+     .ml_meth  = (PyCFunction)struct__replace__,
+     .ml_flags = METH_VARARGS | METH_KEYWORDS,
+     .ml_doc   = "Return a copy with some fields replaced by other values"},
+
     {NULL, NULL, 0, NULL}};
 
 /*
