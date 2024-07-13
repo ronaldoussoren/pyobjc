@@ -56,14 +56,12 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1013
-#if WK_API_ENABLED
     p = PyObjC_IdToPython(@protocol(WKHTTPCookieStoreObserver));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKURLSchemeTask));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKURLSchemeHandler));
     Py_XDECREF(p);
-#endif
 #endif
 #if PyObjC_BUILD_RELEASE >= 1016
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandlerWithReply));

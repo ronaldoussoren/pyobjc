@@ -12,6 +12,9 @@ Version 10.3.2
 * :issue:`593`: PyObjCTools.AppHelper.runConsoleEventLoop no longer
   exits the process on macOS 14 or later when stopping the event loop.
 
+* :issue:`613`: Actually expose protocols ``KHTTPCookieStoreObserver``,
+  ``WKURLSchemeTask``, and ``WKURLSchemeHandler`` in the WebKit bindings.
+
 Version 10.3.1
 --------------
 
