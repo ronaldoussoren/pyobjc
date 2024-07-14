@@ -42,5 +42,7 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1500
     p = PyObjC_IdToPython(@protocol(NSFileProviderKnownFolderSupporting));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderExternalVolumeHandling));
+    Py_XDECREF(p);
 #endif
 }

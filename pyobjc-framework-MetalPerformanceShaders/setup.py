@@ -27,13 +27,11 @@ setup(
             "MetalPerformanceShaders._inlines",
             ["Modules/_MetalPerformanceShaders_inlines.m"],
             extra_link_args=["-framework", "MetalPerformanceShaders"],
-            py_limited_api=True,
         ),
         Extension(
             "MetalPerformanceShaders._MetalPerformanceShaders",
             ["Modules/_MetalPerformanceShaders.m"],
             extra_link_args=["-framework", "MetalPerformanceShaders"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -44,5 +42,4 @@ setup(
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Metal>=" + VERSION],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

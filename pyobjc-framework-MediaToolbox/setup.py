@@ -27,11 +27,9 @@ setup(
             "MediaToolbox._MediaToolbox",
             ["Modules/_MediaToolbox.m"],
             extra_link_args=["-framework", "MediaToolbox"],
-            py_limited_api=True,
         )
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

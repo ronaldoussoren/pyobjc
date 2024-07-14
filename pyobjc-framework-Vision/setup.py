@@ -27,7 +27,6 @@ setup(
             "Vision._Vision",
             ["Modules/_Vision.m"],
             extra_link_args=["-framework", "Vision"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -43,5 +42,4 @@ setup(
         "pyobjc-framework-CoreML>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

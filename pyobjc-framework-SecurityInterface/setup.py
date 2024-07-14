@@ -26,7 +26,6 @@ setup(
             "SecurityInterface._SecurityInterface",
             ["Modules/_SecurityInterface.m"],
             extra_link_args=["-framework", "SecurityInterface"],
-            py_limited_api=True,
         )
     ],
     version=VERSION,
@@ -36,5 +35,4 @@ setup(
         "pyobjc-framework-Security>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

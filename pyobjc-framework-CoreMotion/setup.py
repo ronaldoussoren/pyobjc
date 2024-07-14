@@ -27,7 +27,6 @@ setup(
             "CoreMotion._CoreMotion",
             ["Modules/_CoreMotion.m"],
             extra_link_args=["-framework", "CoreMotion"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

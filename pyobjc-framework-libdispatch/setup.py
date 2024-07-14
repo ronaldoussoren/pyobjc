@@ -26,12 +26,10 @@ setup(
         Extension(
             "dispatch._inlines",
             ["Modules/_libdispatch_inlines.m"],
-            py_limited_api=True,
         ),
         Extension(
             "dispatch._dispatch",
             ["Modules/_libdispatch.m"],
-            # py_limited_api=True
         ),
     ],
     version=VERSION,

@@ -1,6 +1,3 @@
-#ifndef PyObjC_GIL_DISABLED
-#define Py_LIMITED_API 0x03090000
-#endif
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -154,23 +151,8 @@ static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
 
-/* Python glue */
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_Vision", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
-
-PyObject* PyInit__Vision(void);
-
-PyObject* __attribute__((__visibility__("default"))) PyInit__Vision(void)
+static int mod_exec_module(PyObject* m)
 {
-    PyObject* m;
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
-    if (PyObjC_ImportAPI(m) == -1)
-        return NULL;
-
 #if PyObjC_BUILD_RELEASE >= 1013
 
     if (@available(macOS 10.13, *)) {
@@ -179,15 +161,57 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Vision(void)
         if (PyDict_DelItemString(PyModule_GetDict(m),
                                  "VNNormalizedFaceBoundingBoxPointForLandmarkPoint")
             == -1) {
-            return NULL;
+            return -1;
         }
         if (PyDict_DelItemString(PyModule_GetDict(m), "VNImagePointForFaceLandmarkPoint")
             == -1) {
-            return NULL;
+            return -1;
         }
     }
 
 #endif
+    return 0;
+}
 
-    return m;
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        /* The code in this extension should be safe to use without the GIL */
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "_Vision",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit__Vision(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Vision(void)
+{
+    return PyModuleDef_Init(&mod_module);
 }

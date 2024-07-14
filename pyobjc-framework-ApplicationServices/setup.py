@@ -28,7 +28,6 @@ setup(
             "HIServices._HIServices",
             ["Modules/_HIServices.m"],
             extra_link_args=["-framework", "ApplicationServices"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -39,7 +38,6 @@ setup(
             "PrintCore._PrintCore",
             ["Modules/_PrintCore.m"],
             extra_link_args=["-framework", "ApplicationServices"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

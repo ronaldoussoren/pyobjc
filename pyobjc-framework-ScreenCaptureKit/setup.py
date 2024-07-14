@@ -27,7 +27,6 @@ setup(
             "ScreenCaptureKit._ScreenCaptureKit",
             ["Modules/_ScreenCaptureKit.m"],
             extra_link_args=["-framework", "ScreenCaptureKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

@@ -27,7 +27,6 @@ setup(
             "AudioVideoBridging._AudioVideoBridging",
             ["Modules/_AudioVideoBridging.m"],
             extra_link_args=["-framework", "AudioVideoBridging"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

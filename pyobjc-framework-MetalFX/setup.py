@@ -27,7 +27,6 @@ setup(
             "MetalFX._MetalFX",
             ["Modules/_MetalFX.m"],
             extra_link_args=["-framework", "MetalFX"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -41,5 +40,4 @@ setup(
         "pyobjc-framework-Metal>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

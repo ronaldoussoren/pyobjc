@@ -27,7 +27,6 @@ setup(
             "SpriteKit._SpriteKit",
             ["Modules/_SpriteKit.m"],
             extra_link_args=["-framework", "SpriteKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

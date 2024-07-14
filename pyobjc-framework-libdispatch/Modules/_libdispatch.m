@@ -1,4 +1,3 @@
-/*#define Py_LIMITED_API 0x03090000*/
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -84,23 +83,10 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
     return r;
 }
 
-/* Python glue */
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_dispatch", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
-
-PyObject* PyInit__dispatch(void);
-
-PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
+static int mod_exec_module(PyObject* m)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
     if (PyObjC_ImportAPI(m) == -1)
-        return NULL;
+        return -1;
 
     /*
      * Register a number of struct pointer types that are actually Objective-C objects
@@ -214,8 +200,52 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
         != 0)
         goto error;
 
-    return m;
+    return 0;
 
 error:
-    return NULL;
+    return -1;
+}
+
+
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        /* The code in this extension should be safe to use without the GIL */
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "_dispatch",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit__dispatch(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__dispatch(void)
+{
+    return PyModuleDef_Init(&mod_module);
 }

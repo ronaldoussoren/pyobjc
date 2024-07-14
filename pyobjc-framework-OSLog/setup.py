@@ -26,7 +26,6 @@ setup(
             "OSLog._OSLog",
             ["Modules/_OSLog.m"],
             extra_link_args=["-framework", "OSLog"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -42,5 +41,4 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

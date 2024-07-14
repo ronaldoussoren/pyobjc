@@ -27,7 +27,6 @@ setup(
             "IntentsUI._IntentsUI",
             ["Modules/_IntentsUI.m"],
             extra_link_args=["-framework", "IntentsUI"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

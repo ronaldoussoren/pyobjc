@@ -33,7 +33,6 @@ setup(
             "CoreServices._inlines",
             ["Modules/_CoreServices_inlines.m"],
             extra_link_args=["-framework", "CoreServices"],
-            py_limited_api=True,
         )
     ],
     version=VERSION,
@@ -43,5 +42,4 @@ setup(
         "pyobjc-framework-Cocoa>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

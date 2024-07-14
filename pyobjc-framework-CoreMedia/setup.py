@@ -27,7 +27,6 @@ setup(
             "CoreMedia._inlines",
             ["Modules/_CoreMedia_inlines.m"],
             extra_link_args=["-framework", "CoreMedia"],
-            py_limited_api=True,
         ),
         Extension(
             "CoreMedia._CoreMedia",

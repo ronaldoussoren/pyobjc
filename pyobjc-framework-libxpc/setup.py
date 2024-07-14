@@ -23,15 +23,9 @@ setup(
     min_os_level="10.8",
     packages=["xpc"],
     ext_modules=[
-        #        Extension(
-        #            "xpc._inlines",
-        #            ["Modules/_libxpc_inlines.m"],
-        #            py_limited_api=True,
-        #        ),
         Extension(
             "xpc._xpc",
             ["Modules/_xpc.m"],
-            # py_limited_api=True
         ),
     ],
     version=VERSION,

@@ -27,7 +27,6 @@ setup(
             "SceneKit._SceneKit",
             ["Modules/_SceneKit.m"],
             extra_link_args=["-framework", "SceneKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -38,7 +37,6 @@ setup(
             "SceneKit._inlines",
             ["Modules/_SceneKit_inlines.m"],
             extra_link_args=["-framework", "SceneKit"],
-            py_limited_api=True,
         ),
     ],
     version=VERSION,
@@ -48,5 +46,4 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

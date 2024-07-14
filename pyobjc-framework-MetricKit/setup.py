@@ -27,7 +27,6 @@ setup(
             "MetricKit._MetricKit",
             ["Modules/_MetricKit.m"],
             extra_link_args=["-framework", "MetricKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

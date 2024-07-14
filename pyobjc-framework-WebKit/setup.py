@@ -28,7 +28,6 @@ setup(
             "JavaScriptCore._JavaScriptCore",
             ["Modules/_JavaScriptCore.m"],
             extra_link_args=["-framework", "JavaScriptCore"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -39,7 +38,6 @@ setup(
             "WebKit._WebKit",
             ["Modules/_WebKit.m"],
             extra_link_args=["-framework", "WebKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -50,5 +48,4 @@ setup(
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
 )

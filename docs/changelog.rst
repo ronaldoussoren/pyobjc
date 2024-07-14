@@ -26,6 +26,9 @@ Version 11.0 (Unreleased, expected release is October 2024)
 * The ``__pyobjc_copy__`` method has been removed from struct wrappers. This
   was never a public API. Use :func:`copy.deepcopy` instead.
 
+* :issue:`608`: The extension modules for framework bindings were transitioned to multi-phase
+  init. As a side effect of this the framework bindings no longer use the
+  stable ABI.
 
 Version 10.3.2
 --------------

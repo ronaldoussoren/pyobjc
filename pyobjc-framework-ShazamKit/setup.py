@@ -27,7 +27,6 @@ setup(
             "ShazamKit._ShazamKit",
             ["Modules/_ShazamKit.m"],
             extra_link_args=["-framework", "ShazamKit"],
-            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
