@@ -680,3 +680,8 @@ class TestSuperDealloc(TestCase):
         s = super(D, D())
         del s
         assert deleted
+
+
+class TestFreeThreaded(TestCase):
+    def test_freethreaded_if_configured(self):
+        self.assertFreeThreadedIfConfigured()

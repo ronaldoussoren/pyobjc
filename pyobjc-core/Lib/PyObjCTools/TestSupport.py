@@ -1107,6 +1107,16 @@ class TestCase(_unittest.TestCase):
         self.assertEqual(clone, value)
         self.assertIsInstance(clone, type(value))
 
+    def assertFreeThreadedIfConfigured(self):
+        """
+        Assert that the process is running in free-threaded mode when
+        the interpreter was configured as such.
+        """
+        if not _get_config_var("Py_GIL_DISABLED"):
+            return
+
+        self.assertFalse(_sys._is_gil_enabled(), "GIL is enabled")
+
     def _validateCallableMetadata(
         self, value, class_name=None, skip_simple_charptr_check=False
     ):
@@ -1392,6 +1402,10 @@ class TestCase(_unittest.TestCase):
 
             else:
                 continue
+
+        # Quick check that the GIL is actually disabled.  Testing this here isn't
+        # ideal, but avoids changing all framework bindings.
+        self.assertFreeThreadedIfConfigured()
 
     def __init__(self, methodName="runTest"):
         super().__init__(methodName)
