@@ -35,24 +35,24 @@ static PyObject* _Nullable mod_VNNormalizedFaceBoundingBoxPointForLandmarkPoint(
     size_t        imageWidth;
     size_t        imageHeight;
 
-    if (args == NULL || !PyTuple_Check(args) || PyTuple_Size(args) != 4) {
+    if (args == NULL || !PyTuple_Check(args) || PyTuple_GET_SIZE(args) != 4) {
         PyErr_SetString(PyExc_TypeError,
                         "Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint "
                         "requires 4 arguments");
         return NULL;
     }
-    if (PyObjC_PythonToObjC("<2f>", PyTuple_GetItem(args, 0), &faceLandmarkPoint) == -1) {
+    if (PyObjC_PythonToObjC("<2f>", PyTuple_GET_ITEM(args, 0), &faceLandmarkPoint) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGRect), PyTuple_GetItem(args, 1), &faceBoundingBox)
+    if (PyObjC_PythonToObjC(@encode(CGRect), PyTuple_GET_ITEM(args, 1), &faceBoundingBox)
         == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(args, 2), &imageWidth)
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(args, 2), &imageWidth)
         == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(args, 3), &imageHeight)
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(args, 3), &imageHeight)
         == -1) {
         return NULL;
     }
@@ -89,23 +89,23 @@ static PyObject* _Nullable mod_VNImagePointForFaceLandmarkPoint(PyObject* mod,
     size_t        imageWidth;
     size_t        imageHeight;
 
-    if (args == NULL || !PyTuple_Check(args) || PyTuple_Size(args) != 4) {
+    if (args == NULL || !PyTuple_Check(args) || PyTuple_GET_SIZE(args) != 4) {
         PyErr_SetString(PyExc_TypeError,
                         "Vision.VNImagePointForFaceLandmarkPoint requires 4 arguments");
         return NULL;
     }
-    if (PyObjC_PythonToObjC("<2f>", PyTuple_GetItem(args, 0), &faceLandmarkPoint) == -1) {
+    if (PyObjC_PythonToObjC("<2f>", PyTuple_GET_ITEM(args, 0), &faceLandmarkPoint) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGRect), PyTuple_GetItem(args, 1), &faceBoundingBox)
+    if (PyObjC_PythonToObjC(@encode(CGRect), PyTuple_GET_ITEM(args, 1), &faceBoundingBox)
         == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(args, 2), &imageWidth)
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(args, 2), &imageWidth)
         == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(args, 3), &imageHeight)
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(args, 3), &imageHeight)
         == -1) {
         return NULL;
     }
@@ -158,13 +158,10 @@ static int mod_exec_module(PyObject* m)
     if (@available(macOS 10.13, *)) {
         /* pass */
     } else {
-        if (PyDict_DelItemString(PyModule_GetDict(m),
-                                 "VNNormalizedFaceBoundingBoxPointForLandmarkPoint")
-            == -1) {
+        if (PyObject_DelAttrString(m, "VNNormalizedFaceBoundingBoxPointForLandmarkPoint") == -1) {
             return -1;
         }
-        if (PyDict_DelItemString(PyModule_GetDict(m), "VNImagePointForFaceLandmarkPoint")
-            == -1) {
+        if (PyObject_DelAttrString(m, "VNImagePointForFaceLandmarkPoint") == -1) {
             return -1;
         }
     }
@@ -188,7 +185,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
     {
         /* The code in this extension should be safe to use without the GIL */
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

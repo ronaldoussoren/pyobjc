@@ -6,9 +6,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-/* We include the source code here instead of
- * using the linker due to limitations in pyobjc-api.h
- */
 #include "_SpriteKit_protocols.m"
 
 #if PyObjC_BUILD_RELEASE >= 1012
@@ -36,7 +33,6 @@ parse_v2f_array(NSInteger vertexCount, PyObject* value)
     for (i = 0; i < vertexCount; i++) {
         PyObject* item = PySequence_GetItem(value, i);
         if (item == NULL) {
-            Py_DECREF(item);
             PyMem_Free(result);
             return NULL;
         }
@@ -255,7 +251,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
     {
         /* The code in this extension should be safe to use without the GIL */
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

@@ -41,18 +41,8 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-#if Py_MAJOR_VERSION == 3
     py_memview = PyMemoryView_FromMemory(buffer, size, PyBuf_READ)
-#else
-    Py_buffer bufinfo;
-
-    if (PyBuffer_FillInfo(&bufinfo, NULL, (void*)buffer, size, 1, PyBUF_SIMPLE) == -1) {
-        Py_DECREF(py_result);
-        return NULL;
-    }
-    py_memview = PyMemoryView_FromBuffer(&bufinfo);
-#endif
-        if (py_memview == NULL)
+    if (py_memview == NULL)
     {
         Py_DECREF(py_result);
         return NULL;
@@ -222,7 +212,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
     {
         /* The code in this extension should be safe to use without the GIL */
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

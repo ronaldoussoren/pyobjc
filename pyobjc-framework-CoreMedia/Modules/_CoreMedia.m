@@ -301,9 +301,7 @@ static int mod_exec_module(PyObject* m)
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
     if (&CMVideoFormatDescriptionCreateFromHEVCParameterSets == NULL) {
-        if (PyDict_DelItemString(PyModule_GetDict(m),
-                                 "CMVideoFormatDescriptionCreateFromHEVCParameterSets")
-            == -1) {
+        if (PyObject_DelAttrString(m, "CMVideoFormatDescriptionCreateFromHEVCParameterSets") == -1) {
             return -1;
         }
     }

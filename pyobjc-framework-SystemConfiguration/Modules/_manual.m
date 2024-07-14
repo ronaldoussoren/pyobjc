@@ -6,6 +6,10 @@
 
 /*
  * Context definitions
+ *
+ * Note that the use of a tuple object for the context 'info'
+ * is safe because the tuple is fully owned by the context object,
+ * free-threading doesn't change this.
  */
 
 static const void*
@@ -525,7 +529,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
     {
         /* The code in this extension should be safe to use without the GIL */
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */
