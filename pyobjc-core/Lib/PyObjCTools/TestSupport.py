@@ -1112,9 +1112,16 @@ class TestCase(_unittest.TestCase):
         Assert that the process is running in free-threaded mode when
         the interpreter was configured as such.
         """
+
         if not _get_config_var("Py_GIL_DISABLED"):
+            # Not a free threaded build
             return
 
+        if "gil" in _sys._xoptions and _sys._xoptions["gil"]:
+            # User runs with '-Xgil=1'
+            return
+
+        # Check that the GIL is actually disabled
         self.assertFalse(_sys._is_gil_enabled(), "GIL is enabled")
 
     def _validateCallableMetadata(
