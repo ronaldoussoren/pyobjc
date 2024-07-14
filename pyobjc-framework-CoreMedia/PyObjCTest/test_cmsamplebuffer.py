@@ -381,7 +381,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgIsBlock(
             CoreMedia.CMSampleBufferCallBlockForEachSample,
             1,
-            b"v^{opaqueCMSampleBuffer=}q",
+            b"i^{opaqueCMSampleBuffer=}q",
         )
 
     @min_os_level("10.14.4")

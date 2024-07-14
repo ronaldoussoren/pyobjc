@@ -31,6 +31,7 @@ class TestNSFontDescriptor(TestCase):
     )
     def testConvenience(self):
         v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
+        self.assertIsInstance(v, AppKit.NSFontDescriptor)
         d = v[AppKit.NSFontNameAttribute]
         self.assertEqual(v.get(AppKit.NSFontNameAttribute), d)
         self.assertEqual(v.get("no-such-name"), None)

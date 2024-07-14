@@ -544,6 +544,7 @@ def setup(
     **kwds,
 ):
     k = kwds.copy()
+    options = options.copy()
 
     os_level = get_sdk_level()
     if os_level is None:
@@ -615,7 +616,7 @@ def setup(
 
     if "ext_modules" not in k:
         # No extension modules, can build universal wheel
-        k["options"] = {"bdist_wheel": {"universal": 1}}
+        options.update({"bdist_wheel": {"universal": 1}})
 
     plat_name = "MacOS X"
     plat_versions = []
@@ -661,7 +662,6 @@ def setup(
         # Python 3.13 does not support the limited ABI for C extensions
         # when using a free threaded build.
         if get_config_var("Py_GIL_DISABLED"):
-            options = options.copy()
             del options["bdist_wheel"]
 
     _setup(

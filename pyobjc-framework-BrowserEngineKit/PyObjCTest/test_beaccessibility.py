@@ -112,7 +112,7 @@ class TestBEAccessibility(TestCase):
             BrowserEngineKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestBEAccessibilityHelper.browserAccessibilitySetSelectedTextRange,
+            TestBEAccessibilityHelper.browserAccessibilitySetSelectedTextRange_,
             0,
             BrowserEngineKit.NSRange.__typestr__,
         )
