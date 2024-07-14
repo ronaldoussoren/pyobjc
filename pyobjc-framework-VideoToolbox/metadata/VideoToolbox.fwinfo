@@ -446,6 +446,11 @@
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
+   "VTCopyRAWProcessorExtensionProperties": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "VTSessionSetProperties": {
     "args": {
      "1": {}
