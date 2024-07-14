@@ -92,23 +92,20 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
     }
     py_allPlanes = arguments[0];
     if (py_allPlanes != Py_None) {
-        PyObject* fast_planes =
-            PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
+        PyObject* fast_planes = PySequence_Tuple(py_allPlanes);
         if (fast_planes == NULL) {
-            /* XXX: Clearer error message */
             PyErr_SetString(PyExc_TypeError,
                             "First argument must be a 5 element Tuple or None.");
             return NULL;
         }
-        if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
-            /* XXX: Clearer error message */
+        if (PyTuple_GET_SIZE(fast_planes) != 5) {
             PyErr_SetString(PyExc_TypeError,
                             "First argument must be a 5 element Tuple or None.");
             Py_DECREF(fast_planes);
             return NULL;
         }
         for (i = 0; i < 5; i++) {
-            PyObject* tmp = PySequence_Fast_GET_ITEM(fast_planes, i);
+            PyObject* tmp = PyTuple_GET_ITEM(fast_planes, i);
             if (tmp == Py_None) {
                 dataPlanes[i] = NULL;
             } else {
@@ -116,10 +113,12 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                 if (r == 0) {
                     dataPlanes[i] = planeBuffers[i].buf;
                 } else {
+                    Py_DECREF(fast_planes);
                     goto error_cleanup;
                 }
             }
         }
+        Py_DECREF(fast_planes);
     }
 
     if (PyObjC_PythonToObjC(@encode(int), arguments[1], &width) == -1) {
@@ -213,23 +212,20 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
     }
     py_allPlanes = arguments[0];
     if (py_allPlanes != Py_None) {
-        PyObject* fast_planes =
-            PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
+        PyObject* fast_planes = PySequence_Tuple(py_allPlanes);
         if (fast_planes == NULL) {
-            /* XXX: Clearer error message */
             PyErr_SetString(PyExc_TypeError,
                             "First argument must be a 5 element Tuple or None.");
             return NULL;
         }
-        if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
-            /* XXX: Clearer error message */
+        if (PyTuple_GET_SIZE(fast_planes) != 5) {
             PyErr_SetString(PyExc_TypeError,
                             "First argument must be a 5 element Tuple or None.");
             Py_DECREF(fast_planes);
             return NULL;
         }
         for (i = 0; i < 5; i++) {
-            PyObject* tmp = PySequence_Fast_GET_ITEM(fast_planes, i);
+            PyObject* tmp = PyTuple_GET_ITEM(fast_planes, i);
             if (tmp == Py_None) {
                 dataPlanes[i] = NULL;
             } else {
@@ -237,10 +233,12 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                 if (r == 0) {
                     dataPlanes[i] = planeBuffers[i].buf;
                 } else {
+                    Py_DECREF(fast_planes);
                     goto error_cleanup;
                 }
             }
         }
+        Py_DECREF(fast_planes);
     }
 
     if (PyObjC_PythonToObjC(@encode(int), arguments[1], &width) == -1) {

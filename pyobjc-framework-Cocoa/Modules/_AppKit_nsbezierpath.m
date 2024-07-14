@@ -124,12 +124,12 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
 
     memset(points, 0, sizeof(points));
 
-    seq = PySequence_Fast(pointList, "points is not a sequence");
+    seq = PySequence_Tuple(pointList);
     if (seq == NULL) {
         return NULL;
     }
 
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(seq);
     if (len > 3) {
         Py_DECREF(seq);
         PyErr_SetString(PyExc_ValueError, "Need at most 3 elements");
@@ -137,12 +137,13 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < len; i++) {
-        int err = PyObjC_PythonToObjC(@encode(NSPoint), PySequence_Fast_GET_ITEM(seq, i),
+        int err = PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(seq, i),
                                       points + i);
         if (err == -1) {
             return NULL;
         }
     }
+    Py_DECREF(seq);
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -217,24 +218,23 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
           if (result == NULL)
               goto error;
 
-          seq = PySequence_Fast(result, "should return tuple of length 2");
+          seq = PySequence_Tuple(result);
           Py_DECREF(result);
           if (seq == NULL)
               goto error;
 
-          if (PySequence_Fast_GET_SIZE(seq) != 2) {
+          if (PyTuple_GET_SIZE(seq) != 2) {
               PyErr_SetString(PyExc_ValueError, "should return tuple of length 2");
               goto error;
           }
 
-          v = PySequence_Fast_GET_ITEM(seq, 0);
+          v = PyTuple_GET_ITEM(seq, 0);
 
           err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &element);
           if (err == -1)
               goto error;
 
-          v = PySequence_Fast(PySequence_Fast_GET_ITEM(seq, 1),
-                              "result[1] should be a sequence");
+          v = PySequence_Tuple(PyTuple_GET_ITEM(seq, 1));
           if (v == NULL)
               goto error;
 
@@ -262,14 +262,14 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
               goto error;
           }
 
-          if (PySequence_Fast_GET_SIZE(v) != pointCount) {
+          if (PyTuple_GET_SIZE(v) != pointCount) {
               PyErr_SetString(PyExc_ValueError, "wrong number of points");
               Py_DECREF(v);
               goto error;
           }
 
           for (i = 0; i < pointCount; i++) {
-              err = PyObjC_PythonToObjC(@encode(NSPoint), PySequence_Fast_GET_ITEM(v, i),
+              err = PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(v, i),
                                         points + i);
               if (err == -1) {
                   Py_DECREF(v);

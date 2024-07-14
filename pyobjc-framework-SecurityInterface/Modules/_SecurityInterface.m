@@ -2,13 +2,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#undef PySequence_Fast_GET_ITEM
-#define PySequence_Fast_GET_ITEM(o, i)                                                   \
-    (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
-
-#undef PySequence_Fast_GET_SIZE
-#define PySequence_Fast_GET_SIZE(o) (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
-
 #import <Foundation/Foundation.h>
 #import <SecurityInterface/SFAuthorizationView.h>
 
@@ -21,27 +14,30 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         return 1;
 
     } else {
-        PyObject*  seq = PySequence_Fast(value, "itemset must be a sequence or None");
+        PyObject*  seq = PySequence_Tuple(value);
         Py_ssize_t i;
         if (seq == NULL) {
             return 0;
         }
-        itemset->count = PySequence_Fast_GET_SIZE(seq);
+        itemset->count = PyTuple_GET_SIZE(seq);
         itemset->items =
-            PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+            PyMem_Malloc(sizeof(AuthorizationItem) * PyTuple_GET_SIZE(seq));
         if (itemset->items == NULL) {
             PyErr_NoMemory();
+            Py_DECREF(seq);
             return 0;
         }
 
-        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+        for (i = 0; i < PyTuple_GET_SIZE(seq); i++) {
             if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PySequence_Fast_GET_ITEM(seq, i), itemset->items + i)
+                                    PyTuple_GET_ITEM(seq, i), itemset->items + i)
                 < 0) {
                 PyMem_Free(itemset->items);
+                Py_DECREF(seq);
                 return 0;
             }
         }
+        Py_DECREF(seq);
     }
     return 1;
 }

@@ -356,22 +356,22 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         return 1;
 
     } else {
-        PyObject*  seq = PySequence_Fast(value, "itemset must be a sequence or None");
+        PyObject*  seq = PySequence_Tuple(value);
         Py_ssize_t i;
         if (seq == NULL) {
             return 0;
         }
-        itemset->count = PySequence_Fast_GET_SIZE(seq);
+        itemset->count = PyTuple_GET_SIZE(seq);
         itemset->items =
-            PyMem_Malloc(sizeof(AuthorizationItem) * PySequence_Fast_GET_SIZE(seq));
+            PyMem_Malloc(sizeof(AuthorizationItem) * PyTuple_GET_SIZE(seq));
         if (itemset->items == NULL) {
             PyErr_NoMemory();
             return 0;
         }
 
-        for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
+        for (i = 0; i < PyTuple_GET_SIZE(seq); i++) {
             if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PySequence_Fast_GET_ITEM(seq, i), itemset->items + i)
+                                    PyTuple_GET_ITEM(seq, i), itemset->items + i)
                 < 0) {
                 PyMem_Free(itemset->items);
                 return 0;
@@ -720,12 +720,12 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
 
     pathToTool = PyBytes_AsString(py_pathToTool);
 
-    seq = PySequence_Fast(py_arguments, "arguments must be a sequence of byte strings");
+    seq = PySequence_Tuple(py_arguments);
     if (seq == NULL) {
         return NULL;
     }
 
-    arguments = PyMem_Malloc(sizeof(char*) * PySequence_Fast_GET_SIZE(seq) + 1);
+    arguments = PyMem_Malloc(sizeof(char*) * PyTuple_GET_SIZE(seq) + 1);
     if (arguments == NULL) {
         PyErr_NoMemory();
         return NULL;
@@ -736,8 +736,8 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
         return NULL;
     }
 
-    for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
-        PyObject* t = PySequence_Fast_GET_ITEM(seq, i);
+    for (i = 0; i < PyTuple_GET_SIZE(seq); i++) {
+        PyObject* t = PyTuple_GET_ITEM(seq, i);
 
         if (!PyBytes_Check(t)) {
             PyErr_SetString(PyExc_ValueError,

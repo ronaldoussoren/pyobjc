@@ -130,25 +130,25 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 static CFArrayRef
 createWindowList(PyObject* items)
 {
-    PyObject* seq = PySequence_Fast(items, "list of windowIDs");
+    PyObject* seq = PySequence_Tuple(items);
     if (seq == NULL) {
         return NULL;
     }
 
     CFMutableArrayRef array =
-        CFArrayCreateMutable(NULL, PySequence_Fast_GET_SIZE(seq), NULL);
+        CFArrayCreateMutable(NULL, PyTuple_GET_SIZE(seq), NULL);
     if (array == NULL) {
         Py_DECREF(seq);
         PyErr_SetString(PyExc_ValueError, "Cannot create CFArray");
         return NULL;
     }
 
-    Py_ssize_t len = PySequence_Fast_GET_SIZE(seq);
+    Py_ssize_t len = PyTuple_GET_SIZE(seq);
     Py_ssize_t i;
     for (i = 0; i < len; i++) {
         CGWindowID windowID;
 
-        if (PyObjC_PythonToObjC(@encode(CGWindowID), PySequence_Fast_GET_ITEM(seq, i),
+        if (PyObjC_PythonToObjC(@encode(CGWindowID), PyTuple_GET_ITEM(seq, i),
                                 &windowID)
             == -1) {
             Py_DECREF(seq);

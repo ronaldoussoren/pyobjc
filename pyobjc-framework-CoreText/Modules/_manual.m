@@ -149,12 +149,12 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         return result;
     }
 
-    seq = PySequence_Fast(py_settings, "need sequence of settings");
+    seq = PySequence_Tuple(py_settings);
     if (seq == NULL) {
         return NULL;
     }
 
-    if (PySequence_Fast_GET_SIZE(seq) < len) {
+    if (PyTuple_GET_SIZE(seq) < len) {
         PyErr_Format(PyExc_ValueError, "need sequence of at least %ld arguments",
                      (long)len);
         Py_DECREF(seq);
@@ -178,25 +178,25 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
 
     for (i = 0; i < len; i++) {
         CTParagraphStyleSetting* cur   = settings + i;
-        PyObject*                curPy = PySequence_Fast_GET_ITEM(seq, i);
-        PyObject*                s     = PySequence_Fast(curPy, "CTParagraphStyleItem");
+        PyObject*                curPy = PyTuple_GET_ITEM(seq, i);
+        PyObject*                s     = PySequence_Tuple(curPy);
         int                      r;
 
         if (s == NULL) {
             goto setup_error;
         }
-        if (PySequence_Fast_GET_SIZE(s) != 3) {
+        if (PyTuple_GET_SIZE(s) != 3) {
             PyErr_Format(PyExc_ValueError, "settings item has length %ld, not 3",
-                         (long)PySequence_Fast_GET_SIZE(s));
+                         (long)PyTuple_GET_SIZE(s));
             goto setup_error;
         }
 
         r = PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier),
-                                PySequence_Fast_GET_ITEM(s, 0), &cur->spec);
+                                PyTuple_GET_ITEM(s, 0), &cur->spec);
         if (r == -1) {
             goto setup_error;
         }
-        r = PyObjC_PythonToObjC(@encode(size_t), PySequence_Fast_GET_ITEM(s, 1),
+        r = PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(s, 1),
                                 &cur->valueSize);
         if (r == -1) {
             goto setup_error;
@@ -212,11 +212,11 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
             } else {
 
                 r          = PyObjC_PythonToObjC(@encode(CFArrayRef),
-                                                 PySequence_Fast_GET_ITEM(s, 2), &aref);
+                                                 PyTuple_GET_ITEM(s, 2), &aref);
                 cur->value = &aref;
             }
         } else {
-            r = PyObject_GetBuffer(PySequence_Fast_GET_ITEM(s, 2), views + i,
+            r = PyObject_GetBuffer(PyTuple_GET_ITEM(s, 2), views + i,
                                    PyBUF_CONTIG_RO);
             if (r != -1) {
                 if ((size_t)views[i].len != cur->valueSize) {
@@ -231,9 +231,12 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
             }
         }
         if (r == -1) {
+            Py_DECREF(s);
             goto setup_error;
         }
+        Py_DECREF(s);
     }
+    Py_DECREF(seq);
 
     CTParagraphStyleRef rv = NULL;
 

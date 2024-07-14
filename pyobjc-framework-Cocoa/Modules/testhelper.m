@@ -242,12 +242,14 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
+    if (PyObjC_ImportAPI(m) == -1) {
         return -1;
+    }
 
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
                        PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
         return -1;
+    }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
                        PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
         return -1;
