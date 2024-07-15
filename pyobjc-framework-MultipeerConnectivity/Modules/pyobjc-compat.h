@@ -246,6 +246,22 @@ extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
 #define Py_BEGIN_CRITICAL_SECTION2(value1, value2) {
 #define Py_END_CRITICAL_SECTION2() }
+
+
+static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result)
+{
+    *result = PyDict_GetItemWithError(p, key);
+    if (*result == NULL) {
+        if (PyErr_Occurred()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else {
+        Py_INCREF(*result);
+        return 1;
+    }
+}
 #endif
 
 

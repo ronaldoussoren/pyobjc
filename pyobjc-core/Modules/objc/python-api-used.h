@@ -393,5 +393,7 @@ PyAPI_FUNC(Py_ssize_t) PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t* star
                                              Py_ssize_t* stop, Py_ssize_t step)
     __attribute__((warn_unused_result));
 
+PyAPI_FUNC(int) PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result) __attribute__((warn_unused_result));
+
 NS_ASSUME_NONNULL_END
 #endif /* USE_STATIC_ANALYZER */
