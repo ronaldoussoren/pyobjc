@@ -42,7 +42,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 #if PY_VERSION_HEX >= 0x030d0000
     {
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

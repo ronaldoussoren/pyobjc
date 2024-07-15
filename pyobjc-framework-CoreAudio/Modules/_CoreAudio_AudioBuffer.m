@@ -37,8 +37,12 @@ static PyObject*
 ab_get_mNumberChannels(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->ab_buf->mNumberChannels);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->ab_buf->mNumberChannels);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -46,36 +50,48 @@ ab_set_mNumberChannels(PyObject* _self, PyObject* value,
                        void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mNumberChannels'");
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result =  PyObjC_PythonToObjC(@encode(unsigned int), value,
                                &self->ab_buf->mNumberChannels);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 ab_get_mDataByteSize(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->ab_buf->mDataByteSize);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->ab_buf->mDataByteSize);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 ab_get_data(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
+    PyObject* result;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     if (self->ab_buf->mData == NULL) {
         Py_INCREF(Py_None);
-        return Py_None;
-    }
-
-    return PyMemoryView_FromMemory(self->ab_buf->mData, self->ab_buf->mDataByteSize,
+        result = Py_None;
+    } else {
+        result = PyMemoryView_FromMemory(self->ab_buf->mData, self->ab_buf->mDataByteSize,
                                    PyBUF_WRITE);
+    }
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyGetSetDef ab_getset[] = {
@@ -107,26 +123,32 @@ ab_create_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     struct audio_buffer* self = (struct audio_buffer*)_self;
     unsigned int         buf_size;
     void*                new_buf;
+    PyObject* result;
 
     if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
         return NULL;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
+
     new_buf = PyMem_Malloc(buf_size);
     if (new_buf == NULL) {
-        return NULL;
+        result = NULL;
+    } else {
+        if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
+            PyMem_Free(self->ab_buf_pointer);
+        }
+
+        self->ab_buf_pointer = self->ab_buf->mData = new_buf;
+        self->ab_owns_buffer                       = 1;
+        self->ab_buf->mDataByteSize                = buf_size;
+
+        Py_INCREF(Py_None);
+        result = Py_None;
     }
 
-    if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
-        PyMem_Free(self->ab_buf_pointer);
-    }
-
-    self->ab_buf_pointer = self->ab_buf->mData = new_buf;
-    self->ab_owns_buffer                       = 1;
-    self->ab_buf->mDataByteSize                = buf_size;
-
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyMethodDef ab_methods[] = {

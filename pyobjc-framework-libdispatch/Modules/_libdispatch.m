@@ -41,7 +41,7 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-    py_memview = PyMemoryView_FromMemory(buffer, size, PyBuf_READ)
+    py_memview = PyMemoryView_FromMemory((char*)buffer, size, PyBUF_READ);
     if (py_memview == NULL)
     {
         Py_DECREF(py_result);

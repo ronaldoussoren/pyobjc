@@ -31,8 +31,12 @@ static PyObject*
 acd_get_mChannelLabel(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->acd_description->mChannelLabel);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->acd_description->mChannelLabel);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -40,22 +44,30 @@ acd_set_mChannelLabel(PyObject* _self, PyObject* value,
                       void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelLabel'");
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = PyObjC_PythonToObjC(@encode(unsigned int), value,
                                &self->acd_description->mChannelLabel);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 acd_get_mChannelFlags(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->acd_description->mChannelFlags);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->acd_description->mChannelFlags);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -63,24 +75,32 @@ acd_set_mChannelFlags(PyObject* _self, PyObject* value,
                       void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelFlags'");
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = PyObjC_PythonToObjC(@encode(unsigned int), value,
                                &self->acd_description->mChannelFlags);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 acd_get_mCoordinates(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("fff", self->acd_description->mCoordinates[0],
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("fff", self->acd_description->mCoordinates[0],
                          self->acd_description->mCoordinates[1],
                          self->acd_description->mCoordinates[2]);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -88,16 +108,20 @@ acd_set_mCoordinates(PyObject* _self, PyObject* value,
                      void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mCoordinates'");
         return -1;
     }
 
-    return PyArg_ParseTuple(value, "fff:mCoordinates",
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = PyArg_ParseTuple(value, "fff:mCoordinates",
                             self->acd_description->mChannelFlags + 0,
                             self->acd_description->mChannelFlags + 1,
                             self->acd_description->mChannelFlags + 2);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyGetSetDef acd_getset[] = {

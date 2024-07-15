@@ -652,6 +652,17 @@ struct callback_info {
     size_t                  count;
 };
 
+#if PY_VERSION_HEX >= 0x030d0000
+/*
+ * The ``display_reconfig_callback`` variable is shared global state
+ * that needs to be protected by a lock in free-threaded mode.
+ *
+ * Note that the APIs protected by the lock are in general called on
+ * the main thread only, we could get away without using a lock but
+ * it is better to be safe than sorry.
+ */
+PyMutex callback_mutex = {0};
+#endif
 struct callback_info display_reconfig_callback = {NULL, 0};
 
 static int
@@ -659,6 +670,10 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
                      PyObject* real_info)
 {
     size_t i;
+
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Lock(&callback_mutex);
+#endif
 
     for (i = 0; i < info->count; i++) {
         if (info->list[i].callback == NULL) {
@@ -668,6 +683,11 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
             Py_INCREF(callback);
             Py_INCREF(user_info);
             Py_INCREF(real_info);
+
+#if PY_VERSION_HEX >= 0x030d0000
+            PyMutex_Unlock(&callback_mutex);
+#endif
+
             return 0;
         }
     }
@@ -677,6 +697,9 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
         info->list = PyMem_Malloc(sizeof(*info->list));
         if (info->list == NULL) {
             PyErr_NoMemory();
+#if PY_VERSION_HEX >= 0x030d0000
+            PyMutex_Unlock(&callback_mutex);
+#endif
             return -1;
         }
         info->list[0].callback  = callback;
@@ -692,6 +715,9 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
         tmp = PyMem_Realloc(info->list, sizeof(*info->list) * (info->count + 1));
         if (tmp == NULL) {
             PyErr_NoMemory();
+#if PY_VERSION_HEX >= 0x030d0000
+            PyMutex_Unlock(&callback_mutex);
+#endif
             return -1;
         }
         info->list                        = tmp;
@@ -703,6 +729,9 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
         Py_INCREF(real_info);
         info->count++;
     }
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&callback_mutex);
+#endif
     return 0;
 }
 
@@ -710,6 +739,10 @@ static PyObject*
 find_callback_info(struct callback_info* info, PyObject* callback, PyObject* user_info)
 {
     size_t i;
+
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Lock(&callback_mutex);
+#endif
 
     for (i = 0; i < info->count; i++) {
         if (info->list[i].callback == NULL)
@@ -722,9 +755,16 @@ find_callback_info(struct callback_info* info, PyObject* callback, PyObject* use
             continue;
         }
 
+        Py_INCREF(info->list[i].real_info);
+#if PY_VERSION_HEX >= 0x030d0000
+        PyMutex_Unlock(&callback_mutex);
+#endif
         return info->list[i].real_info;
     }
     PyErr_SetString(PyExc_ValueError, "Cannot find callback info");
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&callback_mutex);
+#endif
     return NULL;
 }
 
@@ -732,6 +772,10 @@ static void
 remove_callback_info(struct callback_info* info, PyObject* callback, PyObject* user_info)
 {
     size_t i;
+
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Lock(&callback_mutex);
+#endif
 
     for (i = 0; i < info->count; i++) {
         if (info->list[i].callback == NULL)
@@ -749,6 +793,9 @@ remove_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
         info->list[i].callback  = NULL;
         info->list[i].user_info = NULL;
     }
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&callback_mutex);
+#endif
 }
 
 static void
@@ -857,6 +904,8 @@ m_CGDisplayRemoveReconfigurationCallback(PyObject* self __attribute__((__unused_
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
+
+    Py_DECREF(real_info);
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -970,7 +1019,7 @@ m_CGScreenUnregisterMoveCallback(PyObject* self __attribute__((__unused__)),
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
-
+    Py_DECREF(real_info);
     if (PyErr_Occurred()) {
         return NULL;
     }
@@ -1079,7 +1128,7 @@ m_CGUnregisterScreenRefreshCallback(PyObject* self __attribute__((__unused__)),
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
-
+    Py_DECREF(real_info);
     if (PyErr_Occurred()) {
         return NULL;
     }
@@ -1657,7 +1706,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
     {
         /* The code in this extension should be safe to use without the GIL */
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

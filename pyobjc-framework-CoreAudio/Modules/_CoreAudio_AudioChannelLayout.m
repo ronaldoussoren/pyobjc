@@ -34,8 +34,12 @@ static PyObject*
 avl_get_mChannelLayoutTag(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->avl_layout->mChannelLayoutTag);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->avl_layout->mChannelLayoutTag);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -43,22 +47,30 @@ avl_set_mChannelLayoutTag(PyObject* _self, PyObject* value,
                           void* closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelLayoutTag'");
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = PyObjC_PythonToObjC(@encode(unsigned int), value,
                                &self->avl_layout->mChannelLayoutTag);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 avl_get_mChannelBitmap(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
+    PyObject* result;
 
-    return Py_BuildValue("I", self->avl_layout->mChannelBitmap);
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = Py_BuildValue("I", self->avl_layout->mChannelBitmap);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static int
@@ -66,14 +78,18 @@ avl_set_mChannelBitmap(PyObject* _self, PyObject* value,
                        void* closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
+    int result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelBitmap'");
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = PyObjC_PythonToObjC(@encode(unsigned int), value,
                                &self->avl_layout->mChannelBitmap);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyGetSetDef avl_getset[] = {
@@ -101,27 +117,29 @@ static PyObject*
 avl_get_item(PyObject* _self, Py_ssize_t idx)
 {
     struct audio_channel_layout* self = ((struct audio_channel_layout*)_self);
-    PyObject*                    result;
+    PyObject*                    result = NULL;
+
+    Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (idx >= (Py_ssize_t)self->avl_layout->mNumberChannelDescriptions) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
-        return NULL;
+        goto end;
     }
     if (idx < 0) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
-        return NULL;
+        goto end;
     }
 
     if (self->avl_items != NULL) {
         if (PyTuple_GET_ITEM(self->avl_items, idx) != Py_None) {
             Py_INCREF(PyTuple_GET_ITEM(self->avl_items, idx));
-            return PyTuple_GET_ITEM(self->avl_items, idx);
+            result = PyTuple_GET_ITEM(self->avl_items, idx);
         }
     } else {
         Py_ssize_t i;
         self->avl_items = PyTuple_New(self->avl_layout->mNumberChannelDescriptions);
         if (self->avl_items == NULL) {
-            return NULL;
+            goto end;
         }
         for (i = 0; i < (Py_ssize_t)self->avl_layout->mNumberChannelDescriptions; i++) {
             PyTuple_SET_ITEM(self->avl_items, i, Py_None);
@@ -137,6 +155,9 @@ avl_get_item(PyObject* _self, Py_ssize_t idx)
     Py_DECREF(PyTuple_GET_ITEM(self->avl_items, idx));
     PyTuple_SET_ITEM(self->avl_items, idx, result);
     Py_INCREF(result);
+
+end:(void)0;
+    Py_END_CRITICAL_SECTION();
     return result;
 }
 

@@ -40,19 +40,23 @@ objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* arg
         if (PyUnicode_Check(v)) {
             PyObject* bytes = PyUnicode_AsEncodedString(v, NULL, NULL);
             if (!bytes) {
+                Py_CLEAR(v);
                 goto error_cleanup;
             }
             argv[i] = strdup(PyBytes_AsString(bytes));
         } else {
+            Py_CLEAR(v);
             PyErr_SetString(PyExc_TypeError, "NSApplicationMain: need list of strings "
                                              "as argument");
             goto error_cleanup;
         }
 
         if (argv[i] == NULL) {
+            Py_CLEAR(v);
             PyErr_SetString(PyExc_MemoryError, "Out of memory");
             goto error_cleanup;
         }
+        Py_CLEAR(v);
     }
 
     argv[argc] = NULL;

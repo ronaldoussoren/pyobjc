@@ -33,57 +33,64 @@ static PyMemberDef abl_members[] = {
 static Py_ssize_t
 abl_length(PyObject* self)
 {
+    Py_ssize_t result;
+    Py_BEGIN_CRITICAL_SECTION(self);
     if ((((struct audio_buffer_list*)self)->abl_list) == NULL) {
-        return 0;
+        result = 0;
+    } else {
+        result =  ((struct audio_buffer_list*)self)->abl_list->mNumberBuffers;
     }
-    return ((struct audio_buffer_list*)self)->abl_list->mNumberBuffers;
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject*
 abl_get_item(PyObject* _self, Py_ssize_t idx)
 {
     struct audio_buffer_list* self = ((struct audio_buffer_list*)_self);
-    PyObject*                 result;
+    PyObject*                 result = NULL;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     if (self->abl_list == NULL) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
-        return NULL;
+        goto end;
     }
 
     if (idx >= (Py_ssize_t)self->abl_list->mNumberBuffers) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
-        return NULL;
+        goto end;
     }
     if (idx < 0) {
         PyErr_SetString(PyExc_IndexError, "index out of range");
-        return NULL;
+        goto end;
     }
 
     if (self->abl_items != NULL) {
         if (PyTuple_GET_ITEM(self->abl_items, idx) != Py_None) {
             Py_INCREF(PyTuple_GET_ITEM(self->abl_items, idx));
-            return PyTuple_GET_ITEM(self->abl_items, idx);
+            result = PyTuple_GET_ITEM(self->abl_items, idx);
         }
     } else {
         Py_ssize_t i;
         self->abl_items = PyTuple_New(self->abl_list->mNumberBuffers);
         if (self->abl_items == NULL) {
-            return NULL;
-        }
-        for (i = 0; i < (Py_ssize_t)self->abl_list->mNumberBuffers; i++) {
-            PyTuple_SET_ITEM(self->abl_items, i, Py_None);
-            Py_INCREF(Py_None);
+            goto end;
+        } else {
+            for (i = 0; i < (Py_ssize_t)self->abl_list->mNumberBuffers; i++) {
+                PyTuple_SET_ITEM(self->abl_items, i, Py_None);
+                Py_INCREF(Py_None);
+            }
         }
     }
 
     result = ab_create(self->abl_list->mBuffers + idx);
-    if (result == NULL) {
-        return NULL;
+    if (result != NULL) {
+        Py_DECREF(PyTuple_GET_ITEM(self->abl_items, idx));
+        PyTuple_SET_ITEM(self->abl_items, idx, result);
+        Py_INCREF(result);
     }
-
-    Py_DECREF(PyTuple_GET_ITEM(self->abl_items, idx));
-    PyTuple_SET_ITEM(self->abl_items, idx, result);
-    Py_INCREF(result);
+end:(void)0;
+    Py_END_CRITICAL_SECTION();
     return result;
 }
 

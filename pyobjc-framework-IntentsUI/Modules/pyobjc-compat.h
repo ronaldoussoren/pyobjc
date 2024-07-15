@@ -240,6 +240,15 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
+#if PY_VERSION_HEX < 0x030d0000
+#define Py_BEGIN_CRITICAL_SECTION(value) {
+#define Py_END_CRITICAL_SECTION() }
+
+#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) {
+#define Py_END_CRITICAL_SECTION2() }
+#endif
+
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_COMPAT_H */
