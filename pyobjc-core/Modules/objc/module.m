@@ -2183,11 +2183,11 @@ static setup_function _Nullable setup_functions[] = {
         for (; cur->name != NULL; cur++) {                                               \
             PyObject* t = item_creator(cur->value);                                      \
             if (t == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
-                return NULL; /* LCOV_EXCL_LINE */                                        \
+                return -1; /* LCOV_EXCL_LINE */                                        \
             }                                                                            \
             if (PyModule_AddObject((module), cur->name, t)) { /* LCOV_BR_EXCL_LINE */    \
                 Py_DECREF(t);                                 /* LCOV_EXCL_LINE */       \
-                return NULL;                                  /* LCOV_EXCL_LINE */       \
+                return -1;                                  /* LCOV_EXCL_LINE */       \
             }                                                                            \
         }                                                                                \
     } while (0)
@@ -2198,31 +2198,23 @@ bytes_from_char(char ch)
     return PyBytes_FromStringAndSize(&ch, 1);
 }
 
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
-PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void)
+static int mod_exec_module(PyObject* m)
 {
     _Static_assert(sizeof(BOOL) == sizeof(bool), "BOOL and bool should have same size");
-    PyObject* m;
 
     if (PyObjC_Initialized) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError,
                         "Reload of objc._objc detected, this is not supported");
-        return NULL;
+        return -1;
         // LCOV_EXCL_STOP
     }
 
     calc_current_version();
 
-    m = PyModule_Create(&mod_module);
-    if (m == 0) {    // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE // LCOV_EXCL_LINE
-    }
-
     if (PyObjC_InitSuperCallRegistry() == -1) { // LCOV_BR_EXCL_LINE
-        return NULL;                            // LCOV_EXCL_LINE
+        return -1;                            // LCOV_EXCL_LINE
     }
 
     /* Create a temporary release pool for handling values autoreleased during
@@ -2235,63 +2227,63 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
 
     PyObjCClass_DefaultModule = PyUnicode_FromString("objc");
     if (PyObjCClass_DefaultModule == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;                         // LCOV_EXCL_LINE
+        return -1;                         // LCOV_EXCL_LINE
     }
 
     PyObjC_TypeStr2CFTypeID = PyDict_New();
     if (PyObjC_TypeStr2CFTypeID == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;                       // LCOV_EXCL_LINE
+        return -1;                       // LCOV_EXCL_LINE
     }
 
     /* XXX: Move these to setup functions as well */
     if (PyType_Ready(&PyObjCMetaClass_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                               // LCOV_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
     }
     if (PyType_Ready(&PyObjCClass_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                           // LCOV_EXCL_LINE
+        return -1;                           // LCOV_EXCL_LINE
     }
     if (PyType_Ready((PyTypeObject*)&PyObjCObject_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                           // LCOV_EXCL_LINE
+        return -1;                                           // LCOV_EXCL_LINE
     }
 
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                          // LCOV_EXCL_LINE
+        return -1;                          // LCOV_EXCL_LINE
     }
 
     for (setup_function* cur = setup_functions; *cur != NULL; cur++) {
         if ((*cur)(m) < 0) { // LCOV_BR_EXCL_LINE
-            return NULL;     // LCOV_EXCL_LINE
+            return -1;     // LCOV_EXCL_LINE
         }
         if (PyErr_Occurred()) {
-            return NULL;
+            return -1;
         }
     }
 
     /* XXX: Move these to setup functions as well */
     if ( // LCOV_BR_EXCL_LINE
         PyModule_AddObject(m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
-        return NULL; // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&PyObjCMetaClass_Type);
 
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
             m, "objc_class", (PyObject*)&PyObjCClass_Type)
         < 0) {
-        return NULL; // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&PyObjCClass_Type);
 
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
             m, "objc_object", (PyObject*)&PyObjCObject_Type)
         < 0) {
-        return NULL; // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&PyObjCObject_Type);
 
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
             m, "_structwrapper", (PyObject*)&StructBase_Type)
         < 0) {
-        return NULL; // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&StructBase_Type);
 
@@ -2328,7 +2320,54 @@ PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void
 #pragma clang diagnostic pop
 
     PyObjC_Initialized = 1;
-    return m;
+    return 0;
 }
+
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* This extension does not use the CPython API other than initializing
+         * the module, hence is safe with subinterpreters and per-interpreter
+         * GILs
+         */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "_objc",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit__objc(void);
+
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit__objc(void)
+{
+    return PyModuleDef_Init(&mod_module);
+}
+
 
 NS_ASSUME_NONNULL_END
