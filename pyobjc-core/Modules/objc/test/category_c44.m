@@ -9,65 +9,93 @@
 
 #import <Foundation/Foundation.h>
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP44 : NSObject {
-}
+@interface OC_Category_GP44 : NSObject {}
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P44 : OC_Category_GP44 {
-}
+@interface OC_Category_P44 : OC_Category_GP44 {}
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C44 : OC_Category_P44 {
-}
+@interface OC_Category_C44 : OC_Category_P44 {}
 @end
 
-@implementation
-OC_Category_C44 (Cat)
-- (id)gpMethod1
-{
+
+@implementation OC_Category_C44(Cat)
+-(id)gpMethod1 {
     return @"C44 - gpMethod1 - C44(Cat)";
 }
-- (id)gpMethod5
-{
+-(id)gpMethod5 {
     return @"C44 - gpMethod5 - C44(Cat)";
 }
-- (id)pMethod1
-{
+-(id)pMethod1 {
     return @"C44 - pMethod1 - C44(Cat)";
 }
-- (id)pMethod3
-{
+-(id)pMethod3 {
     return @"C44 - pMethod3 - C44(Cat)";
 }
-- (id)method1
-{
+-(id)method1 {
     return @"C44 - method1 - C44(Cat)";
 }
-- (id)method2
-{
+-(id)method2 {
     return @"C44 - method2 - C44(Cat)";
 }
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
+static int mod_exec_module(PyObject* m)
+{
+    if (PyObjC_ImportAPI(m) < 0) {
+        return -1;
+    }
+
+
+    return 0;
+}
+
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* This extension does not use the CPython API other than initializing
+         * the module, hence is safe with subinterpreters and per-interpreter
+         * GILs
+         */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_NOT_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "category_c44", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "category_c44",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
 
 PyObject* PyInit_category_c44(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit_category_c44(void)
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_category_c44(void)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
-    PyObjC_ImportAPI(m);
-
-    return m;
+    return PyModuleDef_Init(&mod_module);
 }

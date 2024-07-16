@@ -175,9 +175,13 @@ typedef NSObject<NSObject> ObjectClass;
 @end
 
 @implementation OC_TestClass1
+#if __has_feature(c_atomic)
+static _Atomic size_t             g_idx          = 0;
+#else
+static size_t             g_idx          = 0;
+#endif
 
 #define ARRAYSIZE(a) (sizeof(a) / sizeof(a[0]))
-static size_t             g_idx          = 0;
 static unsigned long long g_ulonglongs[] = {0, 42, (1LL << 63)};
 static unsigned long      g_ulongs[]     = {0, 42, (1 << 30)};
 static long long          g_longlongs[]  = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
@@ -1944,171 +1948,202 @@ static PyMethodDef mod_methods[] = {
 
     {0, 0, 0, 0}};
 
-/* Python glue */
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "testbndl", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
-
-PyObject* PyInit_testbndl(void);
-
-PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl(void)
+static int mod_exec_module(PyObject* m)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
     if (PyObjC_ImportAPI(m) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
                            PyObjC_IdToPython([PyObjC_TestClass3 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
                            PyObjC_IdToPython([PyObjC_TestClass4 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
                            PyObjC_IdToPython([PyObjCTest_KVBaseClass class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
                            PyObjC_IdToPython([PyObjCTest_KVPathClass class]))
         < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
                            PyObjC_IdToPython([PyObjCTest_KeyValueObserver class]))
         < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_STOREDVALUEFORKEY", PyLong_FromLong(2)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_VALUESFORKEYS", PyLong_FromLong(3)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_SETVALUE_FORKEY", PyLong_FromLong(4)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "CHAR_MAX", PyLong_FromLong(CHAR_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "CHAR_MIN", PyLong_FromLong(CHAR_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "USHRT_MAX", PyLong_FromLong(USHRT_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "SHRT_MAX", PyLong_FromLong(SHRT_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "SHRT_MIN", PyLong_FromLong(SHRT_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "INT_MAX", PyLong_FromLong(INT_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "INT_MIN", PyLong_FromLong(INT_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "LONG_MAX", PyLong_FromLong(LONG_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "LONG_MIN", PyLong_FromLong(LONG_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "DBL_MAX", PyFloat_FromDouble(DBL_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DBL_MIN", PyFloat_FromDouble(DBL_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "FLT_MAX", PyFloat_FromDouble(FLT_MAX)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "FLT_MIN", PyFloat_FromDouble(FLT_MIN)) < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON)) < 0) {
-        return NULL;
+        return -1;
     }
+    return 0;
+}
 
-    return m;
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* This extension does not use the CPython API other than initializing
+         * the module, hence is safe with subinterpreters and per-interpreter
+         * GILs
+         */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_NOT_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "testbndl",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit_testbndl(void);
+
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_testbndl(void)
+{
+    return PyModuleDef_Init(&mod_module);
 }

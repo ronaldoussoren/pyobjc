@@ -19,6 +19,7 @@ from . import categories_base as mod
 
 class TestCategories(TestCase):
     def test_base_methods_grandparent_parent_child(self):
+
         with self.subTest("parent"):
             o = mod.OC_Category_P0.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP0 - method1 - GP")
@@ -49,6 +50,7 @@ class TestCategories(TestCase):
             self.assertEqual(o.method1(), "C0 - method1 - C")
 
     def test_base_methods_grandparent_child_parent(self):
+
         with self.subTest("child"):
             o = mod.OC_Category_C1.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP1 - method1 - GP")
@@ -79,6 +81,7 @@ class TestCategories(TestCase):
             self.assertEqual(o.gpMethod4(), "GP1 - method4 - GP")
 
     def test_base_methods_parent_grandparent_child(self):
+
         with self.subTest("parent"):
             o = mod.OC_Category_P2.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP2 - method1 - GP")
@@ -109,6 +112,7 @@ class TestCategories(TestCase):
             self.assertEqual(o.method1(), "C2 - method1 - C")
 
     def test_base_methods_parent_child_grandparent(self):
+
         with self.subTest("parent"):
             o = mod.OC_Category_P3.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP3 - method1 - GP")

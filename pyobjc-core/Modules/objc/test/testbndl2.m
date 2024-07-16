@@ -4074,7 +4074,11 @@ struct TestStruct5 {
 @end // interface PyObjC_TestClass2
 
 /* Some global variables */
+#if __has_feature(c_atomic)
+static _Atomic int g_idx = 0;
+#else
 static int g_idx = 0;
+#endif
 #ifdef HAVE_BOOL
 static bool g_bool_values[] = {YES, NO};
 
@@ -23224,41 +23228,29 @@ arg2id(const char* argtype, void* argptr)
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "testbndl2", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
-
-PyObject* PyInit_testbndl2(void);
-
-PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl2(void)
+static int mod_exec_module(PyObject* m)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
     if (PyObjC_ImportAPI(m) < 0) {
-        return NULL;
+        return -1;
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClass1",
                            PyObjC_IdToPython([PyObjC_TestClass1 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass2",
                            PyObjC_IdToPython([PyObjC_TestClass2 class]))
         < 0) {
-        return NULL;
+        return -1;
     }
 #ifdef HAVE_BOOL
     if (PyModule_AddIntConstant(m, "HAVE_BOOL", 1) < 0) {
-        return NULL;
+        return -1;
     }
 #else
     if (PyModule_AddIntConstant(m, "HAVE_BOOL", 0) < 0) {
-        return NULL;
+        return -1;
     }
 #endif
 
@@ -23269,6 +23261,51 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl2(void)
     g_id_values[0] = NSPriorDayDesignations;
 
 #pragma clang diagnostic pop
+    return 0;
+}
 
-    return m;
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* This extension does not use the CPython API other than initializing
+         * the module, hence is safe with subinterpreters and per-interpreter
+         * GILs
+         */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_NOT_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
+static struct PyModuleDef mod_module = {
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "testbndl2",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
+
+PyObject* PyInit_testbndl2(void);
+
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_testbndl2(void)
+{
+    return PyModuleDef_Init(&mod_module);
 }
