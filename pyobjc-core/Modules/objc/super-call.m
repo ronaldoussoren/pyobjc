@@ -258,24 +258,36 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
      *   are preferred over earlier items (those are metadata that
      *   was added later).
      */
-    for (i = 0; i < PyList_GET_SIZE(lst); i++) {
-        PyObject* entry   = PyList_GET_ITEM(lst, i);
+    Py_ssize_t len = PyList_Size(lst);
+    for (i = 0; i < len; i++) {
+        PyObject* entry   = PyList_GetItemRef(lst, i);
+        if (entry == NULL) {
+            goto error;
+        }
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
-        if (pyclass == NULL) // LCOV_BR_EXCL_LINE
+        if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(entry); // LCOV_EXCL_LINE
             continue;        // LCOV_EXCL_LINE
+        }
         if (pyclass != Py_None
             && !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
+            Py_DECREF(entry);
             continue;
         }
 
         if (!special_class) {
             /* No match yet, use */
+            Py_CLEAR(special_class);
+            Py_CLEAR(result);
             special_class = pyclass;
             result        = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(result);
+            Py_DECREF(entry);
 
         } else if (pyclass == Py_None) {
             /* Already have a match, Py_None is less specific */
+            Py_DECREF(entry);
             continue;
 
         } else if (PyType_IsSubtype((PyTypeObject*)special_class,
@@ -285,15 +297,22 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
              * a more specific match or a similar match later in the
              * list.
              */
+            Py_CLEAR(result);
+            Py_CLEAR(special_class);
+            Py_INCREF(pyclass);
             special_class = pyclass;
             result        = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(result);
+            Py_DECREF(entry);
         }
     }
     Py_XDECREF(search_class);
     if (!result)
         goto error;
 
-    return PyCapsule_GetPointer(result, "objc.__memblock__");
+     struct registry* rv = PyCapsule_GetPointer(result, "objc.__memblock__");
+     Py_DECREF(result);
+     return rv;
 
 error:
     return NULL;

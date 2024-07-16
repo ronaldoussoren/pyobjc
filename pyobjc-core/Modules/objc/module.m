@@ -792,7 +792,7 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
         return Py_None;
     }
 
-    protocols = PyList_New(protCount);
+    protocols = PyList_New(0);
 
     if (protocols == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;         // LCOV_EXCL_LINE
@@ -808,7 +808,14 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
             // LCOV_EXCL_STOP
         }
 
-        PyList_SET_ITEM(protocols, i, p);
+        int r = PyList_Append(protocols, p);
+        if (r == -1) { // LCOV_BR_EXCL_START
+            // LCOV_EXCL_START
+            Py_DECREF(protocols);
+            free(protlist);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
     }
 
     free(protlist);

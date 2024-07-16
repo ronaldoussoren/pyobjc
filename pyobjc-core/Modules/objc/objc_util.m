@@ -1396,18 +1396,23 @@ PyObject* _Nullable PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
 
     PyObjC_Assert(PyList_Check(values), NULL);
 
-    len = PyList_GET_SIZE(values);
+    len = PyList_Size(values);
     for (i = 0; i < len; i++) {
-        PyObject* v = PyList_GET_ITEM(values, i);
+        PyObject* v = PyList_GetItemRef(values, i);
+        if (v == NULL) {
+            return NULL;
+        }
 
-        if (!PyObjCSelector_Check(v))
+        if (!PyObjCSelector_Check(v)) {
+            Py_DECREF(v);
             continue;
+        }
 
         if (PyObjCSelector_GetSelector(v) == selector) {
             Py_DECREF(values);
-            Py_INCREF(v);
             return v;
         }
+        Py_DECREF(v);
     }
 
     Py_DECREF(values);

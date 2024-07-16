@@ -46,19 +46,26 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
      * Check if there is a registration for *class_name* in
      * *sublist*, if so replace that registration.
      */
-    for (Py_ssize_t i = 0; i < PyList_GET_SIZE(sublist); i++) {
-        PyObject* item = PyList_GET_ITEM(sublist, i);
+    Py_ssize_t len = PyList_Size(sublist);
+    for (Py_ssize_t i = 0; i < len; i++) {
+        PyObject* item = PyList_GetItemRef(sublist, i);
+        if (item == NULL) {
+            return -1;
+        }
 
         PyObjC_Assert(PyTuple_CheckExact(item), -1);
         PyObjC_Assert(PyTuple_GET_SIZE(item) == 2, -1);
 
         int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
-        if (r == -1)   // LCOV_BR_EXCL_LINE
+        if (r == -1) {  // LCOV_BR_EXCL_LINE
+            Py_DECREF(item); // LCOV_EXCL_LINE
             return -1; // LCOV_EXCL_LINE
+        }
         if (r) {
             Py_DECREF(PyTuple_GET_ITEM(item, 1));
             PyTuple_SET_ITEM(item, 1, value);
             Py_INCREF(value);
+            Py_DECREF(item);
             return 0;
         }
     }
@@ -96,7 +103,7 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
     for (i = 0; i < len; i++) {
         Class cur_class;
 
-        cur = PyList_GET_ITEM(sublist, i);
+        cur = PyList_GetItemRef(sublist, i);
         PyObjC_Assert(cur != NULL, NULL);
         PyObjC_Assert(PyTuple_CheckExact(cur), NULL);
 
@@ -106,17 +113,20 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 
         if (cur_class == nil) {
+            Py_DECREF(cur);
             continue;
         }
 
         if (!PyObjC_class_isSubclassOf(cls, cur_class)
             && !PyObjC_class_isSubclassOf(cls,
                                           (Class _Nonnull)object_getClass(cur_class))) {
+            Py_DECREF(cur);
             continue;
         }
 
         if (found_class != NULL && found_class != cur_class) {
             if (PyObjC_class_isSubclassOf(found_class, cur_class)) {
+                Py_DECREF(cur);
                 continue;
             }
         }
@@ -125,6 +135,7 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         Py_INCREF(PyTuple_GET_ITEM(cur, 1));
         Py_XDECREF(found_value);
         found_value = PyTuple_GET_ITEM(cur, 1);
+        Py_DECREF(cur);
     }
 
     return found_value;
@@ -155,8 +166,8 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
         }
 #endif
 
-        len    = PyList_GET_SIZE(sublist);
-        sl_new = PyList_New(len);
+        len    = PyList_Size(sublist);
+        sl_new = PyList_New(0);
         if (sl_new == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(result);
@@ -176,9 +187,14 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             PyObject* item;
             PyObject* new_item;
 
-            item     = PyList_GET_ITEM(sublist, i);
+            item     = PyList_GetItemRef(sublist, i);
+            if (item == NULL) {
+                Py_DECREF(result);
+                return NULL;
+            }
             new_item = Py_BuildValue("(ON)", PyTuple_GET_ITEM(item, 0),
                                      value_transform(PyTuple_GET_ITEM(item, 1)));
+            Py_DECREF(item);
             if (new_item == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(result);
@@ -186,7 +202,12 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                 // LCOV_EXCL_STOP
             }
 
-            PyList_SET_ITEM(sl_new, i, new_item);
+            if (PyList_Append(sl_new, new_item) < 0) {
+                Py_DECREF(new_item);
+                Py_DECREF(result);
+                return NULL;
+            }
+            Py_DECREF(new_item);
         }
     }
 

@@ -552,7 +552,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(protocols);
 
         protocols_len = PySequence_Fast_GET_SIZE(seq);
-        protocols     = PyList_New(protocols_len);
+        protocols     = PyList_New(0);
         if (protocols == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
@@ -562,8 +562,13 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
 
         for (i = 0; i < protocols_len; i++) {
-            PyList_SET_ITEM(protocols, i, PySequence_Fast_GET_ITEM(seq, i));
-            Py_INCREF(PySequence_Fast_GET_ITEM(seq, i));
+            if (PyList_Append(protocols,  PySequence_Fast_GET_ITEM(seq, i)) < 0) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(hiddenSelectors);
+                Py_DECREF(hiddenClassSelectors);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
         }
 
         Py_DECREF(seq);
@@ -716,8 +721,17 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             }
         }
 
-        Py_DECREF(PyList_GET_ITEM(real_bases, 0));
-        PyList_SET_ITEM(real_bases, 0, py_super_class);
+        if (PyList_SetItem(real_bases, 0, py_super_class) < 0) {
+            PyObjC_Assert(objc_class != Nil, NULL);
+            (void)PyObjCClass_UnbuildClass(objc_class);
+            Py_XDECREF(orig_slots);
+            Py_DECREF(protocols);
+            Py_DECREF(real_bases);
+            Py_DECREF(metadict);
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            return NULL;
+        }
     }
 
     v = PyList_AsTuple(real_bases);
@@ -1039,15 +1053,19 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     /* Merge the "difference" to pick up new selectors */
-    len = PyList_GET_SIZE(keys);
+    len = PyList_Size(keys);
     for (i = 0; i < len; i++) {
-        k = PyList_GET_ITEM(keys, i);
+        k = PyList_GetItemRef(keys, i);
+        if (k == NULL) {
+            return NULL;
+        }
         if (PyDict_GetItem(old_dict, k) == NULL) {
             v = PyDict_GetItem(dict, k);
             if (v != NULL && PyObject_SetAttr(res, k, v) == -1) {
                 PyErr_Clear();
             }
         }
+        Py_DECREF(k);
     }
 
     Py_DECREF(keys);

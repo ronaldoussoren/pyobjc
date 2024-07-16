@@ -1550,7 +1550,7 @@ class TestVariableLengthValue(TestCase):
         ):
             v["hello":"world"] = 1
 
-        with self.assertRaisesRegex(TypeError, "New value must be a sequence"):
+        with self.assertRaisesRegex(TypeError, "object is not iterable"):
             v[1:3] = 42
 
         self.assertEqual(v.as_tuple(5), (1, 3, 5, 7, 11))

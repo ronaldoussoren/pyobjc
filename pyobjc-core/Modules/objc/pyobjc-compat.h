@@ -262,6 +262,13 @@ static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonn
         return 1;
     }
 }
+
+static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
+{
+    PyObject* result = PyList_GetItem(l, i);
+    Py_XINCREF(result);
+    return result;
+}
 #endif
 
 

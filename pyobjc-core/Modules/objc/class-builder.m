@@ -371,8 +371,12 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
     for (i = 0; i < protocol_count; i++) {
         PyObject* wrapped_protocol;
-        wrapped_protocol = PyList_GET_ITEM(protocols, i);
+        wrapped_protocol = PyList_GetItemRef(protocols, i);
+        if (wrapped_protocol == NULL) {
+            goto error_cleanup;
+        }
         if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
+            Py_DECREF(wrapped_protocol);
             continue;
         }
 
@@ -381,8 +385,10 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (!class_addProtocol( // LCOV_BR_EXCL_LINE
                 new_class,
                 (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            Py_DECREF(wrapped_protocol);
             goto error_cleanup; // LCOV_EXCL_LINE
         }
+        Py_DECREF(wrapped_protocol);
     }
 
     /* add instance variables */
