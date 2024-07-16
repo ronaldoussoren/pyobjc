@@ -171,6 +171,7 @@ static PyObject* _Nullable varlist__getslice__(PyObject* _self, Py_ssize_t start
 static int
 varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* newval)
 {
+    int result;
     PyObjCVarList* self = (PyObjCVarList*)_self;
     Py_ssize_t     idx;
     PyObject*      seq;
@@ -187,29 +188,33 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
         stop = start;
     }
 
-    seq = PySequence_Fast(newval, "New value must be a sequence");
+    seq = PySequence_Tuple(newval);
     if (seq == NULL) {
         return -1;
     }
 
-    if (PySequence_Fast_GET_SIZE(seq) != stop - start) {
+    if (PyTuple_GET_SIZE(seq) != stop - start) {
         PyErr_SetString(PyExc_ValueError,
                         "objc.varlist slice assignment doesn't support resizing");
         Py_DECREF(seq);
         return -1;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = 0;
     for (idx = start; idx < stop; idx++) {
-        PyObject* v = PySequence_Fast_GET_ITEM(seq, idx - start);
+        PyObject* v = PyTuple_GET_ITEM(seq, idx - start);
         int       r = depythonify_c_value(
             self->typestr, v, ((unsigned char*)self->array) + (idx * self->itemsize));
         if (r == -1) {
             Py_DECREF(seq);
-            return -1;
+            result = -1;
+            break;
         }
     }
+    Py_END_CRITICAL_SECTION();
     Py_DECREF(seq);
-    return 0;
+    return result;
 }
 
 static int
@@ -221,8 +226,12 @@ varlist__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* _Nullable value)
         return -1;
     }
 
-    return depythonify_c_value(self->typestr, value,
+    int result;
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = depythonify_c_value(self->typestr, value,
                                ((unsigned char*)self->array) + (idx * self->itemsize));
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static Py_ssize_t
