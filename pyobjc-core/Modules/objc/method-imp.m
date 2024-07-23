@@ -320,10 +320,10 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     }
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
-        r = PyDict_SetItemString(result, "classmethod", Py_True);
+        r = PyDict_SetItem(result, PyObjCNM_classmethod, Py_True);
 
     } else {
-        r = PyDict_SetItemString(result, "classmethod", Py_False);
+        r = PyDict_SetItem(result, PyObjCNM_classmethod, Py_False);
     }
 
     if (r == -1) {         // LCOV_BR_EXCL_LINE
@@ -332,7 +332,7 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     }
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-        r = PyDict_SetItemString(result, "return_unitialized_object", Py_True);
+        r = PyDict_SetItem(result, PyObjCNM_return_unitialized_object, Py_True);
         if (r == -1) {         // LCOV_BR_EXCL_LINE
             Py_DECREF(result); // LCOV_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE

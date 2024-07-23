@@ -96,8 +96,8 @@ CFLAGS = [
     # "-O0",
     "-g",
     # "-O0",
-    "-O3",
-    "-flto=thin",
+    # "-O3",
+    # "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
     "-UNDEBUG",
 ]
@@ -118,8 +118,8 @@ OBJC_LDFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto=thin",
+    # "-O3",
+    # "-flto=thin",
     # "-fexceptions",
 ]
 

@@ -47,27 +47,34 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
 
     PyObject*     cfid;
     PyTypeObject* tp;
+    int r;
 
     cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
     if (cfid == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
     }
-    tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
+    r = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
     Py_DECREF(cfid);
-    if (tp == NULL) {
+    switch (r) {
+    case -1:
         return NULL;
+
+    case 0:
+        return NULL;
+
+    default:
+        rval = tp->tp_alloc(tp, 0);
+        Py_DECREF(tp);
+        if (rval == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
+        }
+
+        ((PyObjCObject*)rval)->objc_object = value;
+        ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+        CFRetain(value);
+
+        return rval;
     }
-
-    rval = tp->tp_alloc(tp, 0);
-    if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
-    }
-
-    ((PyObjCObject*)rval)->objc_object = value;
-    ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
-    CFRetain(value);
-
-    return rval;
 }
 
 #ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
@@ -108,6 +115,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     PyObject*          result;
     PyObject*          bases;
     PyObjCClassObject* info;
+    int r;
 
     if (encoding[0] != _C_ID) {
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) { // LCOV_BR_EXCL_LINE
@@ -138,22 +146,20 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         return NULL;  // LCOV_EXCL_LINE
     }
 
-    result = PyDict_GetItemWithError(gTypeid2class, cf);
-    if (result == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
+    r = PyDict_GetItemRef(gTypeid2class, cf, &result);
+    switch (r) {
+    case -1:
         Py_DECREF(cf);
         return NULL;
-        // LCOV_EXCL_STOP
-    }
-    if (result != NULL) {
+    case 1:
         /* This type is the same as an already registered type,
          * return that type
          */
         Py_DECREF(cf);
-        Py_INCREF(result);
         return result;
-    }
 
+    }
+    /* case 0: */
     dict = PyDict_New();
     if (dict == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -163,8 +169,8 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     }
 
     /* XXX: This leaks the new tuple */
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            dict, "__slots__", PyTuple_New(0))
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            dict, PyObjCNM___slots__, PyTuple_New(0))
         == -1) {
         // LCOV_EXCL_START
         Py_DECREF(dict);
@@ -322,24 +328,33 @@ PyObjCCFType_Setup(PyObject* module __attribute__((__unused__)))
  */
 PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* datum)
 {
-    PyObject* v = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
+    PyObject* v;
+    PyObject* typestr_obj = PyUnicode_FromString(typestr);
+    if (typestr_obj == NULL) {
+        return NULL;
+    }
+    int r = PyDict_GetItemRef(PyObjC_TypeStr2CFTypeID, typestr_obj, &v);
+    Py_DECREF(typestr_obj);
+
     CFTypeID typeid;
 
-    if (v == NULL) {
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
-        }
+    switch (r) {
+    case -1:
+        return NULL;
+    case 0:
         PyErr_Format(PyExc_ValueError,
                      "Don't know CF type for typestr '%s', cannot create special wrapper",
                      typestr);
         return NULL;
-    }
+    default:
+        if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(v);
+            return NULL;                                              // LCOV_EXCL_LINE
+        }
+        Py_DECREF(v);
 
-    if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL;                                              // LCOV_EXCL_LINE
+        return PyObjCCF_NewSpecialFromTypeID(typeid, datum);
     }
-
-    return PyObjCCF_NewSpecialFromTypeID(typeid, datum);
 }
 
 /*
@@ -352,6 +367,7 @@ PyObject*
 PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
+    int r;
 
     PyObjC_Assert(gTypeid2class != NULL, NULL);
 
@@ -359,26 +375,27 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     PyTypeObject* tp;
 
     cfid = PyLong_FromLong(typeid);
-    tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
+    r = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
     Py_DECREF(cfid);
-    if (tp == NULL) {
-        if (!PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return (PyObject*)PyObjCObject_New(
-                datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+    switch (r) {
+    case -1:
+        return NULL;
+    case 0:
+        return (PyObject*)PyObjCObject_New(
+            datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+    default:
+        rval = tp->tp_alloc(tp, 0);
+        Py_DECREF(tp);
+        if (rval == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
         }
-        return NULL; // LCOV_EXCL_LINE
-    }
 
-    rval = tp->tp_alloc(tp, 0);
-    if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+        ((PyObjCObject*)rval)->objc_object = datum;
+        ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
+                                       | PyObjCObject_kSHOULD_NOT_RELEASE
+                                       | PyObjCObject_kMAGIC_COOKIE;
+        return rval;
     }
-
-    ((PyObjCObject*)rval)->objc_object = datum;
-    ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
-                                   | PyObjCObject_kSHOULD_NOT_RELEASE
-                                   | PyObjCObject_kMAGIC_COOKIE;
-    return rval;
 }
 
 NS_ASSUME_NONNULL_END

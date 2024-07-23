@@ -203,22 +203,28 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         }
 
         if (likely(PyDict_CheckExact(value))) {
-            v = PyDict_GetItemWithError(value, k);
-            if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            int r = PyDict_GetItemRef(value, k, &v);
+            switch (r) {
+            case -1:
                 PyObjC_GIL_FORWARD_EXC();        // LCOV_EXCL_LINE
+            case 0:
+                PyObjC_GIL_RETURN(nil);
+            case 1:
+                break;
             }
-            Py_XINCREF(v);
 
         } else {
             v = PyObject_GetItem(value, k);
+            if (v == nil) {
+                if (PyErr_ExceptionMatches(PyExc_KeyError)) {
+                    PyErr_Clear();
+                    PyObjC_GIL_RETURN(nil);
+                }
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
 
         Py_DECREF(k);
-
-        if (unlikely(v == NULL)) {
-            PyErr_Clear();
-            PyObjC_GIL_RETURN(nil);
-        }
 
         if (v == Py_None) {
             result = [NSNull null]; /* XXX: NSNull_null */

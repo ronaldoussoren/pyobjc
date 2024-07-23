@@ -40,6 +40,7 @@ static PyObject* registry = NULL;
 static PyObject* _Nullable _intern_bytes(PyObject* key)
 {
     PyObject* value;
+    int r;
     if (key == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
@@ -53,14 +54,13 @@ static PyObject* _Nullable _intern_bytes(PyObject* key)
             // LCOV_EXCL_STOP
         }
     }
-    value = PyDict_GetItemWithError(registry, key);
-    if (value == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
+    r = PyDict_GetItemRef(registry, key, &value);
+    switch (r) {
+    case -1:
         Py_DECREF(key);
         return NULL;
-        // LCOV_EXCL_STOP
-    } else if (value == NULL) {
-        int r = PyDict_SetItem(registry, key, key);
+    case 0:
+        r = PyDict_SetItem(registry, key, key);
         if (r == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(key);
@@ -69,9 +69,8 @@ static PyObject* _Nullable _intern_bytes(PyObject* key)
         } else {
             return key;
         }
-    } else {
+    default:
         Py_DECREF(key);
-        Py_INCREF(value);
         return value;
     }
 }

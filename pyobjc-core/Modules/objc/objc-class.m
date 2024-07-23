@@ -399,7 +399,7 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
     if (kwds != NULL) {
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
 
-            PyObject* v = PyDict_GetItemStringWithError(kwds, "protocols");
+            PyObject* v = PyDict_GetItemString(kwds, "protocols");
             if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return -1;                       // LCOV_EXCL_LINE
             }

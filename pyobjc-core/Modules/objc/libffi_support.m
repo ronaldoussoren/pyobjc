@@ -44,6 +44,23 @@ static const char gCharEncoding[] = {_C_CHR, 0};
 #error "Need FFI_CLOSURES!"
 #endif
 
+
+static PyObject* array_types = NULL;
+static PyObject* struct_types = NULL;
+
+int PyObjCFFI_Setup(PyObject* m __attribute__((__unused__)))
+{
+    array_types = PyDict_New();
+    if (array_types == NULL) {// LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
+    }
+    struct_types = PyDict_New();
+    if (struct_types == NULL) {
+        return -1;
+    }
+    return 0;
+}
+
 #ifdef PyObjC_DEBUG
 /*
  * describe_ffitype and describe_cif are useful during debugging,
@@ -186,7 +203,6 @@ cleanup_ffitype_capsule(PyObject* ptr)
 
 static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 {
-    static PyObject* array_types = NULL;
 
     PyObject*   v;
     ffi_type*   type;
@@ -194,18 +210,24 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     Py_ssize_t  i;
     const char* key = argtype;
 
-    if (array_types == NULL) {
-        array_types = PyDict_New();
-        if (array_types == NULL) // LCOV_BR_EXCL_LINE
-            return NULL;         // LCOV_EXCL_LINE
-    }
+    PyObjC_Assert(array_types != NULL, NULL);
 
-    v = PyDict_GetItemStringWithError(array_types, (char*)argtype);
-    if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                     // LCOV_EXCL_LINE
+    PyObject* typestr = PyUnicode_FromString(argtype);
+    if (typestr == NULL) {
+        return NULL;
     }
-    if (v != NULL) {
-        return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+    switch (PyDict_GetItemRef(array_types, typestr, &v)) {
+    case -1:
+        Py_DECREF(typestr);
+        return NULL;
+    case 1:
+        /* XXX: This effectively returns a borrowed reference */
+        Py_DECREF(typestr);
+        ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+        Py_DECREF(v);
+        return result;
+    default:
+        Py_DECREF(typestr);
     }
 
     /* We don't have a type description yet, dynamically
@@ -276,30 +298,27 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 
 static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 {
-    /*
-     * XXX: Move to a central place.
-     */
-    static PyObject* struct_types = NULL;
-
     PyObject*   v;
     ffi_type*   type;
     Py_ssize_t  field_count;
     const char* curtype;
 
-    if (struct_types == NULL) { /* LCOV_BR_EXCL_LINE */
-        // LCOV_EXCL_START
-        struct_types = PyDict_New();
-        if (struct_types == NULL)
-            return NULL;
-        // LCOV_EXCL_STOP
+    PyObject* typestr = PyUnicode_FromString(argtype);
+    if (typestr == NULL) {
+        return NULL;
     }
-
-    v = PyDict_GetItemStringWithError(struct_types, (char*)argtype);
-    if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+    switch (PyDict_GetItemRef(struct_types, typestr, &v)) {
+    case -1:
+        Py_DECREF(typestr);
         return NULL;                     // LCOV_EXCL_LINE
-    }
-    if (v != NULL) {
-        return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+    case 1:
+        /* XXX: This effectively returns a borrowed reference */
+        Py_DECREF(typestr);
+        ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+        Py_DECREF(v);
+        return result;
+    default:
+        Py_DECREF(typestr);
     }
 
     /* We don't have a type description yet, dynamically

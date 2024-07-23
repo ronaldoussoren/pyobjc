@@ -121,7 +121,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         // LCOV_EXCL_STOP
     }
 
-    lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
+    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
     if (lst == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(entry);
@@ -242,7 +242,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     if (search_class == NULL) // LCOV_BR_EXCL_LINE
         goto error;           // LCOV_EXCL_LINE
 
-    lst = PyDict_GetItemStringWithError(special_registry, sel_getName(sel));
+    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
     if (lst == NULL) {
         goto error;
     }

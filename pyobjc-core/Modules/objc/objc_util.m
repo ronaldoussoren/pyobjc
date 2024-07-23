@@ -19,6 +19,7 @@ PyObject* PyObjCExc_ObjCPointerWarning;
 PyObject* PyObjCExc_ObjCSuperWarning;
 
 PyObject* PyObjCNM_insert;
+PyObject* PyObjCNM__pyobjc_info_;
 PyObject* PyObjCNM_append;
 PyObject* PyObjCNM_extend;
 PyObject* PyObjCNM_timestamp;
@@ -35,6 +36,45 @@ PyObject* PyObjCNM_date_format_string;
 PyObject* PyObjCNM_objc_memview_object;
 PyObject* PyObjCNM_objc_NULL;
 PyObject* PyObjCNM___new__;
+PyObject* PyObjCNM_reason;
+PyObject* PyObjCNM_name;
+PyObject* PyObjCNM_userInfo;
+PyObject* PyObjCNM__template;
+PyObject* PyObjCNM_already_cfretained;
+PyObject* PyObjCNM_already_retained;
+PyObject* PyObjCNM_arguments;
+PyObject* PyObjCNM_c_array_delimited_by_null;
+PyObject* PyObjCNM_c_array_length_in_arg;
+PyObject* PyObjCNM_c_array_length_in_result;
+PyObject* PyObjCNM_c_array_of_fixed_length;
+PyObject* PyObjCNM_c_array_of_variable_length;
+PyObject* PyObjCNM_callable;
+PyObject* PyObjCNM_callable_retained;
+PyObject* PyObjCNM_deprecated;
+PyObject* PyObjCNM_deref_result_pointer;
+PyObject* PyObjCNM_free_result;
+PyObject* PyObjCNM_full_signature;
+PyObject* PyObjCNM_null_accepted;
+PyObject* PyObjCNM_printf_format;
+PyObject* PyObjCNM_retval;
+PyObject* PyObjCNM_sel_of_type;
+PyObject* PyObjCNM_suggestion;
+PyObject* PyObjCNM_type;
+PyObject* PyObjCNM_type_modifier;
+PyObject* PyObjCNM_variadic;
+PyObject* PyObjCNM___slots__;
+PyObject* PyObjCNM___doc__;
+PyObject* PyObjCNM_classmethod;
+PyObject* PyObjCNM_return_unitialized_object;
+PyObject* PyObjCNM_protocols;
+PyObject* PyObjCNM___pyobjc_protocols__;
+PyObject* PyObjCNM___del__;
+PyObject* PyObjCNM_bundleForClass;
+PyObject* PyObjCNM___useKVO__;
+PyObject* PyObjCNM_typestr;
+PyObject* PyObjCNM_classname;
+PyObject* PyObjCNM___typestr__;
+
 
 int
 PyObjCUtil_Init(PyObject* module)
@@ -63,11 +103,11 @@ PyObjCUtil_Init(PyObject* module)
 
 #undef NEW_EXC
 
-#define NEW_STR(identifier, strvalue)                                                    \
+#define NEW_STR(identifier, strvalue) do {                                               \
     identifier = PyUnicode_InternFromString(strvalue);                                   \
-    if (identifier == NULL) {                                                            \
+    if (identifier == NULL)                                                              \
         return -1;                                                                       \
-    }
+    } while(0)
 
     NEW_STR(PyObjCNM_insert, "insert");
     NEW_STR(PyObjCNM_append, "append");
@@ -86,6 +126,45 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_objc_memview_object, "objc.memview object");
     NEW_STR(PyObjCNM_objc_NULL, "objc.NULL");
     NEW_STR(PyObjCNM___new__, "__new__");
+    NEW_STR(PyObjCNM_reason, "reason");
+    NEW_STR(PyObjCNM_name, "name");
+    NEW_STR(PyObjCNM_userInfo, "userInfo");;
+    NEW_STR(PyObjCNM__pyobjc_info_, "_pyobjc_info_");
+    NEW_STR(PyObjCNM__template, "_template");
+    NEW_STR(PyObjCNM_already_cfretained, "already_cfretained");
+    NEW_STR(PyObjCNM_already_retained, "already_retained");
+    NEW_STR(PyObjCNM_arguments, "arguments");
+    NEW_STR(PyObjCNM_c_array_delimited_by_null, "c_array_delimited_by_null");
+    NEW_STR(PyObjCNM_c_array_length_in_arg, "c_array_length_in_arg");
+    NEW_STR(PyObjCNM_c_array_length_in_result, "c_array_length_in_result");
+    NEW_STR(PyObjCNM_c_array_of_fixed_length, "c_array_of_fixed_length");
+    NEW_STR(PyObjCNM_c_array_of_variable_length, "c_array_of_variable_length");
+    NEW_STR(PyObjCNM_callable, "callable");
+    NEW_STR(PyObjCNM_callable_retained, "callable_retained");
+    NEW_STR(PyObjCNM_deprecated, "deprecated");
+    NEW_STR(PyObjCNM_deref_result_pointer, "deref_result_pointer");
+    NEW_STR(PyObjCNM_free_result, "free_result");
+    NEW_STR(PyObjCNM_full_signature, "full_signature");
+    NEW_STR(PyObjCNM_null_accepted, "null_accepted");
+    NEW_STR(PyObjCNM_printf_format, "printf_format");
+    NEW_STR(PyObjCNM_retval, "retval");
+    NEW_STR(PyObjCNM_sel_of_type, "sel_of_type");
+    NEW_STR(PyObjCNM_suggestion, "suggestion");
+    NEW_STR(PyObjCNM_type, "type");
+    NEW_STR(PyObjCNM_type_modifier, "type_modifier");
+    NEW_STR(PyObjCNM_variadic, "variadic");
+    NEW_STR(PyObjCNM___slots__, "__slots__");
+    NEW_STR(PyObjCNM___doc__, "__doc__");
+    NEW_STR(PyObjCNM_classmethod, "classmethod");
+    NEW_STR(PyObjCNM_return_unitialized_object, "return_unitialized_object");
+    NEW_STR(PyObjCNM_protocols, "protocols");
+    NEW_STR(PyObjCNM___pyobjc_protocols__, "__pyobjc_protocols__");
+    NEW_STR(PyObjCNM___del__, "__del__");
+    NEW_STR(PyObjCNM_bundleForClass, "bundleForClass");
+    NEW_STR(PyObjCNM___useKVO__, "__useKVO__");
+    NEW_STR(PyObjCNM_typestr, "typestr");
+    NEW_STR(PyObjCNM_classname, "classname");
+    NEW_STR(PyObjCNM___typestr__, "__typestr__");
 
 #undef NEW_STR
 
@@ -197,13 +276,13 @@ PyObjCErr_FromObjC(NSObject* localException)
              * will be replaced later.
              */
             if ( // LCOV_BR_EXCL_LINE
-                PyDict_SetItemString(dict, "name", c_localException_name) == -1) {
+                PyDict_SetItem(dict, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_name);
 
             if ( // LCOV_BR_EXCL_LINE
-                PyDict_SetItemString(dict, "reason", c_localException_reason) == -1) {
+                PyDict_SetItem(dict, PyObjCNM_reason, c_localException_reason) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_DECREF(c_localException_reason);
@@ -211,7 +290,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                 v = id_to_python(userInfo);
                 if (v != NULL) {
                     if ( // LCOV_BR_EXCL_LINE
-                        PyDict_SetItemString(dict, "userInfo", v) == -1) {
+                        PyDict_SetItem(dict, PyObjCNM_userInfo, v) == -1) {
                         PyErr_Clear(); // LCOV_EXCL_LINE
                     }
                     Py_DECREF(v);
@@ -220,7 +299,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                 }
             } else {
                 if ( // LCOV_BR_EXCL_LINE
-                    PyDict_SetItemString(dict, "userInfo", Py_None) == -1) {
+                    PyDict_SetItem(dict, PyObjCNM_userInfo, Py_None) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             }
@@ -236,12 +315,12 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
             if ( // LCOV_BR_EXCL_LINE
-                PyObject_SetAttrString(exc_value, "_pyobjc_info_", dict) == -1) {
+                PyObject_SetAttr(exc_value, PyObjCNM__pyobjc_info_, dict) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             Py_CLEAR(dict);
             if ( // LCOV_BR_EXCL_LINE
-                PyObject_SetAttrString(exc_value, "name", c_localException_name) == -1) {
+                PyObject_SetAttr(exc_value, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             }
             PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -293,31 +372,46 @@ static NSException* _Nullable python_exception_to_objc(void)
          * Objective-C code.
          */
         PyObject* v;
+        int r;
         NSString* reason = NULL;
         NSString* name   = NULL;
 
-        /* NOTE: Don't use *WithError here because this function ignores errors */
-        v = PyDict_GetItemString(args, "reason");
-        if (v) {
+        r = PyDict_GetItemRef(args, PyObjCNM_reason, &v);
+        switch (r) {
+        case -1:
+            PyErr_Clear();
+            break;
+        case 1:
             if (depythonify_python_object(v, &reason) < 0) {
                 PyErr_Clear();
             }
+            Py_DECREF(v);
         }
 
-        v = PyDict_GetItemString(args, "name");
-        if (v) {
+        r = PyDict_GetItemRef(args, PyObjCNM_name, &v);
+        switch (r) {
+        case -1:
+            PyErr_Clear();
+            break;
+        case 1:
             if (depythonify_python_object(v, &name) < 0) {
                 PyErr_Clear();
             }
+            Py_DECREF(v);
         }
 
-        v = PyDict_GetItemString(args, "userInfo");
-        if (v && PyObjCObject_Check(v)) {
-            userInfo = PyObjCObject_GetObject(v);
-        } else {
-            userInfo = nil;
+        r = PyDict_GetItemRef(args, PyObjCNM_userInfo, &v);
+        switch (r) {
+        case -1:
             PyErr_Clear();
+            break;
+        case 1:
+            if (depythonify_python_object(v, &userInfo) < 0) {
+                PyErr_Clear();
+            }
+            Py_DECREF(v);
         }
+
 
         if (name && reason) {
             val = [NSException exceptionWithName:name reason:reason userInfo:userInfo];
@@ -1446,20 +1540,6 @@ char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
         cur  = strchr(cur, ':');
     }
     return buf;
-}
-
-PyObject* _Nullable PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
-{
-    PyObject* result;
-    PyObject* keystring = PyUnicode_FromString(key);
-    if (keystring == NULL) {
-        return NULL;
-    }
-
-    result = PyDict_GetItemWithError(dict, keystring);
-    Py_DECREF(keystring);
-
-    return result;
 }
 
 int

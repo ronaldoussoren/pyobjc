@@ -39,8 +39,8 @@ static PyObject* _Nullable func_metadata(PyObject* _self)
         return NULL;      // LCOV_EXCL_LINE
     }
     if (self->doc) {
-        if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                result, "__doc__", self->doc)
+        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                result, PyObjCNM___doc__, self->doc)
             == -1) {
             Py_DECREF(result); // LCOV_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE

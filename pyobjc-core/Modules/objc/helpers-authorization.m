@@ -24,13 +24,12 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
 {
     const struct auth_item_set* value = (const struct auth_item_set*)_value;
     PyObject*                   result;
-    const char*                 oc_typestr;
     Py_ssize_t                  pack;
     int                         have_tuple = 0;
     PyObject*                   t;
     int                         r;
 
-    result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, &oc_typestr,
+    result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL,
                                            &pack);
     if (result == NULL) {
         have_tuple = 1;

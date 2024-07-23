@@ -1106,7 +1106,7 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     Class classNSDecimalNumberPlaceholder =
         objc_lookUpClass("NSDecimalNumberPlaceholder");
-    if (classNSDecimalNumberPlaceholder != nil) { // LCOV_BR_EXCL_LINE
+    if (classNSDecimalNumberPlaceholder != Nil) { // LCOV_BR_EXCL_LINE
         if (PyObjC_RegisterMethodMapping(classNSDecimalNumberPlaceholder,
                                          @selector(initWithDecimal:),
                                          call_NSDecimalNumber_initWithDecimal_,

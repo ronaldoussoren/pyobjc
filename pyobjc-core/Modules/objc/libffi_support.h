@@ -25,6 +25,8 @@ struct byref_attr {
         }                                                                                \
     }
 
+extern int PyObjCFFI_Setup(PyObject* m);
+
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void* _Nullable* _Nonnull, void*);
 typedef void (*PyObjC_callback_function)(void);
 typedef void (*PyObjCBlockFunction)(void*, ...);

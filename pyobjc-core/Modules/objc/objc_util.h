@@ -3,10 +3,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern PyObject* _Nullable PyObjCDict_GetItemStringWithError(PyObject*   dict,
-                                                             const char* key);
-#define PyDict_GetItemStringWithError PyObjCDict_GetItemStringWithError
-
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;
@@ -124,6 +120,45 @@ extern PyObject* PyObjCNM_date_format_string;
 extern PyObject* PyObjCNM_objc_memview_object;
 extern PyObject* PyObjCNM_objc_NULL;
 extern PyObject* PyObjCNM___new__;
+extern PyObject* PyObjCNM_reason;
+extern PyObject* PyObjCNM_name;
+extern PyObject* PyObjCNM_userInfo;
+extern PyObject* PyObjCNM__pyobjc_info_;
+extern PyObject* PyObjCNM__template;
+extern PyObject* PyObjCNM_already_cfretained;
+extern PyObject* PyObjCNM_already_retained;
+extern PyObject* PyObjCNM_arguments;
+extern PyObject* PyObjCNM_c_array_delimited_by_null;
+extern PyObject* PyObjCNM_c_array_length_in_arg;
+extern PyObject* PyObjCNM_c_array_length_in_result;
+extern PyObject* PyObjCNM_c_array_of_fixed_length;
+extern PyObject* PyObjCNM_c_array_of_variable_length;
+extern PyObject* PyObjCNM_callable;
+extern PyObject* PyObjCNM_callable_retained;
+extern PyObject* PyObjCNM_deprecated;
+extern PyObject* PyObjCNM_deref_result_pointer;
+extern PyObject* PyObjCNM_free_result;
+extern PyObject* PyObjCNM_full_signature;
+extern PyObject* PyObjCNM_null_accepted;
+extern PyObject* PyObjCNM_printf_format;
+extern PyObject* PyObjCNM_retval;
+extern PyObject* PyObjCNM_sel_of_type;
+extern PyObject* PyObjCNM_suggestion;
+extern PyObject* PyObjCNM_type;
+extern PyObject* PyObjCNM_type_modifier;
+extern PyObject* PyObjCNM_variadic;
+extern PyObject* PyObjCNM___slots__;
+extern PyObject* PyObjCNM___doc__;
+extern PyObject* PyObjCNM_classmethod;
+extern PyObject* PyObjCNM_return_unitialized_object;
+extern PyObject* PyObjCNM_protocols;
+extern PyObject* PyObjCNM___pyobjc_protocols__;
+extern PyObject* PyObjCNM___del__;
+extern PyObject* PyObjCNM_bundleForClass;
+extern PyObject* PyObjCNM___useKVO__;
+extern PyObject* PyObjCNM_typestr;
+extern PyObject* PyObjCNM_classname;
+extern PyObject* PyObjCNM___typestr__;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);

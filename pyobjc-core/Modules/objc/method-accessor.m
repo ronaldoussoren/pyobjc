@@ -422,11 +422,12 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                     continue;
 
                 PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)c);
-                PyObject* v    = PyDict_GetItemWithError(dict, name);
-                if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    return NULL;                     // LCOV_EXCL_LINE
+                PyObject* v;
 
-                } else if (v != NULL) {
+                int r = PyDict_GetItemRef(dict, name, &v);
+                if (r == -1) {
+                    return NULL;
+                } else if (r == 1) {
                     if (PyObjCSelector_Check(v)) {
                         /* Found it, use the
                          * descriptor mechanism to
@@ -437,7 +438,8 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                             return NULL; // LCOV_EXCL_LINE
                         }
                         result = v;
-                        Py_INCREF(result);
+                    } else {
+                        Py_DECREF(v);
                     }
                     /* Found an item with the specified
                      * name, abort the search.

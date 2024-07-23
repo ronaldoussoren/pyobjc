@@ -71,15 +71,15 @@ PyAPI_FUNC(PyObject* _Nullable) PyDict_Copy(PyObject* mp)
 PyAPI_FUNC(int) PyDict_DelItem(PyObject* mp, PyObject* key)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyDict_DelItemString(PyObject* dp, const char* key)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyDict_GetItem(PyObject* mp, PyObject* key)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyDict_GetItemString(PyObject* dp, const char* key)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) _PyDict_GetItemStringWithError(PyObject*, const char*)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyDict_GetItemWithError(PyObject* mp, PyObject* key)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyDict_Keys(PyObject* mp)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyDict_New(void) __attribute__((warn_unused_result));
@@ -89,7 +89,7 @@ PyAPI_FUNC(int) PyDict_Next(PyObject* p, Py_ssize_t* ppos, PyObject* _Nullable* 
 PyAPI_FUNC(int) PyDict_SetItem(PyObject* mp, PyObject* key, PyObject* item)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyDict_SetItemString(PyObject* dp, const char* key, PyObject* item)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(Py_ssize_t) PyDict_Size(PyObject* mp) __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyDict_Update(PyObject* mp, PyObject* other)
     __attribute__((warn_unused_result));
@@ -145,6 +145,8 @@ PyAPI_FUNC(int) PyList_Append(PyObject*, PyObject*) __attribute__((warn_unused_r
 PyAPI_FUNC(PyObject* _Nullable) PyList_AsTuple(PyObject*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyList_GetItem(PyObject*, Py_ssize_t)
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
+PyAPI_FUNC(PyObject* _Nullable) PyList_GetItemRef(PyObject*, Py_ssize_t)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyList_New(Py_ssize_t size)
     __attribute__((warn_unused_result));
@@ -266,7 +268,7 @@ PyAPI_FUNC(int) PySequence_Contains(PyObject* seq, PyObject* ob)
 PyAPI_FUNC(int) PySequence_DelItem(PyObject* o, Py_ssize_t i)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PySequence_Fast(PyObject* o, const char* m)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PySequence_GetItem(PyObject* o, Py_ssize_t i)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(Py_ssize_t) PySequence_Length(PyObject* o) __attribute__((warn_unused_result));

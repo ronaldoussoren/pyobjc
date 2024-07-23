@@ -1419,13 +1419,11 @@ PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_
         return NULL; // LCOV_EXCL_LINE
     }
 
-    type = PyDict_GetItemWithError(structRegistry, v);
-    Py_DECREF(v);
-    if (type == NULL) {
+    if (PyDict_GetItemRef(structRegistry, v, &type) != 1) {
+        Py_DECREF(v);
         return NULL;
     }
-
-    Py_INCREF(type);
+    Py_DECREF(v);
     return type;
 }
 
@@ -1447,17 +1445,18 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 
     v = PyUnicode_FromStringAndSize(signature, len);
 
-    type = (PyTypeObject*)PyDict_GetItemWithError(structRegistry, v);
-    Py_DECREF(v);
-    if (type == NULL) {
+    if (PyDict_GetItemRef(structRegistry, v, (PyObject**)&type) != 1) {
+        Py_DECREF(v);
         return NULL;
     }
+    Py_DECREF(v);
 
     member = type->tp_members;
 
     result = PyObject_GC_New(PyObject, type);
     if (result == NULL) {
         // LCOV_EXCL_START
+        Py_DECREF(type);
         PyErr_Clear();
         return NULL;
         // LCOV_EXCL_STOP
@@ -1473,30 +1472,40 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     PyObject_GC_Track(result);
 
     if (objc_encoding) {
-        PyObject* typestr = PyDict_GetItemStringWithError(type->tp_dict, "__typestr__");
-        if (typestr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        PyObject* typestr;
+
+        switch(PyDict_GetItemRef(type->tp_dict, PyObjCNM___typestr__, &typestr)) {
+        case -1:
             // LCOV_EXCL_START
+            Py_DECREF(type);
             Py_DECREF(result);
             return NULL;
             // LCOV_EXCL_STOP
-        }
-        if (typestr != NULL) {
+        case 0:
+            /* XXX: Can this ever happen? */
+            if (objc_encoding != NULL) {
+                *objc_encoding = signature;
+            }
+            break;
+
+        case 1:
             if (!PyBytes_Check(typestr)) {
                 PyErr_SetString(PyExc_TypeError, "__typestr__ not a bytes object");
+                Py_DECREF(type);
                 Py_DECREF(result);
                 return NULL;
             }
-            *objc_encoding = PyBytes_AsString(typestr);
-
-        } else {
-            /* XXX: Can this ever happen? */
-            *objc_encoding = signature;
+            // XXX: this effectively returns a borrowed reference.
+            if (objc_encoding != NULL) {
+                *objc_encoding = PyBytes_AsString(typestr);
+            }
         }
     }
 
     if (ppack != NULL) {
         *ppack = ((struct StructTypeObject*)type)->pack;
     }
+    Py_DECREF(type);
 
     return result;
 }
