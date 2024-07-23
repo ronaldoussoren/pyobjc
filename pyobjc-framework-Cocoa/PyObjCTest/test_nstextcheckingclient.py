@@ -107,6 +107,13 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsList, 1 << 2)
         self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsTable, 1 << 3)
 
+        self.assertIsEnumType(AppKit.NSWritingToolsResultOptions)
+        self.assertEqual(AppKit.NSWritingToolsResultDefault, 0)
+        self.assertEqual(AppKit.NSWritingToolsResultPlainText, 1 << 0)
+        self.assertEqual(AppKit.NSWritingToolsResultRichText, 1 << 1)
+        self.assertEqual(AppKit.NSWritingToolsResultList, 1 << 2)
+        self.assertEqual(AppKit.NSWritingToolsResultTable, 1 << 3)
+
     def test_methods(self):
         self.assertResultHasType(
             TestNSTextCheckingClientHelper.autocorrectionType, objc._C_NSInteger

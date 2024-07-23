@@ -122,3 +122,4 @@ class TestMAAudibleMedia(TestCase):
     @min_os_level("10.15")
     def test_functions10_15(self):
         MediaAccessibility.MACaptionAppearanceDidDisplayCaptions
+        MediaAccessibility.MACaptionAppearanceIsCustomized

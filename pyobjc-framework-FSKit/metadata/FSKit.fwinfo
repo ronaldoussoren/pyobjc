@@ -203,13 +203,6 @@
       },
       "class_method": true,
       "selector": "identifierWithUUID:longByteQualifier:"
-     },
-     {
-      "args": {
-       "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 }
-      },
-      "class_method": false,
-      "selector": "initWithBytes:length:"
      }
     ]
    },
@@ -219,6 +212,21 @@
       "class_method": false,
       "retval": { "c_array_of_variable_length": true },
       "selector": "bytes"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "c_array_of_variable_length": true, "type_modifier": "n", "type": "^v"  }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "selector": "withBytes:"
      }
     ]
    },
@@ -376,6 +384,21 @@
       "class_method": false,
       "retval": { "c_array_of_variable_length": true },
       "selector": "mutableBytes"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "c_array_of_variable_length": true, "type_modifier": "N", "type": "^v"  }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "selector": "withMutableBytes:"
      }
     ]
    },

@@ -137,6 +137,12 @@ class TestCVImageBuffer(TestCase):
     @min_os_level("15.0")
     def testConstants15_0(self):
         self.assertIsInstance(Quartz.kCVImageBufferSceneIlluminationKey, str)
+        self.assertIsInstance(
+            Quartz.kCVImageBufferPostDecodeProcessingSequenceMetadataKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferPostDecodeProcessingFrameMetadataKey, str
+        )
 
     def testFunctions(self):
         self.assertResultHasType(

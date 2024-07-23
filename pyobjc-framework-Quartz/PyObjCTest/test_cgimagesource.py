@@ -37,6 +37,12 @@ class TestCGImageSource(TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceDecodeToSDR, str)
         self.assertIsInstance(Quartz.kCGImageSourceDecodeRequestOptions, str)
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(
+            Quartz.kCGImageSourceGenerateImageSpecificLumaScaling, str
+        )
+
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)
 

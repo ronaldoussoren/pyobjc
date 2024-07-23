@@ -71,9 +71,6 @@ class TestAVComposition(TestCase):
 
     @min_os_level("15.0")
     def test_methods15_0(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVMutableComposition.insertTimeRange_ofTracks_atTime_error_
-        )
         self.assertArgIsOut(
             AVFoundation.AVMutableComposition.insertTimeRange_ofTracks_atTime_error_, 3
         )

@@ -12,7 +12,7 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(FSFileSystemBase)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSFileSystemOperations)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSManageableResourceSimpleMaintenanceOps)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(FSTaskMessageOps)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSTaskMessageOperations)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSUnaryFileSystemOperations)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSVolumeAccessCheckOperations)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSVolumeCloneOperations)); Py_XDECREF(p);

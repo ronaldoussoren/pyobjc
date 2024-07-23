@@ -1290,6 +1290,13 @@
    "NSPersistentStoreCoordinator": {
     "methods": [
      {
+      "selector": "managedObjectIDFromUTF8String",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "^t", "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
       "args": {
         "1": {
 	  "callable": {

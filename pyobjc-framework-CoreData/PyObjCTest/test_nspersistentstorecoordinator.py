@@ -134,6 +134,10 @@ class TestNSPersistentStoreCoordinator(TestCase):
             CoreData.NSPersistentStoreStagedMigrationManagerOptionKey, str
         )
 
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(CoreData.NSPersistentStoreModelVersionChecksumKey, str)
+
     def testMethods(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_,
@@ -253,4 +257,16 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigrationTask_,
             0,
+        )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertArgIsIn(
+            CoreData.NSPersistentStoreCoordinator.managedObjectIDFromUTF8String_length_,
+            0,
+        )
+        self.assertArgSizeInArg(
+            CoreData.NSPersistentStoreCoordinator.managedObjectIDFromUTF8String_length_,
+            0,
+            1,
         )

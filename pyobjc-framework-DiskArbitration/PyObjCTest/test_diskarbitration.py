@@ -7,6 +7,7 @@ class TestDiskArbitration(TestCase):
     def test_constants(self):
         self.assertEqual(DiskArbitration.kDADiskMountOptionDefault, 0)
         self.assertEqual(DiskArbitration.kDADiskMountOptionWhole, 1)
+        self.assertEqual(DiskArbitration.kDADiskMountOptionNoFollow, 2)
         self.assertEqual(DiskArbitration.kDADiskRenameOptionDefault, 0)
         self.assertEqual(DiskArbitration.kDADiskUnmountOptionDefault, 0x00000000)
         self.assertEqual(DiskArbitration.kDADiskUnmountOptionForce, 0x00080000)

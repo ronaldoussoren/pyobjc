@@ -162,3 +162,18 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_RequestedMVHEVCVideoLayerIDs,
             str,
         )
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_AllowBitstreamToChangeFrameDimensions,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_DecoderProducesRAWOutput,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_RequestRAWOutput,
+            str,
+        )

@@ -540,26 +540,6 @@
      }
     ]
    },
-   "AVAudioEnvironmentNode": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isListenerHeadTrackingEnabled"
-     },
-     {
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "selector": "setListenerHeadTrackingEnabled:"
-     }
-    ]
-   },
    "AVAudioApplication": {
     "methods": [
      {
@@ -927,6 +907,26 @@
        "nonatomic"
       ],
       "name": "musicSequence"
+     }
+    ]
+   },
+   "AVAudioEnvironmentNode": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isListenerHeadTrackingEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setListenerHeadTrackingEnabled:"
      }
     ]
    },
@@ -4515,18 +4515,6 @@
    }
   },
   "enum": {
-   "AVAudioSessionInterruptionReasonDefault": {
-    "value": 0
-   },
-   "AVAudioSessionInterruptionReasonAppWasSuspended": {
-    "value": 1
-   },
-   "AVAudioSessionInterruptionReasonBuiltInMicMuted": {
-    "value": 2
-   },
-   "AVAudioSessionInterruptionReasonDeviceUnauthenticated": {
-    "value": 5
-   },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": {
     "value": 0
    },
@@ -4574,6 +4562,18 @@
    },
    "AVAudioQualityMin": {
     "value": 0
+   },
+   "AVAudioSessionInterruptionReasonAppWasSuspended": {
+    "value": 1
+   },
+   "AVAudioSessionInterruptionReasonBuiltInMicMuted": {
+    "value": 2
+   },
+   "AVAudioSessionInterruptionReasonDefault": {
+    "value": 0
+   },
+   "AVAudioSessionInterruptionReasonDeviceUnauthenticated": {
+    "value": 5
    },
    "AVAudioSessionRenderingModeDolbyAtmos": {
     "value": 5
@@ -5494,14 +5494,6 @@
    }
   },
   "typed_enum": {
-   "AVPlayerIntegratedTimelineSnapshotsOutOfSyncReason": {
-    "type": "@",
-    "type_name": "NSString"
-   },
-   "AVSpatialCaptureDiscomfortReason": {
-    "type": "@",
-    "type_name": "NSString"
-   },
    "AVAssetDownloadedAssetEvictionPriority": {
     "type": "@",
     "type_name": "NSString"
@@ -5583,6 +5575,10 @@
     "type_name": "NSString"
    },
    "AVOutputSettingsPreset": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVPlayerIntegratedTimelineSnapshotsOutOfSyncReason": {
     "type": "@",
     "type_name": "NSString"
    },

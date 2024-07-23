@@ -9,6 +9,9 @@ class TestMEVideoDecoderHelper(MediaExtension.NSObject):
     ):
         pass
 
+    def producesRAWOutput(self):
+        return 1
+
     def contentHasInterframeDependencies(self):
         return 1
 
@@ -57,6 +60,7 @@ class TestMEVideoDecoder(TestCase):
             4,
         )
 
+        self.assertResultIsBOOL(TestMEVideoDecoderHelper.producesRAWOutput)
         self.assertResultIsBOOL(
             TestMEVideoDecoderHelper.contentHasInterframeDependencies
         )

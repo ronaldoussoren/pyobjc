@@ -291,3 +291,7 @@ class TestCGColorSpace(TestCase):
     @min_os_level("13.0")
     def testFunctions13_0(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateCopyWithStandardRange)
+
+    @min_os_level("15.0")
+    def testFunctions15_0(self):
+        self.assertResultIsCFRetained(Quartz.CGColorSpaceCopyBaseColorSpace)
