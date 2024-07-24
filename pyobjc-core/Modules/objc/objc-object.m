@@ -612,11 +612,11 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
         } else {
             dict = *dictptr;
             if (dict != NULL) {
-                res = PyDict_GetItemWithError(dict, name);
-                if (res == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    goto done;                         // LCOV_EXCL_LINE
-                } else if (res != NULL) {
-                    Py_INCREF(res);
+                switch (PyDict_GetItemRef(dict, name, &res)) {
+                case -1:
+                    goto done;
+                /* case 0: pass */
+                case 1:
                     goto done;
                 }
             }
