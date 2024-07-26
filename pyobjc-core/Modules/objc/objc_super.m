@@ -106,11 +106,11 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                 continue;
             }
 
-            res = PyDict_GetItemWithError(dict, name);
-            if (res == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                return NULL;                       // LCOV_EXCL_LINE
-            } else if (res != NULL) {
-                Py_INCREF(res);
+            switch(PyDict_GetItemRef(dict, name, &res)) {
+            case -1:
+                return NULL;
+
+            case 1:
                 f = Py_TYPE(res)->tp_descr_get;
                 if (f != NULL) {
                     tmp = f(
