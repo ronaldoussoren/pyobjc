@@ -69,6 +69,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     PyObject*        pyclass;
     PyObject*        entry;
     PyObject*        lst;
+    PyObject*        py_selname;
+    int r;
 
     PyObjC_Assert(special_registry != NULL, -1);
 
@@ -82,12 +84,18 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         call_to_objc = PyObjCFFI_Caller;
     }
 
+    py_selname = PyUnicode_FromString(sel_getName(sel));
+    if (py_selname == NULL) {
+        return -1;
+    }
+
     if (class == nil) {
         pyclass = Py_None;
         Py_INCREF(Py_None);
     } else {
         pyclass = PyObjCClass_New(class);
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(py_selname);
             return -1;         // LCOV_EXCL_LINE
         }
     }
@@ -95,6 +103,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     v = PyMem_Malloc(sizeof(*v));
     if (v == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(py_selname);
+        Py_DECREF(pyclass);
         PyErr_NoMemory();
         return -1;
         // LCOV_EXCL_STOP
@@ -105,6 +115,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     entry = PyTuple_New(2);
     if (entry == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(py_selname);
+        Py_DECREF(pyclass);
         PyMem_Free(v);
         return -1;
         // LCOV_EXCL_STOP
@@ -116,30 +128,39 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 
     if (PyTuple_GET_ITEM(entry, 1) == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(py_selname);
         Py_DECREF(entry);
         return -1;
         // LCOV_EXCL_STOP
     }
 
-    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
-    if (lst == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
+    r = PyDict_GetItemRef(special_registry, py_selname, &lst);
+
+    switch (r) {
+    case -1:
+        Py_DECREF(py_selname);
         Py_DECREF(entry);
         return -1;
-        // LCOV_EXCL_STOP
-    } else if (lst == NULL) {
+    case 0:
         lst = PyList_New(0);
-        if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                special_registry, sel_getName(sel), lst)
+        if (lst == NULL) {
+            Py_DECREF(py_selname);
+            Py_DECREF(entry);
+            return -1;
+        }
+        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                special_registry, py_selname, lst)
             == -1) {
             // LCOV_EXCL_START
+            Py_DECREF(py_selname);
             Py_DECREF(lst);
             Py_DECREF(entry);
             return -1;
             // LCOV_EXCL_STOP
         }
-    } else {
-        Py_INCREF(lst);
+        Py_DECREF(py_selname);
+
+    /* case 1: fallthrough */
     }
 
     if (PyList_Append(lst, entry) < 0) { // LCOV_BR_EXCL_LINE
@@ -230,24 +251,33 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     PyObject*  result        = NULL;
     PyObject*  special_class = NULL;
     PyObject*  search_class  = NULL;
+    PyObject*  py_selname = NULL;
     PyObject*  lst;
     Py_ssize_t i;
+    int r;
 
     if (special_registry == NULL)
         goto error;
     if (!class)
         goto error;
 
+    py_selname = PyUnicode_FromString(sel_getName(sel));
+    if (py_selname == NULL) {
+        goto error;
+    }
+
     search_class = PyObjCClass_New(class);
     if (search_class == NULL) // LCOV_BR_EXCL_LINE
         goto error;           // LCOV_EXCL_LINE
 
-    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
-    if (lst == NULL) {
+    r = PyDict_GetItemRef(special_registry, py_selname, &lst);
+    switch (r) {
+    case -1:
         goto error;
+    case 0:
+        goto error;
+    /* case 1: fallthrough */
     }
-
-    Py_INCREF(lst);
 
     /*
      * Look for the most specific match:
@@ -282,6 +312,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_CLEAR(result);
             special_class = pyclass;
             result        = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(special_class);
             Py_INCREF(result);
             Py_DECREF(entry);
 
@@ -306,21 +337,27 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_DECREF(entry);
         }
     }
-    Py_XDECREF(search_class);
     if (!result)
         goto error;
+
+    Py_CLEAR(special_class);
+    Py_CLEAR(search_class);
+    Py_CLEAR(py_selname);
 
      struct registry* rv = PyCapsule_GetPointer(result, "objc.__memblock__");
      Py_DECREF(result);
      return rv;
 
 error:
-    return NULL;
+    Py_CLEAR(special_class);
+     Py_CLEAR(py_selname);
+     Py_CLEAR(search_class);
+     return NULL;
 }
 
 static struct registry* _Nullable find_signature(const char* signature)
 {
-    PyObject* o;
+    PyObject* o = NULL;
     int       res;
 
     if (signature_registry == NULL) {
@@ -344,12 +381,13 @@ static struct registry* _Nullable find_signature(const char* signature)
         _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1) == -1) {
         return NULL; // LCOV_EXCL_LINE
     }
-    o = PyDict_GetItemWithError(signature_registry, key);
-    Py_DECREF(key);
-    if (o == NULL)
+    if (PyDict_GetItemRef(signature_registry, key, &o) != 1) {
         return NULL;
+    }
 
-    return PyCapsule_GetPointer(o, "objc.__memblock__");
+    struct registry* result = PyCapsule_GetPointer(o, "objc.__memblock__");
+    Py_DECREF(o);
+    return result;
 }
 
 PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* signature)
