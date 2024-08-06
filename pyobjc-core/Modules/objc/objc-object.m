@@ -407,7 +407,8 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
              *
              * Skip hidden methods.
              */
-            if (!PyObjCClass_HiddenSelector(base, sel, NO)) {
+            PyObject* hidden = PyObjCClass_HiddenSelector(base, sel, NO);
+            if (!hidden) {
                 if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                     return NULL;        // LCOV_EXCL_LINE
                 }
@@ -419,6 +420,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
                     return NULL;
                 }
             }
+            Py_CLEAR(hidden);
         }
     }
 
@@ -470,6 +472,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return NULL;                          // LCOV_EXCL_LINE
             } else if (hidden) {
+                Py_CLEAR(hidden);
                 continue;
             }
 

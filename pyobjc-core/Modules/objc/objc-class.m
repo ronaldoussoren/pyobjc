@@ -68,14 +68,12 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
                     PyErr_Clear(); // LCOV_EXCL_LINE
 
                 } else {
-                    PyObject* r = PyDict_GetItemWithError(hidden, v);
-                    Py_DECREF(v);
-                    if (r == NULL) {
-                        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                            return NULL;        // LCOV_EXCL_LINE
-                        }
-
-                    } else {
+                    PyObject* r;
+                    switch (PyDict_GetItemRef(hidden, v, &r)) {
+                    case -1:
+                        return NULL;
+                    /* case 0: pass */
+                    case 1:
                         return r;
                     }
                 }
@@ -1246,6 +1244,7 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
                 // LCOV_EXCL_STOP
 
             } else if (hidden) {
+                Py_DECREF(hidden);
                 continue;
             }
 
@@ -1407,6 +1406,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 return NULL;                          // LCOV_EXCL_LINE
 
             } else if (hidden) {
+                Py_CLEAR(hidden);
                 continue;
             }
 
@@ -1467,6 +1467,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
     Class     cls;
     Method    m;
     PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+    PyObject* hidden;
 
     Py_BEGIN_ALLOW_THREADS
         @try { /* XXX: Can this raise?, and is it necessary to give up the GIL here? */
@@ -1487,8 +1488,9 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         return NULL;
     }
 
-    if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)
-        || PyErr_Occurred()) {
+    hidden = PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES);
+    if (hidden || PyErr_Occurred()) {
+        Py_CLEAR(hidden);
         return NULL;
     }
 
@@ -1834,6 +1836,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     } else if (hidden) {
+        Py_CLEAR(hidden);
         PyErr_SetObject(PyExc_AttributeError, name);
         return NULL;
     }
@@ -2005,6 +2008,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
                 // LCOV_EXCL_STOP
 
             } else if (hidden) {
+                Py_CLEAR(hidden);
                 Py_DECREF(value);
 
             } else {
@@ -2371,6 +2375,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 return NULL;
                 // LCOV_EXCL_STOP
             } else if (hidden) {
+                Py_CLEAR(hidden);
                 continue;
             }
 
@@ -3004,6 +3009,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         return NULL;                          // LCOV_EXCL_LINE
     } else if (hidden) {
+        Py_CLEAR(hidden);
         (void)PyDict_SetItemString(info->sel_to_py, (char*)sel_getName(selector),
                                    Py_None);
         PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
@@ -3403,8 +3409,9 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         }
 
         r = 0;
-        if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name,
-                                        PyObjCSelector_IsClassMethod(aMethod))) {
+        PyObject* hidden = PyObjCClass_HiddenSelector(classObject, objcMethod->name,
+                                        PyObjCSelector_IsClassMethod(aMethod));
+        if (!hidden) {
             if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 r = -1;             // LCOV_EXCL_LINE
             } else if (PyObjCSelector_IsClassMethod(aMethod)) {
@@ -3414,6 +3421,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
                 r = PyDict_SetItem(extraDict, name, aMethod);
             }
         }
+        Py_CLEAR(hidden);
 
         ((PyObjCSelector*)aMethod)->sel_class = targetClass;
 

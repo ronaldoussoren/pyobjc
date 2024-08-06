@@ -969,12 +969,18 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             return NULL;                          // LCOV_EXCL_LINE
         }
         if (PyObjCObject_IsMagic(self) || hidden) {
+            Py_CLEAR(hidden);
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
         }
+        Py_CLEAR(hidden);
 
     } else {
-        if (PyObjCClass_HiddenSelector(self, sel, YES)) {
+        PyObject* hidden;
+        hidden = PyObjCClass_HiddenSelector(self, sel, YES);
+
+        if (hidden) {
+            Py_CLEAR(hidden);
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
         } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE

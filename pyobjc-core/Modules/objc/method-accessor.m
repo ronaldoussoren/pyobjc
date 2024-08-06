@@ -117,7 +117,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         return NULL;                        // LCOV_EXCL_LINE
     }
 
-    if (meta && meta != Py_None) {
+    if (meta) {
         if (PyObjCSelector_Check(meta)) {
             /*
              * KVO complicates things, it will insert an intermediate
@@ -136,24 +136,24 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                 /* AFAIK class methods cannot be used for KVO, ignore the
                  * issue here.
                  */
-                Py_INCREF(meta);
                 return meta;
             } else {
                 IMP sel_imp =
                     [PyObjCSelector_GetClass(meta) instanceMethodForSelector:sel];
                 IMP cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
                 if (sel_imp == cur_imp) {
-                    Py_INCREF(meta);
                     return meta;
                 } else {
                     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(meta);
                     if (methinfo == NULL) {
+                        Py_DECREF(meta);
                         return NULL;
                     }
                     flattened = (char*)methinfo->signature;
                 }
             }
         }
+        Py_CLEAR(meta);
     }
 
     if (flattened == NULL) {
