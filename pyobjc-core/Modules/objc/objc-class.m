@@ -397,13 +397,14 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
     if (kwds != NULL) {
         if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
 
-            PyObject* v = PyDict_GetItemString(kwds, "protocols");
-            if (v == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                return -1;                       // LCOV_EXCL_LINE
-            }
+            PyObject* v;
 
-            /* XXX: Not clear what this tries to accomplish */
-            if (v != NULL) {
+            switch (PyDict_GetItemRef(kwds, PyObjCNM_protocols, &v)) {
+            case -1:
+                return -1;
+            /* case 0: pass */
+            case 1:
+                Py_DECREF(v);
                 return PyType_Type.tp_init(cls, args, NULL);
             }
         }
@@ -632,20 +633,31 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     /* Also look for '__pyobjc_protocols__' in the class dictionary. */
-    arg_protocols = PyDict_GetItemString(dict, "__pyobjc_protocols__");
-    if (arg_protocols != NULL) {
-        PyObject* args[] = {NULL, protocols, arg_protocols};
+    switch (PyDict_GetItemRef(dict, PyObjCNM___pyobjc_protocols__, &arg_protocols)) {
+    case -1:
+        Py_DECREF(protocols);
+        Py_DECREF(real_bases);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        return NULL;
+    /* case 0: pass */
+    case 1:
+        {
+            PyObject* args[] = {NULL, protocols, arg_protocols};
 
-        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_extend, args + 1,
+            PyObject* r = PyObject_VectorcallMethod(PyObjCNM_extend, args + 1,
                                                 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (r == NULL) {
-            Py_DECREF(protocols);
-            Py_DECREF(real_bases);
-            Py_DECREF(hiddenSelectors);
-            Py_DECREF(hiddenClassSelectors);
-            return NULL;
+            if (r == NULL) {
+                Py_DECREF(arg_protocols);
+                Py_DECREF(protocols);
+                Py_DECREF(real_bases);
+                Py_DECREF(hiddenSelectors);
+                Py_DECREF(hiddenClassSelectors);
+                return NULL;
+            }
+            Py_DECREF(r);
+            Py_CLEAR(arg_protocols);
         }
-        Py_DECREF(r);
     }
 
     metadict = PyDict_New();
@@ -666,8 +678,18 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
      * to ensure that the Python proxy class will have no instance
      * variables.
      */
-    PyObject* orig_slots = PyDict_GetItemString(dict, "__slots__");
-    Py_XINCREF(orig_slots);
+    PyObject* orig_slots;
+    switch (PyDict_GetItemRef(dict, PyObjCNM___slots__, &orig_slots)) {
+    case -1:
+        Py_DECREF(protocols);
+        Py_DECREF(metadict);
+        Py_DECREF(real_bases);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        return NULL;
+    /* case 0: pass */
+    /* case 1: pass */
+    }
 
     if (isCFProxyClass) {
         objc_class = nil;
@@ -797,16 +819,21 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
      * method should only be called when the Objective-C side of the
      * instance is deallocated, not whenever the Python proxy is.
      */
-    delmethod = PyDict_GetItemString(dict, "__del__");
-    if (delmethod == NULL) {
-        PyErr_Clear();
-
-    } else {
-        Py_INCREF(delmethod);
-
+    switch (PyDict_GetItemRef(dict, PyObjCNM___del__, &delmethod)) {
+    case -1:
+        Py_XDECREF(orig_slots);
+        Py_DECREF(protocols);
+        Py_DECREF(real_bases);
+        Py_DECREF(metadict);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        return NULL;
+    /* case 0: pass */
+    case 1:
         if (isCFProxyClass) {
             PyErr_SetString(PyObjCExc_Error,
                             "cannot define __del__ on subclasses of NSCFType");
+            Py_XDECREF(delmethod);
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
@@ -816,7 +843,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
 
         } else {
-            if (PyDict_DelItemString(dict, "__del__") < 0) { // LCOV_BR_EXCL_LINE
+            if (PyDict_DelItem(dict, PyObjCNM___del__) < 0) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 if (objc_class != nil) {
                     (void)PyObjCClass_UnbuildClass(objc_class);
@@ -827,6 +854,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 Py_DECREF(metadict);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
+                Py_DECREF(delmethod);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
@@ -1031,11 +1059,16 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         info->dictoffset = ivar_getOffset(var);
     }
 
-    useKVOObj = PyDict_GetItemString(dict, "__useKVO__");
-    if (useKVOObj != NULL) {
-        info->useKVO = PyObject_IsTrue(useKVOObj);
-    } else {
+    switch (PyDict_GetItemRef(dict, PyObjCNM___useKVO__, &useKVOObj)) {
+    case -1:
+        Py_DECREF(old_dict);
+        return NULL;
+    case 0:
         info->useKVO = PyObjC_UseKVO;
+        break;
+    case 1:
+        info->useKVO = PyObject_IsTrue(useKVOObj);
+        Py_CLEAR(useKVOObj);
     }
 
     if (isCFProxyClass) {
@@ -1055,14 +1088,35 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     for (i = 0; i < len; i++) {
         k = PyList_GetItemRef(keys, i);
         if (k == NULL) {
+            /* XXX: Check refcounts, old_dict */
             return NULL;
         }
-        if (PyDict_GetItem(old_dict, k) == NULL) {
-            v = PyDict_GetItem(dict, k);
-            if (v != NULL && PyObject_SetAttr(res, k, v) == -1) {
-                PyErr_Clear();
+
+        PyObject* old_v;
+        switch (PyDict_GetItemRef(old_dict, k, &old_v)) {
+        case -1:
+            /* XXX: Check refcounts, old_dict */
+            return NULL;
+        case 0:
+
+            switch (PyDict_GetItemRef(dict, k, &v)) {
+            case -1:
+                /* XXX: Check refcounts, old_dict */
+                return NULL;
+            /* case 0: pass */
+            case 1:
+                if (PyObject_SetAttr(res, k, v) == -1) {
+                    PyErr_Clear();
+                }
+                Py_CLEAR(v);
             }
+            break;
+
+        case 1:
+            Py_CLEAR(old_v);
         }
+
+
         Py_DECREF(k);
     }
 
@@ -3018,8 +3072,20 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
 
     /* First check the cache */
 
-    result = PyDict_GetItemString(info->sel_to_py, (char*)sel_getName(selector));
-    if (result != NULL) {
+    PyObject* k = PyUnicode_FromString(sel_getName(selector));
+    if (k == NULL) {
+        return NULL;
+    }
+
+    switch (PyDict_GetItemRef(info->sel_to_py, k, &result)) {
+    case -1:
+        Py_DECREF(k);
+        return NULL;
+    case 0:
+        Py_DECREF(k);
+        break;
+    case 1:
+        Py_DECREF(k);
         if (result == Py_None) {
             /* negative cache entry */
             /* XXX: This is buggy: first looking for a class method where
@@ -3033,8 +3099,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
             return NULL;
 #endif
+            Py_CLEAR(result);
         } else {
-            Py_INCREF(result);
             return result;
         }
     }
