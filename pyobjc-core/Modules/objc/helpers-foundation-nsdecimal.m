@@ -658,7 +658,7 @@ decimal_coerce(PyObject** l, PyObject** r)
         if (left == NULL) // LCOV_BR_EXCL_LINE
             goto error;   // LCOV_EXCL_LINE
 
-        args = Py_BuildValue("(O)", *l); /* XXX: really? */
+        args = PyTuple_Pack(1, *l);
         if (args == NULL)                // LCOV_BR_EXCL_LINE
             goto error;                  // LCOV_EXCL_LINE
 
@@ -679,7 +679,7 @@ decimal_coerce(PyObject** l, PyObject** r)
         if (right == NULL) // LCOV_BR_EXCL_LINE
             goto error;    // LCOV_EXCL_LINE
 
-        args = Py_BuildValue("(O)", *r); /* XXX: really? */
+        args = PyTuple_Pack(1, *r);
         if (args == NULL)                // LCOV_BR_EXCL_LINE
             goto error;                  // LCOV_EXCL_LINE
 

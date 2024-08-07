@@ -4,6 +4,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* A basic wrapper for C's "FILE*"
  * that implements a usable API.
+ *
+ * NOTE: The locking using critical section is not very fine grained,
+ * but that shouldn't be a problem given how little FILE* objects
+ * are used in Objective-C APIs.
  */
 
 static PyObject* FILE_Type;
@@ -56,6 +60,8 @@ static PyObject* _Nullable file_close(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
+
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Closing closed file");
         return NULL;
@@ -67,6 +73,8 @@ static PyObject* _Nullable file_close(PyObject* _self)
 
     self->fp = NULL;
 
+    Py_END_CRITICAL_SECTION();
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -74,68 +82,88 @@ static PyObject* _Nullable file_close(PyObject* _self)
 static PyObject* _Nullable file_flush(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
+    PyObject* retval;
     int                 result;
+
+    Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval = NULL;
+    } else {
+        result = fflush(self->fp);
+        if (result != 0) {
+            retval =  PyErr_SetFromErrno(PyExc_OSError);
+        } else {
+            Py_INCREF(Py_None);
+            retval = Py_None;
+        }
     }
-
-    result = fflush(self->fp);
-    if (result != 0) {
-        return PyErr_SetFromErrno(PyExc_OSError);
-    }
-
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_END_CRITICAL_SECTION();
+    return retval;
 }
 
 static PyObject* _Nullable file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
+    PyObject* retval;
+
+    Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval = NULL;
+    } else {
+        result = ferror(self->fp);
+        retval =  PyBool_FromLong(result);
     }
 
-    result = ferror(self->fp);
+    Py_END_CRITICAL_SECTION();
 
-    return PyBool_FromLong(result);
+    return retval;
 }
 
 static PyObject* _Nullable file_at_eof(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
+    PyObject* retval;
+
+    Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval =  NULL;
+    } else {
+        result = feof(self->fp);
+        retval = PyBool_FromLong(result);
     }
+    Py_END_CRITICAL_SECTION();
 
-    result = feof(self->fp);
-
-    return PyBool_FromLong(result);
+    return retval;
 }
 
 static PyObject* _Nullable file_tell(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     long                offset;
+    PyObject* retval;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval = NULL;
+    } else {
+        offset = ftell(self->fp);
+        if (offset < 0) {
+            retval = PyErr_SetFromErrno(PyExc_OSError);
+        } else {
+            retval = PyLong_FromLong(offset);
+        }
     }
-
-    offset = ftell(self->fp);
-    if (offset < 0) {
-        return PyErr_SetFromErrno(PyExc_OSError);
-    }
-
-    return PyLong_FromLong(offset);
+    Py_END_CRITICAL_SECTION();
+    return retval;
 }
 
 static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
@@ -146,39 +174,46 @@ static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* 
     Py_ssize_t          offset;
     int                 whence;
     long                result;
+    PyObject* retval;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval = NULL;
+    } else if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset, &whence)) {
+        retval = NULL;
+    } else {
+        result = fseek(self->fp, offset, whence);
+        if (result < 0) {
+            retval = PyErr_SetFromErrno(PyExc_OSError);
+        } else {
+            Py_INCREF(Py_None);
+            retval = Py_None;
+        }
     }
+    Py_END_CRITICAL_SECTION();
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset, &whence)) {
-        return NULL;
-    }
-
-    result = fseek(self->fp, offset, whence);
-    if (result < 0) {
-        return PyErr_SetFromErrno(PyExc_OSError);
-    }
-
-    Py_INCREF(Py_None);
-    return Py_None;
+    return retval;
 }
 
 static PyObject* _Nullable file_fileno(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 fd;
+    PyObject* retval;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        retval = NULL;
+    } else {
+        fd = fileno(self->fp);
+        /* According to the manpage this function cannot fail */
+
+        retval = PyLong_FromLong(fd);
     }
-
-    fd = fileno(self->fp);
-    /* According to the manpage this function cannot fail */
-
-    return PyLong_FromLong(fd);
+    Py_END_CRITICAL_SECTION();
+    return retval;
 }
 
 static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject* kwds)
@@ -189,18 +224,22 @@ static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject*
     void*               buffer;
     Py_ssize_t          buffer_size;
     size_t              result;
-
-    if (self->fp == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
-    }
+    PyObject* retval;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "y#", keywords, &buffer, &buffer_size)) {
         return NULL;
     }
 
-    result = fwrite(buffer, 1, buffer_size, self->fp);
-    return Py_BuildValue("k", (unsigned long)result);
+    Py_BEGIN_CRITICAL_SECTION(_self);
+    if (self->fp == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Using closed file");
+        retval =  NULL;
+    } else {
+        result = fwrite(buffer, 1, buffer_size, self->fp);
+        retval =  PyLong_FromSize_t(result);
+    }
+    Py_END_CRITICAL_SECTION();
+    return retval;
 }
 
 static PyObject* _Nullable file_readline(PyObject* _self)
@@ -208,18 +247,22 @@ static PyObject* _Nullable file_readline(PyObject* _self)
     struct file_object* self = (struct file_object*)_self;
     char                buffer[2048];
     char*               result;
+    PyObject* retval;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
         return NULL;
-    }
-
-    result = fgets(buffer, 2048, self->fp);
-    if (result == NULL) {
-        return PyBytes_FromStringAndSize("", 0);
     } else {
-        return PyBytes_FromString(result);
+        result = fgets(buffer, 2048, self->fp);
+        if (result == NULL) {
+            retval = PyBytes_FromStringAndSize("", 0);
+        } else {
+            retval = PyBytes_FromString(result);
+        }
     }
+    Py_END_CRITICAL_SECTION();
+    return retval;
 }
 
 static PyObject* _Nullable file_read(PyObject* _self, PyObject* args, PyObject* kwds)
@@ -231,23 +274,22 @@ static PyObject* _Nullable file_read(PyObject* _self, PyObject* args, PyObject* 
     Py_ssize_t          buffer_size;
     size_t              result;
 
+    Py_BEGIN_CRITICAL_SECTION(_self);
+
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        return NULL;
+        buffer = NULL;
+    } else if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &buffer_size)) {
+        buffer = NULL;
+    } else {
+        buffer = PyBytes_FromStringAndSize(NULL, buffer_size);
+        if (buffer != NULL) {
+            result = fread(PyBytes_AsString(buffer), 1, buffer_size, self->fp);
+
+            _PyBytes_Resize(&buffer, result);
+        }
     }
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &buffer_size)) {
-        return NULL;
-    }
-
-    buffer = PyBytes_FromStringAndSize(NULL, buffer_size);
-    if (buffer == NULL) {
-        return NULL;
-    }
-
-    result = fread(PyBytes_AsString(buffer), 1, buffer_size, self->fp);
-
-    _PyBytes_Resize(&buffer, result);
+    Py_END_CRITICAL_SECTION();
     return buffer;
 }
 

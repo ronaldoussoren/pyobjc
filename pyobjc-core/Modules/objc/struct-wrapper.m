@@ -239,7 +239,7 @@ static PyObject* _Nullable struct_reduce(PyObject* self)
         PyTuple_SET_ITEM(values, i, v);
     }
 
-    result = Py_BuildValue("(OO)", Py_TYPE(self), values);
+    result = PyTuple_Pack(2, Py_TYPE(self), values);
     Py_DECREF(values);
     return result;
 }

@@ -1,10 +1,3 @@
-/*
- * Objective-C runtime 2.0 compatibility for MacOS X 10.4 and earlier.
- *
- * This code works by poking into the ObjC runtime, which means loads of
- * warnings on 10.5+ ;-)
- */
-
 #define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 

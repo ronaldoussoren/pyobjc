@@ -31,7 +31,7 @@ static PyObject* PyObjCOptions_Type;
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        return Py_BuildValue("n", VAR);                                                  \
+        return PyLong_FromSsize_t(VAR);                                                  \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -55,7 +55,7 @@ static PyObject* PyObjCOptions_Type;
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        return Py_BuildValue("i", VAR);                                                  \
+        return PyLong_FromLong(VAR);                                                  \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \

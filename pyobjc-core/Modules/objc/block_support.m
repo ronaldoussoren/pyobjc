@@ -88,8 +88,7 @@ oc_copy_helper(void* _dst, void* _src)
     struct block_literal* src = (struct block_literal*)_src;
 
     PyObjC_BEGIN_WITH_GIL
-        dst->invoke_cleanup = src->invoke_cleanup;
-        Py_XINCREF(dst->invoke_cleanup);
+        dst->invoke_cleanup = Py_XNewRef(src->invoke_cleanup);
 
     PyObjC_END_WITH_GIL
 }

@@ -3,6 +3,7 @@
  * alive forever and we therefore don't have to return storage to the OS.
  *
  * These functions are only used when deploying to macOS 10.14 or earlier.
+ *
  */
 #include "pyobjc.h"
 #include "closure_pool.h"
@@ -18,6 +19,15 @@ typedef struct freelist {
     struct freelist* _Nullable next;
 } freelist;
 
+#if PY_VERSION_HEX >= 0x030d0000
+/*
+ * Mutex protecting *closure_freelist*. There is no need for
+ * minimizing the amount of code protected by the lock, allocating
+ * of new closures is not anywhere close to being on a fast path.
+ */
+static PyMutex freelist_mutex = {0};
+#endif
+
 static freelist* closure_freelist = NULL;
 
 #ifdef MAP_JIT
@@ -29,7 +39,7 @@ static freelist* closure_freelist = NULL;
 static int
 use_map_jit(void)
 {
-    static int cached_result = -1;
+    static _Atomic int cached_result = -1;
 
     if (cached_result == -1) {
         char   buf[256];
@@ -93,23 +103,38 @@ ffi_closure* _Nullable PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
         return NULL;
     }
     PyObjC_Assert(codeloc, NULL);
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Lock(&freelist_mutex);
+#endif
     if (closure_freelist == NULL) {
         closure_freelist = allocate_block();
         if (closure_freelist == NULL) {
+#if PY_VERSION_HEX >= 0x030d0000
+            PyMutex_Unlock(&freelist_mutex);
+#endif
             return NULL;
         }
     }
     ffi_closure* result = (ffi_closure*)closure_freelist;
     closure_freelist    = closure_freelist->next;
     *codeloc            = (void*)result;
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&freelist_mutex);
+#endif
     return result;
 }
 
 int
 PyObjC_ffi_closure_free(ffi_closure* cl)
 {
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Lock(&freelist_mutex);
+#endif
     ((freelist*)cl)->next = closure_freelist;
     closure_freelist      = (freelist*)cl;
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&freelist_mutex);
+#endif
     return 0;
 }
 
