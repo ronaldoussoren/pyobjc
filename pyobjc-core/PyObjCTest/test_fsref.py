@@ -1,5 +1,6 @@
 import objc
 import os
+import pathlib
 import tempfile
 from PyObjCTest.fsref import OC_TestFSRefHelper
 from PyObjCTools.TestSupport import TestCase
@@ -65,7 +66,14 @@ class TestFSRef(TestCase):
 
         self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
 
-        with self.assertRaisesRegex(TypeError, "Expecting string"):
+        ref = objc.FSRef.from_pathname(pathlib.Path("/etc/hosts"))
+        self.assertIsInstance(ref, objc.FSRef)
+
+        self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
+
+        with self.assertRaisesRegex(
+            TypeError, "expected str, bytes or os.PathLike object, not int"
+        ):
             objc.FSRef.from_pathname(42)
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):

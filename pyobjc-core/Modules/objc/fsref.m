@@ -1,5 +1,8 @@
 /*
  * A custom wrapper for the (opaque) FSRef structure.
+ *
+ * Note that the FSRef wrappers are read-only and hence
+ * don't need special handling to support free threading.
  */
 #include "pyobjc.h"
 #import <CoreServices/CoreServices.h>
@@ -67,14 +70,28 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
     Boolean   isDirectory;
     OSStatus  rc;
 
-    if (!PyUnicode_Check(path)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting string");
+    PyObject* fspath = PyOS_FSPath(path);
+    if (fspath == NULL) {
         return NULL;
     }
 
-    value = PyUnicode_EncodeFSDefault(path);
-    if (value == NULL)
+    if (PyUnicode_Check(fspath)) {
+        value = PyUnicode_EncodeFSDefault(fspath);
+        if (value == NULL) {
+            Py_DECREF(fspath);
+            return NULL;
+        }
+        Py_CLEAR(fspath);
+
+    } else if (PyBytes_Check(fspath)) {
+        value = fspath;
+        fspath = NULL;
+    } else {
+        Py_DECREF(fspath);
+        PyErr_SetString(PyExc_TypeError, "Expecting string or os.PathLike");
         return NULL;
+    }
+
     PyObjC_Assert(PyBytes_Check(value), NULL);
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
