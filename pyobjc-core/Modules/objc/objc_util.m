@@ -1112,12 +1112,12 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             }
         }
 
-        seq = PySequence_Fast(pythonList, "converting to a C array");
+        seq = PyObjCSequence_Tuple(pythonList, "converting to a C array");
         if (seq == NULL) {
             return -1;
         }
 
-        seqlen = PySequence_Fast_GET_SIZE(seq);
+        seqlen = PyTuple_GET_SIZE(seq);
         if (size == NULL || *size == -1) {
             pycount = seqlen;
 
@@ -1168,7 +1168,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         *bufobj = NULL;
 
         for (i = 0; i < pycount; i++) {
-            PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
+            PyObject* item = PyTuple_GET_ITEM(seq, i);
 
             r = depythonify_c_value(elementType, item, ((char*)*array) + (i * eltsize));
             if (r == -1) {
@@ -1746,6 +1746,47 @@ PyObjC_RemoveInternalTypeCodes(char* buf)
         }
     }
     return 0;
+}
+
+PyObject* _Nullable
+PyObjCSequence_Tuple(PyObject* value, const char* context)
+{
+    PyObject* result = PySequence_Tuple(value);
+    if (result == NULL) {
+#if PY_VERSION_HEX >= 0x030c0000
+        PyObject* cause = PyErr_GetRaisedException();
+
+        PyErr_SetString(PyExc_TypeError, context);
+
+        PyObject* exc = PyErr_GetRaisedException();
+        PyException_SetCause(exc, cause);
+        PyErr_SetRaisedException(exc);
+#else /* PY_VERSION_HEX < 0x030c0000 */
+        PyObject *type, *cause, *traceback;
+        PyErr_Fetch(&type, &cause, &traceback)
+        PyErr_NormalizeException(&type, &cause, &traceback);
+        if (PyException_SetTraceback(cause, traceback) == --1) {
+            return NULL;
+        }
+        Py_CLEAR(type);
+        Py_CLEAR(traceback);
+
+        PyErr_SetString(PyExc_TypeError, context);
+        PyObject* exc;
+
+        PyErr_Fetch(&type, &exc, &traceback)
+        PyErr_NormalizeException(&type, &exc, &traceback);
+        if (PyException_SetTraceback(exc, traceback) == --1) {
+            return NULL;
+        }
+
+        PyException_SetCause(exc, cause);
+        PyErr_Restore(type, exc, traceback);
+#endif /* PY_VERSION_HEX < 0x030c0000 */
+        return NULL;
+    }
+
+    return result;
 }
 
 NS_ASSUME_NONNULL_END

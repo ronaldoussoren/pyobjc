@@ -121,36 +121,36 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     if (PyObjCStruct_Check(value)) {
         seq = StructAsTuple(value);
     } else {
-        seq = PySequence_Fast(value, "depythonifying struct, got no sequence");
+        seq = PyObjCSequence_Tuple(value, "depythonifying struct, got no sequence");
     }
     if (seq == NULL) {
         return -1;
     }
 
-    if (PySequence_Fast_GET_SIZE(seq) != 4) {
+    if (PyTuple_GET_SIZE(seq) != 4) {
         PyErr_Format(PyExc_ValueError,
                      "depythonifying struct of %" PY_FORMAT_SIZE_T
                      "d members, got tuple of %" PY_FORMAT_SIZE_T "d",
-                     4, PySequence_Fast_GET_SIZE(seq));
+                     4, PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;
     }
 
-    if (PySequence_Fast_GET_ITEM(seq, 0) == Py_None) {
+    if (PyTuple_GET_ITEM(seq, 0) == Py_None) {
         out->name = NULL;
 
-    } else if (PyBytes_Check(PySequence_Fast_GET_ITEM(seq, 0))) {
+    } else if (PyBytes_Check(PyTuple_GET_ITEM(seq, 0))) {
         out->name = PyBytes_AsString(PyTuple_GET_ITEM(seq, 0));
     } else {
         PyErr_Format(PyExc_TypeError,
                      "AuthorizationItem.name should be a byte string, not %s",
-                     Py_TYPE(PySequence_Fast_GET_ITEM(seq, 0))->tp_name);
+                     Py_TYPE(PyTuple_GET_ITEM(seq, 0))->tp_name);
         Py_DECREF(seq);
         return -1;
     }
 
-    if (PyLong_Check(PySequence_Fast_GET_ITEM(seq, 1))) {
-        out->valueLength = PyLong_AsLong(PySequence_Fast_GET_ITEM(seq, 1));
+    if (PyLong_Check(PyTuple_GET_ITEM(seq, 1))) {
+        out->valueLength = PyLong_AsLong(PyTuple_GET_ITEM(seq, 1));
         if (PyErr_Occurred()) {
             Py_DECREF(seq);
             return -1;
@@ -159,7 +159,7 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     } else {
         PyErr_Format(PyExc_TypeError,
                      "AuthorizationItem.valueLength should be an integer, not %s",
-                     Py_TYPE(PySequence_Fast_GET_ITEM(seq, 1))->tp_name);
+                     Py_TYPE(PyTuple_GET_ITEM(seq, 1))->tp_name);
         Py_DECREF(seq);
         return -1;
     }
@@ -167,9 +167,9 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     if (PyTuple_GET_ITEM(seq, 2) == Py_None) {
         out->value = NULL;
 
-    } else if (PyBytes_Check(PySequence_Fast_GET_ITEM(seq, 2))) {
+    } else if (PyBytes_Check(PyTuple_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
-        if (PyBytes_AsStringAndSize(PySequence_Fast_GET_ITEM(seq, 2), (char**)&out->value,
+        if (PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2), (char**)&out->value,
                                     &len)
             == -1) {
             Py_DECREF(seq);
@@ -186,12 +186,12 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     } else {
         PyErr_Format(PyExc_TypeError,
                      "AuthorizationItem.value should be a byte string, not %s",
-                     Py_TYPE(PySequence_Fast_GET_ITEM(seq, 2))->tp_name);
+                     Py_TYPE(PyTuple_GET_ITEM(seq, 2))->tp_name);
         Py_DECREF(seq);
         return -1;
     }
 
-    if (PyLong_Check(PySequence_Fast_GET_ITEM(seq, 3))) {
+    if (PyLong_Check(PyTuple_GET_ITEM(seq, 3))) {
         out->valueLength = PyLong_AsUnsignedLong(PyTuple_GET_ITEM(seq, 3));
         if (PyErr_Occurred()) {
             Py_DECREF(seq);
@@ -201,7 +201,7 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     } else {
         PyErr_Format(PyExc_TypeError,
                      "AuthorizationItem.flags should be a byte string, not %s",
-                     Py_TYPE(PySequence_Fast_GET_ITEM(seq, 3))->tp_name);
+                     Py_TYPE(PyTuple_GET_ITEM(seq, 3))->tp_name);
         Py_DECREF(seq);
         return -1;
     }

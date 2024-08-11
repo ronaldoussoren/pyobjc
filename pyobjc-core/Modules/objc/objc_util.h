@@ -166,6 +166,8 @@ extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObj
                                                      PyObject*);
 extern int PyObjC_RemoveInternalTypeCodes(char*);
 
+extern PyObject* _Nullable PyObjCSequence_Tuple(PyObject* value, const char* context);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* OBJC_UTIL */

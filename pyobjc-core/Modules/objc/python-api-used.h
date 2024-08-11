@@ -386,7 +386,7 @@ PyAPI_FUNC(int) PyBuffer_FillInfo(Py_buffer* view, PyObject* _Nullable exporter,
     __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyBuffer_Release(Py_buffer* view);
 PyAPI_FUNC(const Py_buffer*) PyPickleBuffer_GetBuffer(PyObject*)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(const Py_buffer* info)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PySlice_Unpack(PyObject* slice, Py_ssize_t* start, Py_ssize_t* stop,

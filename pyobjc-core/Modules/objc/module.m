@@ -300,13 +300,13 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
         return NULL;
     }
 
-    methodsArray = PySequence_Fast(methodsArray,
+    methodsArray = PyObjCSequence_Tuple(methodsArray,
                                    "Argument 'methodsArray' (pos 2) must be a sequence");
     if (methodsArray == NULL)
         return NULL;
 
-    int r = PyObjCClass_AddMethods(classObject, PySequence_Fast_ITEMS(methodsArray),
-                                   PySequence_Fast_GET_SIZE(methodsArray));
+    int r = PyObjCClass_AddMethods(classObject, PyTuple_ITEMS(methodsArray),
+                                   PyTuple_GET_SIZE(methodsArray));
     Py_DECREF(methodsArray);
 
     if (r == -1) {
@@ -1051,21 +1051,21 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
 
     if (pyfieldnames != Py_None) {
         pyfieldnames =
-            PySequence_Fast(pyfieldnames, "fieldnames must be a sequence of strings");
+            PyObjCSequence_Tuple(pyfieldnames, "fieldnames must be a sequence of strings");
 
         if (pyfieldnames == NULL)
             goto error_cleanup;
 
-        fieldnames = PyMem_Malloc(sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
+        fieldnames = PyMem_Malloc(sizeof(char*) * PyTuple_GET_SIZE(pyfieldnames));
         if (fieldnames == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_NoMemory();
             goto error_cleanup;
             // LCOV_EXCL_STOP
         }
-        memset(fieldnames, 0, sizeof(char*) * PySequence_Fast_GET_SIZE(pyfieldnames));
-        for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
-            PyObject* v = PySequence_Fast_GET_ITEM(pyfieldnames, i);
+        memset(fieldnames, 0, sizeof(char*) * PyTuple_GET_SIZE(pyfieldnames));
+        for (i = 0; i < PyTuple_GET_SIZE(pyfieldnames); i++) {
+            PyObject* v = PyTuple_GET_ITEM(pyfieldnames, i);
             if (PyUnicode_Check(v)) {
                 PyObject* bytes = PyUnicode_AsEncodedString(v, NULL, NULL);
                 if (bytes == NULL) {
@@ -1085,7 +1085,7 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
                 goto error_cleanup;
             }
         }
-        field_count = PySequence_Fast_GET_SIZE(pyfieldnames);
+        field_count = PyTuple_GET_SIZE(pyfieldnames);
 
     } else {
         field_count = -1;
@@ -1109,7 +1109,7 @@ error_cleanup:
         PyMem_Free(docstr);
 
     if (fieldnames) {
-        for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
+        for (i = 0; i < PyTuple_GET_SIZE(pyfieldnames); i++) {
             if (fieldnames[i])
                 PyMem_Free(fieldnames[i]);
         }

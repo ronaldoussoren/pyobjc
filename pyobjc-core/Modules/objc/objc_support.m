@@ -1778,13 +1778,13 @@ depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject
     /* Use an NSMutableData object to store the bytes, that way we can autorelease the
      * data because we cannot free it otherwise.
      */
-    PyObject* seq = PySequence_Fast(arg, "Sequence required");
+    PyObject* seq = PyObjCSequence_Tuple(arg, "Sequence required");
     if (seq == NULL) {
         return -1;
     }
 
     if (count == -1) {
-        count = PySequence_Fast_GET_SIZE(seq);
+        count = PyTuple_GET_SIZE(seq);
     }
 
     NSMutableData* data =
@@ -1825,12 +1825,12 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
         }
     }
 
-    PyObject* seq = PySequence_Fast(arg, "Sequence required");
+    PyObject* seq = PyObjCSequence_Tuple(arg, "Sequence required");
     if (seq == NULL) {
         return -1;
     }
 
-    Py_ssize_t count = PySequence_Fast_GET_SIZE(seq);
+    Py_ssize_t count = PyTuple_GET_SIZE(seq);
 
     /* The data is 0-filled, which means we won't have to add the terminated ourselves */
     NSMutableData* data =
@@ -1886,27 +1886,27 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
         return 0;
     }
 
-    seq = PySequence_Fast(value, "depythonifying array, got no sequence");
+    seq = PyObjCSequence_Tuple(value, "depythonifying array, got no sequence");
     if (seq == NULL) {
         return -1;
     }
 
     if (strict) {
-        if (PySequence_Fast_GET_SIZE(seq) != nitems) {
+        if (PyTuple_GET_SIZE(seq) != nitems) {
             PyErr_Format(PyExc_ValueError,
                          "depythonifying array of %" PY_FORMAT_SIZE_T
                          "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                         nitems, PySequence_Fast_GET_SIZE(seq));
+                         nitems, PyTuple_GET_SIZE(seq));
             Py_DECREF(seq);
             return -1;
         }
 
     } else {
-        if (PySequence_Fast_GET_SIZE(seq) < nitems) {
+        if (PyTuple_GET_SIZE(seq) < nitems) {
             PyErr_Format(PyExc_ValueError,
                          "depythonifying array of %" PY_FORMAT_SIZE_T
                          "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                         nitems, PySequence_Fast_GET_SIZE(seq));
+                         nitems, PyTuple_GET_SIZE(seq));
             Py_DECREF(seq);
             return -1;
         }
@@ -1914,7 +1914,7 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
 
     curdatum = datum;
     for (itemidx = 0; itemidx < nitems; itemidx++) {
-        PyObject* pyarg = PySequence_Fast_GET_ITEM(seq, itemidx);
+        PyObject* pyarg = PyTuple_GET_ITEM(seq, itemidx);
         int       err;
 
         err = depythonify_c_value(type, pyarg, curdatum);
@@ -1949,12 +1949,12 @@ c_array_nullterminated_size(PyObject* object, PyObject** seq)
     PyObjC_Assert(object != NULL, -1);
     PyObjC_Assert(seq != NULL, -1);
 
-    *seq = PySequence_Fast(object, "depythonifying array, got no sequence");
+    *seq = PyObjCSequence_Tuple(object, "depythonifying array, got no sequence");
     if (*seq == NULL) {
         return -1;
     }
 
-    return PySequence_Fast_GET_SIZE(*seq) + 1;
+    return PyTuple_GET_SIZE(*seq) + 1;
 }
 
 int
@@ -2006,23 +2006,23 @@ depythonify_c_array(const char* type, PyObject* arg, void* datum)
         return -1;
     }
 
-    seq = PySequence_Fast(arg, "depythonifying array, got no sequence");
+    seq = PyObjCSequence_Tuple(arg, "depythonifying array, got no sequence");
     if (seq == NULL) {
         return -1;
     }
 
-    if (nitems != PySequence_Fast_GET_SIZE(seq)) {
+    if (nitems != PyTuple_GET_SIZE(seq)) {
         PyErr_Format(PyExc_ValueError,
                      "depythonifying array of %" PY_FORMAT_SIZE_T
                      "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                     nitems, PySequence_Fast_GET_SIZE(seq));
+                     nitems, PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;
     }
 
     curdatum = datum;
     for (itemidx = 0; itemidx < nitems; itemidx++) {
-        PyObject* pyarg = PySequence_Fast_GET_ITEM(seq, itemidx);
+        PyObject* pyarg = PyTuple_GET_ITEM(seq, itemidx);
         int       err;
 
         err = depythonify_c_value(type, pyarg, curdatum);
@@ -2108,17 +2108,17 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
     if (PyObjCStruct_Check(arg)) {
         seq = StructAsTuple(arg);
     } else {
-        seq = PySequence_Fast(arg, "depythonifying struct, got no sequence");
+        seq = PyObjCSequence_Tuple(arg, "depythonifying struct, got no sequence");
     }
     if (seq == NULL) {
         return -1;
     }
 
-    if (nitems != PySequence_Fast_GET_SIZE(seq)) {
+    if (nitems != PyTuple_GET_SIZE(seq)) {
         PyErr_Format(PyExc_ValueError,
                      "depythonifying struct of %" PY_FORMAT_SIZE_T
                      "d members, got tuple of %" PY_FORMAT_SIZE_T "d",
-                     nitems, PySequence_Fast_GET_SIZE(seq));
+                     nitems, PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;
     }
@@ -2134,7 +2134,7 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
             type++;
         }
 
-        argument = PySequence_Fast_GET_ITEM(seq, itemidx);
+        argument = PyTuple_GET_ITEM(seq, itemidx);
         int error;
         if (!have_align) {
             align      = PyObjCRT_AlignOfType(type);

@@ -750,18 +750,18 @@ mkimp_NSCoder_decodeArrayOfObjCType_count_at_(PyObject*              callable,
               return;
           }
 
-          seq = PySequence_Fast(result, "Return-value must be a sequence");
+          seq = PyObjCSequence_Tuple(result, "Return-value must be a sequence");
           Py_DECREF(result);
           if (seq == NULL)
               goto error;
 
-          if ((NSUInteger)PySequence_Fast_GET_SIZE(seq) != count) {
+          if ((NSUInteger)PyTuple_GET_SIZE(seq) != count) {
               PyErr_SetString(PyExc_TypeError, "return value must be a of correct size");
               goto error;
           }
 
           for (i = 0; i < count; i++) {
-              res = depythonify_c_value(typestr, PySequence_Fast_GET_ITEM(seq, i),
+              res = depythonify_c_value(typestr, PyTuple_GET_ITEM(seq, i),
                                         ((char*)buf) + (i * size));
               if (res == -1)
                   goto error;

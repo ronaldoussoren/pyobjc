@@ -129,14 +129,14 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
         return NULL;
     }
 
-    seq = PySequence_Fast(variableInfo, "variableInfo not a sequence");
+    seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
     if (seq == NULL) {
         return NULL;
     }
 
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
-        PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
+        PyObject* item = PyTuple_GET_ITEM(seq, i);
         void*     value;
         char*     signature;
         PyObject* py_name;
@@ -244,14 +244,14 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         }
     }
 
-    seq = PySequence_Fast(functionInfo, "functionInfo not a sequence");
+    seq = PyObjCSequence_Tuple(functionInfo, "functionInfo not a sequence");
     if (seq == NULL) {
         return NULL;
     }
 
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
-        PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
+        PyObject* item = PyTuple_GET_ITEM(seq, i);
         void*     value;
         char*     signature;
         NSString* name;
@@ -379,14 +379,14 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
         return NULL;
     }
 
-    seq = PySequence_Fast(functionInfo, "functionInfo not a sequence");
+    seq = PyObjCSequence_Tuple(functionInfo, "functionInfo not a sequence");
     if (seq == NULL) {
         return NULL;
     }
 
-    len = PySequence_Fast_GET_SIZE(seq);
+    len = PyTuple_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
-        PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
+        PyObject* item = PyTuple_GET_ITEM(seq, i);
         function  value;
         char*     signature;
         PyObject* name;

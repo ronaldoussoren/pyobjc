@@ -170,11 +170,11 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     PyObjC_Assert(ihigh >= 0, -1);
     PyObjC_Assert(ihigh <= len, -1);
 
-    seq = PySequence_Fast(v, "Must assign sequence to slice");
+    seq = PyObjCSequence_Tuple(v, "Must assign sequence to slice");
     if (seq == NULL)
         return -1;
 
-    if (PySequence_Fast_GET_SIZE(seq) != ihigh - ilow) {
+    if (PyTuple_GET_SIZE(seq) != ihigh - ilow) {
         Py_DECREF(seq);
         PyErr_Format(PyExc_TypeError,
                      "Slice assignment would change size of %.100s "
@@ -187,7 +187,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         PyObject*    x;
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 
-        x = PySequence_Fast_GET_ITEM(seq, i - ilow);
+        x = PyTuple_GET_ITEM(seq, i - ilow);
         PyObjC_Assert(x != NULL, -1);
         SET_STRUCT_FIELD(self, member, x);
     }
@@ -524,11 +524,11 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
             return -1;
         }
 
-        PyObject* seq = PySequence_Fast(value, "must assign sequence to slice");
+        PyObject* seq = PyObjCSequence_Tuple(value, "must assign sequence to slice");
         if (seq == NULL)
             return -1;
 
-        if (PySequence_Fast_GET_SIZE(seq) != slicelength) {
+        if (PyTuple_GET_SIZE(seq) != slicelength) {
             Py_DECREF(seq);
             PyErr_Format(PyExc_TypeError,
                          "slice assignment would change size of %.100s "
@@ -539,7 +539,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
 
         Py_ssize_t cur, i;
         for (cur = start, i = 0; i < slicelength; cur += step, i++) {
-            int r = struct_sq_ass_item(self, cur, PySequence_Fast_GET_ITEM(seq, i));
+            int r = struct_sq_ass_item(self, cur, PyTuple_GET_ITEM(seq, i));
             if (r == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(seq);

@@ -87,16 +87,16 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 
     if (supers != Py_None) {
-        supers = PySequence_Fast(
+        supers = PyObjCSequence_Tuple(
             supers, "supers need to be None or a sequence of objc.formal_protocols");
         if (supers == NULL) {
             return NULL;
         }
 
-        len = PySequence_Fast_GET_SIZE(supers);
+        len = PyTuple_GET_SIZE(supers);
 
         for (i = 0; i < len; i++) {
-            PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
+            PyObject* v = PyTuple_GET_ITEM(supers, i);
             if (!PyObjCFormalProtocol_Check(v)) {
                 Py_DECREF(supers);
                 PyErr_SetString(
@@ -110,16 +110,16 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         Py_INCREF(supers);
     }
 
-    selectors = PySequence_Fast(
+    selectors = PyObjCSequence_Tuple(
         selectors, "selectors need to be a sequence of objc.selector instances");
     if (selectors == NULL) {
         Py_DECREF(supers);
         return NULL;
     }
 
-    len = PySequence_Fast_GET_SIZE(selectors);
+    len = PyTuple_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
-        PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
+        PyObject* sel = PyTuple_GET_ITEM(selectors, i);
         if (PyTuple_Check(sel) && PyTuple_Size(sel) == 2) {
             /* Support for JSExportAs requires adding a tuple of two items
              * to the list of selectors.
@@ -154,9 +154,9 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 
     if (supers != Py_None) {
-        len = PySequence_Fast_GET_SIZE(supers);
+        len = PyTuple_GET_SIZE(supers);
         for (i = 0; i < len; i++) {
-            PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
+            PyObject* v = PyTuple_GET_ITEM(supers, i);
             Protocol* p = PyObjCFormalProtocol_GetProtocol(v);
             if (unlikely(p == nil)) { // LCOV_BR_EXCL_LINE
                 /* Should never happen because we've already checked that 'v'
@@ -168,9 +168,9 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         }
     }
 
-    len = PySequence_Fast_GET_SIZE(selectors);
+    len = PyTuple_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
-        PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
+        PyObject* sel = PyTuple_GET_ITEM(selectors, i);
 
         if (PyTuple_Check(sel)) {
             for (i = 0; i < PyTuple_GET_SIZE(sel); i++) {

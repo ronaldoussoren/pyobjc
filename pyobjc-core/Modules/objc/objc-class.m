@@ -540,7 +540,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         PyObject*  seq;
         Py_ssize_t protocols_len;
 
-        seq = PySequence_Fast(protocols, "__pyobjc_protocols__ not a sequence?");
+        seq = PyObjCSequence_Tuple(protocols, "__pyobjc_protocols__ not a sequence?");
         if (seq == NULL) {
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
@@ -550,7 +550,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         Py_DECREF(protocols);
 
-        protocols_len = PySequence_Fast_GET_SIZE(seq);
+        protocols_len = PyTuple_GET_SIZE(seq);
         protocols     = PyList_New(0);
         if (protocols == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -561,7 +561,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
 
         for (i = 0; i < protocols_len; i++) {
-            if (PyList_Append(protocols,  PySequence_Fast_GET_ITEM(seq, i)) < 0) { // LCOV_BR_EXCL_LINE
+            if (PyList_Append(protocols,  PyTuple_GET_ITEM(seq, i)) < 0) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);

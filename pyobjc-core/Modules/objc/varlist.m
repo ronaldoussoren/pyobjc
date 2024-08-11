@@ -188,7 +188,7 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
         stop = start;
     }
 
-    seq = PySequence_Tuple(newval);
+    seq = PyObjCSequence_Tuple(newval, "New value must be a sequence");
     if (seq == NULL) {
         return -1;
     }
