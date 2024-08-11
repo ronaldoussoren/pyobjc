@@ -100,6 +100,12 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
         return NULL;
     }
 
+    /*
+     * Locking: Access the actual ivar while locking the object, primarily
+     * to avoid issues when concurrently modifying the instance variable
+     * (PyObjC's encoding functions are not atomic.
+     */
+    Py_BEGIN_CRITICAL_SECTION(obj);
     if (self->isSlot) {
         res = *(PyObject**)(((char*)objc) + ivar_getOffset(var));
 
@@ -125,6 +131,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
             res = pythonify_c_value(encoding, ((char*)objc) + ivar_getOffset(var));
         }
     }
+    Py_END_CRITICAL_SECTION();
     return res;
 }
 
@@ -180,12 +187,21 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
 
     // NSString* ocName = [NSString stringWithUTF8String:self->name];
     // [objc willChangeValueForKey:ocName];
+    //
+    /* Locking: The update to the actual ivar is done while locking
+     * the proxy object. That's primarily needed because the encoding
+     * functions are not atomic, and for slots this is also needed to
+     * avoid hitting race conditions.
+     */
 
     if (self->isSlot) {
+        Py_BEGIN_CRITICAL_SECTION(obj);
         PyObject** slotval = (PyObject**)(((char*)objc) + ivar_getOffset(var));
         Py_XINCREF(value);
-        Py_XDECREF(*slotval);
+        PyObject* old_value = *slotval;
         *slotval = value;
+        Py_XDECREF(old_value);
+        Py_END_CRITICAL_SECTION();
 
         // [objc didChangeValueForKey:ocName];
         return 0;
@@ -193,7 +209,12 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
 
     if (strcmp(ivar_getTypeEncoding(var), @encode(id)) == 0) {
         /* Automagically manage refcounting of instance variables */
+
+        /* Locking: No critical section is needed here, assuming
+         * the object_[gs]etIvar functions are atomic.
+         */
         id new_value;
+        id old_value = nil;
 
         res = depythonify_c_value(@encode(id), value, &new_value);
         if (res == -1) {
@@ -201,25 +222,41 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
             return -1;
         }
 
+        /* For outlets we automatically adjust the retain count.
+         *
+         * Increase the retain count for the new value before
+         * changing the ivar, and decrease the retain count
+         * for the old value afterwards to avoid having a window
+         * where the ivar has a too low retain count.
+         */
         if (!self->isOutlet) {
-            Py_BEGIN_ALLOW_THREADS
-                @try {
-                    id old_value = object_getIvar(objc, var);
-                    [new_value retain];
-                    [old_value release];
-                } @catch (NSObject* localException) {
-                    NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
-                          localException);
-                }
-            Py_END_ALLOW_THREADS
+            old_value = object_getIvar(objc, var);
+            @try {
+                [new_value retain];
+            } @catch (NSObject* localException) {
+                NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
+                      localException);
+            }
         }
 
         object_setIvar(objc, var, new_value);
-        // [objc didChangeValueForKey:ocName];
+
+        if (old_value != nil) {
+            /* Releasing, and even deallocating, a reference should
+             * take very little time, don't bother releasing the GIL.
+             */
+            @try {
+                [old_value release];
+            } @catch (NSObject* localException) {
+                NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
+                      localException);
+            }
+        }
 
         return 0;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(obj);
     size = PyObjCRT_SizeOfType(ivar_getTypeEncoding(var));
     if (size == -1) {
         // [objc didChangeValueForKey:ocName];
@@ -227,6 +264,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     }
     res = depythonify_c_value(ivar_getTypeEncoding(var), value,
                               (void*)(((char*)objc) + ivar_getOffset(var)));
+    Py_END_CRITICAL_SECTION();
     if (res == -1) {
         // [objc didChangeValueForKey:ocName];
         return -1;
@@ -314,6 +352,10 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
 
     if (self->name == NULL) {
         self->name = PyObjCUtil_Strdup(name);
+        if (self->name == NULL) {
+            PyErr_NoMemory();
+            return NULL;
+        }
     }
 
     Py_INCREF(Py_None);
@@ -324,6 +366,11 @@ static Py_hash_t
 ivar_hash(PyObject* o)
 {
     Py_hash_t result = 0;
+
+    /*
+     * XXX: 'name' can change through ``__pyobjc_class_setup__``, which means
+     *      ivar's shouldn't be used as dict keys!
+     */
 
     if (PyObjCInstanceVariable_GetName(o)) {
         result = PyHash_GetFuncDef()->hash(PyObjCInstanceVariable_GetName(o),
@@ -538,6 +585,8 @@ PyObjCInstanceVariable_Setup(PyObject* module)
         PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
+
+    /* XXX: Which this INCREF? AddObject does not steal a reference */
     Py_INCREF(PyObjCInstanceVariable_Type);
     return 0;
 }
