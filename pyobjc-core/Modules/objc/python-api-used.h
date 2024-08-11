@@ -199,7 +199,7 @@ PyAPI_FUNC(int) PyModule_AddObject(PyObject* mod, const char*, PyObject* value)
 PyAPI_FUNC(int) PyModule_AddStringConstant(PyObject*, const char*, const char*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyModule_GetDict(PyObject*)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((__unavailable__));
 PyAPI_FUNC(Py_ssize_t) PyNumber_AsSsize_t(PyObject* o, PyObject* _Nullable exc)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyNumber_Float(PyObject* o)
