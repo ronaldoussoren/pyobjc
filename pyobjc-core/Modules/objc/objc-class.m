@@ -1175,38 +1175,50 @@ static PyObject* _Nullable class_repr(PyObject* obj)
     }
 }
 
-// LCOV_EXCL_START
 static void
 class_dealloc(PyObject* cls)
 {
-    if (((PyObjCClassObject*)cls)->class == Nil) {
-        /*
-         * Cleanup of a class proxy that was created due to a race condition in creating
-         * instances.
-         */
-        PyObjCClassObject* info = (PyObjCClassObject*)cls;
+    PyObjCClassObject* self = (PyObjCClassObject*)cls;
 
-        Py_CLEAR(info->sel_to_py);
-        Py_CLEAR(info->delmethod);
-        Py_CLEAR(info->hiddenSelectors);
-        Py_CLEAR(info->hiddenClassSelectors);
-        Py_CLEAR(info->lookup_cache);
-        PyType_Type.tp_dealloc(cls);
+    if (self->hasPythonImpl) {
+        /*
+         * This is a class implemented in Python. These cannot be deallocated because
+         * the state in the Objective-C runtime cannot be reverted. Deallocating the
+         * Python state would therefore result in dangling pointers in the Objective-C
+         * runtime.
+         */
+        char buf[1024];
+
+        snprintf(buf, sizeof(buf), "Deallocating objective-C class %s %d %p\n",
+                 ((PyTypeObject*)cls)->tp_name, class_isMetaClass(((PyObjCClassObject*)cls)->class), cls);
+
+        fputs(buf, stderr);
+        Py_INCREF(cls);
         return;
     }
-    /* XXX: This method should never be called because it is impossible to
-     * unregister and Objective-C class from the Objective-C runtime.
+
+    /*
+     * XXX: use class_replaceMethod to add a dummy implementation for methods
+     *      with a python implementation (again to avoid corrupt Objective-C runtime
+     *      state.
+     *
+     *      Note that this shouldn't actually be necessary as the only use-case for
+     *      deallocating instances of this class is recovering from a race condition
+     *      when creating the proxy for a pure Objective-C class in multiple threads.
      */
-    char buf[1024];
 
-    snprintf(buf, sizeof(buf), "Deallocating objective-C class %s %d %p\n",
-             ((PyTypeObject*)cls)->tp_name, class_isMetaClass(((PyObjCClassObject*)cls)->class), cls);
+    Py_CLEAR(self->sel_to_py);
+    Py_CLEAR(self->delmethod);
+    Py_CLEAR(self->hiddenSelectors);
+    Py_CLEAR(self->hiddenClassSelectors);
+    Py_CLEAR(self->lookup_cache);
+    PyType_Type.tp_dealloc(cls);
 
-    fputs(buf, stderr);
-    Py_INCREF(cls);
+    /* Note: the class cannot be in the 'objc_class_locate' data structure
+     * because that table owns a reference to the class.
+     */
     return;
 }
-// LCOV_EXCL_STOP
 
 int
 PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
@@ -2731,17 +2743,6 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     info->hiddenClassSelectors = hiddenClassSelectors;
     info->lookup_cache         = NULL;
 
-    PyObject* temp = objc_class_locate(objc_class);
-    if (temp != NULL) {
-
-        info->class = Nil;
-        Py_DECREF(result);
-        return temp;
-    }
-    if (objc_class_register(objc_class, result) < 0) {
-        Py_DECREF(result);
-        return NULL;
-    }
 
     /*
      * Support the buffer protocol in the wrappers for NSData and
@@ -2760,7 +2761,6 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         PyType_Modified((PyTypeObject*)result);
         PyType_Ready((PyTypeObject*)result);
     }
-
     if (strcmp(className, "_NSPlaceholderData") == 0) {
         /* XXX */
         /* Workaround for an issue on macOS 10.15: For some
@@ -2774,17 +2774,32 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         [objc_class class];
     }
 
+
+
     var = class_getInstanceVariable(objc_class, "__dict__");
     if (var != NULL) {
         info->dictoffset = ivar_getOffset(var);
     }
 
-    if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
-            result, "__module__", PyObjCClass_DefaultModule)
-        == -1) {
+    /*
+     * Note: Setting the __module__ attribute is directly invoking the superclass implementation
+     * because class_setattro will do the same, and the implementation of class_setattro
+     * is dependent on the class being registered using objc_class_register.
+     */
+    if (PyType_Type.tp_setattro(result, PyObjCNM___module__, PyObjCClass_DefaultModule) == -1) {
         PyErr_Clear(); // LCOV_EXCL_LINE
     }
 
+    PyObject* temp = objc_class_locate(objc_class);
+    if (temp != NULL) {
+
+        Py_DECREF(result);
+        return temp;
+    }
+    if (objc_class_register(objc_class, result) < 0) {
+        Py_DECREF(result);
+        return NULL;
+    }
 
     return result;
 }
