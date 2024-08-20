@@ -220,12 +220,12 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
 
     if (PyLong_Check(pyValue)) {
         mantissa = PyLong_AsUnsignedLongLong(pyValue);
-        if (PyErr_Occurred()) {
+        if (mantissa == (unsigned long long)-1 && PyErr_Occurred()) {
             long long lng;
             PyErr_Clear();
             lng = PyLong_AsLongLong(pyValue);
 
-            if (PyErr_Occurred()) {
+            if (lng == -1 && PyErr_Occurred()) {
                 return -1;
             }
 
