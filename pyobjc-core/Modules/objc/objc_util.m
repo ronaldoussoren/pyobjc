@@ -74,6 +74,7 @@ PyObject* PyObjCNM___useKVO__;
 PyObject* PyObjCNM_typestr;
 PyObject* PyObjCNM_classname;
 PyObject* PyObjCNM___typestr__;
+PyObject* PyObjCNM___module__;
 
 
 int
@@ -165,6 +166,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_typestr, "typestr");
     NEW_STR(PyObjCNM_classname, "classname");
     NEW_STR(PyObjCNM___typestr__, "__typestr__");
+    NEW_STR(PyObjCNM___module__, "__module__");
 
 #undef NEW_STR
 
