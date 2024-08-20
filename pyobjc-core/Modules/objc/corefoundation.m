@@ -168,16 +168,26 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
-    /* XXX: This leaks the new tuple */
-    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-            dict, PyObjCNM___slots__, PyTuple_New(0))
-        == -1) {
+    PyObject* slots = PyTuple_New(0);
+    if (slots == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(dict);
         Py_DECREF(cf);
         return NULL;
         // LCOV_EXCL_STOP
     }
+
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            dict, PyObjCNM___slots__, slots)
+        == -1) {
+        // LCOV_EXCL_START
+        Py_DECREF(slots);
+        Py_DECREF(dict);
+        Py_DECREF(cf);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    Py_DECREF(slots);
 
     bases = PyTuple_New(1);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
@@ -253,7 +263,6 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     }
 
     Py_DECREF(cf);
-    cf = NULL;
     return result;
 }
 
