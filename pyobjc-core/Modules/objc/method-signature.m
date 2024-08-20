@@ -1464,6 +1464,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         } else {
             pos     = 0;
             max_idx = -1;
+            Py_BEGIN_CRITICAL_SECTION(arguments);
             while (PyDict_Next(arguments, &pos, &key, &value)) {
                 if (PyLong_Check(key)) {
 
@@ -1476,6 +1477,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
                     }
                 }
             }
+            Py_END_CRITICAL_SECTION();
 
             max_idx += 1;
         }

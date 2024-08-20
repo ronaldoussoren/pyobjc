@@ -270,17 +270,28 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
             [tmpValue retain];
 
             id v = object_getIvar(objcValue, ivar);
-            [v release];
-        }
-        /* else:
-         *   This can cause memory corruption when *tmpValue*
-         *   isn't kept alive through other means, in general
-         *   by storing it in a Cooa collection (just keeping
-         *   the python variable alive isn't good enough when
-         *   the *value* isn't a Cocoa object).
-         */
+            object_setIvar(objcValue, ivar, tmpValue);
 
-        object_setIvar(objcValue, ivar, tmpValue);
+            /* This uses -autorelease instead of -release because
+             * there's a race between replacing the value here
+             * and another thread getting the value. That is not
+             * fixable by locking the Python proxy as the other thread
+             * might run native ObjC/Swift code.
+             *
+             * Autoreleasing gives the other thread ample time to
+             * call -retain (although there's still a race).
+             */
+            [v autorelease];
+        } else {
+            /*
+             *   This can cause memory corruption when *tmpValue*
+             *   isn't kept alive through other means, in general
+             *   by storing it in a Cooa collection (just keeping
+             *   the python variable alive isn't good enough when
+             *   the *value* isn't a Cocoa object).
+             */
+            object_setIvar(objcValue, ivar, tmpValue);
+        }
 
     } else {
         /* A simple value */

@@ -17,12 +17,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef    PyObject* _Nullable (*pythonify_func)(void*);
+typedef    int (*depythonify_func)(PyObject*, void*);
+
 struct wrapper {
     const char* name;
     const char* signature;
     size_t      offset;
-    PyObject* _Nullable (*pythonify)(void*);
-    int (*depythonify)(PyObject*, void*);
+    pythonify_func pythonify;
+    depythonify_func depythonify;
 };
 
 /* Using an array is pretty lame, this needs to be replaced by a more
@@ -31,6 +34,14 @@ struct wrapper {
  */
 static struct wrapper* items      = 0;
 static Py_ssize_t      item_count = 0;
+
+#ifdef Py_GIL_DISABLED
+/*
+ * Mutex protecting *items*.
+ */
+static PyMutex items_mutex = {0};
+#endif
+
 
 /*
  * If signature is a pointer to a structure return the index of the character
@@ -63,11 +74,18 @@ find_end_of_structname(const char* signature)
     return strlen(signature);
 }
 
-static struct wrapper* _Nullable FindWrapper(const char* signature)
+/* XXX: This is unsafe in free threaded mode, options:
+ * 1. Return 'struct wrapper' (e.g. a copy of the found entry)
+ * 2. Add variants returning the fields used by other parts of this file
+ */
+static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonify, depythonify_func* _Nullable depythonify, const char**_Nullable name)
 {
     /* XXX: This is a linear search, find better way to do this! */
     Py_ssize_t i;
 
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&items_mutex);
+#endif
     for (i = 0; i < item_count; i++) {
         if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
             /* See comment just above find_end_of_structname */
@@ -75,23 +93,71 @@ static struct wrapper* _Nullable FindWrapper(const char* signature)
                 /* XXX: Shouldn't this adjust for _C_CONST? */
                 char ch = signature[items[i].offset];
                 if (ch == '=' || ch == _C_STRUCT_E) {
-                    return items + i;
+                    if (pythonify != NULL) {
+                        *pythonify = items[i].pythonify;
+                    }
+                    if (depythonify != NULL) {
+                        *depythonify = items[i].depythonify;
+                    }
+                    if (name != NULL) {
+                        *name = items[i].name;
+                    }
+#ifdef Py_GIL_DISABLED
+                    PyMutex_Unlock(&items_mutex);
+#endif
+                    return 0;
                 }
 
             } else if (signature[1] == _C_STRUCT_B) {
                 char ch = signature[items[i].offset];
                 if (ch == '=' || ch == _C_STRUCT_E) {
-                    return items + i;
+                    if (pythonify != NULL) {
+                        *pythonify = items[i].pythonify;
+                    }
+                    if (depythonify != NULL) {
+                        *depythonify = items[i].depythonify;
+                    }
+                    if (name != NULL) {
+                        *name = items[i].name;
+                    }
+#ifdef Py_GIL_DISABLED
+                    PyMutex_Unlock(&items_mutex);
+#endif
+                    return 0;
                 }
 
             } else {
                 if (signature[items[i].offset] == '\0') {
-                    return items + i;
+                    if (pythonify != NULL) {
+                        *pythonify = items[i].pythonify;
+                    }
+                    if (depythonify != NULL) {
+                        *depythonify = items[i].depythonify;
+                    }
+                    if (name != NULL) {
+                        *name = items[i].name;
+                    }
+#ifdef Py_GIL_DISABLED
+                    PyMutex_Unlock(&items_mutex);
+#endif
+                    return 0;
                 }
             }
         }
     }
-    return NULL;
+#if PY_VERSION_HEX >= 0x030d0000
+    PyMutex_Unlock(&items_mutex);
+#endif
+    if (pythonify != NULL) {
+        *pythonify = NULL;
+    }
+    if (depythonify != NULL) {
+        *depythonify = NULL;
+    }
+    if (name != NULL) {
+        *name = NULL;
+    }
+    return -1;
 }
 
 static PyObject* _Nullable ID_to_py(const void* idValue)
@@ -132,21 +198,33 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
     if (result == NULL) {
         return NULL;
     }
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&items_mutex);
+#endif
     for (i = 0; i < item_count; i++) {
         if (items[i].pythonify == (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py) {
             PyObject* cur = PyBytes_FromString(items[i].signature);
             if (cur == NULL) {
                 Py_DECREF(result);
+#ifdef Py_GIL_DISABLED
+                PyMutex_Unlock(&items_mutex);
+#endif
                 return NULL;
             }
             if (PyList_Append(result, cur) == -1) {
                 Py_DECREF(cur);
                 Py_DECREF(result);
+#if PY_VERSION_HEX >= 0x030d0000
+                PyMutex_Unlock(&items_mutex);
+#endif
                 return NULL;
             }
             Py_DECREF(cur);
         }
     }
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&items_mutex);
+#endif
     return result;
 }
 
@@ -166,7 +244,17 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     PyObjC_Assert(signature, -1);
     PyObjC_Assert(pythonify, -1);
     PyObjC_Assert(depythonify, -1);
+    PyObjCPointerWrapper_ToPythonFunc cur_pythonify;
+    PyObjCPointerWrapper_FromPythonFunc cur_depythonify;
 
+#if 0
+    /* XXX: Disabled because this is inherently problematic for
+     *      the free threaded build.
+     *
+     *      It should be possibly to implement this in a way that's
+     *      compatible with free threading, but that's only needed
+     *      if the code is actually needed.
+     */
     struct wrapper* value = FindWrapper(signature);
 
     if (value != NULL) {
@@ -175,88 +263,95 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
         value->depythonify = depythonify;
         return 0;
     }
+#else
+    if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
+        if (cur_pythonify != pythonify || cur_depythonify != depythonify) {
+            PyErr_Format(PyObjCExc_Error, "already have registration for signature '%s'", signature);
+            return -1;
+        }
+    }
+#endif
 
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&items_mutex);
+#endif
     struct wrapper* tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
     if (tmp == NULL) {    // LCOV_BR_EXCL_LINE
         PyErr_NoMemory(); // LCOV_EXCL_LINE
         return -1;        // LCOV_EXCL_LINE
     }
     items = tmp;
-    item_count++;
-
-    value = items + (item_count - 1);
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&items_mutex);
+#endif
 
     char* tmp_name = PyObjCUtil_Strdup(name);
     if (tmp_name == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
-        item_count--;
         return -1;
         // LCOV_EXCL_STOP
     }
-    value->name = tmp_name;
+    items[item_count].name = tmp_name;
 
     char* tmp_sig = PyObjCUtil_Strdup(signature);
     if (tmp_sig == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyMem_Free((void*)value->name);
+        PyMem_Free((void*)items[item_count].name);
         PyErr_NoMemory();
-        item_count--;
         return -1;
         // LCOV_EXCL_STOP
     }
-    value->signature = tmp_sig;
+    items[item_count].signature = tmp_sig;
 
-    value->offset = find_end_of_structname(value->signature);
+    items[item_count].offset = find_end_of_structname(items[item_count].signature);
 
-    value->pythonify   = pythonify;
-    value->depythonify = depythonify;
+    items[item_count].pythonify   = pythonify;
+    items[item_count].depythonify = depythonify;
+
+    /* Update item_count to ensure that other threads won't see
+     * a partially initialized entry.
+     */
+    item_count++;
 
     return 0;
 }
 
 PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, const void* datum)
 {
-    struct wrapper* item;
     PyObject*       result;
+    pythonify_func  pythonify;
 
-    item = FindWrapper(type);
-    if (item == NULL) {
+
+    if (FindWrapper(type, &pythonify, NULL, NULL) == -1) {
         return NULL;
     }
 
-    result = item->pythonify(*(void**)datum);
+    result = pythonify(*(void**)datum);
     return result;
 }
 
 int
 PyObjCPointerWrapper_FromPython(const char* type, PyObject* value, void* datum)
 {
-    struct wrapper* item;
-    int             r;
+    depythonify_func depythonify;
 
     if (value == PyObjC_NULL) {
         *(void**)datum = NULL;
         return 0;
     }
 
-    item = FindWrapper(type);
-    if (item == NULL) {
+    if (FindWrapper(type, NULL, &depythonify, NULL) == -1) {
         return -1;
     }
 
-    r = item->depythonify(value, datum);
-    if (r == 0) {
-        return 0;
-    } else {
-        return -1;
-    }
+    return depythonify(value, datum)==0?0:-1;
 }
 
 int
 PyObjCPointerWrapper_HaveWrapper(const char* type)
 {
-    return (FindWrapper(type) != NULL);
+    return (FindWrapper(type, NULL, NULL, NULL) != -1);
 }
 
 static PyObject* _Nullable PyObjectPtr_New(void* obj) { return (PyObject*)obj; }
@@ -333,11 +428,12 @@ PyObjCPointerWrapper_Init(PyObject* module __attribute__((__unused__)))
 
 const char* _Nullable PyObjCPointerWrapper_Describe(const char* signature)
 {
-    struct wrapper* wrapper = FindWrapper(signature);
-    if (wrapper == NULL)
+    const char* name;
+    if (FindWrapper(signature, NULL, NULL, &name) == -1) {
         return NULL;
+    }
 
-    return wrapper->name;
+    return name;
 }
 
 NS_ASSUME_NONNULL_END
