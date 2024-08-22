@@ -108,6 +108,11 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.wantsExtendedDynamicRangeContent)
         self.assertArgIsBOOL(Quartz.CALayer.setWantsExtendedDynamicRangeContent_, 0)
 
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(Quartz.CALayer.wantsDynamicContentScaling)
+        self.assertArgIsBOOL(Quartz.CALayer.setWantsDynamicContentScaling_, 0)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(Quartz.kCAFilterTrilinear, str)

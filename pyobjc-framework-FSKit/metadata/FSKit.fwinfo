@@ -109,6 +109,17 @@
    "FSBlockDeviceResource": {
     "methods": [
      {
+      "selector": "installedExtensionsWithError:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "FSBlockDeviceResource": {
+    "methods": [
+     {
       "args": {
        "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
       },

@@ -9,3 +9,9 @@ class TestVTRAWProcessingProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTRAWProcessingPropertyKey_MetalDeviceRegistryID, str
         )
+        self.assertIsInstance(
+            VideoToolbox.kVTRAWProcessingPropertyKey_MetalDeviceRegistryID, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTRAWProcessingPropertyKey_OutputColorAttachments, str
+        )

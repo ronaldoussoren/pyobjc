@@ -233,3 +233,11 @@ class TestBase(TestCase):
         CoreFoundation.CFRetain(obj)
         CoreFoundation.CFAutorelease(obj)
         del obj
+
+    def test_functions15_0(self):
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorAllocateTyped")
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorReallocateTyped")
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorAllocateBytes")
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorReallocateBytes")
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorAllocate")
+        self.assertNotHasAttr(CoreFoundation, "CFAllocatorReallocate")

@@ -127,3 +127,7 @@ class TestColorSyncTransform(TestCase):
         self.assertIsInstance(ColorSync.kColorSyncHDRDerivative, str)
         self.assertIsInstance(ColorSync.kColorSyncPQDerivative, str)
         self.assertIsInstance(ColorSync.kColorSyncHLGDerivative, str)
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(ColorSync.kColorSyncTransformUseITU709OETF, str)

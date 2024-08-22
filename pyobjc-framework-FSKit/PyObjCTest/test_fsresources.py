@@ -17,16 +17,10 @@ class TestFSResourceHelper(FSKit.NSObject):
 class TestFSResource(TestCase):
     def test_enum(self):
         self.assertIsEnumType(FSKit.FSMatchResult)
-        self.assertEqual(FSKit.FSMatchNotRecognized, 0)
-        self.assertEqual(FSKit.FSMatchRecognized, 1)
-        self.assertEqual(FSKit.FSMatchUsableButLimited, 2)
-        self.assertEqual(FSKit.FSMatchUsable, 3)
-
-        self.assertIsEnumType(FSKit.FSResourceKind)
-        self.assertEqual(FSKit.FSResourceKindGeneric, 0)
-        self.assertEqual(FSKit.FSResourceKindBlockDevice, 1)
-        self.assertEqual(FSKit.FSResourceKindPathURL, 2)
-        self.assertEqual(FSKit.FSResourceKindServerURL, 3)
+        self.assertEqual(FSKit.FSMatchResultNotRecognized, 0)
+        self.assertEqual(FSKit.FSMatchResultRecognized, 1)
+        self.assertEqual(FSKit.FSMatchResultUsableButLimited, 2)
+        self.assertEqual(FSKit.FSMatchResultUsable, 3)
 
     def test_structs(self):
         v = FSKit.FSMetaReadahead()
@@ -34,7 +28,7 @@ class TestFSResource(TestCase):
         self.assertIsInstance(v.length, int)
 
     def test_protocols(self):
-        self.assertProtocolExists("FSManageableResourceSimpleMaintenanceOps")
+        self.assertProtocolExists("FSManageableResourceMaintenanceOperations")
         self.assertProtocolExists("FSBlockDeviceOperations")
 
     def test_protocol_methods(self):
@@ -54,6 +48,10 @@ class TestFSResource(TestCase):
         )
 
     def test_methods(self):
+        self.assertResultIsBOOL(FSKit.FSResource.isRevoked)
+        self.assertResultIsBOOL(FSKit.FSBlockDeviceResource.isWritable)
+        self.assertResultIsBOOL(FSKit.FSBlockDeviceResource.isTerminated)
+
         self.assertArgIsInOut(
             FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_, 0
         )
@@ -177,16 +175,16 @@ class TestFSResource(TestCase):
         )
 
         self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.synchronousDelayedMetaWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousDelayedMetaWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
             0,
             2,
         )
         self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousDelayedMetaWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
             3,
             b"v@",
         )

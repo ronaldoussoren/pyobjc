@@ -118,6 +118,8 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorEncodeFailed, -11883)
         self.assertEqual(AVFoundation.AVErrorSandboxExtensionDenied, -11884)
         self.assertEqual(AVFoundation.AVErrorToneMappingFailed, -11885)
+        self.assertEqual(AVFoundation.AVErrorMediaExtensionDisabled, -11886)
+        self.assertEqual(AVFoundation.AVErrorMediaExtensionConflict, -11887)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

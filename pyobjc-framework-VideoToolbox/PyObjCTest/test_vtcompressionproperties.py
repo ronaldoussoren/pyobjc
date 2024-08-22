@@ -412,3 +412,6 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_SpatialAdaptiveQPLevel, str
         )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MaximumRealTimeFrameRate, str
+        )

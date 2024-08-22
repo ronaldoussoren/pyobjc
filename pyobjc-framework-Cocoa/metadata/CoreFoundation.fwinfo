@@ -341,6 +341,18 @@
    "CFAllocatorReallocate": {
     "ignore": true
    },
+   "CFAllocatorAllocateTyped": {
+    "ignore": true
+   },
+   "CFAllocatorReallocateTyped": {
+    "ignore": true
+   },
+   "CFAllocatorAllocateBytes": {
+    "ignore": true
+   },
+   "CFAllocatorReallocateBytes": {
+    "ignore": true
+   },
    "CFArrayAppendValue": {
      "args": {
        "1": { "type_override": "@" }

@@ -8,5 +8,5 @@ class TestHKActivitySummary(TestCase):
 
     @min_os_level("15.0")
     def test_methods(self):
-        self.assertResultIsBOOL(HealthKit.HKActivitySummary.paused)
+        self.assertResultIsBOOL(HealthKit.HKActivitySummary.isPaused)
         self.assertArgIsBOOL(HealthKit.HKActivitySummary.setPaused_, 0)
