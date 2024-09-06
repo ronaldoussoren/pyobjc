@@ -1275,7 +1275,9 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
      * the interface of this function with yet another argument.
      */
     if (flags != PyObjCObject_kDEFAULT) {
-        PyObjC_RegisterPythonProxy(objc_object, res);
+        PyObject* actual = PyObjC_RegisterPythonProxy(objc_object, res);
+        Py_DECREF(res);
+        return actual;
     }
     return res;
 }

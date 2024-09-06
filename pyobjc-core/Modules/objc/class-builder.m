@@ -103,9 +103,34 @@ PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
  * methods.
  */
 
+#ifdef Py_GIL_DISABLED
+/*
+ * Class creation is not performance critical, use a mutex to protect
+ * against creating the same intermedia class twice in the free threaded
+ * build.
+ */
+static PyMutex intermediate_mutex = { 0 };
+#endif
+
+
 static Class _Nullable build_intermediate_class(Class base_class, char* name)
 {
     Class intermediate_class = nil;
+
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&intermediate_mutex);
+
+#endif
+    /*
+     * The naming style for the intermediate class ensures that the class
+     * we've found has the correct parent, so no need to check for this in
+     * release mode.
+     */
+    intermediate_class = objc_lookUpClass(name);
+    if (intermediate_class != Nil) {
+        PyObjC_Assert(class_getSuperclass(intermediate_class) == base_class, Nil);
+        return intermediate_class;
+    }
 
     intermediate_class = objc_allocateClassPair(base_class, name, 0);
     if (intermediate_class == NULL) { // LCOV_BR_EXCL_LINE
@@ -136,6 +161,9 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
     }
 
     objc_registerClassPair(intermediate_class);
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&intermediate_mutex);
+#endif
     return (Class)intermediate_class;
 
 error_cleanup:
@@ -143,6 +171,10 @@ error_cleanup:
     if (intermediate_class) {
         objc_disposeClassPair(intermediate_class);
     }
+
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&intermediate_mutex);
+#endif
 
     return Nil;
     // LCOV_EXCL_STOP
@@ -333,15 +365,12 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             // LCOV_EXCL_STOP
         }
 
-        intermediate_class = objc_lookUpClass(buf);
-        if (intermediate_class == NULL) {
-            intermediate_class = build_intermediate_class(super_class, buf);
-            if (intermediate_class == Nil) { // LCOV_BR_EXCL_LINE
-                /* build_intermediate_class can only fail when
-                 * running out of resources.
-                 */
-                goto error_cleanup; // LCOV_EXCL_LINE
-            }
+        intermediate_class = build_intermediate_class(super_class, buf);
+        if (intermediate_class == Nil) { // LCOV_BR_EXCL_LINE
+            /* build_intermediate_class can only fail when
+             * running out of resources.
+             */
+            goto error_cleanup; // LCOV_EXCL_LINE
         }
         Py_DECREF(py_superclass);
 

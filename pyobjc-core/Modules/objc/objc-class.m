@@ -25,7 +25,7 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
         PyObjC_Assert(hidden != NULL, -1);
     }
 
-    v = PyObjCBytes_InternFromString(sel_getName(sel));
+    v = PyBytes_FromString(sel_getName(sel));
     if (v == NULL) { // LCOV_BR_EXCL_LINE
         return -1;   // LCOV_EXCL_LINE
     }
@@ -62,7 +62,7 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
             }
 
             if (hidden != NULL) {
-                PyObject* v = PyObjCBytes_InternFromString(sel_getName(sel));
+                PyObject* v = PyBytes_FromString(sel_getName(sel));
 
                 if (v == NULL) {   // LCOV_BR_EXCL_LINE
                     PyErr_Clear(); // LCOV_EXCL_LINE
@@ -1020,19 +1020,25 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         /* Register the proxy as soon as possible, we can get
          * initialize calls very early on with the ObjC 2.0 runtime.
          */
-        PyObjC_RegisterPythonProxy(objc_class, res);
+        PyObject* actual = PyObjC_RegisterPythonProxy(objc_class, res);
+        if (actual != res) {
+            /* This should never happen, *objc_class* was created by this
+             * function.
+             *
+             * Note that *objc_registerClassPair* hasn't been called at
+             * this point, which should avoid races with code introspecting
+             * the available classes.
+             */
+            Py_DECREF(res);
+            Py_DECREF(actual);
+            return PyErr_Format(PyObjCExc_Error, "Race between creating and registering an ObjC class '%s'\n",
+                    class_getName(objc_class));
+        }
+        Py_DECREF(actual);
+
 
         if (objc_class_register(objc_class, res) < 0) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyObjC_UnregisterPythonProxy(objc_class, res);
-            Py_DECREF(res);
-            Py_DECREF(old_dict);
-            Py_DECREF(hiddenSelectors);
-            Py_DECREF(hiddenClassSelectors);
-            PyObjC_Assert(objc_class != Nil, NULL);
-            (void)PyObjCClass_UnbuildClass(objc_class);
             return NULL;
-            // LCOV_EXCL_STOP
         }
 
         PyObjCClass_FinishClass(objc_class);
@@ -2885,10 +2891,10 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             goto error;
         }
         if (e - (attr + 1) > 127) { /* XXX: What does this do??? */
-            v = PyObjCBytes_InternFromStringAndSize(attr + 1, e - (attr + 1));
+            v = PyBytes_FromStringAndSize(attr + 1, e - (attr + 1));
         } else {
             PyObjCRT_RemoveFieldNames(buf, attr + 1);
-            v = PyObjCBytes_InternFromString(buf);
+            v = PyBytes_FromString(buf);
         }
         if (v == NULL) { // LCOV_BR_EXCL_LINE
             goto error;  // LCOV_EXCL_LINE

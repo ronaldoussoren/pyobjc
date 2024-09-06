@@ -178,7 +178,9 @@ static PyObject* _Nullable ID_to_py(const void* idValue)
         result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), (void*)idValue);
 
         if (result != NULL) {
-            PyObjC_RegisterPythonProxy(idValue, result);
+            PyObject* actual = PyObjC_RegisterPythonProxy(idValue, result);
+            Py_DECREF(result);
+            return actual;
         }
         return result;
     }

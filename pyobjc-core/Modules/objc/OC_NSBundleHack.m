@@ -9,6 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* This code is never used on systems I use for coverage testing */
 // LCOV_EXCL_START
+//
+
 
 static void
 nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
@@ -43,48 +45,62 @@ static id (*bundleForClassIMP)(id, SEL, Class) = nil;
     static NSMapTable* bundleCache = nil;
     id                 rval;
 
-    if (unlikely(!mainBundle)) {
-        mainBundle = [[NSBundle mainBundle] retain];
-    }
+#ifdef Py_GIL_DISABLED
+    /*
+     * NSMapTable isn't thread-safe, therefore use a lock to access it.
+     *
+     * This implementation uses @synchronized because the BundleHack class
+     * is unused an recent enough versions of macOS (see comment at the start
+     * of this file).
+     */
+    @synchronized(self) {
+#endif
 
-    if (unlikely(!bundleCache)) {
-        bundleCache =
-            NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, PyObjC_ObjCValueCallBacks,
-                             PYOBJC_EXPECTED_CLASS_COUNT);
-    }
+        if (unlikely(!mainBundle)) {
+            mainBundle = [[NSBundle mainBundle] retain];
+        }
 
-    if (!aClass) {
-        return mainBundle;
-    }
+        if (unlikely(!bundleCache)) {
+            bundleCache =
+                NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, PyObjC_ObjCValueCallBacks,
+                                 PYOBJC_EXPECTED_CLASS_COUNT);
+        }
 
-    rval = (id)NSMapGet(bundleCache, (const void*)aClass);
-    if (rval) {
+        if (!aClass) {
+            return mainBundle;
+        }
+
+        rval = (id)NSMapGet(bundleCache, (const void*)aClass);
+        if (rval) {
+            return rval;
+        }
+
+        rval = bundleForClassIMP(self, @selector(bundleForClass:), aClass);
+        if (rval == mainBundle) {
+            Class base_isa     = aClass;
+            Class nsobject_isa = object_getClass([NSObject class]);
+
+            while (base_isa != nsobject_isa) {
+                Class next_isa = object_getClass(base_isa);
+                if (!next_isa || next_isa == base_isa) {
+                    break;
+                }
+
+                base_isa = next_isa;
+            }
+
+            if (base_isa == nsobject_isa) {
+                if ([(id)aClass respondsToSelector:@selector(bundleForClass)]) {
+                    rval = [(id)aClass performSelector:@selector(bundleForClass)];
+                }
+            }
+        }
+
+        NSMapInsert(bundleCache, (const void*)aClass, (const void*)rval);
         return rval;
+#ifdef Py_GIL_DISABLED
     }
-
-    rval = bundleForClassIMP(self, @selector(bundleForClass:), aClass);
-    if (rval == mainBundle) {
-        Class base_isa     = aClass;
-        Class nsobject_isa = object_getClass([NSObject class]);
-
-        while (base_isa != nsobject_isa) {
-            Class next_isa = object_getClass(base_isa);
-            if (!next_isa || next_isa == base_isa) {
-                break;
-            }
-
-            base_isa = next_isa;
-        }
-
-        if (base_isa == nsobject_isa) {
-            if ([(id)aClass respondsToSelector:@selector(bundleForClass)]) {
-                rval = [(id)aClass performSelector:@selector(bundleForClass)];
-            }
-        }
-    }
-
-    NSMapInsert(bundleCache, (const void*)aClass, (const void*)rval);
-    return rval;
+#endif
 }
 
 static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS, 0};

@@ -6,17 +6,17 @@ from PyObjCTools.TestSupport import TestCase
 
 FooHandle = objc.createOpaquePointerType("FooHandle", FooEncoded, "FooHandle doc")
 
+BarHandle = objc.createOpaquePointerType("Mod.BarHandle", BarEncoded, "BarHandle doc")
+
 
 class TestFromPython(TestCase):
     def testBasic(self):
-        tp = objc.createOpaquePointerType("BarHandle", BarEncoded, "BarHandle doc")
-
-        self.assertIsInstance(tp, type)
-        self.assertEqual(tp.__module__, "objc")
-        self.assertEqual(repr(tp), "<class 'objc.BarHandle'>")
+        self.assertIsInstance(BarHandle, type)
+        self.assertEqual(BarHandle.__module__, "Mod")
+        self.assertEqual(repr(BarHandle), "<class 'Mod.BarHandle'>")
 
         f = OC_OpaqueTest.createBarWithFirst_andSecond_(1.0, 4.5)
-        self.assertIsInstance(f, tp)
+        self.assertIsInstance(f, BarHandle)
         x = OC_OpaqueTest.getFirst_(f)
         self.assertEqual(x, 1.0)
         x = OC_OpaqueTest.getSecond_(f)
@@ -26,40 +26,28 @@ class TestFromPython(TestCase):
         self.assertEqual(OC_OpaqueTest.nullBar(), None)
 
     def testSubclassing(self):
-        tp = objc.createOpaquePointerType("BarHandle", BarEncoded, "BarHandle doc")
-        self.assertEqual(tp.__name__, "BarHandle")
+        self.assertEqual(BarHandle.__name__, "BarHandle")
 
         with self.assertRaisesRegex(
-            TypeError, "type 'objc.BarHandle' is not an acceptable base type"
+            TypeError, "type 'Mod.BarHandle' is not an acceptable base type"
         ):
 
-            class Subclass1(tp):
-                pass
-
-        tp = objc.createOpaquePointerType("Foo.BarHandle", BarEncoded, "BarHandle doc")
-        with self.assertRaisesRegex(
-            TypeError, "type 'Foo.BarHandle' is not an acceptable base type"
-        ):
-
-            class Subclass2(tp):
+            class Subclass1(BarHandle):
                 pass
 
     def testNaming(self):
-        tp = objc.createOpaquePointerType("Mod.BarHandle", BarEncoded, "BarHandle doc")
 
-        self.assertIsInstance(tp, type)
-        self.assertEqual(tp.__module__, "Mod")
-        self.assertEqual(tp.__name__, "BarHandle")
-        self.assertEqual(tp.__qualname__, "BarHandle")
-        self.assertEqual(repr(tp), "<class 'Mod.BarHandle'>")
+        self.assertIsInstance(BarHandle, type)
+        self.assertEqual(BarHandle.__module__, "Mod")
+        self.assertEqual(BarHandle.__name__, "BarHandle")
+        self.assertEqual(BarHandle.__qualname__, "BarHandle")
+        self.assertEqual(repr(BarHandle), "<class 'Mod.BarHandle'>")
 
     def testDoc(self):
-        docstr = "A doc string"
-        tp = objc.createOpaquePointerType("Mod.BarHandle", b"^{TestDoc1=}", docstr)
-        self.assertEqual(tp.__doc__, docstr)
+        self.assertEqual(BarHandle.__doc__, "BarHandle doc")
 
         docstr = None
-        tp = objc.createOpaquePointerType("Mod.BarHandle", b"^{TestDoc1=}", docstr)
+        tp = objc.createOpaquePointerType("Mod.BarHandle2", b"^{TestDoc2=}", docstr)
         self.assertEqual(tp.__doc__, None)
 
 

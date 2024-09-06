@@ -37,20 +37,31 @@ PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
     return 0;
 }
 
-int
+/*
+ * XXX: Add locking
+ */
+PyObject*
 PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
 {
     NSMapInsert(python_proxies, original, proxy);
-    return 0;
+
+    Py_INCREF(proxy);
+    return proxy;
 }
 
-int
+/*
+ * XXX: Add locking
+ */
+id
 PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
 {
     NSMapInsert(objc_proxies, original, proxy);
-    return 0;
+    return proxy;
 }
 
+/*
+ * XXX: Add locking
+ */
 void
 PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
 {
@@ -65,6 +76,9 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
     }
 }
 
+/*
+ * XXX: Add locking
+ */
 void
 PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
 {
@@ -103,8 +117,10 @@ id _Nullable PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
 {
     id result = PyObjC_FindObjCProxy(value);
     if (result == NULL) {
-        PyObjC_RegisterObjCProxy(value, proxy);
-        return proxy;
+        id actual = PyObjC_RegisterObjCProxy(value, proxy);
+        [actual retain];
+        [proxy release];
+        return actual;
 
     } else {
         [proxy release];

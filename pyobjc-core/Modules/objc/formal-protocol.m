@@ -215,15 +215,10 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 
     result->objc = theProtocol;
-    if (PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
-            result->objc, (PyObject*)result)
-        < 0) {
-        // LCOV_EXCL_START
-        Py_DECREF(result);
-        goto error;
-        // LCOV_EXCL_STOP
-    }
-    return (PyObject*)result;
+    PyObject* actual = PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
+            result->objc, (PyObject*)result);
+    Py_DECREF(result);
+    return actual;
 
 error:
     // LCOV_EXCL_START
@@ -500,8 +495,9 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
     }
 
     result->objc = protocol;
-    PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
-    return (PyObject*)result;
+    PyObject* actual = PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
+    Py_DECREF(result);
+    return actual;
 }
 
 Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)

@@ -76,8 +76,9 @@ NSObject (PyObjCSupport)
         }
     }
 
-    PyObjC_RegisterPythonProxy(self, rval);
-    return rval;
+    PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
+    Py_DECREF(rval);
+    return actual;
 }
 
 + (PyObject* _Nullable)__pyobjc_PythonObject__
@@ -125,7 +126,9 @@ NSProxy (PyObjCSupport)
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (rval != NULL) {
-            PyObjC_RegisterPythonProxy(self, rval);
+            PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
+            Py_DECREF(rval);
+            rval = actual;
         }
     }
     return rval;
@@ -289,7 +292,9 @@ NSDecimalNumber (PyObjCSupport)
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (rval != NULL) {
-            PyObjC_RegisterPythonProxy(self, rval);
+            PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
+            Py_DECREF(rval);
+            rval = actual;
         }
     }
 
@@ -2798,7 +2803,13 @@ depythonify_python_object(PyObject* argument, id* datum)
     }
 
     if (*datum) {
-        PyObjC_RegisterObjCProxy(argument, *datum);
+        id actual = PyObjC_RegisterObjCProxy(argument, *datum);
+        if (actual != *datum) {
+            /* The original '*datum' is autoreleased according to the
+             * create rule.
+             */
+            *datum = actual;
+        }
         return 0;
     } else {
         return -1;

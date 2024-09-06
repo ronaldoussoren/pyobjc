@@ -35,56 +35,6 @@ PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
     return -1;
 }
 
-static PyObject* registry = NULL;
-
-static PyObject* _Nullable _intern_bytes(PyObject* key)
-{
-    PyObject* value;
-    int r;
-    if (key == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
-    }
-
-    if (registry == NULL) {
-        registry = PyDict_New();
-        if (registry == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(key);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-    }
-    r = PyDict_GetItemRef(registry, key, &value);
-    switch (r) {
-    case -1:
-        Py_DECREF(key);
-        return NULL;
-    case 0:
-        r = PyDict_SetItem(registry, key, key);
-        if (r == -1) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(key);
-            return NULL;
-            // LCOV_EXCL_STOP
-        } else {
-            return key;
-        }
-    default:
-        Py_DECREF(key);
-        return value;
-    }
-}
-
-PyObject* _Nullable PyObjCBytes_InternFromString(const char* v)
-{
-    return _intern_bytes(PyBytes_FromString(v));
-}
-
-PyObject* _Nullable PyObjCBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
-{
-    return _intern_bytes(PyBytes_FromStringAndSize(v, l));
-}
-
 /* XXX: Can we do without this function, it is a little too intimate with
  * unicode details.
  */

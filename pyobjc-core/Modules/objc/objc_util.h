@@ -159,6 +159,7 @@ extern PyObject* PyObjCNM___useKVO__;
 extern PyObject* PyObjCNM_typestr;
 extern PyObject* PyObjCNM_classname;
 extern PyObject* PyObjCNM___typestr__;
+extern PyObject* PyObjCNM___module__;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);

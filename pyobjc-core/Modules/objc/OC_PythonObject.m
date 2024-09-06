@@ -36,7 +36,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
-    PyObjC_RegisterObjCProxy(obj, self);
+    // XXX: Fix callers to do the registration for us.
+    id actual = PyObjC_RegisterObjCProxy(obj, self);
+    if (actual != self) {
+        /*
+         * Race between two threads creating a proxy, use the
+         * first one that got registered.
+         */
+        [self release];
+        [actual retain];
+        return actual;
+    }
 
     SET_FIELD_INCREF(pyObject, obj);
 

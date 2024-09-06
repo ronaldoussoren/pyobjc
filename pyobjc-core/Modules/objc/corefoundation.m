@@ -100,7 +100,9 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
         }
 
         if (rval) {
-            PyObjC_RegisterPythonProxy(self, rval);
+            PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
+            Py_DECREF(rval);
+            return actual;
         }
     }
 
