@@ -72,8 +72,6 @@ NS_ASSUME_NONNULL_BEGIN
  *     - Insert into registry
  */
 
-extern int PyObjC_weakref_proxy_registry;
-
 extern int PyObjC_InitProxyRegistry(PyObject*);
 
 extern PyObject* PyObjC_RegisterPythonProxy(id original, PyObject* proxy) __attribute__((warn_unused_result));

@@ -5,13 +5,6 @@ NS_ASSUME_NONNULL_BEGIN
 static NSMapTable* _Nonnull python_proxies;
 static NSMapTable* _Nonnull objc_proxies;
 
-/*
- * Iff true the python->objc proxy registry uses a zero-ing weakref
- * for the value, and hence it is not necessary to get the Python
- * GIL in -release for the OC_Python* classes
- */
-int PyObjC_weakref_proxy_registry = 0;
-
 int
 PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
 {
