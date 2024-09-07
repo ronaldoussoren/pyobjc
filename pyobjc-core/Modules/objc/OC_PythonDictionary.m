@@ -489,7 +489,12 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
                 SET_FIELD(value, v);
 
-                self = PyObjC_FindOrRegisterObjCProxy(value, self);
+                id actual = PyObjC_RegisterObjCProxy(value, self);
+                if (actual != self) {
+                    [actual retain];
+                    [self release];
+                    self = actual;
+                }
             PyObjC_END_WITH_GIL
 
             return self;

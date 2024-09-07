@@ -85,8 +85,6 @@ extern void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy);
 extern id _Nullable PyObjC_FindObjCProxy(PyObject* original) __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_FindPythonProxy(id original) __attribute__((warn_unused_result));
 
-extern id _Nullable PyObjC_FindOrRegisterObjCProxy(PyObject* original, id proxy) __attribute__((warn_unused_result));
-
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_PROXY_REGISTRY_H */

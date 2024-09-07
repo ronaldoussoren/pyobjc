@@ -227,7 +227,12 @@ NS_ASSUME_NONNULL_BEGIN
 
             SET_FIELD(value, v);
 
-            self = PyObjC_FindOrRegisterObjCProxy(value, self);
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            if (actual != self) {
+                [actual retain];
+                [self release];
+                self = actual;
+            }
         PyObjC_END_WITH_GIL
 
         return self;

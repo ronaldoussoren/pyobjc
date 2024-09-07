@@ -113,20 +113,4 @@ id _Nullable PyObjC_FindObjCProxy(PyObject* original)
     return NSMapGet(objc_proxies, original);
 }
 
-id _Nullable PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
-{
-    id result = PyObjC_FindObjCProxy(value);
-    if (result == NULL) {
-        id actual = PyObjC_RegisterObjCProxy(value, proxy);
-        [actual retain];
-        [proxy release];
-        return actual;
-
-    } else {
-        [proxy release];
-        [result retain];
-        return result;
-    }
-}
-
 NS_ASSUME_NONNULL_END
