@@ -11,6 +11,16 @@ NS_ASSUME_NONNULL_BEGIN
 #define PyObjCObject_kCFOBJECT 0x20
 #define PyObjCObject_kBLOCK 0x40
 #define PyObjCObject_kNEW_WRAPPER 0x80
+#define PyObjCObject_kALL_FLAGS             \
+   ( PyObjCObject_kDEFAULT                  \
+   | PyObjCObject_kUNINITIALIZED            \
+   | PyObjCObject_kDEALLOC_HELPER           \
+   | PyObjCObject_kSHOULD_NOT_RELEASE       \
+   | PyObjCObject_kMAGIC_COOKIE             \
+   | PyObjCObject_kCFOBJECT                 \
+   | PyObjCObject_kBLOCK                    \
+   | PyObjCObject_kNEW_WRAPPER              \
+   )
 
 typedef struct {
     PyObject_HEAD
@@ -38,7 +48,12 @@ void PyObjCObject_ClearObject(PyObject* object);
 void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object);
 
-#define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
+static inline unsigned int PyObjCObject_GetFlags(void *object)
+{
+    unsigned int flags = ((PyObjCObject*)(object))->flags;
+    PyObjC_Assert((flags & ~PyObjCObject_kALL_FLAGS) == 0, flags);
+    return flags;
+}
 #define PyObjCObject_IsBlock(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kBLOCK)
 #define PyObjCObject_IsMagic(object)                                                     \
     (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE)
