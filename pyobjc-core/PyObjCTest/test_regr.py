@@ -361,6 +361,13 @@ class TestNSDataCreationIssue(TestCase):
         cls.alloc().initWithData_(b"hello")
 
 
+class TestNSIndexSetCreationIssue(TestCase):
+    def test_issue625(self):
+        cls = objc.lookUpClass("NSIndexSet")
+
+        cls.alloc().initWithIndex_(0)
+
+
 class TestTypedefedClass(TestCase):
     # Issue #298, see description in Modules/objc/module.m
     def test_typedefed(self):
