@@ -262,5 +262,5 @@ def main(extra_arg=None):
         print(f"{BOLD}{idx+1}/{len(all_projects)}: Building project {project!r}{RESET}")
         print()
         if not build_project(project, extra_arg):
-            print("{RED}Cannot build one of the projects, bailing out{RESET}")
+            print(f"{RED}Cannot build one of the projects, bailing out{RESET}")
             sys.exit(1)
