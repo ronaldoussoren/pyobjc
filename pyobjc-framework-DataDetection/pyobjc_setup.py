@@ -22,11 +22,12 @@ import sys
 import tempfile
 import time
 import unittest
+from fnmatch import fnmatch
 from sysconfig import get_config_var, get_config_vars
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
-from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
+from setuptools.command import build_ext, build_py, develop, egg_info, install_lib
 
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError
@@ -84,18 +85,14 @@ class oc_egg_info(egg_info.egg_info):
             fp.write(last)
 
 
-class oc_test(test.test):
+class oc_test(Command):
     description = "run test suite"
-    user_options = test.test.user_options + [
-        ("verbosity=", None, "print what tests are run")
-    ]
+    user_options = [("verbosity=", None, "print what tests are run")]
 
     def initialize_options(self):
-        test.test.initialize_options(self)
         self.verbosity = "1"
 
     def finalize_options(self):
-        test.test.finalize_options(self)
         if isinstance(self.verbosity, str):
             self.verbosity = int(self.verbosity)
 
@@ -154,18 +151,14 @@ class oc_test(test.test):
         self.cleanup_environment()
         self.add_project_to_sys_path()
 
-        from pkg_resources import EntryPoint
-
-        loader_ep = EntryPoint.parse("x=" + self.test_loader)
-        loader_class = loader_ep.resolve()
-
         import warnings
 
         warnings.simplefilter("error")
+        warnings.filterwarnings("ignore", message=".*GIL.*", category=RuntimeWarning)
 
         try:
             time_before = time.time()
-            suite = loader_class().loadTestsFromName(self.distribution.test_suite)
+            suite = makeTestSuite()
 
             if self.verbose and self.verbosity < 3:
                 runner = unittest.TextTestRunner(verbosity=3)
@@ -684,3 +677,50 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         **k,
     )
+
+
+def recursiveGlob(root, pathPattern):
+    """
+    Recursively look for files matching 'pathPattern'. Return a list
+    of matching files/directories.
+    """
+    result = []
+
+    for rootpath, _dirnames, filenames in os.walk(root):
+        for fn in filenames:
+            if fnmatch(fn, pathPattern):
+                result.append(os.path.join(rootpath, fn))
+    return result
+
+
+def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
+    """
+    Import all unittests in the PyObjC tree starting at 'root'
+    """
+    testFiles = recursiveGlob(root, pathPattern)
+    testModules = [x[len(root) + 1 : -3].replace("/", ".") for x in testFiles]
+    if package is not None:
+        testModules = [(package + "." + m) for m in testModules]
+    suites = []
+    for modName in testModules:
+        try:
+            module = __import__(modName)
+        except ImportError as msg:
+            print(f"SKIP {modName}: {msg}")
+            continue
+        if "." in modName:
+            for elem in modName.split(".")[1:]:
+                module = getattr(module, elem)
+        s = unittest.defaultTestLoader.loadTestsFromModule(module)
+        suites.append(s)
+    return unittest.TestSuite(suites)
+
+
+gTopdir = os.path.dirname(__file__)
+
+
+def makeTestSuite():
+    plain_suite = importExternalTestCases(
+        "test_*.py", os.path.join(gTopdir, "PyObjCTest"), package="PyObjCTest"
+    )
+    return plain_suite

@@ -22,6 +22,11 @@ Version 10.3.2
 
   Note that PyObjC does not support running without the GIL at this time.
 
+* Fix for running test suite with recent versions of setuptools
+
+  Recent versions of setuptools broke the "test" command, the full command
+  has been reimplemented as part of PyObjC.
+
 Version 10.3.1
 --------------
 
