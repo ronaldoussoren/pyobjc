@@ -38,6 +38,10 @@ Version 10.3.2
 
    Fix by user rndblnch on github
 
+* :issue:`625`: Fix crash for calling ``NSIndexSet.alloc().initWithIndex_(0)``
+
+  This "fix" is a workaround for what appears to be a bug in Foundation.
+
 Version 10.3.1
 --------------
 

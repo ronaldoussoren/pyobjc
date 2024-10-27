@@ -2659,15 +2659,16 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         PyType_Ready((PyTypeObject*)result);
     }
 
-    if (strcmp(className, "_NSPlaceholderData") == 0) {
-        /* XXX */
+    if (strncmp(className, "_NSPlaceholder", sizeof("_NSPlaceholder")-1) == 0) {
         /* Workaround for an issue on macOS 10.15: For some
          * reason the call to class_getInstanceVariable crashes
          * when called early in the process, likely due to an
          * incompletely initialized class.
          *
-         * The workaround is hardcoded for this specific class
-         * to avoid issues with other magic classes.
+         * The issue is more widespread in later versions of the OS,
+         * and seems to be related to rewriting Foundation in Swift.
+         *
+         * Issues: #271, #625
          */
         [objc_class class];
     }
