@@ -42,6 +42,8 @@ Version 10.3.2
 
   This "fix" is a workaround for what appears to be a bug in Foundation.
 
+* :issue:`569`: Actually remove the workaround for Xcode 15.0
+
 Version 10.3.1
 --------------
 
