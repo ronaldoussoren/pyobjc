@@ -7,6 +7,7 @@ from .genericnew import OC_GenericNew, OC_GenericNewChild, OC_GenericNewChild2
 NSObject = objc.lookUpClass("NSObject")
 
 objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithValue:")
+objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithURL:")
 objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithFirst:second:")
 objc.registerNewKeywordsFromSelector("OC_GenericNewChild", b"initWithX:y:")
 objc.registerNewKeywordsFromSelector("OC_GenericNewChild2", b"initWithX:y:z:")
@@ -150,6 +151,9 @@ class TestDefaultNewForObjectiveCClass(TestCase):
 
         v = OC_GenericNew(value=42)
         self.assertEqual(v.value(), 42)
+
+        v = OC_GenericNew(URL=99)
+        self.assertEqual(v.value(), 99)
 
         v = OC_GenericNew(first=1, second=2)
         self.assertEqual(v.value(), ["first-second", 1, 2])
