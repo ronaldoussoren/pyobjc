@@ -39,6 +39,15 @@
     return self;
 }
 
+-(instancetype)initWithURL:(NSObject*)v
+{
+    self = [super init];
+    if (!self) return nil;
+
+    value = [v retain];
+    return self;
+}
+
 -(instancetype)initWithFirst:(NSObject*)first second:(NSObject*)second
 {
     self = [super init];

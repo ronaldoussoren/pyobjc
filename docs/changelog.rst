@@ -27,6 +27,17 @@ Version 10.3.2
   Recent versions of setuptools broke the "test" command, the full command
   has been reimplemented as part of PyObjC.
 
+* :issue:`627`: Fix build issue when deployment target is 15.0 or later.
+
+* :issue:`623`: Don't lowercase the first character of the first keyword
+   argument for ``__new__`` when the segment only contains upper case
+   characters.
+
+   Before this change ``initWithURL:`` mapped to an ``uRL`` keyword argument,
+   with this fix the keyword argument is named ``URL``.
+
+   Fix by user rndblnch on github
+
 Version 10.3.1
 --------------
 
