@@ -43,7 +43,7 @@ def _selectorToKeywords(selector):
     parts = selector.split(":")[:-1]
     if parts[0].startswith("With"):
         parts[0] = parts[0][4:]
-    if len(parts[0]) > 1 and not parts[0][1].isupper():
+    if len(parts[0]) == 1 or len(parts[0]) > 1 and not parts[0][1].isupper():
         parts[0] = parts[0][:1].lower() + parts[0][1:]
 
     return tuple(parts)
