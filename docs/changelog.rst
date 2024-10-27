@@ -15,6 +15,13 @@ Version 10.3.2
 * :issue:`613`: Actually expose protocols ``KHTTPCookieStoreObserver``,
   ``WKURLSchemeTask``, and ``WKURLSchemeHandler`` in the WebKit bindings.
 
+* Remove workaround for a linker problem in early versions of Xcode 15,
+  which restores support for building with Xcode Command Line tools.
+
+* The release contains wheels for the free-threaded build of Python 3.13.
+
+  Note that PyObjC does not support running without the GIL at this time.
+
 Version 10.3.1
 --------------
 

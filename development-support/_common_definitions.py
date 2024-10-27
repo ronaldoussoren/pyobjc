@@ -13,7 +13,7 @@ import time
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+PY_VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.13t"]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -95,7 +95,12 @@ def _install_virtualenv_software(interpreter):
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
+
+    if b"PythonT.framework" not in subprocess.check_output(
+        [interpreter, "-c", "import sys; print(sys.base_prefix)"]
+    ):
+        # Twine doesn't install for me with the free threaded build due to missing build dependencies
+        subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
 
 
 @contextlib.contextmanager
@@ -104,12 +109,14 @@ def virtualenv(interpreter):
         shutil.rmtree("test-env")
 
     subprocess.check_call([interpreter, "-mvenv", "test-env"])
-    if not os.path.exists("test-env/bin/python"):
-        raise RuntimeError("VirtualEnv incomplete")
+
+    path = "test-env/bin/python"
+    if not os.path.exists(path):
+        raise RuntimeError(f"VirtualEnv incomplete, no {path}")
 
     try:
-        _install_virtualenv_software("test-env/bin/python")
-        yield os.path.abspath("test-env/bin/python")
+        _install_virtualenv_software(path)
+        yield os.path.abspath(path)
 
     finally:
         print("CLEANUP")

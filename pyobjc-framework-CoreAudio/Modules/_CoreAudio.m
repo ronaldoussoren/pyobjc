@@ -1,4 +1,6 @@
-/*#define Py_LIMITED_API 0x03060000*/
+#ifndef PyObjC_GIL_DISABLED
+#define Py_LIMITED_API 0x03060000
+#endif
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "structmember.h" /* Why is this needed */

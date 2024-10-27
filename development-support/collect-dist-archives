@@ -32,12 +32,15 @@ _detected_versions = None
 
 
 def is_usable_release(ver):
-    path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+    if ver.endswith("t"):
+        path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+    else:
+        path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
 
     if not os.path.exists(path):
         return False
 
-    output = subprocess.check_output([f"{path}/bin/python3", "--version"]).decode()
+    output = subprocess.check_output([f"{path}/bin/python{ver}", "--version"]).decode()
     if "a" in output.strip():
         # Alpha release
         return False
@@ -76,9 +79,14 @@ def main():
     failed = []
     for nm in names:
         # Collect sdist archive with most recent python version.
+        versions = detect_pyversions()
+        latest = versions.pop()
+        while latest.endswith("t"):
+            latest = versions.pop()
+
         status = subprocess.call(
             [
-                f"python{detect_pyversions()[-1]}",
+                f"python{latest}",
                 "setup.py",
                 "sdist",
                 f"--dist-dir={DIST_DIR}",

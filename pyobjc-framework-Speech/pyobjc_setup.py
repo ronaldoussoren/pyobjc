@@ -526,6 +526,11 @@ def Extension(*args, **kwds):
     if "-Werror" not in cflags:
         cflags.append("-Werror")
 
+    if get_config_var("Py_GIL_DISABLED"):
+        cflags.append("-DPyObjC_GIL_DISABLED")
+        if "py_limited_api" in kwds:
+            del kwds["py_limited_api"]
+
     if "extra_compile_args" in kwds:
         kwds["extra_compile_args"] = kwds["extra_compile_args"] + cflags
     else:
@@ -617,6 +622,10 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
     if "ext_modules" not in k:
         # No extension modules, can build universal wheel
         k["options"] = {"bdist_wheel": {"universal": 1}}
+
+    if "options" in k and "bdist_wheel" in k["options"]:
+        if get_config_var("Py_GIL_DISABLED"):
+            del k["options"]["bdist_wheel"]
 
     plat_name = "MacOS X"
     plat_versions = []

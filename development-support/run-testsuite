@@ -417,7 +417,6 @@ def main():
                         "--no-warn-script-location",
                         "-U",
                         "coverage",
-                        "twine",
 
                         # For some reason 'chardet' is needed for some
                         # 'pyobjc' tests on x86_64 (in emulation)
