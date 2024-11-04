@@ -7,7 +7,7 @@ Instantiating Objective-C objects
    The Pythonic interface for instantiation classes
    was added.
 
-Objective-C uses a two step object instantatin
+Objective-C uses a two step object instantiation
 process, similar to Python's ``__new__`` and
 ``__init__`` methods, but with explicit invocation
 of the methods ``alloc`` and ``init``. By default
@@ -22,7 +22,7 @@ this is mirrored in the Python proxies:
 
 This looks very foreign in Python, therefore PyObjC
 also supports a condensed version of this by directly
-calling the class::
+calling the class:
 
 .. sourcecode:: python
 
@@ -33,34 +33,34 @@ calling the class::
 The generic rules for instantiation objects through calling
 the class are:
 
-* Calling the class without arguments in supported unless
+* Calling the class without arguments is supported unless
   the ``init`` method has been marked with ``NS_UNAVAILABLE``
   in Apple's SDK.
 
-* Every instance selector of the Objective-C with a name starting
-  with ``init`` adds a possible set of keyword arguments using
-  the following algorithm:
+* Every instance selector of the Objective-C class with a name
+  starting with ``init`` adds a possible set of keyword arguments
+  using the following algorithm:
 
-  1. Strip ``initWith`` or ``init`` from the start of the selector;
+  1. Strip ``initWith`` or ``init`` from the start of the selector.
 
-  2. Lowercase the first character of the result
+  2. Lowercase the first character of the result.
 
   3. All segments are now keyword only arguments, in that order.
 
-  For example given, ``-[SomeClass initWithX:y:z]`` the
+  For example, given ``-[SomeClass initWithX:y:z]``, the
   following invocation is valid: ``SomeClass(x=1, y=2, z=3)``.
   Using the keywords in a different order is not valid.
 
-* Some classes may have additional sets of keyword arguments,
-  whose will be documented in the framework notes. In general
+* Some classes may have additional sets of keyword arguments
+  that will be documented in the framework notes. In general
   those will be based on factory class methods for which there
-  are no equivalent using the ``alloc().init...(...)`` pattern.
+  is no equivalent using the ``alloc().init...(...)`` pattern.
 
-For classes in system frameworks the possibly init method are
-registered using frmaework data.
+For classes in system frameworks the possible init methods are
+registered using framework data.
 
 For classes implemented in Python the possible init methods
-are detected automatically, just implement one or more Objective-C
+are detected automatically. Just implement one or more Objective-C
 style init methods to add sets of keyword arguments for ``__new__``
 (and don't implement ``__new__`` or ``__init__`` in the Python
 class).
@@ -71,7 +71,7 @@ arguments, that is:
 .. sourcecode:: python
 
    class MyObject(NSObject):
-       init = None  # Calling MyOjbect() is not allowed
+       init = None  # Calling MyObject() is not allowed
 
        def initWithX_y_(self, x_value, y_value):
            self = super.init()
@@ -79,4 +79,4 @@ arguments, that is:
            self.y = y_value
            return self
 
-   value = MyValue(x=42, y=24)
+   value = MyObject(x=42, y=24)
