@@ -32,7 +32,10 @@ _detected_versions = None
 
 
 def is_usable_release(ver):
-    path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+    if ver.endswith("t"):
+        path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+    else:
+        path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
 
     if not os.path.exists(path):
         return False

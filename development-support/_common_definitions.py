@@ -119,19 +119,22 @@ def virtualenv(interpreter):
 def variants(
     ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")
 ):
-    if os.path.islink(
-        os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-    ):
+    if ver.endswith("t"):
+        fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
+    else:
+        fwk_path = "/Library/Frameworks/Python.framework/Versions"
+
+    if os.path.islink(os.path.join(fwk_path, ver.rstrip("t"))):
         result = []
-        for nm in os.listdir("/Library/Frameworks/Python.framework/Versions"):
-            if nm == ver:
+        for nm in os.listdir(fwk_path):
+            if nm == ver.rstrip("t"):
                 continue
 
             v, _, s = nm.partition("-")
 
             if permitted_variants and s not in permitted_variants:
                 continue
-            if v == ver:
+            if v == ver.rstrip("t"):
                 result.append(nm)
 
         if result:
@@ -141,10 +144,15 @@ def variants(
 
 
 def setup_variant(ver, variant):
-    if ver == variant:
+    if ver.rstrip("t") == variant:
         return
 
-    tgt = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+    if ver.endswith("t"):
+        fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
+    else:
+        fwk_path = "/Library/Frameworks/Python.framework/Versions"
+
+    tgt = os.path.join(fwk_path, ver.rstrip("t"))
 
     if os.path.exists(tgt):
         os.unlink(tgt)
