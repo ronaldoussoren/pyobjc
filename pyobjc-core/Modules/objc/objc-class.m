@@ -1109,9 +1109,27 @@ static PyObject* _Nullable class_repr(PyObject* obj)
 static void
 class_dealloc(PyObject* cls)
 {
-    /* XXX: This method should never be called because it is impossible to
-     * unregister and Objective-C class from the Objective-C runtime.
+    if (((PyObjCClassObject*)cls)->class == Nil) {
+        /*
+         * Cleanup of a class proxy that was created due to a race condition in creating
+         * instances.
+         */
+        PyObjCClassObject* info = (PyObjCClassObject*)cls;
+        Py_CLEAR(info->sel_to_py);
+
+        Py_CLEAR(info->delmethod);
+        Py_CLEAR(info->hiddenSelectors);
+        Py_CLEAR(info->hiddenClassSelectors);
+        Py_CLEAR(info->lookup_cache);
+        PyType_Type.tp_dealloc(cls);
+        return;
+    }
+
+    /*
+     * This method should never be called because it is impossible
+     * to unregister an Objective-C class from the runtime.
      */
+
     char buf[1024];
 
     snprintf(buf, sizeof(buf), "Deallocating objective-C class %s",
@@ -2639,7 +2657,20 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     info->hiddenClassSelectors = hiddenClassSelectors;
     info->lookup_cache         = NULL;
 
-    objc_class_register(objc_class, result);
+    PyObject* temp = objc_class_locate(objc_class);
+    if (temp != NULL) {
+        /* Race condition between two threads that
+         * try to register the class.
+         */
+        info->class = Nil;
+        Py_DECREF(result);
+        return temp;
+    }
+
+    if (objc_class_register(objc_class, result) < 0) {
+        Py_DECREF(result);
+        return NULL;
+    }
 
     /*
      * Support the buffer protocol in the wrappers for NSData and

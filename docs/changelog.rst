@@ -44,6 +44,9 @@ Version 10.3.2
 
 * :issue:`569`: Actually remove the workaround for Xcode 15.0
 
+* :issue:`619`: Fix race condition in creating proxy objects for Objective-C
+  classes.
+
 Version 10.3.1
 --------------
 
