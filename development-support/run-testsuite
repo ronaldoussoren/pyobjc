@@ -39,11 +39,18 @@ def detect_pyversions():
 
     result = []
     for ver in PY_VERSIONS:
-        if os.path.exists(
-            os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-        ):
+        if ver.endswith('t'):
+            if os.path.exists(
+                os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+            ):
 
-            result.append(ver)
+                result.append(ver)
+        else:
+            if os.path.exists(
+                os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+            ):
+
+                result.append(ver)
 
     _detected_versions = result
     return _detected_versions
