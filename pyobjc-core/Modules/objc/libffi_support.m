@@ -4926,9 +4926,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             }
         }
     }
-#ifndef __arm64__
-    useStret = 0;
-#endif
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
         super.super_class = object_getClass(meth->base.sel_class);
     } else {

@@ -339,7 +339,7 @@ static NSException* _Nullable python_exception_to_objc(void)
     PyObject*            repr;
     PyObject*            typerepr;
     NSException*         val;
-    NSMutableDictionary* userInfo;
+    NSMutableDictionary* userInfo = nil;
 
     PyObjC_Assert(PyErr_Occurred(), nil);
 
@@ -375,8 +375,8 @@ static NSException* _Nullable python_exception_to_objc(void)
          */
         PyObject* v;
         int r;
-        NSString* reason = NULL;
-        NSString* name   = NULL;
+        NSString* reason = nil;
+        NSString* name   = nil;
 
         r = PyDict_GetItemRef(args, PyObjCNM_reason, &v);
         switch (r) {

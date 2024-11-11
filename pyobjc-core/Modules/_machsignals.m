@@ -54,8 +54,9 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
             Py_DECREF(callable);
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
+            } else {
+                Py_DECREF(tmp);
             }
-            Py_DECREF(tmp);
         }
     PyObjC_END_WITH_GIL
 }

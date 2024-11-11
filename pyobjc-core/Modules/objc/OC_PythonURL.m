@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (!PyUnicode_Check(fspath)) {
         Py_DECREF(fspath);
         PyErr_Format(PyExc_ValueError, "os.fspath(%R) did not return a string", object);
+        [self release];
         return nil;
     }
 
@@ -26,23 +27,27 @@ NS_ASSUME_NONNULL_BEGIN
     utf8 = PyUnicode_AsUTF8AndSize(fspath, &utf8_size);
     if (utf8 == NULL) {
         Py_DECREF(fspath);
+        [self release];
         return nil;
     }
     if (utf8_size != (Py_ssize_t)strlen(utf8)) {
         Py_DECREF(fspath);
         PyErr_Format(PyExc_ValueError, "os.fspath(%R) result has embedded NULs", object);
+        [self release];
         return nil;
     }
 
     NSString* path = [[NSString alloc] initWithUTF8String:utf8];
     Py_DECREF(fspath);
     if (path == nil) {
+        [self release];
         return nil;
     }
 
     self = [super initFileURLWithPath:path];
     [path release];
     if (self == nil) {
+        [self release];
         return nil;
     }
 

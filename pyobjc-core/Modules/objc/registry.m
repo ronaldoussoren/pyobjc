@@ -26,7 +26,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     case  -1:
         return -1;
     case 0:
-        result = 0;
 #ifdef Py_GIL_DISABLED
         /* For the free threaded build add the new sublist in
          * a critical section to avoid race conditions for this.

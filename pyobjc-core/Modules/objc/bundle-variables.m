@@ -64,6 +64,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
 
     if (![name isKindOfClass:[NSString class]]) {
         PyErr_SetString(PyExc_TypeError, "variable name not a string");
+        CFRelease(cfBundle);
         return NULL;
     }
 
@@ -131,6 +132,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
 
     seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
     if (seq == NULL) {
+        CFRelease(cfBundle);
         return NULL;
     }
 
@@ -246,6 +248,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
 
     seq = PyObjCSequence_Tuple(functionInfo, "functionInfo not a sequence");
     if (seq == NULL) {
+        CFRelease(cfBundle);
         return NULL;
     }
 

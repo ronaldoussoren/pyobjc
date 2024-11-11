@@ -246,6 +246,13 @@ extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
 
 
+#else
+#define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
+#define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection_End2(&_py_cs2)
+
+#endif
+
+#if PY_VERSION_HEX < 0x030d0000
 static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result)
 {
     *result = PyDict_GetItemWithError(p, key);
@@ -267,11 +274,8 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
     Py_XINCREF(result);
     return result;
 }
-
-#else
-#define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
-#define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection_End2(&_py_cs2)
 #endif
+
 
 
 NS_ASSUME_NONNULL_END
