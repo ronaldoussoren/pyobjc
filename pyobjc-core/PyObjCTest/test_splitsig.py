@@ -128,6 +128,7 @@ class SplitSignatureTest(TestCase):
                 if sel.selector.split(b":", 1)[0] in (
                     b"fm",
                     b"_fm",
+                    b"_ns",
                     b"_ax",
                     b"_scr",
                     b"CA_interpolateValues",
@@ -147,6 +148,8 @@ class SplitSignatureTest(TestCase):
                     b"ams",
                     b"safari",
                     b"vs",
+                    b"swiftui",
+                    b"_swiftui",
                 ) or sel.selector in (
                     b"isNSArray::",
                     b"isNSCFConstantString::",
