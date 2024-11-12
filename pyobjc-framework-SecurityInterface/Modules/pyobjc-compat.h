@@ -153,10 +153,6 @@ extern PyObject* _Nullable PyObject_VectorcallMethod(
 
 extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 
-extern PyObject* _Nullable PyObjCBytes_InternFromString(const char* v);
-extern PyObject* _Nullable PyObjCBytes_InternFromStringAndSize(const char* v,
-                                                               Py_ssize_t  l);
-
 /*
  * A micro optimization: when using Python 3.3 or later it
  * is possible to access a 'char*' with an ASCII representation
@@ -238,16 +234,25 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         PyGILState_Release(_GILState);                                                   \
     } while (0)
 
-extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
+extern PyObject* _Nonnull PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
 #if PY_VERSION_HEX < 0x030d0000
 #define Py_BEGIN_CRITICAL_SECTION(value) {
 #define Py_END_CRITICAL_SECTION() }
+#define Py_EXIT_CRITICAL_SECTION() ((void)0)
 
 #define Py_BEGIN_CRITICAL_SECTION2(value1, value2) {
 #define Py_END_CRITICAL_SECTION2() }
+#define Py_EXIT_CRITICAL_SECTION2() ((void)0)
 
 
+#else
+#define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
+#define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection_End2(&_py_cs2)
+
+#endif
+
+#if PY_VERSION_HEX < 0x030d0000
 static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result)
 {
     *result = PyDict_GetItemWithError(p, key);
@@ -262,7 +267,15 @@ static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonn
         return 1;
     }
 }
+
+static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
+{
+    PyObject* result = PyList_GetItem(l, i);
+    Py_XINCREF(result);
+    return result;
+}
 #endif
+
 
 
 NS_ASSUME_NONNULL_END
