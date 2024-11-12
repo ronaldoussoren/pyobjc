@@ -1988,9 +1988,9 @@ const char* _Nullable PyObjCSelector_Signature(PyObject* obj)
     return ((PyObjCSelector*)obj)->sel_python_signature;
 }
 
-Class _Nullable PyObjCSelector_GetClass(PyObject* sel)
+Class PyObjCSelector_GetClass(PyObject* sel)
 {
-    PyObjC_Assert(PyObjCSelector_Check(sel), Nil);
+    PyObjC_Assert(PyObjCSelector_Check(sel), (Class _Nonnull)Nil);
 
     return ((PyObjCNativeSelector*)sel)->base.sel_class;
 }

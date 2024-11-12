@@ -33,7 +33,7 @@ typedef struct {
     const char* _Nullable sel_native_signature; /* XXX: Make _Nonnull */
     SEL sel_selector;
     PyObject* _Nullable sel_self;
-    Class _Nullable sel_class;
+    Class sel_class;
     int sel_flags;
     PyObjCMethodSignature* _Nullable sel_methinfo;
     Py_ssize_t sel_mappingcount;
@@ -71,7 +71,7 @@ extern const char* _Nullable PyObjCSelector_Signature(PyObject* obj);
     (((PyObjCSelector*)obj)->sel_native_signature)
 extern SEL PyObjCSelector_GetSelector(PyObject* obj);
 extern int PyObjCSelector_GetFlags(PyObject* obj);
-extern Class _Nullable PyObjCSelector_GetClass(PyObject* obj);
+extern Class PyObjCSelector_GetClass(PyObject* obj);
 extern int PyObjCSelector_Required(PyObject* obj);
 extern int PyObjCSelector_IsClassMethod(PyObject* obj);
 extern int PyObjCSelector_IsHidden(PyObject* obj);

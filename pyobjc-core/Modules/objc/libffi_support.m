@@ -2170,6 +2170,9 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
 
     } else if (PyObjCNativeSelector_Check(callable)) {
         PyObjCMethodSignature* sig    = PyObjCSelector_GetMetadata(callable);
+        if (sig == NULL) {
+            return -2;
+        }
         Py_ssize_t             result = Py_SIZE(sig) - 1;
         *haveVarArgs                  = NO;
         *haveVarKwds                  = NO;
@@ -4330,6 +4333,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     }
 
     rettype         = methinfo->rettype->type;
+    PyObjC_Assert(rettype != NULL, NULL);
     variadicAllArgs = methinfo->variadic
                       && (methinfo->null_terminated_array || methinfo->arrayArg != -1);
 

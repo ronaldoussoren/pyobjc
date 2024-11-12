@@ -257,12 +257,12 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     }
 
     Py_BEGIN_CRITICAL_SECTION(obj);
-    size = PyObjCRT_SizeOfType(ivar_getTypeEncoding(var));
+    size = PyObjCRT_SizeOfType((const char* _Nonnull)ivar_getTypeEncoding(var));
     if (size == -1) {
         // [objc didChangeValueForKey:ocName];
         return -1;
     }
-    res = depythonify_c_value(ivar_getTypeEncoding(var), value,
+    res = depythonify_c_value((const char* _Nonnull)ivar_getTypeEncoding(var), value,
                               (void*)(((char*)objc) + ivar_getOffset(var)));
     Py_END_CRITICAL_SECTION();
     if (res == -1) {

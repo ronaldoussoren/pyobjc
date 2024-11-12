@@ -36,8 +36,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 static inline int
-extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
-                    Class* super_class, int* flags, PyObjCMethodSignature** methinfo)
+extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* self_obj,
+                    Class _Nonnull* super_class, int* flags, PyObjCMethodSignature** methinfo)
 {
     *isIMP = !!PyObjCIMP_Check(method);
 
@@ -51,19 +51,18 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
 
     if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
-            *self_obj = PyObjCObject_GetObject(self);
+            *self_obj = (id _Nonnull)PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) {
                 return -1;
             }
-            if (*self_obj != NULL) {
-                *self_obj = object_getClass(*self_obj);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
-                }
+            if (*self_obj != (id _Nonnull)NULL) {
+                /* object_getClass never returns Nil for non-nil objects */
+                *self_obj = (id _Nonnull)object_getClass(*self_obj);
             }
 
         } else if (PyObjCClass_Check(self)) {
-            *self_obj = PyObjCClass_GetClass(self);
+            /* PyObjCClass_GetClass only returns Nil on internal errors */
+            *self_obj = (Class _Nonnull)PyObjCClass_GetClass(self);
             if (*self_obj == nil && PyErr_Occurred()) {
                 return -1;
             }
@@ -72,7 +71,12 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
             if (c == NULL) {
-                *self_obj = nil;
+                *self_obj = (Class _Nonnull)nil;
+                PyErr_Format(
+                    PyExc_TypeError,
+                    "Need Objective-C object or class as self, not an instance of '%s'",
+                   Py_TYPE(self)->tp_name);
+                return -1;
 
             } else {
                 *self_obj = PyObjCClass_GetClass(c);
@@ -92,7 +96,10 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     } else {
         int err;
         if (PyObjCObject_Check(self)) {
-            *self_obj = PyObjCObject_GetObject(self);
+            /* PyObjCObject_GetObject only returns NULL if 'self' is not an objc_object,
+             * which cannot happen here.
+             */
+            *self_obj = (id _Nonnull)PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return -1;                              // LCOV_EXCL_LINE
             }
@@ -105,22 +112,32 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     }
 
     if (*isIMP) {
-        *super_class = nil;
+        /* _Nonnull is safe because of the IMP path doesn't use the super class */
+        *super_class = (Class _Nonnull)Nil;
     } else {
         if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
-            *super_class = object_getClass(PyObjCSelector_GetClass(method));
+            /* _Nonnull is safe because object_getClass will only return Nil when the class itself is Nil */
+            *super_class = (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
         } else {
-            *super_class = PyObjCSelector_GetClass(method);
+            *super_class = (Class _Nonnull)PyObjCSelector_GetClass(method);
         }
     }
+
+    assert(*self_obj != nil);
+    assert(*methinfo != NULL);
+    assert(*isIMP || (*super_class != Nil));
 
     return 0;
 }
 
-static PyObject*
+static PyObject* _Nullable
 adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags,
-              PyObject* result)
+              PyObject* _Nullable result)
 {
+    if (result == NULL) {
+        PyObjC_Assert(PyErr_Occurred(), NULL);
+        return NULL;
+    }
     if (methinfo->rettype->alreadyRetained) {
         if (PyObjCObject_Check(result)) {
             /* pythonify_c_return_value has retained the object, but we already

@@ -713,7 +713,12 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
         if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
             if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
                 obj_name =
-                    [NSString stringWithUTF8String:PyObjC_Unicode_Fast_Bytes(name)];
+                    [NSString stringWithUTF8String:(const char* _Nonnull)PyObjC_Unicode_Fast_Bytes(name)];
+
+                if (obj_name == nil) {
+                    PyErr_SetString(PyObjCExc_Error, "Cannot convert attribute name to NSString");
+                    return -1;
+                }
 
                 @try {
                     [(NSObject*)obj_inst willChangeValueForKey:obj_name];

@@ -1213,6 +1213,7 @@ class_dealloc(PyObject* cls)
      *      when creating the proxy for a pure Objective-C class in multiple threads.
      */
 
+    [[clang::suppress]]
     Py_CLEAR(self->sel_to_py);
     Py_CLEAR(self->delmethod);
     Py_CLEAR(self->hiddenSelectors);
@@ -1575,7 +1576,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         return NULL;
     }
 
-    hidden = PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES);
+    hidden = PyObjCClass_HiddenSelector((PyObject* _Nonnull)PyObjCClass_ClassForMetaClass(base), sel, YES);
     if (hidden || PyErr_Occurred()) {
         Py_CLEAR(hidden);
         return NULL;
@@ -1601,7 +1602,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         /* Create (unbound) selector */
         /* XXX: Add check for method_getTypeEncoding */
         PyObject* result =
-            PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 1);
+            PyObjCSelector_NewNative(cls, sel, (const char* _Nonnull)method_getTypeEncoding(m), 1);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;      // LCOV_EXCL_LINE
         }

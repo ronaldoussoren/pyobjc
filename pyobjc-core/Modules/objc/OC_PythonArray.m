@@ -381,6 +381,11 @@ NS_ASSUME_NONNULL_BEGIN
         NSNull_null = [NSNull null];
     }
 
+    if (count > 0 && objects == NULL) {
+        [self release];
+        return nil;
+    }
+
     PyObjC_BEGIN_WITH_GIL
         if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
             for (i = 0; i < count; i++) {
@@ -461,7 +466,22 @@ NS_ASSUME_NONNULL_BEGIN
         code = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+        #if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
+        } else {
+            [[clang::suppress]]
+            [coder decodeValueOfObjCType:@encode(int) at:&code];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&code];
+#endif
+
     }
 
     switch (code) {
@@ -573,7 +593,21 @@ NS_ASSUME_NONNULL_BEGIN
 
         } else {
             int isize;
+#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+            /* Old deployment target, modern SDK */
+            if (@available(macOS 10.13, *)) {
+                [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
+            } else {
+                [[clang::suppress]]
+                [coder decodeValueOfObjCType:@encode(int) at:&isize];
+            }
+#elif PyObjC_BUILD_RELEASE >= 1013
+            /* Modern deployment target */
+            [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
+#else
+            /* Deployment target is ancient and SDK is old */
             [coder decodeValueOfObjCType:@encode(int) at:&isize];
+#endif
             size = isize;
         }
 
@@ -598,7 +632,22 @@ NS_ASSUME_NONNULL_BEGIN
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
+#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+            /* Old deployment target, modern SDK */
+            if (@available(macOS 10.13, *)) {
+                [coder decodeValueOfObjCType:@encode(long long) at:&size size:sizeof(size)];
+            } else {
+                [[clang::suppress]]
+                [coder decodeValueOfObjCType:@encode(long long) at:&size];
+            }
+#elif PyObjC_BUILD_RELEASE >= 1013
+            /* Modern deployment target */
+            [coder decodeValueOfObjCType:@encode(long long) at:&size size:sizeof(size)];
+#else
+            /* Deployment target is ancient and SDK is old */
             [coder decodeValueOfObjCType:@encode(long long) at:&size];
+#endif
+
         }
 
         PyObjC_BEGIN_WITH_GIL

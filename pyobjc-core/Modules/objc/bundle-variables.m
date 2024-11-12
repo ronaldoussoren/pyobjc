@@ -69,6 +69,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
     }
 
     value = CFBundleGetDataPointerForName(cfBundle, (CFStringRef)name);
+    CFRelease(cfBundle);
     if (value == NULL) {
         if (!skip_undefined) {
             PyErr_SetString(PyObjCExc_Error, "cannot find a variable");
@@ -81,7 +82,17 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
             return NULL;
         }
 
-        if (PyDict_SetItemString(module_globals, [name UTF8String], py_val) == -1) {
+        const char* c_name = [name UTF8String];
+        if (c_name == NULL) {
+            /* This should never happen, but the return value of -UTF8String
+             * is _Nullable
+             */
+            PyErr_SetString(PyExc_ValueError, "Cannot convert name to string");
+            Py_DECREF(py_val);
+            return NULL;
+        }
+
+        if (PyDict_SetItemString(module_globals, c_name, py_val) == -1) {
             Py_DECREF(py_val);
             return NULL;
         }
@@ -149,16 +160,19 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                          "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
+            if (cfBundle != NULL) CFRelease(cfBundle);
             return NULL;
         }
 
         if (!PyArg_ParseTuple(item, "O!y:variableInfo", &PyUnicode_Type, &py_name,
                               &signature)) {
             Py_DECREF(seq);
+            if (cfBundle != NULL) CFRelease(cfBundle);
             return NULL;
         }
 
         if (depythonify_python_object(py_name, &name) == -1) {
+            if (cfBundle != NULL) CFRelease(cfBundle);
             return NULL;
         }
 
@@ -170,6 +184,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             if (!skip_undefined) {
                 PyErr_SetString(PyObjCExc_Error, "cannot find a variable");
                 Py_DECREF(seq);
+                if (cfBundle != NULL) CFRelease(cfBundle);
                 return NULL;
             }
 
@@ -182,6 +197,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 py_val = pythonify_c_value(signature, value);
             }
             if (py_val == NULL) {
+                if (cfBundle != NULL) CFRelease(cfBundle);
                 Py_DECREF(seq);
                 return NULL;
             }
@@ -190,6 +206,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                     module_globals, [name UTF8String], py_val)
                 == -1) {
                 // LCOV_EXCL_START
+                if (cfBundle != NULL) CFRelease(cfBundle);
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;
@@ -200,6 +217,9 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
     }
     Py_DECREF(seq);
     Py_INCREF(Py_None);
+    if (cfBundle != NULL) {
+        CFRelease(cfBundle);
+    }
     return Py_None;
 }
 
@@ -248,7 +268,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
 
     seq = PyObjCSequence_Tuple(functionInfo, "functionInfo not a sequence");
     if (seq == NULL) {
-        CFRelease(cfBundle);
+        if (cfBundle != NULL) {
+            CFRelease(cfBundle);
+        }
         return NULL;
     }
 
@@ -267,6 +289,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                          "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
+            if (cfBundle != NULL) {
+                CFRelease(cfBundle);
+            }
             return NULL;
         }
 
@@ -275,11 +300,17 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (!PyArg_ParseTuple(item, "O&y|UO:functionInfo", PyObjCObject_Convert,
                                   &name, &signature, &doc, &meta)) {
                 Py_DECREF(seq);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
             }
             if (![name isKindOfClass:[NSString class]]) {
                 PyErr_SetString(PyExc_TypeError, "functionInfo name not a string");
                 Py_DECREF(seq);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
             }
 
@@ -288,6 +319,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
                                   &meta)) {
                 Py_DECREF(seq);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
             }
 
@@ -298,6 +332,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (!skip_undefined) {
                 PyErr_Format(PyObjCExc_Error, "cannot find a function: %R", item);
                 Py_DECREF(seq);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
             }
 
@@ -315,6 +352,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (py_val == NULL) {
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
             }
 
@@ -325,6 +365,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
                 Py_DECREF(py_val);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
                 return NULL;
                 // LCOV_EXCL_STOP
             }
@@ -334,6 +377,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
     }
     Py_DECREF(seq);
     Py_INCREF(Py_None);
+    if (cfBundle != NULL) {
+        CFRelease(cfBundle);
+    }
     return Py_None;
 }
 

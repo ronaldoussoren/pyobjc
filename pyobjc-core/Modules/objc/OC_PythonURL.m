@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObject* fspath = PyOS_FSPath(object);
     if (fspath == NULL) {
+        [self release];
         return nil;
     }
     if (!PyUnicode_Check(fspath)) {
@@ -47,7 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
     self = [super initFileURLWithPath:path];
     [path release];
     if (self == nil) {
-        [self release];
         return nil;
     }
 

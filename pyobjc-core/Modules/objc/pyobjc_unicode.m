@@ -279,7 +279,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
-    result->nsstr    = nil;
+    result->nsstr = [value retain];
 
     ascii   = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
@@ -471,8 +471,6 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         characters = NULL;
     }
 
-    /* Finally store PyUnicode specific data */
-    result->nsstr = [value retain];
 
     return (PyObject*)result;
 

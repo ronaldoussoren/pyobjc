@@ -176,6 +176,11 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
     Py_ssize_t     idx;
     PyObject*      seq;
 
+    if (newval == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
+        return -1;
+    }
+
     if (check_index(self, start) == -1) {
         return -1;
     }
@@ -223,6 +228,11 @@ varlist__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* _Nullable value)
     PyObjCVarList* self = (PyObjCVarList*)_self;
 
     if (check_index(self, idx) == -1) {
+        return -1;
+    }
+
+    if (value == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
         return -1;
     }
 
@@ -309,6 +319,10 @@ static PyObject* _Nullable varlist_subscript(PyObject* self, PyObject* item)
 static int
 varlist_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 {
+    if (value == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
+        return -1;
+    }
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
         if (i == -1 && PyErr_Occurred()) {

@@ -1666,13 +1666,16 @@ NSObject (IKnowWhatImDoing)
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
+    [[clang::suppress]]
     [coder decodeValueOfObjCType:@encode(int) at:&i];
+
     return i;
 }
 
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
+    [[clang::suppress]]
     [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }

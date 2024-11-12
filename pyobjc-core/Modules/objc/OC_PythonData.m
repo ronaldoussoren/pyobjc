@@ -213,7 +213,22 @@ NS_ASSUME_NONNULL_BEGIN
         v = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&v size:sizeof(v)];
+        } else {
+            [[clang::suppress]]
+            [coder decodeValueOfObjCType:@encode(int) at:&v];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&v size:sizeof(v)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&v];
+#endif
+
     }
     if (v == 1) {
         /* Backward compatibility:

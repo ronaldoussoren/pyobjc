@@ -47,11 +47,11 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         Py_END_ALLOW_THREADS
 
     } else {
-        spr.super_class = object_getClass(PyObjCSelector_GetClass(method));
+        spr.super_class = (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
         if (PyObjCClass_Check(self)) {
-            spr.receiver = PyObjCClass_GetClass(self);
+            spr.receiver = (id _Nonnull)PyObjCClass_GetClass(self);
         } else {
-            spr.receiver = object_getClass(PyObjCObject_GetObject(self));
+            spr.receiver = (id _Nonnull)object_getClass(PyObjCObject_GetObject(self));
         }
         aSel = PyObjCSelector_GetSelector(method);
 

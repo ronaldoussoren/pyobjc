@@ -234,7 +234,7 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         PyGILState_Release(_GILState);                                                   \
     } while (0)
 
-extern PyObject* _Nullable PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
+extern PyObject* _Nonnull PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
 #if PY_VERSION_HEX < 0x030d0000
 #define Py_BEGIN_CRITICAL_SECTION(value) {

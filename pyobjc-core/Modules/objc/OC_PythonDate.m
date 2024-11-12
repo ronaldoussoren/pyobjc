@@ -232,7 +232,22 @@ is_builtin_datetime(PyObject* object)
         pytype = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
+        } else {
+            [[clang::suppress]]
+            [coder decodeValueOfObjCType:@encode(int) at:&pytype];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&pytype];
+#endif
+
     }
 
     self = [super init];

@@ -635,6 +635,7 @@ free_ivars(id self, PyObject* cls)
 {
     /* Free all instance variables introduced through python */
     Ivar var;
+    PyObject* cur_cls;
 
     var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
     if (var != NULL) {
@@ -644,8 +645,9 @@ free_ivars(id self, PyObject* cls)
         Py_XDECREF(tmp);
     }
 
-    while (cls != NULL) {
-        Class     objcClass = PyObjCClass_GetClass(cls);
+    cur_cls = cls;
+    while (cur_cls != NULL) {
+        Class     objcClass = PyObjCClass_GetClass(cur_cls);
         PyObject* clsDict;
         PyObject* clsValues;
         PyObject* o;
@@ -655,7 +657,7 @@ free_ivars(id self, PyObject* cls)
         }
 
         /* XXX: Why does this not access the dict slot directly? */
-        clsDict = PyObject_GetAttrString(cls, "__dict__");
+        clsDict = PyObject_GetAttrString(cur_cls, "__dict__");
         if (clsDict == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -742,20 +744,20 @@ free_ivars(id self, PyObject* cls)
         /* XXX: Why does this use cls.__bases__()[0] instead of
          *      the type slot with the primary superclass?
          */
-        o = PyObject_GetAttrString(cls, "__bases__");
+        o = PyObject_GetAttrString(cur_cls, "__bases__");
         if (o == NULL) {
             PyErr_Clear();
-            cls = NULL;
+            cur_cls = NULL;
 
         } else if (PyTuple_Size(o) == 0) {
             PyErr_Clear();
-            cls = NULL;
+            cur_cls = NULL;
             Py_DECREF(o);
 
         } else {
-            cls = PyTuple_GET_ITEM(o, 0);
-            if (cls == (PyObject*)&PyObjCClass_Type) {
-                cls = NULL;
+            cur_cls = PyTuple_GET_ITEM(o, 0);
+            if (cur_cls == (PyObject*)&PyObjCClass_Type) {
+                cur_cls = NULL;
             }
             Py_DECREF(o);
         }
