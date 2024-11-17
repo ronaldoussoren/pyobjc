@@ -9,6 +9,7 @@ class TestAXSettings(TestCase):
         self.assertEqual(
             Accessibility.AXSettingsFeaturePersonalVoiceAllowAppsToRequestToUse, 1
         )
+        self.assertEqual(Accessibility.AXSettingsFeatureAllowAppsToAddAudioToCalls, 2)
 
     @min_os_level("14.0")
     def testConstants(self):

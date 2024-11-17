@@ -27,7 +27,7 @@ setup(
         Extension(
             "FSKit._FSKit",
             ["Modules/_FSKit.m"],
-            extra_link_args=["-framework", "FSKit"],
+            # extra_link_args=["-framework", "FSKit"],
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")

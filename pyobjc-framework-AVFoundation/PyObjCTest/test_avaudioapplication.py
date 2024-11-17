@@ -15,6 +15,26 @@ class TestAVAudioApplication(TestCase):
             AVFoundation.AVAudioApplicationRecordPermissionGranted, fourcc(b"grnt")
         )
 
+        self.assertIsEnumType(
+            AVFoundation.AVAudioApplicationMicrophoneInjectionPermission
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioApplicationMicrophoneInjectionPermissionServiceDisabled,
+            fourcc(b"srds"),
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioApplicationMicrophoneInjectionPermissionUndetermined,
+            fourcc(b"undt"),
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioApplicationMicrophoneInjectionPermissionDenied,
+            fourcc(b"deny"),
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioApplicationMicrophoneInjectionPermissionGranted,
+            fourcc(b"grnt"),
+        )
+
     @min_os_level("14.0")
     def test_constants14_0(self):
         self.assertIsInstance(

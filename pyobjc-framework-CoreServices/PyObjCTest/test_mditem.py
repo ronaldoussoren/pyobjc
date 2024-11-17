@@ -23,6 +23,10 @@ class TestMDImport(TestCase):
         # Documented on 10.11, but not available there
         self.assertResultIsCFRetained(CoreServices.MDItemsCopyAttributes)
 
+    @min_os_level("15.2")
+    def test_functions15_2(self):
+        self.assertArgIsBlock(CoreServices.MDItemGetCacheFileDescriptors, 1, b"v@")
+
     @expectedFailure
     def test_functions_missing(self):
         # Link error on 10.13

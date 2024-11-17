@@ -183,6 +183,7 @@
    "AudioDeviceAddIOProc": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -218,6 +219,7 @@
    "AudioDeviceAddPropertyListener": {
     "args": {
      "4": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -247,6 +249,7 @@
    "AudioDeviceCreateIOProcID": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -334,6 +337,7 @@
    "AudioDeviceRemoveIOProc": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -368,6 +372,7 @@
    "AudioDeviceRemovePropertyListener": {
     "args": {
      "4": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -433,6 +438,7 @@
    "AudioHardwareAddPropertyListener": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -476,6 +482,7 @@
    "AudioHardwareRemovePropertyListener": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -509,6 +516,7 @@
     "args": {
      "1": { "type_modifier": "n" },
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -623,6 +631,7 @@
     "args": {
      "1": { "type_modifier": "n" },
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -671,6 +680,7 @@
    "AudioStreamAddPropertyListener": {
     "args": {
      "3": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -709,6 +719,7 @@
    "AudioStreamRemovePropertyListener": {
     "args": {
      "3": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

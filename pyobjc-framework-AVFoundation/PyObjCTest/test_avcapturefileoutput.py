@@ -6,6 +6,11 @@ class TestAVCaptureFileOutputHelper(AVFoundation.NSObject):
     def captureOutputShouldProvideSampleAccurateRecordingStart_(self, a):
         return 1
 
+    def captureOutput_didStartRecordingToOutputFileAtURL_startPTS_fromConnections_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestAVCaptureFileOutput(TestCase):
     def testMethods(self):
@@ -28,6 +33,11 @@ class TestAVCaptureFileOutput(TestCase):
     def testProtocolMethods(self):
         self.assertResultIsBOOL(
             TestAVCaptureFileOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
+        )
+        self.assertArgHasType(
+            TestAVCaptureFileOutputHelper.captureOutput_didStartRecordingToOutputFileAtURL_startPTS_fromConnections_,  # noqa: B950
+            2,
+            AVFoundation.CMTime.__typestr__,
         )
 
     @min_os_level("12.0")

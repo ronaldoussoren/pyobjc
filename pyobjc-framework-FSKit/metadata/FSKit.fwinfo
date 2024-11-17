@@ -5,6 +5,9 @@
   "typed_enum": {
    "FSTaskParameterConstant":  { "type": "@", "type_name": "NSString" }
   },
+  "externs": {
+   "FSKitVersionString": { "ignore": true }
+  },
   "classes": {
    "NSObject": {
     "methods": [
@@ -60,7 +63,7 @@
           "4": { "type": "Q" },
           "5": { "type": "I" }
          },
-         "retval": { "type": "i" }
+         "retval": { "type": "Z" }
         }
        }
       }

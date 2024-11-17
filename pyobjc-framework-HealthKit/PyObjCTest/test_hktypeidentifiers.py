@@ -355,3 +355,8 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsTypedEnum(HealthKit.HKScoredAssessmentTypeIdentifier, str)
         self.assertIsInstance(HealthKit.HKScoredAssessmentTypeIdentifierGAD7, str)
         self.assertIsInstance(HealthKit.HKScoredAssessmentTypeIdentifierPHQ9, str)
+
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierAppleSleepingBreathingDisturbances, str
+        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierSleepApneaEvent, str)

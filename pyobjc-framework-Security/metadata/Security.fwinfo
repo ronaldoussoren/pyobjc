@@ -5353,6 +5353,16 @@
     },
     "retval": { "type_override": "@", "already_cfretained": true }
    },
+   "SecTransformRegister": {
+    "args": {
+     "1": { "callable_retained": true }
+    }
+   },
+   "SecKeychainAddCallback": {
+    "args": {
+     "0": { "callable_retained": true }
+    }
+   },
    "sec_protocol_metadata_create_secret": {
     "args": {
      "0": { "type_override": "@" },

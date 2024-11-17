@@ -73,6 +73,7 @@ FRAMEWORK_WRAPPERS = [
     ("CryptoTokenKit", "10.10", None),
     ("DataDetection", "12.0", None),
     ("DeviceCheck", "10.15", None),
+    ("DeviceDiscoveryExtension", "15.0", None),
     ("DictionaryServices", "10.5", None),
     ("DiscRecording", None, None),
     ("DiscRecordingUI", None, None),
@@ -202,6 +203,8 @@ MACOS_TO_DARWIN = {
     "14.0": "23.0",
     "14.4": "23.4",
     "15.0": "24.0",
+    "15.1": "24.1",
+    "15.2": "24.2",
 }
 
 

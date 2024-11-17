@@ -12,6 +12,9 @@ class TestAVCaptureInput(TestCase):
         self.assertIsEnumType(AVFoundation.AVCaptureMultichannelAudioMode)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeNone, 0)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeStereo, 1)
+        self.assertEqual(
+            AVFoundation.AVCaptureMultichannelAudioModeFirstOrderAmbisonics, 2
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureInputPort.isEnabled)
@@ -75,4 +78,14 @@ class TestAVCaptureInput(TestCase):
     def testMethods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isMultichannelAudioModeSupported_
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isWindNoiseRemovalSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isWindNoiseRemovalEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.setWindNoiseRemovalEnabled_, 0
         )

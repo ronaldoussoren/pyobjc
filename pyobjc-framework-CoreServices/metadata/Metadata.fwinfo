@@ -295,6 +295,7 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -320,6 +321,7 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -364,6 +366,7 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

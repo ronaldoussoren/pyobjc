@@ -3,7 +3,8 @@
 {
  "definitions": {
   "typed_enum": {
-   "AXTechnology": { "type": "@", "type_name": "NSString" }
+   "AXTechnology": { "type": "@", "type_name": "NSString" },
+   "AXFeatureOverrideSessionOptions": { "type": "Q" }
   },
   "classes": {
    "AXBrailleMap": {

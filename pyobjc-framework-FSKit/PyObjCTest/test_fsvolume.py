@@ -3,27 +3,33 @@ from PyObjCTools.TestSupport import TestCase
 import FSKit
 import objc
 
-FSDirEntryPacker = b"Z@CQQ@Z"
+FSDirEntryPacker = b"Z@qQQ@Z"
 
 
 class TestFSVolumeHelper(FSKit.NSObject):
     # FSVolumePathConfOperations
-    def maxLinkCount(self):
+    def maximumLinkCount(self):
         return 1
 
-    def maxNameLength(self):
+    def maximumNameLength(self):
         return 1
 
     def isChownRestricted(self):
         return 1
 
-    def isLongNameTruncated(self):
+    def truncatesLongNames(self):
         return 1
 
-    def maxXattrSizeInBits(self):
+    def maximumXattrSize(self):
         return 1
 
-    def maxFileSizeInBits(self):
+    def maximumXattrSizeInBits(self):
+        return 1
+
+    def maximumFileSize(self):
+        return 1
+
+    def maximumFileSizeInBits(self):
         return 1
 
     # FSVolumeOperations
@@ -33,16 +39,19 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def unmountWithReplyHandler_(self, a):
         pass
 
-    def synchronizeWithReplyHandler_(self, a):
+    def synchronizeWithFlags_replyHandler_(self, a, b):
         pass
 
     def getAttributes_ofItem_replyHandler_(self, a, b, c):
         pass
 
+    def setAttributes_onItem_replyHandler_(self, a, b, c):
+        pass
+
     def setAttributes_onItem_replyNadler_(self, a, b, c):
         pass
 
-    def lookupName_inDirectory_replyHandler_(self, a, b, c):
+    def lookupItemNamed_inDirectory_replyHandler_(self, a, b, c):
         pass
 
     def reclaimItem_replyHandler_(self, a, b):
@@ -70,7 +79,7 @@ class TestFSVolumeHelper(FSKit.NSObject):
     ):
         pass
 
-    def enumerateDirectory_startingAtCookie_verifier_provideAttributes_usingBlock_replyHandler_(
+    def enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_(
         self,
         a,
         b,
@@ -88,13 +97,13 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     # FSVolumeXattrOperations
-    def xattrOperationsInhibited(self):
+    def areXattrOperationsInhibited(self):
         return 1
 
     def setXattrOperationsInhibited_(self, a):
         pass
 
-    def xattrNamed_ofItem_replyHandler(self, a, b, c):
+    def getXattrNamed_ofItem_replyHandler_(self, a, b, c):
         pass
 
     def setXattrNamed_toData_onItem_policy_replyHandler_(self, a, b, c, d, e):
@@ -104,10 +113,16 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     # FSVolumeOpenCloseOperations
-    def openItem_withMode_replyHandler_(self, a, b, c):
+    def isOpenCloseInhibited(self):
+        return 1
+
+    def setOpenCloseInhibited_(self, a):
         pass
 
-    def closeItem_keepingMode_replyHandler_(self, a, b, c):
+    def openItem_withModes_replyHandler_(self, a, b, c):
+        pass
+
+    def closeItem_keepingModes_replyHandler_(self, a, b, c):
         pass
 
     # FSVolumeReadWriteOperations
@@ -118,20 +133,20 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     # FSVolumeAccessCheckOperations
-    def accessCheckOperationsInhibited(self):
+    def isAccessCheckInhibited(self):
         return 1
 
-    def setAccessCheckOperationsInhibited_(self, a):
+    def setAccessCheckInhibited_(self, a):
         pass
 
-    def checkAccessTo_requestedAccess_replyHandler_(self, a, b, c):
+    def checkAccessToItem_requestedAccess_replyHandler_(self, a, b, c):
         pass
 
     # FSVolumeRenameOperations
-    def volumeRenameOperationsInhibited(self):
+    def isVolumeRenameInhibited(self):
         return 1
 
-    def setVolumeRenameOperationsInhibited_(self, a):
+    def setVolumeRenameInhibited_(self, a):
         pass
 
     def setVolumeName_replyHandler_(self, a, b):
@@ -170,11 +185,21 @@ class TestFSVolume(TestCase):
         self.assertEqual(FSKit.FSAccessDeleteChild, 1 << 6)
         self.assertEqual(FSKit.FSAccessReadAttributes, 1 << 7)
         self.assertEqual(FSKit.FSAccessWriteAttributes, 1 << 8)
-        self.assertEqual(FSKit.FSAccessReadExtAttributes, 1 << 9)
-        self.assertEqual(FSKit.FSAccessWriteExtAttributes, 1 << 10)
+        self.assertEqual(FSKit.FSAccessReadXattr, 1 << 9)
+        self.assertEqual(FSKit.FSAccessWriteXattr, 1 << 10)
         self.assertEqual(FSKit.FSAccessReadSecurity, 1 << 11)
         self.assertEqual(FSKit.FSAccessWriteSecurity, 1 << 12)
         self.assertEqual(FSKit.FSAccessTakeOwnership, 1 << 13)
+
+        self.assertIsEnumType(FSKit.FSSyncFlags)
+        self.assertEqual(FSKit.FSSyncFlagsWait, 1)
+        self.assertEqual(FSKit.FSSyncFlagsNoWait, 2)
+        self.assertEqual(FSKit.FSSyncFlagsDWait, 4)
+
+        self.assertIsEnumType(FSKit.FSVolumeCaseSensitivity)
+        self.assertEqual(FSKit.FSVolumeCaseSensitivityNotSupported, 0)
+        self.assertEqual(FSKit.FSVolumeCaseSensitivitySupported, 1)
+        self.assertEqual(FSKit.FSVolumeCaseSensitivityCasePreservingOnly, 2)
 
     def test_protocols(self):
         self.assertProtocolExists("FSVolumePathConfOperations")
@@ -187,12 +212,20 @@ class TestFSVolume(TestCase):
 
     def test_protocol_methods(self):
         # FSVolumePathConfOperations
-        self.assertResultHasType(TestFSVolumeHelper.maxLinkCount, objc._C_INT)
-        self.assertResultHasType(TestFSVolumeHelper.maxNameLength, objc._C_INT)
-        self.assertResultIsBOOL(TestFSVolumeHelper.chownRestricted)
-        self.assertResultIsBOOL(TestFSVolumeHelper.longNameTruncated)
-        self.assertResultHasType(TestFSVolumeHelper.maxXattrSizeInBits, objc._C_INT)
-        self.assertResultHasType(TestFSVolumeHelper.maxFileSizeInBits, objc._C_INT)
+        self.assertResultHasType(TestFSVolumeHelper.maximumLinkCount, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestFSVolumeHelper.maximumNameLength, objc._C_NSInteger
+        )
+        self.assertResultIsBOOL(TestFSVolumeHelper.isChownRestricted)
+        self.assertResultIsBOOL(TestFSVolumeHelper.truncatesLongNames)
+        self.assertResultHasType(TestFSVolumeHelper.maximumXattrSize, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestFSVolumeHelper.maximumXattrSizeInBits, objc._C_NSInteger
+        )
+        self.assertResultHasType(TestFSVolumeHelper.maximumFileSize, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestFSVolumeHelper.maximumFileSizeInBits, objc._C_NSInteger
+        )
 
         # FSVolumeOperations
 
@@ -200,7 +233,14 @@ class TestFSVolume(TestCase):
             TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@@"
         )
         self.assertArgIsBlock(TestFSVolumeHelper.unmountWithReplyHandler_, 0, b"v")
-        self.assertArgIsBlock(TestFSVolumeHelper.synchronizeWithReplyHandler_, 0, b"v@")
+
+        self.assertArgHasType(
+            TestFSVolumeHelper.synchronizeWithFlags_replyHandler_, 0, objc._C_NSInteger
+        )
+        self.assertArgIsBlock(
+            TestFSVolumeHelper.synchronizeWithFlags_replyHandler_, 1, b"v@"
+        )
+
         self.assertArgIsBlock(
             TestFSVolumeHelper.getAttributes_ofItem_replyHandler_,
             2,
@@ -212,7 +252,7 @@ class TestFSVolume(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.lookupName_inDirectory_replyHandler_, 2, b"v@@"
+            TestFSVolumeHelper.lookupItemNamed_inDirectory_replyHandler_, 2, b"v@@@"
         )
         self.assertArgIsBlock(TestFSVolumeHelper.reclaimItem_replyHandler_, 1, b"v@")
         self.assertArgIsBlock(
@@ -222,57 +262,52 @@ class TestFSVolume(TestCase):
         self.assertArgHasType(
             TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
             1,
-            b"C",
+            objc._C_NSInteger,
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
             4,
-            b"v@@",
+            b"v@@@",
         )
 
         self.assertArgIsBlock(
             TestFSVolumeHelper.createSymbolicLinkNamed_inDirectory_attributes_linkContents_replyHandler_,
             4,
-            b"v@@",
+            b"v@@@",
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.createLinkToItem_named_inDirectory_replyHandler_,
             3,
-            b"v@",
+            b"v@@",
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.removeItem_named_fromDirectory_replyHandler_, 3, b"v@"
         )
 
         self.assertArgIsBlock(
-            TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_withOptions_replyHandler_,
+            TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_replyHandler_,
             6,
             b"v@@",
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
             1,
             b"Q",
         )
         self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
             2,
             b"Q",
         )
-        self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
-            3,
-            b"B",
-        )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
-            5,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
+            4,
             FSDirEntryPacker,
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_provideAttributes_attributes_usingBlock_replyHandler_,
-            6,
+            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
+            5,
             b"vQ@",
         )
 
@@ -281,25 +316,27 @@ class TestFSVolume(TestCase):
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 0, b"Q"
+            TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 0, b"q"
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 1, b"v@"
         )
 
         # FSVolumeXattrOperations
-        self.assertResultHasType(TestFSVolumeHelper.xattrOperationsInhibited, b"B")
-        self.assertArgHasType(TestFSVolumeHelper.setXattrOperationsInhibited_, 0, b"B")
+        self.assertResultIsBOOL(TestFSVolumeHelper.areXattrOperationsInhibited)
+        self.assertArgIsBOOL(TestFSVolumeHelper.setXattrOperationsInhibited_, 0)
 
         self.assertArgIsBlock(
-            TestFSVolumeHelper.xattrNamed_ofItem_replyHandler_, 2, b"v@@"
+            TestFSVolumeHelper.getXattrNamed_ofItem_replyHandler_, 2, b"v@@"
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.setXAttrNamed_toData_onItem_policy_replyHandler_, 3, b"I"
+            TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
+            3,
+            objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.setXAttrNamed_toData_onItem_policy_replyHandler_,
+            TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
             4,
             b"v@",
         )
@@ -309,15 +346,20 @@ class TestFSVolume(TestCase):
         )
 
         # FSVolumeOpenCloseOperations
+        self.assertResultIsBOOL(TestFSVolumeHelper.isOpenCloseInhibited)
+        self.assertArgIsBOOL(TestFSVolumeHelper.setOpenCloseInhibited_, 0)
+
         self.assertArgHasType(
-            TestFSVolumeHelper.openItem_withModes_replyHandler_, 1, b"i"
+            TestFSVolumeHelper.openItem_withModes_replyHandler_, 1, objc._C_NSUInteger
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.openItem_withModes_replyHandler_, 2, b"v@"
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.closeItem_keepingModes_replyHandler_, 1, b"i"
+            TestFSVolumeHelper.closeItem_keepingModes_replyHandler_,
+            1,
+            objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.closeItem_keepingModes_replyHandler_, 2, b"v@"
@@ -327,7 +369,7 @@ class TestFSVolume(TestCase):
         self.assertArgHasType(
             TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
             1,
-            b"Q",
+            b"q",
         )
         self.assertArgHasType(
             TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
@@ -341,32 +383,28 @@ class TestFSVolume(TestCase):
         )
 
         self.assertArgHasType(
-            TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 2, b"Q"
+            TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 2, b"q"
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 3, b"vQ@"
         )
 
         # FSVolumeAccessCheckOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.accessCheckOperationsInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setAccessCheckOperationsInhibited_, 0)
+        self.assertResultIsBOOL(TestFSVolumeHelper.isAccessCheckInhibited)
+        self.assertArgIsBOOL(TestFSVolumeHelper.setAccessCheckInhibited_, 0)
 
         self.assertArgHasType(
-            TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_, 1, b"I"
+            TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_, 1, b"Q"
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_,
             2,
-            b"vi@",
+            b"vZ@",
         )
 
         # FSVolumeRenameOperations
-        self.assertResultHasType(
-            TestFSVolumeHelper.volumeRenameOperationsInhibited, b"B"
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.setVolumeRenameOperationsInhibited_, 0, b"B"
-        )
+        self.assertResultIsBOOL(TestFSVolumeHelper.isVolumeRenameInhibited)
+        self.assertArgIsBOOL(TestFSVolumeHelper.setVolumeRenameInhibited_, 0)
 
         self.assertArgIsBlock(TestFSVolumeHelper.setVolumeName_replyHandler_, 1, b"v@@")
 
@@ -415,20 +453,6 @@ class TestFSVolume(TestCase):
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsZeroRuns)
         self.assertArgIsBOOL(
             FSKit.FSVolumeSupportedCapabilities.setSupportsZeroRuns_, 0
-        )
-
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsCaseSensitiveNames
-        )
-        self.assertArgIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.setSupportsCaseSensitiveNames_, 0
-        )
-
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsCasePreservingNames
-        )
-        self.assertArgIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.setSupportsCasePreservingNames_, 0
         )
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsFastStatFS)

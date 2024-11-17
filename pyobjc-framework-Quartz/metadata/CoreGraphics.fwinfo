@@ -325,6 +325,16 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGErrorSetCallback": {
+    "args": {
+     "0": { "callable_retained": true }
+    }
+   },
+   "CGColorConversionInfoConvertData": {
+    "args": {
+     "3": { "type_modifier": "n", "c_array_of_variable_length": true }
+    }
+   },
    "CGImageCreateWithContentHeadroom": {
      "comment": "API documentation is unclear about this parameter",
      "args": {
@@ -2267,27 +2277,6 @@
      "0": {}
     },
     "retval": {}
-   },
-   "CGPDFOperatorTableSetCallback": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{CGPDFScanner=}"
-        },
-        {
-         "typestr": "^v"
-        }
-       ],
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     }
-    }
    },
    "CGPDFPageGetBoxRect": {
     "args": {
@@ -5927,6 +5916,7 @@
      "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

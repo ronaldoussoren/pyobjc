@@ -61,6 +61,8 @@ def _setup():
         ("PKRecurringPaymentRequest", b"init"),
         ("PKShareablePassMetadataPreview", b"init"),
         ("PKShareablePassMetadataPreview", b"new"),
+        ("PKIdentityDocumentMetadata", b"init"),
+        ("PKIdentityDocumentMetadata", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -60,6 +60,7 @@ class TestCIContext(TestCase):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationSemanticSegmentationGlassesMatteImage, str
         )
+        self.assertIsInstance(Quartz.kCIImageRepresentationHDRGainMapImage, str)
 
     @min_os_level("11.1")
     def testConstants11_1(self):

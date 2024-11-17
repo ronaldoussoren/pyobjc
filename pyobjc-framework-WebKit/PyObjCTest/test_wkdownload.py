@@ -10,3 +10,7 @@ class TestWKDownload(TestCase):
             0,
             b"v@",
         )
+
+    @min_os_level("15.2")
+    def testMethods15_2(self):
+        self.assertResultIsBOOL(WebKit.WKDownload.isUserInitiated)

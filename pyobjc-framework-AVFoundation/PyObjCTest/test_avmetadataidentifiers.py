@@ -914,3 +914,10 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataIsMontage, str
         )
+
+    @min_os_level("15.0")
+    def testConstants15_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataFullFrameRatePlaybackIntent,
+            str,
+        )

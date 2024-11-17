@@ -247,8 +247,14 @@ extern PyObject* _Nonnull PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
 
 
 #else
+
+#if defined(Py_GIL_DISABLED)
 #define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
 #define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection_End2(&_py_cs2)
+#else
+#define Py_EXIT_CRITICAL_SECTION() ((void)0)
+#define Py_EXIT_CRITICAL_SECTION2() ((void)0)
+#endif
 
 #endif
 

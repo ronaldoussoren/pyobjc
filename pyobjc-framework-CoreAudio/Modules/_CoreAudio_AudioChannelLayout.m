@@ -132,8 +132,9 @@ avl_get_item(PyObject* _self, Py_ssize_t idx)
 
     if (self->avl_items != NULL) {
         if (PyTuple_GET_ITEM(self->avl_items, idx) != Py_None) {
-            Py_INCREF(PyTuple_GET_ITEM(self->avl_items, idx));
             result = PyTuple_GET_ITEM(self->avl_items, idx);
+            Py_INCREF(result);
+            goto end;
         }
     } else {
         Py_ssize_t i;

@@ -100,13 +100,6 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSWritingToolsBehaviorComplete, 1)
         self.assertEqual(AppKit.NSWritingToolsBehaviorLimited, 2)
 
-        self.assertIsEnumType(AppKit.NSWritingToolsAllowedInputOptions)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsDefault, 0)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsPlainText, 1 << 0)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsRichText, 1 << 1)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsList, 1 << 2)
-        self.assertEqual(AppKit.NSWritingToolsAllowedInputOptionsTable, 1 << 3)
-
         self.assertIsEnumType(AppKit.NSWritingToolsResultOptions)
         self.assertEqual(AppKit.NSWritingToolsResultDefault, 0)
         self.assertEqual(AppKit.NSWritingToolsResultPlainText, 1 << 0)

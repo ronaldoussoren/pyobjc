@@ -16,12 +16,13 @@ class TestNSCache(TestCase):
 
     def testConvenience(self):
         key = "key"
+        value = Foundation.NSObject.alloc().init()
         c = Foundation.NSCache.alloc().init()
-        c.setObject_forKey_(42, key)
-        self.assertEqual(c.objectForKey_(key), 42)
-        self.assertEqual(c.objectForKey_(key), 42)
+        c.setObject_forKey_(value, key)
+        self.assertEqual(c.objectForKey_(key), value)
+        self.assertEqual(c.objectForKey_(key), value)
 
-        self.assertEqual(c["key"], 42)
+        self.assertEqual(c["key"], value)
         c["key"] = 21
         self.assertEqual(c["key"], 21)
         self.assertEqual(c.objectForKey_("key"), 21)

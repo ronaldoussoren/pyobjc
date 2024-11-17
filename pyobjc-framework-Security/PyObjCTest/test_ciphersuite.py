@@ -74,6 +74,7 @@ class TestCipherSuite(TestCase):
         self.assertEqual(Security.TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA, 0xC035)
         self.assertEqual(Security.TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA, 0xC036)
         self.assertEqual(Security.TLS_PSK_WITH_CHACHA20_POLY1305_SHA256, 0xCCAB)
+        self.assertEqual(Security.TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256, 0xCCAC)
 
         self.assertEqual(Security.TLS_NULL_WITH_NULL_NULL, 0x0000)
         self.assertEqual(Security.TLS_RSA_WITH_NULL_MD5, 0x0001)

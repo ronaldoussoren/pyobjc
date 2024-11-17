@@ -147,6 +147,7 @@
      "5": {},
      "6": {},
      "7": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

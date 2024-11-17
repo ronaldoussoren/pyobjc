@@ -12,4 +12,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(BETextInputDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(BETextInteractionDelegate)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1404 */
+#if PyObjC_BUILD_RELEASE >= 1502
+    // Not exposed on macOS
+    //p = PyObjC_IdToPython(@protocol(BEAccessibilityTextMarker)); Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1502 */
 }

@@ -390,6 +390,7 @@
    "DVDRegisterEventCallBack": {
     "args": {
      "0": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -429,6 +430,7 @@
    "DVDSetFatalErrorCallBack": {
     "args": {
      "0": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

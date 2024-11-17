@@ -1476,10 +1476,10 @@
       "block": {
        "args": [
         {
-         "typestr": "^@"
+         "typestr": "n^@", "c_array_of_variable_length": true
         },
         {
-         "typestr": "^@"
+         "typestr": "n^@", "c_array_of_variable_length": true
         }
        ],
        "retval": {

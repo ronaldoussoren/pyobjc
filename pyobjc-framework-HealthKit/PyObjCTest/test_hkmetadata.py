@@ -232,3 +232,9 @@ class TestHKMetadata(TestCase):
         self.assertIsInstance(HealthKit.HKMetadataKeyActivityType, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyPhysicalEffortEstimationType, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyMaximumLightIntensity, str)
+
+    @min_os_level("15.2")
+    def test_constants15_2(self):
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyAppleFitnessPlusCatalogIdentifier, str
+        )

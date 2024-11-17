@@ -19,10 +19,6 @@ class TestSCSensitivityAnalyzer(TestCase):
         )
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            SensitiveContentAnalysis.SCSensitivityAnalysis.isSensitive
-        )
-
         self.assertArgIsBlock(
             SensitiveContentAnalysis.SCSensitivityAnalyzer.analyzeImageFile_completionHandler_,
             1,

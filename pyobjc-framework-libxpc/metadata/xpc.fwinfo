@@ -252,6 +252,7 @@
    "xpc_connection_set_finalizer_f": {
     "args": {
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

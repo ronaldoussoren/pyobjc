@@ -1,16 +1,16 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import FSKit
 
 
 class TestFSResourceHelper(FSKit.NSObject):
-    def checkWithParameters_connection_taskID_replyHandler_(self, a, b, c, d):
-        pass
-
-    def formatWithParameters_connection_taskID_replyHandler_(self, a, b, c, d):
-        pass
-
     def probeResource_replyHandler_(self, a, b):
+        pass
+
+    def startCheckWithTask_parameters_error_(self, a, b, c):
+        pass
+
+    def startFormatWithTask_parameters_error_(self, a, b, c):
         pass
 
 
@@ -23,7 +23,7 @@ class TestFSResource(TestCase):
         self.assertEqual(FSKit.FSMatchResultUsable, 3)
 
     def test_structs(self):
-        v = FSKit.FSMetaReadahead()
+        v = FSKit.FSMetadataReadahead()
         self.assertIsInstance(v.offset, int)
         self.assertIsInstance(v.length, int)
 
@@ -33,172 +33,129 @@ class TestFSResource(TestCase):
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(
-            TestFSResourceHelper.checkWithParameters_connection_taskID_replyHandler_,
-            3,
-            b"v@@",
-        )
-        self.assertArgIsBlock(
-            TestFSResourceHelper.formatWithParameters_connection_taskID_replyHandler_,
-            3,
-            b"v@@",
+            TestFSResourceHelper.probeResource_replyHandler_, 1, b"v@@"
         )
 
-        self.assertArgIsBlock(
-            TestFSResourceHelper.probeResource_replyHandler_, 1, b"vi@@@"
+        self.assertArgHasType(
+            TestFSResourceHelper.startCheckWithTask_parameters_error_, 2, b"o^@"
+        )
+        self.assertArgHasType(
+            TestFSResourceHelper.startFormatWithTask_parameters_error_, 2, b"o^@"
         )
 
+    @min_os_level("15.2")
     def test_methods(self):
         self.assertResultIsBOOL(FSKit.FSResource.isRevoked)
         self.assertResultIsBOOL(FSKit.FSBlockDeviceResource.isWritable)
         self.assertResultIsBOOL(FSKit.FSBlockDeviceResource.isTerminated)
 
         self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_, 0
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_completionHandler_, 0
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_, 0, 2
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_completionHandler_,
+            0,
+            2,
         )
         self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.readInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_completionHandler_,
             3,
             b"vQ@",
         )
 
         self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_error_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_error_,
+            0,
+            2,
+        )
+        self.assertArgIsOut(
+            FSKit.FSBlockDeviceResource.readInto_startingAt_length_error_,
+            3,
+        )
+
+        self.assertArgIsIn(
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_completionHandler_,
+            0,
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_completionHandler_,
             0,
             2,
         )
         self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousReadInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_completionHandler_,
             3,
             b"vQ@",
         )
 
         self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_replyHandler_, 0
-        )
-        self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_replyHandler_, 0, 2
-        )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_replyHandler_,
-            3,
-            b"vQ@",
-        )
-
-        self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.synchronousWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_error_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_error_,
             0,
             2,
         )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousWriteFrom_startingAt_length_replyHandler_,
+        self.assertArgIsOut(
+            FSKit.FSBlockDeviceResource.writeFrom_startingAt_length_error_,
             3,
-            b"vQ@",
         )
 
         self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
             0,
             2,
         )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_replyHandler_,
+        self.assertArgIsOut(
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
             3,
-            b"v@",
         )
 
         self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             0,
             2,
         )
         self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             3,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
+            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             3,
             4,
         )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaReadInto_startingAt_length_readAheadExtents_readAheadCount_replyHandler_,
-            5,
-            b"v@",
+
+        self.assertArgIsIn(
+            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_, 0
+        )
+        self.assertArgSizeInArg(
+            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_,
+            0,
+            2,
         )
 
         self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_replyHandler_, 0
-        )
-        self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_replyHandler_,
-            0,
-            2,
-        )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_replyHandler_,
-            3,
-            b"v@",
-        )
-
-        self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.synchronousMetaWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.delayedMetaWriteFrom_startingAt_length_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.synchronousMetaWriteFrom_startingAt_length_replyHandler_,
+            FSKit.FSBlockDeviceResource.delayedMetaWriteFrom_startingAt_length_,
             0,
             2,
         )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaWriteFrom_startingAt_length_replyHandler_,
-            3,
-            b"v@",
-        )
 
-        self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
-            0,
-        )
-        self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
-            0,
-            2,
-        )
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_replyHandler_,
-            3,
-            b"v@",
-        )
-
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaFlushWithReplyHandler_, 0, b"v@"
-        )
-
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaClear_wait_replyHandler_,
-            2,
-            b"v@",
-        )
-
-        self.assertArgIsBlock(
-            FSKit.FSBlockDeviceResource.synchronousMetaPurge_replyHandler_, 1, b"v@"
-        )
+        self.assertArgIsBOOL(FSKit.FSBlockDeviceResource.synchronousMetaClear_wait_, 1)

@@ -357,6 +357,7 @@
       "type_override": "^{_ODQuery=}"
      },
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

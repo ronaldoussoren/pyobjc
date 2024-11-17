@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import FSKit
 
@@ -17,7 +17,7 @@ class TestFSItem(TestCase):
         self.assertEqual(FSKit.FSItemAttributeFileID, 1 << 8)
         self.assertEqual(FSKit.FSItemAttributeParentID, 1 << 9)
         self.assertEqual(FSKit.FSItemAttributeSupportsLimitedXAttrs, 1 << 10)
-        self.assertEqual(FSKit.FSItemAttributeInhibitKOIO, 1 << 11)
+        self.assertEqual(FSKit.FSItemAttributeInhibitKernelOffloadedIO, 1 << 11)
         self.assertEqual(FSKit.FSItemAttributeModifyTime, 1 << 12)
         self.assertEqual(FSKit.FSItemAttributeAddedTime, 1 << 13)
         self.assertEqual(FSKit.FSItemAttributeChangeTime, 1 << 14)
@@ -35,14 +35,22 @@ class TestFSItem(TestCase):
         self.assertEqual(FSKit.FSItemTypeBlockDevice, 6)
         self.assertEqual(FSKit.FSItemTypeSocket, 7)
 
+        self.assertIsEnumType(FSKit.FSItemID)
+        self.assertEqual(FSKit.FSItemIDInvalid, 0)
+        self.assertEqual(FSKit.FSItemIDParentOfRoot, 1)
+        self.assertEqual(FSKit.FSItemIDRootDirectory, 2)
+
     def test_methods(self):
         self.assertResultIsBOOL(FSKit.FSItemAttributes.supportsLimitedXAttrs)
         self.assertArgIsBOOL(FSKit.FSItemAttributes.setSupportsLimitedXAttrs_, 0)
 
-        self.assertResultIsBOOL(FSKit.FSItemAttributes.inhibitKOIO)
-        self.assertArgIsBOOL(FSKit.FSItemAttributes.setInhibitKOIO_, 0)
-
         self.assertResultIsBOOL(FSKit.FSItemAttributes.isValid_)
 
-        self.assertResultIsBOOL(FSKit.FSItemSetAttributesRequest.wasConsumed_)
-        self.assertResultIsBOOL(FSKit.FSItemGetAttributesRequest.isWanted_)
+    @min_os_level("15.2")
+    def test_methods15_2(self):
+        self.assertResultIsBOOL(FSKit.FSItemAttributes.inhibitKernelOffloadedIO)
+        self.assertArgIsBOOL(FSKit.FSItemAttributes.setInhibitKernelOffloadedIO_, 0)
+
+        self.assertResultIsBOOL(FSKit.FSItemSetAttributesRequest.wasAttributeConsumed_)
+
+        self.assertResultIsBOOL(FSKit.FSItemGetAttributesRequest.isAttributeWanted_)

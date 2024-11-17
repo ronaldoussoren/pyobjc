@@ -89,20 +89,20 @@ class TestCTFontManager(TestCase):
         self.assertArgIsBlock(
             CoreText.CTFontManagerRegisterFontURLs,
             3,
-            objc._C_BOOL + objc._C_ID + objc._C_BOOL,
+            objc._C_BOOL + b"^{__CFArray=}" + objc._C_BOOL,
         )
         self.assertArgIsBlock(
             CoreText.CTFontManagerUnregisterFontURLs,
             2,
-            objc._C_BOOL + objc._C_ID + objc._C_BOOL,
+            objc._C_BOOL + b"^{__CFArray=}" + objc._C_BOOL,
         )
         self.assertArgIsBlock(
             CoreText.CTFontManagerRegisterFontDescriptors,
             3,
-            objc._C_BOOL + objc._C_ID + objc._C_BOOL,
+            objc._C_BOOL + b"^{__CFArray=}" + objc._C_BOOL,
         )
         self.assertArgIsBlock(
             CoreText.CTFontManagerUnregisterFontDescriptors,
             2,
-            objc._C_BOOL + objc._C_ID + objc._C_BOOL,
+            objc._C_BOOL + b"^{__CFArray=}" + objc._C_BOOL,
         )

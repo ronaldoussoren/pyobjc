@@ -384,3 +384,7 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isBackgroundReplacementSupported
         )
+
+    @min_os_level("15.2")
+    def testMethods15_2(self):
+        self.assertResultIsBOOL(AVFoundation.AVExposureBiasRange.containsExposureBias_)

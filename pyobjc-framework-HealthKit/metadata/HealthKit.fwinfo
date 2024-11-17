@@ -11,14 +11,59 @@
    "HKVerifiableClinicalRecordSourceType": { "type": "@", "type_name": "NSString" },
    "HKClinicalTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKFHIRRelease": { "type": "@", "type_name": "NSString" },
-   "HKFHIRResourceType": { "type": "@", "type_name": "NSString" }
+   "HKFHIRResourceType": { "type": "@", "type_name": "NSString" },
+   "HKAudiogramConductionType": { "type": "q" }
   },
   "enum": {
    "HKObjectQueryNoLimit": { "value": 0 }
   },
   "classes": {
+   "HKAudiogramSensitivityTest": {
+    "methods": [
+     {
+      "args": {
+       "5": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithSensitivity:type:masked:side:clampingRange:error:"
+     }
+    ]
+   },
+   "HKAudiogramSensitivityPointClampingRange": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "clampingRangeWithLowerBound:upperBound:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "sensitivityPointWithFrequency:tests:error:"
+     }
+    ]
+   },
    "HKAudiogramSensitivityPoint": {
     "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "sensitivityPointWithFrequency:tests:error:"
+     },
      {
       "args": {
        "3": {
