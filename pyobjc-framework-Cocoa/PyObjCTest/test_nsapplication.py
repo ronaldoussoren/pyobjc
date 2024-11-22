@@ -246,8 +246,8 @@ class TestNSApplication(TestCase):
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
-        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
-        "Crash on macOS 15 beta",
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
     )
     def testNSModalSession(self):
         self.assertIsOpaquePointer(AppKit.NSModalSession)

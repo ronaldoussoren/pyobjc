@@ -114,8 +114,8 @@ class TestNSSavePanel(TestCase):
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
 
     @skipUnless(
-        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
-        "Crash on 15.0 beta",
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
     )
     @min_os_level("10.15")
     def test_issue282(self):
