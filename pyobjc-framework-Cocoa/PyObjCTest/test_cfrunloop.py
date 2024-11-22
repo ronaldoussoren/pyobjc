@@ -291,6 +291,10 @@ class TestRunLoop(TestCase):
         ),
         "Crash on 10.13, 10.14??",
     )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
+    )
     @min_os_level("10.6")
     def testFunctions10_6(self):
         self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
@@ -314,6 +318,10 @@ class TestRunLoop(TestCase):
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
         ),
         "Crash on 10.13, 10.14??",
+    )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
     )
     @min_os_level("10.7")
     def testFunctions10_7(self):

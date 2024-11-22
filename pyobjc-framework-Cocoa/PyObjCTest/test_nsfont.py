@@ -25,6 +25,10 @@ class TestNSFont(TestCase):
         ),
         "Crash on 10.13, 10.14??",
     )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
+    )
     def testMatrixMethods(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10)
         m = o.matrix()

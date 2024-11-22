@@ -7,8 +7,8 @@ import tempfile
 import sys
 import subprocess
 import warnings
-from setuptools import Extension, setup
-from setuptools.command import build_ext, build_py, egg_info, install_lib, test
+from setuptools import Extension, setup, Command
+from setuptools.command import build_ext, build_py, egg_info, install_lib
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
@@ -213,18 +213,14 @@ class oc_build_py(build_py.build_py):
             self.packages = p
 
 
-class oc_test(test.test):
+class oc_test(Command):
     description = "run test suite"
-    user_options = test.test.user_options + [
-        ("verbosity=", None, "print what tests are run")
-    ]
+    user_options = [("verbosity=", None, "print what tests are run")]
 
     def initialize_options(self):
-        test.test.initialize_options(self)
         self.verbosity = "1"
 
     def finalize_options(self):
-        test.test.finalize_options(self)
         if isinstance(self.verbosity, str):
             self.verbosity = int(self.verbosity)
 

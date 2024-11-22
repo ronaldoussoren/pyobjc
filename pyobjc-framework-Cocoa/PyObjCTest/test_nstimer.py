@@ -49,6 +49,10 @@ class TestNSTimer(TestCase):
         ),
         "Crash on 10.13, 10.14??",
     )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
+        "Crash on macOS 15",
+    )
     def testPythonLeakage(self):
         # Ignore first run, this has some side-effects that would
         # taint the result.

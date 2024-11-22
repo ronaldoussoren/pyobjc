@@ -93,8 +93,12 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
          * versions should build on the latest one (and preferably
          * use the "official" binary wheels).
          */
+#if 0
         if (@available(macOS 10.15, *)) {
         } else  {
+#else
+        {
+#endif
             /* A numbef of private(-ish) classes that cause
              * crashes when constructed here while running
              * on macOS 10.14
