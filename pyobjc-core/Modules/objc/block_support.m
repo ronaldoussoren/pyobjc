@@ -177,6 +177,10 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     }
 
     block_ptr = PyObjCObject_GetObject(self);
+    if (block_ptr == nil) {
+        PyErr_SetString(PyExc_ValueError, "Cannot call nil block");
+        return NULL;
+    }
     call_func = PyObjCBlock_GetFunction(block_ptr);
 
     argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);
@@ -410,11 +414,9 @@ static char* _Nullable block_signature(PyObjCMethodSignature* signature)
     }
 
     cur = buf;
-    strcpy(cur, signature->rettype->type);
-    cur = strchr(cur, '\0');
+    strlcpy(cur, signature->rettype->type, buflen);
     for (i = 0; i < Py_SIZE(signature); i++) {
-        strcpy(cur, signature->argtype[i]->type);
-        cur = strchr(cur, '\0');
+        strlcat(cur, signature->argtype[i]->type, buflen);
     }
     return buf;
 }

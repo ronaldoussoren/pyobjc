@@ -34,6 +34,12 @@ scan-build:
             --enable-checker security.insecureAPI.bcmp \
             --enable-checker security.insecureAPI.bcopy \
             --enable-checker security.insecureAPI.bzero \
+            --enable-checker security.insecureAPI.rand \
+            --enable-checker security.insecureAPI.strcpy \
+            --enable-checker optin.portability.UnixAPI \
+            --enable-checker valist.CopyToSelf \
+            --enable-checker valist.Uninitialized \
+            --enable-checker valist.Unterminated \
 	    python3 setup.py build_ext
 	open build/scan-build*/index.html
 

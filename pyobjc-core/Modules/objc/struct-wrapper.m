@@ -428,7 +428,7 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
 static PyObject* _Nullable struct_mp_subscript(PyObject* self, PyObject* item)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 7",
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
                      Py_TYPE(self)->tp_name);
         return NULL;
     }
@@ -485,12 +485,17 @@ static int
 struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 8",
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
                      Py_TYPE(self)->tp_name);
         return -1;
     }
     if (!PyObjC_StructsWritable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
+                     Py_TYPE(self)->tp_name);
+        return -1;
+    }
+    if (value == NULL) {
+        PyErr_Format(PyExc_TypeError, "Cannot delete attributes of instances  of '%.100s'",
                      Py_TYPE(self)->tp_name);
         return -1;
     }

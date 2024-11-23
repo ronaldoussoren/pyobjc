@@ -822,8 +822,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            super.super_class = object_getClass(PyObjCSelector_GetClass(method));
-            super.receiver    = object_getClass(PyObjCClass_GetClass(self));
+            super.super_class = (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
+            super.receiver    = (id _Nonnull)object_getClass(PyObjCClass_GetClass(self));
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
@@ -1089,8 +1089,9 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     if (@encode(NSDecimal)[1] == '?') {
         Decimal_Encoding[0] = '{';
-        strcpy(Decimal_Encoding + 1, "_NSDecimal");
-        strcpy(Decimal_Encoding + 11, @encode(NSDecimal) + 2);
+        Decimal_Encoding[1] = '\0';
+        strlcat(Decimal_Encoding, "_NSDecimal", sizeof(Decimal_Encoding));
+        strlcat(Decimal_Encoding, @encode(NSDecimal) + 2, sizeof(Decimal_Encoding));
         Decimal_Encoding_Len = strlen(Decimal_Encoding);
     }
 

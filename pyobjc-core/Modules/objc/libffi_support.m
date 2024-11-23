@@ -1414,7 +1414,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         default:
             v = pythonify_c_value(argtype, args[i]);
 
-            if (unlikely(PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL)) {
+            if (v != NULL && unlikely(PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL)) {
                 /* Value is an (Objective-)C block for which we don't have a Python
                  * signature
                  *
@@ -3973,7 +3973,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                 v      = pythonify_c_value(resttype, &tmp);
                                 [tmp release];
 
-                                if (methinfo->argtype[i]->callable != NULL) {
+                                if (v != NULL && methinfo->argtype[i]->callable != NULL) {
                                     if (PyObjCObject_IsBlock(v)
                                         && PyObjCObject_GetBlock(v) == NULL) {
                                         PyObjCObject_SET_BLOCK(
@@ -4930,6 +4930,12 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             }
         }
     }
+
+    if (self_obj == nil) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot call method on 'nil'");
+        goto error_cleanup;
+    }
+
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
         super.super_class = object_getClass(meth->base.sel_class);
     } else {

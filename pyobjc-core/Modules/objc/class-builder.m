@@ -971,7 +971,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         Py_XDECREF(pymeth);
         Py_XDECREF(pyself);
 
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class)userdata);
         spr.receiver    = self;
         PyGILState_Release(state);
         ((void (*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth,
@@ -1030,7 +1030,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
 
     /* First check super */
     @try {
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class _Nonnull)userdata);
         spr.receiver    = self;
         *((id*)retval)  = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
             &spr, _meth, key);
@@ -1111,7 +1111,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         /* First check super */
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class _Nonnull)userdata);
         spr.receiver    = self;
         ((void (*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value,
                                                                        key);

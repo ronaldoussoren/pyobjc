@@ -327,7 +327,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
             goto error_cleanup;
         }
         strcpy(buf, "objc.");
-        strcpy(buf + 5, name);
+        strlcpy(buf + 5, name, sizeof(buf)-5);
     }
 
     PyType_Spec opaque_spec = {

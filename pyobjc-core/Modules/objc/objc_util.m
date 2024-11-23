@@ -954,7 +954,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         /* 2 bytes per UniChar, and subtract 1 to ignore the BOM at the start */
         Py_ssize_t bufsize = (PyBytes_Size(bytes_array) / 2) - 1;
 
-        if (*size == -1) {
+        if (size == NULL) {
+            /* pass */
+        } else if (*size == -1) {
             *size = bufsize;
 
         } else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {

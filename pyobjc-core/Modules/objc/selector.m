@@ -1028,10 +1028,13 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             if ((class_getClassMethod(cls, @selector(respondsToSelector:)) != NULL) &&
                 [cls respondsToSelector:sel]) {
                 methsig = [cls methodSignatureForSelector:sel];
+
+                const char* typestr = PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
+                if (typestr == NULL) {
+                    return NULL;
+                }
                 retval  = PyObjCSelector_NewNative(
-                    cls, sel,
-                    /* XXX: Check if VVV is NULL */
-                    PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
+                    cls, sel, typestr, 1);
             } else if ((class_getClassMethod(cls, @selector(methodSignatureForSelector:))
                         != NULL)
                        && nil
@@ -1140,7 +1143,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
          * PyObjC cannot parse. Copy those as-is for easier introspection.
          */
         PyErr_Clear();
-        strcpy(tmp, signature);
+        strlcpy(tmp, signature, len);
     }
 
     result->base.sel_python_signature = tmp;

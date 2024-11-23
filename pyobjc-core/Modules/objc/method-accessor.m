@@ -103,7 +103,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     if (!class_method) {
-        objc_object = (id)object_getClass(objc_object);
+        objc_object = (id _Nonnull)object_getClass(objc_object);
     }
 
     /* Look for a hidden method, in practice the value (if present)

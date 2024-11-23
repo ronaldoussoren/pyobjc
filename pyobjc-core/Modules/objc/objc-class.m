@@ -1216,6 +1216,7 @@ class_dealloc(PyObject* cls)
     [[clang::suppress]]
     Py_CLEAR(self->sel_to_py);
     Py_CLEAR(self->delmethod);
+    [[clang::suppress]]
     Py_CLEAR(self->hiddenSelectors);
     Py_CLEAR(self->hiddenClassSelectors);
     Py_CLEAR(self->lookup_cache);
@@ -1629,7 +1630,11 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     Py_ssize_t i, n;
     PyObject * mro, *base, *dict;
     PyObject*  descr = NULL;
-    SEL        sel   = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    const char* c_name = PyObjC_Unicode_Fast_Bytes(name);
+    if (c_name == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXC_LINE
+    }
+    SEL        sel   = PyObjCSelector_DefaultSelector(c_name);
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 

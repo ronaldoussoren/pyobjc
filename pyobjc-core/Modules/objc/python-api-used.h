@@ -23,10 +23,16 @@ PyAPI_FUNC(int) PyArg_Parse(PyObject*, const char*, ...)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyArg_ParseTuple(PyObject* _Nullable, const char*, ...)
     __attribute__((warn_unused_result));
+#if PY_VERSION_HEX >= 0x030d0000
+PyAPI_FUNC(int)
+    PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
+                                const char* _Nullable, char* _Nullable const* _Nullable, ...)
+        __attribute__((warn_unused_result));
+#else
 PyAPI_FUNC(int)
     PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
                                 const char* _Nullable, char* _Nullable* _Nullable, ...)
-        __attribute__((warn_unused_result));
+#endif
 
 PyAPI_FUNC(PyObject* _Nullable) PyBool_FromLong(long) __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyBuffer_Release(Py_buffer* view);

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     if (value == NULL) {
         PyErr_SetString(PyObjCExc_Error, "OC_PythonSet without a value");

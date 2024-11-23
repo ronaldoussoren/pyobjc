@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype _Nullable)setWithPythonObject:(PyObject*)value;
 - (id _Nullable)initWithPythonObject:(PyObject*)value;
 - (void)dealloc;
-- (PyObject*)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
 
 @end
 

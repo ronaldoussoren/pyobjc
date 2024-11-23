@@ -1148,7 +1148,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
         }
 
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
-        char*       tp               = PyMem_Malloc(strlen(withoutModifiers) + 2);
+        size_t bufsize = strlen(withoutModifiers) + 2;
+        char*       tp               = PyMem_Malloc(bufsize);
         if (tp == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_XDECREF(d);
@@ -1161,10 +1162,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
         /*PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);*/
         if (typeModifier != '\0') {
             /* Skip existing modifiers, we're overriding those */
-            strcpy(tp + 1, withoutModifiers);
+            strlcpy(tp + 1, withoutModifiers, bufsize-1);
             tp[0] = typeModifier;
         } else {
-            strcpy(tp, type);
+            strlcpy(tp, type, bufsize);
         }
         PyObjC_Assert(tp != NULL, -1);
         descr->typeOverride = YES;
@@ -1195,7 +1196,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                 return -2;
             }
 
-            char* tp = PyMem_Malloc(strlen(withoutModifiers) + 2);
+            size_t bufsize = strlen(withoutModifiers) + 2;
+            char* tp = PyMem_Malloc(bufsize);
             if (tp == NULL) { // LCOV_BR_EXCL_START
                 // LCOV_EXCL_START
                 Py_XDECREF(d);
@@ -1205,7 +1207,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             }
 
             tp[0] = typeModifier;
-            strcpy(tp + 1, withoutModifiers);
+            strlcpy(tp + 1, withoutModifiers, bufsize-1);
 
             if (descr->typeOverride) {
                 PyMem_Free((void*)(descr->type));
@@ -1458,7 +1460,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     case 0:
         max_idx = 0;
         break;
-    case 1:
+    default: /* case 1: */
         if (!PyDict_Check(arguments)) {
             max_idx = 0;
         } else {
@@ -1673,7 +1675,8 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
             /* Plain old void*, ignore type modifiers */
 
         } else {
-            char* tp      = PyMem_Malloc(strlen(withoutModifiers) + 2);
+            size_t bufsize = strlen(withoutModifiers) + 2;
+            char* tp      = PyMem_Malloc(bufsize);
             char* to_free = NULL;
             if (tp == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
@@ -1691,7 +1694,7 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
 
             /* Skip existing modifiers, we're overriding those */
             PyObjC_Assert(tp != NULL, NULL);
-            strcpy(tp + 1, withoutModifiers);
+            strlcpy(tp + 1, withoutModifiers, bufsize-1);
             tp[0]               = meta->modifier;
             descr->typeOverride = YES;
             descr->type         = tp;

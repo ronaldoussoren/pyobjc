@@ -2,7 +2,7 @@ import objc
 import socket
 import os
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 FUNCTION_LIST = [
     (
@@ -23,6 +23,19 @@ FUNCTION_LIST = [
 ]
 SOCK_FUNCTIONS = {}
 objc.loadBundleFunctions(None, SOCK_FUNCTIONS, FUNCTION_LIST, skip_undefined=False)
+
+
+def host_valid(hostname):
+    """
+    Return true iff *hostname* resolves
+    """
+    try:
+        socket.gethostbyname(hostname)
+    except OSError:
+        return False
+    else:
+        return True
+
 
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",
@@ -83,16 +96,6 @@ class TestSockAddrSupport(TestCase):
         self.assertEqual(v, ("IPv6", "::", 100, 0, 0))
 
         with self.assertRaisesRegex(
-            socket.gaierror, "nodename nor servname provided, or not known"
-        ):
-            o.sockAddrToValue_(("nosuchhost.python.org", 99, 0))
-
-        with self.assertRaisesRegex(
-            socket.gaierror, "nodename nor servname provided, or not known"
-        ):
-            o.sockAddrToValue_(("nosuchhost.python.org", 99))
-
-        with self.assertRaisesRegex(
             TypeError,
             "('str' object cannot be interpreted as an integer)|"
             r"(an integer is required \(got type str\))",
@@ -118,6 +121,22 @@ class TestSockAddrSupport(TestCase):
         info = o.sockAddrToValue_(("mail.python.org", 99, 0))
         sockinfo = socket.getaddrinfo("mail.python.org", 99, socket.AF_INET6)
         self.assertEqual(info, ("IPv6",) + sockinfo[0][4])
+
+    @skipUnless(
+        not host_valid("nosuchhost.python.org"), "'nosuchhost.python.org' resolves"
+    )
+    def testToObjCForNonExistingHost(self):
+        o = PyObjCTestSockAddr
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99, 0))
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99))
 
     def testIPv4FromC(self):
         o = PyObjCTestSockAddr

@@ -202,8 +202,20 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 return NULL;
             }
 
+            const char* c_name = [name UTF8String];
+            if (c_name == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_SetString(PyObjCExc_Error, "Cannot convert name to a C string");
+                if (cfBundle != NULL) CFRelease(cfBundle);
+                Py_DECREF(seq);
+                Py_DECREF(py_val);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+
+
             if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                    module_globals, [name UTF8String], py_val)
+                    module_globals, c_name, py_val)
                 == -1) {
                 // LCOV_EXCL_START
                 if (cfBundle != NULL) CFRelease(cfBundle);
@@ -346,6 +358,14 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 py_name = PyUnicode_FromString(c_name);
             } else {
                 py_name = id_to_python(name);
+            }
+
+            if (py_name == NULL) {
+                Py_DECREF(seq);
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
+                return NULL;
             }
 
             py_val = PyObjCFunc_New(py_name, value, signature, doc, meta);
