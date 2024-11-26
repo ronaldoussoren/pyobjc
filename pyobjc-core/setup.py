@@ -6,6 +6,7 @@ import shlex
 import tempfile
 import sys
 import subprocess
+import textwrap
 import warnings
 from setuptools import Extension, setup, Command
 from setuptools.command import build_ext, build_py, egg_info, install_lib
@@ -345,6 +346,8 @@ class oc_egg_info(egg_info.egg_info):
 
             self.write_header(fn, os.path.join(self.egg_info, fn))
 
+        self.write_build_info()
+
         egg_info.egg_info.run(self)
 
         path = os.path.join(self.egg_info, "PKG-INFO")
@@ -375,6 +378,41 @@ class oc_egg_info(egg_info.egg_info):
                 os.makedirs(os.path.dirname(filename))
 
         self.write_file(basename, filename, data)
+
+    def write_build_info(self):
+        macos_version = subprocess.check_output(
+            ["sw_vers", "-productversion"], text=True
+        ).strip()
+        macos_build = subprocess.check_output(
+            ["sw_vers", "-buildversion"], text=True
+        ).strip()
+        clang_version = (
+            subprocess.check_output(["clang", "--version"], text=True)
+            .splitlines()[0]
+            .strip()
+        )
+
+        sdk_root = self.get_finalized_command("build_ext").sdk_root
+        sdk_info = os.path.join(sdk_root, "SDKSettings.plist")
+        if os.path.exists(sdk_info):
+            pl = plistlib.load(open(sdk_info, "rb"))
+            sdk_version = pl["DisplayName"]
+        else:
+            sdk_version = os.path.basename(sdk_root)
+
+        build_info = textwrap.dedent(
+            f"""\
+            macOS {macos_version} ({macos_build})
+            {clang_version}
+            SDK: {sdk_version}
+            """
+        )
+
+        self.write_file(
+            "pyobjc-build-info.txt",
+            os.path.join(self.egg_info, "pyobjc-build-info.txt"),
+            build_info,
+        )
 
 
 class oc_install_lib(install_lib.install_lib):

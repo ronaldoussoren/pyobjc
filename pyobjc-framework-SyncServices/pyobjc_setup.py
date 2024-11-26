@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import textwrap
 import time
 import unittest
 from fnmatch import fnmatch
@@ -60,6 +61,7 @@ REPO_NAME = "pyobjc"
 class oc_egg_info(egg_info.egg_info):
     def run(self):
         egg_info.egg_info.run(self)
+        self.write_build_info()
 
         path = os.path.join(self.egg_info, "PKG-INFO")
         with open(path) as fp:
@@ -83,6 +85,45 @@ class oc_egg_info(egg_info.egg_info):
             )
             fp.write(middle)
             fp.write(last)
+
+    def write_build_info(self):
+        macos_version = subprocess.check_output(
+            ["sw_vers", "-productversion"], text=True
+        ).strip()
+        macos_build = subprocess.check_output(
+            ["sw_vers", "-buildversion"], text=True
+        ).strip()
+        clang_version = (
+            subprocess.check_output(["clang", "--version"], text=True)
+            .splitlines()[0]
+            .strip()
+        )
+
+        sdk_root = get_sdk()
+        if sdk_root is None:
+            sdk_root = subprocess.check_output(
+                ["xcrun", "-sdk", "macosx", "--show-sdk-path"], text=True
+            ).strip()
+        sdk_info = os.path.join(sdk_root, "SDKSettings.plist")
+        if os.path.exists(sdk_info):
+            pl = plistlib.load(open(sdk_info, "rb"))
+            sdk_version = pl["DisplayName"]
+        else:
+            sdk_version = os.path.basename(sdk_root)
+
+        build_info = textwrap.dedent(
+            f"""\
+            macOS {macos_version} ({macos_build})
+            {clang_version}
+            SDK: {sdk_version}
+            """
+        )
+
+        self.write_file(
+            "pyobjc-build-info.txt",
+            os.path.join(self.egg_info, "pyobjc-build-info.txt"),
+            build_info,
+        )
 
 
 class oc_test(Command):
