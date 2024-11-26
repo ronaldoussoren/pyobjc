@@ -33,7 +33,7 @@ typedef struct {
     const char* _Nullable sel_native_signature; /* XXX: Make _Nonnull */
     SEL sel_selector;
     PyObject* _Nullable sel_self;
-    Class sel_class;
+    Class _Nullable sel_class;
     int sel_flags;
     PyObjCMethodSignature* _Nullable sel_methinfo;
     Py_ssize_t sel_mappingcount;

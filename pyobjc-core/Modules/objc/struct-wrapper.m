@@ -151,7 +151,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
 }
 
 static int
-struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* v)
+struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* _Nullable v)
 {
     PyObject*  seq;
     Py_ssize_t i;
@@ -491,11 +491,6 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
     }
     if (!PyObjC_StructsWritable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
-                     Py_TYPE(self)->tp_name);
-        return -1;
-    }
-    if (value == NULL) {
-        PyErr_Format(PyExc_TypeError, "Cannot delete attributes of instances  of '%.100s'",
                      Py_TYPE(self)->tp_name);
         return -1;
     }

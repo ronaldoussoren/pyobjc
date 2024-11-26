@@ -155,13 +155,13 @@ class TestStructs(TestCase):
 
         r = copy.replace(line)
         self.assertEqual(r, line)
-        self.assertIsNot(r.start, start)
-        self.assertIsNot(r.stop, stop)
+        self.assertIs(r.start, start)
+        self.assertIs(r.stop, stop)
 
         r = copy.replace(line, stop=start)
         self.assertIsInstance(r, Line)
         self.assertEqual(r.start, start)
-        self.assertEqual(r.stop, stop)
+        self.assertEqual(r.stop, start)
 
     def testNamedTupleAPI(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
