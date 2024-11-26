@@ -1695,8 +1695,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
 
                 /* Create (unbound) selector */
                 PyObject* result =
-                    /* XXX: Add check for mehod_getTypeEncoding */
-                    PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 0);
+                    PyObjCSelector_NewNative(cls, sel, (char* _Nonnull)method_getTypeEncoding(m), 0);
                 if (result == NULL) { // LCOV_BR_EXCL_LINE
                     return NULL;      // LCOV_EXCL_LINE
                 }

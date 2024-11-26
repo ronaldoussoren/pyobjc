@@ -4321,7 +4321,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     const char* rettype;
 
     if (PyObjCIMP_Check(aMeth)) {
-        methinfo = PyObjCIMP_GetSignature(aMeth);
+        methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(aMeth);
         flags    = PyObjCIMP_GetFlags(aMeth);
 
     } else {
@@ -4469,6 +4469,11 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     useStret = 0;
 #endif
 
+    if (self_obj == nil) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot call methods on 'nil'");
+        goto error_cleanup;
+    }
+
     if (unlikely(PyObjCIMP_Check(aMeth))) {
         theSel     = PyObjCIMP_GetSelector(aMeth);
         arglist[0] = &ffi_type_pointer;
@@ -4480,7 +4485,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
     } else {
         if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            super.super_class = object_getClass(meth->base.sel_class);
+            super.super_class = (Class _Nonnull)object_getClass(meth->base.sel_class);
         } else {
             super.super_class = meth->base.sel_class;
         }
@@ -4657,7 +4662,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     ffi_cif* cif;
 
     if (PyObjCIMP_Check(aMeth)) {
-        methinfo = PyObjCIMP_GetSignature(aMeth);
+        methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(aMeth);
         flags    = PyObjCIMP_GetFlags(aMeth);
         cif      = PyObjCIMP_GetCIF(aMeth);
 
@@ -4746,6 +4751,11 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     useStret = 0;
 #endif
 
+    if (self_obj == NULL) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot call methods on  'nil'");
+        goto error_cleanup;
+    }
+
     if (unlikely(PyObjCIMP_Check(aMeth))) {
         theSel     = PyObjCIMP_GetSelector(aMeth);
         values[0]  = &self_obj;
@@ -4755,7 +4765,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 
     } else {
         if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            super.super_class = object_getClass(meth->base.sel_class);
+            super.super_class = (Class _Nonnull)object_getClass(meth->base.sel_class);
         } else {
             super.super_class = meth->base.sel_class;
         }
@@ -4854,6 +4864,8 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     flags    = meth->base.sel_flags;
     cif      = meth->sel_cif;
 
+    PyObjC_Assert(methinfo != NULL, NULL);
+
     if (unlikely(!methinfo->shortcut_signature)) {
         PyErr_Format(PyExc_TypeError, "%R is not a simple selector", self);
         return NULL;
@@ -4937,7 +4949,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     }
 
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-        super.super_class = object_getClass(meth->base.sel_class);
+        super.super_class = (Class _Nonnull)object_getClass(meth->base.sel_class);
     } else {
         super.super_class = meth->base.sel_class;
     }

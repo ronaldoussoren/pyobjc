@@ -1040,10 +1040,13 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                        && nil
                               != (methsig =
                                       [(NSObject*)cls methodSignatureForSelector:sel])) {
-                retval = PyObjCSelector_NewNative(
-                    cls, sel,
-                    /* XXX: Check if VVV is NULL */
-                    PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
+
+                const char* typestr = PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
+                if (typestr == NULL) {
+                    retval = NULL;
+                } else {
+                    retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
+                }
             } else {
                 PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
                 retval = NULL;
@@ -1065,17 +1068,19 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         @try {
             if (nil != (methsig = [object methodSignatureForSelector:sel])) {
                 PyObjCNativeSelector* res;
-
-                res = (PyObjCNativeSelector*)PyObjCSelector_NewNative(
-                    object_getClass(object), sel,
-                    /* XXX: Check if VVV is NULL */
-                    PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
-                if (res != NULL) {
-                    /* Bind the method to self */
-                    res->base.sel_self = self;
-                    Py_INCREF(res->base.sel_self);
+                const char* typestr = PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
+                if (typestr == NULL) {
+                    retval = NULL;
+                } else {
+                    res = (PyObjCNativeSelector*)PyObjCSelector_NewNative(
+                        (Class _Nonnull)object_getClass(object), sel, typestr, 0);
+                    if (res != NULL) {
+                        /* Bind the method to self */
+                        res->base.sel_self = self;
+                        Py_INCREF(res->base.sel_self);
+                    }
+                    retval = (PyObject*)res;
                 }
-                retval = (PyObject*)res;
             } else {
                 PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
                 retval = NULL;

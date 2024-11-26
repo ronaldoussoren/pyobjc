@@ -43,7 +43,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
 
     if (*isIMP) {
         *flags    = PyObjCIMP_GetFlags(method);
-        *methinfo = PyObjCIMP_GetSignature(method);
+        *methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(method);
     } else {
         *flags    = PyObjCSelector_GetFlags(method);
         *methinfo = PyObjCSelector_GetMetadata(method);

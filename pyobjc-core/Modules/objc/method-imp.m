@@ -97,6 +97,7 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
         PyErr_SetString(PyExc_TypeError, "Missing argument: self");
         return NULL;
     }
+    PyObjC_Assert(args != NULL, NULL);
 
     pyself = args[0];
     PyObjC_Assert(pyself != NULL, NULL);
@@ -161,6 +162,8 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
         PyErr_SetString(PyExc_TypeError, "Missing argument: self");
         return NULL;
     }
+
+    PyObjC_Assert(args != NULL, NULL);
 
     pyself = args[0];
     PyObjC_Assert(pyself != NULL, NULL);
@@ -446,6 +449,9 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
+
+    PyObjC_Assert(args != NULL, NULL);
+
     sel = args[0];
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
@@ -505,8 +511,13 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         }
     }
 
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
+                        methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }
@@ -524,6 +535,9 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
+
+    PyObjC_Assert(args != NULL, NULL);
+
     sel = args[0];
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
@@ -531,12 +545,12 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     }
 
     if (PyObjCClass_Check(self)) {
-        super.receiver = PyObjCClass_GetClass(self);
+        super.receiver = (Class _Nonnull)PyObjCClass_GetClass(self);
 
     } else {
         super.receiver = PyObjCObject_GetObject(self);
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -587,8 +601,14 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         }
     }
 
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
+    if (methinfo == NULL) {
+        Py_DECREF(attr);
+        return NULL;
+    }
+
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
+                        methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }
