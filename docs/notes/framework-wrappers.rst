@@ -64,6 +64,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Accessibility </apinotes/Accessibility>`                                       | `pyobjc-framework-Accessibility`_                    |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| AccessorySetupKit                                                                    | -                                                    | No public API on macOS.                 |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | Accelerate                                                                           | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Accounts </apinotes/Accounts>`                                                 | `pyobjc-framework-Accounts`_                         |                                         |
@@ -264,6 +266,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`DeviceCheck </apinotes/DeviceCheck>`                                           | `pyobjc-framework-DeviceCheck`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`DeviceDiscoveryExtension </apinotes/DeviceDiscoveryExtension>`                 | `pyobjc-framework-DeviceDiscoveryExtension`_         |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | DirectoryService                                                                     | -                                                    | Will not be wrapped,                    |
 |                                                                                      |                                                      | deprecated framework.                   |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -355,6 +359,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`                                 | `pyobjc-framework-ImageCaptureCore`_                 |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ImageIO </apinotes/ImageIO>`                                                   | `pyobjc-framework-Quartz`_                           | use "import Quartz".                    |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| ImagePlayground                                                                      | -                                                    | Swift only framework.                   |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | IMCore                                                                               | -                                                    | No public API.                          |
 |                                                                                      |                                                      |                                         |
@@ -768,6 +774,7 @@ prioritizing work.
 .. _`pyobjc-framework-DVDPlayback`: https://pypi.org/project/pyobjc-framework-DVDPlayback/
 .. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/
 .. _`pyobjc-framework-DeviceCheck`: https://pypi.org/project/pyobjc-framework-DeviceCheck/
+.. _`pyobjc-framework-DeviceDiscoveryExtension`: https://pypi.org/project/pyobjc-framework-DeviceDiscoveryExtension/
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
 .. _`pyobjc-framework-DiskArbitration`: https://pypi.org/project/pyobjc-framework-DiskArbitration/
