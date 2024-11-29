@@ -232,7 +232,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {
                 @try {
-                    [super dealloc]; /* XXX: Is this correct? */
+                    [super release];
                 } @catch (NSException* exc) {
                     PyObjC_LEAVE_GIL;
                     [exc raise];

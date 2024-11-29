@@ -56,6 +56,9 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* dct = [value __pyobjc_PythonObject__];
+
+        Py_BEGIN_CRITICAL_SECTION(dct);
+
         if (unlikely(!PyDict_Next(dct, &pos, &pykey, NULL))) {
             key = nil;
 
@@ -65,14 +68,18 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         } else {
             if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
                 Py_DECREF(dct);
+                Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_FORWARD_EXC();
             }
         }
+
+        valid = (key != nil) ? YES : NO;
+
+        Py_END_CRITICAL_SECTION();
+
         Py_DECREF(dct);
 
     PyObjC_END_WITH_GIL
-
-    valid = (key != nil) ? YES : NO;
 
     return key;
 }
