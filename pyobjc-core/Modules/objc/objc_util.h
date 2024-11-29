@@ -104,6 +104,15 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
     } while (0)
 
 extern PyObject* PyObjCNM_insert;
+extern PyObject* PyObjCNM_readonly;
+extern PyObject* PyObjCNM_copy;
+extern PyObject* PyObjCNM_retain;
+extern PyObject* PyObjCNM_nonatomic;
+extern PyObject* PyObjCNM_dynamic;
+extern PyObject* PyObjCNM_weak;
+extern PyObject* PyObjCNM_collectable;
+extern PyObject* PyObjCNM_getter;
+extern PyObject* PyObjCNM_setter;
 extern PyObject* PyObjCNM_append;
 extern PyObject* PyObjCNM_extend;
 extern PyObject* PyObjCNM_timestamp;
@@ -150,6 +159,7 @@ extern PyObject* PyObjCNM_variadic;
 extern PyObject* PyObjCNM___slots__;
 extern PyObject* PyObjCNM___doc__;
 extern PyObject* PyObjCNM_classmethod;
+extern PyObject* PyObjCNM_hidden;
 extern PyObject* PyObjCNM_return_unitialized_object;
 extern PyObject* PyObjCNM_protocols;
 extern PyObject* PyObjCNM___pyobjc_protocols__;
@@ -160,6 +170,11 @@ extern PyObject* PyObjCNM_typestr;
 extern PyObject* PyObjCNM_classname;
 extern PyObject* PyObjCNM___typestr__;
 extern PyObject* PyObjCNM___module__;
+extern PyObject* PyObjCNM___dict__;
+extern PyObject* PyObjCNM_return_uninitialized_object;
+extern PyObject* PyObjCNM__fields;
+extern PyObject* PyObjCNM___match_args__;
+extern PyObject* PyObjCNM___struct_pack__;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);

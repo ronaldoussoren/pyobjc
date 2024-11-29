@@ -532,12 +532,22 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         } else if (strcmp(nm, "Object") == 0 || strcmp(nm, "List") == 0
                    || strcmp(nm, "Protocol") == 0) {
             /* skip, these have been deprecated since OpenStep! */
-        } else if (PyDict_SetItemString(module_globals, ((PyTypeObject*)item)->tp_name,
+        } else {
+            PyObject* py_nm = PyUnicode_FromString(nm);
+            if (py_nm == NULL) {
+                Py_DECREF(class_list);
+                class_list = NULL;
+                return NULL;
+            }
+            if (PyDict_SetItem(module_globals, py_nm,
                                         item)
-                   == -1) {
-            Py_DECREF(class_list);
-            class_list = NULL;
-            return NULL;
+                       == -1) {
+                Py_DECREF(class_list);
+                Py_DECREF(py_nm);
+                class_list = NULL;
+                return NULL;
+            }
+            Py_DECREF(py_nm);
         }
     }
     Py_XDECREF(class_list);
@@ -1176,8 +1186,14 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
             return NULL; // LCOV_EXCL_LINE
         }
 
-        int r = PyDict_SetItemString(PyObjC_TypeStr2CFTypeID, encoding, v);
+        PyObject* py_encoding = PyUnicode_FromString(encoding);
+        if (py_encoding == NULL) {   // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
+        }
+
+        int r = PyDict_SetItem(PyObjC_TypeStr2CFTypeID, py_encoding, v);
         Py_DECREF(v);
+        Py_DECREF(py_encoding);
         if (r == -1) {   // LCOV_BR_EXCL_LINE
             return NULL; // LCOV_EXCL_LINE
         }

@@ -362,11 +362,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             }
             PyObject* cache = PyObjCClass_GetLookupCache((PyTypeObject*)base);
             if (cache != NULL) {
-                descr = PyDict_GetItemWithError(cache, name);
-                if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    return NULL;                         // LCOV_EXCL_LINE
-                }
-                if (descr != NULL) {
+                int r = PyDict_GetItemRef(cache, name, &descr);
+                if (r == -1) {    // LCOV_BR_EXCL_LINE
+                    return NULL;  // LCOV_EXCL_LINE
+                } else if (r == 1) {
                     break;
                 }
             }
@@ -388,10 +387,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
 
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
 
-        descr = PyDict_GetItemWithError(dict, name);
-        if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;                         // LCOV_EXCL_LINE
-        } else if (descr != NULL) {
+        int r = PyDict_GetItemRef(dict, name, &descr);
+        if (r == -1) {   // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
+        } else if (r == 1) {
             if (first_class != NULL) {
                 if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr)
                     == -1) {

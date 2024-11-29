@@ -19,6 +19,15 @@ PyObject* PyObjCExc_ObjCPointerWarning;
 PyObject* PyObjCExc_ObjCSuperWarning;
 
 PyObject* PyObjCNM_insert;
+PyObject* PyObjCNM_readonly;
+PyObject* PyObjCNM_copy;
+PyObject* PyObjCNM_retain;
+PyObject* PyObjCNM_nonatomic;
+PyObject* PyObjCNM_dynamic;
+PyObject* PyObjCNM_weak;
+PyObject* PyObjCNM_collectable;
+PyObject* PyObjCNM_getter;
+PyObject* PyObjCNM_setter;
 PyObject* PyObjCNM__pyobjc_info_;
 PyObject* PyObjCNM_append;
 PyObject* PyObjCNM_extend;
@@ -65,6 +74,7 @@ PyObject* PyObjCNM_variadic;
 PyObject* PyObjCNM___slots__;
 PyObject* PyObjCNM___doc__;
 PyObject* PyObjCNM_classmethod;
+PyObject* PyObjCNM_hidden;
 PyObject* PyObjCNM_return_unitialized_object;
 PyObject* PyObjCNM_protocols;
 PyObject* PyObjCNM___pyobjc_protocols__;
@@ -75,6 +85,11 @@ PyObject* PyObjCNM_typestr;
 PyObject* PyObjCNM_classname;
 PyObject* PyObjCNM___typestr__;
 PyObject* PyObjCNM___module__;
+PyObject* PyObjCNM___dict__;
+PyObject* PyObjCNM_return_uninitialized_object;
+PyObject* PyObjCNM__fields;
+PyObject* PyObjCNM___match_args__;
+PyObject* PyObjCNM___struct_pack__;
 
 
 int
@@ -111,6 +126,15 @@ PyObjCUtil_Init(PyObject* module)
     } while(0)
 
     NEW_STR(PyObjCNM_insert, "insert");
+    NEW_STR(PyObjCNM_readonly, "readonly");
+    NEW_STR(PyObjCNM_copy, "copy");
+    NEW_STR(PyObjCNM_retain, "retain");
+    NEW_STR(PyObjCNM_nonatomic, "nonatomic");
+    NEW_STR(PyObjCNM_dynamic, "dynamic");
+    NEW_STR(PyObjCNM_weak, "weak");
+    NEW_STR(PyObjCNM_collectable, "collectable");
+    NEW_STR(PyObjCNM_getter, "getter");
+    NEW_STR(PyObjCNM_setter, "setter");
     NEW_STR(PyObjCNM_append, "append");
     NEW_STR(PyObjCNM_extend, "extend");
     NEW_STR(PyObjCNM_timestamp, "timestamp");
@@ -157,6 +181,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM___slots__, "__slots__");
     NEW_STR(PyObjCNM___doc__, "__doc__");
     NEW_STR(PyObjCNM_classmethod, "classmethod");
+    NEW_STR(PyObjCNM_hidden, "hidden");
     NEW_STR(PyObjCNM_return_unitialized_object, "return_unitialized_object");
     NEW_STR(PyObjCNM_protocols, "protocols");
     NEW_STR(PyObjCNM___pyobjc_protocols__, "__pyobjc_protocols__");
@@ -167,6 +192,11 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_classname, "classname");
     NEW_STR(PyObjCNM___typestr__, "__typestr__");
     NEW_STR(PyObjCNM___module__, "__module__");
+    NEW_STR(PyObjCNM___dict__, "__dict__");
+    NEW_STR(PyObjCNM_return_uninitialized_object, "return_uninitialized_object");
+    NEW_STR(PyObjCNM__fields, "_fields");
+    NEW_STR(PyObjCNM___match_args__, "__match_args__");
+    NEW_STR(PyObjCNM___struct_pack__, "__struct_pack__");
 
 #undef NEW_STR
 

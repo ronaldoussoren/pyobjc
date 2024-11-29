@@ -82,21 +82,19 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
             return NULL;
         }
 
-        const char* c_name = [name UTF8String];
-        if (c_name == NULL) {
-            /* This should never happen, but the return value of -UTF8String
-             * is _Nullable
-             */
-            PyErr_SetString(PyExc_ValueError, "Cannot convert name to string");
+        PyObject*  py_name = id_to_python(name);
+        if (py_name == NULL) {
             Py_DECREF(py_val);
             return NULL;
         }
 
-        if (PyDict_SetItemString(module_globals, c_name, py_val) == -1) {
+        if (PyDict_SetItem(module_globals, py_name, py_val) == -1) {
             Py_DECREF(py_val);
+            Py_DECREF(py_name);
             return NULL;
         }
         Py_DECREF(py_val);
+        Py_DECREF(py_name);
     }
 
     Py_INCREF(Py_None);
@@ -202,10 +200,9 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 return NULL;
             }
 
-            const char* c_name = [name UTF8String];
-            if (c_name == NULL) { // LCOV_BR_EXCL_LINE
+            PyObject* py_name = id_to_python(name);
+            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
-                PyErr_SetString(PyObjCExc_Error, "Cannot convert name to a C string");
                 if (cfBundle != NULL) CFRelease(cfBundle);
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
@@ -214,16 +211,18 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             }
 
 
-            if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                    module_globals, c_name, py_val)
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    module_globals, py_name, py_val)
                 == -1) {
                 // LCOV_EXCL_START
                 if (cfBundle != NULL) CFRelease(cfBundle);
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
+                Py_DECREF(py_name);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
+            Py_DECREF(py_name);
             Py_DECREF(py_val);
         }
     }

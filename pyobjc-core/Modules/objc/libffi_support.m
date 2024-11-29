@@ -286,13 +286,23 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 
     PyObjC_Assert(!PyErr_Occurred(), NULL);
 
-    if (PyDict_SetItemString(array_types, (char*)key, v) == -1) { // LCOV_BR_EXCL_LINE
+    PyObject* py_key = PyUnicode_FromString(key);
+    if (py_key == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(v);
         return NULL;
         // LCOV_EXCL_STOP
     }
+
+    if (PyDict_SetItem(array_types, py_key, v) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(v);
+        Py_DECREF(py_key);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
     Py_DECREF(v);
+    Py_DECREF(py_key);
     return type;
 }
 
@@ -394,15 +404,24 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            struct_types, (char*)argtype, v)
-        == -1) {
+    PyObject* py_argtype = PyUnicode_FromString(argtype);
+    if (py_argtype == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(v);
         return NULL;
         // LCOV_EXCL_STOP
     }
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            struct_types, py_argtype, v)
+        == -1) {
+        // LCOV_EXCL_START
+        Py_DECREF(v);
+        Py_DECREF(py_argtype);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
     Py_DECREF(v);
+    Py_DECREF(py_argtype);
     return type;
 }
 

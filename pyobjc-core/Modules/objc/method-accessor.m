@@ -277,7 +277,8 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 }
             }
 
-            if (PyDict_SetItemString(res, name, v) == -1) { // LCOV_BR_EXCL_LINE
+            PyObject* py_name = PyUnicode_FromString(name);
+            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(v);
                 Py_DECREF(res);
@@ -285,7 +286,17 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 return NULL;
                 // LCOV_EXCL_STOP
             }
+            if (PyDict_SetItem(res, py_name, v) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(v);
+                Py_DECREF(res);
+                Py_DECREF(py_name);
+                free(methods);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
 
+            Py_DECREF(py_name);
             Py_DECREF(v);
         }
 

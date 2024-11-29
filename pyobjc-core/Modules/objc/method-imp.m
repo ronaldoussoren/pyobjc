@@ -19,7 +19,12 @@ ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 {
     PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
-    return ((PyObjCIMPObject*)self)->cif;
+    ffi_cif* result;
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = ((PyObjCIMPObject*)self)->cif;
+    Py_END_CRITICAL_SECTION();
+
+    return result;
 }
 
 int
@@ -27,7 +32,10 @@ PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 {
     PyObjC_Assert(PyObjCIMP_Check(self), -1);
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     ((PyObjCIMPObject*)self)->cif = cif;
+    Py_END_CRITICAL_SECTION();
+
     return 0;
 }
 

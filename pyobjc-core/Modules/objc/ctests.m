@@ -1086,16 +1086,25 @@ PyObjC_init_ctests(PyObject* m)
     PyMethodDef* cur;
     for (cur = mod_methods; cur->ml_name != NULL; cur++) {
         PyObject* meth = PyCFunction_NewEx(cur, NULL, NULL);
-        if (meth == NULL) {
+        if (meth == NULL) {  // LCOV_BR_EXCL_LINE
             Py_DECREF(d); // LCOV_EXCL_LINE
             return -1;    // LCOV_EXCL_LINE
         }
-        if (PyDict_SetItemString(d, cur->ml_name, meth) < 0) {
+
+        PyObject* key = PyUnicode_FromString(cur->ml_name);
+        if (key == NULL) {  // LCOV_BR_EXCL_LINE
             Py_DECREF(d);    // LCOV_EXCL_LINE
             Py_DECREF(meth); // LCOV_EXCL_LINE
+            return -1;
+        }
+        if (PyDict_SetItem(d, key, meth) < 0) {  // LCOV_BR_EXCL_LINE
+            Py_DECREF(d);    // LCOV_EXCL_LINE
+            Py_DECREF(meth); // LCOV_EXCL_LINE
+            Py_DECREF(key); // LCOV_EXCL_LINE
             return -1;       // LCOV_EXCL_LINE
         }
         Py_DECREF(meth);
+        Py_DECREF(key);
     }
 
     return PyModule_AddObject(m, "_ctests", d);

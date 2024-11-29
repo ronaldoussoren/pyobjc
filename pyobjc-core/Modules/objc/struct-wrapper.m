@@ -71,19 +71,23 @@ static PyObject* _Nullable struct_sq_item(PyObject* self, Py_ssize_t offset)
         return NULL;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
+
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
         PyErr_Format(PyExc_IndexError, "%.100s index out of range",
                      Py_TYPE(self)->tp_name);
-        return NULL;
+        res = NULL;
+    } else {
+        member = Py_TYPE(self)->tp_members + offset;
+        res    = GET_STRUCT_FIELD(self, member);
+        PyObjC_Assert(res != NULL, NULL);
+
+        Py_INCREF(res);
     }
 
-    member = Py_TYPE(self)->tp_members + offset;
-    res    = GET_STRUCT_FIELD(self, member);
-    PyObjC_Assert(res != NULL, NULL);
-
-    Py_INCREF(res);
+    Py_END_CRITICAL_SECTION();
     return res;
 }
 
@@ -104,6 +108,8 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
         return NULL; // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
+
     for (i = ilow; i < ihigh; i++) {
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
         PyObject*    v      = GET_STRUCT_FIELD(self, member);
@@ -111,6 +117,8 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
         Py_INCREF(v);
         PyTuple_SET_ITEM(result, i - ilow, v);
     }
+
+    Py_END_CRITICAL_SECTION();
     return result;
 }
 
@@ -146,7 +154,10 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
+
+    Py_BEGIN_CRITICAL_SECTION(self);
     SET_STRUCT_FIELD(self, member, newVal);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
@@ -183,6 +194,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         return -1;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (i = ilow; i < ihigh; i++) {
         PyObject*    x;
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
@@ -192,12 +204,14 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         SET_STRUCT_FIELD(self, member, x);
     }
     Py_DECREF(seq);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
 static int
 struct_sq_contains(PyObject* self, PyObject* value)
 {
+    int result = 0;
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
@@ -205,20 +219,25 @@ struct_sq_contains(PyObject* self, PyObject* value)
         return -1;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (PyMemberDef* member = Py_TYPE(self)->tp_members; member && member->name;
          member++) {
         int       r;
+
         PyObject* cur = GET_STRUCT_FIELD(self, member);
         PyObjC_Assert(cur != NULL, -1);
 
         r = PyObject_RichCompareBool(cur, value, Py_EQ);
         if (r == -1) {
-            return -1;
+            result = -1;
+            break;
         } else if (r) {
-            return 1;
+            result = 1;
+            break;
         }
     }
-    return 0;
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject* _Nullable struct_reduce(PyObject* self)
@@ -232,12 +251,14 @@ static PyObject* _Nullable struct_reduce(PyObject* self)
     if (values == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (i = 0; i < len; i++) {
         PyObject* v = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
         PyObjC_Assert(v != NULL, NULL);
         Py_INCREF(v);
         PyTuple_SET_ITEM(values, i, v);
     }
+    Py_END_CRITICAL_SECTION();
 
     result = PyTuple_Pack(2, Py_TYPE(self), values);
     Py_DECREF(values);
@@ -259,6 +280,7 @@ static PyObject* _Nullable struct__copy__(PyObject* self)
         return NULL;      // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
         PyObjC_Assert(member->type == T_OBJECT, NULL);
         *((PyObject**)(((char*)result) + member->offset)) = NULL;
@@ -271,6 +293,7 @@ static PyObject* _Nullable struct__copy__(PyObject* self)
 
         member++;
     }
+    Py_END_CRITICAL_SECTION();
 
     PyObject_GC_Track(result);
     return result;
@@ -299,6 +322,7 @@ static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, Py
         return NULL;      // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
         PyObjC_Assert(member->type == T_OBJECT, NULL);
         *((PyObject**)(((char*)result) + member->offset)) = NULL;
@@ -313,6 +337,7 @@ static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, Py
             if (v == NULL) {
                 Py_DECREF(result);
                 Py_DECREF(deepcopy);
+                Py_EXIT_CRITICAL_SECTION();
                 return NULL;
             }
             SET_STRUCT_FIELD(result, member, v);
@@ -321,6 +346,7 @@ static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, Py
 
         member++;
     }
+    Py_END_CRITICAL_SECTION();
 
     PyObject_GC_Track(result);
     Py_DECREF(deepcopy);
@@ -370,13 +396,18 @@ static PyObject* _Nullable struct_replace_impl(const char* name, int deepcopy, P
     }
 
     if (kwds != NULL) {
+        Py_BEGIN_CRITICAL_SECTION2(self, kwds);
         while (PyDict_Next(kwds, &pos, &key, &value)) {
             int r = PyObject_SetAttr(result, key, value);
             if (r == -1) {
                 Py_DECREF(result);
-                return NULL;
+                result = NULL;
+                goto exit;
             }
         }
+exit:
+        (void)0;
+        Py_END_CRITICAL_SECTION2();
     }
 
     return result;
@@ -405,22 +436,37 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
         return NULL; // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
         PyObject* t;
         PyObjC_Assert(member->type == T_OBJECT, NULL);
 
         t = GET_STRUCT_FIELD(self, member);
         PyObjC_Assert(t != NULL, NULL);
-        r = PyDict_SetItemString(result, member->name, t);
+
+        PyObject* py_name = PyUnicode_FromString(member->name);
+        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(result);
+            goto exit;
+            // LCOV_EXCL_STOP
+        }
+
+        r = PyDict_SetItem(result, py_name, t);
 
         if (r == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            Py_DECREF(result);
-            return NULL;
+            Py_CLEAR(result);
+            Py_DECREF(py_name);
+            goto exit;
             // LCOV_EXCL_STOP
         }
+        Py_DECREF(py_name);
         member++;
     }
+exit:
+    (void)0;
+    Py_END_CRITICAL_SECTION();
 
     return result;
 }
@@ -965,6 +1011,7 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
         len = STRUCT_LENGTH(self);
 
+        Py_BEGIN_CRITICAL_SECTION2(self, other);
         for (i = 0; i < len; i++) {
             int k;
 
@@ -975,6 +1022,7 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
             k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
             if (k < 0) {
+                Py_EXIT_CRITICAL_SECTION2();
                 return NULL;
             }
 
@@ -982,19 +1030,20 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
                 /* Not equal, result is the comparison of the last
                  * item, we can do better for '==' and '!='.
                  */
-                PyObject* v;
-
                 if (op == Py_EQ) {
+                    Py_EXIT_CRITICAL_SECTION2();
                     Py_INCREF(Py_False);
                     return Py_False;
                 } else if (op == Py_NE) {
+                    Py_EXIT_CRITICAL_SECTION2();
                     Py_INCREF(Py_True);
                     return Py_True;
                 }
-                v = PyObject_RichCompare(self_cur, other_cur, op);
-                return v;
+                Py_EXIT_CRITICAL_SECTION2();
+                return PyObject_RichCompare(self_cur, other_cur, op);
             }
         }
+        Py_END_CRITICAL_SECTION2();
 
         /* All items are equal, compare using sizes */
         switch (op) {
@@ -1072,7 +1121,9 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
     for (i = 0; i < len; i++) {
         int k;
 
+        Py_BEGIN_CRITICAL_SECTION(self);
         self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
+        Py_END_CRITICAL_SECTION();
         PyObjC_Assert(self_cur != NULL, NULL);
         other_cur = PySequence_GetItem(other, i);
         if (other_cur == NULL) // LCOV_BR_EXCL_LINE
@@ -1147,17 +1198,20 @@ struct_traverse(PyObject* self, visitproc visit, void* _Nullable arg)
 {
     PyMemberDef* member;
     PyObject*    v;
-    int          err;
+    int          err = 0;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         v = GET_STRUCT_FIELD(self, member);
         if (v == NULL) // LCOV_BR_EXCL_LINE
             continue;  // LCOV_EXCL_LINE
         err = visit(v, arg);
-        if (err)
-            return err;
+        if (err) {
+            break;
+        }
     }
-    return 0;
+    Py_END_CRITICAL_SECTION();
+    return err;
 }
 
 static int
@@ -1165,6 +1219,7 @@ struct_clear(PyObject* self)
 {
     PyMemberDef* member;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         /* Maintain the invariant that struct fields are not NULL.
          *
@@ -1174,6 +1229,7 @@ struct_clear(PyObject* self)
          */
         SET_STRUCT_FIELD(self, member, Py_None);
     }
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
@@ -1208,7 +1264,9 @@ static PyObject* _Nullable struct_repr(PyObject* self)
         if (cur == NULL) // LCOV_BR_EXCL_LINE
             goto done;   // LCOV_EXCL_LINE
 
+        Py_BEGIN_CRITICAL_SECTION(self);
         v = GET_STRUCT_FIELD(self, member);
+        Py_END_CRITICAL_SECTION();
         PyObjC_Assert(v != NULL, NULL);
 
         PyObject* repr = PyObject_Repr(v);
@@ -1345,8 +1403,8 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     Py_SET_REFCNT(result, 1);
     result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            result->base.tp_dict, "_fields", fields)
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, PyObjCNM__fields, fields)
         == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
@@ -1357,8 +1415,8 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     }
 
 #if PY_VERSION_HEX >= 0x030a0000
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            result->base.tp_dict, "__match_args__", fields)
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, PyObjCNM___match_args__, fields)
         == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
@@ -1403,27 +1461,38 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
  * This is the start of PyObjC specific code
  */
 
+#ifdef Py_GIL_DISABLED
+PyMutex registry_mutex = { 0 };
+#endif
 static PyObject* structRegistry = NULL;
 
 PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 {
-    PyObject* type;
+    PyObject* type = NULL;
     PyObject* v;
 
     if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;              // LCOV_EXCL_LINE
     }
 
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
     v = PyUnicode_FromStringAndSize(signature, len);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        goto exit; // LCOV_EXCL_LINE
     }
 
     if (PyDict_GetItemRef(structRegistry, v, &type) != 1) {
         Py_DECREF(v);
-        return NULL;
+        goto exit;
     }
     Py_DECREF(v);
+
+exit:
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
     return type;
 }
 
@@ -1435,6 +1504,7 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     PyObject*     result;
     PyObject*     v;
     PyMemberDef*  member;
+    int r;
 
     if (structRegistry == NULL)
         return NULL;
@@ -1445,7 +1515,15 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 
     v = PyUnicode_FromStringAndSize(signature, len);
 
-    if (PyDict_GetItemRef(structRegistry, v, (PyObject**)&type) != 1) {
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
+    r = PyDict_GetItemRef(structRegistry, v, (PyObject**)&type);
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
+
+    if (r != 1) {
         Py_DECREF(v);
         return NULL;
     }
@@ -1660,7 +1738,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__typestr__", v);
+    r = PyDict_SetItem(((PyTypeObject*)structType)->tp_dict, PyObjCNM___typestr__, v);
     Py_DECREF(v);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -1680,7 +1758,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             return NULL;
             // LCOV_EXCL_STOP
         }
-        r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__",
+        r = PyDict_SetItem(((PyTypeObject*)structType)->tp_dict, PyObjCNM___struct_pack__,
                                  v);
         Py_DECREF(v);
         if (r == -1) { // LCOV_BR_EXCL_LINE
@@ -1691,6 +1769,9 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         }
     }
 
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
     if (structRegistry == NULL) {
         structRegistry = PyDict_New();
         if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
@@ -1703,25 +1784,56 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         }
     }
 
-    r = PyDict_SetItemString(structRegistry, signature, structType);
+    PyObject* py_signature = PyUnicode_FromString(signature);
+    if (py_signature == NULL) { // LCOV_BR_EXCL_LINE
+        /* This leaks some memory, but we cannot safely
+         * deallocate the type
+         */
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit;
+    }
+
+    r = PyDict_SetItem(structRegistry, py_signature, structType);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         /* This leaks some memory, but we cannot safely
          * deallocate the type
          */
-        return NULL; // LCOV_EXCL_LINE
+        Py_DECREF(py_signature);
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit;
     }
+    Py_DECREF(py_signature);
 
     /* Register again using the typecode used in the ObjC runtime */
     if (PyObjC_RemoveInternalTypeCodes((char*)signature) == -1) { // LCOV_BR_EXCL_LINE
         /* We've validated the type signature earlier, the
          * call should never fail.
          */
-        return NULL; // LCOV_EXCL_LINE
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit;
     }
-    r = PyDict_SetItemString(structRegistry, signature, structType);
+
+    py_signature = PyUnicode_FromString(signature);
+    if (py_signature == NULL) { // LCOV_BR_EXCL_LINE
+        /* This leaks some memory, but we cannot safely
+         * deallocate the type
+         */
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit; // LCOV_EXCL_LINE
+    }
+
+    r = PyDict_SetItem(structRegistry, py_signature, structType);
     if (r == -1) {   // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        Py_DECREF(py_signature);
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit; // LCOV_EXCL_LINE
     }
+    Py_DECREF(py_signature);
+
+exit:
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
 
     return structType;
 }
@@ -1731,6 +1843,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
 {
     char buf[1024];
     int  r;
+    int retval = 0;
 
     if (strlen(signature) > 1023) {
         PyErr_SetString(PyExc_ValueError, "typestr too long");
@@ -1748,30 +1861,58 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
      * compatible encoding (some number of fields, compatible types)
      */
 
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
     if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         structRegistry = PyDict_New();
         if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;                // LCOV_EXCL_LINE
+            retval = -1;                // LCOV_EXCL_LINE
+            goto exit;                // LCOV_EXCL_LINE
         }
         // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(structRegistry, buf, structType);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    PyObject* py_buf = PyUnicode_FromString(buf);
+    if (py_buf == NULL) { // LCOV_BR_EXCL_LINE
+        retval = -1;                // LCOV_EXCL_LINE
+        goto exit;                // LCOV_EXCL_LINE
     }
+
+    r = PyDict_SetItem(structRegistry, py_buf, structType);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(py_buf); // LCOV_EXCL_LINE
+        retval = -1;                // LCOV_EXCL_LINE
+        goto exit;                // LCOV_EXCL_LINE
+    }
+    Py_DECREF(py_buf);
 
     /* Register again using the typecode used in the ObjC runtime */
     if (PyObjC_RemoveInternalTypeCodes(buf) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                   // LCOV_EXCL_LINE
-    }
-    r = PyDict_SetItemString(structRegistry, buf, structType);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        retval = -1;                // LCOV_EXCL_LINE
+        goto exit;                // LCOV_EXCL_LINE
     }
 
-    return 0;
+    py_buf = PyUnicode_FromString(buf);
+    if (py_buf == NULL) { // LCOV_BR_EXCL_LINE
+        retval = -1;                // LCOV_EXCL_LINE
+        goto exit;                // LCOV_EXCL_LINE
+    }
+    r = PyDict_SetItem(structRegistry, py_buf, structType);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(py_buf); // LCOV_EXCL_LINE
+        retval = -1;                // LCOV_EXCL_LINE
+        goto exit;                // LCOV_EXCL_LINE
+    }
+    Py_DECREF(py_buf);
+
+exit:
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
+
+    return retval;
 }
 
 int
@@ -1793,7 +1934,9 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
         // LCOV_EXCL_STOP
     }
     member = Py_TYPE(self)->tp_members + offset;
+    Py_BEGIN_CRITICAL_SECTION(self);
     SET_STRUCT_FIELD(self, member, newVal);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
@@ -1805,6 +1948,7 @@ PyObject* _Nullable StructAsTuple(PyObject* strval)
         return 0; // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(strval);
     for (i = 0; i < len; i++) {
         PyObject* v;
         v = GET_STRUCT_FIELD(strval, Py_TYPE(strval)->tp_members + i);
@@ -1812,6 +1956,7 @@ PyObject* _Nullable StructAsTuple(PyObject* strval)
         PyTuple_SET_ITEM(retval, i, v);
         Py_INCREF(v);
     }
+    Py_END_CRITICAL_SECTION();
     return retval;
 }
 

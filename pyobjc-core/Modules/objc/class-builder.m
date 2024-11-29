@@ -591,7 +591,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     Py_CLEAR(py_superclass);
 
     /* XXX: Can __dict__ ever be in the class_dict? */
-    if (PyDict_DelItemString(class_dict, "__dict__") == -1) {
+    if (PyDict_DelItem(class_dict, PyObjCNM___dict__) == -1) {
         PyErr_Clear();
     }
     Py_CLEAR(instance_variables);

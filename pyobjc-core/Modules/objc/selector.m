@@ -76,8 +76,8 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    r = PyDict_SetItemString(
-        result, "classmethod",
+    r = PyDict_SetItem(
+        result, PyObjCNM_classmethod,
         (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kCLASS_METHOD) ? Py_True
                                                                             : Py_False);
     if (r == -1) { // LCOV_BR_EXCL_LINE
@@ -87,7 +87,7 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
         // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(result, "hidden",
+    r = PyDict_SetItem(result, PyObjCNM_hidden,
                              (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kHIDDEN)
                                  ? Py_True
                                  : Py_False);
@@ -100,7 +100,7 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
     }
 
     if (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-        r = PyDict_SetItemString(result, "return_uninitialized_object", Py_True);
+        r = PyDict_SetItem(result, PyObjCNM_return_uninitialized_object, Py_True);
         if (r == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(result);
