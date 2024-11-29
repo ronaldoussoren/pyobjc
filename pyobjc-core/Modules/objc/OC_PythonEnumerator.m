@@ -20,33 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-            // LCOV_EXCL_START
-        } @catch (NSObject* exc) {
-            /* I'm 99% sure this path cannot be hit,
-             * this class cannot be subclassesed and
-             * -dealloc cannot raise.
-             */
-            PyObjC_LEAVE_GIL;
-            @throw;
-        }
-        // LCOV_EXCL_STOP
-
-    PyObjC_END_WITH_GIL
-}
-
 - (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE

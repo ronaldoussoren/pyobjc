@@ -8,7 +8,7 @@ extern PyObject* PyObjCFormalProtocol_Type;
     PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCFormalProtocol_Type)
 
 extern PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol*);
-extern Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject*);
+extern Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject*) NS_RETURNS_NOT_RETAINED;
 
 extern int PyObjCFormalProtocol_Setup(PyObject* module);
 

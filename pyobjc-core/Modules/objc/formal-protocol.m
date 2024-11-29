@@ -500,7 +500,7 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
     return actual;
 }
 
-Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)
+Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object) NS_RETURNS_NOT_RETAINED
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
 

@@ -2804,11 +2804,15 @@ depythonify_python_object(PyObject* argument, id* datum)
 
     if (*datum) {
         id actual = PyObjC_RegisterObjCProxy(argument, *datum);
-        if (actual != *datum) {
-            /* The original '*datum' is autoreleased according to the
-             * create rule.
-             */
-            *datum = actual;
+        if (actual != nil) {
+            if (actual == *datum) {
+                [actual release];
+            } else {
+                /* The original '*datum' is autoreleased according to the
+                 * create rule.
+                 */
+                *datum = [actual autorelease];
+            }
         }
         return 0;
     } else {

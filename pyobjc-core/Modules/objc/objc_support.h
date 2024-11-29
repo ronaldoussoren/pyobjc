@@ -62,7 +62,7 @@ extern int        depythonify_c_array_nullterminated(const char* type, Py_ssize_
   error. */
 extern int depythonify_c_value(const char* type, PyObject* arg, void* datum);
 extern int depythonify_c_return_value(const char* type, PyObject* arg, void* datum);
-extern int depythonify_python_object(PyObject* argument, id _Nullable* _Nonnull datum);
+extern int depythonify_python_object(PyObject* argument, id _Nullable* _Nonnull __attribute__((ns_returns_autoreleased)) datum);
 extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count,
                                             PyObject* arg, void* resp,
                                             BOOL already_retained,

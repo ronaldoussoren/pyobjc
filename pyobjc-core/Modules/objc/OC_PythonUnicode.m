@@ -42,41 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
     return NO;
 }
 
-- (oneway void)release
-{
-    /* There is small race condition when an object is almost deallocated
-     * in one thread and fetched from the registration mapping in another
-     * thread. If we don't get the GIL this object might get a -dealloc
-     * message just as the other thread is fetching us from the mapping.
-     * That's why we need to grab the GIL here (getting it in dealloc is
-     * too late, we'd already be dead).
-     */
-    /* FIXME: Should switch to __weak on OSX 10.7 or later, that should
-     * fix this issue without a performance penalty.
-     */
-    /*
-     * There is also a race condition on application shutdown between
-     * the call to Py_Finalize (shutting down the interpreter) and the
-     * cleanup performed by Cocoa, possible on other threads.
-     */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-
-        } @catch (NSObject* exc) {
-            PyObjC_LEAVE_GIL;
-            @throw;
-        }
-    PyObjC_END_WITH_GIL
-}
-
 - (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
@@ -358,9 +323,10 @@ NS_ASSUME_NONNULL_BEGIN
 
                 id actual = PyObjC_RegisterObjCProxy(value, self);
                 if (actual != self) {
-                    [actual retain];
                     [self release];
                     self = actual;
+                } else if (actual != nil) {
+                    [actual release];
                 }
 
             PyObjC_END_WITH_GIL

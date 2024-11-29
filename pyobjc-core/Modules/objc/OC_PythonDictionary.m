@@ -103,27 +103,6 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     return NO;
 }
 
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-        } @catch (NSObject* exc) {
-            PyObjC_LEAVE_GIL;
-            @throw;
-        }
-
-    PyObjC_END_WITH_GIL
-}
-
 - (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
@@ -511,9 +490,10 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
                 id actual = PyObjC_RegisterObjCProxy(value, self);
                 if (actual != self) {
-                    [actual retain];
                     [self release];
                     self = actual;
+                } else if (actual != nil) {
+                    [actual release];
                 }
             PyObjC_END_WITH_GIL
 

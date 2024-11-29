@@ -44,40 +44,14 @@ NS_ASSUME_NONNULL_BEGIN
          * first one that got registered.
          */
         [self release];
-        [actual retain];
         return actual;
+    } else if (actual != nil) {
+        [actual release];
     }
 
     SET_FIELD_INCREF(pyObject, obj);
 
     return self;
-}
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-
-        } @catch (NSObject* exc) { // LCOV_EXCL_LINE
-            /* This catch statement is here mostly
-             * for code consistency, [NSProxy release]
-             * should never raise.
-             */
-            // LCOV_EXCL_START
-            PyObjC_LEAVE_GIL;
-            @throw;
-            // LCOV_EXCL_STOP
-        }
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc

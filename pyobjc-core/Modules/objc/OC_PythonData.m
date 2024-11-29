@@ -41,27 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
     return NO;
 }
 
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-        } @catch (NSException* exc) {
-            PyObjC_LEAVE_GIL;
-            [exc raise];
-        }
-
-    PyObjC_END_WITH_GIL
-}
-
 - (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
@@ -296,9 +275,10 @@ NS_ASSUME_NONNULL_BEGIN
 
                 id actual = PyObjC_RegisterObjCProxy(value, self);
                 if (actual != self) {
-                    [actual retain];
                     [self release];
                     self = actual;
+                } else if (actual != nil) {
+                    [actual release];
                 }
 
 
