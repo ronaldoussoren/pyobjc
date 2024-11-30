@@ -16,3 +16,11 @@ class TestSCScreenshotManager(TestCase):
             2,
             b"v^{CGImage=}@",
         )
+
+    @min_os_level("15.2")
+    def test_methods15_2(self):
+        self.assertArgIsBlock(
+            ScreenCaptureKit.SCScreenshotManager.captureImageInRect_completionHandler_,
+            1,
+            b"v^{CGImage=}@",
+        )
