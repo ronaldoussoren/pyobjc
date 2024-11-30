@@ -29,6 +29,7 @@ def files_matching(pattern, dirname):
 
 
 _detected_versions = None
+_latest_version = None
 
 
 def is_usable_release(ver):
@@ -62,6 +63,20 @@ def detect_pyversions():
     return _detected_versions
 
 
+def latest_version():
+    global _latest_version
+    if _latest_version is not None:
+        return _latest_version
+
+    for ver in detect_pyversions()[::-1]:
+        if ver.endswith("t"):
+            continue
+        _latest_version = ver
+        return _latest_version
+
+    raise RuntimeError("Cannot find latest version")
+
+
 def main():
     if os.path.exists(DIST_DIR):
         shutil.rmtree(DIST_DIR)
@@ -81,7 +96,7 @@ def main():
         # Collect sdist archive with most recent python version.
         status = subprocess.call(
             [
-                f"python{detect_pyversions()[-1]}",
+                f"python{latest_version()}",
                 "setup.py",
                 "sdist",
                 f"--dist-dir={DIST_DIR}",
