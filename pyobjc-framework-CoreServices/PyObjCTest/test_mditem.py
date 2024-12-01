@@ -25,7 +25,9 @@ class TestMDImport(TestCase):
 
     @min_os_level("15.2")
     def test_functions15_2(self):
-        self.assertArgIsBlock(CoreServices.MDItemGetCacheFileDescriptors, 1, b"v@")
+        self.assertArgIsBlock(
+            CoreServices.MDItemGetCacheFileDescriptors, 1, b"v^{__CFArray=}"
+        )
 
     @expectedFailure
     def test_functions_missing(self):

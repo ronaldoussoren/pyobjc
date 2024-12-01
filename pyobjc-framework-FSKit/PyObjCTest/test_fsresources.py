@@ -63,7 +63,7 @@ class TestFSResource(TestCase):
             b"vQ@",
         )
 
-        self.assertArgIsInOut(
+        self.assertArgIsOut(
             FSKit.FSBlockDeviceResource.readInto_startingAt_length_error_,
             0,
         )
@@ -106,56 +106,54 @@ class TestFSResource(TestCase):
             3,
         )
 
-        self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
+        self.assertArgIsOut(
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_,
             0,
             2,
-        )
-        self.assertArgIsOut(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_error_,
-            3,
         )
 
-        self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
+        self.assertArgIsOut(
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             0,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             0,
             2,
         )
-        self.assertArgIsInOut(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
+        self.assertArgIsIn(
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             3,
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.metaReadInto_startingAt_length_readAheadExtents_readAheadCount_,
+            FSKit.FSBlockDeviceResource.metadataReadInto_startingAt_length_readAheadExtents_readAheadCount_,
             3,
             4,
         )
 
         self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_, 0
+            FSKit.FSBlockDeviceResource.metadataWriteFrom_startingAt_length_, 0
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.metaWriteFrom_startingAt_length_,
+            FSKit.FSBlockDeviceResource.metadataWriteFrom_startingAt_length_,
             0,
             2,
         )
 
         self.assertArgIsIn(
-            FSKit.FSBlockDeviceResource.delayedMetaWriteFrom_startingAt_length_,
-            0,
+            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_, 0
         )
         self.assertArgSizeInArg(
-            FSKit.FSBlockDeviceResource.delayedMetaWriteFrom_startingAt_length_,
+            FSKit.FSBlockDeviceResource.delayedMetadataWriteFrom_startingAt_length_,
             0,
             2,
         )
 
-        self.assertArgIsBOOL(FSKit.FSBlockDeviceResource.synchronousMetaClear_wait_, 1)
+        self.assertArgIsBOOL(FSKit.FSBlockDeviceResource.metadataClear_wait_, 1)
+        self.assertArgIsBOOL(
+            FSKit.FSBlockDeviceResource.proxyResourceForBSDName_isWritable_, 1
+        )

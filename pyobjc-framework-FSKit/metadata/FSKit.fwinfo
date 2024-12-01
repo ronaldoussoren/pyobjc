@@ -112,16 +112,20 @@
    "FSBlockDeviceResource": {
     "methods": [
      {
-      "selector": "installedExtensionsWithError:",
-      "class_method": true,
       "args": {
-       "0": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "FSBlockDeviceResource": {
-    "methods": [
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "readInto:startingAt:length:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "readInto:startingAt:length:completionHandler:"
+     },
      {
       "args": {
        "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
@@ -138,53 +142,54 @@
      },
      {
       "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "writeFrom:startingAt:length:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "writeFrom:startingAt:length:completionHandler:"
+     },
+     {
+      "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "writeFrom:startingAt:length:replyHandler:"
      },
      {
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      },
+      "selector": "metadataReadInto:startingAt:length:",
       "class_method": false,
-      "selector": "synchronousWriteFrom:startingAt:length:replyHandler:"
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 }
+      }
      },
      {
       "args": {
-       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2},
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
       },
       "class_method": false,
-      "selector": "synchronousMetaReadInto:startingAt:length:replyHandler:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "N", "c_array_length_in_arg": 2},
-       "3": { "type_modifier": "N", "c_array_length_in_arg": 4 }
-      },
-      "class_method": false,
-      "selector": "synchronousMetaReadInto:startingAt:length:readAheadExtents:readAheadCount:replyHandler:"
+      "selector": "metadataReadInto:startingAt:length:readAheadExtents:readAheadCount:"
      },
      {
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
-      "selector": "metaWriteFrom:startingAt:length:replyHandler:"
+      "selector": "metadataWriteFrom:startingAt:length:"
      },
      {
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
-      "selector": "synchronousMetaWriteFrom:startingAt:length:replyHandler:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      },
-      "class_method": false,
-      "selector": "synchronousDelayedMetaWriteFrom:startingAt:length:replyHandler:"
+      "selector": "delayedMetadataWriteFrom:startingAt:length:"
      }
     ]
    },
