@@ -1072,6 +1072,7 @@
      "2": { "type_override": "^v" },
      "3": {
       "type_override": "^?",
+      "callable_retained": true,
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1578,6 +1579,7 @@
      "2": { "type_override": "^v" },
      "3": {
       "type_override": "^?",
+      "callable_retained": true,
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1624,6 +1626,7 @@
      "2": { "type_override": "^v" },
      "3": {
       "type_override": "^?",
+      "callable_retained": true,
       "callable": {
        "arguments": {
         "0": { "type": "^v" }

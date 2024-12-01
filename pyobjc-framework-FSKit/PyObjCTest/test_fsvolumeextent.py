@@ -56,7 +56,7 @@ class TestFSVolumeExtent(TestCase):
         self.assertEqual(FSKit.FSPreallocateFromVol, 0x00000020)
 
     def test_protocols(self):
-        self.assertProtocolExists("FSVolumeKOIOOperations")
+        self.assertProtocolExists("FSVolumeKernelOffloadedIOOperations")
         self.assertProtocolExists("FSVolumePreallocateOperations")
 
     def test_protocol_methods(self):

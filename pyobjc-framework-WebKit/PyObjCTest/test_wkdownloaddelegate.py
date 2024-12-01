@@ -31,7 +31,7 @@ class TestWKDownloadDelegate(TestCase):
         self.assertEqual(WebKit.WKDownloadRedirectPolicyCancel, 0)
         self.assertEqual(WebKit.WKDownloadRedirectPolicyAllow, 1)
 
-        self.assertIsEnumTyupe(WebKit.WKDownloadPlaceholderPolicy)
+        self.assertIsEnumType(WebKit.WKDownloadPlaceholderPolicy)
         self.assertEqual(WebKit.WKDownloadPlaceholderPolicyDisable, 0)
         self.assertEqual(WebKit.WKDownloadPlaceholderPolicyEnable, 1)
 
@@ -57,7 +57,7 @@ class TestWKDownloadDelegate(TestCase):
         )
 
         self.assertArgIsBlock(
-            TestWKDownloadDelegateHelper.download_decidePlaceHolderPolicy_,
+            TestWKDownloadDelegateHelper.download_decidePlaceholderPolicy_,
             1,
             b"v" + objc._C_NSInteger + b"@",
         )
