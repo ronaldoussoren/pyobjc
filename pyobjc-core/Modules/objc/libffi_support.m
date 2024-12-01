@@ -208,7 +208,6 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     ffi_type*   type;
     Py_ssize_t  field_count;
     Py_ssize_t  i;
-    const char* key = argtype;
 
     PyObjC_Assert(array_types != NULL, NULL);
 
@@ -221,14 +220,32 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
         Py_DECREF(typestr);
         return NULL;
     case 1:
-        /* XXX: This effectively returns a borrowed reference */
         Py_DECREF(typestr);
         ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
         Py_DECREF(v);
         return result;
-    default:
-        Py_DECREF(typestr);
     }
+
+    Py_BEGIN_CRITICAL_SECTION(array_types);
+
+#ifdef Py_GIL_DISABLED
+    /*
+     * Recheck within the critical section to avoid a race condition.
+     */
+
+    switch (PyDict_GetItemRef(array_types, typestr, &v)) {
+    case -1:
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
+        return NULL;
+    case 1:
+        Py_DECREF(typestr);
+        ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+        Py_DECREF(v);
+        Py_EXIT_CRITICAL_SECTION();
+        return result;
+    }
+#endif
 
     /* We don't have a type description yet, dynamically
      * create it.
@@ -238,6 +255,8 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     type = PyMem_Malloc(sizeof(*type));
     if (type == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
         PyErr_NoMemory();
         return NULL;
         // LCOV_EXCL_STOP
@@ -254,6 +273,8 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     type->elements = PyMem_Malloc((1 + field_count) * sizeof(ffi_type*));
     if (type->elements == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
         PyMem_Free(type);
         PyErr_NoMemory();
         return NULL;
@@ -266,6 +287,8 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     if (type->elements[0] == NULL) { // LCOV_BR_EXCL_LINE
         /* Unsupported element type */
         // LCOV_EXCL_START
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
         PyMem_Free(type);
         return NULL;
         // LCOV_EXCL_STOP
@@ -279,6 +302,8 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     v = PyCapsule_New(type, "objc.__ffi_type__", cleanup_ffitype_capsule);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
         free_type(type);
         return NULL;
         // LCOV_EXCL_STOP
@@ -286,23 +311,19 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 
     PyObjC_Assert(!PyErr_Occurred(), NULL);
 
-    PyObject* py_key = PyUnicode_FromString(key);
-    if (py_key == NULL) { // LCOV_BR_EXCL_LINE
+    if (PyDict_SetItem(array_types, typestr, v) == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(v);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-
-    if (PyDict_SetItem(array_types, py_key, v) == -1) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(v);
-        Py_DECREF(py_key);
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
         return NULL;
         // LCOV_EXCL_STOP
     }
     Py_DECREF(v);
-    Py_DECREF(py_key);
+    Py_DECREF(typestr);
+
+    Py_END_CRITICAL_SECTION();
+
     return type;
 }
 
@@ -322,20 +343,39 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         Py_DECREF(typestr);
         return NULL;                     // LCOV_EXCL_LINE
     case 1:
-        /* XXX: This effectively returns a borrowed reference */
         Py_DECREF(typestr);
         ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
         Py_DECREF(v);
         return result;
-    default:
-        Py_DECREF(typestr);
     }
+
+
+    Py_BEGIN_CRITICAL_SECTION(struct_types);
+#ifdef Py_GIL_DISABLED
+    /*
+     * Recheck within the critical section to avoid a race condition.
+     */
+    switch (PyDict_GetItemRef(struct_types, typestr, &v)) {
+    case -1:
+        Py_DECREF(typestr);
+        Py_EXIT_CRITICAL_SECTION();
+        return NULL;                     // LCOV_EXCL_LINE
+    case 1:
+        Py_DECREF(typestr);
+        ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
+        Py_DECREF(v);
+        Py_EXIT_CRITICAL_SECTION();
+        return result;
+    }
+#endif
 
     /* We don't have a type description yet, dynamically
      * create it.
      */
     field_count = num_struct_fields(argtype);
     if (field_count == -1) {
+        Py_EXIT_CRITICAL_SECTION();
+        Py_DECREF(typestr);
         PyErr_Format(PyObjCExc_InternalError, "Cannot determine layout of %s", argtype);
         return NULL;
     }
@@ -343,6 +383,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     type = PyMem_Malloc(sizeof(*type));
     if (type == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_EXIT_CRITICAL_SECTION();
+        Py_DECREF(typestr);
         PyErr_NoMemory();
         return NULL;
         // LCOV_EXCL_STOP
@@ -355,6 +397,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 
     if (type->elements == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_EXIT_CRITICAL_SECTION();
+        Py_DECREF(typestr);
         PyMem_Free(type);
         PyErr_NoMemory();
         return NULL;
@@ -381,6 +425,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 
             if (type->elements[field_count] == NULL) {
                 PyMem_Free(type->elements);
+                Py_EXIT_CRITICAL_SECTION();
+                Py_DECREF(typestr);
                 return NULL;
             }
 
@@ -388,6 +434,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
             curtype = PyObjCRT_SkipTypeSpec(curtype);
 
             if (curtype == NULL) {
+                Py_EXIT_CRITICAL_SECTION();
+                Py_DECREF(typestr);
                 PyMem_Free(type->elements);
                 return NULL;
             }
@@ -399,29 +447,27 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     v = PyCapsule_New(type, "objc.__ffi_type__", cleanup_ffitype_capsule);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        Py_EXIT_CRITICAL_SECTION();
+        Py_DECREF(typestr);
         free_type(type);
         return NULL;
         // LCOV_EXCL_STOP
     }
 
-    PyObject* py_argtype = PyUnicode_FromString(argtype);
-    if (py_argtype == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(v);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
     if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-            struct_types, py_argtype, v)
+            struct_types, typestr, v)
         == -1) {
         // LCOV_EXCL_START
+        Py_EXIT_CRITICAL_SECTION();
+        Py_DECREF(typestr);
         Py_DECREF(v);
-        Py_DECREF(py_argtype);
         return NULL;
         // LCOV_EXCL_STOP
     }
     Py_DECREF(v);
-    Py_DECREF(py_argtype);
+    Py_DECREF(typestr);
+
+    Py_END_CRITICAL_SECTION();
     return type;
 }
 
