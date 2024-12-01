@@ -144,7 +144,7 @@ def variants(
 
 
 def setup_variant(ver, variant):
-    if ver.rstrip("t") == variant:
+    if ver == variant:
         return
 
     if ver.endswith("t"):

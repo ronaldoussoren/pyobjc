@@ -40,7 +40,10 @@ def detect_pyversions():
     result = []
     for ver in PY_VERSIONS:
         if os.path.exists(
-            os.path.join(f"/Library/Frameworks/Python{'T' if ver.endswith('t') else ''}.framework/Versions", ver.rstrip("t"))
+            os.path.join(
+                f"/Library/Frameworks/Python{'T' if ver.endswith('t') else ''}.framework/Versions",
+                ver.rstrip("t"),
+            )
         ):
 
             result.append(ver)
@@ -171,12 +174,19 @@ def build_project(*, interpreter, py_ver, project):
     return True
 
 
-def run_tests(*, interpreter, arch, py_ver, project, state_dir):
+def run_tests(*, interpreter, arch, py_ver, project, state_dir, extra_py_args):
     lg = logging.getLogger("run_tests")
 
     proj_dir = os.path.join(TOP_DIR, project)
 
-    lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
+    lg.info(
+        "testing %r using %r (%s, %7s) %s",
+        project,
+        interpreter,
+        py_ver,
+        arch,
+        " ".join(extra_py_args),
+    )
     k = {}
     k["env"] = os.environ.copy()
     k["env"]["PATH"] = os.path.dirname(interpreter) + ":" + k["env"]["PATH"]
@@ -186,6 +196,9 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
             "/usr/bin/arch",
             f"-{arch}",
             interpreter,
+        ]
+        + extra_py_args
+        + [
             # XXX: Coverage support is disabled for now because
             # I've never actually used it.
             # "-mcoverage",
@@ -199,7 +212,7 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
         cwd=proj_dir,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        **k
+        **k,
     )
     stdout, stderr = p.communicate()
     exitcode = p.wait()
@@ -299,9 +312,7 @@ def system_supports_arch(interpreter, arch):
     assert supports_arch(interpreter, arch)
 
     try:
-        subprocess.check_output(
-            ["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""]
-        )
+        subprocess.check_output(["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""])
     except subprocess.CalledProcessError:
         return False
 
@@ -379,7 +390,9 @@ def main():
 
     # Invoke 'sw_vers' to get the real system version, even if Python was compiled
     # with an older SDK.
-    osx_release = subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    osx_release = (
+        subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    )
 
     lg.info(
         "running PyObjC tests on OSX %s with python versions %s",
@@ -419,7 +432,6 @@ def main():
                         "-U",
                         "coverage",
                         "twine",
-
                         # For some reason 'chardet' is needed for some
                         # 'pyobjc' tests on x86_64 (in emulation)
                         "chardet",
@@ -467,16 +479,27 @@ def main():
                         arch,
                         interpreter,
                     )
-                    state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
 
-                    for project in ["pyobjc"] + build_order:
-                        run_tests(
-                            interpreter=interpreter,
-                            arch=arch,
-                            py_ver=variant,
-                            project=project,
-                            state_dir=state_dir,
-                        )
+                    # Test free-threaded builds both with and without the GIL enabled.
+                    if py_ver.endswith("t"):
+                        extra_args = (["-Xgil=1"], ["-Xgil=0"])
+                    else:
+                        extra_args = []
+
+                    for extra in extra_args:
+                        state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
+                        if extra:
+                            state_dir = state_dir + "-" + "~".join(extra)
+
+                        for project in ["pyobjc"] + build_order:
+                            run_tests(
+                                interpreter=interpreter,
+                                arch=arch,
+                                py_ver=variant,
+                                project=project,
+                                state_dir=state_dir,
+                                extra_py_args=extra,
+                            )
 
     lg.info("done")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:
