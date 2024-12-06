@@ -578,7 +578,6 @@ def pyobjectDecode(coder, setValue):
 
 
 # An finally register the coder/decoder
-objc.options._nscoding_version = 1
 objc.options._nscoding_encoder = pyobjectEncode
 objc.options._nscoding_decoder = pyobjectDecode
 objc.options._copy = copy.copy

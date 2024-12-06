@@ -1840,7 +1840,7 @@ class TestSecureArchivingPython(TestCase):
         with pyobjc_options(_nscoding_encoder=None):
             with self.assertRaisesRegex(
                 ValueError,
-                "NSInvalidArgumentException - encoding Python objects is not supported",
+                "encoding Python objects is not supported",
             ):
                 NSKeyedArchiver.archivedDataWithRootObject_(object())
 
@@ -1849,6 +1849,6 @@ class TestSecureArchivingPython(TestCase):
         with pyobjc_options(_nscoding_decoder=None):
             with self.assertRaisesRegex(
                 ValueError,
-                "NSInvalidArgumentException - decoding Python objects is not supported",
+                "decoding Python objects is not supported",
             ):
                 NSKeyedUnarchiver.unarchiveObjectWithData_(buf)

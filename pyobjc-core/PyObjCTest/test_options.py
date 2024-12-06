@@ -93,26 +93,6 @@ class TestOptions(TestCase):
         finally:
             objc.options.structs_writable = orig
 
-    def test_nscodiing_version(self):
-        orig = objc.options._nscoding_version
-        try:
-            objc.options._nscoding_version = 2
-            self.assertEqual(objc.options._nscoding_version, 2)
-
-            with self.assertRaisesRegex(
-                TypeError,
-                r"('str' object cannot be interpreted as an integer)|(an integer is required \(got type str\))",
-            ):
-                objc.options._nscoding_version = ""
-
-            with self.assertRaisesRegex(
-                AttributeError, "Cannot delete option '_nscoding_version'"
-            ):
-                del objc.options._nscoding_version
-
-        finally:
-            objc.options._nscoding_version = orig
-
     def test_mapping_count(self):
         orig = objc.options._mapping_count
         try:

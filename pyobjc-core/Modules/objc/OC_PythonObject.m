@@ -1014,7 +1014,14 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
  */
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    PyObjC_encodeWithCoder(pyObject, coder);
+    int rval;
+
+    PyObjC_BEGIN_WITH_GIL
+        rval = PyObjC_encodeWithCoder(pyObject, coder);
+        if (rval == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
 }
 
 /*
@@ -1034,65 +1041,33 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     pyObject = NULL;
 
-    if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = id_to_python(coder);
-            PyObject* setValue;
-            PyObject* selfAsPython;
-            PyObject* v;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+        if (decoded == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        /* To make life more interesting the correct proxy
+         * type for 'v' might not be OC_PythonObject, in particular
+         * when introducing new proxy types in new versions
+         * of PyObjC, and in some error cases.
+         */
+        NSObject* temp;
+        if (depythonify_python_object(decoded, &temp) == -1) {
+            Py_DECREF(decoded);
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
-            if (setValue == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_STOP
-                Py_DECREF(selfAsPython);
-                PyObjC_GIL_FORWARD_EXC();
-                // LCOV_EXCL_STOP
-            }
+        if (temp != (NSObject*)self) {
+            [temp retain];
+            [self release];
+            self = (OC_PythonObject*)temp;
+        }
+        Py_DECREF(pyObject);
 
-            v = PyObjC_CallDecoder(cdr, setValue);
-            Py_DECREF(cdr);
-            Py_DECREF(setValue);
-            Py_DECREF(selfAsPython);
+    PyObjC_END_WITH_GIL
 
-            if (v == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            /* To make life more interesting the correct proxy
-             * type for 'v' might not be OC_PythonObject, in particular
-             * when introducing new proxy types in new versions
-             * of PyObjC, and in some error cases.
-             */
-            NSObject* temp;
-            if (depythonify_python_object(v, &temp) == -1) {
-                Py_DECREF(v);
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            if (temp != (NSObject*)self) {
-                [temp retain];
-                [self release];
-                self = (OC_PythonObject*)temp;
-            }
-            Py_DECREF(pyObject);
-
-        PyObjC_END_WITH_GIL
-
-        return self;
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"decoding Python objects is not supported"
-                                     userInfo:nil];
-    }
+    return self;
 }
 
 - (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__))coder
@@ -1227,36 +1202,5 @@ static CFTypeID _NSObjectTypeID;
 
 @end /* OC_PythonObject class implementation */
 
-void
-PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
-{
-    /* XXX: This should be called with the GIL held, and should
-     * return an error indicator.
-     */
-    if (PyObjC_Encoder != NULL && PyObjC_Encoder != Py_None) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = id_to_python(coder);
-            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
-
-            PyObject* args[3] = {NULL, pyObject, cdr};
-
-            PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args + 1,
-                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(cdr);
-            Py_XDECREF(r);
-            if (r == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-        PyObjC_END_WITH_GIL
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"encoding Python objects is not supported"
-                                     userInfo:nil];
-    }
-}
 
 NS_ASSUME_NONNULL_END

@@ -22,16 +22,40 @@ struct options {
 
 static PyObject* PyObjCOptions_Type;
 
+/*
+ * Free threading:
+ * - PyObject options are guarded by a mutex to avoid race conditions between
+ *   setting and using;
+ * - Other options use atomic vars to ensure consistent updates.*
+ *
+ * Users of options should cache the value locally to get a consistent value
+ * when it is used multiple times. PyObject users must either use the value
+ * with an acquired lock, or get a local owned reference while holding the
+ * mutex.
+ */
+
 #define _STR(v) #v
 #define STR(v) _STR(v)
 
+#if Py_GIL_DISABLED
+#   define MUTEX_FOR(VAR)        static PyMutex VAR##_lock = { 0 };
+#   define LOCK(VAR)             PyMutex_Lock(&VAR##_lock)
+#   define UNLOCK(VAR)           PyMutex_Unlock(&VAR##_lock)
+#else
+#   define MUTEX_FOR(VAR)
+#   define LOCK(VAR) do {} while(0)
+#   define UNLOCK(VAR) do {} while(0)
+#endif
+
 #define SSIZE_T_PROP(NAME, VAR, DFLT)                                                    \
-    Py_ssize_t VAR = DFLT;                                                               \
+    PyObjC_ATOMIC Py_ssize_t VAR = DFLT;                                                 \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        return PyLong_FromSsize_t(VAR);                                                  \
+        PyObject* result;                                                                \
+        result = PyLong_FromSsize_t(VAR);                                                \
+        return result;                                                                   \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -43,19 +67,24 @@ static PyObject* PyObjCOptions_Type;
             return -1;                                                                   \
         }                                                                                \
                                                                                          \
-        if (!PyArg_Parse(newVal, "n", &VAR)) {                                           \
+        Py_ssize_t temp;                                                                 \
+        if (!PyArg_Parse(newVal, "n", &temp)) {                                          \
             return -1;                                                                   \
         }                                                                                \
+        VAR = temp;                                                                      \
         return 0;                                                                        \
     }
 
 #define INT_PROP(NAME, VAR, DFLT)                                                        \
-    int VAR = DFLT;                                                                      \
+    PyObjC_ATOMIC int VAR = DFLT;                                                                      \
+    MUTEX_FOR(VAR)                                                                       \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        return PyLong_FromLong(VAR);                                                  \
+        PyObject* result;                                                                \
+        result = PyLong_FromLong(VAR);                                                   \
+        return result;                                                                   \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -67,19 +96,23 @@ static PyObject* PyObjCOptions_Type;
             return -1;                                                                   \
         }                                                                                \
                                                                                          \
-        if (!PyArg_Parse(newVal, "i", &VAR)) {                                           \
+        int temp;                                                                        \
+        if (!PyArg_Parse(newVal, "i", &temp)) {                                          \
             return -1;                                                                   \
         }                                                                                \
+        VAR = temp;                                                                      \
         return 0;                                                                        \
     }
 
 #define BOOL_PROP(NAME, VAR, DFLT)                                                       \
-    BOOL VAR = DFLT;                                                                     \
+    PyObjC_ATOMIC BOOL VAR = DFLT;                                                                     \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        return PyBool_FromLong(VAR);                                                     \
+        PyObject* result;                                                                \
+        result = PyBool_FromLong(VAR);                                                   \
+        return result;                                                                   \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -94,22 +127,22 @@ static PyObject* PyObjCOptions_Type;
         return 0;                                                                        \
     }
 
-/* XXX: Either set the default from PyObjC_SetupOptions, or
- *      make sure that setting the value of 'None' sets the global
- *      variable to NULL (and check users!)
- */
-#define OBJECT_PROP(NAME, VAR, DFLT)                                                     \
-    PyObject* VAR = DFLT;                                                                \
+#define OBJECT_PROP(NAME, VAR)                                                           \
+    PyObject* VAR = NULL;                                                                \
+    MUTEX_FOR(VAR)                                                                       \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
+        LOCK(VAR);                                                                       \
         if (VAR != NULL) {                                                               \
             Py_INCREF(VAR);                                                              \
+            UNLOCK(VAR);                                                                 \
             return VAR;                                                                  \
                                                                                          \
         } else {                                                                         \
             Py_INCREF(Py_None);                                                          \
+            UNLOCK(VAR);                                                                 \
             return Py_None;                                                              \
         }                                                                                \
     }                                                                                    \
@@ -122,7 +155,43 @@ static PyObject* PyObjCOptions_Type;
                             "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
+        LOCK(VAR);                                                                       \
         SET_FIELD_INCREF(VAR, newVal);                                                   \
+        UNLOCK(VAR);                                                                     \
+        return 0;                                                                        \
+    }
+
+#define OBJECT_PROP_STATIC(NAME, VAR)                                                    \
+    static PyObject* VAR = NULL;                                                         \
+    MUTEX_FOR(VAR)                                                                       \
+                                                                                         \
+    static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
+                                void*     c __attribute__((__unused__)))                 \
+    {                                                                                    \
+        LOCK(VAR);                                                                       \
+        if (VAR != NULL) {                                                               \
+            Py_INCREF(VAR);                                                              \
+            UNLOCK(VAR);                                                                 \
+            return VAR;                                                                  \
+                                                                                         \
+        } else {                                                                         \
+            Py_INCREF(Py_None);                                                          \
+            UNLOCK(VAR);                                                                 \
+            return Py_None;                                                              \
+        }                                                                                \
+    }                                                                                    \
+                                                                                         \
+    static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
+                          void* c __attribute__((__unused__)))                           \
+    {                                                                                    \
+        if (newVal == NULL) {                                                            \
+            PyErr_SetString(PyExc_AttributeError,                                        \
+                            "Cannot delete option '" STR(NAME) "'");                     \
+            return -1;                                                                   \
+        }                                                                                \
+        LOCK(VAR);                                                                       \
+        SET_FIELD_INCREF(VAR, newVal);                                                   \
+        UNLOCK(VAR);                                                                     \
         return 0;                                                                        \
     }
 
@@ -138,33 +207,33 @@ BOOL_PROP(unknown_pointer_raises, PyObjCPointer_RaiseException, NO)
 BOOL_PROP(structs_indexable, PyObjC_StructsIndexable, YES)
 BOOL_PROP(structs_writable, PyObjC_StructsWritable, YES)
 
-INT_PROP(_nscoding_version, PyObjC_NSCoding_Version, 0)
 SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
 
 /* Private properties */
-OBJECT_PROP(_nscoding_encoder, PyObjC_Encoder, NULL)
-OBJECT_PROP(_nscoding_decoder, PyObjC_Decoder, NULL)
-OBJECT_PROP(_copy, PyObjC_CopyFunc, NULL)
-OBJECT_PROP(_class_extender, PyObjC_ClassExtender, NULL)
-OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass, NULL)
-OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper, NULL)
-OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction, NULL)
-OBJECT_PROP(_callable_signature, PyObjC_CallableSignatureFunction, NULL)
-OBJECT_PROP(_mapping_types, PyObjC_DictLikeTypes, NULL)
-OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes, NULL)
-OBJECT_PROP(_set_types, PyObjC_SetLikeTypes, NULL)
-OBJECT_PROP(_date_types, PyObjC_DateLikeTypes, NULL)
-OBJECT_PROP(_path_types, PyObjC_PathLikeTypes, NULL)
-OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type, NULL)
-OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type, NULL)
-OBJECT_PROP(_getKey, PyObjC_getKey, NULL)
-OBJECT_PROP(_setKey, PyObjC_setKey, NULL)
-OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath, NULL)
-OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath, NULL)
-OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute, NULL)
-OBJECT_PROP(_processClassDict, PyObjC_processClassDict, NULL)
-OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew, NULL)
-OBJECT_PROP(_genericNewClass, PyObjC_genericNewClass, NULL)
+
+OBJECT_PROP_STATIC(_nscoding_encoder, PyObjC_Encoder)
+OBJECT_PROP_STATIC(_nscoding_decoder, PyObjC_Decoder)
+OBJECT_PROP(_copy, PyObjC_CopyFunc)
+OBJECT_PROP(_class_extender, PyObjC_ClassExtender)
+OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass)
+OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
+OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction)
+OBJECT_PROP(_callable_signature, PyObjC_CallableSignatureFunction)
+OBJECT_PROP(_mapping_types, PyObjC_DictLikeTypes)
+OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes)
+OBJECT_PROP(_set_types, PyObjC_SetLikeTypes)
+OBJECT_PROP(_date_types, PyObjC_DateLikeTypes)
+OBJECT_PROP(_path_types, PyObjC_PathLikeTypes)
+OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type)
+OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type)
+OBJECT_PROP(_getKey, PyObjC_getKey)
+OBJECT_PROP(_setKey, PyObjC_setKey)
+OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath)
+OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath)
+OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute)
+OBJECT_PROP(_processClassDict, PyObjC_processClassDict)
+OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew)
+OBJECT_PROP(_genericNewClass, PyObjC_genericNewClass)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -173,7 +242,7 @@ bundle_hack_get(PyObject* s __attribute__((__unused__)),
     return PyBool_FromLong([OC_NSBundleHack bundleHackUsed]);
 }
 
-int PyObjC_DeprecationVersion = 0;
+PyObjC_ATOMIC int PyObjC_DeprecationVersion = 0;
 
 static PyObject*
 deprecation_warnings_get(PyObject* s __attribute__((__unused__)),
@@ -274,7 +343,6 @@ static PyGetSetDef options_getset[] = {
     GETSET(structs_writable, "If True wrappers for C structs can be modified"),
 
     /* Private properties */
-    GETSET(_nscoding_version, "Private version number for NSCoding support"),
     GETSET(_nscoding_encoder, "Private helper function for NSCoding support"),
     GETSET(_nscoding_decoder, "Private helper function for NSCoding support"),
     GETSET(_mapping_count, "Private counter for noticing metadata updates"),
@@ -320,6 +388,98 @@ static PyGetSetDef options_getset[] = {
 
     {0, 0, 0, 0, 0} /* Sentinel */
 };
+
+
+/*
+ * Helper for calling 'options._nscoder_encoder'.
+ *
+ * GIL must be held when calling.
+ */
+int
+PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
+{
+    PyObject* encoder;
+    LOCK(PyObjC_Encoder);
+    encoder = PyObjC_Encoder;
+    Py_INCREF(encoder);
+    UNLOCK(PyObjC_Encoder);
+
+    if (encoder != Py_None) {
+            PyObject* cdr = id_to_python(coder);
+            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
+            }
+
+            PyObject* args[3] = {NULL, pyObject, cdr};
+
+            PyObject* r = PyObject_Vectorcall(encoder, args + 1,
+                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            Py_DECREF(cdr);
+            Py_XDECREF(r);
+            Py_DECREF(encoder);
+
+            return r == NULL?-1:0;
+    } else {
+        PyErr_SetString(PyExc_ValueError, "encoding Python objects is not supported");
+        Py_DECREF(encoder);
+        return -1;
+    }
+}
+
+/*
+ * Helper for calling 'options._nscoder_decoder'.
+ *
+ * GIL must be held when calling.
+ */
+PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
+{
+    PyObject* decoder;
+
+    LOCK(PyObjC_Decoder);
+    decoder = PyObjC_Decoder;
+    Py_INCREF(decoder);
+    UNLOCK(PyObjC_Decoder);
+
+    if (decoder != Py_None) {
+        PyObject* cdr = id_to_python(coder);
+        if (cdr == NULL) {
+            Py_DECREF(decoder);
+            return NULL;
+        }
+
+        PyObject* self_as_python = PyObjCObject_New(self, 0, YES);
+        if (self_as_python == NULL) {   // LCOV_BR_EXCL_LINE
+            Py_DECREF(cdr);
+            Py_DECREF(decoder);
+            return NULL;
+        }
+
+        PyObject* setvalue_method = PyObject_GetAttr(self_as_python, PyObjCNM_pyobjcSetValue_);
+        Py_CLEAR(self_as_python);
+        if (setvalue_method == NULL) {
+            Py_DECREF(cdr);
+            Py_DECREF(decoder);
+            return NULL;
+        }
+
+        PyObject* args[3] = {NULL, cdr, setvalue_method};
+
+        PyObject* result = PyObject_Vectorcall(decoder, args + 1,
+                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+
+        Py_DECREF(cdr);
+        Py_DECREF(decoder);
+        Py_DECREF(setvalue_method);
+
+        return result;
+
+    } else {
+        Py_DECREF(decoder);
+        PyErr_SetString(PyExc_ValueError, "decoding Python objects is not supported");
+        return NULL;
+    }
+}
+
 
 #if PY_VERSION_HEX < 0x030a0000
 static PyObject* _Nullable options_new(PyTypeObject* tp __attribute__((__unused__)),
@@ -393,6 +553,32 @@ PyObjC_SetupOptions(PyObject* m)
     if (o == NULL) { // LCOV_BR_EXCL_LINE
         return -1;   // LCOV_EXCL_LINE
     }
+
+#   define INIT(VAR) do { VAR = Py_None; Py_INCREF(Py_None); } while(0)
+    INIT(PyObjC_Encoder);
+    INIT(PyObjC_Decoder);
+    INIT(PyObjC_CopyFunc);
+    INIT(PyObjC_ClassExtender);
+    INIT(PyObjC_MakeBundleForClass);
+    INIT(PyObjC_NSNumberWrapper);
+    INIT(PyObjC_CallableDocFunction);
+    INIT(PyObjC_CallableSignatureFunction);
+    INIT(PyObjC_DictLikeTypes);
+    INIT(PyObjC_ListLikeTypes);
+    INIT(PyObjC_SetLikeTypes);
+    INIT(PyObjC_DateLikeTypes);
+    INIT(PyObjC_PathLikeTypes);
+    INIT(PyObjC_DateTime_Date_Type);
+    INIT(PyObjC_DateTime_DateTime_Type);
+    INIT(PyObjC_getKey);
+    INIT(PyObjC_setKey);
+    INIT(PyObjC_getKeyPath);
+    INIT(PyObjC_setKeyPath);
+    INIT(PyObjC_transformAttribute);
+    INIT(PyObjC_processClassDict);
+    INIT(PyObjC_setDunderNew);
+    INIT(PyObjC_genericNewClass);
+#undef INIT
 
     return PyModule_AddObject(m, "options", o);
 }

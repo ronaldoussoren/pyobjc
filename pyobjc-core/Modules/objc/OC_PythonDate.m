@@ -182,7 +182,11 @@ is_builtin_datetime(PyObject* object)
         }
     }
 
-    PyObjC_encodeWithCoder(value, coder);
+    PyObjC_BEGIN_WITH_GIL
+        if (PyObjC_encodeWithCoder(value, coder) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
 }
 
 /*
@@ -286,50 +290,24 @@ is_builtin_datetime(PyObject* object)
     } break;
 
     case 3:
-        if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
-                if (cdr == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+            if (decoded == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-                PyObject* setValue;
-                PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            SET_FIELD(value, decoded);
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            if (actual != self) {
+                [self release];
+                self = actual;
+            } else  if (actual != nil) {
+                [actual release];
+            }
 
-                PyObject* v = PyObjC_CallDecoder(cdr, setValue);
+        PyObjC_END_WITH_GIL
 
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-                Py_DECREF(selfAsPython);
-
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [self release];
-                    self = actual;
-                } else  if (actual != nil) {
-                    [actual release];
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-
-        } else {
-            @throw
-                [NSException exceptionWithName:NSInvalidArgumentException
-                                        reason:@"decoding Python objects is not supported"
-                                      userInfo:nil];
-            return nil;
-        }
+        return self;
 
     default:
         // LCOV_EXCL_START

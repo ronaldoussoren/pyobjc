@@ -293,55 +293,25 @@ NS_ASSUME_NONNULL_BEGIN
         return self;
     } else if (ver == 2) {
 
-        if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* setValue;
-                PyObject* selfAsPython;
-                PyObject* v;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* decoder = PyObjC_decodeWithCoder(coder, self);
+            if (decoder == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-                PyObject* cdr = id_to_python(coder);
-                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
+            SET_FIELD(value, decoder);
 
-                selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            if (actual != self) {
+                [self release];
+                self = actual;
+            } else if (actual != nil) {
+                [actual release];
+            }
 
-                v = PyObjC_CallDecoder(cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-                Py_DECREF(selfAsPython);
+        PyObjC_END_WITH_GIL
 
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [self release];
-                    self = actual;
-                } else if (actual != nil) {
-                    [actual release];
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-
-        } else { // LCOV_BR_EXCL_LINE
-            // LOCV_EXCL_START
-            @throw
-                [NSException exceptionWithName:NSInvalidArgumentException
-                                        reason:@"decoding Python objects is not supported"
-                                      userInfo:nil];
-            return nil;
-            // LOCV_EXCL_STOP
-        }
+        return self;
     } else {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"decoding Python objects is not supported"
@@ -369,7 +339,11 @@ NS_ASSUME_NONNULL_BEGIN
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
 
-        PyObjC_encodeWithCoder(value, coder);
+        PyObjC_BEGIN_WITH_GIL
+            if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        PyObjC_END_WITH_GIL
     }
 }
 

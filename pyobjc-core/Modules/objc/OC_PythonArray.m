@@ -324,7 +324,11 @@ NS_ASSUME_NONNULL_BEGIN
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
 
-        PyObjC_encodeWithCoder(value, coder);
+        PyObjC_BEGIN_WITH_GIL
+            if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        PyObjC_END_WITH_GIL
     }
 }
 
@@ -516,53 +520,24 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             }
 
+            PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+            if (decoded == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+            SET_FIELD(value, decoded);
+
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            if (actual != self) {
+                [self release];
+                self = actual;
+            } else if (actual != nil) {
+                [actual release];
+            }
+
         PyObjC_END_WITH_GIL
 
-        if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
-                PyObject* setValue;
-                PyObject* selfAsPython;
-                PyObject* v;
-
-                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-
-                selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
-                Py_DECREF(selfAsPython);
-
-                if (setValue == NULL) {       // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-
-                v = PyObjC_CallDecoder(cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [self release];
-                    self = actual;
-                } else if (actual != nil) {
-                    [actual release];
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-        }
+        return self;
 
     case 4:
         /* tuple with less than MAX_INT elements */

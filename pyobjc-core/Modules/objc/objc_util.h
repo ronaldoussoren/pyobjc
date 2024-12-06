@@ -175,6 +175,7 @@ extern PyObject* PyObjCNM_return_uninitialized_object;
 extern PyObject* PyObjCNM__fields;
 extern PyObject* PyObjCNM___match_args__;
 extern PyObject* PyObjCNM___struct_pack__;
+extern PyObject* PyObjCNM_pyobjcSetValue_;
 
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);

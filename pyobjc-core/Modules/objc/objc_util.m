@@ -90,6 +90,7 @@ PyObject* PyObjCNM_return_uninitialized_object;
 PyObject* PyObjCNM__fields;
 PyObject* PyObjCNM___match_args__;
 PyObject* PyObjCNM___struct_pack__;
+PyObject* PyObjCNM_pyobjcSetValue_;
 
 
 int
@@ -197,6 +198,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM__fields, "_fields");
     NEW_STR(PyObjCNM___match_args__, "__match_args__");
     NEW_STR(PyObjCNM___struct_pack__, "__struct_pack__");
+    NEW_STR(PyObjCNM_pyobjcSetValue_, "pyobjcSetValue_");
 
 #undef NEW_STR
 
@@ -1642,14 +1644,6 @@ PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg)
                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
-PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
-{
-    PyObject* args[3] = {NULL, cdr, setValue};
-
-    return PyObject_Vectorcall(PyObjC_Decoder, args + 1,
-                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-}
-
 PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
                                               PyObject* class_object, PyObject* protocols)
 {
@@ -1665,7 +1659,12 @@ PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
 bool
 version_is_deprecated(int version)
 {
-    return (PyObjC_DeprecationVersion && version && version <= PyObjC_DeprecationVersion);
+    /*
+     * Use a local variable to avoid a race condition when using a free-threaded
+     * build.
+     */
+    int depcrecation_version = PyObjC_DeprecationVersion;
+    return (depcrecation_version && version && version <= depcrecation_version);
 }
 
 /* PyObjC uses a number of typecode descriptors that aren't available in
