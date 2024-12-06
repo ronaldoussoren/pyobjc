@@ -1636,14 +1636,6 @@ PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr)
     return res;
 }
 
-PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg)
-{
-    PyObject* args[2] = {NULL, arg};
-
-    return PyObject_Vectorcall(PyObjC_CopyFunc, args + 1,
-                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-}
-
 PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
                                               PyObject* class_object, PyObject* protocols)
 {

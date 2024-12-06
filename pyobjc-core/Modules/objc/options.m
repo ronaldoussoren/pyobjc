@@ -213,7 +213,7 @@ SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
 
 OBJECT_PROP_STATIC(_nscoding_encoder, PyObjC_Encoder)
 OBJECT_PROP_STATIC(_nscoding_decoder, PyObjC_Decoder)
-OBJECT_PROP(_copy, PyObjC_CopyFunc)
+OBJECT_PROP_STATIC(_copy, PyObjC_CopyFunc)
 OBJECT_PROP(_class_extender, PyObjC_ClassExtender)
 OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass)
 OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
@@ -226,10 +226,10 @@ OBJECT_PROP(_date_types, PyObjC_DateLikeTypes)
 OBJECT_PROP(_path_types, PyObjC_PathLikeTypes)
 OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type)
 OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type)
-OBJECT_PROP(_getKey, PyObjC_getKey)
-OBJECT_PROP(_setKey, PyObjC_setKey)
-OBJECT_PROP(_getKeyPath, PyObjC_getKeyPath)
-OBJECT_PROP(_setKeyPath, PyObjC_setKeyPath)
+OBJECT_PROP_STATIC(_getKey, PyObjC_getKey)
+OBJECT_PROP_STATIC(_setKey, PyObjC_setKey)
+OBJECT_PROP_STATIC(_getKeyPath, PyObjC_getKeyPath)
+OBJECT_PROP_STATIC(_setKeyPath, PyObjC_setKeyPath)
 OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute)
 OBJECT_PROP(_processClassDict, PyObjC_processClassDict)
 OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew)
@@ -479,6 +479,195 @@ PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
         return NULL;
     }
 }
+
+PyObject* _Nullable PyObjC_Copy(PyObject* arg)
+{
+    PyObject* copy;
+
+    LOCK(PyObjC_CopyFunc);
+    copy = PyObjC_CopyFunc;
+    Py_INCREF(copy);
+    UNLOCK(PyObjC_CopyFunc);
+
+    if (copy != Py_None) {
+        PyObject* args[2] = {NULL, arg};
+
+        PyObject* result = PyObject_Vectorcall(copy, args + 1,
+                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(copy);
+        return result;
+    } else {
+        Py_DECREF(copy);
+
+        PyErr_SetString(PyExc_ValueError, "cannot copy Python objects");
+        return NULL;
+    }
+}
+
+int PyObjC_GetKey(PyObject* object, id key, id* value)
+{
+    PyObject* func;
+
+    LOCK(PyObjC_getKey);
+    func = PyObjC_getKey;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_getKey);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        PyErr_SetString(PyExc_ValueError, "helper function for getKey not set");
+        return -1;
+    }
+
+    PyObject* keyName = id_to_python(key);
+    if (keyName == NULL) {
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* args[3] = {NULL, object, keyName};
+
+    PyObject* val = PyObject_Vectorcall(func, args + 1,
+                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(keyName);
+    Py_DECREF(func);
+
+    if (val == NULL) {
+        return -1;
+    }
+
+    int result = depythonify_c_value(@encode(id), val, value);
+    Py_DECREF(val);
+    return result;
+}
+
+int PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
+{
+    PyObject* func;
+
+    LOCK(PyObjC_getKeyPath);
+    func = PyObjC_getKeyPath;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_getKeyPath);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        PyErr_SetString(PyExc_ValueError, "helper function for getKeyPath not set");
+        return -1;
+    }
+
+    PyObject* keyName = id_to_python(keypath);
+    if (keyName == NULL) {
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* args[3] = {NULL, object, keyName};
+
+    PyObject* val = PyObject_Vectorcall(func, args + 1,
+                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(keyName);
+    Py_DECREF(func);
+
+    if (val == NULL) {
+        return -1;
+    }
+
+    int result = depythonify_c_value(@encode(id), val, value);
+    Py_DECREF(val);
+    return result;
+}
+
+int PyObjC_SetKey(PyObject* object, id key, id value)
+{
+    PyObject* func;
+
+    LOCK(PyObjC_setKey);
+    func = PyObjC_setKey;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_setKey);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        PyErr_SetString(PyExc_ValueError, "helper function for setKey not set");
+        return -1;
+    }
+
+    PyObject* keyName = id_to_python(key);
+    if (keyName == NULL) {
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* pyValue = id_to_python(value);
+    if (pyValue == NULL) {
+        Py_DECREF(keyName);
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* args[4] = {NULL, object, keyName, pyValue};
+
+    PyObject* val = PyObject_Vectorcall(func, args + 1,
+                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(keyName);
+    Py_DECREF(pyValue);
+    Py_DECREF(func);
+
+    if (val == NULL) {
+        return -1;
+    } else {
+        Py_DECREF(val);
+        return 0;
+    }
+}
+
+
+int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
+{
+    PyObject* func;
+
+    LOCK(PyObjC_setKeyPath);
+    func = PyObjC_setKeyPath;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_setKeyPath);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        PyErr_SetString(PyExc_ValueError, "helper function for setKeyPath not set");
+        return -1;
+    }
+
+    PyObject* keyName = id_to_python(keypath);
+    if (keyName == NULL) {
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* pyValue = id_to_python(value);
+    if (pyValue == NULL) {
+        Py_DECREF(keyName);
+        Py_DECREF(func);
+        return -1;
+    }
+
+    PyObject* args[4] = {NULL, object, keyName, pyValue};
+
+    PyObject* val = PyObject_Vectorcall(func, args + 1,
+                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(keyName);
+    Py_DECREF(pyValue);
+    Py_DECREF(func);
+
+    if (val == NULL) {
+        return -1;
+    } else {
+        Py_DECREF(val);
+        return 0;
+    }
+}
+
+
 
 
 #if PY_VERSION_HEX < 0x030a0000

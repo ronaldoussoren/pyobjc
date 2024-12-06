@@ -634,31 +634,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc && PyObjC_CopyFunc != Py_None) {
-        NSObject* result;
-        PyObjC_BEGIN_WITH_GIL
+    NSObject* result;
+    PyObjC_BEGIN_WITH_GIL
 
-            PyObject* copy = PyObjC_CallCopyFunc(value);
+        PyObject* copy = PyObjC_Copy(value);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-        PyObjC_END_WITH_GIL
+        Py_DECREF(copy);
 
-        [result retain];
-        return result;
+    PyObjC_END_WITH_GIL
 
-    } else {
-        return [super copyWithZone:zone];
-    }
+    [result retain];
+    return result;
 }
 
 

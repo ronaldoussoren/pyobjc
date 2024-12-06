@@ -230,29 +230,23 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject* result;
 
     (void)zone;
-    if (PyObjC_CopyFunc != NULL && PyObjC_CopyFunc != Py_None) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* tmp = PyObjC_CallCopyFunc(value);
-            if (tmp == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
 
-            if (depythonify_python_object(tmp, &result) == -1) {
-                Py_DECREF(tmp);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* tmp = PyObjC_Copy(value);
+        if (tmp == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        if (depythonify_python_object(tmp, &result) == -1) {
             Py_DECREF(tmp);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        Py_DECREF(tmp);
 
-        PyObjC_END_WITH_GIL
+    PyObjC_END_WITH_GIL
 
-        [result retain];
-        return result;
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"cannot copy python set"
-                                     userInfo:nil];
-    }
+    [result retain];
+    return result;
 }
 
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone

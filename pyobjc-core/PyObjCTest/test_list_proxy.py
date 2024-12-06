@@ -273,11 +273,8 @@ class TestSequencesWithErrors(TestCase):
     def test_copy_without_helper(self):
         with pyobjc_options(_copy=None):
             s = [1, 2, 3]
-            o = OC_TestSet.set_copyWithZone_(s, None)
-            self.assertIsInstance(o, NSArray)
-            self.assertNotIsInstance(o, OC_PythonArray)
-
-            self.assertEqual(o, s)
+            with self.assertRaisesRegex(ValueError, "cannot copy Python object"):
+                OC_TestSet.set_copyWithZone_(s, None)
 
     def test_copy_raises(self):
         def copy_func(value):

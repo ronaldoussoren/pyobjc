@@ -293,9 +293,7 @@ class TestMisc(TestCase):
     def test_no_copy_helper(self):
         s = {1, 2, 3}
         with pyobjc_options(_copy=None):
-            with self.assertRaisesRegex(
-                ValueError, "NSInvalidArgumentException - cannot copy python set"
-            ):
+            with self.assertRaisesRegex(ValueError, "cannot copy Python objects"):
                 OC_TestSet.set_copyWithZone_(s, None)
 
     def test_copy_failure(self):

@@ -60,9 +60,7 @@ class TestPythonProxy(TestCase):
 
     def test_copy_without_helper(self):
         with pyobjc_options(_copy=None):
-            with self.assertRaisesRegex(
-                ValueError, "NSInvalidArgumentException - cannot copy Python objects"
-            ):
+            with self.assertRaisesRegex(ValueError, "cannot copy Python objects"):
                 OC_ObjectInt.copyObject_withZone_(self.value, None)
 
     def test_description(self):

@@ -78,26 +78,19 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject* result;
     PyObject* copy;
 
-    if (PyObjC_CopyFunc == NULL || PyObjC_CopyFunc == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"cannot copy Python objects"
-                                     userInfo:nil];
+    PyObjC_BEGIN_WITH_GIL
+        copy = PyObjC_Copy(pyObject);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-    } else {
-        PyObjC_BEGIN_WITH_GIL
-            copy = PyObjC_CallCopyFunc(pyObject);
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        Py_DECREF(copy);
 
-        PyObjC_END_WITH_GIL
-    }
+    PyObjC_END_WITH_GIL
 
     if (result) {
         [result retain];
@@ -667,37 +660,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id)valueForKey:(NSString*)key
 {
-    PyObject* keyName;
-    PyObject* val;
     id        res = nil;
 
-    if (PyObjC_getKey == NULL || PyObjC_getKey == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for getKey not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-
-        keyName = id_to_python(key);
-        if (keyName == NULL) {
+        if (PyObjC_GetKey(pyObject, key, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        PyObject* args[3] = {NULL, pyObject, keyName};
-
-        val = PyObject_Vectorcall(PyObjC_getKey, args + 1,
-                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        if (depythonify_c_value(@encode(id), val, &res) < 0) {
-            Py_DECREF(val);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 
@@ -716,40 +684,10 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (void)setValue:value forKey:(NSString*)key
 {
-    PyObject* keyName;
-    PyObject* pyValue;
-    PyObject* val;
-
-    if (PyObjC_setKey == NULL || PyObjC_setKey == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for setKey not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-
-        keyName = id_to_python(key);
-        if (keyName == NULL) {
+        if (PyObjC_SetKey(pyObject, key, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        pyValue = id_to_python(value);
-        if (pyValue == NULL) {
-            Py_DECREF(keyName);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
-
-        val = PyObject_Vectorcall(PyObjC_setKey, args + 1,
-                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        Py_DECREF(pyValue);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 }
@@ -778,36 +716,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id _Nullable)valueForKeyPath:(NSString*)keyPath
 {
-    PyObject* keyName;
-    PyObject* val;
     id        res = nil;
 
-    if (PyObjC_getKeyPath == NULL || PyObjC_getKeyPath == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for getKeyPath not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-        keyName = id_to_python(keyPath);
-        if (keyName == NULL) {
+        if (PyObjC_GetKeyPath(pyObject, keyPath, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        PyObject* args[3] = {NULL, pyObject, keyName};
-
-        val = PyObject_Vectorcall(PyObjC_getKeyPath, args + 1,
-                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        if (depythonify_python_object(val, &res) < 0) {
-            Py_DECREF(val);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 
@@ -821,39 +735,10 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (void)setValue:value forKeyPath:(NSString*)keyPath
 {
-    PyObject* keyName;
-    PyObject* pyValue;
-    PyObject* val;
-
-    if (PyObjC_setKeyPath == NULL || PyObjC_setKeyPath == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for setKeyPath not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-        keyName = id_to_python(keyPath);
-        if (keyName == NULL) {
+        if (PyObjC_SetKeyPath(pyObject, keyPath, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        pyValue = id_to_python(value);
-        if (pyValue == NULL) {
-            Py_DECREF(keyName);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
-
-        val = PyObject_Vectorcall(PyObjC_setKeyPath, args + 1,
-                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        Py_DECREF(pyValue);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        Py_DECREF(val);
 
     PyObjC_END_WITH_GIL
 }

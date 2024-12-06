@@ -18,16 +18,11 @@ extern PyObjC_ATOMIC BOOL PyObjC_StructsWritable;
 extern PyObjC_ATOMIC int        PyObjC_DeprecationVersion;
 extern PyObjC_ATOMIC Py_ssize_t PyObjC_MappingCount;
 
-extern PyObject* _Nullable PyObjC_CopyFunc;
 extern PyObject* _Nullable PyObjC_ClassExtender;
 extern PyObject* _Nullable PyObjC_MakeBundleForClass;
 extern PyObject* _Nullable PyObjC_NSNumberWrapper;
 extern PyObject* _Nullable PyObjC_CallableDocFunction;
 extern PyObject* _Nullable PyObjC_CallableSignatureFunction;
-extern PyObject* _Nullable PyObjC_getKey;
-extern PyObject* _Nullable PyObjC_setKey;
-extern PyObject* _Nullable PyObjC_getKeyPath;
-extern PyObject* _Nullable PyObjC_setKeyPath;
 extern PyObject* _Nullable PyObjC_transformAttribute;
 extern PyObject* _Nullable PyObjC_processClassDict;
 extern PyObject* _Nullable PyObjC_setDunderNew;
@@ -46,6 +41,11 @@ extern int PyObjC_SetupOptions(PyObject* m);
 
 extern int PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder) __attribute__((warn_unused_result));
 extern PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self) __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_Copy(PyObject* arg) __attribute__((warn_unused_result));
+extern int PyObjC_GetKey(PyObject* object, id key, id _Nullable *_Nonnull value) __attribute__((warn_unused_result));
+extern int PyObjC_SetKey(PyObject* object, id key, id value) __attribute__((warn_unused_result));
+extern int PyObjC_GetKeyPath(PyObject* object, id keypath, id _Nullable* _Nonnull value) __attribute__((warn_unused_result));
+extern int PyObjC_SetKeyPath(PyObject* object, id keypath, id value) __attribute__((warn_unused_result));
 
 NS_ASSUME_NONNULL_END
 

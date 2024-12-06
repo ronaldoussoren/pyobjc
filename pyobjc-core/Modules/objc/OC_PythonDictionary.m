@@ -539,28 +539,23 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc) {
-        NSObject* result;
+    NSObject* result;
 
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* copy = PyObjC_CallCopyFunc(value);
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* copy = PyObjC_Copy(value);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
-        PyObjC_END_WITH_GIL
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        Py_DECREF(copy);
+    PyObjC_END_WITH_GIL
 
-        [result retain];
-        return result;
-
-    } else {
-        return [super copyWithZone:zone];
-    }
+    [result retain];
+    return result;
 }
 
 #pragma clang diagnostic push
