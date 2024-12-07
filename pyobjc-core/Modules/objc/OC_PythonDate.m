@@ -1,25 +1,6 @@
 #include "pyobjc.h"
 NS_ASSUME_NONNULL_BEGIN
 
-static bool
-is_builtin_date(PyObject* object)
-{
-    if (PyObjC_DateTime_Date_Type == NULL || PyObjC_DateTime_Date_Type == Py_None) {
-        return false;
-    }
-    return ((PyObject*)Py_TYPE(object) == PyObjC_DateTime_Date_Type);
-}
-
-static bool
-is_builtin_datetime(PyObject* object)
-{
-    if (PyObjC_DateTime_DateTime_Type == NULL
-        || PyObjC_DateTime_DateTime_Type == Py_None) {
-        return false;
-    }
-    return ((PyObject*)Py_TYPE(object) == PyObjC_DateTime_DateTime_Type);
-}
-
 @implementation OC_PythonDate
 
 + (instancetype _Nullable)dateWithPythonObject:(PyObject*)v
@@ -142,19 +123,19 @@ is_builtin_datetime(PyObject* object)
      *
      * XXX: Add code to encode the timezone as well.
      */
-    if (is_builtin_date(value)) {
+    if (PyObjC_IsBuiltinDate(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
         }
         [super encodeWithCoder:coder];
         return;
-    } else if (is_builtin_datetime(value)) {
+    } else if (PyObjC_IsBuiltinDatetime(value)) {
         if ([coder allowsKeyedCoding]) {
             id c_info = nil;
             [coder encodeInt32:2 forKey:@"pytype"];
 
             PyObjC_BEGIN_WITH_GIL
-                PyObject* tzinfo = PyObject_GetAttrString(value, "tzinfo");
+                PyObject* tzinfo = PyObject_GetAttr(value, PyObjCNM_tzinfo);
                 if (tzinfo != NULL && tzinfo != Py_None) {
                     if (depythonify_python_object( // LCOV_BR_EXCL_LINE
                             tzinfo, &c_info)
@@ -243,15 +224,9 @@ is_builtin_datetime(PyObject* object)
     case 1: {
         PyObjC_BEGIN_WITH_GIL
             NSDate*   temp    = [[NSDate alloc] initWithCoder:coder];
-            PyObject* args[3] = {
-                NULL,
-                PyObjC_DateTime_Date_Type,
-                PyFloat_FromDouble([temp timeIntervalSince1970]),
-            };
-            [temp release];
 
-            value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
-                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            value = PyObjC_DateFromTimestamp([temp timeIntervalSince1970]);
+            [temp release];
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -262,26 +237,10 @@ is_builtin_datetime(PyObject* object)
         PyObjC_BEGIN_WITH_GIL
 
             id        c_info = [coder decodeObjectForKey:@"py_tzinfo"];
-            PyObject* tzinfo = NULL;
             NSDate*   temp   = [[NSDate alloc] initWithCoder:coder];
 
-            if (c_info != nil) {
-                tzinfo = id_to_python(c_info);
-                if (tzinfo == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-            }
-
-            PyObject* args[4] = {
-                NULL,
-                PyObjC_DateTime_DateTime_Type,
-                PyFloat_FromDouble([temp timeIntervalSince1970]),
-                tzinfo,
-            };
+            value = PyObjC_DatetimeFromTimestamp([temp timeIntervalSince1970], c_info);
             [temp release];
-            value = PyObject_VectorcallMethod(
-                PyObjCNM_fromtimestamp, args + 1,
-                (tzinfo == NULL ? 2 : 3) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -320,7 +279,7 @@ is_builtin_datetime(PyObject* object)
 
 - (Class)classForCoder
 {
-    if (is_builtin_date(value) || is_builtin_datetime(value)) {
+    if (PyObjC_IsBuiltinDate(value) || PyObjC_IsBuiltinDatetime(value)) {
         return [NSDate class];
     } else {
         return [OC_PythonDate class];

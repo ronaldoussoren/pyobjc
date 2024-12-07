@@ -28,15 +28,6 @@ extern PyObject* _Nullable PyObjC_processClassDict;
 extern PyObject* _Nullable PyObjC_setDunderNew;
 extern PyObject* _Nullable PyObjC_genericNewClass;
 
-extern PyObject* _Nullable PyObjC_DictLikeTypes;
-extern PyObject* _Nullable PyObjC_ListLikeTypes;
-extern PyObject* _Nullable PyObjC_SetLikeTypes;
-extern PyObject* _Nullable PyObjC_DateLikeTypes;
-extern PyObject* _Nullable PyObjC_PathLikeTypes;
-
-extern PyObject* _Nullable PyObjC_DateTime_Date_Type;
-extern PyObject* _Nullable PyObjC_DateTime_DateTime_Type;
-
 extern int PyObjC_SetupOptions(PyObject* m);
 
 extern int PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder) __attribute__((warn_unused_result));
@@ -46,6 +37,15 @@ extern int PyObjC_GetKey(PyObject* object, id key, id _Nullable *_Nonnull value)
 extern int PyObjC_SetKey(PyObject* object, id key, id value) __attribute__((warn_unused_result));
 extern int PyObjC_GetKeyPath(PyObject* object, id keypath, id _Nullable* _Nonnull value) __attribute__((warn_unused_result));
 extern int PyObjC_SetKeyPath(PyObject* object, id keypath, id value) __attribute__((warn_unused_result));
+extern bool PyObjC_IsBuiltinDate(PyObject* object);
+extern bool PyObjC_IsBuiltinDatetime(PyObject* object);
+extern int PyObjC_IsDictLike(PyObject* object);
+extern int PyObjC_IsListLike(PyObject* object);
+extern int PyObjC_IsSetLike(PyObject* object);
+extern int PyObjC_IsDateLike(PyObject* object);
+extern int PyObjC_IsPathLike(PyObject* object);
+extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp);
+extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id tzinfo);
 
 NS_ASSUME_NONNULL_END
 

@@ -219,13 +219,13 @@ OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass)
 OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
 OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction)
 OBJECT_PROP(_callable_signature, PyObjC_CallableSignatureFunction)
-OBJECT_PROP(_mapping_types, PyObjC_DictLikeTypes)
-OBJECT_PROP(_sequence_types, PyObjC_ListLikeTypes)
-OBJECT_PROP(_set_types, PyObjC_SetLikeTypes)
-OBJECT_PROP(_date_types, PyObjC_DateLikeTypes)
-OBJECT_PROP(_path_types, PyObjC_PathLikeTypes)
-OBJECT_PROP(_datetime_date_type, PyObjC_DateTime_Date_Type)
-OBJECT_PROP(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type)
+OBJECT_PROP_STATIC(_mapping_types, PyObjC_DictLikeTypes)
+OBJECT_PROP_STATIC(_sequence_types, PyObjC_ListLikeTypes)
+OBJECT_PROP_STATIC(_set_types, PyObjC_SetLikeTypes)
+OBJECT_PROP_STATIC(_date_types, PyObjC_DateLikeTypes)
+OBJECT_PROP_STATIC(_path_types, PyObjC_PathLikeTypes)
+OBJECT_PROP_STATIC(_datetime_date_type, PyObjC_DateTime_Date_Type)
+OBJECT_PROP_STATIC(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type)
 OBJECT_PROP_STATIC(_getKey, PyObjC_getKey)
 OBJECT_PROP_STATIC(_setKey, PyObjC_setKey)
 OBJECT_PROP_STATIC(_getKeyPath, PyObjC_getKeyPath)
@@ -667,7 +667,203 @@ int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
     }
 }
 
+bool
+PyObjC_IsBuiltinDate(PyObject* object)
+{
+    PyObject* type;
 
+    LOCK(PyObjC_DateTime_Date_Type);
+    type = PyObjC_DateTime_Date_Type;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DateTime_Date_Type);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return false;
+    }
+    bool result =  ((PyObject*)Py_TYPE(object) == type);
+    Py_DECREF(type);
+    return result;
+}
+
+PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_DateTime_Date_Type);
+    type = PyObjC_DateTime_Date_Type;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DateTime_Date_Type);
+
+    PyObject* args[3] = {
+        NULL,
+        type,
+        PyFloat_FromDouble(timestamp),
+    };
+    if (args[2] == NULL) {
+        Py_DECREF(type);
+        return NULL;
+    }
+
+    PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
+                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_CLEAR(args[2]);
+    Py_DECREF(type);
+    if (value == NULL) {
+        return NULL;
+    }
+    return value;
+}
+
+
+bool
+PyObjC_IsBuiltinDatetime(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_DateTime_DateTime_Type);
+    type = PyObjC_DateTime_DateTime_Type;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DateTime_DateTime_Type);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return false;
+    }
+    bool result =  ((PyObject*)Py_TYPE(object) == type);
+    Py_DECREF(type);
+    return result;
+}
+
+PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id c_info)
+{
+    PyObject* type;
+    PyObject* tzinfo = NULL;
+
+    LOCK(PyObjC_DateTime_DateTime_Type);
+    type = PyObjC_DateTime_DateTime_Type;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DateTime_DateTime_Type);
+
+    if (c_info != nil) {
+        tzinfo = id_to_python(c_info);
+        if (tzinfo == NULL) {
+            Py_DECREF(type);
+            return NULL;
+        }
+    }
+
+    PyObject* args[4] = {
+        NULL,
+        type,
+        PyFloat_FromDouble(timestamp),
+        tzinfo,
+    };
+    if (args[2] == NULL) {
+        Py_DECREF(type);
+        return NULL;
+    }
+
+    PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
+                                      (2 + (tzinfo != NULL)) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_CLEAR(args[2]);
+    Py_DECREF(type);
+    Py_CLEAR(tzinfo);
+    if (value == NULL) {
+        return NULL;
+    }
+    return value;
+}
+
+int PyObjC_IsDictLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_DictLikeTypes);
+    type = PyObjC_DictLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DictLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return -1;
+    }
+    int result =  PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
+
+int PyObjC_IsListLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_ListLikeTypes);
+    type = PyObjC_ListLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_ListLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return -1;
+    }
+    int result =  PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
+
+int PyObjC_IsSetLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_SetLikeTypes);
+    type = PyObjC_SetLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_SetLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return 0;
+    }
+    int result =  PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
+
+int PyObjC_IsDateLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_DateLikeTypes);
+    type = PyObjC_DateLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_DateLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return 0;
+    }
+    int result =  PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
+
+int PyObjC_IsPathLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_PathLikeTypes);
+    type = PyObjC_PathLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_PathLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return 0;
+    }
+    int result =  PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
 
 
 #if PY_VERSION_HEX < 0x030a0000
@@ -752,11 +948,6 @@ PyObjC_SetupOptions(PyObject* m)
     INIT(PyObjC_NSNumberWrapper);
     INIT(PyObjC_CallableDocFunction);
     INIT(PyObjC_CallableSignatureFunction);
-    INIT(PyObjC_DictLikeTypes);
-    INIT(PyObjC_ListLikeTypes);
-    INIT(PyObjC_SetLikeTypes);
-    INIT(PyObjC_DateLikeTypes);
-    INIT(PyObjC_PathLikeTypes);
     INIT(PyObjC_DateTime_Date_Type);
     INIT(PyObjC_DateTime_DateTime_Type);
     INIT(PyObjC_getKey);
@@ -767,6 +958,14 @@ PyObjC_SetupOptions(PyObject* m)
     INIT(PyObjC_processClassDict);
     INIT(PyObjC_setDunderNew);
     INIT(PyObjC_genericNewClass);
+#undef INIT
+
+#   define INIT(VAR) do { VAR = PyTuple_New(0); if (VAR == NULL) return -1; } while(0)
+    INIT(PyObjC_DictLikeTypes);
+    INIT(PyObjC_ListLikeTypes);
+    INIT(PyObjC_SetLikeTypes);
+    INIT(PyObjC_DateLikeTypes);
+    INIT(PyObjC_PathLikeTypes);
 #undef INIT
 
     return PyModule_AddObject(m, "options", o);

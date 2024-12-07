@@ -91,6 +91,7 @@ PyObject* PyObjCNM__fields;
 PyObject* PyObjCNM___match_args__;
 PyObject* PyObjCNM___struct_pack__;
 PyObject* PyObjCNM_pyobjcSetValue_;
+PyObject* PyObjCNM_tzinfo;
 
 
 int
@@ -199,6 +200,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM___match_args__, "__match_args__");
     NEW_STR(PyObjCNM___struct_pack__, "__struct_pack__");
     NEW_STR(PyObjCNM_pyobjcSetValue_, "pyobjcSetValue_");
+    NEW_STR(PyObjCNM_tzinfo, "tzinfo");
 
 #undef NEW_STR
 

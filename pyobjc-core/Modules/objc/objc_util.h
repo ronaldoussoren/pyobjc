@@ -176,6 +176,7 @@ extern PyObject* PyObjCNM__fields;
 extern PyObject* PyObjCNM___match_args__;
 extern PyObject* PyObjCNM___struct_pack__;
 extern PyObject* PyObjCNM_pyobjcSetValue_;
+extern PyObject* PyObjCNM_tzinfo;
 
 extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
                                                      PyObject*);

@@ -2692,13 +2692,8 @@ depythonify_python_object(PyObject* argument, id* datum)
 
     } else {
 
-        if (*datum == nil && PyObjC_ListLikeTypes != NULL) {
-            int r;
-
-            r = PyObject_IsInstance(argument, PyObjC_ListLikeTypes);
-            if (r == -1) {
-                return -1;
-            }
+        if (*datum == nil) {
+            int r = PyObjC_IsListLike(argument);
 
             if (r) {
                 *datum = [OC_PythonArray arrayWithPythonObject:argument];
@@ -2708,10 +2703,9 @@ depythonify_python_object(PyObject* argument, id* datum)
             }
         }
 
-        if (*datum == nil && PyObjC_DictLikeTypes != NULL) {
-            int r;
+        if (*datum == nil) {
 
-            r = PyObject_IsInstance(argument, PyObjC_DictLikeTypes);
+            int r = PyObjC_IsDictLike(argument);
             if (r == -1) {
                 return -1;
             }
@@ -2724,10 +2718,8 @@ depythonify_python_object(PyObject* argument, id* datum)
             }
         }
 
-        if (*datum == nil && PyObjC_SetLikeTypes != NULL) {
-            int r;
-
-            r = PyObject_IsInstance(argument, PyObjC_SetLikeTypes);
+        if (*datum == nil) {
+            int r = PyObjC_IsSetLike(argument);
             if (r == -1) {
                 return -1;
             }
@@ -2740,30 +2732,22 @@ depythonify_python_object(PyObject* argument, id* datum)
             }
         }
 
-        if (*datum == nil && PyObjC_DateTime_Date_Type != NULL
-            && PyObjC_DateTime_Date_Type != Py_None) {
-            if ((PyObject*)Py_TYPE(argument) == PyObjC_DateTime_Date_Type) {
-                *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-                if (*datum == nil) {
-                    return -1;
-                }
+        if (*datum == nil && PyObjC_IsBuiltinDate(argument)) {
+            *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
+            if (*datum == nil) {
+                return -1;
             }
         }
 
-        if (*datum == nil && PyObjC_DateTime_DateTime_Type != NULL
-            && PyObjC_DateTime_DateTime_Type != Py_None) {
-            if ((PyObject*)Py_TYPE(argument) == PyObjC_DateTime_DateTime_Type) {
-                *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-                if (*datum == nil) {
-                    return -1;
-                }
+        if (*datum == nil && PyObjC_IsBuiltinDatetime(argument)) {
+            *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
+            if (*datum == nil) {
+                return -1;
             }
         }
 
-        if (*datum == nil && PyObjC_DateLikeTypes != NULL) {
-            int r;
-
-            r = PyObject_IsInstance(argument, PyObjC_DateLikeTypes);
+        if (*datum == nil) {
+            int r = PyObjC_IsDateLike(argument);
             if (r == -1) {
                 return -1;
             }
@@ -2776,10 +2760,10 @@ depythonify_python_object(PyObject* argument, id* datum)
             }
         }
 
-        if (*datum == nil && PyObjC_PathLikeTypes != NULL) {
+        if (*datum == nil) {
             int r;
 
-            r = PyObject_IsInstance(argument, PyObjC_PathLikeTypes);
+            r = PyObjC_IsPathLike(argument);
             if (r == -1) {
                 return -1;
             }
