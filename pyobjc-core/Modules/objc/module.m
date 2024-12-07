@@ -28,10 +28,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 static int PyObjC_Initialized = 0;
 
+/*
+ * free-threaded: No lock needed becausethis value is set once
+ * during module init.
+ */
 PyObject* _Nullable PyObjCClass_DefaultModule;
 
 PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
 
+#if Py_GIL_DISABLED
+static PyMutex global_release_pool_lock = { 0 };
+#endif
 static NSAutoreleasePool* _Nullable global_release_pool;
 
 /* Calculate the current version of macOS in a format that
@@ -46,6 +53,10 @@ typedef struct {
 } NSOperatingSystemVersion;
 #endif
 
+/*
+ * free-threaded: No lock needed becausethis value is set once
+ * during module init.
+ */
 static NSOperatingSystemVersion gSystemVersion = {0, 0, 0};
 
 /*
@@ -117,6 +128,7 @@ PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
 @implementation OC_NSAutoreleasePoolCollector
 + (void)newAutoreleasePool
 {
+    /* This method must be called with the mutex locked */
     OC_NSAutoreleasePoolCollector* value = [[self alloc] init];
     global_release_pool                  = [[NSAutoreleasePool alloc] init];
     (void)[value autorelease];
@@ -124,7 +136,13 @@ PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
 
 - (void)dealloc
 {
+#if Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
     global_release_pool = nil;
+#if Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
     [super dealloc];
 }
 
@@ -322,7 +340,14 @@ PyDoc_STRVAR(have_autorelease_pool_doc,
 static PyObject*
 have_autorelease_pool(PyObject* self __attribute__((__unused__)))
 {
-    if (global_release_pool) {
+#if Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
+    bool have_pool = (global_release_pool != nil);
+#if Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
+    if (have_pool) {
         Py_RETURN_TRUE;
     } else {
         Py_RETURN_FALSE;
@@ -344,8 +369,14 @@ static PyObject* _Nullable remove_autorelease_pool(PyObject* self
             /* Unconditionally clear the global autorelease pool,
              * there's not much we can do if releasing raises.
              */
+#if Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
             pool                = global_release_pool;
             global_release_pool = nil;
+#if Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
             [pool release];
 
         } @catch (NSObject* localException) {
@@ -368,6 +399,9 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
                                                     __attribute__((__unused__)))
 {
     NSAutoreleasePool* pool;
+#if Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
     Py_BEGIN_ALLOW_THREADS
         @try {
             /* Unconditionally set global_release_pool to nil
@@ -387,6 +421,9 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
          */
         [OC_NSAutoreleasePoolCollector newAutoreleasePool];
     Py_END_ALLOW_THREADS
+#if Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
 
     if (PyErr_Occurred())
         return NULL;
@@ -1685,10 +1722,21 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
 {
     static bool (*contains_func)(const char*) = NULL;
     static bool resolved_func                 = 0;
+#if Py_GIL_DISABLED
+    static PyMutex resolve_lock = { 0 };
+#endif
 
     if (!resolved_func) {
-        contains_func = dlsym(RTLD_DEFAULT, "_dyld_shared_cache_contains_path");
-        resolved_func = 1;
+#if Py_GIL_DISABLED
+        PyMutex_Lock(&resolve_lock);
+        if (!resolved_func) {
+#endif
+            contains_func = dlsym(RTLD_DEFAULT, "_dyld_shared_cache_contains_path");
+            resolved_func = 1;
+#if Py_GIL_DISABLED
+        }
+        PyMutex_Unlock(&resolve_lock);
+#endif
     }
 
     if (!PyUnicode_Check(object)) { // LCOV_BR_EXCL_LINE
@@ -2290,8 +2338,14 @@ static int mod_exec_module(PyObject* m)
     /* Allocate an auto-release pool for our own use, this avoids numerous
      * warnings during startup of a python script.
      */
+#if Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
     global_release_pool = nil;
     [OC_NSAutoreleasePoolCollector newAutoreleasePool];
+#if Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
 
     /*
      * Archives created with Python 2.x can contain instances of
