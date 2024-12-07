@@ -896,12 +896,12 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
 
 static PyGetSetDef objcsel_getset[] = {{
                                            .name = "__doc__",
-                                           .get  = PyObjC_callable_docstr_get,
+                                           .get  = PyObjC_GetCallableDocString,
                                            .doc  = "The document string for a method",
                                        },
                                        {
                                            .name = "__signature__",
-                                           .get  = PyObjC_callable_signature_get,
+                                           .get  = PyObjC_GetCallableSignature,
                                            .doc  = "inspect.Signature for a method",
                                        },
                                        {
@@ -1936,7 +1936,7 @@ static PyGetSetDef pysel_getset[] = {{
                                      },
                                      {
                                          .name = "__signature__",
-                                         .get  = PyObjC_callable_signature_get,
+                                         .get  = PyObjC_GetCallableSignature,
                                          .doc  = "inspect.Signaturefor a method",
                                      },
                                      {

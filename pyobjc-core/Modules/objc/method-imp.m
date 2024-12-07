@@ -314,7 +314,7 @@ static PyGetSetDef imp_getset[] = {{
                                    },
                                    {
                                        .name = "__signature__",
-                                       .get  = PyObjC_callable_signature_get,
+                                       .get  = PyObjC_GetCallableSignature,
                                        .doc  = "inspect.Signature for an IMP",
                                    },
                                    {

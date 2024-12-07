@@ -1575,36 +1575,6 @@ static PyObject* _Nullable PyObjC_LoadConstant(PyObject* self __attribute__((__u
     return v;
 }
 
-/* XXX: Move to utility file */
-PyObject* _Nullable PyObjC_callable_docstr_get(PyObject* callable, void* _Nullable closure
-                                               __attribute__((__unused__)))
-
-{
-    if (PyObjC_CallableDocFunction == NULL || PyObjC_CallableDocFunction == Py_None) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-    PyObject* args[2] = {NULL, callable};
-    return PyObject_Vectorcall(PyObjC_CallableDocFunction, args + 1,
-                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-}
-
-/* XXX: Move to utility file */
-PyObject* _Nullable PyObjC_callable_signature_get(PyObject* callable,
-                                                  void* _Nullable closure
-                                                  __attribute__((__unused__)))
-
-{
-    if (PyObjC_CallableSignatureFunction == NULL
-        || PyObjC_CallableSignatureFunction == Py_None) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-    PyObject* args[2] = {NULL, callable};
-    return PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args + 1,
-                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-}
-
 static PyObject* _Nullable name_for_signature(PyObject* mod __attribute__((__unused__)),
                                               PyObject* signature)
 {

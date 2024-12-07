@@ -21,8 +21,6 @@ extern PyObjC_ATOMIC Py_ssize_t PyObjC_MappingCount;
 extern PyObject* _Nullable PyObjC_ClassExtender;
 extern PyObject* _Nullable PyObjC_MakeBundleForClass;
 extern PyObject* _Nullable PyObjC_NSNumberWrapper;
-extern PyObject* _Nullable PyObjC_CallableDocFunction;
-extern PyObject* _Nullable PyObjC_CallableSignatureFunction;
 extern PyObject* _Nullable PyObjC_transformAttribute;
 extern PyObject* _Nullable PyObjC_processClassDict;
 extern PyObject* _Nullable PyObjC_setDunderNew;
@@ -46,6 +44,8 @@ extern int PyObjC_IsDateLike(PyObject* object);
 extern int PyObjC_IsPathLike(PyObject* object);
 extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp);
 extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id tzinfo);
+extern PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nullable closure);
+extern PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nullable closure);
 
 NS_ASSUME_NONNULL_END
 

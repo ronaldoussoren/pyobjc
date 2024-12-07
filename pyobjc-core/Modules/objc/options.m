@@ -141,9 +141,8 @@ static PyObject* PyObjCOptions_Type;
             return VAR;                                                                  \
                                                                                          \
         } else {                                                                         \
-            Py_INCREF(Py_None);                                                          \
             UNLOCK(VAR);                                                                 \
-            return Py_None;                                                              \
+            Py_RETURN_NONE;                                                              \
         }                                                                                \
     }                                                                                    \
                                                                                          \
@@ -175,9 +174,8 @@ static PyObject* PyObjCOptions_Type;
             return VAR;                                                                  \
                                                                                          \
         } else {                                                                         \
-            Py_INCREF(Py_None);                                                          \
             UNLOCK(VAR);                                                                 \
-            return Py_None;                                                              \
+            Py_RETURN_NONE;                                                              \
         }                                                                                \
     }                                                                                    \
                                                                                          \
@@ -217,8 +215,8 @@ OBJECT_PROP_STATIC(_copy, PyObjC_CopyFunc)
 OBJECT_PROP(_class_extender, PyObjC_ClassExtender)
 OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass)
 OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
-OBJECT_PROP(_callable_doc, PyObjC_CallableDocFunction)
-OBJECT_PROP(_callable_signature, PyObjC_CallableSignatureFunction)
+OBJECT_PROP_STATIC(_callable_doc, PyObjC_CallableDocFunction)
+OBJECT_PROP_STATIC(_callable_signature, PyObjC_CallableSignatureFunction)
 OBJECT_PROP_STATIC(_mapping_types, PyObjC_DictLikeTypes)
 OBJECT_PROP_STATIC(_sequence_types, PyObjC_ListLikeTypes)
 OBJECT_PROP_STATIC(_set_types, PyObjC_SetLikeTypes)
@@ -864,6 +862,49 @@ int PyObjC_IsPathLike(PyObject* object)
     Py_DECREF(type);
     return result;
 }
+
+
+PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nullable closure __attribute__((__unused__)))
+{
+    PyObject* func;
+
+    LOCK(PyObjC_CallableDocFunction);
+    func = PyObjC_CallableDocFunction;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_CallableDocFunction);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        Py_RETURN_NONE;
+    }
+
+    PyObject* args[2] = {NULL, callable};
+    PyObject* result = PyObject_Vectorcall(func, args + 1,
+                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    return result;
+}
+
+PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nullable closure __attribute__((__unused__)))
+{
+    PyObject* func;
+
+    LOCK(PyObjC_CallableSignatureFunction);
+    func = PyObjC_CallableSignatureFunction;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_CallableSignatureFunction);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        Py_RETURN_NONE;
+    }
+    PyObject* args[2] = {NULL, callable};
+    PyObject* result = PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args + 1,
+                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    return result;
+}
+
 
 
 #if PY_VERSION_HEX < 0x030a0000

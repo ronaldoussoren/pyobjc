@@ -60,12 +60,12 @@ static PyMethodDef func_methods[] = {
 
 static PyGetSetDef func_getset[] = {{
                                         .name = "__doc__",
-                                        .get  = PyObjC_callable_docstr_get,
+                                        .get  = PyObjC_GetCallableDocString,
                                         .doc  = "Documentation for a function",
                                     },
                                     {
                                         .name = "__signature__",
-                                        .get  = PyObjC_callable_signature_get,
+                                        .get  = PyObjC_GetCallableSignature,
                                         .doc  = "inspect.Signature for a function",
                                     },
                                     {
