@@ -214,9 +214,9 @@ SSIZE_T_PROP(_mapping_count, PyObjC_MappingCount, 0)
 OBJECT_PROP_STATIC(_nscoding_encoder, PyObjC_Encoder)
 OBJECT_PROP_STATIC(_nscoding_decoder, PyObjC_Decoder)
 OBJECT_PROP_STATIC(_copy, PyObjC_CopyFunc)
-OBJECT_PROP(_class_extender, PyObjC_ClassExtender)
-OBJECT_PROP(_make_bundleForClass, PyObjC_MakeBundleForClass)
-OBJECT_PROP(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
+OBJECT_PROP_STATIC(_class_extender, PyObjC_ClassExtender)
+OBJECT_PROP_STATIC(_make_bundleForClass, PyObjC_MakeBundleForClass)
+OBJECT_PROP_STATIC(_nsnumber_wrapper, PyObjC_NSNumberWrapper)
 OBJECT_PROP_STATIC(_callable_doc, PyObjC_CallableDocFunction)
 OBJECT_PROP_STATIC(_callable_signature, PyObjC_CallableSignatureFunction)
 OBJECT_PROP_STATIC(_mapping_types, PyObjC_DictLikeTypes)
@@ -230,10 +230,10 @@ OBJECT_PROP_STATIC(_getKey, PyObjC_getKey)
 OBJECT_PROP_STATIC(_setKey, PyObjC_setKey)
 OBJECT_PROP_STATIC(_getKeyPath, PyObjC_getKeyPath)
 OBJECT_PROP_STATIC(_setKeyPath, PyObjC_setKeyPath)
-OBJECT_PROP(_transformAttribute, PyObjC_transformAttribute)
-OBJECT_PROP(_processClassDict, PyObjC_processClassDict)
-OBJECT_PROP(_setDunderNew, PyObjC_setDunderNew)
-OBJECT_PROP(_genericNewClass, PyObjC_genericNewClass)
+OBJECT_PROP_STATIC(_transformAttribute, PyObjC_transformAttribute)
+OBJECT_PROP_STATIC(_processClassDict, PyObjC_processClassDict)
+OBJECT_PROP_STATIC(_setDunderNew, PyObjC_setDunderNew)
+OBJECT_PROP_STATIC(_genericNewClass, PyObjC_genericNewClass)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -911,6 +911,220 @@ PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nulla
     return result;
 }
 
+int PyObjC_CallClassExtender(PyObject* cls)
+{
+
+    if (!PyObjCClass_Check(cls)) {
+        PyErr_SetString(PyExc_TypeError, "not a class");
+        return -1;
+    }
+
+    LOCK(PyObjC_ClassExtender);
+    PyObject* func = PyObjC_ClassExtender;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_ClassExtender);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        return 0;
+    }
+
+    PyObject* dict = PyDict_New();
+    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(func); // LCOV_EXCL_LINE
+        return -1;      // LCOV_EXCL_LINE
+    }
+
+    PyObject* args[3] = {NULL, cls, dict};
+
+    PyObject* res = PyObject_Vectorcall(func, args + 1,
+                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    if (res == NULL) {
+        return -1;
+    }
+    Py_DECREF(res);
+
+    PyObject*  k = NULL;
+    PyObject*  v = NULL;
+    Py_ssize_t pos = 0;
+
+    while (PyDict_Next(dict, &pos, &k, &v)) {
+        if (PyUnicode_Check(k)) {
+            if (PyObjC_is_ascii_string(k, "__dict__")
+                || PyObjC_is_ascii_string(k, "__bases__")
+                || PyObjC_is_ascii_string(k, "__slots__")
+                || PyObjC_is_ascii_string(k, "__mro__")) {
+
+                continue;
+            }
+
+        } else {
+            if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)cls), k, v) == -1) {
+                PyErr_Clear();
+            }
+            continue;
+        }
+
+        if (PyType_Type.tp_setattro(cls, k, v) == -1) {
+            PyErr_Clear();
+            continue;
+        }
+    }
+    Py_DECREF(dict);
+    return 0;
+}
+
+/*
+ * Returns NULL without setting an exception when
+ * the option is not set.
+ */
+PyObject* _Nullable PyObjC_GetBundleForClassMethod(void)
+{
+    LOCK(PyObjC_MakeBundleForClass);
+    PyObject* func = PyObjC_MakeBundleForClass;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_MakeBundleForClass);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        return NULL;
+    }
+
+    PyObject* args[1] = {NULL};
+
+    PyObject* m = PyObject_Vectorcall(func, args + 1,
+                                  0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+
+    Py_DECREF(func);
+    if (m == NULL) {
+        return NULL;
+    }
+
+    if (!PyObjCPythonSelector_Check(m)) {
+        Py_DECREF(m);
+        return NULL;
+    }
+
+    return m;
+}
+
+PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
+{
+    PyObject* rval = PyObjCObject_New(value, PyObjCObject_kDEFAULT, YES);
+    if (rval == NULL) {
+        return NULL;
+    }
+
+    LOCK(PyObjC_NSNumberWrapper);
+    PyObject* func = PyObjC_NSNumberWrapper;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_NSNumberWrapper);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        return rval;
+    }
+
+
+    PyObject* args[2] = {NULL, rval};
+    rval              = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    Py_DECREF(args[1]);
+
+    return rval;
+}
+
+PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
+                                              PyObject* class_object, PyObject* protocols)
+{
+    LOCK(PyObjC_transformAttribute);
+    PyObject* func = PyObjC_transformAttribute;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_transformAttribute);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        Py_INCREF(value);
+        return value;
+    }
+
+    PyObject* args[5] = {NULL, name, value, class_object, protocols};
+    PyObject* result = PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                               4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    return result;
+}
+
+int PyObjC_SetDunderNew(PyObject* value)
+{
+    LOCK(PyObjC_setDunderNew);
+    PyObject* func = PyObjC_setDunderNew;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_setDunderNew);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        return 0;
+    }
+
+    PyObject* args[2] = {NULL, value};
+
+    PyObject* rv = PyObject_Vectorcall(func, args + 1,
+                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    if (rv == NULL) {
+        return -1;
+    }
+    Py_DECREF(rv);
+    return 0;
+}
+
+int PyObjC_IsGenericNew(PyObject* value)
+{
+    LOCK(PyObjC_genericNewClass);
+    PyObject* type = PyObjC_genericNewClass;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_genericNewClass);
+
+    int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
+    Py_DECREF(type);
+    return r;
+}
+
+extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* class_dict,
+                                                   PyObject* meta_dict, PyObject* py_superclass,
+                                                   PyObject* protocols, PyObject* hiddenSelectors,
+                                                   PyObject* hiddenClassSelectors)
+{
+    LOCK(PyObjC_processClassDict);
+    PyObject* func = PyObjC_processClassDict;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_processClassDict);
+
+    if (func == Py_None) {
+        Py_DECREF(func);
+        PyErr_SetString(
+            PyObjCExc_InternalError,
+            "Cannot create class because 'objc.options._processClassDict' is not set");
+        return NULL;
+    }
+
+    PyObject* py_name = PyUnicode_FromString(name);
+    if (py_name == NULL) {
+        Py_DECREF(func);
+        return NULL;
+    }
+    PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
+                        protocols, hiddenSelectors, hiddenClassSelectors};
+    PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
+                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    Py_DECREF(py_name);
+
+    return rv;
+}
 
 
 #if PY_VERSION_HEX < 0x030a0000

@@ -37,21 +37,6 @@ extern PyTypeObject PyObjCClass_Type;
 #define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
 #define PyObjCMetaClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCMetaClass_Type)
 
-// The @const is not correct, but what else can we use here?
-/*!
- * @const PyObjC_ClassExtender
- * @discussion
- *     PyObjC_ClassExtender is either NULL or a Python function that can
- *     update a class dictionary.
- *
- *     The interface for the extender function is:
- *          extender(super_class, class_name, class_dict)
- *
- *     The return value of the function is ignored, it should update the
- *     class_dict (which represents the __dict__ of an Objective-C class.
- */
-extern PyObject* PyObjC_ClassExtender;
-
 /*!
  * @struct PyObjCClassObject
  * @abstract The type struct for Objective-C classes (Python 2.3 and later)

@@ -178,8 +178,6 @@ extern PyObject* PyObjCNM___struct_pack__;
 extern PyObject* PyObjCNM_pyobjcSetValue_;
 extern PyObject* PyObjCNM_tzinfo;
 
-extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
-                                                     PyObject*);
 extern int PyObjC_RemoveInternalTypeCodes(char*);
 
 extern PyObject* _Nullable PyObjCSequence_Tuple(PyObject* value, const char* context);

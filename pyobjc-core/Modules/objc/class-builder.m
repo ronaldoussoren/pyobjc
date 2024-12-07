@@ -291,21 +291,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_processClassDict == NULL || PyObjC_processClassDict == Py_None) {
-        PyErr_SetString(
-            PyObjCExc_InternalError,
-            "Cannot create class because 'objc.options._processClassDict' is not set");
-        goto error_cleanup;
-    }
-    PyObject* py_name = PyUnicode_FromString(name);
-    if (py_name == NULL) {
-        goto error_cleanup;
-    }
-    PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
-                        protocols, hiddenSelectors, hiddenClassSelectors};
-    PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
-                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(py_name);
+    PyObject* rv = PyObjC_ProcessClassDict(name, class_dict, meta_dict, py_superclass,
+                        protocols, hiddenSelectors, hiddenClassSelectors);
     if (rv == NULL) {
         goto error_cleanup;
     }

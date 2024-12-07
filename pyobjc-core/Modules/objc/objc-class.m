@@ -117,8 +117,6 @@ PyDoc_STRVAR(class_doc,
              "method signatures and will not be visible in the list of base-classes\n"
              "of the created class.");
 
-static int update_convenience_methods(PyObject* cls);
-
 /*
  *
  *  Class Registry
@@ -364,21 +362,23 @@ static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, 
         return result;
     }
 
-    if (PyObjC_genericNewClass != NULL && PyObjC_genericNewClass != Py_None) {
-        PyObject* new = PyObject_GetAttr((PyObject*)type, PyObjCNM___new__);
-        if (new == NULL) { /* Shouldn't happen */
-            Py_DECREF(result);
-            return NULL;
-        }
-
-        int r = PyObject_TypeCheck(new, (PyTypeObject*)PyObjC_genericNewClass);
-        Py_DECREF(new);
-        if (r != 0) {
-            return result;
-        }
+    PyObject* new = PyObject_GetAttr((PyObject*)type, PyObjCNM___new__);
+    if (new == NULL) { /* Shouldn't happen */
+        Py_DECREF(result);
+        return NULL;
     }
 
-    /* Only call __init__ when the generic new implementation is not used */
+    int r = PyObjC_IsGenericNew(new);
+    if (r == -1) {
+        Py_DECREF(new);
+        Py_DECREF(result);
+        return NULL;
+    } else if (r) {
+        /* the __new__ of the class is the generic __new__,
+         * don't call __init__.
+         */
+        return result;
+    }
 
     type = Py_TYPE(result);
     if (type->tp_init != NULL) {
@@ -881,30 +881,14 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         // LCOV_EXCL_STOP
     }
 
-    if (PyObjC_MakeBundleForClass != NULL && PyObjC_MakeBundleForClass != Py_None) {
-        PyObject* args[1] = {NULL};
-
-        PyObject* m = PyObject_Vectorcall(PyObjC_MakeBundleForClass, args + 1,
-                                          0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (m == NULL) {
-            if (objc_class != Nil) {
-                (void)PyObjCClass_UnbuildClass(objc_class);
-            }
-            Py_XDECREF(orig_slots);
-            Py_DECREF(old_dict);
-            Py_DECREF(protocols);
-            Py_DECREF(real_bases);
-            Py_DECREF(metadict);
-            Py_DECREF(hiddenSelectors);
-            Py_DECREF(hiddenClassSelectors);
-            return NULL;
-        }
-        if (PyObjCPythonSelector_Check(m)) {
-            ((PyObjCSelector*)m)->sel_class = objc_class;
+    PyObject* bundleForClass = PyObjC_GetBundleForClassMethod();
+    if (bundleForClass != NULL) {
+        if (PyObjCPythonSelector_Check(bundleForClass)) {
+            ((PyObjCSelector*)bundleForClass)->sel_class = objc_class;
         }
 
-        r = PyDict_SetItem(dict, PyObjCNM_bundleForClass, m);
-        Py_DECREF(m);
+        r = PyDict_SetItem(dict, PyObjCNM_bundleForClass, bundleForClass);
+        Py_CLEAR(bundleForClass);
         if (r == -1) {
             if (objc_class != Nil) {
                 (void)PyObjCClass_UnbuildClass(objc_class);
@@ -918,6 +902,18 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             Py_DECREF(hiddenClassSelectors);
             return NULL;
         }
+
+    } else if (PyErr_Occurred()) {
+        if (objc_class != Nil) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+        }
+        Py_XDECREF(orig_slots);
+        Py_DECREF(old_dict);
+        Py_DECREF(protocols);
+        Py_DECREF(real_bases);
+        Py_DECREF(metadict);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
     }
 
     PyTypeObject* metatype;
@@ -1147,17 +1143,11 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     PyObjC_Assert(info->hasPythonImpl, NULL);
 
-    if (!has_dunder_new && PyObjC_setDunderNew != NULL && PyObjC_setDunderNew != Py_None) {
-        PyObject* args[2] = {NULL, res};
-        PyObject* rv;
-
-        rv = PyObject_Vectorcall(PyObjC_setDunderNew, args + 1,
-                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (rv == NULL) {
+    if (!has_dunder_new) {
+        if (PyObjC_SetDunderNew(res) == -1) {
             Py_DECREF(res);
             return NULL;
         }
-        Py_DECREF(rv);
     }
 
     Py_INCREF(res);
@@ -1245,7 +1235,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
             int r;
             info->generation = PyObjC_MappingCount;
 
-            r = update_convenience_methods(cls);
+            r = PyObjC_CallClassExtender(cls);
             if (r < 0) {
                 return -1;
             }
@@ -3330,81 +3320,6 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
     PyObjCClassObject* info;
     info = (PyObjCClassObject*)cls;
     return info->hasPythonImpl;
-}
-
-/*!
- * @function update_convenience_methods
- * @abstract Update the convenience methods for a class
- * @param cls  An Objective-C class wrapper
- * @result Returns -1 on error, 0 on success
- * @discussion
- *     This function calls the PyObjC_ClassExtender function (if one is
- *     registered) and then updates the class __dict__.
- *
- *     NOTE: We change the __dict__ using a setattro function because the type
- *     doesn't notice the existence of new special methods otherwise.
- *
- *     NOTE2: We use PyType_Type.tp_setattro instead of PyObject_SetAttr because
- *     the tp_setattro of Objective-C class wrappers does not allow some of
- *     the assignments we do here.
- */
-static int
-update_convenience_methods(PyObject* cls)
-{
-    PyObject*  res;
-    PyObject*  dict;
-    PyObject*  k;
-    PyObject*  v;
-    Py_ssize_t pos;
-
-    if (PyObjC_ClassExtender == NULL || PyObjC_ClassExtender == Py_None || cls == NULL)
-        return 0;
-
-    if (!PyObjCClass_Check(cls)) {
-        PyErr_SetString(PyExc_TypeError, "not a class");
-        return -1;
-    }
-
-    dict = PyDict_New();
-    if (dict == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;      // LCOV_EXCL_LINE
-    }
-
-    PyObject* args[3] = {NULL, cls, dict};
-
-    res = PyObject_Vectorcall(PyObjC_ClassExtender, args + 1,
-                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    if (res == NULL) {
-        return -1;
-    }
-    Py_DECREF(res);
-
-    pos = 0;
-    while (PyDict_Next(dict, &pos, &k, &v)) {
-        if (PyUnicode_Check(k)) {
-            if (PyObjC_is_ascii_string(k, "__dict__")
-                || PyObjC_is_ascii_string(k, "__bases__")
-                || PyObjC_is_ascii_string(k, "__slots__")
-                || PyObjC_is_ascii_string(k, "__mro__")) {
-
-                continue;
-            }
-
-        } else {
-            if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)cls), k, v) == -1) {
-                PyErr_Clear();
-            }
-            continue;
-        }
-
-        if (PyType_Type.tp_setattro(cls, k, v) == -1) {
-            PyErr_Clear();
-            continue;
-        }
-    }
-
-    Py_DECREF(dict);
-    return 0;
 }
 
 PyObject* _Nullable PyObjCClass_ClassForMetaClass(PyObject* meta)

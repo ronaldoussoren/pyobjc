@@ -253,16 +253,7 @@ NSNumber (PyObjCSupport)
 
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
-        rval = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-
-        if (PyObjC_NSNumberWrapper && rval) {
-            PyObject* val = rval;
-
-            PyObject* args[2] = {NULL, val};
-            rval              = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args + 1,
-                                                    1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(val);
-        }
+        rval = PyObjC_CreateNSNumberProxy(self);
     }
     return rval;
 }
