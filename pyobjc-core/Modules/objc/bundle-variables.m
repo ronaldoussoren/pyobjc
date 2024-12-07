@@ -97,8 +97,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         Py_DECREF(py_name);
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)),

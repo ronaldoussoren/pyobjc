@@ -358,8 +358,7 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static Py_hash_t
@@ -435,25 +434,20 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
             }
 
             if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
 
         } else {
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
         }
     }
-    Py_INCREF(Py_NotImplemented);
-    return Py_NotImplemented;
+    Py_RETURN_NOTIMPLEMENTED;
 }
 
 static PyMethodDef ivar_methods[] = {{
@@ -497,8 +491,7 @@ static PyObject* _Nullable ivar_get_name(PyObject* _self, void* _Nullable closur
     if (self->name) {
         return PyUnicode_FromString(self->name);
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 
@@ -507,9 +500,12 @@ static PyObject* _Nullable ivar_get_isOutlet(PyObject* _self, void* _Nullable cl
                                              __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
-    PyObject*               result = self->isOutlet ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+
+    if (self->isOutlet) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(ivar_isSlot_doc, "True if the instance variable is a Python slot");
@@ -517,9 +513,11 @@ static PyObject* _Nullable ivar_get_isSlot(PyObject* _self, void* _Nullable clos
                                            __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
-    PyObject*               result = self->isSlot ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (self->isSlot) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyGetSetDef ivar_getset[] = {{

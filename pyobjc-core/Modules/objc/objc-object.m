@@ -866,8 +866,7 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static int
@@ -963,16 +962,17 @@ meth_is_magic(PyObject* self)
         is_magic = PyObjCObject_IsMagic(self);
     }
 
-    PyObject* result = is_magic ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (is_magic) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
     if (PyObjCObject_GetObject(self) == nil) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);

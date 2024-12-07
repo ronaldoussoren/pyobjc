@@ -266,10 +266,12 @@ static PyObject*
 imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject*        result =
-        (0 != (self->flags & PyObjCSelector_kCLASS_METHOD)) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+
+    if ((self->flags & PyObjCSelector_kCLASS_METHOD) != 0) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(
@@ -281,10 +283,11 @@ static PyObject*
 imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject*        result =
-        (0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED)) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if ((self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) != 0) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyGetSetDef imp_getset[] = {{
@@ -489,8 +492,7 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         if (PyErr_Occurred()) {
             return NULL;
         }
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     attr = PyObjCClass_FindSelector(self, selector, NO);
@@ -575,8 +577,7 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         if (PyErr_Occurred()) {
             return NULL;
         }
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     if (PyObjCClass_Check(self)) {

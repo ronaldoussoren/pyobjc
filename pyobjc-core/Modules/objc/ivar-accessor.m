@@ -229,8 +229,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
         curType = Py_TYPE(anObject);
         Py_SET_TYPE(anObject, (PyTypeObject*)pycls);
         Py_DECREF((PyObject*)curType);
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     ivar = find_ivar(objcValue, name);
@@ -303,8 +302,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 NS_ASSUME_NONNULL_END

@@ -71,8 +71,7 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     }
 
     if (result == nil) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     return PyObjCObject_New(result, PyObjCObject_kUNINITIALIZED, NO);
@@ -173,8 +172,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP
@@ -265,8 +263,7 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self,

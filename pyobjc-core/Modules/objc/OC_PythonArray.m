@@ -38,8 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_INCREF(value);
         return value;
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 

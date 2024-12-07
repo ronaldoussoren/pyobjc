@@ -313,8 +313,7 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(have_autorelease_pool_doc,
@@ -323,9 +322,11 @@ PyDoc_STRVAR(have_autorelease_pool_doc,
 static PyObject*
 have_autorelease_pool(PyObject* self __attribute__((__unused__)))
 {
-    PyObject* result = global_release_pool ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (global_release_pool) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(remove_autorelease_pool_doc,
@@ -356,8 +357,7 @@ static PyObject* _Nullable remove_autorelease_pool(PyObject* self
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(recycle_autorelease_pool_doc,
@@ -391,8 +391,7 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(getClassList_doc,
@@ -798,8 +797,7 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
 
     protlist = objc_copyProtocolList(&protCount);
     if (protlist == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     protocols = PyList_New(0);
@@ -976,8 +974,7 @@ static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unus
 
     } else {
         PyObjC_MappingCount++;
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 
@@ -1243,8 +1240,7 @@ static PyObject* _Nullable _updatingMetadata(PyObject* self __attribute__((__unu
         PyObjC_UpdatingMetaData = NO;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 /* Support for locking */
@@ -1265,8 +1261,7 @@ static PyObject* _Nullable PyObjC_objc_sync_enter(PyObject* self
     Py_END_ALLOW_THREADS
 
     if (rv == OBJC_SYNC_SUCCESS) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     PyErr_Format(PyObjCExc_LockError, "objc_sync_enter failed: %d", rv);
@@ -1288,8 +1283,7 @@ static PyObject* _Nullable PyObjC_objc_sync_exit(PyObject* self
         rv = objc_sync_exit(object);
     Py_END_ALLOW_THREADS
     if (rv == OBJC_SYNC_SUCCESS) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     PyErr_Format(PyObjCExc_LockError, "objc_sync_exit failed: %d", rv);
@@ -1460,8 +1454,7 @@ static PyObject* _Nullable PyObjC_setAssociatedObject(PyObject* self
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
@@ -1532,8 +1525,7 @@ static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)),
@@ -1593,8 +1585,7 @@ static PyObject* _Nullable name_for_signature(PyObject* mod __attribute__((__unu
             if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return NULL;        // LCOV_EXCL_LINE
             } else {
-                Py_INCREF(Py_None);
-                return Py_None;
+                Py_RETURN_NONE;
             }
         } else {
             return PyUnicode_FromString(type->tp_name);
@@ -1606,8 +1597,7 @@ static PyObject* _Nullable name_for_signature(PyObject* mod __attribute__((__unu
             return PyUnicode_FromString(name);
         }
     }
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused__)),
@@ -1620,8 +1610,7 @@ static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused
 
     const char* sig = PyObjCBlock_GetSignature(PyObjCObject_GetObject(block));
     if (sig == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     return PyBytes_FromString(sig);
@@ -1653,8 +1642,7 @@ static PyObject* _Nullable force_rescan(PyObject* mod __attribute__((__unused__)
     }
 
 done:
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 #if PyObjC_BUILD_RELEASE >= 1100
@@ -1676,10 +1664,13 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
         }
 
         int result = _dyld_shared_cache_contains_path(path);
-        return PyBool_FromLong(result);
+        if (result) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
     } else {
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
@@ -1718,11 +1709,13 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
 
     if (contains_func) {
         int result = contains_func(path);
-        return PyBool_FromLong(result);
+        if (result) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
     } else {
-
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
@@ -1747,8 +1740,7 @@ static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
         PyObjC_Assert(PyErr_Occurred(), NULL);
         return NULL;
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 
@@ -1781,8 +1773,7 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
     PyObjCMethodSignature* sig = PyObjCMethodSignature_GetRegistered(cls, sel);
     if (sig == NULL) {
         PyErr_Clear();
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
     return PyObjCMethodSignature_AsDict(sig);
 }

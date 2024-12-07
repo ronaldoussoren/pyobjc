@@ -1619,8 +1619,7 @@ PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames)
 PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr)
 {
     if (ptr == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
     PyObject* c_void_p = PyObjC_get_c_void_p();
     if (c_void_p == NULL) {

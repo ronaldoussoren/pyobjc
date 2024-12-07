@@ -41,8 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
     {
 
 #define END_UNITTEST                                                                     \
-    Py_INCREF(Py_None);                                                                  \
-    return Py_None;                                                                      \
+    Py_RETURN_NONE;                                                                      \
     error:                                                                               \
     return NULL;                                                                         \
     }

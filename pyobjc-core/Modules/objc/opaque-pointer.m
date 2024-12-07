@@ -123,8 +123,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
             }
 
         } else if (attrval == Py_None) {
-            Py_INCREF(Py_None);
-            return Py_None;
+            Py_RETURN_NONE;
 
         } else {
             PyErr_SetString(PyExc_TypeError, "c_void_p.value is not an integer");
@@ -134,8 +133,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         Py_DECREF(attrval);
 
         if (p == NULL) {
-            Py_INCREF(Py_None);
-            return Py_None;
+            Py_RETURN_NONE;
         }
 
         result = PyObject_GC_New(OpaquePointerObject, type);

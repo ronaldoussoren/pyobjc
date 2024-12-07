@@ -76,8 +76,7 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP
@@ -244,8 +243,7 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP
@@ -835,8 +833,7 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        met
     if (PyErr_Occurred())
         return NULL;
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP
@@ -1275,8 +1272,7 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
     if (PyErr_Occurred()) {
         return NULL;
     }
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP

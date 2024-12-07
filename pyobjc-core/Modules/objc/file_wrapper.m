@@ -75,8 +75,7 @@ static PyObject* _Nullable file_close(PyObject* _self)
 
     Py_END_CRITICAL_SECTION();
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable file_flush(PyObject* _self)
@@ -107,41 +106,47 @@ static PyObject* _Nullable file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
-    PyObject* retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval = NULL;
+        Py_EXIT_CRITICAL_SECTION();
+        return NULL;
     } else {
         result = ferror(self->fp);
-        retval =  PyBool_FromLong(result);
     }
 
     Py_END_CRITICAL_SECTION();
 
-    return retval;
+    if (result) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyObject* _Nullable file_at_eof(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
-    PyObject* retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval =  NULL;
+        Py_EXIT_CRITICAL_SECTION();
+        return NULL;
     } else {
         result = feof(self->fp);
-        retval = PyBool_FromLong(result);
     }
     Py_END_CRITICAL_SECTION();
 
-    return retval;
+    if (result) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyObject* _Nullable file_tell(PyObject* _self)

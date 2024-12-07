@@ -77,8 +77,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject*
@@ -153,8 +152,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject*

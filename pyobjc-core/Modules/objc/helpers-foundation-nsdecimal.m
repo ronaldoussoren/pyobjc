@@ -432,13 +432,13 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
             if (PyErr_Occurred()) {
                 PyErr_Clear();
             }
-            return PyBool_FromLong(0);
+            Py_RETURN_FALSE;
 
         } else if (type == Py_NE) {
             if (PyErr_Occurred()) {
                 PyErr_Clear();
             }
-            return PyBool_FromLong(1);
+            Py_RETURN_TRUE;
         }
 
         PyErr_Format(PyExc_TypeError, "Cannot compare NSDecimal and %s",
@@ -454,17 +454,17 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
     switch (type) {
     case Py_LT:
-        return PyBool_FromLong(res == NSOrderedAscending);
+        if(res == NSOrderedAscending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     case Py_LE:
-        return PyBool_FromLong(res != NSOrderedDescending);
+        if(res != NSOrderedDescending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     case Py_EQ:
-        return PyBool_FromLong(res == NSOrderedSame);
+        if(res == NSOrderedSame) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     case Py_NE:
-        return PyBool_FromLong(res != NSOrderedSame);
+        if(res != NSOrderedSame) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     case Py_GE:
-        return PyBool_FromLong(res != NSOrderedAscending);
+        if(res != NSOrderedAscending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     case Py_GT:
-        return PyBool_FromLong(res == NSOrderedDescending);
+        if(res == NSOrderedDescending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
     default:
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "Bad comparison arg");
@@ -532,8 +532,7 @@ static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
 #define TRY_COERCE(left, right)                                                          \
     int r = decimal_coerce(&left, &right);                                               \
     if (r == 1) {                                                                        \
-        Py_INCREF(Py_NotImplemented);                                                    \
-        return Py_NotImplemented;                                                        \
+        Py_RETURN_NOTIMPLEMENTED;                                                        \
     }
 
 #define DECIMAL_OPERATOR(py_function, nsdecimal_function)                                \

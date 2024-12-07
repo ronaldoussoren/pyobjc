@@ -23,8 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     /* XXX: Can value ever be NULL? */
     if (value == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
     Py_INCREF(value);
     return value;

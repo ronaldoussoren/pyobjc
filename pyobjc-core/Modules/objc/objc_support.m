@@ -245,12 +245,10 @@ NSNumber (PyObjCSupport)
 
     /* shortcut for booleans */
     if (kCFBooleanTrue == (CFBooleanRef)self) {
-        Py_INCREF(Py_True);
-        return Py_True;
+        Py_RETURN_TRUE;
 
     } else if (kCFBooleanFalse == (CFBooleanRef)self) {
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 
     rval = PyObjC_FindPythonProxy(self);

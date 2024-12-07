@@ -110,9 +110,11 @@ static PyObject* PyObjCOptions_Type;
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
-        PyObject* result;                                                                \
-        result = PyBool_FromLong(VAR);                                                   \
-        return result;                                                                   \
+        if (VAR) {                                                                       \
+            Py_RETURN_TRUE;                                                              \
+        } else {                                                                         \
+            Py_RETURN_FALSE;                                                             \
+        }                                                                                \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -237,7 +239,11 @@ static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
                 void*     c __attribute__((__unused__)))
 {
-    return PyBool_FromLong([OC_NSBundleHack bundleHackUsed]);
+    if ([OC_NSBundleHack bundleHackUsed]) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyObjC_ATOMIC int PyObjC_DeprecationVersion = 0;

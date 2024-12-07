@@ -129,8 +129,7 @@ base_self(PyObject* _self, void* closure __attribute__((__unused__)))
         Py_INCREF(self->sel_self);
         return self->sel_self;
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 
@@ -155,8 +154,7 @@ base_native_signature(PyObject* _self, void* closure __attribute__((__unused__))
     PyObjCSelector* self = (PyObjCSelector*)_self;
     if (self->sel_native_signature == NULL) {
         /* XXX: When can this be NULL? */
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     return PyBytes_FromString(self->sel_native_signature);
@@ -203,7 +201,11 @@ PyDoc_STRVAR(base_hidden_doc,
 static PyObject*
 base_hidden(PyObject* _self, void* closure __attribute__((__unused__)))
 {
-    return PyBool_FromLong(((PyObjCSelector*)_self)->sel_flags & PyObjCSelector_kHIDDEN);
+    if  (((PyObjCSelector*)_self)->sel_flags & PyObjCSelector_kHIDDEN) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 static int
 base_hidden_setter(PyObject* _self, PyObject* newVal,
@@ -257,8 +259,7 @@ static PyObject* _Nullable base_class(PyObject* _self,
         return PyObjCClass_New(self->base.sel_class);
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(base_class_method_doc, "True if this is a class method, False otherwise");
@@ -267,7 +268,11 @@ static PyObject*
 base_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
-    return PyBool_FromLong(0 != (self->base.sel_flags & PyObjCSelector_kCLASS_METHOD));
+    if (0 != (self->base.sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(base_required_doc, "True if this is a required method, False otherwise");
@@ -276,7 +281,11 @@ static PyObject*
 base_required(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
-    return PyBool_FromLong(0 != (self->base.sel_flags & PyObjCSelector_kREQUIRED));
+    if (0 != (self->base.sel_flags & PyObjCSelector_kREQUIRED)) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyGetSetDef base_getset[] = {{
@@ -458,21 +467,17 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
                 same = 0;
             }
             if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
 
         } else {
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
 
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
         }
 
@@ -484,18 +489,17 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
             int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
             switch (op) { // LCOV_BR_EXCL_LINE
             case Py_LT:
-                return PyBool_FromLong(r < 0);
+                if (r < 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_LE:
-                return PyBool_FromLong(r <= 0);
+                if (r <= 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_GT:
-                return PyBool_FromLong(r > 0);
+                if (r > 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_GE:
-                return PyBool_FromLong(r >= 0);
+                if (r >= 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             } // LCOV_EXCL_LINE
         }
 
-        Py_INCREF(Py_NotImplemented);
-        return Py_NotImplemented;
+        Py_RETURN_NOTIMPLEMENTED;
     }
 }
 
@@ -1360,20 +1364,16 @@ static PyObject* _Nullable pysel_richcompare(PyObject* a, PyObject* b, int op)
             }
 
             if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
 
         } else {
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
         }
     } else {
@@ -1384,17 +1384,16 @@ static PyObject* _Nullable pysel_richcompare(PyObject* a, PyObject* b, int op)
             int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
             switch (op) {
             case Py_LT:
-                return PyBool_FromLong(r < 0);
+                if (r < 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_LE:
-                return PyBool_FromLong(r <= 0);
+                if (r <= 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_GT:
-                return PyBool_FromLong(r > 0);
+                if (r > 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             case Py_GE:
-                return PyBool_FromLong(r >= 0);
+                if (r >= 0) { Py_RETURN_TRUE;} else { Py_RETURN_FALSE;};
             }
         }
-        Py_INCREF(Py_NotImplemented);
-        return Py_NotImplemented;
+        Py_RETURN_NOTIMPLEMENTED;
     }
 }
 

@@ -2162,20 +2162,16 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
     Class     self_class;
     Class     other_class;
     int       v;
-    PyObject* result;
 
     if (!PyObjCClass_Check(other)) {
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else if (op == Py_NE) {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         } else {
-            Py_INCREF(Py_NotImplemented);
-            return Py_NotImplemented;
+            Py_RETURN_NOTIMPLEMENTED;
         }
     }
 
@@ -2200,14 +2196,18 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
             /* Classes should only compare equal
              * if they are the same class.
              */
-            result = (self_class == other_class) ? Py_True : Py_False;
-            Py_INCREF(result);
-            return result;
+            if (self_class == other_class) {
+                Py_RETURN_TRUE;
+            } else {
+                Py_RETURN_FALSE;
+            }
 
         case Py_NE:
-            result = (self_class == other_class) ? Py_False : Py_True;
-            Py_INCREF(result);
-            return result;
+            if (self_class == other_class) {
+                Py_RETURN_FALSE;
+            } else {
+                Py_RETURN_TRUE;
+            }
         }
 
         v = strcmp(class_getName(self_class), class_getName(other_class));
@@ -2215,36 +2215,57 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
 
     switch (op) {
     case Py_EQ:
-        result = (v == 0) ? Py_True : Py_False;
+        if (v == 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     case Py_NE:
-        result = (v != 0) ? Py_True : Py_False;
+        if (v != 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     case Py_LE:
-        result = (v <= 0) ? Py_True : Py_False;
+        if (v <= 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     case Py_LT:
-        result = (v < 0) ? Py_True : Py_False;
+        if (v < 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     case Py_GE:
-        result = (v >= 0) ? Py_True : Py_False;
+        if (v >= 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     case Py_GT:
-        result = (v > 0) ? Py_True : Py_False;
+        if (v > 0) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
         break;
 
     default:
         PyErr_Format(PyExc_TypeError, "Unexpected op=%d in class_richcompare", op);
         return NULL;
     }
-
-    Py_INCREF(result);
-    return result;
 }
 
 static Py_hash_t
@@ -2299,8 +2320,7 @@ static PyObject* _Nullable cls_get_version(PyObject* self, void* _Nullable closu
 {
     Class cls = PyObjCClass_GetClass(self);
     if (cls == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     } else {
         return PyLong_FromLong(class_getVersion(cls));
     }
@@ -2331,9 +2351,11 @@ cls_set_version(PyObject* self, PyObject* _Nullable newVal,
 static PyObject*
 cls_get_useKVO(PyObject* self, void* _Nullable closure __attribute__((__unused__)))
 {
-    PyObject* result = ((PyObjCClassObject*)self)->useKVO ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (((PyObjCClassObject*)self)->useKVO) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static int
@@ -2352,9 +2374,11 @@ cls_set_useKVO(PyObject* self, PyObject* _Nullable newVal,
 static PyObject* _Nullable cls_get_final(PyObject* self, void* _Nullable closure
                                          __attribute__((__unused__)))
 {
-    PyObject* result = ((PyObjCClassObject*)self)->isFinal ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (((PyObjCClassObject*)self)->isFinal) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static int
@@ -2373,19 +2397,22 @@ cls_set_final(PyObject* self, PyObject* _Nullable newVal,
 static PyObject* _Nullable cls_get_hasdict(PyObject* self, void* _Nullable closure
                                            __attribute__((__unused__)))
 {
-    PyObject* result = (((PyObjCClassObject*)self)->dictoffset != 0) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (((PyObjCClassObject*)self)->dictoffset != 0) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyObject* _Nullable cls_get_haspythonimplementation(PyObject* self,
                                                            void* _Nullable closure
                                                            __attribute__((__unused__)))
 {
-    PyObject* result =
-        (((PyObjCClassObject*)self)->hasPythonImpl != 0) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (((PyObjCClassObject*)self)->hasPythonImpl != 0)  {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyGetSetDef class_getset[] = {

@@ -759,11 +759,13 @@ set_defaults(PyObject* self, const char* typestr)
         switch (*typestr) {
 #ifdef _C_BOOL
         case _C_BOOL:
-            v = PyBool_FromLong(0);
+            v = Py_False;
+            Py_INCREF(Py_False);
             break;
 #endif
         case _C_NSBOOL:
-            v = PyBool_FromLong(0);
+            v = Py_False;
+            Py_INCREF(Py_False);
             break;
 
         case _C_CHAR_AS_TEXT: {
@@ -1032,12 +1034,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
                  */
                 if (op == Py_EQ) {
                     Py_EXIT_CRITICAL_SECTION2();
-                    Py_INCREF(Py_False);
-                    return Py_False;
+                    Py_RETURN_FALSE;
                 } else if (op == Py_NE) {
                     Py_EXIT_CRITICAL_SECTION2();
-                    Py_INCREF(Py_True);
-                    return Py_True;
+                    Py_RETURN_TRUE;
                 }
                 Py_EXIT_CRITICAL_SECTION2();
                 return PyObject_RichCompare(self_cur, other_cur, op);
@@ -1050,14 +1050,12 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
         case Py_LT:
         case Py_NE:
         case Py_GT:
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         case Py_LE:
         case Py_EQ:
         case Py_GE:
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         default:
             /* Should never happen */
@@ -1070,12 +1068,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
     if (!PySequence_Check(other)) {
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else if (op == Py_NE) {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         } else {
             PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
@@ -1085,12 +1081,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
     } else if (!PyObjC_StructsIndexable) {
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else if (op == Py_NE) {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         } else {
             PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
@@ -1109,12 +1103,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
     if (self_len != other_len && (op == Py_EQ || op == Py_NE)) {
         /* Shortcut comparison for non-equals lengths */
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
         }
     }
 
@@ -1142,11 +1134,9 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
             PyObject* v;
 
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else if (op == Py_NE) {
-                Py_INCREF(Py_True);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
             v = PyObject_RichCompare(self_cur, other_cur, op);
             Py_DECREF(other_cur);
@@ -1184,12 +1174,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
     }
 
     if (cmp) {
-        Py_INCREF(Py_True);
-        return Py_True;
+        Py_RETURN_TRUE;
 
     } else {
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
