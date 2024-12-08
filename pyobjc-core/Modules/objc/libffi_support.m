@@ -1475,34 +1475,43 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         default:
             v = pythonify_c_value(argtype, args[i]);
 
-            if (v != NULL && unlikely(PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL)) {
-                /* Value is an (Objective-)C block for which we don't have a Python
-                 * signature
-                 *
-                 * 1) Try to extract from the metadata system
-                 * 2) Try to extract from the ObjC runtime
-                 *
-                 * Both systems may not have the required information.
-                 */
+            if (v != NULL && unlikely(PyObjCObject_Check(v) && PyObjCObject_IsBlock(v))) {
+                PyObjCMethodSignature* block_methinfo = PyObjCObject_GetBlockSignature(v);
+                if (unlikely(block_methinfo == NULL)) {
+                    /* Value is an (Objective-)C block for which we don't have a Python
+                     * signature
+                     *
+                     * 1) Try to extract from the metadata system
+                     * 2) Try to extract from the ObjC runtime
+                     *
+                     * Both systems may not have the required information.
+                     */
 
-                if (methinfo->argtype[i]->callable != NULL) {
-                    PyObjCObject_SET_BLOCK(v, methinfo->argtype[i]->callable);
-                    Py_INCREF(methinfo->argtype[i]->callable);
+                    if (methinfo->argtype[i]->callable != NULL) {
+                        if (PyObjCObject_SetBlockSignature(v, methinfo->argtype[i]->callable) == -1) {
+                            goto error;
+                        }
 
-                } else {
-                    const char* signature = PyObjCBlock_GetSignature(v);
-                    if (signature != NULL) {
-                        PyObjCMethodSignature* sig =
-                            PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+                    } else {
+                        const char* signature = PyObjCBlock_GetSignature(v);
+                        if (signature != NULL) {
+                            PyObjCMethodSignature* sig =
+                                PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 
-                        if (sig == NULL) {
-                            Py_DECREF(v);
-                            v = NULL;
-                        } else {
-                            PyObjCObject_SET_BLOCK(v, sig);
-                            sig = NULL;
+                            if (sig == NULL) {
+                                Py_DECREF(v);
+                                v = NULL;
+                            } else {
+                                if (PyObjCObject_SetBlockSignature(v, sig) == -1) {
+                                    Py_DECREF(sig);
+                                    goto error;
+                                }
+                                Py_DECREF(sig);
+                            }
                         }
                     }
+                } else {
+                    Py_DECREF(block_methinfo);
                 }
             }
         }
@@ -3900,33 +3909,42 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                     return NULL;
                 }
 
-                if (PyObjCObject_IsBlock(objc_result)
-                    && PyObjCObject_GetBlock(objc_result) == NULL) {
-                    /* Result is an (Objective-)C block for which we don't have a Python
-                     * signature
-                     *
-                     * 1) Try to extract from the metadata system
-                     * 2) Try to extract from the ObjC runtime
-                     *
-                     * Both systems may not have the required information.
-                     */
+                if (PyObjCObject_Check(objc_result) && PyObjCObject_IsBlock(objc_result)) {
+                    PyObjCMethodSignature* block_methinfo = PyObjCObject_GetBlockSignature(objc_result);
+                    if (block_methinfo == NULL) {
+                        /* Result is an (Objective-)C block for which we don't have a Python
+                         * signature
+                         *
+                         * 1) Try to extract from the metadata system
+                         * 2) Try to extract from the ObjC runtime
+                         *
+                         * Both systems may not have the required information.
+                         */
 
-                    if (methinfo->rettype->callable != NULL) {
-                        PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype->callable);
-                        Py_INCREF(methinfo->rettype->callable);
-                    } else {
-                        const char* signature = PyObjCBlock_GetSignature(objc_result);
-                        if (signature != NULL) {
-                            PyObjCMethodSignature* sig =
-                                PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
-
-                            if (sig == NULL) {
-                                Py_DECREF(objc_result);
+                        if (methinfo->rettype->callable != NULL) {
+                            if (PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable) == -1) {
                                 return NULL;
                             }
-                            PyObjCObject_SET_BLOCK(objc_result, sig);
-                            sig = NULL;
+                        } else {
+                            const char* signature = PyObjCBlock_GetSignature(objc_result);
+                            if (signature != NULL) {
+                                PyObjCMethodSignature* sig =
+                                    PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+
+                                if (sig == NULL) {
+                                    Py_DECREF(objc_result);
+                                    return NULL;
+                                }
+                                if (PyObjCObject_SetBlockSignature(objc_result, sig) == -1) {
+                                    Py_DECREF(objc_result);
+                                    Py_DECREF(sig);
+                                    return NULL;
+                                }
+                                Py_CLEAR(sig);
+                            }
                         }
+                    } else {
+                        Py_DECREF(block_methinfo);
                     }
                 }
             } else {
@@ -4035,11 +4053,15 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                 [tmp release];
 
                                 if (v != NULL && methinfo->argtype[i]->callable != NULL) {
-                                    if (PyObjCObject_IsBlock(v)
-                                        && PyObjCObject_GetBlock(v) == NULL) {
-                                        PyObjCObject_SET_BLOCK(
-                                            v, methinfo->argtype[i]->callable);
-                                        Py_INCREF(methinfo->argtype[i]->callable);
+                                    if (PyObjCObject_Check(v) && PyObjCObject_IsBlock(v)) {
+                                        PyObjCMethodSignature* methinfo = PyObjCObject_GetBlockSignature(v);
+                                        if  (methinfo == NULL) {
+                                            if (PyObjCObject_SetBlockSignature( v, methinfo->argtype[i]->callable) == -1) {
+                                                goto error_cleanup;
+                                            }
+                                        } else {
+                                            Py_DECREF(methinfo);
+                                        }
                                     }
                                 }
                             } else {
@@ -4221,36 +4243,46 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
                 return NULL;
             }
 
-            if (PyObjCObject_IsBlock(objc_result)
-                && PyObjCObject_GetBlock(objc_result) == NULL) {
-                /* Result is an (Objective-)C block for which we don't have a Python
-                 * signature
-                 *
-                 * 1) Try to extract from the metadata system
-                 * 2) Try to extract from the ObjC runtime
-                 *
-                 * Both systems may not have the required information.
-                 *
-                 * XXX: Move to separate function!
-                 */
+            if (PyObjCObject_Check(objc_result) && PyObjCObject_IsBlock(objc_result)) {
+                PyObjCMethodSignature* block_methinfo = PyObjCObject_GetBlockSignature(objc_result);
+                if (block_methinfo == NULL) {
+                    /* Result is an (Objective-)C block for which we don't have a Python
+                     * signature
+                     *
+                     * 1) Try to extract from the metadata system
+                     * 2) Try to extract from the ObjC runtime
+                     *
+                     * Both systems may not have the required information.
+                     *
+                     * XXX: Move to separate function!
+                     */
 
-                if (methinfo->rettype->callable != NULL) {
-                    PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype->callable);
-                    Py_INCREF(methinfo->rettype->callable);
-                } else {
-                    const char* signature = PyObjCBlock_GetSignature(objc_result);
-                    if (signature != NULL) {
-                        PyObjCMethodSignature* sig =
-                            PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
-
-                        if (sig == NULL) {
-                            Py_DECREF(objc_result);
+                    if (methinfo->rettype->callable != NULL) {
+                        if (PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable) == -1) {
                             return NULL;
                         }
-                        PyObjCObject_SET_BLOCK(objc_result, sig);
-                        sig = NULL;
+                    } else {
+                        const char* signature = PyObjCBlock_GetSignature(objc_result);
+                        if (signature != NULL) {
+                            PyObjCMethodSignature* sig =
+                                PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+
+                            if (sig == NULL) {
+                                Py_DECREF(objc_result);
+                                return NULL;
+                            }
+                            if (PyObjCObject_SetBlockSignature(objc_result, sig) == -1) {
+                                Py_DECREF(objc_result);
+                                Py_DECREF(sig);
+                                return NULL;
+                            }
+                            Py_CLEAR(sig);
+                        }
                     }
+                } else {
+                    Py_DECREF(block_methinfo);
                 }
+
             }
         } else {
 

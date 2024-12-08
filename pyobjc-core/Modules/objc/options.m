@@ -905,7 +905,7 @@ PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nulla
         Py_RETURN_NONE;
     }
     PyObject* args[2] = {NULL, callable};
-    PyObject* result = PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args + 1,
+    PyObject* result = PyObject_Vectorcall(func, args + 1,
                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     return result;
@@ -1116,12 +1116,16 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
         Py_DECREF(func);
         return NULL;
     }
+
+    PyObjC_Assert(!PyErr_Occurred(), NULL);
     PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
                         protocols, hiddenSelectors, hiddenClassSelectors};
-    PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
+    PyObject* rv     = PyObject_Vectorcall(func, args + 1,
                                            7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     Py_DECREF(py_name);
+
+    PyObjC_Assert(rv == NULL || !PyErr_Occurred(), NULL);
 
     return rv;
 }

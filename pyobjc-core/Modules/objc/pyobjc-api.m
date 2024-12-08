@@ -10,10 +10,6 @@
  */
 #include "pyobjc.h"
 
-#ifdef PyObjCObject_GetObject
-#undef PyObjCObject_GetObject
-#endif
-
 struct pyobjc_api objc_api = {
     .api_version = PYOBJC_API_VERSION,
     .struct_len  = sizeof(struct pyobjc_api),

@@ -140,7 +140,21 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             } else {
                 IMP sel_imp =
                     [PyObjCSelector_GetClass(meta) instanceMethodForSelector:sel];
-                IMP cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
+                IMP cur_imp;
+
+                /* XXX: The typecheck here is necessary because some callers pass a
+                 *      class, I'm not yet sure this is correct. Found by stricter
+                 *      checks in PyObjCObject_GetObject.
+                 */
+                if (PyObjCObject_Check(self)) {
+                    cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
+                } else if (PyObjCClass_Check(self)) {
+                    cur_imp = [PyObjCClass_GetClass(self) methodForSelector:sel];
+                } else {
+                    PyErr_SetString(PyObjCExc_Error, "Unsupported case for find_selector");
+                    return NULL;
+                }
+
                 if (sel_imp == cur_imp) {
                     return meta;
                 } else {

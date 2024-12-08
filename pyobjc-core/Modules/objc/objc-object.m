@@ -138,9 +138,7 @@ object_dealloc(PyObject* obj)
     PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
     if (PyObjCObject_IsBlock(obj)) {
-        PyObjCMethodSignature* v = PyObjCObject_GetBlock(obj);
-        PyObjCObject_SET_BLOCK(obj, NULL);
-        Py_XDECREF(v);
+        SET_FIELD(((PyObjCBlockObject*)obj)->signature, NULL);
     }
 
     if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
@@ -848,20 +846,21 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
                                                   __attribute__((__unused__)))
 {
     if (PyObjCObject_IsBlock(self)) {
-        PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
+        PyObjCMethodSignature* v = PyObjCObject_GetBlockSignature(self);
         if (v != NULL) {
-            Py_INCREF(v);
-            return v;
+            return (PyObject*)v;
         } else {
             const char* typestr = PyObjCBlock_GetSignature(PyObjCObject_GetObject(self));
             if (typestr != NULL) {
-                v = (PyObject*)PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
+                v = PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
                 if (v == NULL) {
                     return NULL;
                 }
-                PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)v);
-                Py_INCREF(v);
-                return v;
+                if (PyObjCObject_SetBlockSignature(self, v) == -1) {
+                    Py_DECREF(v);
+                    return NULL;
+                }
+                return (PyObject*)v;
             }
         }
     }
@@ -890,13 +889,10 @@ obj_set_blocksignature(PyObject* self, PyObject* _Nullable newVal,
         }
     }
 
-    PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
-    Py_XINCREF(newVal);
-    PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
-    if (v != NULL) {
-        Py_DECREF(v);
-    }
-    return 0;
+    int r = PyObjCObject_SetBlockSignature(self, (PyObjCMethodSignature*)newVal);
+    Py_DECREF(newVal);
+
+    return r;
 }
 
 static PyGetSetDef obj_getset[] = {{
@@ -978,26 +974,6 @@ static PyObject* _Nullable as_cobject(PyObject* self)
     return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);
 }
 
-/* XXX: Move this function to objc_util.m */
-PyObject* _Nullable PyObjC_get_c_void_p(void)
-{
-    static PyObject* c_void_p = NULL;
-    if (c_void_p == NULL) {
-        PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
-        if (mod_ctypes == NULL) {
-            /* ctypes is not available */
-            return NULL;
-        }
-
-        c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
-        Py_DECREF(mod_ctypes);
-        if (c_void_p == NULL) {
-            /* invalid or incomplete module */
-            return NULL;
-        }
-    }
-    return c_void_p;
-}
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
@@ -1300,16 +1276,47 @@ PyObject* _Nullable PyObjCObject_FindSelector(PyObject* object, SEL selector)
     }
 }
 
-id _Nullable(PyObjCObject_GetObject)(PyObject* object)
+id _Nullable PyObjCObject_GetObject(PyObject* object)
 {
-    if (!PyObjCObject_Check(object)) {
-        PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
-                     Py_TYPE(object)->tp_name);
-        return nil;
-    }
-
-    return PyObjCObject_GetObject(object);
+    PyObjC_Assert(PyObjCObject_Check(object), nil);
+    return PyObjCObject_OBJECT(object);
 }
+
+unsigned int PyObjCObject_GetFlags(PyObject* object)
+{
+    PyObjC_Assert(PyObjCObject_Check(object), 0xffffffff);
+    return PyObjCObject_FLAGS(object);
+}
+
+bool PyObjCObject_IsBlock(PyObject* object)
+{
+    PyObjC_Assert(PyObjCObject_Check(object), false);
+    return (PyObjCObject_FLAGS(object) & PyObjCObject_kBLOCK) != 0;
+}
+
+bool PyObjCObject_IsMagic(PyObject* object)
+{
+    PyObjC_Assert(PyObjCObject_Check(object), false);
+    return (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE) != 0;
+}
+
+PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object)
+{
+    PyObjC_Assert(PyObjCObject_IsBlock(object), NULL);
+    PyObjCMethodSignature* result = (((PyObjCBlockObject*)(object))->signature);
+    Py_XINCREF(result);
+    return result;
+}
+
+int PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo)
+{
+    PyObjC_Assert(PyObjCObject_IsBlock(object), -1);
+
+    SET_FIELD_INCREF(((PyObjCBlockObject*)(object))->signature, methinfo);
+    return 0;
+}
+
+
 
 void
 PyObjCObject_ClearObject(PyObject* object)
@@ -1317,6 +1324,7 @@ PyObjCObject_ClearObject(PyObject* object)
     if (!PyObjCObject_Check(object)) {
         PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
                      Py_TYPE(object)->tp_name);
+        return;
     }
     PyObjC_UnregisterPythonProxy(((PyObjCObject*)object)->objc_object, object);
     ((PyObjCObject*)object)->objc_object = nil;

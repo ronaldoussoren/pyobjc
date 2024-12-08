@@ -1803,4 +1803,46 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
     return result;
 }
 
+/*
+ * XXX: Make this a static variable set during module init
+ */
+PyObject* _Nullable PyObjC_get_c_void_p(void)
+{
+#if Py_GIL_DISABLED
+    static PyMutex c_void_p_mutex = { 0 };
+#endif
+    static PyObject* c_void_p = NULL;
+    if (c_void_p == NULL) {
+#if Py_GIL_DISABLED
+        PyMutex_Lock(&c_void_p_mutex);
+        if (c_void_p != NULL) {
+            PyMutex_Unlock(&c_void_p_mutex);
+            return c_void_p_mutex;
+        }
+#endif
+        PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
+        if (mod_ctypes == NULL) {
+            /* ctypes is not available */
+#if Py_GIL_DISABLED
+            PyMutex_Unlock(&c_void_p_mutex);
+#endif
+            return NULL;
+        }
+
+        c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
+        Py_DECREF(mod_ctypes);
+        if (c_void_p == NULL) {
+            /* invalid or incomplete module */
+#if Py_GIL_DISABLED
+            PyMutex_Unlock(&c_void_p_mutex);
+#endif
+            return NULL;
+        }
+#if Py_GIL_DISABLED
+        PyMutex_Unlock(&c_void_p_mutex);
+#endif
+    }
+    return c_void_p;
+}
+
 NS_ASSUME_NONNULL_END
