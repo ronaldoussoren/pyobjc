@@ -1809,13 +1809,11 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
             *(void**)resp       = [data mutableBytes];
             return 0;
 
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(arg)) {
             NSMutableData* data = [NSMutableData dataWithBytes:PyByteArray_AsString(arg)
                                                         length:PyByteArray_Size(arg)];
             *(void**)resp       = [data mutableBytes];
             return 0;
-#endif
         }
     }
 
@@ -2461,9 +2459,7 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr, unsigned long lo
         PyObject* tmp;
 
         if (PyBytes_Check(argument) ||
-#ifdef PyByteArray_Check
             PyByteArray_Check(argument) ||
-#endif
             PyUnicode_Check(argument)) {
 
             PyErr_Format(PyExc_ValueError, "depythonifying '%s', got '%s'", descr,
@@ -2540,9 +2536,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
         PyObject* tmp;
 
         if (PyBytes_Check(argument) ||
-#ifdef PyByteArray_Check
             PyByteArray_Check(argument) ||
-#endif
             PyUnicode_Check(argument)) {
 
             PyErr_Format(PyExc_ValueError,
@@ -2827,14 +2821,12 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             if (v == NULL) {
                 return -1;
             }
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument)) {
             char* v = PyByteArray_AsString(argument);
             memcpy(datum, (void*)&v, sizeof(char*));
             if (v == NULL) {
                 return -1;
             }
-#endif
         } else if (argument == Py_None) {
             char* v = NULL;
             memcpy(datum, (void*)&v, sizeof(char*));
@@ -2873,11 +2865,9 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             *(char*)datum = PyBytes_AsString(argument)[0];
             return 0;
 
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
             *(char*)datum = PyByteArray_AsString(argument)[0];
             return 0;
-#endif
 
         } else {
             PyErr_Format(PyExc_ValueError,
@@ -2891,11 +2881,9 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             *(unsigned char*)datum = PyBytes_AsString(argument)[0];
             return 0;
 
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
             *(unsigned char*)datum = PyByteArray_AsString(argument)[0];
             return 0;
-#endif
         }
 
         r = depythonify_unsigned_int_value(argument, "unsigned char", &utemp, UCHAR_MAX);
@@ -3087,7 +3075,6 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                     return -1;
                 }
             }
-#ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument)) {
             char* selname = PyByteArray_AsString(argument);
             SEL   sel;
@@ -3107,7 +3094,6 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                     return -1;
                 }
             }
-#endif
         } else {
             PyErr_Format(PyExc_ValueError, "depythonifying 'SEL', got '%s'",
                          Py_TYPE(argument)->tp_name);
