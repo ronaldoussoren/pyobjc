@@ -19,13 +19,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static const char gCharEncoding[] = {_C_CHR, 0};
+
 /*
  * Define SMALL_STRUCT_LIMIT as the largest struct that will be returned
  * in registers instead of with a hidden pointer argument.
  */
-
-static const char gCharEncoding[] = {_C_CHR, 0};
-
 #if defined(__x86_64__)
 
 #define SMALL_STRUCT_LIMIT 16
@@ -600,9 +599,6 @@ extract_count(const char* type, void* pvalue)
     case _C_PTR:
         switch (type[1]) {
         case _C_ID: {
-            /* XXX: Not sure why this (only) works for contains with
-             * a count, supporting NSNumber could be useful as well.
-             */
             if ((!*(id**)pvalue)) {
                 return 0;
             }
