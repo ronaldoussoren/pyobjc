@@ -446,11 +446,12 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                 if (!PyObjCClass_Check(c))
                     continue;
 
-                PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)c);
+                PyObject* dict = PyType_GetDict((PyTypeObject*)c);
                 PyObject* v;
 
                 int r = PyDict_GetItemRef(dict, name, &v);
                 if (r == -1) {
+                    Py_CLEAR(dict);
                     return NULL;
                 } else if (r == 1) {
                     if (PyObjCSelector_Check(v)) {
@@ -460,6 +461,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                          */
                         v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
                         if (v == NULL) { // LCOV_BR_EXCL_LINE
+                            Py_CLEAR(dict); // LCOV_EXCL_LINE
                             return NULL; // LCOV_EXCL_LINE
                         }
                         result = v;
@@ -469,6 +471,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                     /* Found an item with the specified
                      * name, abort the search.
                      */
+                    Py_CLEAR(dict);
                     break;
                 }
             }

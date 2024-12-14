@@ -234,8 +234,6 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         PyGILState_Release(_GILState);                                                   \
     } while (0)
 
-extern PyObject* _Nonnull PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
-
 #if PY_VERSION_HEX < 0x030d0000
 #define Py_BEGIN_CRITICAL_SECTION(value) {
 #define Py_END_CRITICAL_SECTION() }
@@ -282,6 +280,14 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 }
 #endif
 
+#if PY_VERSION_HEX < 0x030c0000
+static inline PyObject* PyType_GetDict(PyTypeObject* type)
+{
+    PyObject* result = type->tp_dict;
+    Py_INCREF(result);
+    return result;
+}
+#endif
 
 
 NS_ASSUME_NONNULL_END

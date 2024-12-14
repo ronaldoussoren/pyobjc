@@ -83,8 +83,13 @@ static PyObject* _Nullable object_repr(PyObject* _self)
 {
     PyObjCObject* self = (PyObjCObject*)_self;
     PyObject*     res;
+    unsigned int flags;
 
-    if (self->flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
+    Py_BEGIN_CRITICAL_SECTION(_self);
+    flags = self->flags;
+    Py_END_CRITICAL_SECTION();
+
+    if (flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         //
         // There currently is no code path that can create objective-c
@@ -95,12 +100,14 @@ static PyObject* _Nullable object_repr(PyObject* _self)
         // LCOV_EXCL_STOP
     }
 
-    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0) {
+    if ((flags & PyObjCObject_kUNINITIALIZED) == 0) {
         /* Try to call the method 'description', which is the ObjC
          * equivalent of __repr__. If that fails we'll fall back to
          * the default repr.
          * Don't call 'description' for uninitialized objects, that
          * is undefined behaviour and will crash the interpreter sometimes.
+         *
+         * Free threaded: the UNINITIALIZED flags is never re-set once cleared.
          */
         PyObject* args[2] = {NULL, (PyObject*)self};
         res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
@@ -115,8 +122,12 @@ static PyObject* _Nullable object_repr(PyObject* _self)
             return res;
         }
     }
-    return PyUnicode_FromFormat("<%s objective-c instance %p>", Py_TYPE(self)->tp_name,
+    Py_BEGIN_CRITICAL_SECTION(_self);
+    res = PyUnicode_FromFormat("<%s objective-c instance %p>", Py_TYPE(self)->tp_name,
                                 self->objc_object);
+    Py_END_CRITICAL_SECTION();
+
+    return res;
 }
 
 // LCOV_EXCL_START
@@ -133,9 +144,13 @@ object_dealloc(PyObject* obj)
     /*
      * Save exception information, needed because releasing the object
      * might clear or modify the exception state.
+     *
+     * free-threaded: the dealloc method can only be called when there
+     * are no references to `obj` left, hence no need to use locking here.
      */
     PyObject *ptype, *pvalue, *ptraceback;
     PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
 
     if (PyObjCObject_IsBlock(obj)) {
         SET_FIELD(((PyObjCBlockObject*)obj)->signature, NULL);
@@ -241,17 +256,28 @@ object_verify_type(PyObject* obj)
              * XXX: Probably need to call PyObject_Type.tp_setattro(...) to avoid hitting
              * calling object_setattro in this file.
              */
-            tmp = Py_TYPE(obj);
-            Py_SET_TYPE(obj, tp);
-            Py_INCREF(tp);
-            Py_DECREF(tmp);
+            Py_BEGIN_CRITICAL_SECTION(obj);
+#if Py_GIL_DISABLED
+            /* Recheck in a free threaded build, another thread
+             * may have raced us.
+             */
+            if (tp != Py_TYPE(obj)) {
+#endif
+                tmp = Py_TYPE(obj);
+                Py_SET_TYPE(obj, tp);
+                Py_INCREF(tp);
+                Py_END_CRITICAL_SECTION();
+                Py_DECREF(tmp);
 
-            if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(tp);
-                return -1;
-                // LCOV_EXCL_STOP
+                if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(tp);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
+#if Py_GIL_DISABLED
             }
+#endif
         }
         Py_CLEAR(tp);
     }
@@ -273,11 +299,13 @@ object_verify_not_nil(PyObject* obj, PyObject* name)
 PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
                                                    SEL sel)
 {
+    PyObjC_Assert(PyObjCClass_Check(base), NULL);
     Class cls = PyObjCClass_GetClass(base);
     if (cls == NULL) {
         return NULL;
     }
-    PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+    /* 'base' is a PyObjCClass instance, using tp_dict is safe */
+    PyObject* dict = ((PyTypeObject*)base)->tp_dict;
     Method    m    = class_getInstanceMethod(cls, sel);
     if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
@@ -372,11 +400,11 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
                 return NULL;                                // LCOV_EXCL_LINE
             }
 
-            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+            dict = PyType_GetDict((PyTypeObject*)base);
 
         } else if (PyType_Check(base)) {
 
-            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+            dict = PyType_GetDict((PyTypeObject*)base);
 
         } else {
             /* XXX: Can this ever happen? */
@@ -386,6 +414,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
         PyObjC_Assert(dict && PyDict_Check(dict), NULL);
 
         int r = PyDict_GetItemRef(dict, name, &descr);
+        Py_CLEAR(dict);
         if (r == -1) {   // LCOV_BR_EXCL_LINE
             return NULL; // LCOV_EXCL_LINE
         } else if (r == 1) {
@@ -509,7 +538,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)base), name, descr)
+                /* 'base' is a PyObjClass instance, using tp_dict is safe */
+                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr)
                     == -1) {
                     Py_DECREF(descr);
                     return NULL;
@@ -992,7 +1022,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
-    result = PyDict_Keys(PyObjC_get_tp_dict(Py_TYPE(self)));
+    result = PyDict_Keys((Py_TYPE(self))->tp_dict);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }

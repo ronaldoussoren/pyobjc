@@ -97,10 +97,10 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             }
 
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
-                dict = PyObjC_get_tp_dict(Py_TYPE(tmp));
+                dict = PyType_GetDict(Py_TYPE(tmp));
 
             } else if (PyType_Check(tmp)) {
-                dict = PyObjC_get_tp_dict((PyTypeObject*)tmp);
+                dict = PyType_GetDict((PyTypeObject*)tmp);
 
             } else {
                 continue;
@@ -108,6 +108,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 
             switch(PyDict_GetItemRef(dict, name, &res)) {
             case -1:
+                Py_CLEAR(dict);
                 return NULL;
 
             case 1:
@@ -124,6 +125,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                     Py_DECREF(res);
                     res = tmp;
                 }
+                Py_CLEAR(dict);
                 return res;
             }
 
@@ -151,12 +153,15 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                         res = tmp;
                     }
 
+                    Py_CLEAR(dict);
                     return res;
 
                 } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    Py_CLEAR(dict);             // LCOV_EXCL_LINE
                     return NULL;               // LCOV_EXCL_LINE
                 }
             }
+            Py_CLEAR(dict);
         }
     }
     return PyObject_GenericGetAttr(self, name);

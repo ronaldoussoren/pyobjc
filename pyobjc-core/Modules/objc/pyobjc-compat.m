@@ -156,23 +156,4 @@ PyObject_VectorcallMethod(PyObject* name, PyObject* _Nonnull const* _Nonnull arg
 
 #endif
 
-#if PY_VERSION_HEX >= 0x030c0000
-extern PyObject* _Nonnull _PyType_GetDict(PyTypeObject* _Nonnull tp);
-
-extern PyObject*
-PyObjC_get_tp_dict(PyTypeObject* tp)
-{
-    return _PyType_GetDict(tp);
-}
-
-#else
-
-extern PyObject*
-PyObjC_get_tp_dict(PyTypeObject* tp)
-{
-    return tp->tp_dict;
-}
-
-#endif
-
 NS_ASSUME_NONNULL_END

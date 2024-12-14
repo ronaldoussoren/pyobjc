@@ -960,7 +960,10 @@ int PyObjC_CallClassExtender(PyObject* cls)
             }
 
         } else {
-            if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)cls), k, v) == -1) {
+            /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
+             * slot is usable directly.
+             */
+            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) {
                 PyErr_Clear();
             }
             continue;
