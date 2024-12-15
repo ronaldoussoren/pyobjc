@@ -39,7 +39,7 @@ extern PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object);
 extern bool PyObjCObject_IsBlock(PyObject* object);
 extern bool PyObjCObject_IsMagic(PyObject* object);
 extern PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object);
-extern int PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo);
+extern PyObjCMethodSignature* _Nullable  PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo);
 
 /*
  * XXX: these defines should be in the .m file

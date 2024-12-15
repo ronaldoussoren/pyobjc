@@ -249,9 +249,11 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #if Py_GIL_DISABLED
 #define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
 #define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection2_End(&_py_cs2)
+#define PyObjC_ATOMIC _Atomic
 #else
 #define Py_EXIT_CRITICAL_SECTION() ((void)0)
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
+#define PyObjC_ATOMIC
 #endif
 
 #endif

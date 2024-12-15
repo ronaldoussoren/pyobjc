@@ -138,7 +138,6 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                 }
 
                 if (res) {
-                    Py_INCREF(res);
                     f = Py_TYPE(res)->tp_descr_get;
                     if (f != NULL) {
                         tmp = f(res,

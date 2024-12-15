@@ -1546,6 +1546,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     return NULL;
 }
 
+/* Returns a new reference */
 PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
                                                        SEL sel)
 {
@@ -1614,7 +1615,6 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         }
 
         /* and return, as a borrowed reference */
-        Py_DECREF(result);
         return result;
     }
     return NULL;
@@ -3274,7 +3274,6 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             }
             Py_DECREF(py_name);
             if (value != NULL) {
-                Py_INCREF(value);
                 return value;
             } else if (PyErr_Occurred()) {
                 return NULL;
@@ -3573,6 +3572,61 @@ cleanup_and_return_error:
         PyMem_Free(classMethodsToAdd);
     }
     return -1;
+}
+
+
+/* Return a new reference */
+PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
+                                                   SEL sel)
+{
+    PyObjC_Assert(PyObjCClass_Check(base), NULL);
+    Class cls = PyObjCClass_GetClass(base);
+    if (cls == NULL) {
+        return NULL;
+    }
+    /* 'base' is a PyObjCClass instance, using tp_dict is safe */
+    PyObject* dict = ((PyTypeObject*)base)->tp_dict;
+    Method    m    = class_getInstanceMethod(cls, sel);
+    if (m) {
+#ifndef PyObjC_FAST_BUT_INEXACT
+        int   use = 1;
+        Class sup = class_getSuperclass(cls);
+        if (sup) {
+            Method m_sup = class_getInstanceMethod(sup, sel);
+            if (m_sup == m) {
+                use = 0;
+            }
+        }
+        if (!use)
+            return NULL;
+#endif
+
+        /* Create (unbound) selector */
+        const char* encoding = method_getTypeEncoding(m);
+        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_Error, "Native selector with Nil type encoding");
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
+        if (result == NULL) {
+            /* XXX: Can fail if the 'encoding' is invalid, needs test case */
+            return NULL;
+        }
+
+        /* add to __dict__ 'cache' */
+        if (PyDict_SetItem(dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+
+        /* and return as a borrowed reference */
+        return result;
+    }
+    return NULL;
 }
 
 NS_ASSUME_NONNULL_END

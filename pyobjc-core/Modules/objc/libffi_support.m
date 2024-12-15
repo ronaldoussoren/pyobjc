@@ -1488,9 +1488,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                      */
 
                     if (methinfo->argtype[i]->callable != NULL) {
-                        if (PyObjCObject_SetBlockSignature(v, methinfo->argtype[i]->callable) == -1) {
+                        PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(v, methinfo->argtype[i]->callable);
+                        if (tmp == NULL) {
                             goto error;
                         }
+                        Py_CLEAR(tmp);
 
                     } else {
                         const char* signature = PyObjCBlock_GetSignature(v);
@@ -1502,10 +1504,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                                 Py_DECREF(v);
                                 v = NULL;
                             } else {
-                                if (PyObjCObject_SetBlockSignature(v, sig) == -1) {
+                                PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(v, sig);
+                                if (tmp == NULL) {
                                     Py_DECREF(sig);
                                     goto error;
                                 }
+                                Py_CLEAR(tmp);
                                 Py_DECREF(sig);
                             }
                         }
@@ -3922,9 +3926,11 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                          */
 
                         if (methinfo->rettype->callable != NULL) {
-                            if (PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable) == -1) {
+                            PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable);
+                            if (tmp == NULL) {
                                 return NULL;
                             }
+                            Py_CLEAR(tmp);
                         } else {
                             const char* signature = PyObjCBlock_GetSignature(objc_result);
                             if (signature != NULL) {
@@ -3935,11 +3941,13 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                     Py_DECREF(objc_result);
                                     return NULL;
                                 }
-                                if (PyObjCObject_SetBlockSignature(objc_result, sig) == -1) {
+                                PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(objc_result, sig);
+                                if (tmp == NULL) {
                                     Py_DECREF(objc_result);
                                     Py_DECREF(sig);
                                     return NULL;
                                 }
+                                Py_CLEAR(tmp);
                                 Py_CLEAR(sig);
                             }
                         }
@@ -4056,9 +4064,11 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                     if (PyObjCObject_Check(v) && PyObjCObject_IsBlock(v)) {
                                         PyObjCMethodSignature* methinfo = PyObjCObject_GetBlockSignature(v);
                                         if  (methinfo == NULL) {
-                                            if (PyObjCObject_SetBlockSignature( v, methinfo->argtype[i]->callable) == -1) {
+                                            PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature( v, methinfo->argtype[i]->callable);
+                                            if (tmp == NULL) {
                                                 goto error_cleanup;
                                             }
+                                            Py_CLEAR(tmp);
                                         } else {
                                             Py_DECREF(methinfo);
                                         }
@@ -4258,9 +4268,11 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
                      */
 
                     if (methinfo->rettype->callable != NULL) {
-                        if (PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable) == -1) {
+                        PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(objc_result, methinfo->rettype->callable);
+                        if (tmp == NULL) {
                             return NULL;
                         }
+                        Py_CLEAR(tmp);
                     } else {
                         const char* signature = PyObjCBlock_GetSignature(objc_result);
                         if (signature != NULL) {
@@ -4271,11 +4283,13 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
                                 Py_DECREF(objc_result);
                                 return NULL;
                             }
-                            if (PyObjCObject_SetBlockSignature(objc_result, sig) == -1) {
+                            PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature(objc_result, sig);
+                            if (tmp == NULL) {
                                 Py_DECREF(objc_result);
                                 Py_DECREF(sig);
                                 return NULL;
                             }
+                            Py_CLEAR(tmp);
                             Py_CLEAR(sig);
                         }
                     }

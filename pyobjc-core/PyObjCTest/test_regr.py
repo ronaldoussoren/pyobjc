@@ -631,6 +631,18 @@ class TestReplacingDir(TestCase):
         self.assertEqual(value.__dir__(), ["hello"])
         self.assertIsInstance(value.__dir__, types.MethodType)
 
+    def test_basic_dir(self):
+        class OC_TestBasicDir(NSObject):
+            pass
+
+        o = OC_TestBasicDir.alloc().init()
+        self.assertNotIn("key", dir(o))
+        self.assertIn("init", dir(o))
+
+        o.key = 42
+        self.assertIn("key", dir(o))
+        self.assertIn("init", dir(o))
+
 
 class TestMethodsWithVarargs(TestCase):
     def test_method_with_varargs(self):

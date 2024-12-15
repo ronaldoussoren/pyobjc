@@ -108,7 +108,9 @@ extern PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base,
 
 static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 {
-    return ((PyObjCClassObject*)tp)->lookup_cache;
+    PyObject* result =  ((PyObjCClassObject*)tp)->lookup_cache;
+    Py_XINCREF(result);
+    return result;
 }
 
 static inline int

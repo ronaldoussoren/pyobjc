@@ -3,12 +3,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if Py_GIL_DISABLED
-#define PyObjC_ATOMIC _Atomic
-#else
-#define PyObjC_ATOMIC
-#endif
-
 extern PyObjC_ATOMIC BOOL PyObjC_Verbose;
 extern PyObjC_ATOMIC BOOL PyObjC_UseKVO;
 extern PyObjC_ATOMIC BOOL PyObjCPointer_RaiseException;
