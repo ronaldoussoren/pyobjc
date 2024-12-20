@@ -253,11 +253,11 @@ base_hidden_setter(PyObject* _self, PyObject* newVal,
     }
 
     if (PyObject_IsTrue(newVal)) {
-        Py_BEGIN_CRITICAL_SECTION(self);
+        Py_BEGIN_CRITICAL_SECTION(_self);
         ((PyObjCSelector*)_self)->sel_flags |= PyObjCSelector_kHIDDEN;
         Py_END_CRITICAL_SECTION();
     } else {
-        Py_BEGIN_CRITICAL_SECTION(self);
+        Py_BEGIN_CRITICAL_SECTION(_self);
         ((PyObjCSelector*)_self)->sel_flags &= ~PyObjCSelector_kHIDDEN;
         Py_END_CRITICAL_SECTION();
     }

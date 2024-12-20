@@ -52,6 +52,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 - (id _Nullable)nextObject
 {
     id        key   = nil;
+    int       rv;
     PyObject* pykey = NULL;
 
     PyObjC_BEGIN_WITH_GIL
@@ -59,23 +60,31 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
         Py_BEGIN_CRITICAL_SECTION(dct);
 
-        if (unlikely(!PyDict_Next(dct, &pos, &pykey, NULL))) {
+        rv = PyDict_Next(dct, &pos, &pykey, NULL);
+        if (rv) {
+            Py_XINCREF(pykey);
+            valid = YES;
+        } else {
+            valid = NO;
+        }
+
+        Py_END_CRITICAL_SECTION();
+
+        if (!rv) {
             key = nil;
 
         } else if (pykey == Py_None) {
             key = [NSNull null];
+            Py_DECREF(pykey);
 
         } else {
             if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
                 Py_DECREF(dct);
-                Py_EXIT_CRITICAL_SECTION();
+                Py_DECREF(pykey);
                 PyObjC_GIL_FORWARD_EXC();
             }
+            Py_DECREF(pykey);
         }
-
-        valid = (key != nil) ? YES : NO;
-
-        Py_END_CRITICAL_SECTION();
 
         Py_DECREF(dct);
 

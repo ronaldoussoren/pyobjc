@@ -1315,7 +1315,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
             } else {
                 should_call = 0;
             }
-            Py_END_CRITICAL_SECTION(info);
+            Py_END_CRITICAL_SECTION();
 
             if (should_call) {
 #endif
@@ -3219,9 +3219,7 @@ Class _Nullable PyObjCClass_GetClass(PyObject* cls)
     if (PyObjCClass_Check(cls)) {
         Class result = Nil;
 
-        Py_BEGIN_CRITICAL_SECTION(cls);
         result = ((PyObjCClassObject*)cls)->class;
-        Py_END_CRITICAL_SECTION();
 
         if (result == Nil) {
             /* XXX: Audit callers, the field can be Nil */

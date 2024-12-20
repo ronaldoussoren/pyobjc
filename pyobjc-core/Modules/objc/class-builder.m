@@ -119,8 +119,8 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&intermediate_mutex);
-
 #endif
+
     /*
      * The naming style for the intermediate class ensures that the class
      * we've found has the correct parent, so no need to check for this in
@@ -128,7 +128,11 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
      */
     intermediate_class = objc_lookUpClass(name);
     if (intermediate_class != Nil) {
+#ifdef Py_GIL_DISABLED
+        PyMutex_Unlock(&intermediate_mutex);
+#endif
         PyObjC_Assert(class_getSuperclass(intermediate_class) == base_class, Nil);
+
         return intermediate_class;
     }
 

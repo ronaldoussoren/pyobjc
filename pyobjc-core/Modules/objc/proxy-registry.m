@@ -242,6 +242,8 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 
 id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
 {
+    id result;
+
     if (original == Py_None)       // LCOV_BR_EXCL_LINE
         PyObjCErr_InternalError(); // LCOV_EXCL_LINE
 
@@ -251,10 +253,10 @@ id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
 
     struct weak_value* record  = NSMapGet(objc_proxies, original);
     if (record == NULL) {
-        return nil;
+        result = nil ;
+    } else {
+        result =  objc_loadWeakRetained(&record->value);
     }
-
-    id result =  objc_loadWeakRetained(&record->value);
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&proxy_mutex);
 #endif

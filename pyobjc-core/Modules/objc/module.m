@@ -370,12 +370,12 @@ static PyObject* _Nullable remove_autorelease_pool(PyObject* self
              * there's not much we can do if releasing raises.
              */
 #ifdef Py_GIL_DISABLED
-    PyMutex_Lock(&global_release_pool_lock);
+            PyMutex_Lock(&global_release_pool_lock);
 #endif
             pool                = global_release_pool;
             global_release_pool = nil;
 #ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&global_release_pool_lock);
+            PyMutex_Unlock(&global_release_pool_lock);
 #endif
             [pool release];
 
@@ -399,17 +399,20 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
                                                     __attribute__((__unused__)))
 {
     NSAutoreleasePool* pool;
-#ifdef Py_GIL_DISABLED
-    PyMutex_Lock(&global_release_pool_lock);
-#endif
     Py_BEGIN_ALLOW_THREADS
         @try {
             /* Unconditionally set global_release_pool to nil
              * before calling release. There's not much we can
              * do if draining fails with an exception.
              */
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&global_release_pool_lock);
+#endif
             pool                = global_release_pool;
             global_release_pool = nil;
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&global_release_pool_lock);
+#endif
             [pool release];
 
         } @catch (NSObject* localException) {
@@ -421,9 +424,6 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
          */
         [OC_NSAutoreleasePoolCollector newAutoreleasePool];
     Py_END_ALLOW_THREADS
-#ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&global_release_pool_lock);
-#endif
 
     if (PyErr_Occurred())
         return NULL;
@@ -2388,7 +2388,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 #if PY_VERSION_HEX >= 0x030d0000
     {
         .slot = Py_mod_gil,
-        .value = Py_MOD_GIL_USED,
+        .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
     {  /* Sentinel */

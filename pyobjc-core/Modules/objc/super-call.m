@@ -195,12 +195,13 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     Py_DECREF(entry);
 
     PyObjC_MappingCount += 1;
+
+exit:
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&registry_mutex);
 #endif
-
-exit:
     return retval;
+
 }
 
 int
@@ -391,16 +392,16 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
      struct registry* rv = PyCapsule_GetPointer(result, "objc.__memblock__");
      Py_DECREF(result);
 #ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&registry_mutex);
+     PyMutex_Unlock(&registry_mutex);
 #endif
      return rv;
 
 error:
-    Py_CLEAR(special_class);
+     Py_CLEAR(special_class);
      Py_CLEAR(py_selname);
      Py_CLEAR(search_class);
 #ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&registry_mutex);
+     PyMutex_Unlock(&registry_mutex);
 #endif
      return NULL;
 }
@@ -420,7 +421,7 @@ static struct registry* _Nullable find_signature(const char* signature)
 #endif
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
+        goto exit;
     }
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
@@ -456,9 +457,6 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
 
     PyObjC_Assert(special_registry != NULL, NULL);
 
-#ifdef Py_GIL_DISABLED
-    PyMutex_Lock(&registry_mutex);
-#endif
     special = search_special(class, sel);
     if (special) {
         result = special->call_to_objc;
@@ -475,9 +473,6 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
         }
     }
 
-#ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&registry_mutex);
-#endif
     return result;
 }
 

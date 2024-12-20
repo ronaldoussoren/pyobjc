@@ -59,21 +59,26 @@ file_dealloc(PyObject* self)
 static PyObject* _Nullable file_close(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
+    FILE* fp;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
+    fp = self->fp;
+    self->fp = NULL;
+    Py_END_CRITICAL_SECTION();
 
-    if (self->fp == NULL) {
+    if (fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Closing closed file");
         return NULL;
     }
 
-    if (fclose(self->fp) < 0) {
+    if (fclose(fp) < 0) {
+    /* This is very unlikely, restore previous value */
+        Py_BEGIN_CRITICAL_SECTION(_self);
+        self->fp = fp;
+        Py_END_CRITICAL_SECTION();
         return PyErr_SetFromErrno(PyExc_OSError);
     }
 
-    self->fp = NULL;
-
-    Py_END_CRITICAL_SECTION();
 
     Py_RETURN_NONE;
 }
@@ -111,18 +116,20 @@ static PyObject* _Nullable file_errors(PyObject* _self)
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        Py_EXIT_CRITICAL_SECTION();
-        return NULL;
+        result = -1;
     } else {
-        result = ferror(self->fp);
+        result = ferror(self->fp) != 0;
     }
 
     Py_END_CRITICAL_SECTION();
 
-    if (result) {
-        Py_RETURN_TRUE;
-    } else {
+    switch (result) {
+    case -1:
+        return NULL;
+    case 0:
         Py_RETURN_FALSE;
+    default:
+        Py_RETURN_TRUE;
     }
 }
 
@@ -135,17 +142,19 @@ static PyObject* _Nullable file_at_eof(PyObject* _self)
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        Py_EXIT_CRITICAL_SECTION();
-        return NULL;
+        result = -1;
     } else {
-        result = feof(self->fp);
+        result = feof(self->fp) != 0;
     }
     Py_END_CRITICAL_SECTION();
 
-    if (result) {
-        Py_RETURN_TRUE;
-    } else {
+    switch (result) {
+    case -1:
+        return NULL;
+    case 0:
         Py_RETURN_FALSE;
+    default:
+        Py_RETURN_TRUE;
     }
 }
 
@@ -257,6 +266,7 @@ static PyObject* _Nullable file_readline(PyObject* _self)
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
+        Py_EXIT_CRITICAL_SECTION();
         return NULL;
     } else {
         result = fgets(buffer, 2048, self->fp);
